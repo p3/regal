@@ -61,7 +61,6 @@ static Init *init = NULL;
 extern "C" { void __stdcall RegCloseKey(void *); }
 extern "C" { void __stdcall DeleteDC   (void *); }
 extern "C" { void __stdcall GetFocus   (void); }
-
 extern "C" { static void (__stdcall * myRegCloseKey)(void *) = RegCloseKey; }
 extern "C" { static void (__stdcall * myDeleteDC   )(void *) = DeleteDC;    }
 extern "C" { static void (__stdcall * myGetFocus   )(void  ) = GetFocus;    }
@@ -97,8 +96,22 @@ extern "C" { DWORD __stdcall GetCurrentThreadId(void); }
 DispatchTableGlobal dispatchTableGlobal;
 
 #if REGAL_SYS_WGL
-
+#if REGAL_WIN_TLS
+    DWORD regalCurrentContextTLSIDX = ~0;
+    struct RegalPrivateTlsInit {
+        RegalPrivateTlsInit()
+        {
+	    regalCurrentContextTLSIDX = TlsAlloc();
+        }
+        ~RegalPrivateTlsInit()
+        {
+	    TlsFree( regalCurrentContextTLSIDX );
+        }
+    };
+    RegalPrivateTlsInit regalPrivateTlsInit;
+#else
     __declspec( thread ) void * regalCurrentContext = NULL;
+#endif
 
     inline Thread RegalPrivateThreadSelf()
     {
@@ -145,7 +158,13 @@ void RegalPrivateMakeCurrent(RegalSystemContext sysCtx)
         if (!ctx) {
             ctx = new RegalContext();
 #if REGAL_SYS_WGL
+#if REGAL_WIN_TLS
+            if (regalCurrentContextTLSIDX == ~0) 
+  	        regalCurrentContextTLSIDX = TlsAlloc();
+	    TlsSetValue( regalCurrentContextTLSIDX, ctx );
+#else
             regalCurrentContext = ctx;
+#endif
 #else
             if (regalPrivateCurrentContextKey == 0) {
                 pthread_key_create( & regalPrivateCurrentContextKey, NULL );
@@ -170,7 +189,13 @@ void RegalPrivateMakeCurrent(RegalSystemContext sysCtx)
     th2rc[ thread ] = ctx;
     ctx->thread = thread;
 #if REGAL_SYS_WGL
+#if REGAL_WIN_TLS
+       if (regalCurrentContextTLSIDX == ~0) 
+           regalCurrentContextTLSIDX = TlsAlloc();
+	TlsSetValue( regalCurrentContextTLSIDX, ctx );
+#else
         regalCurrentContext = ctx;
+#endif
 #else
         pthread_setspecific( regalPrivateCurrentContextKey, ctx );
 #endif
@@ -185,7 +210,11 @@ void RegalPrivateMakeCurrent(RegalSystemContext sysCtx)
       }
     }
 #if REGAL_SYS_WGL
+#if REGAL_WIN_TLS
+    TlsSetValue( regalCurrentContextTLSIDX, NULL );
+#else
     regalCurrentContext = NULL;
+#endif
 #else
     pthread_setspecific( regalPrivateCurrentContextKey, NULL );
 #endif

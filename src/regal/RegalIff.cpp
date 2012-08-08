@@ -1424,9 +1424,9 @@ void RFF::InitFixedFunction( RegalContext * ctx ) {
 #else
     es = GetProcAddress( "glClearDepth" ) == NULL;
 #endif
-    string v = (const char *)ctx->dsp->emuTbl.glGetString( GL_VERSION );
+    const char* v = (const char *)ctx->dsp->emuTbl.glGetString( GL_VERSION );
     // FIXME: Handle detecting legacy more generally...
-    legacy = v[0] == '2' && v[1] == '.';
+    legacy = !v || (v[0] == '2' && v[1] == '.');
     //legacy = v.find( "2.1 " ) != string::npos;
 
     shadowMatrixMode = GL_MODELVIEW;

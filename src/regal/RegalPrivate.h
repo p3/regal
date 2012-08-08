@@ -116,16 +116,28 @@ const GLuint RFF2ATexEnd16 = 16;
 extern void RegalPrivateMakeCurrent(RegalSystemContext sysCtx);
 
 #if REGAL_SYS_WGL
-
     typedef DWORD Thread;
+#if REGAL_WIN_TLS
 
+    extern "C" { DWORD __stdcall TlsAlloc    (void);          }
+    extern "C" { int   __stdcall TlsFree     (DWORD);         }
+    extern "C" { void* __stdcall TlsGetValue (DWORD);         }
+    extern "C" { int   __stdcall TlsSetValue (DWORD, void *); }
+
+    extern DWORD regalCurrentContextTLSIDX;
+
+    inline void * RegalPrivateGetCurrentContext()
+    {
+        return TlsGetValue( regalCurrentContextTLSIDX );
+    }
+#else
     extern __declspec( thread ) void * regalCurrentContext;
 
     inline void * RegalPrivateGetCurrentContext()
     {
         return regalCurrentContext;
     }
-
+#endif
 #else
     typedef pthread_t Thread;
 
