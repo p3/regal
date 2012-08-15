@@ -64,10 +64,6 @@ extern "C"
 #include <android/log.h>
 #endif
 
-#if REGAL_SYS_NACL
-extern void _naclPrintf(const char* str, ...);
-#endif
-
 REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN

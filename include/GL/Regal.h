@@ -143,8 +143,13 @@ typedef float GLclampf;
 typedef double GLdouble;
 typedef double GLclampd;
 typedef void GLvoid;
+#ifdef REGAL_SYS_NACL
+typedef long int GLintptr;
+typedef long int GLsizeiptr;
+#else
 typedef ptrdiff_t GLintptr;
 typedef ptrdiff_t GLsizeiptr;
+#endif
 typedef char GLchar;
 typedef signed long long GLint64;
 typedef unsigned long long GLuint64;

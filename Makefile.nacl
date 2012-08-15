@@ -73,6 +73,8 @@ LIB.SRCS           += src/regal/RegalDispatchLog.cpp
 LIB.SRCS           += src/regal/RegalDispatchDebug.cpp
 LIB.SRCS           += src/regal/RegalDispatchError.cpp
 LIB.SRCS           += src/regal/RegalDispatchLoader.cpp
+LIB.SRCS           += src/regal/RegalDispatchNacl.cpp
+LIB.SRCS           += src/regal/RegalDispatchMissing.cpp
 LIB.SRCS           += src/regal/RegalHttp.cpp
 LIB.SRCS           += src/regal/RegalFavicon.cpp
 
@@ -98,7 +100,7 @@ LIB.SOBJS          := $(LIB.SOBJS:.cpp=.o)
 
 CFLAGS += -DREGAL_NO_HTTP
 
-regal.lib: lib lib/$(LIB.SHARED) lib/$(LIB.STATIC)
+regal.lib: lib lib/$(LIB.SHARED) glu.lib
 
 lib:
 	mkdir lib
@@ -276,6 +278,141 @@ endif
 
 endif
 
+#
+# RegalGLU
+#
+
+GLU.SRCS        += src/glu/libtess/dict.c
+GLU.SRCS        += src/glu/libtess/geom.c
+GLU.SRCS        += src/glu/libtess/memalloc.c
+GLU.SRCS        += src/glu/libtess/mesh.c
+GLU.SRCS        += src/glu/libtess/normal.c
+#GLU.SRCS        += src/glu/libtess/priorityq-heap.c
+GLU.SRCS        += src/glu/libtess/priorityq.c
+GLU.SRCS        += src/glu/libtess/render.c
+GLU.SRCS        += src/glu/libtess/sweep.c
+GLU.SRCS        += src/glu/libtess/tess.c
+GLU.SRCS        += src/glu/libtess/tessmono.c
+GLU.SRCS        += src/glu/libutil/error.c
+GLU.SRCS        += src/glu/libutil/glue.c
+GLU.SRCS        += src/glu/libutil/mipmap.c
+GLU.SRCS        += src/glu/libutil/project.c
+GLU.SRCS        += src/glu/libutil/quad.c
+GLU.SRCS        += src/glu/libutil/registry.c
+
+GLU.SRCS        += src/glu/libnurbs/interface/bezierEval.cc
+GLU.SRCS        += src/glu/libnurbs/interface/bezierPatch.cc
+GLU.SRCS        += src/glu/libnurbs/interface/bezierPatchMesh.cc
+GLU.SRCS        += src/glu/libnurbs/interface/glcurveval.cc
+GLU.SRCS        += src/glu/libnurbs/interface/glinterface.cc
+GLU.SRCS        += src/glu/libnurbs/interface/glrenderer.cc
+GLU.SRCS        += src/glu/libnurbs/interface/glsurfeval.cc
+GLU.SRCS        += src/glu/libnurbs/interface/incurveeval.cc
+GLU.SRCS        += src/glu/libnurbs/interface/insurfeval.cc
+GLU.SRCS        += src/glu/libnurbs/internals/arc.cc
+GLU.SRCS        += src/glu/libnurbs/internals/arcsorter.cc
+GLU.SRCS        += src/glu/libnurbs/internals/arctess.cc
+GLU.SRCS        += src/glu/libnurbs/internals/backend.cc
+GLU.SRCS        += src/glu/libnurbs/internals/basiccrveval.cc
+GLU.SRCS        += src/glu/libnurbs/internals/basicsurfeval.cc
+GLU.SRCS        += src/glu/libnurbs/internals/bin.cc
+GLU.SRCS        += src/glu/libnurbs/internals/bufpool.cc
+GLU.SRCS        += src/glu/libnurbs/internals/cachingeval.cc
+GLU.SRCS        += src/glu/libnurbs/internals/ccw.cc
+GLU.SRCS        += src/glu/libnurbs/internals/coveandtiler.cc
+GLU.SRCS        += src/glu/libnurbs/internals/curve.cc
+GLU.SRCS        += src/glu/libnurbs/internals/curvelist.cc
+GLU.SRCS        += src/glu/libnurbs/internals/curvesub.cc
+GLU.SRCS        += src/glu/libnurbs/internals/dataTransform.cc
+GLU.SRCS        += src/glu/libnurbs/internals/displaylist.cc
+GLU.SRCS        += src/glu/libnurbs/internals/flist.cc
+GLU.SRCS        += src/glu/libnurbs/internals/flistsorter.cc
+GLU.SRCS        += src/glu/libnurbs/internals/hull.cc
+GLU.SRCS        += src/glu/libnurbs/internals/intersect.cc
+GLU.SRCS        += src/glu/libnurbs/internals/knotvector.cc
+GLU.SRCS        += src/glu/libnurbs/internals/mapdesc.cc
+GLU.SRCS        += src/glu/libnurbs/internals/mapdescv.cc
+GLU.SRCS        += src/glu/libnurbs/internals/maplist.cc
+GLU.SRCS        += src/glu/libnurbs/internals/mesher.cc
+GLU.SRCS        += src/glu/libnurbs/internals/monotonizer.cc
+GLU.SRCS        += src/glu/libnurbs/internals/monoTriangulationBackend.cc
+GLU.SRCS        += src/glu/libnurbs/internals/mycode.cc
+GLU.SRCS        += src/glu/libnurbs/internals/nurbsinterfac.cc
+GLU.SRCS        += src/glu/libnurbs/internals/nurbstess.cc
+GLU.SRCS        += src/glu/libnurbs/internals/patch.cc
+GLU.SRCS        += src/glu/libnurbs/internals/patchlist.cc
+GLU.SRCS        += src/glu/libnurbs/internals/quilt.cc
+GLU.SRCS        += src/glu/libnurbs/internals/reader.cc
+GLU.SRCS        += src/glu/libnurbs/internals/renderhints.cc
+GLU.SRCS        += src/glu/libnurbs/internals/slicer.cc
+GLU.SRCS        += src/glu/libnurbs/internals/sorter.cc
+GLU.SRCS        += src/glu/libnurbs/internals/splitarcs.cc
+GLU.SRCS        += src/glu/libnurbs/internals/subdivider.cc
+GLU.SRCS        += src/glu/libnurbs/internals/tobezier.cc
+GLU.SRCS        += src/glu/libnurbs/internals/trimline.cc
+GLU.SRCS        += src/glu/libnurbs/internals/trimregion.cc
+GLU.SRCS        += src/glu/libnurbs/internals/trimvertpool.cc
+GLU.SRCS        += src/glu/libnurbs/internals/uarray.cc
+GLU.SRCS        += src/glu/libnurbs/internals/varray.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/directedLine.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/gridWrap.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/monoChain.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/monoPolyPart.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/monoTriangulation.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/partitionX.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/partitionY.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/polyDBG.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/polyUtil.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/primitiveStream.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/quicksort.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/rectBlock.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/sampleComp.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/sampleCompBot.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/sampleCompRight.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/sampleCompTop.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/sampledLine.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/sampleMonoPoly.cc
+GLU.SRCS        += src/glu/libnurbs/nurbtess/searchTree.cc
+
+GLU.SRCS.NAMES := $(notdir $(GLU.SRCS))
+GLU.OBJS       := $(addprefix tmp/$(SYSTEM)/glu/shared/,$(GLU.SRCS.NAMES))
+GLU.OBJS       := $(GLU.OBJS:.c=.o) $(GLU.OBJS:.cc=.o)
+GLU.OBJS       := $(filter %.o,$(GLU.OBJS)) 
+GLU.CFLAGS     := -Isrc/glu/include -Isrc/glu/libnurbs/interface -Isrc/glu/libnurbs/internals -Isrc/glu/libnurbs/nurbtess
+GLU.CFLAGS     += -DLIBRARYBUILD
+GLU.LIBS       := -Llib 
+GLU.LIBS       += -lpthread -lm
+GLU.SHARED     := libRegalGLU.so
+GLU.STATIC     := libRegalGLU.a
+
+glu.lib: lib lib/$(GLU.SHARED)
+
+tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libtess/%.c
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libutil/%.c
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libnurbs/interface/%.cc
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libnurbs/internals/%.cc
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libnurbs/nurbtess/%.cc
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+lib/$(GLU.SHARED): $(GLU.OBJS)
+	$(CCACHE) $(CC) $(LDFLAGS.SO) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) -o $@ $^
+ifneq ($(STRIP),)
+	$(STRIP) -x $@
+endif
+
 # Examples
 
 regal.bin: lib bin bin/nacl$(BIN_EXTENSION)
@@ -339,7 +476,7 @@ NACLHELLOWORLD.SRCS.NAMES := $(notdir $(NACLHELLOWORLD.SRCS))
 NACLHELLOWORLD.OBJS       := $(addprefix tmp/$(SYSTEM)/nacl/static/,$(NACLHELLOWORLD.SRCS.NAMES))
 NACLHELLOWORLD.OBJS       := $(NACLHELLOWORLD.OBJS:.cpp=.o)
 NACLHELLOWORLD.CFLAGS     := -Iinclude
-NACLHELLOWORLD.LIBS       += -L./lib -lRegal
+NACLHELLOWORLD.LIBS       += -L./lib -lRegal -lRegalGLU
 NACLHELLOWORLD.LIBS       += -lm -lpthread -lppapi -lppapi_gles2
 
 tmp/$(SYSTEM)/nacl/static/%.o: examples/nacl/%.cpp

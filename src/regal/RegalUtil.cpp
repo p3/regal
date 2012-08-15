@@ -210,7 +210,7 @@ void *GetProcAddress( const char * entry )
 
 void *GetProcAddress(const char *lookupName)
 {
-  return _naclGetProcAddress(lookupName);
+  return NULL;
 }
 
 #elif REGAL_SYS_IOS
