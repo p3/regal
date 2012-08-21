@@ -1783,6 +1783,14 @@ struct RegalIff : public RegalEmu {
                 *params = static_cast<T>(shadowMatrixMode);
                 break;
             }
+            case GL_MAX_LIGHTS: {
+                *params = static_cast<T>(REGAL_FIXED_FUNCTION_MAX_LIGHTS);
+                break;
+            }
+            case GL_MAX_TEXTURE_UNITS: {
+                *params = static_cast<T>(REGAL_FIXED_FUNCTION_MAX_TEXTURE_UNITS);
+                break;
+            }
             default:
                 return false;
         }
