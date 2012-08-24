@@ -228,7 +228,7 @@ typedef void * CGSWindowID;
 typedef void * CGSSurfaceID;
 #endif // REGAL_SYS_OSX
 
-#if REGAL_SYS_ANDROID
+#if REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 typedef struct ANativeWindow* EGLNativeWindowType;
 typedef struct egl_native_pixmap_t* EGLNativePixmapType;
 typedef void* EGLNativeDisplayType;
@@ -244,7 +244,7 @@ typedef void * EGLDisplay;
 typedef void * EGLSurface;
 typedef void * EGLClientBuffer;
 typedef void  (*__eglMustCastToProperFunctionPointerType)(void);
-#endif // REGAL_SYS_ANDROID
+#endif // REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 
 // TODO: make this automatic?
 typedef void (*GLDEBUGPROCAMD)(GLuint id, GLenum category, GLenum severity, GLsizei length, const GLchar *message, GLvoid *userParam);
@@ -30538,7 +30538,7 @@ REGAL_DECL CGLShareGroupObj REGAL_CALL CGLGetShareGroup(CGLContextObj ctx);
 
 #endif /* REGAL_SYS_OSX */
 
-#if REGAL_SYS_ANDROID
+#if REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 #define EGL_NO_CONTEXT                  ((EGLContext)0)
 #define EGL_NO_DISPLAY                  ((EGLDisplay)0)
 #define EGL_DEFAULT_DISPLAY             ((EGLNativeDisplayType)0)
@@ -30868,7 +30868,7 @@ REGAL_DECL EGLSurface REGAL_CALL eglCreatePbufferFromClientBuffer(EGLDisplay dpy
 REGAL_DECL EGLenum REGAL_CALL eglQueryAPI(void);
 #endif
 
-#endif /* REGAL_SYS_ANDROID */
+#endif /* REGAL_SYS_ANDROID | REGAL_STATIC_EGL */
 
 #ifdef __cplusplus
 }

@@ -69,7 +69,7 @@ emu = [
     { 'type' : 'void',        'member' : None,     'conditional' : None,                   'ifdef' : None,            'formulae' : None           }
 ]
 
-cond = { 'wgl' : 'REGAL_SYS_WGL', 'glx' : 'REGAL_SYS_GLX', 'cgl' : 'REGAL_SYS_OSX', 'egl' : 'REGAL_SYS_ANDROID' }
+cond = { 'wgl' : 'REGAL_SYS_WGL', 'glx' : 'REGAL_SYS_GLX', 'cgl' : 'REGAL_SYS_OSX', 'egl' : 'REGAL_SYS_ANDROID | REGAL_STATIC_EGL' }
 
 regalLicense = '''
 /*
@@ -986,7 +986,7 @@ def versionDeclareCode(apis, args):
   for api in apis:
     name = api.name.lower()
     if name in cond:
-      code += '#ifdef %s\n'%cond[name]
+      code += '#if %s\n'%cond[name]
     for c in sorted(api.categories):
       code += '  GLboolean %s : 1;\n' % (c.lower())
     if name in cond:
@@ -1023,7 +1023,7 @@ def versionInitCode(apis, args):
   for api in apis:
     name = api.name.lower()
     if name in cond:
-      code += '#ifdef %s\n'%cond[name]
+      code += '#if %s\n'%cond[name]
     for c in sorted(api.categories):
       code += '  %s(false),\n' % (c.lower())
     if name in cond:
@@ -1082,7 +1082,7 @@ def extensionStringCode(apis, args):
   for api in apis:
     name = api.name.lower()
     if name in cond:
-      code += '#ifdef %s\n'%cond[name]
+      code += '#if %s\n'%cond[name]
     for c in sorted(api.categories):
       code += '  %s = e.find("%s")!=e.end();\n' % (c.lower(),c)
     if name in cond:
@@ -1103,7 +1103,7 @@ def getExtensionCode(apis, args):
   for api in apis:
     name = api.name.lower()
     if name in cond:
-      code += '#ifdef %s\n'%cond[name]
+      code += '#if %s\n'%cond[name]
     for c in sorted(api.categories):
       if c.startswith('GL_REGAL_') or c=='GL_EXT_debug_marker':
         code += '  if (!strcmp(ext,"%s")) return true;\n' % (c)
@@ -1194,7 +1194,7 @@ def generateLookupSource(apis, args):
       names.append(j.name)
 
     if i.name in cond:
-      code.append( '#ifdef %s'%cond[i.name] )
+      code.append( '#if %s'%cond[i.name] )
 
     code.extend(pointerLookupByNameCode([ (j,j) for j in names ],("%s_Name"%i.name,"%s_Value"%i.name),valueCast = '(void *)(%s)'))
 
@@ -1269,7 +1269,7 @@ def generateLookupHeader(apis, args):
   for i in apis:
 
     if i.name in cond:
-      code.append( '#ifdef %s'%cond[i.name] )
+      code.append( '#if %s'%cond[i.name] )
 
     names = []
     for j in i.functions:

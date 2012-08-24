@@ -71,7 +71,7 @@ inline size_t gl_LookupOffset(const char *name)
   return res ? gl_Offset[(size_t) (res - gl_Name)] : 0;
 }
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL
 
 extern const char * const wgl_Name[144];
 extern const void *wgl_Value[144];
@@ -93,7 +93,7 @@ inline size_t wgl_LookupOffset(const char *name)
 
 #endif
 
-#ifdef REGAL_SYS_GLX
+#if REGAL_SYS_GLX
 
 extern const char * const glx_Name[114];
 extern const void *glx_Value[114];
@@ -115,7 +115,7 @@ inline size_t glx_LookupOffset(const char *name)
 
 #endif
 
-#ifdef REGAL_SYS_OSX
+#if REGAL_SYS_OSX
 
 extern const char * const cgl_Name[53];
 extern const void *cgl_Value[53];
@@ -137,7 +137,7 @@ inline size_t cgl_LookupOffset(const char *name)
 
 #endif
 
-#ifdef REGAL_SYS_ANDROID
+#if REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 
 extern const char * const egl_Name[35];
 extern const void *egl_Value[35];

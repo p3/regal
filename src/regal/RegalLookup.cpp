@@ -7592,7 +7592,7 @@ const size_t gl_Offset[2512] = {
   0
 };
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL
 const char * const wgl_Name[144] = {
   "wglAllocateMemoryNV",
   "wglAssociateImageBufferEventsI3D",
@@ -8036,7 +8036,7 @@ const size_t wgl_Offset[144] = {
 
 #endif
 
-#ifdef REGAL_SYS_GLX
+#if REGAL_SYS_GLX
 const char * const glx_Name[114] = {
   "glXAllocateMemoryNV",
   "glXBindChannelToWindowSGIX",
@@ -8390,7 +8390,7 @@ const size_t glx_Offset[114] = {
 
 #endif
 
-#ifdef REGAL_SYS_OSX
+#if REGAL_SYS_OSX
 const char * const cgl_Name[53] = {
   "CGLChoosePixelFormat",
   "CGLClearDrawable",
@@ -8561,7 +8561,7 @@ const size_t cgl_Offset[53] = {
 
 #endif
 
-#ifdef REGAL_SYS_ANDROID
+#if REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 const char * const egl_Name[35] = {
   "eglBindAPI",
   "eglBindTexImage",

@@ -576,7 +576,7 @@ struct DispatchTableGlobal {
     CGLError (REGAL_CALL *CGLUpdateContext)(CGLContextObj ctx);
 #endif // REGAL_SYS_OSX
 
-#if REGAL_SYS_ANDROID
+#if REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 
     // EGL_VERSION_1_0
 
@@ -620,7 +620,7 @@ struct DispatchTableGlobal {
     EGLBoolean (REGAL_CALL *eglSurfaceAttrib)(EGLDisplay dpy, EGLSurface surface, EGLint attribute, EGLint value);
     EGLBoolean (REGAL_CALL *eglSwapInterval)(EGLDisplay dpy, EGLint interval);
     EGLBoolean (REGAL_CALL *eglWaitClient)(void);
-#endif // REGAL_SYS_ANDROID
+#endif // REGAL_SYS_ANDROID | REGAL_STATIC_EGL
 
 };
 

@@ -356,7 +356,7 @@ struct ContextInfo
   GLboolean gl_sun_vertex : 1;
   GLboolean gl_win_swap_hint : 1;
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL
   GLboolean wgl_3dl_stereo_control : 1;
   GLboolean wgl_amd_gpu_association : 1;
   GLboolean wgl_arb_buffer_region : 1;
@@ -390,7 +390,7 @@ struct ContextInfo
   GLboolean wgl_oml_sync_control : 1;
 #endif
 
-#ifdef REGAL_SYS_GLX
+#if REGAL_SYS_GLX
   GLboolean glx_arb_create_context : 1;
   GLboolean glx_arb_get_proc_address : 1;
   GLboolean glx_ati_render_texture : 1;

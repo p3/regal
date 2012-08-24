@@ -327,7 +327,7 @@ ContextInfo::ContextInfo()
   gl_sun_triangle_list(false),
   gl_sun_vertex(false),
   gl_win_swap_hint(false),
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL
   wgl_3dl_stereo_control(false),
   wgl_amd_gpu_association(false),
   wgl_arb_buffer_region(false),
@@ -360,7 +360,7 @@ ContextInfo::ContextInfo()
   wgl_nv_video_output(false),
   wgl_oml_sync_control(false),
 #endif
-#ifdef REGAL_SYS_GLX
+#if REGAL_SYS_GLX
   glx_arb_create_context(false),
   glx_arb_get_proc_address(false),
   glx_ati_render_texture(false),
@@ -796,7 +796,7 @@ ContextInfo::init(const RegalContext &context)
   gl_sun_vertex = e.find("GL_SUN_vertex")!=e.end();
   gl_win_swap_hint = e.find("GL_WIN_swap_hint")!=e.end();
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL
   wgl_3dl_stereo_control = e.find("WGL_3DL_stereo_control")!=e.end();
   wgl_amd_gpu_association = e.find("WGL_AMD_gpu_association")!=e.end();
   wgl_arb_buffer_region = e.find("WGL_ARB_buffer_region")!=e.end();
@@ -830,7 +830,7 @@ ContextInfo::init(const RegalContext &context)
   wgl_oml_sync_control = e.find("WGL_OML_sync_control")!=e.end();
 #endif
 
-#ifdef REGAL_SYS_GLX
+#if REGAL_SYS_GLX
   glx_arb_create_context = e.find("GLX_ARB_create_context")!=e.end();
   glx_arb_get_proc_address = e.find("GLX_ARB_get_proc_address")!=e.end();
   glx_ati_render_texture = e.find("GLX_ATI_render_texture")!=e.end();
@@ -1115,7 +1115,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_SUN_vertex")) return gl_sun_vertex;
   if (!strcmp(ext,"GL_WIN_swap_hint")) return gl_win_swap_hint;
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL
   if (!strcmp(ext,"WGL_3DL_stereo_control")) return wgl_3dl_stereo_control;
   if (!strcmp(ext,"WGL_AMD_gpu_association")) return wgl_amd_gpu_association;
   if (!strcmp(ext,"WGL_ARB_buffer_region")) return wgl_arb_buffer_region;
@@ -1149,7 +1149,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"WGL_OML_sync_control")) return wgl_oml_sync_control;
 #endif
 
-#ifdef REGAL_SYS_GLX
+#if REGAL_SYS_GLX
   if (!strcmp(ext,"GLX_ARB_create_context")) return glx_arb_create_context;
   if (!strcmp(ext,"GLX_ARB_get_proc_address")) return glx_arb_get_proc_address;
   if (!strcmp(ext,"GLX_ATI_render_texture")) return glx_ati_render_texture;
