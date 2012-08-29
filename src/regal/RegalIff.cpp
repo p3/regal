@@ -1421,7 +1421,7 @@ void Program::Uniforms( RegalContext * ctx, DispatchTable & tbl ) {
 
 void RFF::InitFixedFunction( RegalContext * ctx ) {
 
-#if RGL_SYS_ANDROID || RGL_SYS_IOS
+#if RGL_SYS_ANDROID || RGL_SYS_IOS || REGAL_STATIC_ES2
     es = true;
 #else
     es = GetProcAddress( "glClearDepth" ) == NULL;
