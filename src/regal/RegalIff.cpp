@@ -1325,10 +1325,14 @@ void Program::Init( RegalContext * ctx, const Store & sstore, const GLchar *vsSr
     Shader( ctx, tbl, GL_FRAGMENT_SHADER, fs, fsSrc );
     Attribs( ctx );
     ctx->dispatcher.call(&tbl.glLinkProgram)( pg );
-    ctx->dispatcher.call(&tbl.glGetProgramInfoLog)( pg, (1<<15) - 2, &dbgLogLen, dbgLog );
-    dbgLog[ dbgLogLen ] = 0;
-    if( dbgLogLen > 0 ) {
-        ITrace( dbgLog );
+    GLint status = 0;
+    ctx->dispatcher.call(&tbl.glGetProgramiv)( pg, GL_LINK_STATUS, &status );
+    if ( !status ) {
+      ctx->dispatcher.call(&tbl.glGetProgramInfoLog)( pg, (1<<15) - 2, &dbgLogLen, dbgLog );
+      dbgLog[ dbgLogLen ] = 0;
+      if( dbgLogLen > 0 ) {
+          ITrace( dbgLog );
+      }
     }
 
     ctx->dispatcher.call(&tbl.glUseProgram)( pg );
@@ -1356,10 +1360,14 @@ void Program::Shader( RegalContext * ctx, DispatchTable & tbl, GLenum type, GLui
     shader = ctx->dispatcher.call(&tbl.glCreateShader)(type);
     ctx->dispatcher.call(&tbl.glShaderSource)( shader, 1, srcs, len );
     ctx->dispatcher.call(&tbl.glCompileShader)( shader );
-    ctx->dispatcher.call(&tbl.glGetShaderInfoLog)( shader, (1<<15) - 2, &dbgLogLen, dbgLog );
-    dbgLog[ dbgLogLen ] = 0;
-    if( dbgLogLen > 0 ) {
-        ITrace( dbgLog );
+    GLint status = 0;
+    ctx->dispatcher.call(&tbl.glGetShaderiv)( shader, GL_COMPILE_STATUS, &status );
+    if ( !status ) {
+      ctx->dispatcher.call(&tbl.glGetShaderInfoLog)( shader, (1<<15) - 2, &dbgLogLen, dbgLog );
+      dbgLog[ dbgLogLen ] = 0;
+      if( dbgLogLen > 0 ) {
+          ITrace( dbgLog );
+      }
     }
     ctx->dispatcher.call(&tbl.glAttachShader)( pg, shader );
 }
