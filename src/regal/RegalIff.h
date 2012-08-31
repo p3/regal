@@ -1754,6 +1754,23 @@ struct RegalIff : public RegalEmu {
             case GL_CURRENT_PROGRAM:
                 *params = static_cast<T>(program);
                 break;
+            case GL_MAX_MODELVIEW_STACK_DEPTH:
+                *params = static_cast<T>(REGAL_FIXED_FUNCTION_MATRIX_STACK_DEPTH);
+                break;
+            case GL_MAX_PROJECTION_STACK_DEPTH:
+                *params = static_cast<T>(REGAL_FIXED_FUNCTION_MATRIX_STACK_DEPTH);
+                break;
+            case GL_MAX_TEXTURE_STACK_DEPTH:
+                *params = static_cast<T>(REGAL_FIXED_FUNCTION_MATRIX_STACK_DEPTH);
+                break;
+            case GL_SMOOTH_POINT_SIZE_RANGE:
+                // FIXME: Pass through actual GL's limit.
+                *params = static_cast<T>(1);
+                break;
+            case GL_SMOOTH_LINE_WIDTH_RANGE:
+                // FIXME: Pass through actual GL's limit.
+                *params = static_cast<T>(1);
+                break;
             case GL_MODELVIEW_STACK_DEPTH:
                 *params = static_cast<T>(modelview.size());
                 break;
