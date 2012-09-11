@@ -44,7 +44,7 @@ REGAL_NAMESPACE_BEGIN
 
 DispatchTableGlobal dispatchTableGlobal;
 
-#if REGAL_SYS_ANDROID && REGAL_STATIC_EGL
+#if REGAL_SYS_ANDROID || REGAL_STATIC_EGL
 extern void InitDispatchTableStaticEGL(DispatchTableGlobal &tbl);
 #endif
 
@@ -52,7 +52,7 @@ DispatchTableGlobal::DispatchTableGlobal()
 {
   memset(this,0,sizeof(DispatchTableGlobal));
 
-#if REGAL_SYS_ANDROID && REGAL_STATIC_EGL
+#if REGAL_SYS_ANDROID || REGAL_STATIC_EGL
   InitDispatchTableStaticEGL(*this);
 #endif
 }

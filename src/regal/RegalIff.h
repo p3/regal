@@ -1256,7 +1256,11 @@ struct RegalIff : public RegalEmu {
             }
         }
 
-        void Pop() { RegalAssert( stack.size()>1 ); if ( stack.size()>1 ) stack.pop_back(); }
+        void Pop() {
+            /*RegalAssert( stack.size()>1 );*/
+            if ( stack.size()>1 )
+                stack.pop_back();
+        }
 
               r3::Matrix4f &Top()       { RegalAssert( stack.size() ); return stack.back().mat; }
         const r3::Matrix4f &Top() const { RegalAssert( stack.size() ); return stack.back().mat; }
