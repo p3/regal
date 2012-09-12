@@ -775,6 +775,22 @@ struct RegalIff : public RegalEmu {
         }
     }
 
+    void Hint( RegalContext * ctx, GLenum target, GLenum mode) {
+        if ( ctx->info->gles && ctx->info->gles_version_major >= 2 ) {
+            switch ( target ) {
+                case GL_PERSPECTIVE_CORRECTION_HINT:
+                case GL_POINT_SMOOTH_HINT:
+                case GL_LINE_SMOOTH_HINT:
+                case GL_FOG_HINT:
+                    // ignore these unused hints in ES 2.0
+                    return;
+            }
+        }
+        DispatchTable &tbl = ctx->dispatcher.emulation;
+        tbl.glHint( target, mode );
+    }
+
+
     void Provoke( RegalContext * ctx ) {
         memcpy( immArray + immCurrent * maxVertexAttribs * 16, &immVab.attr[0].x, maxVertexAttribs * 16 );
         immCurrent++;

@@ -2809,6 +2809,48 @@ static void REGAL_CALL emu_glGetTexParameteriv(GLenum target, GLenum pname, GLin
    _context->dispatcher.call(&_context->dispatcher.table().glGetTexParameteriv)(target, pname, params);
 }
 
+static void REGAL_CALL emu_glHint(GLenum target, GLenum mode)
+{
+   RegalContext *_context = GET_REGAL_CONTEXT();
+   RegalAssert(_context);
+
+   // prefix
+   switch( _context->emuLevel ) {
+       case 6 :
+       case 5 :
+       case 4 :
+       case 3 :
+       case 2 :
+         #if REGAL_EMU_IFF
+         if (_context->iff) break;
+         #endif
+       default:
+           break;
+   }
+
+   // impl
+   switch( _context->emuLevel ) {
+       case 6 :
+       case 5 :
+       case 4 :
+       case 3 :
+       case 2 :
+         #if REGAL_EMU_IFF
+         if (_context->iff) {
+             RegalEmuScopedActivate activate( _context, _context->iff );
+             return _context->iff->Hint( _context, target, mode );
+         }
+         #endif
+       default: {
+         Dispatcher::ScopedStep stepDown(_context->dispatcher);
+         _context->dispatcher.call(&_context->dispatcher.table().glHint)(target, mode);
+         break;
+       }
+
+   }
+
+}
+
 static GLboolean REGAL_CALL emu_glIsEnabled(GLenum cap)
 {
    RegalContext *_context = GET_REGAL_CONTEXT();
@@ -28927,6 +28969,7 @@ void InitDispatchTableEmu(DispatchTable &tbl)
    tbl.glGetTexGeniv = emu_glGetTexGeniv;
    tbl.glGetTexParameterfv = emu_glGetTexParameterfv;
    tbl.glGetTexParameteriv = emu_glGetTexParameteriv;
+   tbl.glHint = emu_glHint;
    tbl.glIsEnabled = emu_glIsEnabled;
    tbl.glLightModelf = emu_glLightModelf;
    tbl.glLightModelfv = emu_glLightModelfv;
