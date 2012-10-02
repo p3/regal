@@ -1817,6 +1817,10 @@ struct RegalIff : public RegalEmu {
                 *params = static_cast<T>(REGAL_FIXED_FUNCTION_MAX_TEXTURE_UNITS);
                 break;
             }
+            case GL_MAX_CLIP_PLANES: {
+                *params = static_cast<T>(REGAL_FIXED_FUNCTION_MAX_CLIP_PLANES);
+                break;
+            }
             default:
                 return false;
         }
