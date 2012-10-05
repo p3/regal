@@ -51,7 +51,7 @@ REGAL_NAMESPACE_BEGIN
 
 #ifdef REGAL_SYS_NACL
 #undef REGAL_NO_HTTP
-#define REGAL_NO_HTTP 0
+#define REGAL_NO_HTTP 1
 #endif
 
 #ifndef REGAL_HTTP_PORT
