@@ -122,7 +122,7 @@ void Marker::FrameTerminator(RegalContext &context)
 #ifndef REGAL_NO_PNG
         if (Config::frameSaveColor)
         {
-          const static png_color_8 pngSBIT = {8, 8, 8, 0, 8};
+          static png_color_8 pngSBIT = {8, 8, 8, 0, 8};
 
           string filename = print_string("color_",boost::print::right(context.frame,3,'0'),".png");
           FILE *fp = fopen(filename.c_str(), "wb");
