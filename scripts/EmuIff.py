@@ -121,6 +121,10 @@ iffFormulae = {
         'entries' : [ 'glTexImage(1|2|3|4)DMultisampleCoverageNV' ],
         'prefix' : [ '_context->iff->ShadowTexInfo( ${arg0}, ${arg3} );', ],
     },
+    'FfnShadowTexInfo3' : {
+        'entries' : [ 'glCopyTexImage2D' ],
+        'prefix' : [ '_context->iff->ShadowTexInfo( ${arg0}, ${arg2} );', ],
+    },
     'FfnTexEnv' : {
         'entries' : [ 'gl(Multi|)TexEnv(i|f)(v|)(EXT|)' ],
         'impl' : [ '_context->iff->TexEnv( ${arg0plus} );', ],

@@ -8801,6 +8801,35 @@ static void REGAL_CALL emu_glColorPointer(GLint size, GLenum type, GLsizei strid
 
 }
 
+static void REGAL_CALL emu_glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border)
+{
+   RegalContext *_context = GET_REGAL_CONTEXT();
+   RegalAssert(_context);
+
+   // prefix
+   switch( _context->emuLevel ) {
+       case 7 :
+       case 6 :
+       case 5 :
+       case 4 :
+       case 3 :
+         #if REGAL_EMU_IFF
+         if (_context->iff) {
+           Push<int> pushLevel(_context->emuLevel);
+           _context->emuLevel = 2;
+           _context->iff->ShadowTexInfo( target, internalformat );
+         }
+         #endif
+       case 1 :
+       default:
+           break;
+   }
+
+   DispatchTable *_next = _context->dispatcher.emulation._next;
+   RegalAssert(_next);
+    _next->call(& _next->glCopyTexImage2D)(target, level, internalformat, x, y, width, height, border);
+}
+
 static void REGAL_CALL emu_glDisableClientState(GLenum cap)
 {
    RegalContext *_context = GET_REGAL_CONTEXT();
@@ -32053,6 +32082,7 @@ void InitDispatchTableEmu(DispatchTable &tbl)
 
    tbl.glBindTexture = emu_glBindTexture;
    tbl.glColorPointer = emu_glColorPointer;
+   tbl.glCopyTexImage2D = emu_glCopyTexImage2D;
    tbl.glDisableClientState = emu_glDisableClientState;
    tbl.glDrawArrays = emu_glDrawArrays;
    tbl.glDrawElements = emu_glDrawElements;

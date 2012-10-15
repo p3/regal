@@ -272,6 +272,10 @@ Linux
 
  ``$ REGAL_LOG_DRIVER=1; bin/dreamtorus``
 
+* Note that you may need to install libxmu-dev before building:
+
+ ``$ apt-get install libxmu-dev``
+
 OS X
 ----
 
