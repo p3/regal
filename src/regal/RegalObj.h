@@ -46,6 +46,7 @@ REGAL_GLOBAL_BEGIN
 
 #include "RegalEmu.h"
 #include "RegalPrivate.h"
+#include "RegalSharedPtr.h"
 
 REGAL_GLOBAL_END
 
@@ -125,64 +126,72 @@ struct RegalNameTranslator {
 
 struct RegalObj : public RegalEmu {
 
-  RegalNameTranslator bufferNames;
-	RegalNameTranslator vaoNames;
+  shared_ptr<RegalNameTranslator>::type bufferNames;
+  shared_ptr<RegalNameTranslator>::type vaoNames;
 
-  void Init( RegalContext &ctx )
+  void Init( RegalContext &ctx, RegalContext *share_ctx )
   {
-    bufferNames.gen = ctx.dispatcher.emulation.glGenBuffers;
-    bufferNames.del = ctx.dispatcher.emulation.glDeleteBuffers;
-    vaoNames.gen    = ctx.dispatcher.emulation.glGenVertexArrays;
-    vaoNames.del    = ctx.dispatcher.emulation.glDeleteVertexArrays;
+    if (share_ctx != NULL) {
+      bufferNames = share_ctx->obj->bufferNames;
+      vaoNames = share_ctx->obj->vaoNames;
+    } else {
+      bufferNames.reset(new RegalNameTranslator());
+      vaoNames.reset(new RegalNameTranslator());
+    }
+
+    bufferNames->gen = ctx.dispatcher.emulation.glGenBuffers;
+    bufferNames->del = ctx.dispatcher.emulation.glDeleteBuffers;
+    vaoNames->gen    = ctx.dispatcher.emulation.glGenVertexArrays;
+    vaoNames->del    = ctx.dispatcher.emulation.glDeleteVertexArrays;
   }
 
 	void BindBuffer( RegalContext * ctx, GLenum target, GLuint bufferBinding ) {
 		DispatchTable & tbl = ctx->dispatcher.emulation;
-		tbl.glBindBuffer( target, bufferNames.ToDriverName( bufferBinding ) );
+		tbl.glBindBuffer( target, bufferNames->ToDriverName( bufferBinding ) );
 	}
 
 	void GenBuffers( RegalContext * ctx, GLsizei n, GLuint * buffers ) {
 		UNUSED_PARAMETER(ctx);
 		for( int i = 0; i < n; i++ ) {
-			buffers[ i ] = bufferNames.Gen();
+			buffers[ i ] = bufferNames->Gen();
 		}
 	}
 
 	void DeleteBuffers( RegalContext * ctx, GLsizei n, const GLuint * buffers ) {
 		UNUSED_PARAMETER(ctx);
 		for( int i = 0; i < n; i++ ) {
-			bufferNames.Delete( buffers[ i ] );
+		  bufferNames->Delete( buffers[ i ] );
 		}
 	}
 
     GLboolean IsBuffer( RegalContext * ctx, GLuint appName ) {
 		UNUSED_PARAMETER(ctx);
-        return bufferNames.IsObject( appName );
+        return bufferNames->IsObject( appName );
     }
 
 
 	void BindVertexArray( RegalContext * ctx, GLuint vao ) {
 		DispatchTable & tbl = ctx->dispatcher.emulation;
-		tbl.glBindVertexArray( vaoNames.ToDriverName( vao ) );
+		tbl.glBindVertexArray( vaoNames->ToDriverName( vao ) );
 	}
 
 	void GenVertexArrays( RegalContext * ctx, GLsizei n, GLuint * vaos ) {
 		UNUSED_PARAMETER(ctx);
 		for( int i = 0; i < n; i++ ) {
-			vaos[ i ] = vaoNames.Gen();
+			vaos[ i ] = vaoNames->Gen();
 		}
 	}
 
 	void DeleteVertexArrays( RegalContext * ctx, GLsizei n, const GLuint * vaos ) {
 		UNUSED_PARAMETER(ctx);
 		for( int i = 0; i < n; i++ ) {
-			vaoNames.Delete( vaos[ i ] );
+		  vaoNames->Delete( vaos[ i ] );
 		}
 	}
 
     GLboolean IsVertexArray( RegalContext * ctx, GLuint appName ) {
 		UNUSED_PARAMETER(ctx);
-        return vaoNames.IsObject( appName );
+        return vaoNames->IsObject( appName );
     }
 
 

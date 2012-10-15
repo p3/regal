@@ -72,7 +72,7 @@ struct RegalContext
   RegalContext();
   ~RegalContext();
 
-  void Init();
+  void Init(RegalContext *share_ctx);
 
   Dispatcher          dispatcher;
   DispatchErrorState  err;

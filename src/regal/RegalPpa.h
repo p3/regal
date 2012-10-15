@@ -62,9 +62,10 @@ REGAL_NAMESPACE_BEGIN
 
 struct RegalPpa : public RegalEmu, State::Stencil, State::Depth, State::Polygon
 {
-  void Init(RegalContext &ctx)
+  void Init(RegalContext &ctx, RegalContext *share_ctx)
   {
     UNUSED_PARAMETER(ctx);
+    UNUSED_PARAMETER(share_ctx);
   }
 
   void PushAttrib(RegalContext *ctx, GLbitfield mask)

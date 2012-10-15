@@ -60,6 +60,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalEmu.h"
 #include "RegalPrivate.h"
 #include "RegalContextInfo.h"
+#include "RegalSharedPtr.h"
 #include "linear.h"
 
 REGAL_GLOBAL_END
@@ -1000,10 +1001,8 @@ struct RegalIff : public RegalEmu {
   struct TextureUnit {
     TextureUnit()
     : ttb( 0 )
-    , fmt( 0 )
     {}
     GLubyte ttb;
-    GLint fmt;
     TextureEnv env;
   };
 
@@ -1396,6 +1395,12 @@ struct RegalIff : public RegalEmu {
     void Uniforms( RegalContext * ctx, DispatchTable & tbl );
   };
 
+  struct TexFmtMap : public shared_ptr<std::map<GLuint, GLint> >::type {
+    GLint& operator[] (GLuint name) const {
+      return (*get())[name];
+    }
+  };
+
   MatrixStack modelview;
   MatrixStack projection;
   MatrixStack texture[ REGAL_FIXED_FUNCTION_MAX_TEXTURE_UNITS ];
@@ -1417,7 +1422,9 @@ struct RegalIff : public RegalEmu {
 
   Program  ffprogs[ 1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS ];
 
-  std::map<GLuint, GLint>   textureObjToFmt;
+  TexFmtMap textureObjToFmt;
+  // Program uniforms are tied to context state, so we cannot share IFF
+  // programs, however we share user programs in general.
   std::map<GLenum, GLenum>  fmtmap;
   std::map<GLuint, GLenum>  shaderTypeMap;
   std::map<GLuint, Program> shprogmap;
@@ -2044,7 +2051,7 @@ struct RegalIff : public RegalEmu {
   }
 
   //
-  void Init( RegalContext &ctx )
+  void Init( RegalContext &ctx, RegalContext *share_ctx )
   {
     shadowMatrixMode = 0;
     shadowActiveTextureIndex = 0;
@@ -2054,6 +2061,12 @@ struct RegalIff : public RegalEmu {
     currVao = 0;
     gles = false;
     legacy = false;
+
+    if (share_ctx != NULL) {
+      textureObjToFmt = share_ctx->iff->textureObjToFmt;
+    } else {
+      textureObjToFmt.reset(new std::map<GLuint, GLint>());
+    }
 
     InitVertexArray( &ctx );
     InitFixedFunction( &ctx );

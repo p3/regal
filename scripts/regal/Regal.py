@@ -138,9 +138,17 @@ REGAL_DECL RegalErrorCallback RegalSetErrorCallback( RegalErrorCallback callback
 
 #if REGAL_SYS_NACL
 typedef int32_t RegalSystemContext;
+// RegalCreateContext is optional and provides information on whether two
+// contexts share underlying data. It has to be called before calling
+// RegalMakeCurrent on the same sysCtx.
+REGAL_DECL void RegalCreateContext( RegalSystemContext sysCtx,
+                                    PPB_OpenGLES2 *interface,
+                                    RegalSystemContext share_group );
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx, struct PPB_OpenGLES2 *interface );
 #else
 typedef void * RegalSystemContext;
+REGAL_DECL void RegalCreateContext( RegalSystemContext sysCtx,
+                                    RegalSystemContext share_group );
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx );
 #endif
 
