@@ -165,7 +165,7 @@ def generate(apis, args):
   generateTokenHeader(apis, args)
   generateEnumHeader(apis, args)
 
-  additional_exports = ['RegalSetErrorCallback', 'RegalMakeCurrent']
+  additional_exports = ['RegalSetErrorCallback', 'RegalCreateContext', 'RegalMakeCurrent']
 
   generateDefFile( apis, args, additional_exports)
 

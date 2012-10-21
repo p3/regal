@@ -94,7 +94,7 @@ RegalContext::RegalContext()
 }
 
 void
-RegalContext::Init()
+RegalContext::Init(RegalContext *share_ctx)
 {
   Internal("RegalContext::Init","()");
 
@@ -129,7 +129,7 @@ RegalContext::Init()
     {
       vao = new RegalVao;
       emuLevel = 1;
-      vao->Init(*this);
+      vao->Init(*this, share_ctx);
     }
     #endif /* REGAL_EMU_VAO */
     #if REGAL_EMU_IFF
@@ -137,7 +137,7 @@ RegalContext::Init()
     {
       iff = new RegalIff;
       emuLevel = 2;
-      iff->Init(*this);
+      iff->Init(*this, share_ctx);
     }
     #endif /* REGAL_EMU_IFF */
     #if REGAL_EMU_DSA
@@ -149,7 +149,7 @@ RegalContext::Init()
       info->regalExtensions = ::boost::print::detail::join(info->regalExtensionsSet,std::string(" "));
       dsa = new RegalDsa;
       emuLevel = 3;
-      dsa->Init(*this);
+      dsa->Init(*this, share_ctx);
     }
     #endif /* REGAL_EMU_DSA */
     #if REGAL_EMU_BIN
@@ -157,7 +157,7 @@ RegalContext::Init()
     {
       bin = new RegalBin;
       emuLevel = 4;
-      bin->Init(*this);
+      bin->Init(*this, share_ctx);
     }
     #endif /* REGAL_EMU_BIN */
     #if REGAL_EMU_PPA
@@ -165,7 +165,7 @@ RegalContext::Init()
     {
       ppa = new RegalPpa;
       emuLevel = 5;
-      ppa->Init(*this);
+      ppa->Init(*this, share_ctx);
     }
     #endif /* REGAL_EMU_PPA */
     #if REGAL_EMU_OBJ
@@ -173,7 +173,7 @@ RegalContext::Init()
     {
       obj = new RegalObj;
       emuLevel = 6;
-      obj->Init(*this);
+      obj->Init(*this, share_ctx);
     }
     #endif /* REGAL_EMU_OBJ */
     emuLevel = 7;

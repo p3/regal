@@ -2667,4 +2667,5 @@ EXPORTS
   rwglWaitForMscOML
   rwglWaitForSbcOML
   RegalSetErrorCallback
+  RegalCreateContext
   RegalMakeCurrent

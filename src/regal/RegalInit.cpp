@@ -170,6 +170,27 @@ inline Thread RegalPrivateThreadSelf() { return 1; }
 #endif
 #endif
 
+static void SetContextInTls(RegalContext * ctx) {
+#if REGAL_NO_TLS
+  currentContext = ctx;
+#else
+#if REGAL_SYS_WGL
+#if REGAL_WIN_TLS
+  if (regalCurrentContextTLSIDX == ~0)
+    regalCurrentContextTLSIDX = TlsAlloc();
+  TlsSetValue( regalCurrentContextTLSIDX, ctx );
+#else
+  regalCurrentContext = ctx;
+#endif
+#else
+  if (regalPrivateCurrentContextKey == 0) {
+    pthread_key_create( & regalPrivateCurrentContextKey, NULL );
+  }
+  pthread_setspecific( regalPrivateCurrentContextKey, ctx );
+#endif
+#endif
+}
+
 map<RegalSystemContext, RegalContext *> sc2rc;
 map<Thread, RegalContext *> th2rc;
 
@@ -188,44 +209,68 @@ using namespace ::REGAL_NAMESPACE_INTERNAL;
 REGAL_GLOBAL_BEGIN
 
 #if REGAL_SYS_NACL
-REGAL_DECL void RegalMakeCurrent( PP_Resource sysCtx, PPB_OpenGLES2 *interface )
+REGAL_DECL void RegalCreateContext( RegalSystemContext sysCtx,
+                                    PPB_OpenGLES2 *interface,
+                                    PP_Resource share_group )
+#else
+REGAL_DECL void RegalCreateContext( RegalSystemContext sysCtx,
+                                    RegalSystemContext share_group )
+#endif
+{
+  ::REGAL_NAMESPACE_INTERNAL::Init::init();
+
+  RegalAssert( sc2rc.count( sysCtx ) == 0 );  // Should be unused.
+
+  RegalContext * share_ctx = NULL;
+  if (share_group != 0) {
+    share_ctx = sc2rc[ share_group ];
+    RegalAssert(share_ctx != NULL);
+  }
+
+  RegalContext * ctx = new RegalContext();
+#if REGAL_SYS_NACL
+  ctx->naclResource = sysCtx;
+  ctx->naclES2      = interface;
+#endif
+  void *old_ctx = RegalPrivateGetCurrentContext();
+  if (old_ctx == NULL) {
+    // We need some context active during Init(), because
+    // RegalContextInfo init makes GL calls.
+    SetContextInTls(ctx);
+  }
+  ctx->Init(share_ctx);
+  if (old_ctx != NULL) {
+    SetContextInTls((RegalContext*) old_ctx);
+  }
+  sc2rc[ sysCtx ] = ctx;
+  ctx->sysCtx = sysCtx;
+}
+
+#if REGAL_SYS_NACL
+REGAL_DECL void RegalMakeCurrent( RegalSystemContext sysCtx,
+                                  PPB_OpenGLES2 *interface )
 #else
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext sysCtx )
 #endif
 {
-    ::REGAL_NAMESPACE_INTERNAL::Init::init();
+  ::REGAL_NAMESPACE_INTERNAL::Init::init();
 
 //  Trace("RegalPrivateMakeCurrent ",sysCtx);
-    Thread thread = RegalPrivateThreadSelf();
-    if (sysCtx) {
-        RegalContext * ctx = sc2rc.count( sysCtx ) > 0 ? sc2rc[ sysCtx ] : NULL;
-        if (!ctx) {
-            ctx = new RegalContext();
-            currentContext = ctx;
+  Thread thread = RegalPrivateThreadSelf();
+  if (sysCtx) {
+    // NOTE: Access to sc2rc and other parts of the function (including
+    // various one-time-init in RegalCreateContext) are not thread-safe.
+    RegalContext * ctx = sc2rc.count( sysCtx ) > 0 ? sc2rc[ sysCtx ] : NULL;
+    if (!ctx) {
 #if REGAL_SYS_NACL
-            ctx->naclResource = sysCtx;
-            ctx->naclES2      = interface;
-#endif
-#if !REGAL_NO_TLS
-#if REGAL_SYS_WGL
-#if REGAL_WIN_TLS
-            if (regalCurrentContextTLSIDX == ~0)
-                regalCurrentContextTLSIDX = TlsAlloc();
-            TlsSetValue( regalCurrentContextTLSIDX, ctx );
+      RegalCreateContext(sysCtx, interface, 0);
 #else
-            regalCurrentContext = ctx;
+      RegalCreateContext(sysCtx, 0);
 #endif
-#else
-            if (regalPrivateCurrentContextKey == 0) {
-                pthread_key_create( & regalPrivateCurrentContextKey, NULL );
-            }
-            pthread_setspecific( regalPrivateCurrentContextKey, ctx );
-#endif
-#endif
-            ctx->Init();
-            sc2rc[ sysCtx ] = ctx;
-            ctx->sysCtx = sysCtx;
-        }
+      ctx = sc2rc[ sysCtx ];
+    }
+
+    SetContextInTls(ctx);
 
     if( th2rc.count( thread ) != 0 ) {
       RegalContext * & c = th2rc[ thread ];
@@ -240,19 +285,7 @@ REGAL_DECL void RegalMakeCurrent( RegalSystemContext sysCtx )
     th2rc[ thread ] = ctx;
     ctx->thread = thread;
 
-#if !REGAL_NO_TLS
-#if REGAL_SYS_WGL
-#if REGAL_WIN_TLS
-    if (regalCurrentContextTLSIDX == ~0)
-        regalCurrentContextTLSIDX = TlsAlloc();
-    TlsSetValue( regalCurrentContextTLSIDX, ctx );
-#else
-    regalCurrentContext = ctx;
-#endif
-#else
-    pthread_setspecific( regalPrivateCurrentContextKey, ctx );
-#endif
-#endif
+    SetContextInTls(ctx);
     Internal("RegalMakeCurrent ",ctx," ",ctx->info->version);
   }
   else
@@ -266,17 +299,7 @@ REGAL_DECL void RegalMakeCurrent( RegalSystemContext sysCtx )
         RegalAssert( th2rc[ thread ] == NULL );
       }
     }
-#if !REGAL_NO_TLS
-#if REGAL_SYS_WGL
-#if REGAL_WIN_TLS
-    TlsSetValue( regalCurrentContextTLSIDX, NULL );
-#else
-    regalCurrentContext = NULL;
-#endif
-#else
-    pthread_setspecific( regalPrivateCurrentContextKey, NULL );
-#endif
-#endif
+    SetContextInTls(NULL);
   }
 }
 

@@ -47,6 +47,7 @@ REGAL_GLOBAL_BEGIN
 
 #include "RegalEmu.h"
 #include "RegalContextInfo.h"
+#include "RegalSharedPtr.h"
 
 REGAL_GLOBAL_END
 
@@ -87,7 +88,13 @@ struct RegalVao : public RegalEmu {
         Array a[ REGAL_VAO_NUM_ARRAYS ];
     };
 
-    std::map<GLuint, Vao> objects;
+    struct VaoMap : public shared_ptr<std::map<GLuint, Vao> >::type {
+      Vao& operator[] (GLuint name) const {
+        return (*get())[name];
+      }
+    };
+
+    VaoMap objects;
 
     GLenum clientActiveTexture;
 
@@ -106,13 +113,19 @@ struct RegalVao : public RegalEmu {
     GLuint ffAttrNumTex;
     GLuint maxVertexAttribs;
 
-    void Init( RegalContext &ctx )
+    void Init( RegalContext &ctx, RegalContext *share_ctx )
     {
         maxName = 0;
         clientActiveTexture = GL_TEXTURE0;
 
         maxVertexAttribs = ctx.info->maxVertexAttribs;
         RegalAssert( maxVertexAttribs <= REGAL_VAO_NUM_ARRAYS );
+
+        if (share_ctx != NULL) {
+          objects = share_ctx->vao->objects;
+        } else {
+          objects.reset(new std::map<GLuint, Vao>());
+        }
 
         // we have RFF2A maps for sets of 8 and 16 attributes. if
         // REGAL_VAO_NUM_ARRAYS > 16 a new map needs to be added
@@ -211,7 +224,7 @@ struct RegalVao : public RegalEmu {
             GLsizei i = 0;
             GLuint name = 1;
             while( i < n ) {
-                if( objects.count( name ) == 0 ) {
+                if( objects->count( name ) == 0 ) {
                     arrays[ i++ ] = name;
                     objects[ name ]; // gen allocates
                 }
@@ -223,14 +236,14 @@ struct RegalVao : public RegalEmu {
     void DeleteVertexArrays( GLsizei n, const GLuint * arrays ) {
         for( GLsizei i = 0; i < n; i++ ) {
             GLuint name = arrays[ i ];
-            if( name != coreVao && objects.count( name ) > 0 ) {
-                objects.erase( name );
+            if( name != coreVao && objects->count( name ) > 0 ) {
+                objects->erase( name );
             }
         }
     }
 
     GLboolean IsVertexArray( GLuint name ) {
-        return objects.count( name ) > 0 ? GL_TRUE : GL_FALSE;
+        return objects->count( name ) > 0 ? GL_TRUE : GL_FALSE;
     }
 
     void EnableDisableVertexAttribArray( RegalContext * ctx, GLboolean enable, GLuint index ) {

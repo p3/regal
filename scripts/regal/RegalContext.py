@@ -90,7 +90,7 @@ struct RegalContext
   RegalContext();
   ~RegalContext();
 
-  void Init();
+  void Init(RegalContext *share_ctx);
 
   Dispatcher          dispatcher;
   DispatchErrorState  err;
@@ -177,7 +177,7 @@ ${EMU_MEMBER_CONSTRUCT}#endif
 }
 
 void
-RegalContext::Init()
+RegalContext::Init(RegalContext *share_ctx)
 {
   Internal("RegalContext::Init","()");
 
@@ -306,7 +306,7 @@ def generateContextSource(apis, args):
 
             init += '%s = new %s;\n' % ( emu[revi]['member'], emu[revi]['type'] )
             init += 'emuLevel = %d;\n' % ( int(emu[revi]['level']) - 1)
-            init += '%s->Init(*this);\n' % emu[revi]['member']
+            init += '%s->Init(*this, share_ctx);\n' % emu[revi]['member']
             emuMemberInit += indent(wrapIf(emu[revi]['ifdef'],wrapCIf(emu[revi]['conditional'],init)),'    ')
 
     emuMemberInit += '    emuLevel = %d;\n' % ( len( emu ) - 1 )
