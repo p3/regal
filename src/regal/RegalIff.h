@@ -2066,7 +2066,7 @@ struct RegalIff : public RegalEmu {
     legacy = false;
 
     if (share_ctx)
-      textureObjToFmt.reset(share_ctx->iff->textureObjToFmt);
+      textureObjToFmt = share_ctx->iff->textureObjToFmt;
     else
       textureObjToFmt.reset(new std::map<GLuint, GLint>());
 

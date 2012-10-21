@@ -34,32 +34,36 @@ REGAL_GLOBAL_BEGIN
 
 // Optimistically assume that TR1 is available
 // - Except for Mac
+// - Except for gcc before 4.4.x
 
 #ifndef REGAL_NO_TR1
 #  ifdef __APPLE__
 #    define REGAL_NO_TR1 1
-#  else
-#    define REGAL_NO_TR1 0
+#  else 
+#    ifdef __GNUC__
+#      if __GNUC__<4 || (__GNUC__==4 && __GNUC_MINOR__<4)
+#        define REGAL_NO_TR1 1
+#      endif
+#    endif
 #  endif
 #endif
 
-// There is no way to check for TR1, assuming it is here.
+#ifndef REGAL_NO_TR1
+#  define REGAL_NO_TR1 0
+#endif
+
+// Use TR1, if available
 
 #if !REGAL_NO_TR1
-#if defined(__GNUC__)
 #include <tr1/memory>
-#else
-#endif // __GNUC__
 #endif // !REGAL_NO_TR1
-
-// TODO: Support Windows and Mac.
 
 REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
 #if !REGAL_NO_TR1
-using ::std::shared_ptr;
+using ::std::tr1::shared_ptr;
 #else  // !REGAL_NO_TR1
 
 // A dummy impl of TR1 shared_ptr that does not

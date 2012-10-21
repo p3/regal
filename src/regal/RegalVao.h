@@ -125,7 +125,7 @@ struct RegalVao : public RegalEmu {
         RegalAssert( maxVertexAttribs <= REGAL_VAO_NUM_ARRAYS );
 
         if (share_ctx)
-          objects.reset(share_ctx->vao->objects);
+          objects = share_ctx->vao->objects;
         else
           objects.reset(new std::map<GLuint, Vao>());
 
