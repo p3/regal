@@ -35,6 +35,7 @@ REGAL_GLOBAL_BEGIN
 // Optimistically assume that TR1 is available
 // - Except for Mac
 // - Except for gcc before 4.4.x
+// - Except for MS Visual Studio before VC10
 
 #ifndef REGAL_NO_TR1
 #  ifdef __APPLE__
@@ -44,6 +45,9 @@ REGAL_GLOBAL_BEGIN
 #      if __GNUC__<4 || (__GNUC__==4 && __GNUC_MINOR__<4)
 #        define REGAL_NO_TR1 1
 #      endif
+#    endif
+#    if defined(_MSC_VER) && _MSC_VER<1600
+#      define REGAL_NO_TR1 1
 #    endif
 #  endif
 #endif
@@ -55,7 +59,11 @@ REGAL_GLOBAL_BEGIN
 // Use TR1, if available
 
 #if !REGAL_NO_TR1
-#include <tr1/memory>
+#  ifdef _MSC_VER
+#    include <memory>
+#  else
+#    include <tr1/memory>
+#  endif
 #endif // !REGAL_NO_TR1
 
 REGAL_GLOBAL_END
