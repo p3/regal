@@ -88,9 +88,12 @@ struct RegalVao : public RegalEmu {
         Array a[ REGAL_VAO_NUM_ARRAYS ];
     };
 
-    struct VaoMap : public shared_ptr<std::map<GLuint, Vao> >::type {
-      Vao& operator[] (GLuint name) const {
-        return (*get())[name];
+    struct VaoMap : public shared_ptr<std::map<GLuint, Vao> >
+    {
+      inline Vao &operator[](GLuint name)
+      {
+        RegalAssert(get());
+        return operator*()[name];
       }
     };
 
@@ -121,11 +124,10 @@ struct RegalVao : public RegalEmu {
         maxVertexAttribs = ctx.info->maxVertexAttribs;
         RegalAssert( maxVertexAttribs <= REGAL_VAO_NUM_ARRAYS );
 
-        if (share_ctx != NULL) {
+        if (share_ctx)
           objects = share_ctx->vao->objects;
-        } else {
+        else
           objects.reset(new std::map<GLuint, Vao>());
-        }
 
         // we have RFF2A maps for sets of 8 and 16 attributes. if
         // REGAL_VAO_NUM_ARRAYS > 16 a new map needs to be added

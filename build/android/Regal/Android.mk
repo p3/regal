@@ -21,7 +21,7 @@ regal_path   := $(LOCAL_PATH)/../../..
 regal_src_files := $(wildcard $(regal_path)/src/regal/*.cpp) $(regal_path)/src/mongoose/mongoose.c $(regal_path)/src/md5/src/md5.c
 regal_src_files := $(patsubst $(LOCAL_PATH)/%,%,$(regal_src_files))
 
-regal_c_includes := $(regal_path)/include $(regal_path)/src/regal $(regal_path)/src/boost $(regal_path)/src/mongoose $(regal_path)/src/md5/include
+regal_c_includes := $(regal_path)/include $(regal_path)/src/regal $(regal_path)/src/boost $(regal_path)/src/mongoose $(regal_path)/src/md5/include $(regal_path)/src/lookup3
 
 regal_export_c_includes := $(regal_path)/include
 

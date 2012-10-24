@@ -500,7 +500,7 @@ __glutCreateWindow(GLUTwindow * parent,
   WNDCLASS wc;
   int style;
 
-  if (!GetClassInfo(GetModuleHandle(NULL), "GLUT", &wc)) {
+  if (!GetClassInfo(GetModuleHandle(NULL), TEXT("GLUT"), &wc)) {
     __glutOpenWin32Connection(NULL);
   }
 #else
@@ -566,7 +566,7 @@ __glutCreateWindow(GLUTwindow * parent,
       style = WS_OVERLAPPEDWINDOW;
     }
   }
-  window->win = CreateWindow("GLUT", "GLUT",
+  window->win = CreateWindow(TEXT("GLUT"), TEXT("GLUT"),
     WS_CLIPSIBLINGS | WS_CLIPCHILDREN | style,
     x, y, width, height, parent ? parent->win : __glutRoot,
     NULL, GetModuleHandle(NULL), 0);
@@ -739,7 +739,7 @@ glutCreateWindow(const char *title)
   textprop.format = 8;
   textprop.nitems = (unsigned long) strlen(title);
 #if defined(_WIN32)
-  SetWindowText(win, title);
+  SetWindowTextA(win, title);
   if (__glutIconic) {
     window->desiredMapState = IconicState;
   }

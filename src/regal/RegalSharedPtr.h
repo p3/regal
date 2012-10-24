@@ -1,5 +1,6 @@
 /*
   Copyright (c) 2012 Igor Chernyshev
+  Copyright (c) 2012 Nigel Stewart, NVIDIA Corporation
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
@@ -31,83 +32,133 @@
 
 REGAL_GLOBAL_BEGIN
 
-#define SHARED_PTR_MODE_NONE  0
-#define SHARED_PTR_MODE_TR1   1
+// Optimistically assume that TR1 is available
+// - Except for Mac
+// - Except for gcc before 4.4.x
+// - Except for MS Visual Studio before VC10
 
-#if defined(__GNUC__)
-// There is no way to check for TR1, assuming it is here.
-#include <tr1/memory>
-#define SHARED_PTR_MODE SHARED_PTR_MODE_TR1
-#else
-#define SHARED_PTR_MODE SHARED_PTR_MODE_NONE
-#endif  // __GNUC__
+#ifndef REGAL_NO_TR1
+#  ifdef __APPLE__
+#    define REGAL_NO_TR1 1
+#  else 
+#    ifdef __GNUC__
+#      if __GNUC__<4 || (__GNUC__==4 && __GNUC_MINOR__<4)
+#        define REGAL_NO_TR1 1
+#      endif
+#    endif
+#    if defined(_MSC_VER) && _MSC_VER<1600
+#      define REGAL_NO_TR1 1
+#    endif
+#  endif
+#endif
 
-// TODO: Support Windows and Mac.
+#ifndef REGAL_NO_TR1
+#  define REGAL_NO_TR1 0
+#endif
+
+// Use TR1, if available
+
+#if !REGAL_NO_TR1
+#  ifdef _MSC_VER
+#    include <memory>
+#  else
+#    include <tr1/memory>
+#  endif
+#endif // !REGAL_NO_TR1
 
 REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
+#if !REGAL_NO_TR1
+using ::std::tr1::shared_ptr;
+#else  // !REGAL_NO_TR1
 
-#if SHARED_PTR_MODE == SHARED_PTR_MODE_TR1
+// A dummy impl of TR1 shared_ptr that does not
+// support multi-threading.
 
-template<typename Value>
-struct shared_ptr
+template<typename T>
+class shared_ptr 
 {
-  typedef std::tr1::shared_ptr<Value> type;
-};
+  public:
+    inline shared_ptr() : _value(NULL), _count(NULL) {}
+    
+    template<typename U>
+    inline explicit shared_ptr(U *value) : _value(value), _count(NULL)
+    {
+      // Inc-ref
+    }
+    
+    template<typename U>
+    inline shared_ptr(const shared_ptr<U> &other)
+    : _value(other._value),
+      _count(other._count)
+    {
+      // Inc-ref
 
-#else  // SHARED_PTR_MODE_NONE
+      // Allow compilation but prevent use at runtime.
+      RegalAssert(false);
+    }
 
-namespace internal {
+    inline shared_ptr &operator=(T *value)
+    {
+      // Dec-ref
 
-// A dummy impl of TR1 shared_ptr that does not allow sharing.
-template<typename Value>
-class shared_ptr {
- public:
-  inline shared_ptr() : value_(NULL) {}
+      // Allow compilation but prevent use at runtime.
+      RegalAssert(false);
+      _value = value;
 
-  template<typename Value1>
-  inline explicit shared_ptr(Value1* v) : value_(v) {}
+      // Inc-ref
 
-  template<typename Value1>
-  inline shared_ptr(const shared_ptr<Value1>& src) : value_(NULL) {
-    // Allow compilation but prevent use at runtime.
-    RegalAssert(false);
-    value_ = src.value_;  // Check for incompatible types.
-  }
+      return *this;
+    }
+    
+    template<typename U>
+    inline shared_ptr &operator=(const shared_ptr<U> &other)
+    {
+      // Dec-ref
 
-  template<typename Value1>
-  inline shared_ptr& operator=(const shared_ptr<Value1>& src) {
-    // Allow compilation but prevent use at runtime.
-    RegalAssert(false);
-    value_ = src.value_;  // Check for incompatible types.
-    return *this;
-  }
+      // Allow compilation but prevent use at runtime.
+      RegalAssert(false);
+      _value = other._value;
+      _count = other._count;
 
-  template<typename Value1>
-  inline void reset(Value1* v) { value_ = v; }
+      // Inc-ref
 
-  inline Value& operator*() const { return *value_; }
+      return *this;
+    }
 
-  inline Value* operator->() const { return value_; }
+    inline void reset(T *value)
+    { 
+      operator=(value);
+    }
 
-  inline Value* get() const { return value_; }
-
- private:
-  Value* value_;
-};
-
-}  // internal
-
-template<typename Value>
-struct shared_ptr
-{
-  typedef internal::shared_ptr<Value> type;
+    inline void reset(shared_ptr<T> &other)
+    { 
+      operator=(other);
+    }
+    
+    template<typename U>
+    inline void reset(U *value)
+    { 
+      operator=(value);
+    }
+    
+    inline       T &operator*()        { return *_value; }
+    inline const T &operator*()  const { return *_value; }
+    
+    inline       T *operator->()       { return _value; }
+    inline const T *operator->() const { return _value; }
+    
+    inline       T *get()              { return _value; }
+    inline const T *get()        const { return _value; }
+    
+  private:
+    T      *_value;
+    size_t *_count;
 };
 
 #endif
-
 
 REGAL_NAMESPACE_END
 

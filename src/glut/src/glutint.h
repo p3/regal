@@ -27,7 +27,7 @@
 #define GLUT_BUILDING_LIB  /* Building the GLUT library itself. */
 #endif
 
-#include <GL/glut.h>
+#include <GL/RegalGLUT.h>
 
 #ifndef _WIN32
 /* added by BrianP: */
@@ -38,7 +38,7 @@
 #define CDECL GLAPIENTRY
 #endif
 
-/* GLUT_BUILDING_LIB is used by <GL/glut.h> to 1) not #pragma link
+/* GLUT_BUILDING_LIB is used by <GL/RegalGLUT.h> to 1) not #pragma link
    with the GLUT library, and 2) avoid the Win32 atexit hack. */
 
 #ifdef SUPPORT_FORTRAN

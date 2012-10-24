@@ -12,7 +12,7 @@
                                the GLUT library itself. */
 #endif
 
-#include <GL/glut.h>
+#include <GL/RegalGLUT.h>
 
 #if defined(_MSC_VER)
 #pragma warning (disable:4244)  /* disable bogus conversion warnings */

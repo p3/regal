@@ -895,7 +895,7 @@ string TextureFetchSwizzle( bool es, bool legacy, RFF::TextureTargetBitfield b )
   return "";
 }
 
-void GenerateFragmentShaderSource( const RFF * rff, string_list & src ) {
+void GenerateFragmentShaderSource( RFF * rff, string_list & src ) {
 
   const Store & st = rff->ffstate.processed;
   if( rff->gles ) {

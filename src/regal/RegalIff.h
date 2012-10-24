@@ -1395,9 +1395,12 @@ struct RegalIff : public RegalEmu {
     void Uniforms( RegalContext * ctx, DispatchTable & tbl );
   };
 
-  struct TexFmtMap : public shared_ptr<std::map<GLuint, GLint> >::type {
-    GLint& operator[] (GLuint name) const {
-      return (*get())[name];
+  struct TexFmtMap : public shared_ptr<std::map<GLuint, GLint> >
+  {
+    inline GLint &operator[](GLuint name)
+    {
+      RegalAssert(get());
+      return operator*()[name];
     }
   };
 
@@ -2062,11 +2065,10 @@ struct RegalIff : public RegalEmu {
     gles = false;
     legacy = false;
 
-    if (share_ctx != NULL) {
+    if (share_ctx)
       textureObjToFmt = share_ctx->iff->textureObjToFmt;
-    } else {
+    else
       textureObjToFmt.reset(new std::map<GLuint, GLint>());
-    }
 
     InitVertexArray( &ctx );
     InitFixedFunction( &ctx );

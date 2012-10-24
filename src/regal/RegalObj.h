@@ -126,8 +126,8 @@ struct RegalNameTranslator {
 
 struct RegalObj : public RegalEmu {
 
-  shared_ptr<RegalNameTranslator>::type bufferNames;
-  shared_ptr<RegalNameTranslator>::type vaoNames;
+  shared_ptr<RegalNameTranslator> bufferNames;
+  shared_ptr<RegalNameTranslator> vaoNames;
 
   void Init( RegalContext &ctx, RegalContext *share_ctx )
   {

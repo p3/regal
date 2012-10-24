@@ -69,7 +69,7 @@ void
 __glutOpenWin32Connection(char* display)
 {
   static char *classname;
-  WNDCLASS  wc;
+  WNDCLASSA wc;
   HINSTANCE hInstance = GetModuleHandle(NULL);
   
   /* Make sure we register the window only once. */
@@ -90,11 +90,11 @@ __glutOpenWin32Connection(char* display)
   classname = "GLUT";
 
   /* Clear (important!) and then fill in the window class structure. */
-  memset(&wc, 0, sizeof(WNDCLASS));
+  memset(&wc, 0, sizeof(WNDCLASSA));
   wc.style         = CS_OWNDC;
   wc.lpfnWndProc   = (WNDPROC)__glutWindowProc;
   wc.hInstance     = hInstance;
-  wc.hIcon         = LoadIcon(hInstance, "GLUT_ICON");
+  wc.hIcon         = LoadIcon(hInstance, TEXT("GLUT_ICON"));
   wc.hCursor       = LoadCursor(hInstance, IDC_ARROW);
   wc.hbrBackground = NULL;
   wc.lpszMenuName  = NULL;
@@ -104,7 +104,7 @@ __glutOpenWin32Connection(char* display)
   if(!wc.hIcon)
     wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
   
-  if(!RegisterClass(&wc)) {
+  if(!RegisterClassA(&wc)) {
     __glutFatalError("RegisterClass() failed:"
 		     "Cannot register GLUT window class.");
   }
@@ -201,7 +201,7 @@ glutInit(int *argcp, char **argv)
 #if defined(_WIN32)
   // Hacky Regal workaround to ensure gdi32.dll 
   // calls into opengl32.dll will work
-  HANDLE dll = LoadLibrary("opengl32.dll");
+  HANDLE dll = LoadLibrary(TEXT("opengl32.dll"));
 #endif
 
   if (__glutDisplay) {

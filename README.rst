@@ -288,6 +288,23 @@ iOS
 NaCL
 ----
 
+Questions and Answers
+=====================
+
+STL, Standard C++ Library, Boost
+--------------------------------
+
+* `For and against STL <http://gamedev.stackexchange.com/questions/268/stl-for-games-yea-or-nay>`_.
+
+* `For and against Boost <http://gamedev.stackexchange.com/questions/8980/why-dont-c-game-developers-use-the-boost-library>`_.
+
+Alternatives for OpenGL Loading
+-------------------------------
+
+* `GLEW <http://glew.sourceforge.net/>`_.
+
+* `OpenGL Loader Generator <https://bitbucket.org/alfonse/glloadgen/wiki/Home>`_.
+
 License and Credits
 ===================
 

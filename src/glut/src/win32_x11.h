@@ -6,9 +6,9 @@
 /* This program is freely distributable without licensing fees 
    and is provided without guarantee or warrantee expressed or 
    implied. This program is -not- in the public domain. */
-#ifdef __MINGW32__
+
 #include <GL/Regal.h>
-#endif
+
 #include <stdlib.h>
 #include <windows.h>
 
@@ -228,7 +228,7 @@ typedef struct {
   SetWindowPos(window, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)
 
 #define XSetWMName(display, window, tp) \
-  SetWindowText(window, (const char *)(tp)->value)
+  SetWindowTextA(window, (const char *)(tp)->value)
 
 /* There really isn't a way to set the icon name separate from the
    windows name in Win32, so, just set the windows name. */

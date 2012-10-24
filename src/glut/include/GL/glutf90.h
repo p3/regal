@@ -3,8 +3,8 @@
 
 /* Copyright (c) Mark J. Kilgard & Willam F. Mitchell, 1998. */
 
-/* This program is freely distributable without licensing fees 
-   and is provided without guarantee or warrantee expressed or 
+/* This program is freely distributable without licensing fees
+   and is provided without guarantee or warrantee expressed or
    implied. This program is -not- in the public domain. */
 
 /* This header provides the binding interface for William Mitchell's
@@ -15,7 +15,7 @@
    (mitchell@cam.nist.gov) in developing this friend interface
    for use by the f90gl package.  See ../../README.fortran */
 
-#include <GL/glut.h>
+#include <GL/RegalGLUT.h>
 
 /* Which callback enumerants for the __glutSetFCB/__glutGetFCB routines. */
 /* NOTE These values are part of a binary interface for the f90gl Fortran

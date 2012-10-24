@@ -12,7 +12,7 @@
                                the GLUT library itself. */
 #endif
 
-#include <GL/glut.h>
+#include <GL/RegalGLUT.h>
 
 typedef struct {
   const GLsizei width;

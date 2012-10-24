@@ -383,10 +383,12 @@
 				HEADER_SEARCH_PATHS = (
 					../../../include,
 					../../../src/boost,
+					../../../src/mongoose,
+					../../../src/lookup3,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				USER_HEADER_SEARCH_PATHS = "../../../src/mongoose ../../../src/md5/include";
 			};
 			name = Debug;
@@ -412,9 +414,11 @@
 				HEADER_SEARCH_PATHS = (
 					../../../include,
 					../../../src/boost,
+					../../../src/mongoose,
+					../../../src/lookup3,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				USER_HEADER_SEARCH_PATHS = "../../../src/mongoose ../../../src/md5/include";
 			};
 			name = Release;

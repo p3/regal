@@ -89,10 +89,21 @@ ifeq ($(filter -DREGAL_NO_MD5%,$(CFLAGS)),)
 LIB.SRCS           += src/md5/src/md5.c
 endif
 
+# Disable zlib and PNG for OSX and NaCL only
+
+ifeq ($(filter darwin%,$(SYSTEM)),)
+ifeq ($(filter nacl%,$(SYSTEM)),)
+LIB.LIBS           += -lpng -lz
+else
 CFLAGS             += -DREGAL_NO_PNG
+endif
+else
+CFLAGS             += -DREGAL_NO_PNG
+endif
 
 LIB.INCLUDE        += -Isrc/mongoose
 LIB.INCLUDE        += -Isrc/md5/include
+LIB.INCLUDE        += -Isrc/lookup3
 
 LIB.SRCS.NAMES     := $(notdir $(LIB.SRCS))
 

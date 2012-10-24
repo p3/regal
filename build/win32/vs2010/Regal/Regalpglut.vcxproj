@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>z</ProjectName>
-    <ProjectGuid>{C04D78E5-3A59-67AE-8832-C03CE8DFF0B7}</ProjectGuid>
+    <ProjectName>Regalpglut</ProjectName>
+    <ProjectGuid>{19CA2FC8-1CA1-2AC2-882B-65730755577D}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -63,42 +63,42 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\z\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\z\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\Regalpglut\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\Regalpglut\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\z\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\z\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\Regalpglut\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\Regalpglut\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ZLIB_DLL;verbose=-1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../../src/glut/include;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;GLUT_BUILDING_LIB;REGAL_POINTER;WIN32;BUILD_GLUT32;_DLL=;GLUT_STATIC;_WINDOWS;_CRTIMP=;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Release\Win32\z\</AssemblerListingLocation>
-      <ObjectFileName>Release\Win32\z\</ObjectFileName>
-      <ProgramDataBaseFileName>Release\Win32\zlib1.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Release\Win32\Regalpglut\</AssemblerListingLocation>
+      <ObjectFileName>Release\Win32\Regalpglut\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\Win32\regalpglut.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\Win32\zlib1.dll</OutputFile>
+      <AdditionalDependencies>RegalP.lib;RegalPGLU.lib;gdi32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Release\Win32\regalpglut.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>../../../../src/zlib/src/zlib.def</ModuleDefinitionFile>
-      <ProgramDatabaseFile>Release\Win32\zlib1.pdb</ProgramDatabaseFile>
+      <ModuleDefinitionFile>../../../../src/glut/src/glut.def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\Win32\regalpglut.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImportLibrary>Release\Win32\zlib1.lib</ImportLibrary>
+      <ImportLibrary>Release\Win32\regalpglut.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -113,16 +113,16 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ZLIB_DLL;verbose=-1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../../src/glut/include;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;GLUT_BUILDING_LIB;REGAL_POINTER;WIN32;BUILD_GLUT32;_DLL=;GLUT_STATIC;_WINDOWS;_CRTIMP=;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Release\x64\z\</AssemblerListingLocation>
-      <ObjectFileName>Release\x64\z\</ObjectFileName>
-      <ProgramDataBaseFileName>Release\x64\zlib1.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Release\x64\Regalpglut\</AssemblerListingLocation>
+      <ObjectFileName>Release\x64\Regalpglut\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\x64\regalpglut.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -130,14 +130,14 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\x64\zlib1.dll</OutputFile>
+      <AdditionalDependencies>RegalP.lib;RegalPGLU.lib;gdi32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Release\x64\regalpglut.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>../../../../src/zlib/src/zlib.def</ModuleDefinitionFile>
-      <ProgramDatabaseFile>Release\x64\zlib1.pdb</ProgramDatabaseFile>
+      <ModuleDefinitionFile>../../../../src/glut/src/glut.def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\x64\regalpglut.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <ImportLibrary>Release\x64\zlib1.lib</ImportLibrary>
+      <ImportLibrary>Release\x64\regalpglut.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -151,15 +151,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ZLIB_DLL;verbose=-1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../../src/glut/include;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;GLUT_BUILDING_LIB;REGAL_POINTER;WIN32;BUILD_GLUT32;_DLL=;GLUT_STATIC;_WINDOWS;_CRTIMP=;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Debug\Win32\z\</AssemblerListingLocation>
-      <ObjectFileName>Debug\Win32\z\</ObjectFileName>
-      <ProgramDataBaseFileName>Debug\Win32\zlib1.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Debug\Win32\Regalpglut\</AssemblerListingLocation>
+      <ObjectFileName>Debug\Win32\Regalpglut\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\Win32\regalpglut.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -167,16 +167,16 @@
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\Win32\zlib1.dll</OutputFile>
+      <AdditionalDependencies>RegalP.lib;RegalPGLU.lib;gdi32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Debug\Win32\regalpglut.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>../../../../src/zlib/src/zlib.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>../../../../src/glut/src/glut.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>Debug\Win32\zlib1.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>Debug\Win32\regalpglut.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImportLibrary>Debug\Win32\zlib1.lib</ImportLibrary>
+      <ImportLibrary>Debug\Win32\regalpglut.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -190,15 +190,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ZLIB_DLL;verbose=-1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../../src/glut/include;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;GLUT_BUILDING_LIB;REGAL_POINTER;WIN32;BUILD_GLUT32;_DLL=;GLUT_STATIC;_WINDOWS;_CRTIMP=;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Debug\x64\z\</AssemblerListingLocation>
-      <ObjectFileName>Debug\x64\z\</ObjectFileName>
-      <ProgramDataBaseFileName>Debug\x64\zlib1.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Debug\x64\Regalpglut\</AssemblerListingLocation>
+      <ObjectFileName>Debug\x64\Regalpglut\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\x64\regalpglut.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -206,15 +206,15 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\x64\zlib1.dll</OutputFile>
+      <AdditionalDependencies>RegalP.lib;RegalPGLU.lib;gdi32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Debug\x64\regalpglut.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Debug\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>../../../../src/zlib/src/zlib.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>../../../../src/glut/src/glut.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>Debug\x64\zlib1.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>Debug\x64\regalpglut.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <ImportLibrary>Debug\x64\zlib1.lib</ImportLibrary>
+      <ImportLibrary>Debug\x64\regalpglut.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -226,28 +226,61 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\zlib\src\adler32.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\compress.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\crc32.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\deflate.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\gzclose.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\gzlib.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\gzread.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\gzwrite.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\infback.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\inffast.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\inflate.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\inftrees.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\trees.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\uncompr.c" />
-    <ClCompile Include="..\..\..\..\src\zlib\src\zutil.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_8x13.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_9x15.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_bitmap.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_bwidth.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_cindex.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_cmap.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_cursor.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_dials.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_dstr.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_event.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_ext.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_fcb.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_fullscrn.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_gamemode.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_get.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_hel10.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_hel12.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_hel18.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_init.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_input.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_joy.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_key.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_keyctrl.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_keyup.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_mesa.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_modifier.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_mroman.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_overlay.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_ppm.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_roman.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_shapes.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_space.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_stroke.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_swap.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_swidth.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_tablet.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_teapot.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_tr10.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_tr24.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_util.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_vidresize.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_warp.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_win.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\glut_winmisc.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\win32_glx.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\win32_menu.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\win32_util.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\win32_winproc.c" />
+    <ClCompile Include="..\..\..\..\src\glut\src\win32_x11.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\src\zlib\include\zconf.h" />
-    <None Include="..\..\..\..\src\zlib\include\zlib.h" />
+    <None Include="..\..\..\..\include\GL\RegalGLUT.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\src\zlib\src\zlib.def" />
+    <None Include="..\..\..\..\src\glut\src\glut.def" />
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
