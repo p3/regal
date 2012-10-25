@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nvidia.minimalAndroid;
+package com.regal.dreamtorus;
 /*
  * Copyright (C) 2008 The Android Open Source Project
  *
@@ -64,16 +64,16 @@ import javax.microedition.khronos.opengles.GL10;
  *   that matches it exactly (with regards to red/green/blue/alpha channels
  *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
  */
-class MinimalAndroidView extends GLSurfaceView {
-    private static String TAG = "MinimalAndroidView";
+class DreamtorusView extends GLSurfaceView {
+    private static String TAG = "DreamtorusView";
     private static final boolean DEBUG = false;
 
-    public MinimalAndroidView(Context context) {
+    public DreamtorusView(Context context) {
         super(context);
         init(false, 0, 0);
     }
 
-    public MinimalAndroidView(Context context, boolean translucent, int depth, int stencil) {
+    public DreamtorusView(Context context, boolean translucent, int depth, int stencil) {
         super(context);
         init(translucent, depth, stencil);
     }
@@ -307,7 +307,7 @@ class MinimalAndroidView extends GLSurfaceView {
                 if ( egl.eglGetConfigAttrib(display, config, attribute, value)) {
                     Log.w(TAG, String.format("  %s: %d\n", name, value[0]));
                 } else {
-                    // Log.w(TAG, String.format("  %s: failed\n", name)); 
+                    // Log.w(TAG, String.format("  %s: failed\n", name));
                     while (egl.eglGetError() != EGL10.EGL_SUCCESS);
                 }
             }
@@ -325,11 +325,11 @@ class MinimalAndroidView extends GLSurfaceView {
 
     private static class Renderer implements GLSurfaceView.Renderer {
         public void onDrawFrame(GL10 gl) {
-            MinimalAndroidLib.step();
+            DreamtorusLib.step();
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            MinimalAndroidLib.init(width, height);
+            DreamtorusLib.init(width, height);
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {

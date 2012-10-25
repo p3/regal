@@ -1397,6 +1397,28 @@ struct DispatchTable {
     void (REGAL_CALL *glTessellationFactorAMD)(GLfloat factor);
     void (REGAL_CALL *glTessellationModeAMD)(GLenum mode);
 
+    // GL_ANGLE_framebuffer_blit
+
+    void (REGAL_CALL *glBlitFramebufferANGLE)(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+
+    // GL_ANGLE_framebuffer_multisample
+
+    void (REGAL_CALL *glRenderbufferStorageMultisampleANGLE)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+
+    // GL_ANGLE_instanced_arrays
+
+    void (REGAL_CALL *glDrawArraysInstancedANGLE)(GLenum mode, GLint first, GLsizei count, GLsizei primcount);
+    void (REGAL_CALL *glDrawElementsInstancedANGLE)(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount);
+    void (REGAL_CALL *glVertexAttribDivisorANGLE)(GLuint index, GLuint divisor);
+
+    // GL_ANGLE_translated_shader_source
+
+    void (REGAL_CALL *glGetTranslatedShaderSourceANGLE)(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source);
+
+    // GL_APPLE_copy_texture_levels
+
+    void (REGAL_CALL *glCopyTextureLevelsAPPLE)(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount);
+
     // GL_APPLE_element_array
 
     void (REGAL_CALL *glDrawElementArrayAPPLE)(GLenum mode, GLint first, GLsizei count);
@@ -1427,11 +1449,26 @@ struct DispatchTable {
     void (REGAL_CALL *glFlushRenderAPPLE)(void);
     void (REGAL_CALL *glSwapAPPLE)(void);
 
+    // GL_APPLE_framebuffer_multisample
+
+    void (REGAL_CALL *glRenderbufferStorageMultisampleAPPLE)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+    void (REGAL_CALL *glResolveMultisampleFramebufferAPPLE)(void);
+
     // GL_APPLE_object_purgeable
 
     void (REGAL_CALL *glGetObjectParameterivAPPLE)(GLenum objectType, GLuint name, GLenum pname, GLint *params);
     GLenum (REGAL_CALL *glObjectPurgeableAPPLE)(GLenum objectType, GLuint name, GLenum option);
     GLenum (REGAL_CALL *glObjectUnpurgeableAPPLE)(GLenum objectType, GLuint name, GLenum option);
+
+    // GL_APPLE_sync
+
+    GLenum (REGAL_CALL *glClientWaitSyncAPPLE)(GLsync sync, GLbitfield flags, GLuint64 timeout);
+    void (REGAL_CALL *glDeleteSyncAPPLE)(GLsync sync);
+    GLsync (REGAL_CALL *glFenceSyncAPPLE)(GLenum condition, GLbitfield flags);
+    void (REGAL_CALL *glGetInteger64vAPPLE)(GLenum pname, GLint64 *params);
+    void (REGAL_CALL *glGetSyncivAPPLE)(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values);
+    GLboolean (REGAL_CALL *glIsSyncAPPLE)(GLsync sync);
+    void (REGAL_CALL *glWaitSyncAPPLE)(GLsync sync, GLbitfield flags, GLuint64 timeout);
 
     // GL_APPLE_texture_range
 
@@ -2447,6 +2484,11 @@ struct DispatchTable {
     void (REGAL_CALL *glCullParameterdvEXT)(GLenum pname, GLdouble *params);
     void (REGAL_CALL *glCullParameterfvEXT)(GLenum pname, GLfloat *params);
 
+    // GL_EXT_debug_label
+
+    void (REGAL_CALL *glGetObjectLabelEXT)(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label);
+    void (REGAL_CALL *glLabelObjectEXT)(GLenum type, GLuint object, GLsizei length, const GLchar *label);
+
     // GL_EXT_debug_marker
 
     void (REGAL_CALL *glInsertEventMarkerEXT)(GLsizei length, const GLchar *marker);
@@ -2690,6 +2732,10 @@ struct DispatchTable {
     void (REGAL_CALL *glVertexArrayVertexAttribOffsetEXT)(GLuint vaobj, GLuint buffer, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLintptr offset);
     void (REGAL_CALL *glVertexArrayVertexOffsetEXT)(GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, const GLintptr offset);
 
+    // GL_EXT_discard_framebuffer
+
+    void (REGAL_CALL *glDiscardFramebufferEXT)(GLenum target, GLsizei numAttachments, const GLenum *attachments);
+
     // GL_EXT_draw_buffers2
 
     void (REGAL_CALL *glColorMaskIndexedEXT)(GLuint buf, GLboolean r, GLboolean g, GLboolean b, GLboolean a);
@@ -2840,6 +2886,11 @@ struct DispatchTable {
     void (REGAL_CALL *glTextureLightEXT)(GLenum pname);
     void (REGAL_CALL *glTextureMaterialEXT)(GLenum face, GLenum mode);
 
+    // GL_EXT_map_buffer_range
+
+    void (REGAL_CALL *glFlushMappedBufferRangeEXT)(GLenum target, GLintptr offset, GLsizeiptr length);
+    GLvoid *(REGAL_CALL *glMapBufferRangeEXT)(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+
     // GL_EXT_multi_draw_arrays
 
     void (REGAL_CALL *glMultiDrawArraysEXT)(GLenum mode, const GLint *first, const GLsizei *count, GLsizei primcount);
@@ -2849,6 +2900,26 @@ struct DispatchTable {
 
     void (REGAL_CALL *glSampleMaskEXT)(GLclampf value, GLboolean invert);
     void (REGAL_CALL *glSamplePatternEXT)(GLenum pattern);
+
+    // GL_EXT_multisampled_render_to_texture
+
+    void (REGAL_CALL *glFramebufferTexture2DMultisampleEXT)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
+
+    // GL_EXT_multiview_draw_buffers
+
+    void (REGAL_CALL *glDrawBuffersIndexedEXT)(GLint n, const GLenum *location, const GLint *indices);
+    void (REGAL_CALL *glGetIntegeri_vEXT)(GLenum target, GLuint index, GLint *data);
+    void (REGAL_CALL *glReadBufferIndexedEXT)(GLenum src, GLint index);
+
+    // GL_EXT_occlusion_query_boolean
+
+    void (REGAL_CALL *glBeginQueryEXT)(GLenum target, GLuint id);
+    void (REGAL_CALL *glDeleteQueriesEXT)(GLsizei n, const GLuint *ids);
+    void (REGAL_CALL *glEndQueryEXT)(GLenum target);
+    void (REGAL_CALL *glGenQueriesEXT)(GLsizei n, GLuint *ids);
+    void (REGAL_CALL *glGetQueryObjectuivEXT)(GLuint id, GLenum pname, GLuint *params);
+    void (REGAL_CALL *glGetQueryivEXT)(GLenum target, GLenum pname, GLint *params);
+    GLboolean (REGAL_CALL *glIsQueryEXT)(GLuint id);
 
     // GL_EXT_paletted_texture
 
@@ -2878,6 +2949,12 @@ struct DispatchTable {
     // GL_EXT_provoking_vertex
 
     void (REGAL_CALL *glProvokingVertexEXT)(GLenum mode);
+
+    // GL_EXT_robustness
+
+    void (REGAL_CALL *glGetnUniformfvEXT)(GLuint program, GLint location, GLsizei bufSize, GLfloat *params);
+    void (REGAL_CALL *glGetnUniformivEXT)(GLuint program, GLint location, GLsizei bufSize, GLint *params);
+    void (REGAL_CALL *glReadnPixelsEXT)(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data);
 
     // GL_EXT_scene_marker
 
@@ -2962,6 +3039,12 @@ struct DispatchTable {
     // GL_EXT_texture_perturb_normal
 
     void (REGAL_CALL *glTextureNormalEXT)(GLenum mode);
+
+    // GL_EXT_texture_storage
+
+    void (REGAL_CALL *glTexStorage1DEXT)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width);
+    void (REGAL_CALL *glTexStorage2DEXT)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
+    void (REGAL_CALL *glTexStorage3DEXT)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
 
     // GL_EXT_timer_query
 
@@ -3092,6 +3175,11 @@ struct DispatchTable {
     void (REGAL_CALL *glTexCoordPointerListIBM)(GLint size, GLenum type, GLint stride, const GLvoid **pointer, GLint ptrstride);
     void (REGAL_CALL *glVertexPointerListIBM)(GLint size, GLenum type, GLint stride, const GLvoid **pointer, GLint ptrstride);
 
+    // GL_IMG_multisampled_render_to_texture
+
+    void (REGAL_CALL *glFramebufferTexture2DMultisampleIMG)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
+    void (REGAL_CALL *glRenderbufferStorageMultisampleIMG)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+
     // GL_INGR_blend_func_separate
 
     void (REGAL_CALL *glBlendFuncSeparateINGR)(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
@@ -3190,11 +3278,20 @@ struct DispatchTable {
 
     void (REGAL_CALL *glCopyImageSubDataNV)(GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth);
 
+    // GL_NV_coverage_sample
+
+    void (REGAL_CALL *glCoverageMaskNV)(GLboolean mask);
+    void (REGAL_CALL *glCoverageOperationNV)(GLenum operation);
+
     // GL_NV_depth_buffer_float
 
     void (REGAL_CALL *glClearDepthdNV)(GLdouble depth);
     void (REGAL_CALL *glDepthBoundsdNV)(GLdouble zmin, GLdouble zmax);
     void (REGAL_CALL *glDepthRangedNV)(GLdouble zNear, GLdouble zFar);
+
+    // GL_NV_draw_buffers
+
+    void (REGAL_CALL *glDrawBuffersNV)(GLsizei n, const GLenum *bufs);
 
     // GL_NV_evaluators
 
@@ -3437,6 +3534,10 @@ struct DispatchTable {
     void (REGAL_CALL *glPrimitiveRestartIndexNV)(GLuint index);
     void (REGAL_CALL *glPrimitiveRestartNV)(void);
 
+    // GL_NV_read_buffer
+
+    void (REGAL_CALL *glReadBufferNV)(GLenum mode);
+
     // GL_NV_register_combiners
 
     void (REGAL_CALL *glCombinerInputNV)(GLenum stage, GLenum portion, GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage);
@@ -3649,6 +3750,53 @@ struct DispatchTable {
     void (REGAL_CALL *glVideoCaptureStreamParameterfvNV)(GLuint video_capture_slot, GLuint stream, GLenum pname, const GLfloat *params);
     void (REGAL_CALL *glVideoCaptureStreamParameterivNV)(GLuint video_capture_slot, GLuint stream, GLenum pname, const GLint *params);
 
+    // GL_OES_blend_equation_separate
+
+    void (REGAL_CALL *glBlendEquationSeparateOES)(GLenum modeRGB, GLenum modeAlpha);
+
+    // GL_OES_blend_func_separate
+
+    void (REGAL_CALL *glBlendFuncSeparateOES)(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
+
+    // GL_OES_blend_subtract
+
+    void (REGAL_CALL *glBlendEquationOES)(GLenum mode);
+
+    // GL_OES_framebuffer_object
+
+    void (REGAL_CALL *glBindFramebufferOES)(GLenum target, GLuint framebuffer);
+    void (REGAL_CALL *glBindRenderbufferOES)(GLenum target, GLuint renderbuffer);
+    GLenum (REGAL_CALL *glCheckFramebufferStatusOES)(GLenum target);
+    void (REGAL_CALL *glDeleteFramebuffersOES)(GLsizei n, const GLuint *framebuffers);
+    void (REGAL_CALL *glDeleteRenderbuffersOES)(GLsizei n, const GLuint *renderbuffers);
+    void (REGAL_CALL *glFramebufferRenderbufferOES)(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
+    void (REGAL_CALL *glFramebufferTexture2DOES)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+    void (REGAL_CALL *glGenFramebuffersOES)(GLsizei n, GLuint *framebuffers);
+    void (REGAL_CALL *glGenRenderbuffersOES)(GLsizei n, GLuint *renderbuffers);
+    void (REGAL_CALL *glGenerateMipmapOES)(GLenum target);
+    void (REGAL_CALL *glGetFramebufferAttachmentParameterivOES)(GLenum target, GLenum attachment, GLenum pname, GLint *params);
+    void (REGAL_CALL *glGetRenderbufferParameterivOES)(GLenum target, GLenum pname, GLint *params);
+    GLboolean (REGAL_CALL *glIsFramebufferOES)(GLuint framebuffer);
+    GLboolean (REGAL_CALL *glIsRenderbufferOES)(GLuint renderbuffer);
+    void (REGAL_CALL *glRenderbufferStorageOES)(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
+
+    // GL_OES_get_program_binary
+
+    void (REGAL_CALL *glGetProgramBinaryOES)(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary);
+    void (REGAL_CALL *glProgramBinaryOES)(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length);
+
+    // GL_OES_mapbuffer
+
+    void (REGAL_CALL *glGetBufferPointervOES)(GLenum target, GLenum pname, GLvoid **params);
+    GLvoid *(REGAL_CALL *glMapBufferOES)(GLenum target, GLenum access);
+    GLboolean (REGAL_CALL *glUnmapBufferOES)(GLenum target);
+
+    // GL_OES_matrix_palette
+
+    void (REGAL_CALL *glCurrentPaletteMatrixOES)(GLuint index);
+    void (REGAL_CALL *glMatrixIndexPointerOES)(GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+    void (REGAL_CALL *glWeightPointerOES)(GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+
     // GL_OES_single_precision
 
     void (REGAL_CALL *glClearDepthfOES)(GLclampd depth);
@@ -3658,9 +3806,71 @@ struct DispatchTable {
     void (REGAL_CALL *glGetClipPlanefOES)(GLenum plane, GLfloat *equation);
     void (REGAL_CALL *glOrthofOES)(GLfloat l, GLfloat r, GLfloat b, GLfloat t, GLfloat n, GLfloat f);
 
+    // GL_OES_texture_3D
+
+    void (REGAL_CALL *glCompressedTexImage3DOES)(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data);
+    void (REGAL_CALL *glCompressedTexSubImage3DOES)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data);
+    void (REGAL_CALL *glCopyTexSubImage3DOES)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+    void (REGAL_CALL *glFramebufferTexture3DOES)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
+    void (REGAL_CALL *glTexImage3DOES)(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+    void (REGAL_CALL *glTexSubImage3DOES)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels);
+
+    // GL_OES_texture_cube_map
+
+    void (REGAL_CALL *glGetTexGenfvOES)(GLenum coord, GLenum pname, GLfloat *params);
+    void (REGAL_CALL *glGetTexGenivOES)(GLenum coord, GLenum pname, GLint *params);
+    void (REGAL_CALL *glGetTexGenxvOES)(GLenum coord, GLenum pname, GLfixed *params);
+    void (REGAL_CALL *glTexGenfOES)(GLenum coord, GLenum pname, GLfloat param);
+    void (REGAL_CALL *glTexGenfvOES)(GLenum coord, GLenum pname, const GLfloat *params);
+    void (REGAL_CALL *glTexGeniOES)(GLenum coord, GLenum pname, GLint param);
+    void (REGAL_CALL *glTexGenivOES)(GLenum coord, GLenum pname, const GLint *params);
+    void (REGAL_CALL *glTexGenxOES)(GLenum coord, GLenum pname, GLfixed param);
+    void (REGAL_CALL *glTexGenxvOES)(GLenum coord, GLenum pname, const GLfixed *params);
+
+    // GL_OES_vertex_array_object
+
+    void (REGAL_CALL *glBindVertexArrayOES)(GLuint array);
+    void (REGAL_CALL *glDeleteVertexArraysOES)(GLsizei n, const GLuint *arrays);
+    void (REGAL_CALL *glGenVertexArraysOES)(GLsizei n, GLuint *arrays);
+    GLboolean (REGAL_CALL *glIsVertexArrayOES)(GLuint array);
+
     // GL_PGI_misc_hints
 
     void (REGAL_CALL *glHintPGI)(GLenum target, GLint mode);
+
+    // GL_QCOM_alpha_test
+
+    void (REGAL_CALL *glAlphaFuncQCOM)(GLenum func, GLclampf ref);
+
+    // GL_QCOM_driver_control
+
+    void (REGAL_CALL *glDisableDriverControlQCOM)(GLuint driverControl);
+    void (REGAL_CALL *glEnableDriverControlQCOM)(GLuint driverControl);
+    void (REGAL_CALL *glGetDriverControlStringQCOM)(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString);
+    void (REGAL_CALL *glGetDriverControlsQCOM)(GLint *num, GLsizei size, GLuint *driverControls);
+
+    // GL_QCOM_extended_get
+
+    void (REGAL_CALL *glExtGetBufferPointervQCOM)(GLenum target, GLvoid **params);
+    void (REGAL_CALL *glExtGetBuffersQCOM)(GLuint *buffers, GLint maxBuffers, GLint *numBuffers);
+    void (REGAL_CALL *glExtGetFramebuffersQCOM)(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers);
+    void (REGAL_CALL *glExtGetRenderbuffersQCOM)(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers);
+    void (REGAL_CALL *glExtGetTexLevelParameterivQCOM)(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params);
+    void (REGAL_CALL *glExtGetTexSubImageQCOM)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels);
+    void (REGAL_CALL *glExtGetTexturesQCOM)(GLuint *textures, GLint maxTextures, GLint *numTextures);
+    void (REGAL_CALL *glExtTexObjectStateOverrideiQCOM)(GLenum target, GLenum pname, GLint param);
+
+    // GL_QCOM_extended_get2
+
+    void (REGAL_CALL *glExtGetProgramBinarySourceQCOM)(GLuint program, GLenum shadertype, GLchar *source, GLint *length);
+    void (REGAL_CALL *glExtGetProgramsQCOM)(GLuint *programs, GLint maxPrograms, GLint *numPrograms);
+    void (REGAL_CALL *glExtGetShadersQCOM)(GLuint *shaders, GLint maxShaders, GLint *numShaders);
+    GLboolean (REGAL_CALL *glExtIsProgramBinaryQCOM)(GLuint program);
+
+    // GL_QCOM_tiled_rendering
+
+    void (REGAL_CALL *glEndTilingQCOM)(GLbitfield preserveMask);
+    void (REGAL_CALL *glStartTilingQCOM)(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask);
 
     // GL_REGAL_ES1_1_compatibility
 

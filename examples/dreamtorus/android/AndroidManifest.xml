@@ -19,11 +19,12 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nvidia.minimalAndroid">
+    package="com.regal.dreamtorus">
     <application
-            android:label="@string/minimalAndroid_activity"
+            android:icon="@drawable/ic_launcher_regal"
+            android:label="@string/dreamtorus_activity"
             >
-        <activity android:name="MinimalAndroidActivity"
+        <activity android:name="DreamtorusActivity"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             	android:launchMode="singleTask"
             	android:configChanges="orientation|keyboardHidden">

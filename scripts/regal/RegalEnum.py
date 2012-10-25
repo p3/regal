@@ -50,7 +50,7 @@ def generateEnumHeader(apis, args):
 
   # GL_TIMEOUT_IGNORED 0xffffffffffffffff can't be represented as an enum
 
-  regalEnum = [ '   R%s = %s,'%(i,i) for i in regalEnum if i not in [ 'GL_TIMEOUT_IGNORED' ] ]
+  regalEnum = [ '   R%s = %s,'%(i,i) for i in regalEnum if i not in [ 'GL_TIMEOUT_IGNORED', 'GL_TIMEOUT_IGNORED_APPLE' ] ]
 
   substitute = {}
   substitute['LICENSE']       = args.license

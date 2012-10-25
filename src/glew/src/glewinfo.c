@@ -716,6 +716,27 @@ static void _glewInfo_GL_AMD_shader_stencil_export (void)
 
 #endif /* GL_AMD_shader_stencil_export */
 
+#ifdef GL_AMD_shader_trinary_minmax
+
+static void _glewInfo_GL_AMD_shader_trinary_minmax (void)
+{
+  glewPrintExt("GL_AMD_shader_trinary_minmax", GLEW_AMD_shader_trinary_minmax, glewIsSupported("GL_AMD_shader_trinary_minmax"), glewGetExtension("GL_AMD_shader_trinary_minmax"));
+}
+
+#endif /* GL_AMD_shader_trinary_minmax */
+
+#ifdef GL_AMD_sparse_texture
+
+static void _glewInfo_GL_AMD_sparse_texture (void)
+{
+  glewPrintExt("GL_AMD_sparse_texture", GLEW_AMD_sparse_texture, glewIsSupported("GL_AMD_sparse_texture"), glewGetExtension("GL_AMD_sparse_texture"));
+
+  glewInfoFunc("glTexStorageSparseAMD", glTexStorageSparseAMD == NULL);
+  glewInfoFunc("glTextureStorageSparseAMD", glTextureStorageSparseAMD == NULL);
+}
+
+#endif /* GL_AMD_sparse_texture */
+
 #ifdef GL_AMD_stencil_operation_extended
 
 static void _glewInfo_GL_AMD_stencil_operation_extended (void)
@@ -4664,6 +4685,19 @@ static void _glewInfo_GL_INGR_interlace_read (void)
 
 #endif /* GL_INGR_interlace_read */
 
+#ifdef GL_INTEL_map_texture
+
+static void _glewInfo_GL_INTEL_map_texture (void)
+{
+  glewPrintExt("GL_INTEL_map_texture", GLEW_INTEL_map_texture, glewIsSupported("GL_INTEL_map_texture"), glewGetExtension("GL_INTEL_map_texture"));
+
+  glewInfoFunc("glMapTexture2DINTEL", glMapTexture2DINTEL == NULL);
+  glewInfoFunc("glSyncTextureINTEL", glSyncTextureINTEL == NULL);
+  glewInfoFunc("glUnmapTexture2DINTEL", glUnmapTexture2DINTEL == NULL);
+}
+
+#endif /* GL_INTEL_map_texture */
+
 #ifdef GL_INTEL_parallel_arrays
 
 static void _glewInfo_GL_INTEL_parallel_arrays (void)
@@ -4939,6 +4973,17 @@ static void _glewInfo_GL_NV_depth_range_unclamped (void)
 }
 
 #endif /* GL_NV_depth_range_unclamped */
+
+#ifdef GL_NV_draw_texture
+
+static void _glewInfo_GL_NV_draw_texture (void)
+{
+  glewPrintExt("GL_NV_draw_texture", GLEW_NV_draw_texture, glewIsSupported("GL_NV_draw_texture"), glewGetExtension("GL_NV_draw_texture"));
+
+  glewInfoFunc("glDrawTextureNV", glDrawTextureNV == NULL);
+}
+
+#endif /* GL_NV_draw_texture */
 
 #ifdef GL_NV_evaluators
 
@@ -7574,6 +7619,15 @@ static void _glewInfo_GLX_ATI_render_texture (void)
 
 #endif /* GLX_ATI_render_texture */
 
+#ifdef GLX_EXT_buffer_age
+
+static void _glewInfo_GLX_EXT_buffer_age (void)
+{
+  glewPrintExt("GLX_EXT_buffer_age", GLXEW_EXT_buffer_age, glxewIsSupported("GLX_EXT_buffer_age"), glxewGetExtension("GLX_EXT_buffer_age"));
+}
+
+#endif /* GLX_EXT_buffer_age */
+
 #ifdef GLX_EXT_create_context_es2_profile
 
 static void _glewInfo_GLX_EXT_create_context_es2_profile (void)
@@ -8186,6 +8240,12 @@ static void glewInfo (void)
 #ifdef GL_AMD_shader_stencil_export
   _glewInfo_GL_AMD_shader_stencil_export();
 #endif /* GL_AMD_shader_stencil_export */
+#ifdef GL_AMD_shader_trinary_minmax
+  _glewInfo_GL_AMD_shader_trinary_minmax();
+#endif /* GL_AMD_shader_trinary_minmax */
+#ifdef GL_AMD_sparse_texture
+  _glewInfo_GL_AMD_sparse_texture();
+#endif /* GL_AMD_sparse_texture */
 #ifdef GL_AMD_stencil_operation_extended
   _glewInfo_GL_AMD_stencil_operation_extended();
 #endif /* GL_AMD_stencil_operation_extended */
@@ -9044,6 +9104,9 @@ static void glewInfo (void)
 #ifdef GL_INGR_interlace_read
   _glewInfo_GL_INGR_interlace_read();
 #endif /* GL_INGR_interlace_read */
+#ifdef GL_INTEL_map_texture
+  _glewInfo_GL_INTEL_map_texture();
+#endif /* GL_INTEL_map_texture */
 #ifdef GL_INTEL_parallel_arrays
   _glewInfo_GL_INTEL_parallel_arrays();
 #endif /* GL_INTEL_parallel_arrays */
@@ -9110,6 +9173,9 @@ static void glewInfo (void)
 #ifdef GL_NV_depth_range_unclamped
   _glewInfo_GL_NV_depth_range_unclamped();
 #endif /* GL_NV_depth_range_unclamped */
+#ifdef GL_NV_draw_texture
+  _glewInfo_GL_NV_draw_texture();
+#endif /* GL_NV_draw_texture */
 #ifdef GL_NV_evaluators
   _glewInfo_GL_NV_evaluators();
 #endif /* GL_NV_evaluators */
@@ -9745,6 +9811,9 @@ static void glxewInfo ()
 #ifdef GLX_ATI_render_texture
   _glewInfo_GLX_ATI_render_texture();
 #endif /* GLX_ATI_render_texture */
+#ifdef GLX_EXT_buffer_age
+  _glewInfo_GLX_EXT_buffer_age();
+#endif /* GLX_EXT_buffer_age */
 #ifdef GLX_EXT_create_context_es2_profile
   _glewInfo_GLX_EXT_create_context_es2_profile();
 #endif /* GLX_EXT_create_context_es2_profile */

@@ -137,7 +137,7 @@ static void regalerr( GLenum err ) {
 
 static GLuint tex;
 
-static void init()
+void dreamTorusInit()
 {
     glPushGroupMarkerEXT(0, "init");
 
@@ -214,7 +214,7 @@ void dreamTorusDisplay( bool clear )
     static int count = 0;
 
     if( count == 0 ) {
-        init();
+        dreamTorusInit();
     }
 
     glPushGroupMarkerEXT(0, "display");
