@@ -542,6 +542,65 @@ REGAL_DECL void REGAL_CALL glTbufferMask3DFX(GLuint mask);
 #endif
 
 /**
+ ** GL_AMD_compressed_3DC_texture
+ **/
+
+#if (defined(GL_AMD_COMPRESSED_3DC_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_AMD_COMPRESSED_3DC_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_AMD_COMPRESSED_3DC_TEXTURE)
+#define REGAL_NO_ENUM_GL_AMD_COMPRESSED_3DC_TEXTURE
+#endif
+
+#if (defined(GL_AMD_COMPRESSED_3DC_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_AMD_COMPRESSED_3DC_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_AMD_COMPRESSED_3DC_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_AMD_COMPRESSED_3DC_TEXTURE
+#endif
+
+#if (defined(GL_AMD_COMPRESSED_3DC_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_AMD_COMPRESSED_3DC_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_AMD_COMPRESSED_3DC_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_AMD_COMPRESSED_3DC_TEXTURE
+#endif
+
+#if (defined(GL_AMD_COMPRESSED_3DC_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_AMD_COMPRESSED_3DC_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_AMD_COMPRESSED_3DC_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_AMD_COMPRESSED_3DC_TEXTURE
+#endif
+
+#ifndef GL_AMD_compressed_3DC_texture
+#define GL_AMD_compressed_3DC_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_AMD_COMPRESSED_3DC_TEXTURE
+#define GL_3DC_X_AMD  0x87f9     /* 34809 */
+#define GL_3DC_XY_AMD 0x87fa     /* 34810 */
+#endif
+
+/**
+ ** GL_AMD_compressed_ATC_texture
+ **/
+
+#if (defined(GL_AMD_COMPRESSED_ATC_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_AMD_COMPRESSED_ATC_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_AMD_COMPRESSED_ATC_TEXTURE)
+#define REGAL_NO_ENUM_GL_AMD_COMPRESSED_ATC_TEXTURE
+#endif
+
+#if (defined(GL_AMD_COMPRESSED_ATC_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_AMD_COMPRESSED_ATC_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_AMD_COMPRESSED_ATC_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_AMD_COMPRESSED_ATC_TEXTURE
+#endif
+
+#if (defined(GL_AMD_COMPRESSED_ATC_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_AMD_COMPRESSED_ATC_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_AMD_COMPRESSED_ATC_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_AMD_COMPRESSED_ATC_TEXTURE
+#endif
+
+#if (defined(GL_AMD_COMPRESSED_ATC_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_AMD_COMPRESSED_ATC_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_AMD_COMPRESSED_ATC_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_AMD_COMPRESSED_ATC_TEXTURE
+#endif
+
+#ifndef GL_AMD_compressed_ATC_texture
+#define GL_AMD_compressed_ATC_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_AMD_COMPRESSED_ATC_TEXTURE
+#define GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD 0x87ee     /* 34798 */
+#define GL_ATC_RGB_AMD                     0x8c92     /* 35986 */
+#define GL_ATC_RGBA_EXPLICIT_ALPHA_AMD     0x8c93     /* 35987 */
+#endif
+
+/**
  ** GL_AMD_debug_output
  **/
 
@@ -871,6 +930,34 @@ REGAL_DECL void REGAL_CALL glSelectPerfMonitorCountersAMD(GLuint monitor, GLbool
 #endif
 
 /**
+ ** GL_AMD_program_binary_Z400
+ **/
+
+#if (defined(GL_AMD_PROGRAM_BINARY_Z400) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_AMD_PROGRAM_BINARY_Z400)) && !defined(REGAL_NO_ENUM_GL_AMD_PROGRAM_BINARY_Z400)
+#define REGAL_NO_ENUM_GL_AMD_PROGRAM_BINARY_Z400
+#endif
+
+#if (defined(GL_AMD_PROGRAM_BINARY_Z400) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_AMD_PROGRAM_BINARY_Z400)) && !defined(REGAL_NO_TYPEDEF_GL_AMD_PROGRAM_BINARY_Z400)
+#define REGAL_NO_TYPEDEF_GL_AMD_PROGRAM_BINARY_Z400
+#endif
+
+#if (defined(GL_AMD_PROGRAM_BINARY_Z400) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_AMD_PROGRAM_BINARY_Z400)) && !defined(REGAL_NO_NAMESPACE_GL_AMD_PROGRAM_BINARY_Z400)
+#define REGAL_NO_NAMESPACE_GL_AMD_PROGRAM_BINARY_Z400
+#endif
+
+#if (defined(GL_AMD_PROGRAM_BINARY_Z400) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_AMD_PROGRAM_BINARY_Z400)) && !defined(REGAL_NO_DECLARATION_GL_AMD_PROGRAM_BINARY_Z400)
+#define REGAL_NO_DECLARATION_GL_AMD_PROGRAM_BINARY_Z400
+#endif
+
+#ifndef GL_AMD_program_binary_Z400
+#define GL_AMD_program_binary_Z400 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_AMD_PROGRAM_BINARY_Z400
+#define GL_Z400_BINARY_AMD 0x8740 /* 34624 */
+#endif
+
+/**
  ** GL_AMD_query_buffer_object
  **/
 
@@ -1061,6 +1148,266 @@ REGAL_DECL void REGAL_CALL glTessellationModeAMD(GLenum mode);
 #endif
 
 /**
+ ** GL_ANGLE_framebuffer_blit
+ **/
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_BLIT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_BLIT)) && !defined(REGAL_NO_ENUM_GL_ANGLE_FRAMEBUFFER_BLIT)
+#define REGAL_NO_ENUM_GL_ANGLE_FRAMEBUFFER_BLIT
+#endif
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_BLIT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_BLIT)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_FRAMEBUFFER_BLIT)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_FRAMEBUFFER_BLIT
+#endif
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_BLIT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_BLIT)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_FRAMEBUFFER_BLIT)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_FRAMEBUFFER_BLIT
+#endif
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_BLIT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_BLIT)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_FRAMEBUFFER_BLIT)
+#define REGAL_NO_DECLARATION_GL_ANGLE_FRAMEBUFFER_BLIT
+#endif
+
+#ifndef GL_ANGLE_framebuffer_blit
+#define GL_ANGLE_framebuffer_blit 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_FRAMEBUFFER_BLIT
+#define GL_DRAW_FRAMEBUFFER_BINDING_ANGLE 0x8ca6     /* 36006 */
+#define GL_READ_FRAMEBUFFER_ANGLE         0x8ca8     /* 36008 */
+#define GL_DRAW_FRAMEBUFFER_ANGLE         0x8ca9     /* 36009 */
+#define GL_READ_FRAMEBUFFER_BINDING_ANGLE 0x8caa     /* 36010 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_ANGLE_FRAMEBUFFER_BLIT
+typedef void (REGAL_CALL *PFNGLBLITFRAMEBUFFERANGLEPROC)(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_ANGLE_FRAMEBUFFER_BLIT
+#define glBlitFramebufferANGLE              rglBlitFramebufferANGLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_ANGLE_FRAMEBUFFER_BLIT
+REGAL_DECL void REGAL_CALL glBlitFramebufferANGLE(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+#endif
+
+/**
+ ** GL_ANGLE_framebuffer_multisample
+ **/
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_MULTISAMPLE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_ENUM_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_ENUM_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_MULTISAMPLE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_MULTISAMPLE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#if (defined(GL_ANGLE_FRAMEBUFFER_MULTISAMPLE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_DECLARATION_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#ifndef GL_ANGLE_framebuffer_multisample
+#define GL_ANGLE_framebuffer_multisample 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+#define GL_RENDERBUFFER_SAMPLES_ANGLE               0x8cab     /* 36011 */
+#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE 0x8d56     /* 36182 */
+#define GL_MAX_SAMPLES_ANGLE                        0x8d57     /* 36183 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+typedef void (REGAL_CALL *PFNGLRENDERBUFFERSTORAGEMULTISAMPLEANGLEPROC)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+#define glRenderbufferStorageMultisampleANGLE rglRenderbufferStorageMultisampleANGLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_ANGLE_FRAMEBUFFER_MULTISAMPLE
+REGAL_DECL void REGAL_CALL glRenderbufferStorageMultisampleANGLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+#endif
+
+/**
+ ** GL_ANGLE_instanced_arrays
+ **/
+
+#if (defined(GL_ANGLE_INSTANCED_ARRAYS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_INSTANCED_ARRAYS)) && !defined(REGAL_NO_ENUM_GL_ANGLE_INSTANCED_ARRAYS)
+#define REGAL_NO_ENUM_GL_ANGLE_INSTANCED_ARRAYS
+#endif
+
+#if (defined(GL_ANGLE_INSTANCED_ARRAYS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_INSTANCED_ARRAYS)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_INSTANCED_ARRAYS)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_INSTANCED_ARRAYS
+#endif
+
+#if (defined(GL_ANGLE_INSTANCED_ARRAYS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_INSTANCED_ARRAYS)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_INSTANCED_ARRAYS)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_INSTANCED_ARRAYS
+#endif
+
+#if (defined(GL_ANGLE_INSTANCED_ARRAYS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_INSTANCED_ARRAYS)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_INSTANCED_ARRAYS)
+#define REGAL_NO_DECLARATION_GL_ANGLE_INSTANCED_ARRAYS
+#endif
+
+#ifndef GL_ANGLE_instanced_arrays
+#define GL_ANGLE_instanced_arrays 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_INSTANCED_ARRAYS
+#define GL_VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE 0x88fe /* 35070 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_ANGLE_INSTANCED_ARRAYS
+typedef void (REGAL_CALL *PFNGLDRAWARRAYSINSTANCEDANGLEPROC)(GLenum mode, GLint first, GLsizei count, GLsizei primcount);
+typedef void (REGAL_CALL *PFNGLDRAWELEMENTSINSTANCEDANGLEPROC)(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount);
+typedef void (REGAL_CALL *PFNGLVERTEXATTRIBDIVISORANGLEPROC)(GLuint index, GLuint divisor);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_ANGLE_INSTANCED_ARRAYS
+#define glDrawArraysInstancedANGLE          rglDrawArraysInstancedANGLE
+#define glDrawElementsInstancedANGLE        rglDrawElementsInstancedANGLE
+#define glVertexAttribDivisorANGLE          rglVertexAttribDivisorANGLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_ANGLE_INSTANCED_ARRAYS
+REGAL_DECL void REGAL_CALL glDrawArraysInstancedANGLE(GLenum mode, GLint first, GLsizei count, GLsizei primcount);
+REGAL_DECL void REGAL_CALL glDrawElementsInstancedANGLE(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount);
+REGAL_DECL void REGAL_CALL glVertexAttribDivisorANGLE(GLuint index, GLuint divisor);
+#endif
+
+/**
+ ** GL_ANGLE_pack_reverse_row_order
+ **/
+
+#if (defined(GL_ANGLE_PACK_REVERSE_ROW_ORDER) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_PACK_REVERSE_ROW_ORDER)) && !defined(REGAL_NO_ENUM_GL_ANGLE_PACK_REVERSE_ROW_ORDER)
+#define REGAL_NO_ENUM_GL_ANGLE_PACK_REVERSE_ROW_ORDER
+#endif
+
+#if (defined(GL_ANGLE_PACK_REVERSE_ROW_ORDER) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_PACK_REVERSE_ROW_ORDER)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_PACK_REVERSE_ROW_ORDER)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_PACK_REVERSE_ROW_ORDER
+#endif
+
+#if (defined(GL_ANGLE_PACK_REVERSE_ROW_ORDER) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_PACK_REVERSE_ROW_ORDER)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_PACK_REVERSE_ROW_ORDER)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_PACK_REVERSE_ROW_ORDER
+#endif
+
+#if (defined(GL_ANGLE_PACK_REVERSE_ROW_ORDER) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_PACK_REVERSE_ROW_ORDER)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_PACK_REVERSE_ROW_ORDER)
+#define REGAL_NO_DECLARATION_GL_ANGLE_PACK_REVERSE_ROW_ORDER
+#endif
+
+#ifndef GL_ANGLE_pack_reverse_row_order
+#define GL_ANGLE_pack_reverse_row_order 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_PACK_REVERSE_ROW_ORDER
+#define GL_PACK_REVERSE_ROW_ORDER_ANGLE 0x93a4 /* 37796 */
+#endif
+
+/**
+ ** GL_ANGLE_texture_compression_dxt5
+ **/
+
+#if (defined(GL_ANGLE_TEXTURE_COMPRESSION_DXT5) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)) && !defined(REGAL_NO_ENUM_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)
+#define REGAL_NO_ENUM_GL_ANGLE_TEXTURE_COMPRESSION_DXT5
+#endif
+
+#if (defined(GL_ANGLE_TEXTURE_COMPRESSION_DXT5) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_TEXTURE_COMPRESSION_DXT5
+#endif
+
+#if (defined(GL_ANGLE_TEXTURE_COMPRESSION_DXT5) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_TEXTURE_COMPRESSION_DXT5
+#endif
+
+#if (defined(GL_ANGLE_TEXTURE_COMPRESSION_DXT5) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_TEXTURE_COMPRESSION_DXT5)
+#define REGAL_NO_DECLARATION_GL_ANGLE_TEXTURE_COMPRESSION_DXT5
+#endif
+
+#ifndef GL_ANGLE_texture_compression_dxt5
+#define GL_ANGLE_texture_compression_dxt5 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_TEXTURE_COMPRESSION_DXT5
+#define GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE 0x83f2     /* 33778 */
+#define GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE 0x83f2     /* 33778 */
+#define GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE 0x83f3     /* 33779 */
+#define GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE 0x83f3     /* 33779 */
+#endif
+
+/**
+ ** GL_ANGLE_texture_usage
+ **/
+
+#if (defined(GL_ANGLE_TEXTURE_USAGE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_TEXTURE_USAGE)) && !defined(REGAL_NO_ENUM_GL_ANGLE_TEXTURE_USAGE)
+#define REGAL_NO_ENUM_GL_ANGLE_TEXTURE_USAGE
+#endif
+
+#if (defined(GL_ANGLE_TEXTURE_USAGE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_TEXTURE_USAGE)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_TEXTURE_USAGE)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_TEXTURE_USAGE
+#endif
+
+#if (defined(GL_ANGLE_TEXTURE_USAGE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_TEXTURE_USAGE)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_TEXTURE_USAGE)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_TEXTURE_USAGE
+#endif
+
+#if (defined(GL_ANGLE_TEXTURE_USAGE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_TEXTURE_USAGE)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_TEXTURE_USAGE)
+#define REGAL_NO_DECLARATION_GL_ANGLE_TEXTURE_USAGE
+#endif
+
+#ifndef GL_ANGLE_texture_usage
+#define GL_ANGLE_texture_usage 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_TEXTURE_USAGE
+#define GL_NONE                         0x0
+#define GL_TEXTURE_USAGE_ANGLE          0x93a2     /* 37794 */
+#define GL_FRAMEBUFFER_ATTACHMENT_ANGLE 0x93a3     /* 37795 */
+#endif
+
+/**
+ ** GL_ANGLE_translated_shader_source
+ **/
+
+#if (defined(GL_ANGLE_TRANSLATED_SHADER_SOURCE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ANGLE_TRANSLATED_SHADER_SOURCE)) && !defined(REGAL_NO_ENUM_GL_ANGLE_TRANSLATED_SHADER_SOURCE)
+#define REGAL_NO_ENUM_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+#endif
+
+#if (defined(GL_ANGLE_TRANSLATED_SHADER_SOURCE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ANGLE_TRANSLATED_SHADER_SOURCE)) && !defined(REGAL_NO_TYPEDEF_GL_ANGLE_TRANSLATED_SHADER_SOURCE)
+#define REGAL_NO_TYPEDEF_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+#endif
+
+#if (defined(GL_ANGLE_TRANSLATED_SHADER_SOURCE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ANGLE_TRANSLATED_SHADER_SOURCE)) && !defined(REGAL_NO_NAMESPACE_GL_ANGLE_TRANSLATED_SHADER_SOURCE)
+#define REGAL_NO_NAMESPACE_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+#endif
+
+#if (defined(GL_ANGLE_TRANSLATED_SHADER_SOURCE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ANGLE_TRANSLATED_SHADER_SOURCE)) && !defined(REGAL_NO_DECLARATION_GL_ANGLE_TRANSLATED_SHADER_SOURCE)
+#define REGAL_NO_DECLARATION_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+#endif
+
+#ifndef GL_ANGLE_translated_shader_source
+#define GL_ANGLE_translated_shader_source 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+#define GL_TRANSLATED_SHADER_SOURCE_LENGTH_ANGLE 0x93a0 /* 37792 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+typedef void (REGAL_CALL *PFNGLGETTRANSLATEDSHADERSOURCEANGLEPROC)(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+#define glGetTranslatedShaderSourceANGLE    rglGetTranslatedShaderSourceANGLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_ANGLE_TRANSLATED_SHADER_SOURCE
+REGAL_DECL void REGAL_CALL glGetTranslatedShaderSourceANGLE(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source);
+#endif
+
+/**
  ** GL_APPLE_aux_depth_stencil
  **/
 
@@ -1114,6 +1461,42 @@ REGAL_DECL void REGAL_CALL glTessellationModeAMD(GLenum mode);
 
 #ifndef REGAL_NO_ENUM_GL_APPLE_CLIENT_STORAGE
 #define GL_UNPACK_CLIENT_STORAGE_APPLE 0x85b2 /* 34226 */
+#endif
+
+/**
+ ** GL_APPLE_copy_texture_levels
+ **/
+
+#if (defined(GL_APPLE_COPY_TEXTURE_LEVELS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_APPLE_COPY_TEXTURE_LEVELS)) && !defined(REGAL_NO_ENUM_GL_APPLE_COPY_TEXTURE_LEVELS)
+#define REGAL_NO_ENUM_GL_APPLE_COPY_TEXTURE_LEVELS
+#endif
+
+#if (defined(GL_APPLE_COPY_TEXTURE_LEVELS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_APPLE_COPY_TEXTURE_LEVELS)) && !defined(REGAL_NO_TYPEDEF_GL_APPLE_COPY_TEXTURE_LEVELS)
+#define REGAL_NO_TYPEDEF_GL_APPLE_COPY_TEXTURE_LEVELS
+#endif
+
+#if (defined(GL_APPLE_COPY_TEXTURE_LEVELS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_APPLE_COPY_TEXTURE_LEVELS)) && !defined(REGAL_NO_NAMESPACE_GL_APPLE_COPY_TEXTURE_LEVELS)
+#define REGAL_NO_NAMESPACE_GL_APPLE_COPY_TEXTURE_LEVELS
+#endif
+
+#if (defined(GL_APPLE_COPY_TEXTURE_LEVELS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_APPLE_COPY_TEXTURE_LEVELS)) && !defined(REGAL_NO_DECLARATION_GL_APPLE_COPY_TEXTURE_LEVELS)
+#define REGAL_NO_DECLARATION_GL_APPLE_COPY_TEXTURE_LEVELS
+#endif
+
+#ifndef GL_APPLE_copy_texture_levels
+#define GL_APPLE_copy_texture_levels 1
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_APPLE_COPY_TEXTURE_LEVELS
+typedef void (REGAL_CALL *PFNGLCOPYTEXTURELEVELSAPPLEPROC)(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_APPLE_COPY_TEXTURE_LEVELS
+#define glCopyTextureLevelsAPPLE            rglCopyTextureLevelsAPPLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_APPLE_COPY_TEXTURE_LEVELS
+REGAL_DECL void REGAL_CALL glCopyTextureLevelsAPPLE(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount);
 #endif
 
 /**
@@ -1360,6 +1743,55 @@ REGAL_DECL void REGAL_CALL glSwapAPPLE(void);
 #endif
 
 /**
+ ** GL_APPLE_framebuffer_multisample
+ **/
+
+#if (defined(GL_APPLE_FRAMEBUFFER_MULTISAMPLE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_ENUM_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_ENUM_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#if (defined(GL_APPLE_FRAMEBUFFER_MULTISAMPLE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_TYPEDEF_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_TYPEDEF_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#if (defined(GL_APPLE_FRAMEBUFFER_MULTISAMPLE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_NAMESPACE_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_NAMESPACE_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#if (defined(GL_APPLE_FRAMEBUFFER_MULTISAMPLE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)) && !defined(REGAL_NO_DECLARATION_GL_APPLE_FRAMEBUFFER_MULTISAMPLE)
+#define REGAL_NO_DECLARATION_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+#endif
+
+#ifndef GL_APPLE_framebuffer_multisample
+#define GL_APPLE_framebuffer_multisample 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+#define GL_DRAW_FRAMEBUFFER_BINDING_APPLE           0x8ca6     /* 36006 */
+#define GL_READ_FRAMEBUFFER_APPLE                   0x8ca8     /* 36008 */
+#define GL_DRAW_FRAMEBUFFER_APPLE                   0x8ca9     /* 36009 */
+#define GL_READ_FRAMEBUFFER_BINDING_APPLE           0x8caa     /* 36010 */
+#define GL_RENDERBUFFER_SAMPLES_APPLE               0x8cab     /* 36011 */
+#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_APPLE 0x8d56     /* 36182 */
+#define GL_MAX_SAMPLES_APPLE                        0x8d57     /* 36183 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+typedef void (REGAL_CALL *PFNGLRENDERBUFFERSTORAGEMULTISAMPLEAPPLEPROC)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+typedef void (REGAL_CALL *PFNGLRESOLVEMULTISAMPLEFRAMEBUFFERAPPLEPROC)(void);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+#define glRenderbufferStorageMultisampleAPPLE rglRenderbufferStorageMultisampleAPPLE
+#define glResolveMultisampleFramebufferAPPLE rglResolveMultisampleFramebufferAPPLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_APPLE_FRAMEBUFFER_MULTISAMPLE
+REGAL_DECL void REGAL_CALL glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+REGAL_DECL void REGAL_CALL glResolveMultisampleFramebufferAPPLE(void);
+#endif
+
+/**
  ** GL_APPLE_object_purgeable
  **/
 
@@ -1521,6 +1953,107 @@ REGAL_DECL void REGAL_CALL glGetObjectParameterivAPPLE(GLenum objectType, GLuint
 
 #ifndef REGAL_NO_ENUM_GL_APPLE_SPECULAR_VECTOR
 #define GL_LIGHT_MODEL_SPECULAR_VECTOR_APPLE 0x85b0 /* 34224 */
+#endif
+
+/**
+ ** GL_APPLE_sync
+ **/
+
+#if (defined(GL_APPLE_SYNC) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_APPLE_SYNC)) && !defined(REGAL_NO_ENUM_GL_APPLE_SYNC)
+#define REGAL_NO_ENUM_GL_APPLE_SYNC
+#endif
+
+#if (defined(GL_APPLE_SYNC) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_APPLE_SYNC)) && !defined(REGAL_NO_TYPEDEF_GL_APPLE_SYNC)
+#define REGAL_NO_TYPEDEF_GL_APPLE_SYNC
+#endif
+
+#if (defined(GL_APPLE_SYNC) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_APPLE_SYNC)) && !defined(REGAL_NO_NAMESPACE_GL_APPLE_SYNC)
+#define REGAL_NO_NAMESPACE_GL_APPLE_SYNC
+#endif
+
+#if (defined(GL_APPLE_SYNC) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_APPLE_SYNC)) && !defined(REGAL_NO_DECLARATION_GL_APPLE_SYNC)
+#define REGAL_NO_DECLARATION_GL_APPLE_SYNC
+#endif
+
+#ifndef GL_APPLE_sync
+#define GL_APPLE_sync 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_APPLE_SYNC
+#define GL_SYNC_FLUSH_COMMANDS_BIT_APPLE    0x1
+#define GL_SYNC_OBJECT_APPLE                0x8a53                 /* 35411 */
+#define GL_MAX_SERVER_WAIT_TIMEOUT_APPLE    0x9111                 /* 37137 */
+#define GL_OBJECT_TYPE_APPLE                0x9112                 /* 37138 */
+#define GL_SYNC_CONDITION_APPLE             0x9113                 /* 37139 */
+#define GL_SYNC_STATUS_APPLE                0x9114                 /* 37140 */
+#define GL_SYNC_FLAGS_APPLE                 0x9115                 /* 37141 */
+#define GL_SYNC_FENCE_APPLE                 0x9116                 /* 37142 */
+#define GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE 0x9117                 /* 37143 */
+#define GL_UNSIGNALED_APPLE                 0x9118                 /* 37144 */
+#define GL_SIGNALED_APPLE                   0x9119                 /* 37145 */
+#define GL_ALREADY_SIGNALED_APPLE           0x911a                 /* 37146 */
+#define GL_TIMEOUT_EXPIRED_APPLE            0x911b                 /* 37147 */
+#define GL_CONDITION_SATISFIED_APPLE        0x911c                 /* 37148 */
+#define GL_WAIT_FAILED_APPLE                0x911d                 /* 37149 */
+#define GL_TIMEOUT_IGNORED_APPLE            0xffffffffffffffff     /* 18446744073709551615 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_APPLE_SYNC
+typedef GLboolean (REGAL_CALL *PFNGLISSYNCAPPLEPROC)(GLsync sync);
+typedef GLenum (REGAL_CALL *PFNGLCLIENTWAITSYNCAPPLEPROC)(GLsync sync, GLbitfield flags, GLuint64 timeout);
+typedef GLsync (REGAL_CALL *PFNGLFENCESYNCAPPLEPROC)(GLenum condition, GLbitfield flags);
+typedef void (REGAL_CALL *PFNGLDELETESYNCAPPLEPROC)(GLsync sync);
+typedef void (REGAL_CALL *PFNGLGETINTEGER64VAPPLEPROC)(GLenum pname, GLint64 *params);
+typedef void (REGAL_CALL *PFNGLGETSYNCIVAPPLEPROC)(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values);
+typedef void (REGAL_CALL *PFNGLWAITSYNCAPPLEPROC)(GLsync sync, GLbitfield flags, GLuint64 timeout);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_APPLE_SYNC
+#define glClientWaitSyncAPPLE               rglClientWaitSyncAPPLE
+#define glDeleteSyncAPPLE                   rglDeleteSyncAPPLE
+#define glFenceSyncAPPLE                    rglFenceSyncAPPLE
+#define glGetInteger64vAPPLE                rglGetInteger64vAPPLE
+#define glGetSyncivAPPLE                    rglGetSyncivAPPLE
+#define glIsSyncAPPLE                       rglIsSyncAPPLE
+#define glWaitSyncAPPLE                     rglWaitSyncAPPLE
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_APPLE_SYNC
+REGAL_DECL GLboolean REGAL_CALL glIsSyncAPPLE(GLsync sync);
+REGAL_DECL GLenum REGAL_CALL glClientWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout);
+REGAL_DECL GLsync REGAL_CALL glFenceSyncAPPLE(GLenum condition, GLbitfield flags);
+REGAL_DECL void REGAL_CALL glDeleteSyncAPPLE(GLsync sync);
+REGAL_DECL void REGAL_CALL glGetInteger64vAPPLE(GLenum pname, GLint64 *params);
+REGAL_DECL void REGAL_CALL glGetSyncivAPPLE(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values);
+REGAL_DECL void REGAL_CALL glWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout);
+#endif
+
+/**
+ ** GL_APPLE_texture_max_level
+ **/
+
+#if (defined(GL_APPLE_TEXTURE_MAX_LEVEL) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_APPLE_TEXTURE_MAX_LEVEL)) && !defined(REGAL_NO_ENUM_GL_APPLE_TEXTURE_MAX_LEVEL)
+#define REGAL_NO_ENUM_GL_APPLE_TEXTURE_MAX_LEVEL
+#endif
+
+#if (defined(GL_APPLE_TEXTURE_MAX_LEVEL) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_APPLE_TEXTURE_MAX_LEVEL)) && !defined(REGAL_NO_TYPEDEF_GL_APPLE_TEXTURE_MAX_LEVEL)
+#define REGAL_NO_TYPEDEF_GL_APPLE_TEXTURE_MAX_LEVEL
+#endif
+
+#if (defined(GL_APPLE_TEXTURE_MAX_LEVEL) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_APPLE_TEXTURE_MAX_LEVEL)) && !defined(REGAL_NO_NAMESPACE_GL_APPLE_TEXTURE_MAX_LEVEL)
+#define REGAL_NO_NAMESPACE_GL_APPLE_TEXTURE_MAX_LEVEL
+#endif
+
+#if (defined(GL_APPLE_TEXTURE_MAX_LEVEL) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_APPLE_TEXTURE_MAX_LEVEL)) && !defined(REGAL_NO_DECLARATION_GL_APPLE_TEXTURE_MAX_LEVEL)
+#define REGAL_NO_DECLARATION_GL_APPLE_TEXTURE_MAX_LEVEL
+#endif
+
+#ifndef GL_APPLE_texture_max_level
+#define GL_APPLE_texture_max_level 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_APPLE_TEXTURE_MAX_LEVEL
+#define GL_TEXTURE_MAX_LEVEL_APPLE 0x813d /* 33085 */
 #endif
 
 /**
@@ -8098,6 +8631,62 @@ REGAL_DECL void REGAL_CALL glWindowPos3svARB(const GLshort *p);
 #endif
 
 /**
+ ** GL_ARM_mali_program_binary
+ **/
+
+#if (defined(GL_ARM_MALI_PROGRAM_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ARM_MALI_PROGRAM_BINARY)) && !defined(REGAL_NO_ENUM_GL_ARM_MALI_PROGRAM_BINARY)
+#define REGAL_NO_ENUM_GL_ARM_MALI_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_ARM_MALI_PROGRAM_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ARM_MALI_PROGRAM_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_ARM_MALI_PROGRAM_BINARY)
+#define REGAL_NO_TYPEDEF_GL_ARM_MALI_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_ARM_MALI_PROGRAM_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ARM_MALI_PROGRAM_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_ARM_MALI_PROGRAM_BINARY)
+#define REGAL_NO_NAMESPACE_GL_ARM_MALI_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_ARM_MALI_PROGRAM_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ARM_MALI_PROGRAM_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_ARM_MALI_PROGRAM_BINARY)
+#define REGAL_NO_DECLARATION_GL_ARM_MALI_PROGRAM_BINARY
+#endif
+
+#ifndef GL_ARM_mali_program_binary
+#define GL_ARM_mali_program_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ARM_MALI_PROGRAM_BINARY
+#define GL_MALI_PROGRAM_BINARY_ARM 0x8f61 /* 36705 */
+#endif
+
+/**
+ ** GL_ARM_mali_shader_binary
+ **/
+
+#if (defined(GL_ARM_MALI_SHADER_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_ARM_MALI_SHADER_BINARY)) && !defined(REGAL_NO_ENUM_GL_ARM_MALI_SHADER_BINARY)
+#define REGAL_NO_ENUM_GL_ARM_MALI_SHADER_BINARY
+#endif
+
+#if (defined(GL_ARM_MALI_SHADER_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_ARM_MALI_SHADER_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_ARM_MALI_SHADER_BINARY)
+#define REGAL_NO_TYPEDEF_GL_ARM_MALI_SHADER_BINARY
+#endif
+
+#if (defined(GL_ARM_MALI_SHADER_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_ARM_MALI_SHADER_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_ARM_MALI_SHADER_BINARY)
+#define REGAL_NO_NAMESPACE_GL_ARM_MALI_SHADER_BINARY
+#endif
+
+#if (defined(GL_ARM_MALI_SHADER_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_ARM_MALI_SHADER_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_ARM_MALI_SHADER_BINARY)
+#define REGAL_NO_DECLARATION_GL_ARM_MALI_SHADER_BINARY
+#endif
+
+#ifndef GL_ARM_mali_shader_binary
+#define GL_ARM_mali_shader_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_ARM_MALI_SHADER_BINARY
+#define GL_MALI_SHADER_BINARY_ARM 0x8f60 /* 36704 */
+#endif
+
+/**
  ** GL_ATI_draw_buffers
  **/
 
@@ -9013,6 +9602,34 @@ REGAL_DECL void REGAL_CALL glVertexStream4svATI(GLenum stream, const GLshort *co
 #endif
 
 /**
+ ** GL_DMP_shader_binary
+ **/
+
+#if (defined(GL_DMP_SHADER_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_DMP_SHADER_BINARY)) && !defined(REGAL_NO_ENUM_GL_DMP_SHADER_BINARY)
+#define REGAL_NO_ENUM_GL_DMP_SHADER_BINARY
+#endif
+
+#if (defined(GL_DMP_SHADER_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_DMP_SHADER_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_DMP_SHADER_BINARY)
+#define REGAL_NO_TYPEDEF_GL_DMP_SHADER_BINARY
+#endif
+
+#if (defined(GL_DMP_SHADER_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_DMP_SHADER_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_DMP_SHADER_BINARY)
+#define REGAL_NO_NAMESPACE_GL_DMP_SHADER_BINARY
+#endif
+
+#if (defined(GL_DMP_SHADER_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_DMP_SHADER_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_DMP_SHADER_BINARY)
+#define REGAL_NO_DECLARATION_GL_DMP_SHADER_BINARY
+#endif
+
+#ifndef GL_DMP_shader_binary
+#define GL_DMP_shader_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_DMP_SHADER_BINARY
+#define GL_SHADER_BINARY_DMP 0x9250 /* 37456 */
+#endif
+
+/**
  ** GL_EXT_422_pixels
  **/
 
@@ -9440,6 +10057,35 @@ REGAL_DECL void REGAL_CALL glBlendEquationEXT(GLenum mode);
 #endif
 
 /**
+ ** GL_EXT_color_buffer_half_float
+ **/
+
+#if (defined(GL_EXT_COLOR_BUFFER_HALF_FLOAT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_COLOR_BUFFER_HALF_FLOAT)) && !defined(REGAL_NO_ENUM_GL_EXT_COLOR_BUFFER_HALF_FLOAT)
+#define REGAL_NO_ENUM_GL_EXT_COLOR_BUFFER_HALF_FLOAT
+#endif
+
+#if (defined(GL_EXT_COLOR_BUFFER_HALF_FLOAT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_COLOR_BUFFER_HALF_FLOAT)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_COLOR_BUFFER_HALF_FLOAT)
+#define REGAL_NO_TYPEDEF_GL_EXT_COLOR_BUFFER_HALF_FLOAT
+#endif
+
+#if (defined(GL_EXT_COLOR_BUFFER_HALF_FLOAT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_COLOR_BUFFER_HALF_FLOAT)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_COLOR_BUFFER_HALF_FLOAT)
+#define REGAL_NO_NAMESPACE_GL_EXT_COLOR_BUFFER_HALF_FLOAT
+#endif
+
+#if (defined(GL_EXT_COLOR_BUFFER_HALF_FLOAT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_COLOR_BUFFER_HALF_FLOAT)) && !defined(REGAL_NO_DECLARATION_GL_EXT_COLOR_BUFFER_HALF_FLOAT)
+#define REGAL_NO_DECLARATION_GL_EXT_COLOR_BUFFER_HALF_FLOAT
+#endif
+
+#ifndef GL_EXT_color_buffer_half_float
+#define GL_EXT_color_buffer_half_float 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_COLOR_BUFFER_HALF_FLOAT
+#define GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT 0x8211     /* 33297 */
+#define GL_UNSIGNED_NORMALIZED_EXT                   0x8c17     /* 35863 */
+#endif
+
+/**
  ** GL_EXT_color_subtable
  **/
 
@@ -9824,6 +10470,54 @@ typedef void (REGAL_CALL *PFNGLCULLPARAMETERFVEXTPROC)(GLenum pname, GLfloat *pa
 #ifndef REGAL_NO_DECLARATION_GL_EXT_CULL_VERTEX
 REGAL_DECL void REGAL_CALL glCullParameterdvEXT(GLenum pname, GLdouble *params);
 REGAL_DECL void REGAL_CALL glCullParameterfvEXT(GLenum pname, GLfloat *params);
+#endif
+
+/**
+ ** GL_EXT_debug_label
+ **/
+
+#if (defined(GL_EXT_DEBUG_LABEL) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_DEBUG_LABEL)) && !defined(REGAL_NO_ENUM_GL_EXT_DEBUG_LABEL)
+#define REGAL_NO_ENUM_GL_EXT_DEBUG_LABEL
+#endif
+
+#if (defined(GL_EXT_DEBUG_LABEL) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_DEBUG_LABEL)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_DEBUG_LABEL)
+#define REGAL_NO_TYPEDEF_GL_EXT_DEBUG_LABEL
+#endif
+
+#if (defined(GL_EXT_DEBUG_LABEL) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_DEBUG_LABEL)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_DEBUG_LABEL)
+#define REGAL_NO_NAMESPACE_GL_EXT_DEBUG_LABEL
+#endif
+
+#if (defined(GL_EXT_DEBUG_LABEL) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_DEBUG_LABEL)) && !defined(REGAL_NO_DECLARATION_GL_EXT_DEBUG_LABEL)
+#define REGAL_NO_DECLARATION_GL_EXT_DEBUG_LABEL
+#endif
+
+#ifndef GL_EXT_debug_label
+#define GL_EXT_debug_label 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_DEBUG_LABEL
+#define GL_PROGRAM_PIPELINE_OBJECT_EXT 0x8a4f     /* 35407 */
+#define GL_PROGRAM_OBJECT_EXT          0x8b40     /* 35648 */
+#define GL_SHADER_OBJECT_EXT           0x8b48     /* 35656 */
+#define GL_BUFFER_OBJECT_EXT           0x9151     /* 37201 */
+#define GL_QUERY_OBJECT_EXT            0x9153     /* 37203 */
+#define GL_VERTEX_ARRAY_OBJECT_EXT     0x9154     /* 37204 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_DEBUG_LABEL
+typedef void (REGAL_CALL *PFNGLGETOBJECTLABELEXTPROC)(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label);
+typedef void (REGAL_CALL *PFNGLLABELOBJECTEXTPROC)(GLenum type, GLuint object, GLsizei length, const GLchar *label);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_DEBUG_LABEL
+#define glGetObjectLabelEXT                 rglGetObjectLabelEXT
+#define glLabelObjectEXT                    rglLabelObjectEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_DEBUG_LABEL
+REGAL_DECL void REGAL_CALL glGetObjectLabelEXT(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label);
+REGAL_DECL void REGAL_CALL glLabelObjectEXT(GLenum type, GLuint object, GLsizei length, const GLchar *label);
 #endif
 
 /**
@@ -10636,6 +11330,48 @@ REGAL_DECL void REGAL_CALL glVertexArrayTexCoordOffsetEXT(GLuint vaobj, GLuint b
 REGAL_DECL void REGAL_CALL glVertexArrayVertexAttribIOffsetEXT(GLuint vaobj, GLuint buffer, GLuint index, GLint size, GLenum type, GLsizei stride, const GLintptr offset);
 REGAL_DECL void REGAL_CALL glVertexArrayVertexAttribOffsetEXT(GLuint vaobj, GLuint buffer, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLintptr offset);
 REGAL_DECL void REGAL_CALL glVertexArrayVertexOffsetEXT(GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, const GLintptr offset);
+#endif
+
+/**
+ ** GL_EXT_discard_framebuffer
+ **/
+
+#if (defined(GL_EXT_DISCARD_FRAMEBUFFER) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_DISCARD_FRAMEBUFFER)) && !defined(REGAL_NO_ENUM_GL_EXT_DISCARD_FRAMEBUFFER)
+#define REGAL_NO_ENUM_GL_EXT_DISCARD_FRAMEBUFFER
+#endif
+
+#if (defined(GL_EXT_DISCARD_FRAMEBUFFER) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_DISCARD_FRAMEBUFFER)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_DISCARD_FRAMEBUFFER)
+#define REGAL_NO_TYPEDEF_GL_EXT_DISCARD_FRAMEBUFFER
+#endif
+
+#if (defined(GL_EXT_DISCARD_FRAMEBUFFER) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_DISCARD_FRAMEBUFFER)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_DISCARD_FRAMEBUFFER)
+#define REGAL_NO_NAMESPACE_GL_EXT_DISCARD_FRAMEBUFFER
+#endif
+
+#if (defined(GL_EXT_DISCARD_FRAMEBUFFER) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_DISCARD_FRAMEBUFFER)) && !defined(REGAL_NO_DECLARATION_GL_EXT_DISCARD_FRAMEBUFFER)
+#define REGAL_NO_DECLARATION_GL_EXT_DISCARD_FRAMEBUFFER
+#endif
+
+#ifndef GL_EXT_discard_framebuffer
+#define GL_EXT_discard_framebuffer 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_DISCARD_FRAMEBUFFER
+#define GL_COLOR_EXT   0x1800     /* 6144 */
+#define GL_DEPTH_EXT   0x1801     /* 6145 */
+#define GL_STENCIL_EXT 0x1802     /* 6146 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_DISCARD_FRAMEBUFFER
+typedef void (REGAL_CALL *PFNGLDISCARDFRAMEBUFFEREXTPROC)(GLenum target, GLsizei numAttachments, const GLenum *attachments);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_DISCARD_FRAMEBUFFER
+#define glDiscardFramebufferEXT             rglDiscardFramebufferEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_DISCARD_FRAMEBUFFER
+REGAL_DECL void REGAL_CALL glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments);
 #endif
 
 /**
@@ -11689,6 +12425,54 @@ REGAL_DECL void REGAL_CALL glTextureMaterialEXT(GLenum face, GLenum mode);
 #endif
 
 /**
+ ** GL_EXT_map_buffer_range
+ **/
+
+#if (defined(GL_EXT_MAP_BUFFER_RANGE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_MAP_BUFFER_RANGE)) && !defined(REGAL_NO_ENUM_GL_EXT_MAP_BUFFER_RANGE)
+#define REGAL_NO_ENUM_GL_EXT_MAP_BUFFER_RANGE
+#endif
+
+#if (defined(GL_EXT_MAP_BUFFER_RANGE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_MAP_BUFFER_RANGE)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_MAP_BUFFER_RANGE)
+#define REGAL_NO_TYPEDEF_GL_EXT_MAP_BUFFER_RANGE
+#endif
+
+#if (defined(GL_EXT_MAP_BUFFER_RANGE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_MAP_BUFFER_RANGE)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_MAP_BUFFER_RANGE)
+#define REGAL_NO_NAMESPACE_GL_EXT_MAP_BUFFER_RANGE
+#endif
+
+#if (defined(GL_EXT_MAP_BUFFER_RANGE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_MAP_BUFFER_RANGE)) && !defined(REGAL_NO_DECLARATION_GL_EXT_MAP_BUFFER_RANGE)
+#define REGAL_NO_DECLARATION_GL_EXT_MAP_BUFFER_RANGE
+#endif
+
+#ifndef GL_EXT_map_buffer_range
+#define GL_EXT_map_buffer_range 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_MAP_BUFFER_RANGE
+#define GL_MAP_READ_BIT_EXT              0x1
+#define GL_MAP_FLUSH_EXPLICIT_BIT_EXT    0x10     /* 16 */
+#define GL_MAP_WRITE_BIT_EXT             0x2
+#define GL_MAP_UNSYNCHRONIZED_BIT_EXT    0x20     /* 32 */
+#define GL_MAP_INVALIDATE_RANGE_BIT_EXT  0x4
+#define GL_MAP_INVALIDATE_BUFFER_BIT_EXT 0x8
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_MAP_BUFFER_RANGE
+typedef GLvoid *(REGAL_CALL *PFNGLMAPBUFFERRANGEEXTPROC)(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+typedef void (REGAL_CALL *PFNGLFLUSHMAPPEDBUFFERRANGEEXTPROC)(GLenum target, GLintptr offset, GLsizeiptr length);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_MAP_BUFFER_RANGE
+#define glFlushMappedBufferRangeEXT         rglFlushMappedBufferRangeEXT
+#define glMapBufferRangeEXT                 rglMapBufferRangeEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_MAP_BUFFER_RANGE
+REGAL_DECL GLvoid *REGAL_CALL glMapBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+REGAL_DECL void REGAL_CALL glFlushMappedBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length);
+#endif
+
+/**
  ** GL_EXT_multi_draw_arrays
  **/
 
@@ -11784,6 +12568,161 @@ typedef void (REGAL_CALL *PFNGLSAMPLEPATTERNEXTPROC)(GLenum pattern);
 #ifndef REGAL_NO_DECLARATION_GL_EXT_MULTISAMPLE
 REGAL_DECL void REGAL_CALL glSampleMaskEXT(GLclampf value, GLboolean invert);
 REGAL_DECL void REGAL_CALL glSamplePatternEXT(GLenum pattern);
+#endif
+
+/**
+ ** GL_EXT_multisampled_render_to_texture
+ **/
+
+#if (defined(GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_ENUM_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#if (defined(GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#if (defined(GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#if (defined(GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#ifndef GL_EXT_multisampled_render_to_texture
+#define GL_EXT_multisampled_render_to_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+#define GL_RENDERBUFFER_SAMPLES_EXT                   0x8cab     /* 36011 */
+#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT     0x8d56     /* 36182 */
+#define GL_MAX_SAMPLES_EXT                            0x8d57     /* 36183 */
+#define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT 0x8d6c     /* 36204 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+typedef void (REGAL_CALL *PFNGLFRAMEBUFFERTEXTURE2DMULTISAMPLEEXTPROC)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+#define glFramebufferTexture2DMultisampleEXT rglFramebufferTexture2DMultisampleEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_MULTISAMPLED_RENDER_TO_TEXTURE
+REGAL_DECL void REGAL_CALL glFramebufferTexture2DMultisampleEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
+#endif
+
+/**
+ ** GL_EXT_multiview_draw_buffers
+ **/
+
+#if (defined(GL_EXT_MULTIVIEW_DRAW_BUFFERS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_MULTIVIEW_DRAW_BUFFERS)) && !defined(REGAL_NO_ENUM_GL_EXT_MULTIVIEW_DRAW_BUFFERS)
+#define REGAL_NO_ENUM_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+#endif
+
+#if (defined(GL_EXT_MULTIVIEW_DRAW_BUFFERS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_MULTIVIEW_DRAW_BUFFERS)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_MULTIVIEW_DRAW_BUFFERS)
+#define REGAL_NO_TYPEDEF_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+#endif
+
+#if (defined(GL_EXT_MULTIVIEW_DRAW_BUFFERS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_MULTIVIEW_DRAW_BUFFERS)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_MULTIVIEW_DRAW_BUFFERS)
+#define REGAL_NO_NAMESPACE_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+#endif
+
+#if (defined(GL_EXT_MULTIVIEW_DRAW_BUFFERS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_MULTIVIEW_DRAW_BUFFERS)) && !defined(REGAL_NO_DECLARATION_GL_EXT_MULTIVIEW_DRAW_BUFFERS)
+#define REGAL_NO_DECLARATION_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+#endif
+
+#ifndef GL_EXT_multiview_draw_buffers
+#define GL_EXT_multiview_draw_buffers 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+#define GL_COLOR_ATTACHMENT_EXT      0x90f0     /* 37104 */
+#define GL_MULTIVIEW_EXT             0x90f1     /* 37105 */
+#define GL_MAX_MULTIVIEW_BUFFERS_EXT 0x90f2     /* 37106 */
+#define GL_DRAW_BUFFER_EXT           0xc01      /* 3073 */
+#define GL_READ_BUFFER_EXT           0xc02      /* 3074 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+typedef void (REGAL_CALL *PFNGLDRAWBUFFERSINDEXEDEXTPROC)(GLint n, const GLenum *location, const GLint *indices);
+typedef void (REGAL_CALL *PFNGLGETINTEGERI_VEXTPROC)(GLenum target, GLuint index, GLint *data);
+typedef void (REGAL_CALL *PFNGLREADBUFFERINDEXEDEXTPROC)(GLenum src, GLint index);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+#define glDrawBuffersIndexedEXT             rglDrawBuffersIndexedEXT
+#define glGetIntegeri_vEXT                  rglGetIntegeri_vEXT
+#define glReadBufferIndexedEXT              rglReadBufferIndexedEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_MULTIVIEW_DRAW_BUFFERS
+REGAL_DECL void REGAL_CALL glDrawBuffersIndexedEXT(GLint n, const GLenum *location, const GLint *indices);
+REGAL_DECL void REGAL_CALL glGetIntegeri_vEXT(GLenum target, GLuint index, GLint *data);
+REGAL_DECL void REGAL_CALL glReadBufferIndexedEXT(GLenum src, GLint index);
+#endif
+
+/**
+ ** GL_EXT_occlusion_query_boolean
+ **/
+
+#if (defined(GL_EXT_OCCLUSION_QUERY_BOOLEAN) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_OCCLUSION_QUERY_BOOLEAN)) && !defined(REGAL_NO_ENUM_GL_EXT_OCCLUSION_QUERY_BOOLEAN)
+#define REGAL_NO_ENUM_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+#endif
+
+#if (defined(GL_EXT_OCCLUSION_QUERY_BOOLEAN) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_OCCLUSION_QUERY_BOOLEAN)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_OCCLUSION_QUERY_BOOLEAN)
+#define REGAL_NO_TYPEDEF_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+#endif
+
+#if (defined(GL_EXT_OCCLUSION_QUERY_BOOLEAN) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_OCCLUSION_QUERY_BOOLEAN)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_OCCLUSION_QUERY_BOOLEAN)
+#define REGAL_NO_NAMESPACE_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+#endif
+
+#if (defined(GL_EXT_OCCLUSION_QUERY_BOOLEAN) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_OCCLUSION_QUERY_BOOLEAN)) && !defined(REGAL_NO_DECLARATION_GL_EXT_OCCLUSION_QUERY_BOOLEAN)
+#define REGAL_NO_DECLARATION_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+#endif
+
+#ifndef GL_EXT_occlusion_query_boolean
+#define GL_EXT_occlusion_query_boolean 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+#define GL_CURRENT_QUERY_EXT                   0x8865     /* 34917 */
+#define GL_QUERY_RESULT_EXT                    0x8866     /* 34918 */
+#define GL_QUERY_RESULT_AVAILABLE_EXT          0x8867     /* 34919 */
+#define GL_ANY_SAMPLES_PASSED_EXT              0x8c2f     /* 35887 */
+#define GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT 0x8d6a     /* 36202 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+typedef GLboolean (REGAL_CALL *PFNGLISQUERYEXTPROC)(GLuint id);
+typedef void (REGAL_CALL *PFNGLBEGINQUERYEXTPROC)(GLenum target, GLuint id);
+typedef void (REGAL_CALL *PFNGLDELETEQUERIESEXTPROC)(GLsizei n, const GLuint *ids);
+typedef void (REGAL_CALL *PFNGLENDQUERYEXTPROC)(GLenum target);
+typedef void (REGAL_CALL *PFNGLGENQUERIESEXTPROC)(GLsizei n, GLuint *ids);
+typedef void (REGAL_CALL *PFNGLGETQUERYIVEXTPROC)(GLenum target, GLenum pname, GLint *params);
+typedef void (REGAL_CALL *PFNGLGETQUERYOBJECTUIVEXTPROC)(GLuint id, GLenum pname, GLuint *params);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+#define glBeginQueryEXT                     rglBeginQueryEXT
+#define glDeleteQueriesEXT                  rglDeleteQueriesEXT
+#define glEndQueryEXT                       rglEndQueryEXT
+#define glGenQueriesEXT                     rglGenQueriesEXT
+#define glGetQueryObjectuivEXT              rglGetQueryObjectuivEXT
+#define glGetQueryivEXT                     rglGetQueryivEXT
+#define glIsQueryEXT                        rglIsQueryEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_OCCLUSION_QUERY_BOOLEAN
+REGAL_DECL GLboolean REGAL_CALL glIsQueryEXT(GLuint id);
+REGAL_DECL void REGAL_CALL glBeginQueryEXT(GLenum target, GLuint id);
+REGAL_DECL void REGAL_CALL glDeleteQueriesEXT(GLsizei n, const GLuint *ids);
+REGAL_DECL void REGAL_CALL glEndQueryEXT(GLenum target);
+REGAL_DECL void REGAL_CALL glGenQueriesEXT(GLsizei n, GLuint *ids);
+REGAL_DECL void REGAL_CALL glGetQueryObjectuivEXT(GLuint id, GLenum pname, GLuint *params);
+REGAL_DECL void REGAL_CALL glGetQueryivEXT(GLenum target, GLenum pname, GLint *params);
 #endif
 
 /**
@@ -12172,6 +13111,35 @@ REGAL_DECL void REGAL_CALL glProvokingVertexEXT(GLenum mode);
 #endif
 
 /**
+ ** GL_EXT_read_format_bgra
+ **/
+
+#if (defined(GL_EXT_READ_FORMAT_BGRA) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_READ_FORMAT_BGRA)) && !defined(REGAL_NO_ENUM_GL_EXT_READ_FORMAT_BGRA)
+#define REGAL_NO_ENUM_GL_EXT_READ_FORMAT_BGRA
+#endif
+
+#if (defined(GL_EXT_READ_FORMAT_BGRA) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_READ_FORMAT_BGRA)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_READ_FORMAT_BGRA)
+#define REGAL_NO_TYPEDEF_GL_EXT_READ_FORMAT_BGRA
+#endif
+
+#if (defined(GL_EXT_READ_FORMAT_BGRA) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_READ_FORMAT_BGRA)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_READ_FORMAT_BGRA)
+#define REGAL_NO_NAMESPACE_GL_EXT_READ_FORMAT_BGRA
+#endif
+
+#if (defined(GL_EXT_READ_FORMAT_BGRA) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_READ_FORMAT_BGRA)) && !defined(REGAL_NO_DECLARATION_GL_EXT_READ_FORMAT_BGRA)
+#define REGAL_NO_DECLARATION_GL_EXT_READ_FORMAT_BGRA
+#endif
+
+#ifndef GL_EXT_read_format_bgra
+#define GL_EXT_read_format_bgra 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_READ_FORMAT_BGRA
+#define GL_UNSIGNED_SHORT_4_4_4_4_REV_EXT 0x8365     /* 33637 */
+#define GL_UNSIGNED_SHORT_1_5_5_5_REV_EXT 0x8366     /* 33638 */
+#endif
+
+/**
  ** GL_EXT_rescale_normal
  **/
 
@@ -12197,6 +13165,90 @@ REGAL_DECL void REGAL_CALL glProvokingVertexEXT(GLenum mode);
 
 #ifndef REGAL_NO_ENUM_GL_EXT_RESCALE_NORMAL
 #define GL_RESCALE_NORMAL_EXT 0x803a /* 32826 */
+#endif
+
+/**
+ ** GL_EXT_robustness
+ **/
+
+#if (defined(GL_EXT_ROBUSTNESS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_ROBUSTNESS)) && !defined(REGAL_NO_ENUM_GL_EXT_ROBUSTNESS)
+#define REGAL_NO_ENUM_GL_EXT_ROBUSTNESS
+#endif
+
+#if (defined(GL_EXT_ROBUSTNESS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_ROBUSTNESS)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_ROBUSTNESS)
+#define REGAL_NO_TYPEDEF_GL_EXT_ROBUSTNESS
+#endif
+
+#if (defined(GL_EXT_ROBUSTNESS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_ROBUSTNESS)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_ROBUSTNESS)
+#define REGAL_NO_NAMESPACE_GL_EXT_ROBUSTNESS
+#endif
+
+#if (defined(GL_EXT_ROBUSTNESS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_ROBUSTNESS)) && !defined(REGAL_NO_DECLARATION_GL_EXT_ROBUSTNESS)
+#define REGAL_NO_DECLARATION_GL_EXT_ROBUSTNESS
+#endif
+
+#ifndef GL_EXT_robustness
+#define GL_EXT_robustness 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_ROBUSTNESS
+#define GL_NO_ERROR                        0x0
+#define GL_LOSE_CONTEXT_ON_RESET_EXT       0x8252     /* 33362 */
+#define GL_GUILTY_CONTEXT_RESET_EXT        0x8253     /* 33363 */
+#define GL_INNOCENT_CONTEXT_RESET_EXT      0x8254     /* 33364 */
+#define GL_UNKNOWN_CONTEXT_RESET_EXT       0x8255     /* 33365 */
+#define GL_RESET_NOTIFICATION_STRATEGY_EXT 0x8256     /* 33366 */
+#define GL_NO_RESET_NOTIFICATION_EXT       0x8261     /* 33377 */
+#define GL_CONTEXT_ROBUST_ACCESS_EXT       0x90f3     /* 37107 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_ROBUSTNESS
+typedef void (REGAL_CALL *PFNGLGETNUNIFORMFVEXTPROC)(GLuint program, GLint location, GLsizei bufSize, GLfloat *params);
+typedef void (REGAL_CALL *PFNGLGETNUNIFORMIVEXTPROC)(GLuint program, GLint location, GLsizei bufSize, GLint *params);
+typedef void (REGAL_CALL *PFNGLREADNPIXELSEXTPROC)(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_ROBUSTNESS
+#define glGetnUniformfvEXT                  rglGetnUniformfvEXT
+#define glGetnUniformivEXT                  rglGetnUniformivEXT
+#define glReadnPixelsEXT                    rglReadnPixelsEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_ROBUSTNESS
+REGAL_DECL void REGAL_CALL glGetnUniformfvEXT(GLuint program, GLint location, GLsizei bufSize, GLfloat *params);
+REGAL_DECL void REGAL_CALL glGetnUniformivEXT(GLuint program, GLint location, GLsizei bufSize, GLint *params);
+REGAL_DECL void REGAL_CALL glReadnPixelsEXT(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data);
+#endif
+
+/**
+ ** GL_EXT_sRGB
+ **/
+
+#if (defined(GL_EXT_SRGB) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_SRGB)) && !defined(REGAL_NO_ENUM_GL_EXT_SRGB)
+#define REGAL_NO_ENUM_GL_EXT_SRGB
+#endif
+
+#if (defined(GL_EXT_SRGB) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_SRGB)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_SRGB)
+#define REGAL_NO_TYPEDEF_GL_EXT_SRGB
+#endif
+
+#if (defined(GL_EXT_SRGB) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_SRGB)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_SRGB)
+#define REGAL_NO_NAMESPACE_GL_EXT_SRGB
+#endif
+
+#if (defined(GL_EXT_SRGB) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_SRGB)) && !defined(REGAL_NO_DECLARATION_GL_EXT_SRGB)
+#define REGAL_NO_DECLARATION_GL_EXT_SRGB
+#endif
+
+#ifndef GL_EXT_sRGB
+#define GL_EXT_sRGB 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_SRGB
+#define GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING_EXT 0x8210     /* 33296 */
+#define GL_SRGB_EXT                                  0x8c40     /* 35904 */
+#define GL_SRGB_ALPHA_EXT                            0x8c42     /* 35906 */
+#define GL_SRGB8_ALPHA8_EXT                          0x8c43     /* 35907 */
 #endif
 
 /**
@@ -12409,6 +13461,34 @@ REGAL_DECL void REGAL_CALL glUseShaderProgramEXT(GLenum type, GLuint program);
 #endif
 
 /**
+ ** GL_EXT_shader_framebuffer_fetch
+ **/
+
+#if (defined(GL_EXT_SHADER_FRAMEBUFFER_FETCH) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_SHADER_FRAMEBUFFER_FETCH)) && !defined(REGAL_NO_ENUM_GL_EXT_SHADER_FRAMEBUFFER_FETCH)
+#define REGAL_NO_ENUM_GL_EXT_SHADER_FRAMEBUFFER_FETCH
+#endif
+
+#if (defined(GL_EXT_SHADER_FRAMEBUFFER_FETCH) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_SHADER_FRAMEBUFFER_FETCH)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_SHADER_FRAMEBUFFER_FETCH)
+#define REGAL_NO_TYPEDEF_GL_EXT_SHADER_FRAMEBUFFER_FETCH
+#endif
+
+#if (defined(GL_EXT_SHADER_FRAMEBUFFER_FETCH) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_SHADER_FRAMEBUFFER_FETCH)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_SHADER_FRAMEBUFFER_FETCH)
+#define REGAL_NO_NAMESPACE_GL_EXT_SHADER_FRAMEBUFFER_FETCH
+#endif
+
+#if (defined(GL_EXT_SHADER_FRAMEBUFFER_FETCH) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_SHADER_FRAMEBUFFER_FETCH)) && !defined(REGAL_NO_DECLARATION_GL_EXT_SHADER_FRAMEBUFFER_FETCH)
+#define REGAL_NO_DECLARATION_GL_EXT_SHADER_FRAMEBUFFER_FETCH
+#endif
+
+#ifndef GL_EXT_shader_framebuffer_fetch
+#define GL_EXT_shader_framebuffer_fetch 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_SHADER_FRAMEBUFFER_FETCH
+#define GL_FRAGMENT_SHADER_DISCARDS_SAMPLES_EXT 0x8a52 /* 35410 */
+#endif
+
+/**
  ** GL_EXT_shader_image_load_store
  **/
 
@@ -12503,6 +13583,37 @@ typedef void (REGAL_CALL *PFNGLMEMORYBARRIEREXTPROC)(GLbitfield barriers);
 #ifndef REGAL_NO_DECLARATION_GL_EXT_SHADER_IMAGE_LOAD_STORE
 REGAL_DECL void REGAL_CALL glBindImageTextureEXT(GLuint index, GLuint texture, GLint level, GLboolean layered, GLint layer, GLenum access, GLint format);
 REGAL_DECL void REGAL_CALL glMemoryBarrierEXT(GLbitfield barriers);
+#endif
+
+/**
+ ** GL_EXT_shadow_samplers
+ **/
+
+#if (defined(GL_EXT_SHADOW_SAMPLERS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_SHADOW_SAMPLERS)) && !defined(REGAL_NO_ENUM_GL_EXT_SHADOW_SAMPLERS)
+#define REGAL_NO_ENUM_GL_EXT_SHADOW_SAMPLERS
+#endif
+
+#if (defined(GL_EXT_SHADOW_SAMPLERS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_SHADOW_SAMPLERS)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_SHADOW_SAMPLERS)
+#define REGAL_NO_TYPEDEF_GL_EXT_SHADOW_SAMPLERS
+#endif
+
+#if (defined(GL_EXT_SHADOW_SAMPLERS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_SHADOW_SAMPLERS)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_SHADOW_SAMPLERS)
+#define REGAL_NO_NAMESPACE_GL_EXT_SHADOW_SAMPLERS
+#endif
+
+#if (defined(GL_EXT_SHADOW_SAMPLERS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_SHADOW_SAMPLERS)) && !defined(REGAL_NO_DECLARATION_GL_EXT_SHADOW_SAMPLERS)
+#define REGAL_NO_DECLARATION_GL_EXT_SHADOW_SAMPLERS
+#endif
+
+#ifndef GL_EXT_shadow_samplers
+#define GL_EXT_shadow_samplers 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_SHADOW_SAMPLERS
+#define GL_TEXTURE_COMPARE_MODE_EXT   0x884c     /* 34892 */
+#define GL_TEXTURE_COMPARE_FUNC_EXT   0x884d     /* 34893 */
+#define GL_COMPARE_REF_TO_TEXTURE_EXT 0x884e     /* 34894 */
+#define GL_SAMPLER_2D_SHADOW_EXT      0x8b62     /* 35682 */
 #endif
 
 /**
@@ -13161,6 +14272,36 @@ REGAL_DECL void REGAL_CALL glTexBufferEXT(GLenum target, GLenum internalformat, 
 #endif
 
 /**
+ ** GL_EXT_texture_format_BGRA8888
+ **/
+
+#if (defined(GL_EXT_TEXTURE_FORMAT_BGRA8888) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_TEXTURE_FORMAT_BGRA8888)) && !defined(REGAL_NO_ENUM_GL_EXT_TEXTURE_FORMAT_BGRA8888)
+#define REGAL_NO_ENUM_GL_EXT_TEXTURE_FORMAT_BGRA8888
+#endif
+
+#if (defined(GL_EXT_TEXTURE_FORMAT_BGRA8888) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_TEXTURE_FORMAT_BGRA8888)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_FORMAT_BGRA8888)
+#define REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_FORMAT_BGRA8888
+#endif
+
+#if (defined(GL_EXT_TEXTURE_FORMAT_BGRA8888) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_TEXTURE_FORMAT_BGRA8888)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_FORMAT_BGRA8888)
+#define REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_FORMAT_BGRA8888
+#endif
+
+#if (defined(GL_EXT_TEXTURE_FORMAT_BGRA8888) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_TEXTURE_FORMAT_BGRA8888)) && !defined(REGAL_NO_DECLARATION_GL_EXT_TEXTURE_FORMAT_BGRA8888)
+#define REGAL_NO_DECLARATION_GL_EXT_TEXTURE_FORMAT_BGRA8888
+#endif
+
+#ifndef GL_EXT_texture_format_BGRA8888
+#define GL_EXT_texture_format_BGRA8888 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_TEXTURE_FORMAT_BGRA8888
+#define GL_BGRA_EXT 0x80e1     /* 32993 */
+#define GL_BGRA_EXT 0x80e1     /* 32993 */
+#define GL_BGRA_EXT 0x80e1     /* 32993 */
+#endif
+
+/**
  ** GL_EXT_texture_integer
  **/
 
@@ -13453,6 +14594,35 @@ REGAL_DECL void REGAL_CALL glTextureNormalEXT(GLenum mode);
 #endif
 
 /**
+ ** GL_EXT_texture_rg
+ **/
+
+#if (defined(GL_EXT_TEXTURE_RG) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_TEXTURE_RG)) && !defined(REGAL_NO_ENUM_GL_EXT_TEXTURE_RG)
+#define REGAL_NO_ENUM_GL_EXT_TEXTURE_RG
+#endif
+
+#if (defined(GL_EXT_TEXTURE_RG) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_TEXTURE_RG)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_RG)
+#define REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_RG
+#endif
+
+#if (defined(GL_EXT_TEXTURE_RG) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_TEXTURE_RG)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_RG)
+#define REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_RG
+#endif
+
+#if (defined(GL_EXT_TEXTURE_RG) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_TEXTURE_RG)) && !defined(REGAL_NO_DECLARATION_GL_EXT_TEXTURE_RG)
+#define REGAL_NO_DECLARATION_GL_EXT_TEXTURE_RG
+#endif
+
+#ifndef GL_EXT_texture_rg
+#define GL_EXT_texture_rg 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_TEXTURE_RG
+#define GL_RED_EXT 0x1903     /* 6403 */
+#define GL_RG_EXT  0x8227     /* 33319 */
+#endif
+
+/**
  ** GL_EXT_texture_sRGB
  **/
 
@@ -13621,6 +14791,79 @@ REGAL_DECL void REGAL_CALL glTextureNormalEXT(GLenum mode);
 #endif
 
 /**
+ ** GL_EXT_texture_storage
+ **/
+
+#if (defined(GL_EXT_TEXTURE_STORAGE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_TEXTURE_STORAGE)) && !defined(REGAL_NO_ENUM_GL_EXT_TEXTURE_STORAGE)
+#define REGAL_NO_ENUM_GL_EXT_TEXTURE_STORAGE
+#endif
+
+#if (defined(GL_EXT_TEXTURE_STORAGE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_TEXTURE_STORAGE)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_STORAGE)
+#define REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_STORAGE
+#endif
+
+#if (defined(GL_EXT_TEXTURE_STORAGE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_TEXTURE_STORAGE)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_STORAGE)
+#define REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_STORAGE
+#endif
+
+#if (defined(GL_EXT_TEXTURE_STORAGE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_TEXTURE_STORAGE)) && !defined(REGAL_NO_DECLARATION_GL_EXT_TEXTURE_STORAGE)
+#define REGAL_NO_DECLARATION_GL_EXT_TEXTURE_STORAGE
+#endif
+
+#ifndef GL_EXT_texture_storage
+#define GL_EXT_texture_storage 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_TEXTURE_STORAGE
+#define GL_ALPHA8_EXT                   0x803c     /* 32828 */
+#define GL_LUMINANCE8_EXT               0x8040     /* 32832 */
+#define GL_LUMINANCE8_ALPHA8_EXT        0x8045     /* 32837 */
+#define GL_R8_EXT                       0x8229     /* 33321 */
+#define GL_R8_EXT                       0x8229     /* 33321 */
+#define GL_RG8_EXT                      0x822b     /* 33323 */
+#define GL_RG8_EXT                      0x822b     /* 33323 */
+#define GL_R16F_EXT                     0x822d     /* 33325 */
+#define GL_R16F_EXT                     0x822d     /* 33325 */
+#define GL_R32F_EXT                     0x822e     /* 33326 */
+#define GL_RG16F_EXT                    0x822f     /* 33327 */
+#define GL_RG16F_EXT                    0x822f     /* 33327 */
+#define GL_RG32F_EXT                    0x8230     /* 33328 */
+#define GL_RGBA32F_EXT                  0x8814     /* 34836 */
+#define GL_RGB32F_EXT                   0x8815     /* 34837 */
+#define GL_ALPHA32F_EXT                 0x8816     /* 34838 */
+#define GL_LUMINANCE32F_EXT             0x8818     /* 34840 */
+#define GL_LUMINANCE_ALPHA32F_EXT       0x8819     /* 34841 */
+#define GL_RGBA16F_EXT                  0x881a     /* 34842 */
+#define GL_RGBA16F_EXT                  0x881a     /* 34842 */
+#define GL_RGB16F_EXT                   0x881b     /* 34843 */
+#define GL_RGB16F_EXT                   0x881b     /* 34843 */
+#define GL_ALPHA16F_EXT                 0x881c     /* 34844 */
+#define GL_LUMINANCE16F_EXT             0x881e     /* 34846 */
+#define GL_LUMINANCE_ALPHA16F_EXT       0x881f     /* 34847 */
+#define GL_RGB_422_APPLE                0x8a1f     /* 35359 */
+#define GL_TEXTURE_IMMUTABLE_FORMAT_EXT 0x912f     /* 37167 */
+#define GL_BGRA8_EXT                    0x93a1     /* 37793 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_STORAGE
+typedef void (REGAL_CALL *PFNGLTEXSTORAGE1DEXTPROC)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width);
+typedef void (REGAL_CALL *PFNGLTEXSTORAGE2DEXTPROC)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
+typedef void (REGAL_CALL *PFNGLTEXSTORAGE3DEXTPROC)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_STORAGE
+#define glTexStorage1DEXT                   rglTexStorage1DEXT
+#define glTexStorage2DEXT                   rglTexStorage2DEXT
+#define glTexStorage3DEXT                   rglTexStorage3DEXT
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_EXT_TEXTURE_STORAGE
+REGAL_DECL void REGAL_CALL glTexStorage1DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width);
+REGAL_DECL void REGAL_CALL glTexStorage2DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
+REGAL_DECL void REGAL_CALL glTexStorage3DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
+#endif
+
+/**
  ** GL_EXT_texture_swizzle
  **/
 
@@ -13650,6 +14893,34 @@ REGAL_DECL void REGAL_CALL glTextureNormalEXT(GLenum mode);
 #define GL_TEXTURE_SWIZZLE_B_EXT    0x8e44     /* 36420 */
 #define GL_TEXTURE_SWIZZLE_A_EXT    0x8e45     /* 36421 */
 #define GL_TEXTURE_SWIZZLE_RGBA_EXT 0x8e46     /* 36422 */
+#endif
+
+/**
+ ** GL_EXT_texture_type_2_10_10_10_REV
+ **/
+
+#if (defined(GL_EXT_TEXTURE_TYPE_2_10_10_10_REV) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)) && !defined(REGAL_NO_ENUM_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)
+#define REGAL_NO_ENUM_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV
+#endif
+
+#if (defined(GL_EXT_TEXTURE_TYPE_2_10_10_10_REV) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)
+#define REGAL_NO_TYPEDEF_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV
+#endif
+
+#if (defined(GL_EXT_TEXTURE_TYPE_2_10_10_10_REV) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)
+#define REGAL_NO_NAMESPACE_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV
+#endif
+
+#if (defined(GL_EXT_TEXTURE_TYPE_2_10_10_10_REV) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)) && !defined(REGAL_NO_DECLARATION_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV)
+#define REGAL_NO_DECLARATION_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV
+#endif
+
+#ifndef GL_EXT_texture_type_2_10_10_10_REV
+#define GL_EXT_texture_type_2_10_10_10_REV 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_TEXTURE_TYPE_2_10_10_10_REV
+#define GL_UNSIGNED_INT_2_10_10_10_REV_EXT 0x8368 /* 33640 */
 #endif
 
 /**
@@ -13765,6 +15036,36 @@ REGAL_DECL void REGAL_CALL glBindBufferRangeEXT(GLenum target, GLuint index, GLu
 REGAL_DECL void REGAL_CALL glEndTransformFeedbackEXT(void);
 REGAL_DECL void REGAL_CALL glGetTransformFeedbackVaryingEXT(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLsizei *size, GLenum *type, GLchar *name);
 REGAL_DECL void REGAL_CALL glTransformFeedbackVaryingsEXT(GLuint program, GLsizei count, const GLchar **varyings, GLenum bufferMode);
+#endif
+
+/**
+ ** GL_EXT_unpack_subimage
+ **/
+
+#if (defined(GL_EXT_UNPACK_SUBIMAGE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_EXT_UNPACK_SUBIMAGE)) && !defined(REGAL_NO_ENUM_GL_EXT_UNPACK_SUBIMAGE)
+#define REGAL_NO_ENUM_GL_EXT_UNPACK_SUBIMAGE
+#endif
+
+#if (defined(GL_EXT_UNPACK_SUBIMAGE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_EXT_UNPACK_SUBIMAGE)) && !defined(REGAL_NO_TYPEDEF_GL_EXT_UNPACK_SUBIMAGE)
+#define REGAL_NO_TYPEDEF_GL_EXT_UNPACK_SUBIMAGE
+#endif
+
+#if (defined(GL_EXT_UNPACK_SUBIMAGE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_EXT_UNPACK_SUBIMAGE)) && !defined(REGAL_NO_NAMESPACE_GL_EXT_UNPACK_SUBIMAGE)
+#define REGAL_NO_NAMESPACE_GL_EXT_UNPACK_SUBIMAGE
+#endif
+
+#if (defined(GL_EXT_UNPACK_SUBIMAGE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_EXT_UNPACK_SUBIMAGE)) && !defined(REGAL_NO_DECLARATION_GL_EXT_UNPACK_SUBIMAGE)
+#define REGAL_NO_DECLARATION_GL_EXT_UNPACK_SUBIMAGE
+#endif
+
+#ifndef GL_EXT_unpack_subimage
+#define GL_EXT_unpack_subimage 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_EXT_UNPACK_SUBIMAGE
+#define GL_UNPACK_ROW_LENGTH  0xcf2     /* 3314 */
+#define GL_UNPACK_SKIP_ROWS   0xcf3     /* 3315 */
+#define GL_UNPACK_SKIP_PIXELS 0xcf4     /* 3316 */
 #endif
 
 /**
@@ -14315,6 +15616,34 @@ REGAL_DECL GLsync REGAL_CALL glImportSyncEXT(GLenum external_sync_type, GLintptr
 #endif
 
 /**
+ ** GL_FJ_shader_binary_GCCSO
+ **/
+
+#if (defined(GL_FJ_SHADER_BINARY_GCCSO) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_FJ_SHADER_BINARY_GCCSO)) && !defined(REGAL_NO_ENUM_GL_FJ_SHADER_BINARY_GCCSO)
+#define REGAL_NO_ENUM_GL_FJ_SHADER_BINARY_GCCSO
+#endif
+
+#if (defined(GL_FJ_SHADER_BINARY_GCCSO) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_FJ_SHADER_BINARY_GCCSO)) && !defined(REGAL_NO_TYPEDEF_GL_FJ_SHADER_BINARY_GCCSO)
+#define REGAL_NO_TYPEDEF_GL_FJ_SHADER_BINARY_GCCSO
+#endif
+
+#if (defined(GL_FJ_SHADER_BINARY_GCCSO) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_FJ_SHADER_BINARY_GCCSO)) && !defined(REGAL_NO_NAMESPACE_GL_FJ_SHADER_BINARY_GCCSO)
+#define REGAL_NO_NAMESPACE_GL_FJ_SHADER_BINARY_GCCSO
+#endif
+
+#if (defined(GL_FJ_SHADER_BINARY_GCCSO) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_FJ_SHADER_BINARY_GCCSO)) && !defined(REGAL_NO_DECLARATION_GL_FJ_SHADER_BINARY_GCCSO)
+#define REGAL_NO_DECLARATION_GL_FJ_SHADER_BINARY_GCCSO
+#endif
+
+#ifndef GL_FJ_shader_binary_GCCSO
+#define GL_FJ_shader_binary_GCCSO 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_FJ_SHADER_BINARY_GCCSO
+#define GL_GCCSO_SHADER_BINARY_FJ 0x9260 /* 37472 */
+#endif
+
+/**
  ** GL_GREMEDY_frame_terminator
  **/
 
@@ -14692,6 +16021,236 @@ REGAL_DECL void REGAL_CALL glNormalPointerListIBM(GLenum type, GLint stride, con
 REGAL_DECL void REGAL_CALL glSecondaryColorPointerListIBM(GLint size, GLenum type, GLint stride, const GLvoid **pointer, GLint ptrstride);
 REGAL_DECL void REGAL_CALL glTexCoordPointerListIBM(GLint size, GLenum type, GLint stride, const GLvoid **pointer, GLint ptrstride);
 REGAL_DECL void REGAL_CALL glVertexPointerListIBM(GLint size, GLenum type, GLint stride, const GLvoid **pointer, GLint ptrstride);
+#endif
+
+/**
+ ** GL_IMG_multisampled_render_to_texture
+ **/
+
+#if (defined(GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_ENUM_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#if (defined(GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#if (defined(GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#if (defined(GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+#endif
+
+#ifndef GL_IMG_multisampled_render_to_texture
+#define GL_IMG_multisampled_render_to_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+#define GL_RENDERBUFFER_SAMPLES_IMG               0x9133     /* 37171 */
+#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_IMG 0x9134     /* 37172 */
+#define GL_MAX_SAMPLES_IMG                        0x9135     /* 37173 */
+#define GL_TEXTURE_SAMPLES_IMG                    0x9136     /* 37174 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+typedef void (REGAL_CALL *PFNGLFRAMEBUFFERTEXTURE2DMULTISAMPLEIMGPROC)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
+typedef void (REGAL_CALL *PFNGLRENDERBUFFERSTORAGEMULTISAMPLEIMGPROC)(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+#define glFramebufferTexture2DMultisampleIMG rglFramebufferTexture2DMultisampleIMG
+#define glRenderbufferStorageMultisampleIMG rglRenderbufferStorageMultisampleIMG
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_IMG_MULTISAMPLED_RENDER_TO_TEXTURE
+REGAL_DECL void REGAL_CALL glFramebufferTexture2DMultisampleIMG(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples);
+REGAL_DECL void REGAL_CALL glRenderbufferStorageMultisampleIMG(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+#endif
+
+/**
+ ** GL_IMG_program_binary
+ **/
+
+#if (defined(GL_IMG_PROGRAM_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_PROGRAM_BINARY)) && !defined(REGAL_NO_ENUM_GL_IMG_PROGRAM_BINARY)
+#define REGAL_NO_ENUM_GL_IMG_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_IMG_PROGRAM_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_PROGRAM_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_PROGRAM_BINARY)
+#define REGAL_NO_TYPEDEF_GL_IMG_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_IMG_PROGRAM_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_PROGRAM_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_PROGRAM_BINARY)
+#define REGAL_NO_NAMESPACE_GL_IMG_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_IMG_PROGRAM_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_PROGRAM_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_IMG_PROGRAM_BINARY)
+#define REGAL_NO_DECLARATION_GL_IMG_PROGRAM_BINARY
+#endif
+
+#ifndef GL_IMG_program_binary
+#define GL_IMG_program_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_PROGRAM_BINARY
+#define GL_SGX_PROGRAM_BINARY_IMG 0x9130 /* 37168 */
+#endif
+
+/**
+ ** GL_IMG_read_format
+ **/
+
+#if (defined(GL_IMG_READ_FORMAT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_READ_FORMAT)) && !defined(REGAL_NO_ENUM_GL_IMG_READ_FORMAT)
+#define REGAL_NO_ENUM_GL_IMG_READ_FORMAT
+#endif
+
+#if (defined(GL_IMG_READ_FORMAT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_READ_FORMAT)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_READ_FORMAT)
+#define REGAL_NO_TYPEDEF_GL_IMG_READ_FORMAT
+#endif
+
+#if (defined(GL_IMG_READ_FORMAT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_READ_FORMAT)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_READ_FORMAT)
+#define REGAL_NO_NAMESPACE_GL_IMG_READ_FORMAT
+#endif
+
+#if (defined(GL_IMG_READ_FORMAT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_READ_FORMAT)) && !defined(REGAL_NO_DECLARATION_GL_IMG_READ_FORMAT)
+#define REGAL_NO_DECLARATION_GL_IMG_READ_FORMAT
+#endif
+
+#ifndef GL_IMG_read_format
+#define GL_IMG_read_format 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_READ_FORMAT
+#define GL_BGRA_IMG                       0x80e1     /* 32993 */
+#define GL_UNSIGNED_SHORT_4_4_4_4_REV_IMG 0x8365     /* 33637 */
+#endif
+
+/**
+ ** GL_IMG_shader_binary
+ **/
+
+#if (defined(GL_IMG_SHADER_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_SHADER_BINARY)) && !defined(REGAL_NO_ENUM_GL_IMG_SHADER_BINARY)
+#define REGAL_NO_ENUM_GL_IMG_SHADER_BINARY
+#endif
+
+#if (defined(GL_IMG_SHADER_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_SHADER_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_SHADER_BINARY)
+#define REGAL_NO_TYPEDEF_GL_IMG_SHADER_BINARY
+#endif
+
+#if (defined(GL_IMG_SHADER_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_SHADER_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_SHADER_BINARY)
+#define REGAL_NO_NAMESPACE_GL_IMG_SHADER_BINARY
+#endif
+
+#if (defined(GL_IMG_SHADER_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_SHADER_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_IMG_SHADER_BINARY)
+#define REGAL_NO_DECLARATION_GL_IMG_SHADER_BINARY
+#endif
+
+#ifndef GL_IMG_shader_binary
+#define GL_IMG_shader_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_SHADER_BINARY
+#define GL_SGX_BINARY_IMG 0x8c0a /* 35850 */
+#endif
+
+/**
+ ** GL_IMG_texture_compression_pvrtc
+ **/
+
+#if (defined(GL_IMG_TEXTURE_COMPRESSION_PVRTC) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_TEXTURE_COMPRESSION_PVRTC)) && !defined(REGAL_NO_ENUM_GL_IMG_TEXTURE_COMPRESSION_PVRTC)
+#define REGAL_NO_ENUM_GL_IMG_TEXTURE_COMPRESSION_PVRTC
+#endif
+
+#if (defined(GL_IMG_TEXTURE_COMPRESSION_PVRTC) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_TEXTURE_COMPRESSION_PVRTC)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_TEXTURE_COMPRESSION_PVRTC)
+#define REGAL_NO_TYPEDEF_GL_IMG_TEXTURE_COMPRESSION_PVRTC
+#endif
+
+#if (defined(GL_IMG_TEXTURE_COMPRESSION_PVRTC) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_TEXTURE_COMPRESSION_PVRTC)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_TEXTURE_COMPRESSION_PVRTC)
+#define REGAL_NO_NAMESPACE_GL_IMG_TEXTURE_COMPRESSION_PVRTC
+#endif
+
+#if (defined(GL_IMG_TEXTURE_COMPRESSION_PVRTC) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_TEXTURE_COMPRESSION_PVRTC)) && !defined(REGAL_NO_DECLARATION_GL_IMG_TEXTURE_COMPRESSION_PVRTC)
+#define REGAL_NO_DECLARATION_GL_IMG_TEXTURE_COMPRESSION_PVRTC
+#endif
+
+#ifndef GL_IMG_texture_compression_pvrtc
+#define GL_IMG_texture_compression_pvrtc 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_TEXTURE_COMPRESSION_PVRTC
+#define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG  0x8c00     /* 35840 */
+#define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG  0x8c01     /* 35841 */
+#define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG 0x8c02     /* 35842 */
+#define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG 0x8c03     /* 35843 */
+#endif
+
+/**
+ ** GL_IMG_texture_env_enhanced_fixed_function
+ **/
+
+#if (defined(GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)) && !defined(REGAL_NO_ENUM_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)
+#define REGAL_NO_ENUM_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION
+#endif
+
+#if (defined(GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)
+#define REGAL_NO_TYPEDEF_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION
+#endif
+
+#if (defined(GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)
+#define REGAL_NO_NAMESPACE_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION
+#endif
+
+#if (defined(GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)) && !defined(REGAL_NO_DECLARATION_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION)
+#define REGAL_NO_DECLARATION_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION
+#endif
+
+#ifndef GL_IMG_texture_env_enhanced_fixed_function
+#define GL_IMG_texture_env_enhanced_fixed_function 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_TEXTURE_ENV_ENHANCED_FIXED_FUNCTION
+#define GL_DOT3_RGBA_IMG               0x86af     /* 34479 */
+#define GL_MODULATE_COLOR_IMG          0x8c04     /* 35844 */
+#define GL_RECIP_ADD_SIGNED_ALPHA_IMG  0x8c05     /* 35845 */
+#define GL_TEXTURE_ALPHA_MODULATE_IMG  0x8c06     /* 35846 */
+#define GL_FACTOR_ALPHA_MODULATE_IMG   0x8c07     /* 35847 */
+#define GL_FRAGMENT_ALPHA_MODULATE_IMG 0x8c08     /* 35848 */
+#define GL_ADD_BLEND_IMG               0x8c09     /* 35849 */
+#endif
+
+/**
+ ** GL_IMG_user_clip_plane
+ **/
+
+#if (defined(GL_IMG_USER_CLIP_PLANE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_IMG_USER_CLIP_PLANE)) && !defined(REGAL_NO_ENUM_GL_IMG_USER_CLIP_PLANE)
+#define REGAL_NO_ENUM_GL_IMG_USER_CLIP_PLANE
+#endif
+
+#if (defined(GL_IMG_USER_CLIP_PLANE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_IMG_USER_CLIP_PLANE)) && !defined(REGAL_NO_TYPEDEF_GL_IMG_USER_CLIP_PLANE)
+#define REGAL_NO_TYPEDEF_GL_IMG_USER_CLIP_PLANE
+#endif
+
+#if (defined(GL_IMG_USER_CLIP_PLANE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_IMG_USER_CLIP_PLANE)) && !defined(REGAL_NO_NAMESPACE_GL_IMG_USER_CLIP_PLANE)
+#define REGAL_NO_NAMESPACE_GL_IMG_USER_CLIP_PLANE
+#endif
+
+#if (defined(GL_IMG_USER_CLIP_PLANE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_IMG_USER_CLIP_PLANE)) && !defined(REGAL_NO_DECLARATION_GL_IMG_USER_CLIP_PLANE)
+#define REGAL_NO_DECLARATION_GL_IMG_USER_CLIP_PLANE
+#endif
+
+#ifndef GL_IMG_user_clip_plane
+#define GL_IMG_user_clip_plane 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_IMG_USER_CLIP_PLANE
+#define GL_CLIP_PLANE0_IMG     0x3000     /* 12288 */
+#define GL_CLIP_PLANE1_IMG     0x3001     /* 12289 */
+#define GL_CLIP_PLANE2_IMG     0x3002     /* 12290 */
+#define GL_CLIP_PLANE3_IMG     0x3003     /* 12291 */
+#define GL_CLIP_PLANE4_IMG     0x3004     /* 12292 */
+#define GL_CLIP_PLANE5_IMG     0x3005     /* 12293 */
+#define GL_MAX_CLIP_PLANES_IMG 0xd32      /* 3378 */
 #endif
 
 /**
@@ -15617,6 +17176,58 @@ REGAL_DECL void REGAL_CALL glCopyImageSubDataNV(GLuint srcName, GLenum srcTarget
 #endif
 
 /**
+ ** GL_NV_coverage_sample
+ **/
+
+#if (defined(GL_NV_COVERAGE_SAMPLE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_NV_COVERAGE_SAMPLE)) && !defined(REGAL_NO_ENUM_GL_NV_COVERAGE_SAMPLE)
+#define REGAL_NO_ENUM_GL_NV_COVERAGE_SAMPLE
+#endif
+
+#if (defined(GL_NV_COVERAGE_SAMPLE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_NV_COVERAGE_SAMPLE)) && !defined(REGAL_NO_TYPEDEF_GL_NV_COVERAGE_SAMPLE)
+#define REGAL_NO_TYPEDEF_GL_NV_COVERAGE_SAMPLE
+#endif
+
+#if (defined(GL_NV_COVERAGE_SAMPLE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_NV_COVERAGE_SAMPLE)) && !defined(REGAL_NO_NAMESPACE_GL_NV_COVERAGE_SAMPLE)
+#define REGAL_NO_NAMESPACE_GL_NV_COVERAGE_SAMPLE
+#endif
+
+#if (defined(GL_NV_COVERAGE_SAMPLE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_NV_COVERAGE_SAMPLE)) && !defined(REGAL_NO_DECLARATION_GL_NV_COVERAGE_SAMPLE)
+#define REGAL_NO_DECLARATION_GL_NV_COVERAGE_SAMPLE
+#endif
+
+#ifndef GL_NV_coverage_sample
+#define GL_NV_coverage_sample 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_NV_COVERAGE_SAMPLE
+#define GL_EGL_COVERAGE_BUFFERS_NV    0x30e0     /* 12512 */
+#define GL_EGL_COVERAGE_SAMPLES_NV    0x30e1     /* 12513 */
+#define GL_COVERAGE_BUFFER_BIT_NV     0x8000     /* 32768 */
+#define GL_COVERAGE_COMPONENT_NV      0x8ed0     /* 36560 */
+#define GL_COVERAGE_COMPONENT4_NV     0x8ed1     /* 36561 */
+#define GL_COVERAGE_ATTACHMENT_NV     0x8ed2     /* 36562 */
+#define GL_COVERAGE_BUFFERS_NV        0x8ed3     /* 36563 */
+#define GL_COVERAGE_ALL_FRAGMENTS_NV  0x8ed5     /* 36565 */
+#define GL_COVERAGE_EDGE_FRAGMENTS_NV 0x8ed6     /* 36566 */
+#define GL_COVERAGE_AUTOMATIC_NV      0x8ed7     /* 36567 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_NV_COVERAGE_SAMPLE
+typedef void (REGAL_CALL *PFNGLCOVERAGEMASKNVPROC)(GLboolean mask);
+typedef void (REGAL_CALL *PFNGLCOVERAGEOPERATIONNVPROC)(GLenum operation);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_NV_COVERAGE_SAMPLE
+#define glCoverageMaskNV                    rglCoverageMaskNV
+#define glCoverageOperationNV               rglCoverageOperationNV
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_NV_COVERAGE_SAMPLE
+REGAL_DECL void REGAL_CALL glCoverageMaskNV(GLboolean mask);
+REGAL_DECL void REGAL_CALL glCoverageOperationNV(GLenum operation);
+#endif
+
+/**
  ** GL_NV_deep_texture3D
  **/
 
@@ -15723,6 +17334,37 @@ REGAL_DECL void REGAL_CALL glDepthRangedNV(GLdouble zNear, GLdouble zFar);
 #endif
 
 /**
+ ** GL_NV_depth_nonlinear
+ **/
+
+#if (defined(GL_NV_DEPTH_NONLINEAR) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_NV_DEPTH_NONLINEAR)) && !defined(REGAL_NO_ENUM_GL_NV_DEPTH_NONLINEAR)
+#define REGAL_NO_ENUM_GL_NV_DEPTH_NONLINEAR
+#endif
+
+#if (defined(GL_NV_DEPTH_NONLINEAR) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_NV_DEPTH_NONLINEAR)) && !defined(REGAL_NO_TYPEDEF_GL_NV_DEPTH_NONLINEAR)
+#define REGAL_NO_TYPEDEF_GL_NV_DEPTH_NONLINEAR
+#endif
+
+#if (defined(GL_NV_DEPTH_NONLINEAR) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_NV_DEPTH_NONLINEAR)) && !defined(REGAL_NO_NAMESPACE_GL_NV_DEPTH_NONLINEAR)
+#define REGAL_NO_NAMESPACE_GL_NV_DEPTH_NONLINEAR
+#endif
+
+#if (defined(GL_NV_DEPTH_NONLINEAR) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_NV_DEPTH_NONLINEAR)) && !defined(REGAL_NO_DECLARATION_GL_NV_DEPTH_NONLINEAR)
+#define REGAL_NO_DECLARATION_GL_NV_DEPTH_NONLINEAR
+#endif
+
+#ifndef GL_NV_depth_nonlinear
+#define GL_NV_depth_nonlinear 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_NV_DEPTH_NONLINEAR
+#define GL_EGL_DEPTH_ENCODING_NONE_NV      0x0
+#define GL_EGL_DEPTH_ENCODING_NV           0x30e2     /* 12514 */
+#define GL_EGL_DEPTH_ENCODING_NONLINEAR_NV 0x30e3     /* 12515 */
+#define GL_DEPTH_COMPONENT16_NONLINEAR_NV  0x8e2c     /* 36396 */
+#endif
+
+/**
  ** GL_NV_depth_range_unclamped
  **/
 
@@ -15752,6 +17394,62 @@ REGAL_DECL void REGAL_CALL glDepthRangedNV(GLdouble zNear, GLdouble zFar);
 #define GL_QUERY_RESULT_NV               0x8866     /* 34918 */
 #define GL_QUERY_RESULT_AVAILABLE_NV     0x8867     /* 34919 */
 #define GL_SAMPLE_COUNT_NV               0x8914     /* 35092 */
+#endif
+
+/**
+ ** GL_NV_draw_buffers
+ **/
+
+#if (defined(GL_NV_DRAW_BUFFERS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_NV_DRAW_BUFFERS)) && !defined(REGAL_NO_ENUM_GL_NV_DRAW_BUFFERS)
+#define REGAL_NO_ENUM_GL_NV_DRAW_BUFFERS
+#endif
+
+#if (defined(GL_NV_DRAW_BUFFERS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_NV_DRAW_BUFFERS)) && !defined(REGAL_NO_TYPEDEF_GL_NV_DRAW_BUFFERS)
+#define REGAL_NO_TYPEDEF_GL_NV_DRAW_BUFFERS
+#endif
+
+#if (defined(GL_NV_DRAW_BUFFERS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_NV_DRAW_BUFFERS)) && !defined(REGAL_NO_NAMESPACE_GL_NV_DRAW_BUFFERS)
+#define REGAL_NO_NAMESPACE_GL_NV_DRAW_BUFFERS
+#endif
+
+#if (defined(GL_NV_DRAW_BUFFERS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_NV_DRAW_BUFFERS)) && !defined(REGAL_NO_DECLARATION_GL_NV_DRAW_BUFFERS)
+#define REGAL_NO_DECLARATION_GL_NV_DRAW_BUFFERS
+#endif
+
+#ifndef GL_NV_draw_buffers
+#define GL_NV_draw_buffers 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_NV_DRAW_BUFFERS
+#define GL_MAX_DRAW_BUFFERS_NV 0x8824     /* 34852 */
+#define GL_DRAW_BUFFER0_NV     0x8825     /* 34853 */
+#define GL_DRAW_BUFFER1_NV     0x8826     /* 34854 */
+#define GL_DRAW_BUFFER2_NV     0x8827     /* 34855 */
+#define GL_DRAW_BUFFER3_NV     0x8828     /* 34856 */
+#define GL_DRAW_BUFFER4_NV     0x8829     /* 34857 */
+#define GL_DRAW_BUFFER5_NV     0x882a     /* 34858 */
+#define GL_DRAW_BUFFER6_NV     0x882b     /* 34859 */
+#define GL_DRAW_BUFFER7_NV     0x882c     /* 34860 */
+#define GL_DRAW_BUFFER8_NV     0x882d     /* 34861 */
+#define GL_DRAW_BUFFER9_NV     0x882e     /* 34862 */
+#define GL_DRAW_BUFFER10_NV    0x882f     /* 34863 */
+#define GL_DRAW_BUFFER11_NV    0x8830     /* 34864 */
+#define GL_DRAW_BUFFER12_NV    0x8831     /* 34865 */
+#define GL_DRAW_BUFFER13_NV    0x8832     /* 34866 */
+#define GL_DRAW_BUFFER14_NV    0x8833     /* 34867 */
+#define GL_DRAW_BUFFER15_NV    0x8834     /* 34868 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_NV_DRAW_BUFFERS
+typedef void (REGAL_CALL *PFNGLDRAWBUFFERSNVPROC)(GLsizei n, const GLenum *bufs);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_NV_DRAW_BUFFERS
+#define glDrawBuffersNV                     rglDrawBuffersNV
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_NV_DRAW_BUFFERS
+REGAL_DECL void REGAL_CALL glDrawBuffersNV(GLsizei n, const GLenum *bufs);
 #endif
 
 /**
@@ -15894,6 +17592,66 @@ typedef void (REGAL_CALL *PFNGLTEXRENDERBUFFERNVPROC)(GLenum target, GLuint rend
 REGAL_DECL void REGAL_CALL glGetMultisamplefvNV(GLenum pname, GLuint index, GLfloat *val);
 REGAL_DECL void REGAL_CALL glSampleMaskIndexedNV(GLuint index, GLbitfield mask);
 REGAL_DECL void REGAL_CALL glTexRenderbufferNV(GLenum target, GLuint renderbuffer);
+#endif
+
+/**
+ ** GL_NV_fbo_color_attachments
+ **/
+
+#if (defined(GL_NV_FBO_COLOR_ATTACHMENTS) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_NV_FBO_COLOR_ATTACHMENTS)) && !defined(REGAL_NO_ENUM_GL_NV_FBO_COLOR_ATTACHMENTS)
+#define REGAL_NO_ENUM_GL_NV_FBO_COLOR_ATTACHMENTS
+#endif
+
+#if (defined(GL_NV_FBO_COLOR_ATTACHMENTS) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_NV_FBO_COLOR_ATTACHMENTS)) && !defined(REGAL_NO_TYPEDEF_GL_NV_FBO_COLOR_ATTACHMENTS)
+#define REGAL_NO_TYPEDEF_GL_NV_FBO_COLOR_ATTACHMENTS
+#endif
+
+#if (defined(GL_NV_FBO_COLOR_ATTACHMENTS) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_NV_FBO_COLOR_ATTACHMENTS)) && !defined(REGAL_NO_NAMESPACE_GL_NV_FBO_COLOR_ATTACHMENTS)
+#define REGAL_NO_NAMESPACE_GL_NV_FBO_COLOR_ATTACHMENTS
+#endif
+
+#if (defined(GL_NV_FBO_COLOR_ATTACHMENTS) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_NV_FBO_COLOR_ATTACHMENTS)) && !defined(REGAL_NO_DECLARATION_GL_NV_FBO_COLOR_ATTACHMENTS)
+#define REGAL_NO_DECLARATION_GL_NV_FBO_COLOR_ATTACHMENTS
+#endif
+
+#ifndef GL_NV_fbo_color_attachments
+#define GL_NV_fbo_color_attachments 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_NV_FBO_COLOR_ATTACHMENTS
+#define GL_MAX_COLOR_ATTACHMENTS_NV 0x8cdf     /* 36063 */
+#define GL_COLOR_ATTACHMENT0_NV     0x8ce0     /* 36064 */
+#define GL_COLOR_ATTACHMENT0_NV     0x8ce0     /* 36064 */
+#define GL_COLOR_ATTACHMENT1_NV     0x8ce1     /* 36065 */
+#define GL_COLOR_ATTACHMENT1_NV     0x8ce1     /* 36065 */
+#define GL_COLOR_ATTACHMENT2_NV     0x8ce2     /* 36066 */
+#define GL_COLOR_ATTACHMENT2_NV     0x8ce2     /* 36066 */
+#define GL_COLOR_ATTACHMENT3_NV     0x8ce3     /* 36067 */
+#define GL_COLOR_ATTACHMENT3_NV     0x8ce3     /* 36067 */
+#define GL_COLOR_ATTACHMENT4_NV     0x8ce4     /* 36068 */
+#define GL_COLOR_ATTACHMENT4_NV     0x8ce4     /* 36068 */
+#define GL_COLOR_ATTACHMENT5_NV     0x8ce5     /* 36069 */
+#define GL_COLOR_ATTACHMENT5_NV     0x8ce5     /* 36069 */
+#define GL_COLOR_ATTACHMENT6_NV     0x8ce6     /* 36070 */
+#define GL_COLOR_ATTACHMENT6_NV     0x8ce6     /* 36070 */
+#define GL_COLOR_ATTACHMENT7_NV     0x8ce7     /* 36071 */
+#define GL_COLOR_ATTACHMENT7_NV     0x8ce7     /* 36071 */
+#define GL_COLOR_ATTACHMENT8_NV     0x8ce8     /* 36072 */
+#define GL_COLOR_ATTACHMENT8_NV     0x8ce8     /* 36072 */
+#define GL_COLOR_ATTACHMENT9_NV     0x8ce9     /* 36073 */
+#define GL_COLOR_ATTACHMENT9_NV     0x8ce9     /* 36073 */
+#define GL_COLOR_ATTACHMENT10_NV    0x8cea     /* 36074 */
+#define GL_COLOR_ATTACHMENT10_NV    0x8cea     /* 36074 */
+#define GL_COLOR_ATTACHMENT11_NV    0x8ceb     /* 36075 */
+#define GL_COLOR_ATTACHMENT11_NV    0x8ceb     /* 36075 */
+#define GL_COLOR_ATTACHMENT12_NV    0x8cec     /* 36076 */
+#define GL_COLOR_ATTACHMENT12_NV    0x8cec     /* 36076 */
+#define GL_COLOR_ATTACHMENT13_NV    0x8ced     /* 36077 */
+#define GL_COLOR_ATTACHMENT13_NV    0x8ced     /* 36077 */
+#define GL_COLOR_ATTACHMENT14_NV    0x8cee     /* 36078 */
+#define GL_COLOR_ATTACHMENT14_NV    0x8cee     /* 36078 */
+#define GL_COLOR_ATTACHMENT15_NV    0x8cef     /* 36079 */
+#define GL_COLOR_ATTACHMENT15_NV    0x8cef     /* 36079 */
 #endif
 
 /**
@@ -16717,6 +18475,7 @@ REGAL_DECL void REGAL_CALL glVertexWeighthvNV(const GLhalfNV *weight);
 
 #ifndef REGAL_NO_ENUM_GL_NV_MULTISAMPLE_COVERAGE
 #define GL_COVERAGE_SAMPLES_NV 0x80a9     /* 32937 */
+#define GL_COVERAGE_SAMPLES_NV 0x80a9     /* 32937 */
 #define GL_COLOR_SAMPLES_NV    0x8e20     /* 36384 */
 #endif
 
@@ -17393,6 +19152,71 @@ typedef void (REGAL_CALL *PFNGLPRIMITIVERESTARTNVPROC)(void);
 #ifndef REGAL_NO_DECLARATION_GL_NV_PRIMITIVE_RESTART
 REGAL_DECL void REGAL_CALL glPrimitiveRestartIndexNV(GLuint index);
 REGAL_DECL void REGAL_CALL glPrimitiveRestartNV(void);
+#endif
+
+/**
+ ** GL_NV_read_buffer
+ **/
+
+#if (defined(GL_NV_READ_BUFFER) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_NV_READ_BUFFER)) && !defined(REGAL_NO_ENUM_GL_NV_READ_BUFFER)
+#define REGAL_NO_ENUM_GL_NV_READ_BUFFER
+#endif
+
+#if (defined(GL_NV_READ_BUFFER) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_NV_READ_BUFFER)) && !defined(REGAL_NO_TYPEDEF_GL_NV_READ_BUFFER)
+#define REGAL_NO_TYPEDEF_GL_NV_READ_BUFFER
+#endif
+
+#if (defined(GL_NV_READ_BUFFER) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_NV_READ_BUFFER)) && !defined(REGAL_NO_NAMESPACE_GL_NV_READ_BUFFER)
+#define REGAL_NO_NAMESPACE_GL_NV_READ_BUFFER
+#endif
+
+#if (defined(GL_NV_READ_BUFFER) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_NV_READ_BUFFER)) && !defined(REGAL_NO_DECLARATION_GL_NV_READ_BUFFER)
+#define REGAL_NO_DECLARATION_GL_NV_READ_BUFFER
+#endif
+
+#ifndef GL_NV_read_buffer
+#define GL_NV_read_buffer 1
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_NV_READ_BUFFER
+typedef void (REGAL_CALL *PFNGLREADBUFFERNVPROC)(GLenum mode);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_NV_READ_BUFFER
+#define glReadBufferNV                      rglReadBufferNV
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_NV_READ_BUFFER
+REGAL_DECL void REGAL_CALL glReadBufferNV(GLenum mode);
+#endif
+
+/**
+ ** GL_NV_read_buffer_front
+ **/
+
+#if (defined(GL_NV_READ_BUFFER_FRONT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_NV_READ_BUFFER_FRONT)) && !defined(REGAL_NO_ENUM_GL_NV_READ_BUFFER_FRONT)
+#define REGAL_NO_ENUM_GL_NV_READ_BUFFER_FRONT
+#endif
+
+#if (defined(GL_NV_READ_BUFFER_FRONT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_NV_READ_BUFFER_FRONT)) && !defined(REGAL_NO_TYPEDEF_GL_NV_READ_BUFFER_FRONT)
+#define REGAL_NO_TYPEDEF_GL_NV_READ_BUFFER_FRONT
+#endif
+
+#if (defined(GL_NV_READ_BUFFER_FRONT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_NV_READ_BUFFER_FRONT)) && !defined(REGAL_NO_NAMESPACE_GL_NV_READ_BUFFER_FRONT)
+#define REGAL_NO_NAMESPACE_GL_NV_READ_BUFFER_FRONT
+#endif
+
+#if (defined(GL_NV_READ_BUFFER_FRONT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_NV_READ_BUFFER_FRONT)) && !defined(REGAL_NO_DECLARATION_GL_NV_READ_BUFFER_FRONT)
+#define REGAL_NO_DECLARATION_GL_NV_READ_BUFFER_FRONT
+#endif
+
+#ifndef GL_NV_read_buffer_front
+#define GL_NV_read_buffer_front 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_NV_READ_BUFFER_FRONT
+#define GL_READ_BUFFER_NV 0xc02     /* 3074 */
+#define GL_READ_BUFFER_NV 0xc02     /* 3074 */
 #endif
 
 /**
@@ -19112,6 +20936,161 @@ REGAL_DECL void REGAL_CALL glVideoCaptureStreamParameterivNV(GLuint video_captur
 #endif
 
 /**
+ ** GL_OES_blend_equation_separate
+ **/
+
+#if (defined(GL_OES_BLEND_EQUATION_SEPARATE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_BLEND_EQUATION_SEPARATE)) && !defined(REGAL_NO_ENUM_GL_OES_BLEND_EQUATION_SEPARATE)
+#define REGAL_NO_ENUM_GL_OES_BLEND_EQUATION_SEPARATE
+#endif
+
+#if (defined(GL_OES_BLEND_EQUATION_SEPARATE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_BLEND_EQUATION_SEPARATE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_BLEND_EQUATION_SEPARATE)
+#define REGAL_NO_TYPEDEF_GL_OES_BLEND_EQUATION_SEPARATE
+#endif
+
+#if (defined(GL_OES_BLEND_EQUATION_SEPARATE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_BLEND_EQUATION_SEPARATE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_BLEND_EQUATION_SEPARATE)
+#define REGAL_NO_NAMESPACE_GL_OES_BLEND_EQUATION_SEPARATE
+#endif
+
+#if (defined(GL_OES_BLEND_EQUATION_SEPARATE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_BLEND_EQUATION_SEPARATE)) && !defined(REGAL_NO_DECLARATION_GL_OES_BLEND_EQUATION_SEPARATE)
+#define REGAL_NO_DECLARATION_GL_OES_BLEND_EQUATION_SEPARATE
+#endif
+
+#ifndef GL_OES_blend_equation_separate
+#define GL_OES_blend_equation_separate 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_BLEND_EQUATION_SEPARATE
+#define GL_BLEND_EQUATION_RGB_OES   0x8009     /* 32777 */
+#define GL_BLEND_EQUATION_ALPHA_OES 0x883d     /* 34877 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_BLEND_EQUATION_SEPARATE
+typedef void (REGAL_CALL *PFNGLBLENDEQUATIONSEPARATEOESPROC)(GLenum modeRGB, GLenum modeAlpha);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_BLEND_EQUATION_SEPARATE
+#define glBlendEquationSeparateOES          rglBlendEquationSeparateOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_BLEND_EQUATION_SEPARATE
+REGAL_DECL void REGAL_CALL glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha);
+#endif
+
+/**
+ ** GL_OES_blend_func_separate
+ **/
+
+#if (defined(GL_OES_BLEND_FUNC_SEPARATE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_BLEND_FUNC_SEPARATE)) && !defined(REGAL_NO_ENUM_GL_OES_BLEND_FUNC_SEPARATE)
+#define REGAL_NO_ENUM_GL_OES_BLEND_FUNC_SEPARATE
+#endif
+
+#if (defined(GL_OES_BLEND_FUNC_SEPARATE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_BLEND_FUNC_SEPARATE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_BLEND_FUNC_SEPARATE)
+#define REGAL_NO_TYPEDEF_GL_OES_BLEND_FUNC_SEPARATE
+#endif
+
+#if (defined(GL_OES_BLEND_FUNC_SEPARATE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_BLEND_FUNC_SEPARATE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_BLEND_FUNC_SEPARATE)
+#define REGAL_NO_NAMESPACE_GL_OES_BLEND_FUNC_SEPARATE
+#endif
+
+#if (defined(GL_OES_BLEND_FUNC_SEPARATE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_BLEND_FUNC_SEPARATE)) && !defined(REGAL_NO_DECLARATION_GL_OES_BLEND_FUNC_SEPARATE)
+#define REGAL_NO_DECLARATION_GL_OES_BLEND_FUNC_SEPARATE
+#endif
+
+#ifndef GL_OES_blend_func_separate
+#define GL_OES_blend_func_separate 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_BLEND_FUNC_SEPARATE
+#define GL_BLEND_DST_RGB_OES   0x80c8     /* 32968 */
+#define GL_BLEND_SRC_RGB_OES   0x80c9     /* 32969 */
+#define GL_BLEND_DST_ALPHA_OES 0x80ca     /* 32970 */
+#define GL_BLEND_SRC_ALPHA_OES 0x80cb     /* 32971 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_BLEND_FUNC_SEPARATE
+typedef void (REGAL_CALL *PFNGLBLENDFUNCSEPARATEOESPROC)(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_BLEND_FUNC_SEPARATE
+#define glBlendFuncSeparateOES              rglBlendFuncSeparateOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_BLEND_FUNC_SEPARATE
+REGAL_DECL void REGAL_CALL glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
+#endif
+
+/**
+ ** GL_OES_blend_subtract
+ **/
+
+#if (defined(GL_OES_BLEND_SUBTRACT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_BLEND_SUBTRACT)) && !defined(REGAL_NO_ENUM_GL_OES_BLEND_SUBTRACT)
+#define REGAL_NO_ENUM_GL_OES_BLEND_SUBTRACT
+#endif
+
+#if (defined(GL_OES_BLEND_SUBTRACT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_BLEND_SUBTRACT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_BLEND_SUBTRACT)
+#define REGAL_NO_TYPEDEF_GL_OES_BLEND_SUBTRACT
+#endif
+
+#if (defined(GL_OES_BLEND_SUBTRACT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_BLEND_SUBTRACT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_BLEND_SUBTRACT)
+#define REGAL_NO_NAMESPACE_GL_OES_BLEND_SUBTRACT
+#endif
+
+#if (defined(GL_OES_BLEND_SUBTRACT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_BLEND_SUBTRACT)) && !defined(REGAL_NO_DECLARATION_GL_OES_BLEND_SUBTRACT)
+#define REGAL_NO_DECLARATION_GL_OES_BLEND_SUBTRACT
+#endif
+
+#ifndef GL_OES_blend_subtract
+#define GL_OES_blend_subtract 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_BLEND_SUBTRACT
+#define GL_FUNC_ADD_OES              0x8006     /* 32774 */
+#define GL_BLEND_EQUATION_OES        0x8009     /* 32777 */
+#define GL_FUNC_SUBTRACT_OES         0x800a     /* 32778 */
+#define GL_FUNC_REVERSE_SUBTRACT_OES 0x800b     /* 32779 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_BLEND_SUBTRACT
+typedef void (REGAL_CALL *PFNGLBLENDEQUATIONOESPROC)(GLenum mode);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_BLEND_SUBTRACT
+#define glBlendEquationOES                  rglBlendEquationOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_BLEND_SUBTRACT
+REGAL_DECL void REGAL_CALL glBlendEquationOES(GLenum mode);
+#endif
+
+/**
+ ** GL_OES_compressed_ETC1_RGB8_texture
+ **/
+
+#if (defined(GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)
+#define REGAL_NO_ENUM_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE
+#endif
+
+#if (defined(GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE
+#endif
+
+#if (defined(GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE
+#endif
+
+#if (defined(GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE
+#endif
+
+#ifndef GL_OES_compressed_ETC1_RGB8_texture
+#define GL_OES_compressed_ETC1_RGB8_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_COMPRESSED_ETC1_RGB8_TEXTURE
+#define GL_ETC1_RGB8_OES 0x8d64 /* 36196 */
+#endif
+
+/**
  ** GL_OES_compressed_paletted_texture
  **/
 
@@ -19149,6 +21128,480 @@ REGAL_DECL void REGAL_CALL glVideoCaptureStreamParameterivNV(GLuint video_captur
 #endif
 
 /**
+ ** GL_OES_depth_texture
+ **/
+
+#if (defined(GL_OES_DEPTH_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_DEPTH_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_OES_DEPTH_TEXTURE)
+#define REGAL_NO_ENUM_GL_OES_DEPTH_TEXTURE
+#endif
+
+#if (defined(GL_OES_DEPTH_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_DEPTH_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_DEPTH_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_OES_DEPTH_TEXTURE
+#endif
+
+#if (defined(GL_OES_DEPTH_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_DEPTH_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_DEPTH_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_OES_DEPTH_TEXTURE
+#endif
+
+#if (defined(GL_OES_DEPTH_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_DEPTH_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_OES_DEPTH_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_OES_DEPTH_TEXTURE
+#endif
+
+#ifndef GL_OES_depth_texture
+#define GL_OES_depth_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_DEPTH_TEXTURE
+#define GL_UNSIGNED_SHORT  0x1403     /* 5123 */
+#define GL_DEPTH_COMPONENT 0x1902     /* 6402 */
+#endif
+
+/**
+ ** GL_OES_draw_texture
+ **/
+
+#if (defined(GL_OES_DRAW_TEXTURE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_DRAW_TEXTURE)) && !defined(REGAL_NO_ENUM_GL_OES_DRAW_TEXTURE)
+#define REGAL_NO_ENUM_GL_OES_DRAW_TEXTURE
+#endif
+
+#if (defined(GL_OES_DRAW_TEXTURE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_DRAW_TEXTURE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_DRAW_TEXTURE)
+#define REGAL_NO_TYPEDEF_GL_OES_DRAW_TEXTURE
+#endif
+
+#if (defined(GL_OES_DRAW_TEXTURE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_DRAW_TEXTURE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_DRAW_TEXTURE)
+#define REGAL_NO_NAMESPACE_GL_OES_DRAW_TEXTURE
+#endif
+
+#if (defined(GL_OES_DRAW_TEXTURE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_DRAW_TEXTURE)) && !defined(REGAL_NO_DECLARATION_GL_OES_DRAW_TEXTURE)
+#define REGAL_NO_DECLARATION_GL_OES_DRAW_TEXTURE
+#endif
+
+#ifndef GL_OES_draw_texture
+#define GL_OES_draw_texture 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_DRAW_TEXTURE
+#define GL_TEXTURE_CROP_RECT_OES 0x8b9d /* 35741 */
+#endif
+
+/**
+ ** GL_OES_element_index_uint
+ **/
+
+#if (defined(GL_OES_ELEMENT_INDEX_UINT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_ELEMENT_INDEX_UINT)) && !defined(REGAL_NO_ENUM_GL_OES_ELEMENT_INDEX_UINT)
+#define REGAL_NO_ENUM_GL_OES_ELEMENT_INDEX_UINT
+#endif
+
+#if (defined(GL_OES_ELEMENT_INDEX_UINT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_ELEMENT_INDEX_UINT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_ELEMENT_INDEX_UINT)
+#define REGAL_NO_TYPEDEF_GL_OES_ELEMENT_INDEX_UINT
+#endif
+
+#if (defined(GL_OES_ELEMENT_INDEX_UINT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_ELEMENT_INDEX_UINT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_ELEMENT_INDEX_UINT)
+#define REGAL_NO_NAMESPACE_GL_OES_ELEMENT_INDEX_UINT
+#endif
+
+#if (defined(GL_OES_ELEMENT_INDEX_UINT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_ELEMENT_INDEX_UINT)) && !defined(REGAL_NO_DECLARATION_GL_OES_ELEMENT_INDEX_UINT)
+#define REGAL_NO_DECLARATION_GL_OES_ELEMENT_INDEX_UINT
+#endif
+
+#ifndef GL_OES_element_index_uint
+#define GL_OES_element_index_uint 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_ELEMENT_INDEX_UINT
+#define GL_UNSIGNED_INT 0x1405     /* 5125 */
+#define GL_UNSIGNED_INT 0x1405     /* 5125 */
+#endif
+
+/**
+ ** GL_OES_framebuffer_object
+ **/
+
+#if (defined(GL_OES_FRAMEBUFFER_OBJECT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_FRAMEBUFFER_OBJECT)) && !defined(REGAL_NO_ENUM_GL_OES_FRAMEBUFFER_OBJECT)
+#define REGAL_NO_ENUM_GL_OES_FRAMEBUFFER_OBJECT
+#endif
+
+#if (defined(GL_OES_FRAMEBUFFER_OBJECT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_FRAMEBUFFER_OBJECT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_FRAMEBUFFER_OBJECT)
+#define REGAL_NO_TYPEDEF_GL_OES_FRAMEBUFFER_OBJECT
+#endif
+
+#if (defined(GL_OES_FRAMEBUFFER_OBJECT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_FRAMEBUFFER_OBJECT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_FRAMEBUFFER_OBJECT)
+#define REGAL_NO_NAMESPACE_GL_OES_FRAMEBUFFER_OBJECT
+#endif
+
+#if (defined(GL_OES_FRAMEBUFFER_OBJECT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_FRAMEBUFFER_OBJECT)) && !defined(REGAL_NO_DECLARATION_GL_OES_FRAMEBUFFER_OBJECT)
+#define REGAL_NO_DECLARATION_GL_OES_FRAMEBUFFER_OBJECT
+#endif
+
+#ifndef GL_OES_framebuffer_object
+#define GL_OES_framebuffer_object 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_FRAMEBUFFER_OBJECT
+#define GL_NONE_OES                                         0x0
+#define GL_INVALID_FRAMEBUFFER_OPERATION_OES                0x506      /* 1286 */
+#define GL_MAX_RENDERBUFFER_SIZE_OES                        0x84e8     /* 34024 */
+#define GL_FRAMEBUFFER_BINDING_OES                          0x8ca6     /* 36006 */
+#define GL_RENDERBUFFER_BINDING_OES                         0x8ca7     /* 36007 */
+#define GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES           0x8cd0     /* 36048 */
+#define GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES           0x8cd1     /* 36049 */
+#define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES         0x8cd2     /* 36050 */
+#define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES 0x8cd3     /* 36051 */
+#define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES    0x8cd4     /* 36052 */
+#define GL_FRAMEBUFFER_COMPLETE_OES                         0x8cd5     /* 36053 */
+#define GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES            0x8cd6     /* 36054 */
+#define GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES    0x8cd7     /* 36055 */
+#define GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES            0x8cd9     /* 36057 */
+#define GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES               0x8cda     /* 36058 */
+#define GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES           0x8cdb     /* 36059 */
+#define GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES           0x8cdc     /* 36060 */
+#define GL_FRAMEBUFFER_UNSUPPORTED_OES                      0x8cdd     /* 36061 */
+#define GL_COLOR_ATTACHMENT0_OES                            0x8ce0     /* 36064 */
+#define GL_DEPTH_ATTACHMENT_OES                             0x8d00     /* 36096 */
+#define GL_STENCIL_ATTACHMENT_OES                           0x8d20     /* 36128 */
+#define GL_FRAMEBUFFER_OES                                  0x8d40     /* 36160 */
+#define GL_RENDERBUFFER_OES                                 0x8d41     /* 36161 */
+#define GL_RENDERBUFFER_WIDTH_OES                           0x8d42     /* 36162 */
+#define GL_RENDERBUFFER_HEIGHT_OES                          0x8d43     /* 36163 */
+#define GL_RENDERBUFFER_INTERNAL_FORMAT_OES                 0x8d44     /* 36164 */
+#define GL_RENDERBUFFER_RED_SIZE_OES                        0x8d50     /* 36176 */
+#define GL_RENDERBUFFER_GREEN_SIZE_OES                      0x8d51     /* 36177 */
+#define GL_RENDERBUFFER_BLUE_SIZE_OES                       0x8d52     /* 36178 */
+#define GL_RENDERBUFFER_ALPHA_SIZE_OES                      0x8d53     /* 36179 */
+#define GL_RENDERBUFFER_DEPTH_SIZE_OES                      0x8d54     /* 36180 */
+#define GL_RENDERBUFFER_STENCIL_SIZE_OES                    0x8d55     /* 36181 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_FRAMEBUFFER_OBJECT
+typedef GLboolean (REGAL_CALL *PFNGLISFRAMEBUFFEROESPROC)(GLuint framebuffer);
+typedef GLboolean (REGAL_CALL *PFNGLISRENDERBUFFEROESPROC)(GLuint renderbuffer);
+typedef GLenum (REGAL_CALL *PFNGLCHECKFRAMEBUFFERSTATUSOESPROC)(GLenum target);
+typedef void (REGAL_CALL *PFNGLBINDFRAMEBUFFEROESPROC)(GLenum target, GLuint framebuffer);
+typedef void (REGAL_CALL *PFNGLBINDRENDERBUFFEROESPROC)(GLenum target, GLuint renderbuffer);
+typedef void (REGAL_CALL *PFNGLDELETEFRAMEBUFFERSOESPROC)(GLsizei n, const GLuint *framebuffers);
+typedef void (REGAL_CALL *PFNGLDELETERENDERBUFFERSOESPROC)(GLsizei n, const GLuint *renderbuffers);
+typedef void (REGAL_CALL *PFNGLFRAMEBUFFERRENDERBUFFEROESPROC)(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
+typedef void (REGAL_CALL *PFNGLFRAMEBUFFERTEXTURE2DOESPROC)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+typedef void (REGAL_CALL *PFNGLGENERATEMIPMAPOESPROC)(GLenum target);
+typedef void (REGAL_CALL *PFNGLGENFRAMEBUFFERSOESPROC)(GLsizei n, GLuint *framebuffers);
+typedef void (REGAL_CALL *PFNGLGENRENDERBUFFERSOESPROC)(GLsizei n, GLuint *renderbuffers);
+typedef void (REGAL_CALL *PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVOESPROC)(GLenum target, GLenum attachment, GLenum pname, GLint *params);
+typedef void (REGAL_CALL *PFNGLGETRENDERBUFFERPARAMETERIVOESPROC)(GLenum target, GLenum pname, GLint *params);
+typedef void (REGAL_CALL *PFNGLRENDERBUFFERSTORAGEOESPROC)(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_FRAMEBUFFER_OBJECT
+#define glBindFramebufferOES                rglBindFramebufferOES
+#define glBindRenderbufferOES               rglBindRenderbufferOES
+#define glCheckFramebufferStatusOES         rglCheckFramebufferStatusOES
+#define glDeleteFramebuffersOES             rglDeleteFramebuffersOES
+#define glDeleteRenderbuffersOES            rglDeleteRenderbuffersOES
+#define glFramebufferRenderbufferOES        rglFramebufferRenderbufferOES
+#define glFramebufferTexture2DOES           rglFramebufferTexture2DOES
+#define glGenFramebuffersOES                rglGenFramebuffersOES
+#define glGenRenderbuffersOES               rglGenRenderbuffersOES
+#define glGenerateMipmapOES                 rglGenerateMipmapOES
+#define glGetFramebufferAttachmentParameterivOES rglGetFramebufferAttachmentParameterivOES
+#define glGetRenderbufferParameterivOES     rglGetRenderbufferParameterivOES
+#define glIsFramebufferOES                  rglIsFramebufferOES
+#define glIsRenderbufferOES                 rglIsRenderbufferOES
+#define glRenderbufferStorageOES            rglRenderbufferStorageOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_FRAMEBUFFER_OBJECT
+REGAL_DECL GLboolean REGAL_CALL glIsFramebufferOES(GLuint framebuffer);
+REGAL_DECL GLboolean REGAL_CALL glIsRenderbufferOES(GLuint renderbuffer);
+REGAL_DECL GLenum REGAL_CALL glCheckFramebufferStatusOES(GLenum target);
+REGAL_DECL void REGAL_CALL glBindFramebufferOES(GLenum target, GLuint framebuffer);
+REGAL_DECL void REGAL_CALL glBindRenderbufferOES(GLenum target, GLuint renderbuffer);
+REGAL_DECL void REGAL_CALL glDeleteFramebuffersOES(GLsizei n, const GLuint *framebuffers);
+REGAL_DECL void REGAL_CALL glDeleteRenderbuffersOES(GLsizei n, const GLuint *renderbuffers);
+REGAL_DECL void REGAL_CALL glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
+REGAL_DECL void REGAL_CALL glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+REGAL_DECL void REGAL_CALL glGenFramebuffersOES(GLsizei n, GLuint *framebuffers);
+REGAL_DECL void REGAL_CALL glGenRenderbuffersOES(GLsizei n, GLuint *renderbuffers);
+REGAL_DECL void REGAL_CALL glGenerateMipmapOES(GLenum target);
+REGAL_DECL void REGAL_CALL glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint *params);
+REGAL_DECL void REGAL_CALL glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint *params);
+REGAL_DECL void REGAL_CALL glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
+#endif
+
+/**
+ ** GL_OES_get_program_binary
+ **/
+
+#if (defined(GL_OES_GET_PROGRAM_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_GET_PROGRAM_BINARY)) && !defined(REGAL_NO_ENUM_GL_OES_GET_PROGRAM_BINARY)
+#define REGAL_NO_ENUM_GL_OES_GET_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_OES_GET_PROGRAM_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_GET_PROGRAM_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_OES_GET_PROGRAM_BINARY)
+#define REGAL_NO_TYPEDEF_GL_OES_GET_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_OES_GET_PROGRAM_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_GET_PROGRAM_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_OES_GET_PROGRAM_BINARY)
+#define REGAL_NO_NAMESPACE_GL_OES_GET_PROGRAM_BINARY
+#endif
+
+#if (defined(GL_OES_GET_PROGRAM_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_GET_PROGRAM_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_OES_GET_PROGRAM_BINARY)
+#define REGAL_NO_DECLARATION_GL_OES_GET_PROGRAM_BINARY
+#endif
+
+#ifndef GL_OES_get_program_binary
+#define GL_OES_get_program_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_GET_PROGRAM_BINARY
+#define GL_PROGRAM_BINARY_LENGTH_OES      0x8741     /* 34625 */
+#define GL_NUM_PROGRAM_BINARY_FORMATS_OES 0x87fe     /* 34814 */
+#define GL_PROGRAM_BINARY_FORMATS_OES     0x87ff     /* 34815 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_GET_PROGRAM_BINARY
+typedef void (REGAL_CALL *PFNGLGETPROGRAMBINARYOESPROC)(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary);
+typedef void (REGAL_CALL *PFNGLPROGRAMBINARYOESPROC)(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_GET_PROGRAM_BINARY
+#define glGetProgramBinaryOES               rglGetProgramBinaryOES
+#define glProgramBinaryOES                  rglProgramBinaryOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_GET_PROGRAM_BINARY
+REGAL_DECL void REGAL_CALL glGetProgramBinaryOES(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary);
+REGAL_DECL void REGAL_CALL glProgramBinaryOES(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length);
+#endif
+
+/**
+ ** GL_OES_mapbuffer
+ **/
+
+#if (defined(GL_OES_MAPBUFFER) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_MAPBUFFER)) && !defined(REGAL_NO_ENUM_GL_OES_MAPBUFFER)
+#define REGAL_NO_ENUM_GL_OES_MAPBUFFER
+#endif
+
+#if (defined(GL_OES_MAPBUFFER) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_MAPBUFFER)) && !defined(REGAL_NO_TYPEDEF_GL_OES_MAPBUFFER)
+#define REGAL_NO_TYPEDEF_GL_OES_MAPBUFFER
+#endif
+
+#if (defined(GL_OES_MAPBUFFER) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_MAPBUFFER)) && !defined(REGAL_NO_NAMESPACE_GL_OES_MAPBUFFER)
+#define REGAL_NO_NAMESPACE_GL_OES_MAPBUFFER
+#endif
+
+#if (defined(GL_OES_MAPBUFFER) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_MAPBUFFER)) && !defined(REGAL_NO_DECLARATION_GL_OES_MAPBUFFER)
+#define REGAL_NO_DECLARATION_GL_OES_MAPBUFFER
+#endif
+
+#ifndef GL_OES_mapbuffer
+#define GL_OES_mapbuffer 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_MAPBUFFER
+#define GL_WRITE_ONLY_OES         0x88b9     /* 35001 */
+#define GL_BUFFER_ACCESS_OES      0x88bb     /* 35003 */
+#define GL_BUFFER_MAPPED_OES      0x88bc     /* 35004 */
+#define GL_BUFFER_MAP_POINTER_OES 0x88bd     /* 35005 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_MAPBUFFER
+typedef GLboolean (REGAL_CALL *PFNGLUNMAPBUFFEROESPROC)(GLenum target);
+typedef GLvoid *(REGAL_CALL *PFNGLMAPBUFFEROESPROC)(GLenum target, GLenum access);
+typedef void (REGAL_CALL *PFNGLGETBUFFERPOINTERVOESPROC)(GLenum target, GLenum pname, GLvoid **params);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_MAPBUFFER
+#define glGetBufferPointervOES              rglGetBufferPointervOES
+#define glMapBufferOES                      rglMapBufferOES
+#define glUnmapBufferOES                    rglUnmapBufferOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_MAPBUFFER
+REGAL_DECL GLboolean REGAL_CALL glUnmapBufferOES(GLenum target);
+REGAL_DECL GLvoid *REGAL_CALL glMapBufferOES(GLenum target, GLenum access);
+REGAL_DECL void REGAL_CALL glGetBufferPointervOES(GLenum target, GLenum pname, GLvoid **params);
+#endif
+
+/**
+ ** GL_OES_matrix_get
+ **/
+
+#if (defined(GL_OES_MATRIX_GET) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_MATRIX_GET)) && !defined(REGAL_NO_ENUM_GL_OES_MATRIX_GET)
+#define REGAL_NO_ENUM_GL_OES_MATRIX_GET
+#endif
+
+#if (defined(GL_OES_MATRIX_GET) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_MATRIX_GET)) && !defined(REGAL_NO_TYPEDEF_GL_OES_MATRIX_GET)
+#define REGAL_NO_TYPEDEF_GL_OES_MATRIX_GET
+#endif
+
+#if (defined(GL_OES_MATRIX_GET) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_MATRIX_GET)) && !defined(REGAL_NO_NAMESPACE_GL_OES_MATRIX_GET)
+#define REGAL_NO_NAMESPACE_GL_OES_MATRIX_GET
+#endif
+
+#if (defined(GL_OES_MATRIX_GET) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_MATRIX_GET)) && !defined(REGAL_NO_DECLARATION_GL_OES_MATRIX_GET)
+#define REGAL_NO_DECLARATION_GL_OES_MATRIX_GET
+#endif
+
+#ifndef GL_OES_matrix_get
+#define GL_OES_matrix_get 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_MATRIX_GET
+#define GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES  0x898     /* 2200 */
+#define GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES 0x898     /* 2200 */
+#define GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES    0x898     /* 2200 */
+#endif
+
+/**
+ ** GL_OES_matrix_palette
+ **/
+
+#if (defined(GL_OES_MATRIX_PALETTE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_MATRIX_PALETTE)) && !defined(REGAL_NO_ENUM_GL_OES_MATRIX_PALETTE)
+#define REGAL_NO_ENUM_GL_OES_MATRIX_PALETTE
+#endif
+
+#if (defined(GL_OES_MATRIX_PALETTE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_MATRIX_PALETTE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_MATRIX_PALETTE)
+#define REGAL_NO_TYPEDEF_GL_OES_MATRIX_PALETTE
+#endif
+
+#if (defined(GL_OES_MATRIX_PALETTE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_MATRIX_PALETTE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_MATRIX_PALETTE)
+#define REGAL_NO_NAMESPACE_GL_OES_MATRIX_PALETTE
+#endif
+
+#if (defined(GL_OES_MATRIX_PALETTE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_MATRIX_PALETTE)) && !defined(REGAL_NO_DECLARATION_GL_OES_MATRIX_PALETTE)
+#define REGAL_NO_DECLARATION_GL_OES_MATRIX_PALETTE
+#endif
+
+#ifndef GL_OES_matrix_palette
+#define GL_OES_matrix_palette 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_MATRIX_PALETTE
+#define GL_MAX_VERTEX_UNITS_OES                  0x86a4     /* 34468 */
+#define GL_WEIGHT_ARRAY_TYPE_OES                 0x86a9     /* 34473 */
+#define GL_WEIGHT_ARRAY_STRIDE_OES               0x86aa     /* 34474 */
+#define GL_WEIGHT_ARRAY_SIZE_OES                 0x86ab     /* 34475 */
+#define GL_WEIGHT_ARRAY_POINTER_OES              0x86ac     /* 34476 */
+#define GL_WEIGHT_ARRAY_OES                      0x86ad     /* 34477 */
+#define GL_MATRIX_PALETTE_OES                    0x8840     /* 34880 */
+#define GL_MAX_PALETTE_MATRICES_OES              0x8842     /* 34882 */
+#define GL_CURRENT_PALETTE_MATRIX_OES            0x8843     /* 34883 */
+#define GL_MATRIX_INDEX_ARRAY_OES                0x8844     /* 34884 */
+#define GL_MATRIX_INDEX_ARRAY_SIZE_OES           0x8846     /* 34886 */
+#define GL_MATRIX_INDEX_ARRAY_TYPE_OES           0x8847     /* 34887 */
+#define GL_MATRIX_INDEX_ARRAY_STRIDE_OES         0x8848     /* 34888 */
+#define GL_MATRIX_INDEX_ARRAY_POINTER_OES        0x8849     /* 34889 */
+#define GL_WEIGHT_ARRAY_BUFFER_BINDING_OES       0x889e     /* 34974 */
+#define GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES 0x8b9e     /* 35742 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_MATRIX_PALETTE
+typedef void (REGAL_CALL *PFNGLCURRENTPALETTEMATRIXOESPROC)(GLuint index);
+typedef void (REGAL_CALL *PFNGLMATRIXINDEXPOINTEROESPROC)(GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+typedef void (REGAL_CALL *PFNGLWEIGHTPOINTEROESPROC)(GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_MATRIX_PALETTE
+#define glCurrentPaletteMatrixOES           rglCurrentPaletteMatrixOES
+#define glMatrixIndexPointerOES             rglMatrixIndexPointerOES
+#define glWeightPointerOES                  rglWeightPointerOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_MATRIX_PALETTE
+REGAL_DECL void REGAL_CALL glCurrentPaletteMatrixOES(GLuint index);
+REGAL_DECL void REGAL_CALL glMatrixIndexPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+REGAL_DECL void REGAL_CALL glWeightPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+#endif
+
+/**
+ ** GL_OES_packed_depth_stencil
+ **/
+
+#if (defined(GL_OES_PACKED_DEPTH_STENCIL) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_PACKED_DEPTH_STENCIL)) && !defined(REGAL_NO_ENUM_GL_OES_PACKED_DEPTH_STENCIL)
+#define REGAL_NO_ENUM_GL_OES_PACKED_DEPTH_STENCIL
+#endif
+
+#if (defined(GL_OES_PACKED_DEPTH_STENCIL) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_PACKED_DEPTH_STENCIL)) && !defined(REGAL_NO_TYPEDEF_GL_OES_PACKED_DEPTH_STENCIL)
+#define REGAL_NO_TYPEDEF_GL_OES_PACKED_DEPTH_STENCIL
+#endif
+
+#if (defined(GL_OES_PACKED_DEPTH_STENCIL) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_PACKED_DEPTH_STENCIL)) && !defined(REGAL_NO_NAMESPACE_GL_OES_PACKED_DEPTH_STENCIL)
+#define REGAL_NO_NAMESPACE_GL_OES_PACKED_DEPTH_STENCIL
+#endif
+
+#if (defined(GL_OES_PACKED_DEPTH_STENCIL) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_PACKED_DEPTH_STENCIL)) && !defined(REGAL_NO_DECLARATION_GL_OES_PACKED_DEPTH_STENCIL)
+#define REGAL_NO_DECLARATION_GL_OES_PACKED_DEPTH_STENCIL
+#endif
+
+#ifndef GL_OES_packed_depth_stencil
+#define GL_OES_packed_depth_stencil 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_PACKED_DEPTH_STENCIL
+#define GL_DEPTH_STENCIL_OES     0x84f9     /* 34041 */
+#define GL_UNSIGNED_INT_24_8_OES 0x84fa     /* 34042 */
+#endif
+
+/**
+ ** GL_OES_point_size_array
+ **/
+
+#if (defined(GL_OES_POINT_SIZE_ARRAY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_POINT_SIZE_ARRAY)) && !defined(REGAL_NO_ENUM_GL_OES_POINT_SIZE_ARRAY)
+#define REGAL_NO_ENUM_GL_OES_POINT_SIZE_ARRAY
+#endif
+
+#if (defined(GL_OES_POINT_SIZE_ARRAY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_POINT_SIZE_ARRAY)) && !defined(REGAL_NO_TYPEDEF_GL_OES_POINT_SIZE_ARRAY)
+#define REGAL_NO_TYPEDEF_GL_OES_POINT_SIZE_ARRAY
+#endif
+
+#if (defined(GL_OES_POINT_SIZE_ARRAY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_POINT_SIZE_ARRAY)) && !defined(REGAL_NO_NAMESPACE_GL_OES_POINT_SIZE_ARRAY)
+#define REGAL_NO_NAMESPACE_GL_OES_POINT_SIZE_ARRAY
+#endif
+
+#if (defined(GL_OES_POINT_SIZE_ARRAY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_POINT_SIZE_ARRAY)) && !defined(REGAL_NO_DECLARATION_GL_OES_POINT_SIZE_ARRAY)
+#define REGAL_NO_DECLARATION_GL_OES_POINT_SIZE_ARRAY
+#endif
+
+#ifndef GL_OES_point_size_array
+#define GL_OES_point_size_array 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_POINT_SIZE_ARRAY
+#define GL_POINT_SIZE_ARRAY_TYPE_OES           0x898a     /* 35210 */
+#define GL_POINT_SIZE_ARRAY_STRIDE_OES         0x898b     /* 35211 */
+#define GL_POINT_SIZE_ARRAY_POINTER_OES        0x898c     /* 35212 */
+#define GL_POINT_SIZE_ARRAY_OES                0x8b9c     /* 35740 */
+#define GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES 0x8b9f     /* 35743 */
+#endif
+
+/**
+ ** GL_OES_point_sprite
+ **/
+
+#if (defined(GL_OES_POINT_SPRITE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_POINT_SPRITE)) && !defined(REGAL_NO_ENUM_GL_OES_POINT_SPRITE)
+#define REGAL_NO_ENUM_GL_OES_POINT_SPRITE
+#endif
+
+#if (defined(GL_OES_POINT_SPRITE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_POINT_SPRITE)) && !defined(REGAL_NO_TYPEDEF_GL_OES_POINT_SPRITE)
+#define REGAL_NO_TYPEDEF_GL_OES_POINT_SPRITE
+#endif
+
+#if (defined(GL_OES_POINT_SPRITE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_POINT_SPRITE)) && !defined(REGAL_NO_NAMESPACE_GL_OES_POINT_SPRITE)
+#define REGAL_NO_NAMESPACE_GL_OES_POINT_SPRITE
+#endif
+
+#if (defined(GL_OES_POINT_SPRITE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_POINT_SPRITE)) && !defined(REGAL_NO_DECLARATION_GL_OES_POINT_SPRITE)
+#define REGAL_NO_DECLARATION_GL_OES_POINT_SPRITE
+#endif
+
+#ifndef GL_OES_point_sprite
+#define GL_OES_point_sprite 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_POINT_SPRITE
+#define GL_POINT_SPRITE_OES  0x8861     /* 34913 */
+#define GL_COORD_REPLACE_OES 0x8862     /* 34914 */
+#endif
+
+/**
  ** GL_OES_read_format
  **/
 
@@ -19175,6 +21628,87 @@ REGAL_DECL void REGAL_CALL glVideoCaptureStreamParameterivNV(GLuint video_captur
 #ifndef REGAL_NO_ENUM_GL_OES_READ_FORMAT
 #define GL_IMPLEMENTATION_COLOR_READ_TYPE_OES   0x8b9a     /* 35738 */
 #define GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES 0x8b9b     /* 35739 */
+#endif
+
+/**
+ ** GL_OES_required_internalformat
+ **/
+
+#if (defined(GL_OES_REQUIRED_INTERNALFORMAT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_REQUIRED_INTERNALFORMAT)) && !defined(REGAL_NO_ENUM_GL_OES_REQUIRED_INTERNALFORMAT)
+#define REGAL_NO_ENUM_GL_OES_REQUIRED_INTERNALFORMAT
+#endif
+
+#if (defined(GL_OES_REQUIRED_INTERNALFORMAT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_REQUIRED_INTERNALFORMAT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_REQUIRED_INTERNALFORMAT)
+#define REGAL_NO_TYPEDEF_GL_OES_REQUIRED_INTERNALFORMAT
+#endif
+
+#if (defined(GL_OES_REQUIRED_INTERNALFORMAT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_REQUIRED_INTERNALFORMAT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_REQUIRED_INTERNALFORMAT)
+#define REGAL_NO_NAMESPACE_GL_OES_REQUIRED_INTERNALFORMAT
+#endif
+
+#if (defined(GL_OES_REQUIRED_INTERNALFORMAT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_REQUIRED_INTERNALFORMAT)) && !defined(REGAL_NO_DECLARATION_GL_OES_REQUIRED_INTERNALFORMAT)
+#define REGAL_NO_DECLARATION_GL_OES_REQUIRED_INTERNALFORMAT
+#endif
+
+#ifndef GL_OES_required_internalformat
+#define GL_OES_required_internalformat 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_REQUIRED_INTERNALFORMAT
+#define GL_ALPHA8_OES            0x803c     /* 32828 */
+#define GL_LUMINANCE8_OES        0x8040     /* 32832 */
+#define GL_LUMINANCE4_ALPHA4_OES 0x8043     /* 32835 */
+#define GL_LUMINANCE8_ALPHA8_OES 0x8045     /* 32837 */
+#define GL_RGB10_EXT             0x8052     /* 32850 */
+#define GL_RGB10_EXT             0x8052     /* 32850 */
+#define GL_RGBA4_OES             0x8056     /* 32854 */
+#define GL_RGBA4_OES             0x8056     /* 32854 */
+#define GL_RGB5_A1_OES           0x8057     /* 32855 */
+#define GL_RGB5_A1_OES           0x8057     /* 32855 */
+#define GL_RGB10_A2_EXT          0x8059     /* 32857 */
+#define GL_RGB10_A2_EXT          0x8059     /* 32857 */
+#define GL_DEPTH_COMPONENT16_OES 0x81a5     /* 33189 */
+#define GL_DEPTH_COMPONENT16_OES 0x81a5     /* 33189 */
+#define GL_DEPTH_COMPONENT24_OES 0x81a6     /* 33190 */
+#define GL_DEPTH_COMPONENT24_OES 0x81a6     /* 33190 */
+#define GL_DEPTH_COMPONENT32_OES 0x81a7     /* 33191 */
+#define GL_DEPTH_COMPONENT32_OES 0x81a7     /* 33191 */
+#define GL_DEPTH24_STENCIL8_OES  0x88f0     /* 35056 */
+#define GL_DEPTH24_STENCIL8_OES  0x88f0     /* 35056 */
+#define GL_RGB565_OES            0x8d62     /* 36194 */
+#define GL_RGB565_OES            0x8d62     /* 36194 */
+#endif
+
+/**
+ ** GL_OES_rgb8_rgba8
+ **/
+
+#if (defined(GL_OES_RGB8_RGBA8) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_RGB8_RGBA8)) && !defined(REGAL_NO_ENUM_GL_OES_RGB8_RGBA8)
+#define REGAL_NO_ENUM_GL_OES_RGB8_RGBA8
+#endif
+
+#if (defined(GL_OES_RGB8_RGBA8) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_RGB8_RGBA8)) && !defined(REGAL_NO_TYPEDEF_GL_OES_RGB8_RGBA8)
+#define REGAL_NO_TYPEDEF_GL_OES_RGB8_RGBA8
+#endif
+
+#if (defined(GL_OES_RGB8_RGBA8) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_RGB8_RGBA8)) && !defined(REGAL_NO_NAMESPACE_GL_OES_RGB8_RGBA8)
+#define REGAL_NO_NAMESPACE_GL_OES_RGB8_RGBA8
+#endif
+
+#if (defined(GL_OES_RGB8_RGBA8) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_RGB8_RGBA8)) && !defined(REGAL_NO_DECLARATION_GL_OES_RGB8_RGBA8)
+#define REGAL_NO_DECLARATION_GL_OES_RGB8_RGBA8
+#endif
+
+#ifndef GL_OES_rgb8_rgba8
+#define GL_OES_rgb8_rgba8 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_RGB8_RGBA8
+#define GL_RGB8_OES  0x8051     /* 32849 */
+#define GL_RGB8_OES  0x8051     /* 32849 */
+#define GL_RGBA8_OES 0x8058     /* 32856 */
+#define GL_RGBA8_OES 0x8058     /* 32856 */
+#define GL_RGBA8_OES 0x8058     /* 32856 */
 #endif
 
 /**
@@ -19226,6 +21760,417 @@ REGAL_DECL void REGAL_CALL glDepthRangefOES(GLclampf n, GLclampf f);
 REGAL_DECL void REGAL_CALL glFrustumfOES(GLfloat l, GLfloat r, GLfloat b, GLfloat t, GLfloat n, GLfloat f);
 REGAL_DECL void REGAL_CALL glGetClipPlanefOES(GLenum plane, GLfloat *equation);
 REGAL_DECL void REGAL_CALL glOrthofOES(GLfloat l, GLfloat r, GLfloat b, GLfloat t, GLfloat n, GLfloat f);
+#endif
+
+/**
+ ** GL_OES_standard_derivatives
+ **/
+
+#if (defined(GL_OES_STANDARD_DERIVATIVES) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_STANDARD_DERIVATIVES)) && !defined(REGAL_NO_ENUM_GL_OES_STANDARD_DERIVATIVES)
+#define REGAL_NO_ENUM_GL_OES_STANDARD_DERIVATIVES
+#endif
+
+#if (defined(GL_OES_STANDARD_DERIVATIVES) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_STANDARD_DERIVATIVES)) && !defined(REGAL_NO_TYPEDEF_GL_OES_STANDARD_DERIVATIVES)
+#define REGAL_NO_TYPEDEF_GL_OES_STANDARD_DERIVATIVES
+#endif
+
+#if (defined(GL_OES_STANDARD_DERIVATIVES) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_STANDARD_DERIVATIVES)) && !defined(REGAL_NO_NAMESPACE_GL_OES_STANDARD_DERIVATIVES)
+#define REGAL_NO_NAMESPACE_GL_OES_STANDARD_DERIVATIVES
+#endif
+
+#if (defined(GL_OES_STANDARD_DERIVATIVES) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_STANDARD_DERIVATIVES)) && !defined(REGAL_NO_DECLARATION_GL_OES_STANDARD_DERIVATIVES)
+#define REGAL_NO_DECLARATION_GL_OES_STANDARD_DERIVATIVES
+#endif
+
+#ifndef GL_OES_standard_derivatives
+#define GL_OES_standard_derivatives 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_STANDARD_DERIVATIVES
+#define GL_FRAGMENT_SHADER_DERIVATIVE_HINT_OES 0x8b8b /* 35723 */
+#endif
+
+/**
+ ** GL_OES_stencil1
+ **/
+
+#if (defined(GL_OES_STENCIL1) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_STENCIL1)) && !defined(REGAL_NO_ENUM_GL_OES_STENCIL1)
+#define REGAL_NO_ENUM_GL_OES_STENCIL1
+#endif
+
+#if (defined(GL_OES_STENCIL1) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_STENCIL1)) && !defined(REGAL_NO_TYPEDEF_GL_OES_STENCIL1)
+#define REGAL_NO_TYPEDEF_GL_OES_STENCIL1
+#endif
+
+#if (defined(GL_OES_STENCIL1) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_STENCIL1)) && !defined(REGAL_NO_NAMESPACE_GL_OES_STENCIL1)
+#define REGAL_NO_NAMESPACE_GL_OES_STENCIL1
+#endif
+
+#if (defined(GL_OES_STENCIL1) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_STENCIL1)) && !defined(REGAL_NO_DECLARATION_GL_OES_STENCIL1)
+#define REGAL_NO_DECLARATION_GL_OES_STENCIL1
+#endif
+
+#ifndef GL_OES_stencil1
+#define GL_OES_stencil1 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_STENCIL1
+#define GL_STENCIL_INDEX1_OES 0x8d46     /* 36166 */
+#define GL_STENCIL_INDEX1_OES 0x8d46     /* 36166 */
+#endif
+
+/**
+ ** GL_OES_stencil4
+ **/
+
+#if (defined(GL_OES_STENCIL4) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_STENCIL4)) && !defined(REGAL_NO_ENUM_GL_OES_STENCIL4)
+#define REGAL_NO_ENUM_GL_OES_STENCIL4
+#endif
+
+#if (defined(GL_OES_STENCIL4) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_STENCIL4)) && !defined(REGAL_NO_TYPEDEF_GL_OES_STENCIL4)
+#define REGAL_NO_TYPEDEF_GL_OES_STENCIL4
+#endif
+
+#if (defined(GL_OES_STENCIL4) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_STENCIL4)) && !defined(REGAL_NO_NAMESPACE_GL_OES_STENCIL4)
+#define REGAL_NO_NAMESPACE_GL_OES_STENCIL4
+#endif
+
+#if (defined(GL_OES_STENCIL4) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_STENCIL4)) && !defined(REGAL_NO_DECLARATION_GL_OES_STENCIL4)
+#define REGAL_NO_DECLARATION_GL_OES_STENCIL4
+#endif
+
+#ifndef GL_OES_stencil4
+#define GL_OES_stencil4 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_STENCIL4
+#define GL_STENCIL_INDEX4_OES 0x8d47     /* 36167 */
+#define GL_STENCIL_INDEX4_OES 0x8d47     /* 36167 */
+#endif
+
+/**
+ ** GL_OES_stencil8
+ **/
+
+#if (defined(GL_OES_STENCIL8) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_STENCIL8)) && !defined(REGAL_NO_ENUM_GL_OES_STENCIL8)
+#define REGAL_NO_ENUM_GL_OES_STENCIL8
+#endif
+
+#if (defined(GL_OES_STENCIL8) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_STENCIL8)) && !defined(REGAL_NO_TYPEDEF_GL_OES_STENCIL8)
+#define REGAL_NO_TYPEDEF_GL_OES_STENCIL8
+#endif
+
+#if (defined(GL_OES_STENCIL8) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_STENCIL8)) && !defined(REGAL_NO_NAMESPACE_GL_OES_STENCIL8)
+#define REGAL_NO_NAMESPACE_GL_OES_STENCIL8
+#endif
+
+#if (defined(GL_OES_STENCIL8) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_STENCIL8)) && !defined(REGAL_NO_DECLARATION_GL_OES_STENCIL8)
+#define REGAL_NO_DECLARATION_GL_OES_STENCIL8
+#endif
+
+#ifndef GL_OES_stencil8
+#define GL_OES_stencil8 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_STENCIL8
+#define GL_STENCIL_INDEX8_OES 0x8d48     /* 36168 */
+#define GL_STENCIL_INDEX8_OES 0x8d48     /* 36168 */
+#endif
+
+/**
+ ** GL_OES_surfaceless_context
+ **/
+
+#if (defined(GL_OES_SURFACELESS_CONTEXT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_SURFACELESS_CONTEXT)) && !defined(REGAL_NO_ENUM_GL_OES_SURFACELESS_CONTEXT)
+#define REGAL_NO_ENUM_GL_OES_SURFACELESS_CONTEXT
+#endif
+
+#if (defined(GL_OES_SURFACELESS_CONTEXT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_SURFACELESS_CONTEXT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_SURFACELESS_CONTEXT)
+#define REGAL_NO_TYPEDEF_GL_OES_SURFACELESS_CONTEXT
+#endif
+
+#if (defined(GL_OES_SURFACELESS_CONTEXT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_SURFACELESS_CONTEXT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_SURFACELESS_CONTEXT)
+#define REGAL_NO_NAMESPACE_GL_OES_SURFACELESS_CONTEXT
+#endif
+
+#if (defined(GL_OES_SURFACELESS_CONTEXT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_SURFACELESS_CONTEXT)) && !defined(REGAL_NO_DECLARATION_GL_OES_SURFACELESS_CONTEXT)
+#define REGAL_NO_DECLARATION_GL_OES_SURFACELESS_CONTEXT
+#endif
+
+#ifndef GL_OES_surfaceless_context
+#define GL_OES_surfaceless_context 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_SURFACELESS_CONTEXT
+#define GL_FRAMEBUFFER_UNDEFINED_OES 0x8219 /* 33305 */
+#endif
+
+/**
+ ** GL_OES_texture_3D
+ **/
+
+#if (defined(GL_OES_TEXTURE_3D) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_TEXTURE_3D)) && !defined(REGAL_NO_ENUM_GL_OES_TEXTURE_3D)
+#define REGAL_NO_ENUM_GL_OES_TEXTURE_3D
+#endif
+
+#if (defined(GL_OES_TEXTURE_3D) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_TEXTURE_3D)) && !defined(REGAL_NO_TYPEDEF_GL_OES_TEXTURE_3D)
+#define REGAL_NO_TYPEDEF_GL_OES_TEXTURE_3D
+#endif
+
+#if (defined(GL_OES_TEXTURE_3D) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_TEXTURE_3D)) && !defined(REGAL_NO_NAMESPACE_GL_OES_TEXTURE_3D)
+#define REGAL_NO_NAMESPACE_GL_OES_TEXTURE_3D
+#endif
+
+#if (defined(GL_OES_TEXTURE_3D) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_TEXTURE_3D)) && !defined(REGAL_NO_DECLARATION_GL_OES_TEXTURE_3D)
+#define REGAL_NO_DECLARATION_GL_OES_TEXTURE_3D
+#endif
+
+#ifndef GL_OES_texture_3D
+#define GL_OES_texture_3D 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_TEXTURE_3D
+#define GL_TEXTURE_BINDING_3D_OES  0x806a     /* 32874 */
+#define GL_TEXTURE_3D_OES          0x806f     /* 32879 */
+#define GL_TEXTURE_WRAP_R_OES      0x8072     /* 32882 */
+#define GL_MAX_3D_TEXTURE_SIZE_OES 0x8073     /* 32883 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_TEXTURE_3D
+typedef void (REGAL_CALL *PFNGLCOMPRESSEDTEXIMAGE3DOESPROC)(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data);
+typedef void (REGAL_CALL *PFNGLCOMPRESSEDTEXSUBIMAGE3DOESPROC)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data);
+typedef void (REGAL_CALL *PFNGLCOPYTEXSUBIMAGE3DOESPROC)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+typedef void (REGAL_CALL *PFNGLFRAMEBUFFERTEXTURE3DOESPROC)(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
+typedef void (REGAL_CALL *PFNGLTEXIMAGE3DOESPROC)(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+typedef void (REGAL_CALL *PFNGLTEXSUBIMAGE3DOESPROC)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_TEXTURE_3D
+#define glCompressedTexImage3DOES           rglCompressedTexImage3DOES
+#define glCompressedTexSubImage3DOES        rglCompressedTexSubImage3DOES
+#define glCopyTexSubImage3DOES              rglCopyTexSubImage3DOES
+#define glFramebufferTexture3DOES           rglFramebufferTexture3DOES
+#define glTexImage3DOES                     rglTexImage3DOES
+#define glTexSubImage3DOES                  rglTexSubImage3DOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_TEXTURE_3D
+REGAL_DECL void REGAL_CALL glCompressedTexImage3DOES(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data);
+REGAL_DECL void REGAL_CALL glCompressedTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data);
+REGAL_DECL void REGAL_CALL glCopyTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+REGAL_DECL void REGAL_CALL glFramebufferTexture3DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
+REGAL_DECL void REGAL_CALL glTexImage3DOES(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+REGAL_DECL void REGAL_CALL glTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels);
+#endif
+
+/**
+ ** GL_OES_texture_cube_map
+ **/
+
+#if (defined(GL_OES_TEXTURE_CUBE_MAP) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_TEXTURE_CUBE_MAP)) && !defined(REGAL_NO_ENUM_GL_OES_TEXTURE_CUBE_MAP)
+#define REGAL_NO_ENUM_GL_OES_TEXTURE_CUBE_MAP
+#endif
+
+#if (defined(GL_OES_TEXTURE_CUBE_MAP) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_TEXTURE_CUBE_MAP)) && !defined(REGAL_NO_TYPEDEF_GL_OES_TEXTURE_CUBE_MAP)
+#define REGAL_NO_TYPEDEF_GL_OES_TEXTURE_CUBE_MAP
+#endif
+
+#if (defined(GL_OES_TEXTURE_CUBE_MAP) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_TEXTURE_CUBE_MAP)) && !defined(REGAL_NO_NAMESPACE_GL_OES_TEXTURE_CUBE_MAP)
+#define REGAL_NO_NAMESPACE_GL_OES_TEXTURE_CUBE_MAP
+#endif
+
+#if (defined(GL_OES_TEXTURE_CUBE_MAP) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_TEXTURE_CUBE_MAP)) && !defined(REGAL_NO_DECLARATION_GL_OES_TEXTURE_CUBE_MAP)
+#define REGAL_NO_DECLARATION_GL_OES_TEXTURE_CUBE_MAP
+#endif
+
+#ifndef GL_OES_texture_cube_map
+#define GL_OES_texture_cube_map 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_TEXTURE_CUBE_MAP
+#define GL_TEXTURE_GEN_MODE_OES            0x2500     /* 9472 */
+#define GL_NORMAL_MAP_OES                  0x8511     /* 34065 */
+#define GL_REFLECTION_MAP_OES              0x8512     /* 34066 */
+#define GL_TEXTURE_CUBE_MAP_OES            0x8513     /* 34067 */
+#define GL_TEXTURE_BINDING_CUBE_MAP_OES    0x8514     /* 34068 */
+#define GL_TEXTURE_CUBE_MAP_POSITIVE_X_OES 0x8515     /* 34069 */
+#define GL_TEXTURE_CUBE_MAP_NEGATIVE_X_OES 0x8516     /* 34070 */
+#define GL_TEXTURE_CUBE_MAP_POSITIVE_Y_OES 0x8517     /* 34071 */
+#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_OES 0x8518     /* 34072 */
+#define GL_TEXTURE_CUBE_MAP_POSITIVE_Z_OES 0x8519     /* 34073 */
+#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_OES 0x851a     /* 34074 */
+#define GL_MAX_CUBE_MAP_TEXTURE_SIZE_OES   0x851c     /* 34076 */
+#define GL_TEXTURE_GEN_STR_OES             0x8d60     /* 36192 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_TEXTURE_CUBE_MAP
+typedef void (REGAL_CALL *PFNGLGETTEXGENFVOESPROC)(GLenum coord, GLenum pname, GLfloat *params);
+typedef void (REGAL_CALL *PFNGLGETTEXGENIVOESPROC)(GLenum coord, GLenum pname, GLint *params);
+typedef void (REGAL_CALL *PFNGLGETTEXGENXVOESPROC)(GLenum coord, GLenum pname, GLfixed *params);
+typedef void (REGAL_CALL *PFNGLTEXGENFOESPROC)(GLenum coord, GLenum pname, GLfloat param);
+typedef void (REGAL_CALL *PFNGLTEXGENFVOESPROC)(GLenum coord, GLenum pname, const GLfloat *params);
+typedef void (REGAL_CALL *PFNGLTEXGENIOESPROC)(GLenum coord, GLenum pname, GLint param);
+typedef void (REGAL_CALL *PFNGLTEXGENIVOESPROC)(GLenum coord, GLenum pname, const GLint *params);
+typedef void (REGAL_CALL *PFNGLTEXGENXOESPROC)(GLenum coord, GLenum pname, GLfixed param);
+typedef void (REGAL_CALL *PFNGLTEXGENXVOESPROC)(GLenum coord, GLenum pname, const GLfixed *params);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_TEXTURE_CUBE_MAP
+#define glGetTexGenfvOES                    rglGetTexGenfvOES
+#define glGetTexGenivOES                    rglGetTexGenivOES
+#define glGetTexGenxvOES                    rglGetTexGenxvOES
+#define glTexGenfOES                        rglTexGenfOES
+#define glTexGenfvOES                       rglTexGenfvOES
+#define glTexGeniOES                        rglTexGeniOES
+#define glTexGenivOES                       rglTexGenivOES
+#define glTexGenxOES                        rglTexGenxOES
+#define glTexGenxvOES                       rglTexGenxvOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_TEXTURE_CUBE_MAP
+REGAL_DECL void REGAL_CALL glGetTexGenfvOES(GLenum coord, GLenum pname, GLfloat *params);
+REGAL_DECL void REGAL_CALL glGetTexGenivOES(GLenum coord, GLenum pname, GLint *params);
+REGAL_DECL void REGAL_CALL glGetTexGenxvOES(GLenum coord, GLenum pname, GLfixed *params);
+REGAL_DECL void REGAL_CALL glTexGenfOES(GLenum coord, GLenum pname, GLfloat param);
+REGAL_DECL void REGAL_CALL glTexGenfvOES(GLenum coord, GLenum pname, const GLfloat *params);
+REGAL_DECL void REGAL_CALL glTexGeniOES(GLenum coord, GLenum pname, GLint param);
+REGAL_DECL void REGAL_CALL glTexGenivOES(GLenum coord, GLenum pname, const GLint *params);
+REGAL_DECL void REGAL_CALL glTexGenxOES(GLenum coord, GLenum pname, GLfixed param);
+REGAL_DECL void REGAL_CALL glTexGenxvOES(GLenum coord, GLenum pname, const GLfixed *params);
+#endif
+
+/**
+ ** GL_OES_texture_mirrored_repeat
+ **/
+
+#if (defined(GL_OES_TEXTURE_MIRRORED_REPEAT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_TEXTURE_MIRRORED_REPEAT)) && !defined(REGAL_NO_ENUM_GL_OES_TEXTURE_MIRRORED_REPEAT)
+#define REGAL_NO_ENUM_GL_OES_TEXTURE_MIRRORED_REPEAT
+#endif
+
+#if (defined(GL_OES_TEXTURE_MIRRORED_REPEAT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_TEXTURE_MIRRORED_REPEAT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_TEXTURE_MIRRORED_REPEAT)
+#define REGAL_NO_TYPEDEF_GL_OES_TEXTURE_MIRRORED_REPEAT
+#endif
+
+#if (defined(GL_OES_TEXTURE_MIRRORED_REPEAT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_TEXTURE_MIRRORED_REPEAT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_TEXTURE_MIRRORED_REPEAT)
+#define REGAL_NO_NAMESPACE_GL_OES_TEXTURE_MIRRORED_REPEAT
+#endif
+
+#if (defined(GL_OES_TEXTURE_MIRRORED_REPEAT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_TEXTURE_MIRRORED_REPEAT)) && !defined(REGAL_NO_DECLARATION_GL_OES_TEXTURE_MIRRORED_REPEAT)
+#define REGAL_NO_DECLARATION_GL_OES_TEXTURE_MIRRORED_REPEAT
+#endif
+
+#ifndef GL_OES_texture_mirrored_repeat
+#define GL_OES_texture_mirrored_repeat 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_TEXTURE_MIRRORED_REPEAT
+#define GL_MIRRORED_REPEAT 0x8370 /* 33648 */
+#endif
+
+/**
+ ** GL_OES_vertex_array_object
+ **/
+
+#if (defined(GL_OES_VERTEX_ARRAY_OBJECT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_VERTEX_ARRAY_OBJECT)) && !defined(REGAL_NO_ENUM_GL_OES_VERTEX_ARRAY_OBJECT)
+#define REGAL_NO_ENUM_GL_OES_VERTEX_ARRAY_OBJECT
+#endif
+
+#if (defined(GL_OES_VERTEX_ARRAY_OBJECT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_VERTEX_ARRAY_OBJECT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_VERTEX_ARRAY_OBJECT)
+#define REGAL_NO_TYPEDEF_GL_OES_VERTEX_ARRAY_OBJECT
+#endif
+
+#if (defined(GL_OES_VERTEX_ARRAY_OBJECT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_VERTEX_ARRAY_OBJECT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_VERTEX_ARRAY_OBJECT)
+#define REGAL_NO_NAMESPACE_GL_OES_VERTEX_ARRAY_OBJECT
+#endif
+
+#if (defined(GL_OES_VERTEX_ARRAY_OBJECT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_VERTEX_ARRAY_OBJECT)) && !defined(REGAL_NO_DECLARATION_GL_OES_VERTEX_ARRAY_OBJECT)
+#define REGAL_NO_DECLARATION_GL_OES_VERTEX_ARRAY_OBJECT
+#endif
+
+#ifndef GL_OES_vertex_array_object
+#define GL_OES_vertex_array_object 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_VERTEX_ARRAY_OBJECT
+#define GL_VERTEX_ARRAY_BINDING_OES 0x85b5 /* 34229 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_OES_VERTEX_ARRAY_OBJECT
+typedef GLboolean (REGAL_CALL *PFNGLISVERTEXARRAYOESPROC)(GLuint array);
+typedef void (REGAL_CALL *PFNGLBINDVERTEXARRAYOESPROC)(GLuint array);
+typedef void (REGAL_CALL *PFNGLDELETEVERTEXARRAYSOESPROC)(GLsizei n, const GLuint *arrays);
+typedef void (REGAL_CALL *PFNGLGENVERTEXARRAYSOESPROC)(GLsizei n, GLuint *arrays);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_OES_VERTEX_ARRAY_OBJECT
+#define glBindVertexArrayOES                rglBindVertexArrayOES
+#define glDeleteVertexArraysOES             rglDeleteVertexArraysOES
+#define glGenVertexArraysOES                rglGenVertexArraysOES
+#define glIsVertexArrayOES                  rglIsVertexArrayOES
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_OES_VERTEX_ARRAY_OBJECT
+REGAL_DECL GLboolean REGAL_CALL glIsVertexArrayOES(GLuint array);
+REGAL_DECL void REGAL_CALL glBindVertexArrayOES(GLuint array);
+REGAL_DECL void REGAL_CALL glDeleteVertexArraysOES(GLsizei n, const GLuint *arrays);
+REGAL_DECL void REGAL_CALL glGenVertexArraysOES(GLsizei n, GLuint *arrays);
+#endif
+
+/**
+ ** GL_OES_vertex_half_float
+ **/
+
+#if (defined(GL_OES_VERTEX_HALF_FLOAT) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_VERTEX_HALF_FLOAT)) && !defined(REGAL_NO_ENUM_GL_OES_VERTEX_HALF_FLOAT)
+#define REGAL_NO_ENUM_GL_OES_VERTEX_HALF_FLOAT
+#endif
+
+#if (defined(GL_OES_VERTEX_HALF_FLOAT) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_VERTEX_HALF_FLOAT)) && !defined(REGAL_NO_TYPEDEF_GL_OES_VERTEX_HALF_FLOAT)
+#define REGAL_NO_TYPEDEF_GL_OES_VERTEX_HALF_FLOAT
+#endif
+
+#if (defined(GL_OES_VERTEX_HALF_FLOAT) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_VERTEX_HALF_FLOAT)) && !defined(REGAL_NO_NAMESPACE_GL_OES_VERTEX_HALF_FLOAT)
+#define REGAL_NO_NAMESPACE_GL_OES_VERTEX_HALF_FLOAT
+#endif
+
+#if (defined(GL_OES_VERTEX_HALF_FLOAT) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_VERTEX_HALF_FLOAT)) && !defined(REGAL_NO_DECLARATION_GL_OES_VERTEX_HALF_FLOAT)
+#define REGAL_NO_DECLARATION_GL_OES_VERTEX_HALF_FLOAT
+#endif
+
+#ifndef GL_OES_vertex_half_float
+#define GL_OES_vertex_half_float 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_VERTEX_HALF_FLOAT
+#define GL_HALF_FLOAT_OES 0x8d61 /* 36193 */
+#endif
+
+/**
+ ** GL_OES_vertex_type_10_10_10_2
+ **/
+
+#if (defined(GL_OES_VERTEX_TYPE_10_10_10_2) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_OES_VERTEX_TYPE_10_10_10_2)) && !defined(REGAL_NO_ENUM_GL_OES_VERTEX_TYPE_10_10_10_2)
+#define REGAL_NO_ENUM_GL_OES_VERTEX_TYPE_10_10_10_2
+#endif
+
+#if (defined(GL_OES_VERTEX_TYPE_10_10_10_2) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_OES_VERTEX_TYPE_10_10_10_2)) && !defined(REGAL_NO_TYPEDEF_GL_OES_VERTEX_TYPE_10_10_10_2)
+#define REGAL_NO_TYPEDEF_GL_OES_VERTEX_TYPE_10_10_10_2
+#endif
+
+#if (defined(GL_OES_VERTEX_TYPE_10_10_10_2) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_OES_VERTEX_TYPE_10_10_10_2)) && !defined(REGAL_NO_NAMESPACE_GL_OES_VERTEX_TYPE_10_10_10_2)
+#define REGAL_NO_NAMESPACE_GL_OES_VERTEX_TYPE_10_10_10_2
+#endif
+
+#if (defined(GL_OES_VERTEX_TYPE_10_10_10_2) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_OES_VERTEX_TYPE_10_10_10_2)) && !defined(REGAL_NO_DECLARATION_GL_OES_VERTEX_TYPE_10_10_10_2)
+#define REGAL_NO_DECLARATION_GL_OES_VERTEX_TYPE_10_10_10_2
+#endif
+
+#ifndef GL_OES_vertex_type_10_10_10_2
+#define GL_OES_vertex_type_10_10_10_2 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_OES_VERTEX_TYPE_10_10_10_2
+#define GL_UNSIGNED_INT_10_10_10_2_OES 0x8df6     /* 36342 */
+#define GL_INT_10_10_10_2_OES          0x8df7     /* 36343 */
 #endif
 
 /**
@@ -19425,6 +22370,371 @@ REGAL_DECL void REGAL_CALL glHintPGI(GLenum target, GLint mode);
 #define GL_MAT_EMISSION_BIT_PGI            0x800000       /* 8388608 */
 #define GL_NORMAL_BIT_PGI                  0x8000000      /* 134217728 */
 #define GL_TEXCOORD4_BIT_PGI               0x80000000     /* 2147483648 */
+#endif
+
+/**
+ ** GL_QCOM_alpha_test
+ **/
+
+#if (defined(GL_QCOM_ALPHA_TEST) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_ALPHA_TEST)) && !defined(REGAL_NO_ENUM_GL_QCOM_ALPHA_TEST)
+#define REGAL_NO_ENUM_GL_QCOM_ALPHA_TEST
+#endif
+
+#if (defined(GL_QCOM_ALPHA_TEST) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_ALPHA_TEST)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_ALPHA_TEST)
+#define REGAL_NO_TYPEDEF_GL_QCOM_ALPHA_TEST
+#endif
+
+#if (defined(GL_QCOM_ALPHA_TEST) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_ALPHA_TEST)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_ALPHA_TEST)
+#define REGAL_NO_NAMESPACE_GL_QCOM_ALPHA_TEST
+#endif
+
+#if (defined(GL_QCOM_ALPHA_TEST) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_ALPHA_TEST)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_ALPHA_TEST)
+#define REGAL_NO_DECLARATION_GL_QCOM_ALPHA_TEST
+#endif
+
+#ifndef GL_QCOM_alpha_test
+#define GL_QCOM_alpha_test 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_QCOM_ALPHA_TEST
+#define GL_ALPHA_TEST_QCOM      0xbc0     /* 3008 */
+#define GL_ALPHA_TEST_FUNC_QCOM 0xbc1     /* 3009 */
+#define GL_ALPHA_TEST_REF_QCOM  0xbc2     /* 3010 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_QCOM_ALPHA_TEST
+typedef void (REGAL_CALL *PFNGLALPHAFUNCQCOMPROC)(GLenum func, GLclampf ref);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_QCOM_ALPHA_TEST
+#define glAlphaFuncQCOM                     rglAlphaFuncQCOM
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_QCOM_ALPHA_TEST
+REGAL_DECL void REGAL_CALL glAlphaFuncQCOM(GLenum func, GLclampf ref);
+#endif
+
+/**
+ ** GL_QCOM_binning_control
+ **/
+
+#if (defined(GL_QCOM_BINNING_CONTROL) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_BINNING_CONTROL)) && !defined(REGAL_NO_ENUM_GL_QCOM_BINNING_CONTROL)
+#define REGAL_NO_ENUM_GL_QCOM_BINNING_CONTROL
+#endif
+
+#if (defined(GL_QCOM_BINNING_CONTROL) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_BINNING_CONTROL)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_BINNING_CONTROL)
+#define REGAL_NO_TYPEDEF_GL_QCOM_BINNING_CONTROL
+#endif
+
+#if (defined(GL_QCOM_BINNING_CONTROL) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_BINNING_CONTROL)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_BINNING_CONTROL)
+#define REGAL_NO_NAMESPACE_GL_QCOM_BINNING_CONTROL
+#endif
+
+#if (defined(GL_QCOM_BINNING_CONTROL) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_BINNING_CONTROL)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_BINNING_CONTROL)
+#define REGAL_NO_DECLARATION_GL_QCOM_BINNING_CONTROL
+#endif
+
+#ifndef GL_QCOM_binning_control
+#define GL_QCOM_binning_control 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_QCOM_BINNING_CONTROL
+#define GL_DONT_CARE                         0x1100     /* 4352 */
+#define GL_BINNING_CONTROL_HINT_QCOM         0x8fb0     /* 36784 */
+#define GL_CPU_OPTIMIZED_QCOM                0x8fb1     /* 36785 */
+#define GL_GPU_OPTIMIZED_QCOM                0x8fb2     /* 36786 */
+#define GL_RENDER_DIRECT_TO_FRAMEBUFFER_QCOM 0x8fb3     /* 36787 */
+#endif
+
+/**
+ ** GL_QCOM_driver_control
+ **/
+
+#if (defined(GL_QCOM_DRIVER_CONTROL) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_DRIVER_CONTROL)) && !defined(REGAL_NO_ENUM_GL_QCOM_DRIVER_CONTROL)
+#define REGAL_NO_ENUM_GL_QCOM_DRIVER_CONTROL
+#endif
+
+#if (defined(GL_QCOM_DRIVER_CONTROL) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_DRIVER_CONTROL)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_DRIVER_CONTROL)
+#define REGAL_NO_TYPEDEF_GL_QCOM_DRIVER_CONTROL
+#endif
+
+#if (defined(GL_QCOM_DRIVER_CONTROL) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_DRIVER_CONTROL)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_DRIVER_CONTROL)
+#define REGAL_NO_NAMESPACE_GL_QCOM_DRIVER_CONTROL
+#endif
+
+#if (defined(GL_QCOM_DRIVER_CONTROL) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_DRIVER_CONTROL)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_DRIVER_CONTROL)
+#define REGAL_NO_DECLARATION_GL_QCOM_DRIVER_CONTROL
+#endif
+
+#ifndef GL_QCOM_driver_control
+#define GL_QCOM_driver_control 1
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_QCOM_DRIVER_CONTROL
+typedef void (REGAL_CALL *PFNGLDISABLEDRIVERCONTROLQCOMPROC)(GLuint driverControl);
+typedef void (REGAL_CALL *PFNGLENABLEDRIVERCONTROLQCOMPROC)(GLuint driverControl);
+typedef void (REGAL_CALL *PFNGLGETDRIVERCONTROLSQCOMPROC)(GLint *num, GLsizei size, GLuint *driverControls);
+typedef void (REGAL_CALL *PFNGLGETDRIVERCONTROLSTRINGQCOMPROC)(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_QCOM_DRIVER_CONTROL
+#define glDisableDriverControlQCOM          rglDisableDriverControlQCOM
+#define glEnableDriverControlQCOM           rglEnableDriverControlQCOM
+#define glGetDriverControlStringQCOM        rglGetDriverControlStringQCOM
+#define glGetDriverControlsQCOM             rglGetDriverControlsQCOM
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_QCOM_DRIVER_CONTROL
+REGAL_DECL void REGAL_CALL glDisableDriverControlQCOM(GLuint driverControl);
+REGAL_DECL void REGAL_CALL glEnableDriverControlQCOM(GLuint driverControl);
+REGAL_DECL void REGAL_CALL glGetDriverControlStringQCOM(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString);
+REGAL_DECL void REGAL_CALL glGetDriverControlsQCOM(GLint *num, GLsizei size, GLuint *driverControls);
+#endif
+
+/**
+ ** GL_QCOM_extended_get
+ **/
+
+#if (defined(GL_QCOM_EXTENDED_GET) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET)) && !defined(REGAL_NO_ENUM_GL_QCOM_EXTENDED_GET)
+#define REGAL_NO_ENUM_GL_QCOM_EXTENDED_GET
+#endif
+
+#if (defined(GL_QCOM_EXTENDED_GET) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_EXTENDED_GET)
+#define REGAL_NO_TYPEDEF_GL_QCOM_EXTENDED_GET
+#endif
+
+#if (defined(GL_QCOM_EXTENDED_GET) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_EXTENDED_GET)
+#define REGAL_NO_NAMESPACE_GL_QCOM_EXTENDED_GET
+#endif
+
+#if (defined(GL_QCOM_EXTENDED_GET) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_EXTENDED_GET)
+#define REGAL_NO_DECLARATION_GL_QCOM_EXTENDED_GET
+#endif
+
+#ifndef GL_QCOM_extended_get
+#define GL_QCOM_extended_get 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_QCOM_EXTENDED_GET
+#define GL_TEXTURE_WIDTH_QCOM           0x8bd2     /* 35794 */
+#define GL_TEXTURE_HEIGHT_QCOM          0x8bd3     /* 35795 */
+#define GL_TEXTURE_DEPTH_QCOM           0x8bd4     /* 35796 */
+#define GL_TEXTURE_INTERNAL_FORMAT_QCOM 0x8bd5     /* 35797 */
+#define GL_TEXTURE_FORMAT_QCOM          0x8bd6     /* 35798 */
+#define GL_TEXTURE_TYPE_QCOM            0x8bd7     /* 35799 */
+#define GL_TEXTURE_IMAGE_VALID_QCOM     0x8bd8     /* 35800 */
+#define GL_TEXTURE_NUM_LEVELS_QCOM      0x8bd9     /* 35801 */
+#define GL_TEXTURE_TARGET_QCOM          0x8bda     /* 35802 */
+#define GL_TEXTURE_OBJECT_VALID_QCOM    0x8bdb     /* 35803 */
+#define GL_STATE_RESTORE                0x8bdc     /* 35804 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_QCOM_EXTENDED_GET
+typedef void (REGAL_CALL *PFNGLEXTGETBUFFERPOINTERVQCOMPROC)(GLenum target, GLvoid **params);
+typedef void (REGAL_CALL *PFNGLEXTGETBUFFERSQCOMPROC)(GLuint *buffers, GLint maxBuffers, GLint *numBuffers);
+typedef void (REGAL_CALL *PFNGLEXTGETFRAMEBUFFERSQCOMPROC)(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers);
+typedef void (REGAL_CALL *PFNGLEXTGETRENDERBUFFERSQCOMPROC)(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers);
+typedef void (REGAL_CALL *PFNGLEXTGETTEXLEVELPARAMETERIVQCOMPROC)(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params);
+typedef void (REGAL_CALL *PFNGLEXTGETTEXSUBIMAGEQCOMPROC)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels);
+typedef void (REGAL_CALL *PFNGLEXTGETTEXTURESQCOMPROC)(GLuint *textures, GLint maxTextures, GLint *numTextures);
+typedef void (REGAL_CALL *PFNGLEXTTEXOBJECTSTATEOVERRIDEIQCOMPROC)(GLenum target, GLenum pname, GLint param);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_QCOM_EXTENDED_GET
+#define glExtGetBufferPointervQCOM          rglExtGetBufferPointervQCOM
+#define glExtGetBuffersQCOM                 rglExtGetBuffersQCOM
+#define glExtGetFramebuffersQCOM            rglExtGetFramebuffersQCOM
+#define glExtGetRenderbuffersQCOM           rglExtGetRenderbuffersQCOM
+#define glExtGetTexLevelParameterivQCOM     rglExtGetTexLevelParameterivQCOM
+#define glExtGetTexSubImageQCOM             rglExtGetTexSubImageQCOM
+#define glExtGetTexturesQCOM                rglExtGetTexturesQCOM
+#define glExtTexObjectStateOverrideiQCOM    rglExtTexObjectStateOverrideiQCOM
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_QCOM_EXTENDED_GET
+REGAL_DECL void REGAL_CALL glExtGetBufferPointervQCOM(GLenum target, GLvoid **params);
+REGAL_DECL void REGAL_CALL glExtGetBuffersQCOM(GLuint *buffers, GLint maxBuffers, GLint *numBuffers);
+REGAL_DECL void REGAL_CALL glExtGetFramebuffersQCOM(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers);
+REGAL_DECL void REGAL_CALL glExtGetRenderbuffersQCOM(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers);
+REGAL_DECL void REGAL_CALL glExtGetTexLevelParameterivQCOM(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params);
+REGAL_DECL void REGAL_CALL glExtGetTexSubImageQCOM(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels);
+REGAL_DECL void REGAL_CALL glExtGetTexturesQCOM(GLuint *textures, GLint maxTextures, GLint *numTextures);
+REGAL_DECL void REGAL_CALL glExtTexObjectStateOverrideiQCOM(GLenum target, GLenum pname, GLint param);
+#endif
+
+/**
+ ** GL_QCOM_extended_get2
+ **/
+
+#if (defined(GL_QCOM_EXTENDED_GET2) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET2)) && !defined(REGAL_NO_ENUM_GL_QCOM_EXTENDED_GET2)
+#define REGAL_NO_ENUM_GL_QCOM_EXTENDED_GET2
+#endif
+
+#if (defined(GL_QCOM_EXTENDED_GET2) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET2)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_EXTENDED_GET2)
+#define REGAL_NO_TYPEDEF_GL_QCOM_EXTENDED_GET2
+#endif
+
+#if (defined(GL_QCOM_EXTENDED_GET2) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET2)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_EXTENDED_GET2)
+#define REGAL_NO_NAMESPACE_GL_QCOM_EXTENDED_GET2
+#endif
+
+#if (defined(GL_QCOM_EXTENDED_GET2) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_EXTENDED_GET2)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_EXTENDED_GET2)
+#define REGAL_NO_DECLARATION_GL_QCOM_EXTENDED_GET2
+#endif
+
+#ifndef GL_QCOM_extended_get2
+#define GL_QCOM_extended_get2 1
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_QCOM_EXTENDED_GET2
+typedef GLboolean (REGAL_CALL *PFNGLEXTISPROGRAMBINARYQCOMPROC)(GLuint program);
+typedef void (REGAL_CALL *PFNGLEXTGETPROGRAMBINARYSOURCEQCOMPROC)(GLuint program, GLenum shadertype, GLchar *source, GLint *length);
+typedef void (REGAL_CALL *PFNGLEXTGETPROGRAMSQCOMPROC)(GLuint *programs, GLint maxPrograms, GLint *numPrograms);
+typedef void (REGAL_CALL *PFNGLEXTGETSHADERSQCOMPROC)(GLuint *shaders, GLint maxShaders, GLint *numShaders);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_QCOM_EXTENDED_GET2
+#define glExtGetProgramBinarySourceQCOM     rglExtGetProgramBinarySourceQCOM
+#define glExtGetProgramsQCOM                rglExtGetProgramsQCOM
+#define glExtGetShadersQCOM                 rglExtGetShadersQCOM
+#define glExtIsProgramBinaryQCOM            rglExtIsProgramBinaryQCOM
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_QCOM_EXTENDED_GET2
+REGAL_DECL GLboolean REGAL_CALL glExtIsProgramBinaryQCOM(GLuint program);
+REGAL_DECL void REGAL_CALL glExtGetProgramBinarySourceQCOM(GLuint program, GLenum shadertype, GLchar *source, GLint *length);
+REGAL_DECL void REGAL_CALL glExtGetProgramsQCOM(GLuint *programs, GLint maxPrograms, GLint *numPrograms);
+REGAL_DECL void REGAL_CALL glExtGetShadersQCOM(GLuint *shaders, GLint maxShaders, GLint *numShaders);
+#endif
+
+/**
+ ** GL_QCOM_perfmon_global_mode
+ **/
+
+#if (defined(GL_QCOM_PERFMON_GLOBAL_MODE) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_PERFMON_GLOBAL_MODE)) && !defined(REGAL_NO_ENUM_GL_QCOM_PERFMON_GLOBAL_MODE)
+#define REGAL_NO_ENUM_GL_QCOM_PERFMON_GLOBAL_MODE
+#endif
+
+#if (defined(GL_QCOM_PERFMON_GLOBAL_MODE) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_PERFMON_GLOBAL_MODE)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_PERFMON_GLOBAL_MODE)
+#define REGAL_NO_TYPEDEF_GL_QCOM_PERFMON_GLOBAL_MODE
+#endif
+
+#if (defined(GL_QCOM_PERFMON_GLOBAL_MODE) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_PERFMON_GLOBAL_MODE)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_PERFMON_GLOBAL_MODE)
+#define REGAL_NO_NAMESPACE_GL_QCOM_PERFMON_GLOBAL_MODE
+#endif
+
+#if (defined(GL_QCOM_PERFMON_GLOBAL_MODE) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_PERFMON_GLOBAL_MODE)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_PERFMON_GLOBAL_MODE)
+#define REGAL_NO_DECLARATION_GL_QCOM_PERFMON_GLOBAL_MODE
+#endif
+
+#ifndef GL_QCOM_perfmon_global_mode
+#define GL_QCOM_perfmon_global_mode 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_QCOM_PERFMON_GLOBAL_MODE
+#define GL_PERFMON_GLOBAL_MODE_QCOM 0x8fa0 /* 36768 */
+#endif
+
+/**
+ ** GL_QCOM_tiled_rendering
+ **/
+
+#if (defined(GL_QCOM_TILED_RENDERING) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_TILED_RENDERING)) && !defined(REGAL_NO_ENUM_GL_QCOM_TILED_RENDERING)
+#define REGAL_NO_ENUM_GL_QCOM_TILED_RENDERING
+#endif
+
+#if (defined(GL_QCOM_TILED_RENDERING) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_TILED_RENDERING)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_TILED_RENDERING)
+#define REGAL_NO_TYPEDEF_GL_QCOM_TILED_RENDERING
+#endif
+
+#if (defined(GL_QCOM_TILED_RENDERING) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_TILED_RENDERING)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_TILED_RENDERING)
+#define REGAL_NO_NAMESPACE_GL_QCOM_TILED_RENDERING
+#endif
+
+#if (defined(GL_QCOM_TILED_RENDERING) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_TILED_RENDERING)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_TILED_RENDERING)
+#define REGAL_NO_DECLARATION_GL_QCOM_TILED_RENDERING
+#endif
+
+#ifndef GL_QCOM_tiled_rendering
+#define GL_QCOM_tiled_rendering 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_QCOM_TILED_RENDERING
+#define GL_COLOR_BUFFER_BIT0_QCOM       0x1
+#define GL_COLOR_BUFFER_BIT4_QCOM       0x10           /* 16 */
+#define GL_DEPTH_BUFFER_BIT0_QCOM       0x100          /* 256 */
+#define GL_DEPTH_BUFFER_BIT4_QCOM       0x1000         /* 4096 */
+#define GL_STENCIL_BUFFER_BIT0_QCOM     0x10000        /* 65536 */
+#define GL_STENCIL_BUFFER_BIT4_QCOM     0x100000       /* 1048576 */
+#define GL_MULTISAMPLE_BUFFER_BIT0_QCOM 0x1000000      /* 16777216 */
+#define GL_MULTISAMPLE_BUFFER_BIT4_QCOM 0x10000000     /* 268435456 */
+#define GL_COLOR_BUFFER_BIT1_QCOM       0x2
+#define GL_COLOR_BUFFER_BIT5_QCOM       0x20           /* 32 */
+#define GL_DEPTH_BUFFER_BIT1_QCOM       0x200          /* 512 */
+#define GL_DEPTH_BUFFER_BIT5_QCOM       0x2000         /* 8192 */
+#define GL_STENCIL_BUFFER_BIT1_QCOM     0x20000        /* 131072 */
+#define GL_STENCIL_BUFFER_BIT5_QCOM     0x200000       /* 2097152 */
+#define GL_MULTISAMPLE_BUFFER_BIT1_QCOM 0x2000000      /* 33554432 */
+#define GL_MULTISAMPLE_BUFFER_BIT5_QCOM 0x20000000     /* 536870912 */
+#define GL_COLOR_BUFFER_BIT2_QCOM       0x4
+#define GL_COLOR_BUFFER_BIT6_QCOM       0x40           /* 64 */
+#define GL_DEPTH_BUFFER_BIT2_QCOM       0x400          /* 1024 */
+#define GL_DEPTH_BUFFER_BIT6_QCOM       0x4000         /* 16384 */
+#define GL_STENCIL_BUFFER_BIT2_QCOM     0x40000        /* 262144 */
+#define GL_STENCIL_BUFFER_BIT6_QCOM     0x400000       /* 4194304 */
+#define GL_MULTISAMPLE_BUFFER_BIT2_QCOM 0x4000000      /* 67108864 */
+#define GL_MULTISAMPLE_BUFFER_BIT6_QCOM 0x40000000     /* 1073741824 */
+#define GL_COLOR_BUFFER_BIT3_QCOM       0x8
+#define GL_COLOR_BUFFER_BIT7_QCOM       0x80           /* 128 */
+#define GL_DEPTH_BUFFER_BIT3_QCOM       0x800          /* 2048 */
+#define GL_DEPTH_BUFFER_BIT7_QCOM       0x8000         /* 32768 */
+#define GL_STENCIL_BUFFER_BIT3_QCOM     0x80000        /* 524288 */
+#define GL_STENCIL_BUFFER_BIT7_QCOM     0x800000       /* 8388608 */
+#define GL_MULTISAMPLE_BUFFER_BIT3_QCOM 0x8000000      /* 134217728 */
+#define GL_MULTISAMPLE_BUFFER_BIT7_QCOM 0x80000000     /* 2147483648 */
+#endif
+
+#ifndef REGAL_NO_TYPEDEF_GL_QCOM_TILED_RENDERING
+typedef void (REGAL_CALL *PFNGLENDTILINGQCOMPROC)(GLbitfield preserveMask);
+typedef void (REGAL_CALL *PFNGLSTARTTILINGQCOMPROC)(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask);
+#endif
+
+#ifndef REGAL_NO_NAMESPACE_GL_QCOM_TILED_RENDERING
+#define glEndTilingQCOM                     rglEndTilingQCOM
+#define glStartTilingQCOM                   rglStartTilingQCOM
+#endif
+
+#ifndef REGAL_NO_DECLARATION_GL_QCOM_TILED_RENDERING
+REGAL_DECL void REGAL_CALL glEndTilingQCOM(GLbitfield preserveMask);
+REGAL_DECL void REGAL_CALL glStartTilingQCOM(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask);
+#endif
+
+/**
+ ** GL_QCOM_writeonly_rendering
+ **/
+
+#if (defined(GL_QCOM_WRITEONLY_RENDERING) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_QCOM_WRITEONLY_RENDERING)) && !defined(REGAL_NO_ENUM_GL_QCOM_WRITEONLY_RENDERING)
+#define REGAL_NO_ENUM_GL_QCOM_WRITEONLY_RENDERING
+#endif
+
+#if (defined(GL_QCOM_WRITEONLY_RENDERING) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_QCOM_WRITEONLY_RENDERING)) && !defined(REGAL_NO_TYPEDEF_GL_QCOM_WRITEONLY_RENDERING)
+#define REGAL_NO_TYPEDEF_GL_QCOM_WRITEONLY_RENDERING
+#endif
+
+#if (defined(GL_QCOM_WRITEONLY_RENDERING) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_QCOM_WRITEONLY_RENDERING)) && !defined(REGAL_NO_NAMESPACE_GL_QCOM_WRITEONLY_RENDERING)
+#define REGAL_NO_NAMESPACE_GL_QCOM_WRITEONLY_RENDERING
+#endif
+
+#if (defined(GL_QCOM_WRITEONLY_RENDERING) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_QCOM_WRITEONLY_RENDERING)) && !defined(REGAL_NO_DECLARATION_GL_QCOM_WRITEONLY_RENDERING)
+#define REGAL_NO_DECLARATION_GL_QCOM_WRITEONLY_RENDERING
+#endif
+
+#ifndef GL_QCOM_writeonly_rendering
+#define GL_QCOM_writeonly_rendering 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_QCOM_WRITEONLY_RENDERING
+#define GL_WRITEONLY_RENDERING_QCOM 0x8823 /* 34851 */
 #endif
 
 /**
@@ -25474,6 +28784,34 @@ REGAL_DECL void REGAL_CALL glBlendFunci(GLuint buf, GLenum src, GLenum dst);
 #ifndef REGAL_NO_ENUM_GL_VERSION_4_3
 #define GL_NUM_SHADING_LANGUAGE_VERSIONS 0x82e9     /* 33513 */
 #define GL_VERTEX_ATTRIB_ARRAY_LONG      0x874e     /* 34638 */
+#endif
+
+/**
+ ** GL_VIV_shader_binary
+ **/
+
+#if (defined(GL_VIV_SHADER_BINARY) || defined(REGAL_NO_ENUM) || defined(REGAL_NO_GL_VIV_SHADER_BINARY)) && !defined(REGAL_NO_ENUM_GL_VIV_SHADER_BINARY)
+#define REGAL_NO_ENUM_GL_VIV_SHADER_BINARY
+#endif
+
+#if (defined(GL_VIV_SHADER_BINARY) || defined(REGAL_NO_TYPEDEF) || defined(REGAL_NO_GL_VIV_SHADER_BINARY)) && !defined(REGAL_NO_TYPEDEF_GL_VIV_SHADER_BINARY)
+#define REGAL_NO_TYPEDEF_GL_VIV_SHADER_BINARY
+#endif
+
+#if (defined(GL_VIV_SHADER_BINARY) || !defined(REGAL_NAMESPACE) || defined(REGAL_NO_GL_VIV_SHADER_BINARY)) && !defined(REGAL_NO_NAMESPACE_GL_VIV_SHADER_BINARY)
+#define REGAL_NO_NAMESPACE_GL_VIV_SHADER_BINARY
+#endif
+
+#if (defined(GL_VIV_SHADER_BINARY) || defined(REGAL_NO_DECLARATION) || defined(REGAL_NO_GL_VIV_SHADER_BINARY)) && !defined(REGAL_NO_DECLARATION_GL_VIV_SHADER_BINARY)
+#define REGAL_NO_DECLARATION_GL_VIV_SHADER_BINARY
+#endif
+
+#ifndef GL_VIV_shader_binary
+#define GL_VIV_shader_binary 1
+#endif
+
+#ifndef REGAL_NO_ENUM_GL_VIV_SHADER_BINARY
+#define GL_SHADER_BINARY_VIV 0x8fc4 /* 36804 */
 #endif
 
 /**

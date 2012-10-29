@@ -608,6 +608,9 @@ PFNGLSELECTPERFMONITORCOUNTERSAMDPROC __glewSelectPerfMonitorCountersAMD = NULL;
 
 PFNGLSETMULTISAMPLEFVAMDPROC __glewSetMultisamplefvAMD = NULL;
 
+PFNGLTEXSTORAGESPARSEAMDPROC __glewTexStorageSparseAMD = NULL;
+PFNGLTEXTURESTORAGESPARSEAMDPROC __glewTextureStorageSparseAMD = NULL;
+
 PFNGLSTENCILOPVALUEAMDPROC __glewStencilOpValueAMD = NULL;
 
 PFNGLTESSELLATIONFACTORAMDPROC __glewTessellationFactorAMD = NULL;
@@ -1981,6 +1984,10 @@ PFNGLSECONDARYCOLORPOINTERLISTIBMPROC __glewSecondaryColorPointerListIBM = NULL;
 PFNGLTEXCOORDPOINTERLISTIBMPROC __glewTexCoordPointerListIBM = NULL;
 PFNGLVERTEXPOINTERLISTIBMPROC __glewVertexPointerListIBM = NULL;
 
+PFNGLMAPTEXTURE2DINTELPROC __glewMapTexture2DINTEL = NULL;
+PFNGLSYNCTEXTUREINTELPROC __glewSyncTextureINTEL = NULL;
+PFNGLUNMAPTEXTURE2DINTELPROC __glewUnmapTexture2DINTEL = NULL;
+
 PFNGLCOLORPOINTERVINTELPROC __glewColorPointervINTEL = NULL;
 PFNGLNORMALPOINTERVINTELPROC __glewNormalPointervINTEL = NULL;
 PFNGLTEXCOORDPOINTERVINTELPROC __glewTexCoordPointervINTEL = NULL;
@@ -2058,6 +2065,8 @@ PFNGLCOPYIMAGESUBDATANVPROC __glewCopyImageSubDataNV = NULL;
 PFNGLCLEARDEPTHDNVPROC __glewClearDepthdNV = NULL;
 PFNGLDEPTHBOUNDSDNVPROC __glewDepthBoundsdNV = NULL;
 PFNGLDEPTHRANGEDNVPROC __glewDepthRangedNV = NULL;
+
+PFNGLDRAWTEXTURENVPROC __glewDrawTextureNV = NULL;
 
 PFNGLEVALMAPSNVPROC __glewEvalMapsNV = NULL;
 PFNGLGETMAPATTRIBPARAMETERFVNVPROC __glewGetMapAttribParameterfvNV = NULL;
@@ -2678,6 +2687,8 @@ GLboolean __GLEW_AMD_query_buffer_object = GL_FALSE;
 GLboolean __GLEW_AMD_sample_positions = GL_FALSE;
 GLboolean __GLEW_AMD_seamless_cubemap_per_texture = GL_FALSE;
 GLboolean __GLEW_AMD_shader_stencil_export = GL_FALSE;
+GLboolean __GLEW_AMD_shader_trinary_minmax = GL_FALSE;
+GLboolean __GLEW_AMD_sparse_texture = GL_FALSE;
 GLboolean __GLEW_AMD_stencil_operation_extended = GL_FALSE;
 GLboolean __GLEW_AMD_texture_texture4 = GL_FALSE;
 GLboolean __GLEW_AMD_transform_feedback3_lines_triangles = GL_FALSE;
@@ -2964,6 +2975,7 @@ GLboolean __GLEW_IBM_texture_mirrored_repeat = GL_FALSE;
 GLboolean __GLEW_IBM_vertex_array_lists = GL_FALSE;
 GLboolean __GLEW_INGR_color_clamp = GL_FALSE;
 GLboolean __GLEW_INGR_interlace_read = GL_FALSE;
+GLboolean __GLEW_INTEL_map_texture = GL_FALSE;
 GLboolean __GLEW_INTEL_parallel_arrays = GL_FALSE;
 GLboolean __GLEW_INTEL_texture_scissor = GL_FALSE;
 GLboolean __GLEW_KHR_debug = GL_FALSE;
@@ -2986,6 +2998,7 @@ GLboolean __GLEW_NV_deep_texture3D = GL_FALSE;
 GLboolean __GLEW_NV_depth_buffer_float = GL_FALSE;
 GLboolean __GLEW_NV_depth_clamp = GL_FALSE;
 GLboolean __GLEW_NV_depth_range_unclamped = GL_FALSE;
+GLboolean __GLEW_NV_draw_texture = GL_FALSE;
 GLboolean __GLEW_NV_evaluators = GL_FALSE;
 GLboolean __GLEW_NV_explicit_multisample = GL_FALSE;
 GLboolean __GLEW_NV_fence = GL_FALSE;
@@ -3703,6 +3716,24 @@ static GLboolean _glewInit_GL_AMD_sample_positions (GLEW_CONTEXT_ARG_DEF_INIT)
 #ifdef GL_AMD_shader_stencil_export
 
 #endif /* GL_AMD_shader_stencil_export */
+
+#ifdef GL_AMD_shader_trinary_minmax
+
+#endif /* GL_AMD_shader_trinary_minmax */
+
+#ifdef GL_AMD_sparse_texture
+
+static GLboolean _glewInit_GL_AMD_sparse_texture (GLEW_CONTEXT_ARG_DEF_INIT)
+{
+  GLboolean r = GL_FALSE;
+
+  r = ((glTexStorageSparseAMD = (PFNGLTEXSTORAGESPARSEAMDPROC)glewGetProcAddress((const GLubyte*)"glTexStorageSparseAMD")) == NULL) || r;
+  r = ((glTextureStorageSparseAMD = (PFNGLTEXTURESTORAGESPARSEAMDPROC)glewGetProcAddress((const GLubyte*)"glTextureStorageSparseAMD")) == NULL) || r;
+
+  return r;
+}
+
+#endif /* GL_AMD_sparse_texture */
 
 #ifdef GL_AMD_stencil_operation_extended
 
@@ -7258,6 +7289,21 @@ static GLboolean _glewInit_GL_IBM_vertex_array_lists (GLEW_CONTEXT_ARG_DEF_INIT)
 
 #endif /* GL_INGR_interlace_read */
 
+#ifdef GL_INTEL_map_texture
+
+static GLboolean _glewInit_GL_INTEL_map_texture (GLEW_CONTEXT_ARG_DEF_INIT)
+{
+  GLboolean r = GL_FALSE;
+
+  r = ((glMapTexture2DINTEL = (PFNGLMAPTEXTURE2DINTELPROC)glewGetProcAddress((const GLubyte*)"glMapTexture2DINTEL")) == NULL) || r;
+  r = ((glSyncTextureINTEL = (PFNGLSYNCTEXTUREINTELPROC)glewGetProcAddress((const GLubyte*)"glSyncTextureINTEL")) == NULL) || r;
+  r = ((glUnmapTexture2DINTEL = (PFNGLUNMAPTEXTURE2DINTELPROC)glewGetProcAddress((const GLubyte*)"glUnmapTexture2DINTEL")) == NULL) || r;
+
+  return r;
+}
+
+#endif /* GL_INTEL_map_texture */
+
 #ifdef GL_INTEL_parallel_arrays
 
 static GLboolean _glewInit_GL_INTEL_parallel_arrays (GLEW_CONTEXT_ARG_DEF_INIT)
@@ -7500,6 +7546,19 @@ static GLboolean _glewInit_GL_NV_depth_buffer_float (GLEW_CONTEXT_ARG_DEF_INIT)
 #ifdef GL_NV_depth_range_unclamped
 
 #endif /* GL_NV_depth_range_unclamped */
+
+#ifdef GL_NV_draw_texture
+
+static GLboolean _glewInit_GL_NV_draw_texture (GLEW_CONTEXT_ARG_DEF_INIT)
+{
+  GLboolean r = GL_FALSE;
+
+  r = ((glDrawTextureNV = (PFNGLDRAWTEXTURENVPROC)glewGetProcAddress((const GLubyte*)"glDrawTextureNV")) == NULL) || r;
+
+  return r;
+}
+
+#endif /* GL_NV_draw_texture */
 
 #ifdef GL_NV_evaluators
 
@@ -9202,6 +9261,13 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_AMD_shader_stencil_export
   CONST_CAST(GLEW_AMD_shader_stencil_export) = _glewSearchExtension("GL_AMD_shader_stencil_export", extStart, extEnd);
 #endif /* GL_AMD_shader_stencil_export */
+#ifdef GL_AMD_shader_trinary_minmax
+  CONST_CAST(GLEW_AMD_shader_trinary_minmax) = _glewSearchExtension("GL_AMD_shader_trinary_minmax", extStart, extEnd);
+#endif /* GL_AMD_shader_trinary_minmax */
+#ifdef GL_AMD_sparse_texture
+  CONST_CAST(GLEW_AMD_sparse_texture) = _glewSearchExtension("GL_AMD_sparse_texture", extStart, extEnd);
+  if (glewExperimental || GLEW_AMD_sparse_texture) CONST_CAST(GLEW_AMD_sparse_texture) = !_glewInit_GL_AMD_sparse_texture(GLEW_CONTEXT_ARG_VAR_INIT);
+#endif /* GL_AMD_sparse_texture */
 #ifdef GL_AMD_stencil_operation_extended
   CONST_CAST(GLEW_AMD_stencil_operation_extended) = _glewSearchExtension("GL_AMD_stencil_operation_extended", extStart, extEnd);
   if (glewExperimental || GLEW_AMD_stencil_operation_extended) CONST_CAST(GLEW_AMD_stencil_operation_extended) = !_glewInit_GL_AMD_stencil_operation_extended(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -10208,6 +10274,10 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_INGR_interlace_read
   CONST_CAST(GLEW_INGR_interlace_read) = _glewSearchExtension("GL_INGR_interlace_read", extStart, extEnd);
 #endif /* GL_INGR_interlace_read */
+#ifdef GL_INTEL_map_texture
+  CONST_CAST(GLEW_INTEL_map_texture) = _glewSearchExtension("GL_INTEL_map_texture", extStart, extEnd);
+  if (glewExperimental || GLEW_INTEL_map_texture) CONST_CAST(GLEW_INTEL_map_texture) = !_glewInit_GL_INTEL_map_texture(GLEW_CONTEXT_ARG_VAR_INIT);
+#endif /* GL_INTEL_map_texture */
 #ifdef GL_INTEL_parallel_arrays
   CONST_CAST(GLEW_INTEL_parallel_arrays) = _glewSearchExtension("GL_INTEL_parallel_arrays", extStart, extEnd);
   if (glewExperimental || GLEW_INTEL_parallel_arrays) CONST_CAST(GLEW_INTEL_parallel_arrays) = !_glewInit_GL_INTEL_parallel_arrays(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -10285,6 +10355,10 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_NV_depth_range_unclamped
   CONST_CAST(GLEW_NV_depth_range_unclamped) = _glewSearchExtension("GL_NV_depth_range_unclamped", extStart, extEnd);
 #endif /* GL_NV_depth_range_unclamped */
+#ifdef GL_NV_draw_texture
+  CONST_CAST(GLEW_NV_draw_texture) = _glewSearchExtension("GL_NV_draw_texture", extStart, extEnd);
+  if (glewExperimental || GLEW_NV_draw_texture) CONST_CAST(GLEW_NV_draw_texture) = !_glewInit_GL_NV_draw_texture(GLEW_CONTEXT_ARG_VAR_INIT);
+#endif /* GL_NV_draw_texture */
 #ifdef GL_NV_evaluators
   CONST_CAST(GLEW_NV_evaluators) = _glewSearchExtension("GL_NV_evaluators", extStart, extEnd);
   if (glewExperimental || GLEW_NV_evaluators) CONST_CAST(GLEW_NV_evaluators) = !_glewInit_GL_NV_evaluators(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -11928,6 +12002,7 @@ GLboolean __GLXEW_ARB_robustness_share_group_isolation = GL_FALSE;
 GLboolean __GLXEW_ARB_vertex_buffer_object = GL_FALSE;
 GLboolean __GLXEW_ATI_pixel_format_float = GL_FALSE;
 GLboolean __GLXEW_ATI_render_texture = GL_FALSE;
+GLboolean __GLXEW_EXT_buffer_age = GL_FALSE;
 GLboolean __GLXEW_EXT_create_context_es2_profile = GL_FALSE;
 GLboolean __GLXEW_EXT_create_context_es_profile = GL_FALSE;
 GLboolean __GLXEW_EXT_fbconfig_packed_float = GL_FALSE;
@@ -12114,6 +12189,10 @@ static GLboolean _glewInit_GLX_ATI_render_texture (GLXEW_CONTEXT_ARG_DEF_INIT)
 }
 
 #endif /* GLX_ATI_render_texture */
+
+#ifdef GLX_EXT_buffer_age
+
+#endif /* GLX_EXT_buffer_age */
 
 #ifdef GLX_EXT_create_context_es2_profile
 
@@ -12697,6 +12776,9 @@ GLenum glxewContextInit (GLXEW_CONTEXT_ARG_DEF_LIST)
   CONST_CAST(GLXEW_ATI_render_texture) = _glewSearchExtension("GLX_ATI_render_texture", extStart, extEnd);
   if (glewExperimental || GLXEW_ATI_render_texture) CONST_CAST(GLXEW_ATI_render_texture) = !_glewInit_GLX_ATI_render_texture(GLEW_CONTEXT_ARG_VAR_INIT);
 #endif /* GLX_ATI_render_texture */
+#ifdef GLX_EXT_buffer_age
+  CONST_CAST(GLXEW_EXT_buffer_age) = _glewSearchExtension("GLX_EXT_buffer_age", extStart, extEnd);
+#endif /* GLX_EXT_buffer_age */
 #ifdef GLX_EXT_create_context_es2_profile
   CONST_CAST(GLXEW_EXT_create_context_es2_profile) = _glewSearchExtension("GLX_EXT_create_context_es2_profile", extStart, extEnd);
 #endif /* GLX_EXT_create_context_es2_profile */
@@ -13158,6 +13240,20 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_stencil_export", 21))
         {
           ret = GLEW_AMD_shader_stencil_export;
+          continue;
+        }
+#endif
+#ifdef GL_AMD_shader_trinary_minmax
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_trinary_minmax", 21))
+        {
+          ret = GLEW_AMD_shader_trinary_minmax;
+          continue;
+        }
+#endif
+#ifdef GL_AMD_sparse_texture
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"sparse_texture", 14))
+        {
+          ret = GLEW_AMD_sparse_texture;
           continue;
         }
 #endif
@@ -15193,6 +15289,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
       }
       if (_glewStrSame2(&pos, &len, (const GLubyte*)"INTEL_", 6))
       {
+#ifdef GL_INTEL_map_texture
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"map_texture", 11))
+        {
+          ret = GLEW_INTEL_map_texture;
+          continue;
+        }
+#endif
 #ifdef GL_INTEL_parallel_arrays
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"parallel_arrays", 15))
         {
@@ -15362,6 +15465,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"depth_range_unclamped", 21))
         {
           ret = GLEW_NV_depth_range_unclamped;
+          continue;
+        }
+#endif
+#ifdef GL_NV_draw_texture
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"draw_texture", 12))
+        {
+          ret = GLEW_NV_draw_texture;
           continue;
         }
 #endif
@@ -16937,6 +17047,13 @@ GLboolean glxewIsSupported (const char* name)
       }
       if (_glewStrSame2(&pos, &len, (const GLubyte*)"EXT_", 4))
       {
+#ifdef GLX_EXT_buffer_age
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"buffer_age", 10))
+        {
+          ret = GLXEW_EXT_buffer_age;
+          continue;
+        }
+#endif
 #ifdef GLX_EXT_create_context_es2_profile
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"create_context_es2_profile", 26))
         {

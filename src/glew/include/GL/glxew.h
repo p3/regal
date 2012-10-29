@@ -575,6 +575,17 @@ typedef void ( * PFNGLXRELEASETEXIMAGEATIPROC) (Display *dpy, GLXPbuffer pbuf, i
 
 #endif /* GLX_ATI_render_texture */
 
+/* --------------------------- GLX_EXT_buffer_age -------------------------- */
+
+#ifndef GLX_EXT_buffer_age
+#define GLX_EXT_buffer_age 1
+
+#define GLX_BACK_BUFFER_AGE_EXT 0x20F4
+
+#define GLXEW_EXT_buffer_age GLXEW_GET_VAR(__GLXEW_EXT_buffer_age)
+
+#endif /* GLX_EXT_buffer_age */
+
 /* ------------------- GLX_EXT_create_context_es2_profile ------------------ */
 
 #ifndef GLX_EXT_create_context_es2_profile
@@ -1575,6 +1586,7 @@ GLXEW_VAR_EXPORT GLboolean __GLXEW_ARB_robustness_share_group_isolation;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_ARB_vertex_buffer_object;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_ATI_pixel_format_float;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_ATI_render_texture;
+GLXEW_VAR_EXPORT GLboolean __GLXEW_EXT_buffer_age;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_EXT_create_context_es2_profile;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_EXT_create_context_es_profile;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_EXT_fbconfig_packed_float;

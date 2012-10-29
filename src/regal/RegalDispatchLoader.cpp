@@ -9798,6 +9798,121 @@ static void REGAL_CALL loader_glTessellationModeAMD(GLenum mode)
   _next->call(&_next->glTessellationModeAMD)(mode);
 }
 
+// GL_ANGLE_framebuffer_blit
+
+static void REGAL_CALL loader_glBlitFramebufferANGLE(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBlitFramebufferANGLE, "glBlitFramebufferANGLE");
+  if (_driver.glBlitFramebufferANGLE) {
+    _driver.glBlitFramebufferANGLE(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlitFramebufferANGLE)(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+}
+
+// GL_ANGLE_framebuffer_multisample
+
+static void REGAL_CALL loader_glRenderbufferStorageMultisampleANGLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glRenderbufferStorageMultisampleANGLE, "glRenderbufferStorageMultisampleANGLE");
+  if (_driver.glRenderbufferStorageMultisampleANGLE) {
+    _driver.glRenderbufferStorageMultisampleANGLE(target, samples, internalformat, width, height);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageMultisampleANGLE)(target, samples, internalformat, width, height);
+}
+
+// GL_ANGLE_instanced_arrays
+
+static void REGAL_CALL loader_glDrawArraysInstancedANGLE(GLenum mode, GLint first, GLsizei count, GLsizei primcount)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDrawArraysInstancedANGLE, "glDrawArraysInstancedANGLE");
+  if (_driver.glDrawArraysInstancedANGLE) {
+    _driver.glDrawArraysInstancedANGLE(mode, first, count, primcount);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawArraysInstancedANGLE)(mode, first, count, primcount);
+}
+
+static void REGAL_CALL loader_glDrawElementsInstancedANGLE(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDrawElementsInstancedANGLE, "glDrawElementsInstancedANGLE");
+  if (_driver.glDrawElementsInstancedANGLE) {
+    _driver.glDrawElementsInstancedANGLE(mode, count, type, indices, primcount);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawElementsInstancedANGLE)(mode, count, type, indices, primcount);
+}
+
+static void REGAL_CALL loader_glVertexAttribDivisorANGLE(GLuint index, GLuint divisor)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glVertexAttribDivisorANGLE, "glVertexAttribDivisorANGLE");
+  if (_driver.glVertexAttribDivisorANGLE) {
+    _driver.glVertexAttribDivisorANGLE(index, divisor);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glVertexAttribDivisorANGLE)(index, divisor);
+}
+
+// GL_ANGLE_translated_shader_source
+
+static void REGAL_CALL loader_glGetTranslatedShaderSourceANGLE(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetTranslatedShaderSourceANGLE, "glGetTranslatedShaderSourceANGLE");
+  if (_driver.glGetTranslatedShaderSourceANGLE) {
+    _driver.glGetTranslatedShaderSourceANGLE(shader, bufsize, length, source);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTranslatedShaderSourceANGLE)(shader, bufsize, length, source);
+}
+
+// GL_APPLE_copy_texture_levels
+
+static void REGAL_CALL loader_glCopyTextureLevelsAPPLE(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCopyTextureLevelsAPPLE, "glCopyTextureLevelsAPPLE");
+  if (_driver.glCopyTextureLevelsAPPLE) {
+    _driver.glCopyTextureLevelsAPPLE(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCopyTextureLevelsAPPLE)(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+}
+
 // GL_APPLE_element_array
 
 static void REGAL_CALL loader_glDrawElementArrayAPPLE(GLenum mode, GLint first, GLsizei count)
@@ -10073,6 +10188,38 @@ static void REGAL_CALL loader_glSwapAPPLE(void)
   _next->call(&_next->glSwapAPPLE)();
 }
 
+// GL_APPLE_framebuffer_multisample
+
+static void REGAL_CALL loader_glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glRenderbufferStorageMultisampleAPPLE, "glRenderbufferStorageMultisampleAPPLE");
+  if (_driver.glRenderbufferStorageMultisampleAPPLE) {
+    _driver.glRenderbufferStorageMultisampleAPPLE(target, samples, internalformat, width, height);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageMultisampleAPPLE)(target, samples, internalformat, width, height);
+}
+
+static void REGAL_CALL loader_glResolveMultisampleFramebufferAPPLE(void)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glResolveMultisampleFramebufferAPPLE, "glResolveMultisampleFramebufferAPPLE");
+  if (_driver.glResolveMultisampleFramebufferAPPLE) {
+    _driver.glResolveMultisampleFramebufferAPPLE();
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glResolveMultisampleFramebufferAPPLE)();
+}
+
 // GL_APPLE_object_purgeable
 
 static void REGAL_CALL loader_glGetObjectParameterivAPPLE(GLenum objectType, GLuint name, GLenum pname, GLint *params)
@@ -10116,6 +10263,110 @@ static GLenum REGAL_CALL loader_glObjectUnpurgeableAPPLE(GLenum objectType, GLui
   DispatchTable *_next = _driver._next;
   RegalAssert(_next);
   return _next->call(&_next->glObjectUnpurgeableAPPLE)(objectType, name, option);
+}
+
+// GL_APPLE_sync
+
+static GLenum REGAL_CALL loader_glClientWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glClientWaitSyncAPPLE, "glClientWaitSyncAPPLE");
+  if (_driver.glClientWaitSyncAPPLE) {
+    return _driver.glClientWaitSyncAPPLE(sync, flags, timeout);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glClientWaitSyncAPPLE)(sync, flags, timeout);
+}
+
+static void REGAL_CALL loader_glDeleteSyncAPPLE(GLsync sync)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDeleteSyncAPPLE, "glDeleteSyncAPPLE");
+  if (_driver.glDeleteSyncAPPLE) {
+    _driver.glDeleteSyncAPPLE(sync);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteSyncAPPLE)(sync);
+}
+
+static GLsync REGAL_CALL loader_glFenceSyncAPPLE(GLenum condition, GLbitfield flags)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFenceSyncAPPLE, "glFenceSyncAPPLE");
+  if (_driver.glFenceSyncAPPLE) {
+    return _driver.glFenceSyncAPPLE(condition, flags);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glFenceSyncAPPLE)(condition, flags);
+}
+
+static void REGAL_CALL loader_glGetInteger64vAPPLE(GLenum pname, GLint64 *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetInteger64vAPPLE, "glGetInteger64vAPPLE");
+  if (_driver.glGetInteger64vAPPLE) {
+    _driver.glGetInteger64vAPPLE(pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetInteger64vAPPLE)(pname, params);
+}
+
+static void REGAL_CALL loader_glGetSyncivAPPLE(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetSyncivAPPLE, "glGetSyncivAPPLE");
+  if (_driver.glGetSyncivAPPLE) {
+    _driver.glGetSyncivAPPLE(sync, pname, bufSize, length, values);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetSyncivAPPLE)(sync, pname, bufSize, length, values);
+}
+
+static GLboolean REGAL_CALL loader_glIsSyncAPPLE(GLsync sync)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glIsSyncAPPLE, "glIsSyncAPPLE");
+  if (_driver.glIsSyncAPPLE) {
+    return _driver.glIsSyncAPPLE(sync);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glIsSyncAPPLE)(sync);
+}
+
+static void REGAL_CALL loader_glWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glWaitSyncAPPLE, "glWaitSyncAPPLE");
+  if (_driver.glWaitSyncAPPLE) {
+    _driver.glWaitSyncAPPLE(sync, flags, timeout);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glWaitSyncAPPLE)(sync, flags, timeout);
 }
 
 // GL_APPLE_texture_range
@@ -21245,6 +21496,38 @@ static void REGAL_CALL loader_glCullParameterfvEXT(GLenum pname, GLfloat *params
   _next->call(&_next->glCullParameterfvEXT)(pname, params);
 }
 
+// GL_EXT_debug_label
+
+static void REGAL_CALL loader_glGetObjectLabelEXT(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetObjectLabelEXT, "glGetObjectLabelEXT");
+  if (_driver.glGetObjectLabelEXT) {
+    _driver.glGetObjectLabelEXT(type, object, bufSize, length, label);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetObjectLabelEXT)(type, object, bufSize, length, label);
+}
+
+static void REGAL_CALL loader_glLabelObjectEXT(GLenum type, GLuint object, GLsizei length, const GLchar *label)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glLabelObjectEXT, "glLabelObjectEXT");
+  if (_driver.glLabelObjectEXT) {
+    _driver.glLabelObjectEXT(type, object, length, label);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glLabelObjectEXT)(type, object, length, label);
+}
+
 // GL_EXT_debug_marker
 
 static void REGAL_CALL loader_glInsertEventMarkerEXT(GLsizei length, const GLchar *marker)
@@ -24757,6 +25040,23 @@ static void REGAL_CALL loader_glVertexArrayVertexOffsetEXT(GLuint vaobj, GLuint 
   _next->call(&_next->glVertexArrayVertexOffsetEXT)(vaobj, buffer, size, type, stride, offset);
 }
 
+// GL_EXT_discard_framebuffer
+
+static void REGAL_CALL loader_glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDiscardFramebufferEXT, "glDiscardFramebufferEXT");
+  if (_driver.glDiscardFramebufferEXT) {
+    _driver.glDiscardFramebufferEXT(target, numAttachments, attachments);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDiscardFramebufferEXT)(target, numAttachments, attachments);
+}
+
 // GL_EXT_draw_buffers2
 
 static void REGAL_CALL loader_glColorMaskIndexedEXT(GLuint buf, GLboolean r, GLboolean g, GLboolean b, GLboolean a)
@@ -26357,6 +26657,37 @@ static void REGAL_CALL loader_glTextureMaterialEXT(GLenum face, GLenum mode)
   _next->call(&_next->glTextureMaterialEXT)(face, mode);
 }
 
+// GL_EXT_map_buffer_range
+
+static void REGAL_CALL loader_glFlushMappedBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFlushMappedBufferRangeEXT, "glFlushMappedBufferRangeEXT");
+  if (_driver.glFlushMappedBufferRangeEXT) {
+    _driver.glFlushMappedBufferRangeEXT(target, offset, length);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFlushMappedBufferRangeEXT)(target, offset, length);
+}
+
+static GLvoid *REGAL_CALL loader_glMapBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glMapBufferRangeEXT, "glMapBufferRangeEXT");
+  if (_driver.glMapBufferRangeEXT) {
+    return _driver.glMapBufferRangeEXT(target, offset, length, access);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glMapBufferRangeEXT)(target, offset, length, access);
+}
+
 // GL_EXT_multi_draw_arrays
 
 static void REGAL_CALL loader_glMultiDrawArraysEXT(GLenum mode, const GLint *first, const GLsizei *count, GLsizei primcount)
@@ -26419,6 +26750,176 @@ static void REGAL_CALL loader_glSamplePatternEXT(GLenum pattern)
   DispatchTable *_next = _driver._next;
   RegalAssert(_next);
   _next->call(&_next->glSamplePatternEXT)(pattern);
+}
+
+// GL_EXT_multisampled_render_to_texture
+
+static void REGAL_CALL loader_glFramebufferTexture2DMultisampleEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFramebufferTexture2DMultisampleEXT, "glFramebufferTexture2DMultisampleEXT");
+  if (_driver.glFramebufferTexture2DMultisampleEXT) {
+    _driver.glFramebufferTexture2DMultisampleEXT(target, attachment, textarget, texture, level, samples);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture2DMultisampleEXT)(target, attachment, textarget, texture, level, samples);
+}
+
+// GL_EXT_multiview_draw_buffers
+
+static void REGAL_CALL loader_glDrawBuffersIndexedEXT(GLint n, const GLenum *location, const GLint *indices)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDrawBuffersIndexedEXT, "glDrawBuffersIndexedEXT");
+  if (_driver.glDrawBuffersIndexedEXT) {
+    _driver.glDrawBuffersIndexedEXT(n, location, indices);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawBuffersIndexedEXT)(n, location, indices);
+}
+
+static void REGAL_CALL loader_glGetIntegeri_vEXT(GLenum target, GLuint index, GLint *data)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetIntegeri_vEXT, "glGetIntegeri_vEXT");
+  if (_driver.glGetIntegeri_vEXT) {
+    _driver.glGetIntegeri_vEXT(target, index, data);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetIntegeri_vEXT)(target, index, data);
+}
+
+static void REGAL_CALL loader_glReadBufferIndexedEXT(GLenum src, GLint index)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glReadBufferIndexedEXT, "glReadBufferIndexedEXT");
+  if (_driver.glReadBufferIndexedEXT) {
+    _driver.glReadBufferIndexedEXT(src, index);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glReadBufferIndexedEXT)(src, index);
+}
+
+// GL_EXT_occlusion_query_boolean
+
+static void REGAL_CALL loader_glBeginQueryEXT(GLenum target, GLuint id)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBeginQueryEXT, "glBeginQueryEXT");
+  if (_driver.glBeginQueryEXT) {
+    _driver.glBeginQueryEXT(target, id);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBeginQueryEXT)(target, id);
+}
+
+static void REGAL_CALL loader_glDeleteQueriesEXT(GLsizei n, const GLuint *ids)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDeleteQueriesEXT, "glDeleteQueriesEXT");
+  if (_driver.glDeleteQueriesEXT) {
+    _driver.glDeleteQueriesEXT(n, ids);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteQueriesEXT)(n, ids);
+}
+
+static void REGAL_CALL loader_glEndQueryEXT(GLenum target)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glEndQueryEXT, "glEndQueryEXT");
+  if (_driver.glEndQueryEXT) {
+    _driver.glEndQueryEXT(target);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glEndQueryEXT)(target);
+}
+
+static void REGAL_CALL loader_glGenQueriesEXT(GLsizei n, GLuint *ids)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGenQueriesEXT, "glGenQueriesEXT");
+  if (_driver.glGenQueriesEXT) {
+    _driver.glGenQueriesEXT(n, ids);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenQueriesEXT)(n, ids);
+}
+
+static void REGAL_CALL loader_glGetQueryObjectuivEXT(GLuint id, GLenum pname, GLuint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetQueryObjectuivEXT, "glGetQueryObjectuivEXT");
+  if (_driver.glGetQueryObjectuivEXT) {
+    _driver.glGetQueryObjectuivEXT(id, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetQueryObjectuivEXT)(id, pname, params);
+}
+
+static void REGAL_CALL loader_glGetQueryivEXT(GLenum target, GLenum pname, GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetQueryivEXT, "glGetQueryivEXT");
+  if (_driver.glGetQueryivEXT) {
+    _driver.glGetQueryivEXT(target, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetQueryivEXT)(target, pname, params);
+}
+
+static GLboolean REGAL_CALL loader_glIsQueryEXT(GLuint id)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glIsQueryEXT, "glIsQueryEXT");
+  if (_driver.glIsQueryEXT) {
+    return _driver.glIsQueryEXT(id);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glIsQueryEXT)(id);
 }
 
 // GL_EXT_paletted_texture
@@ -26639,6 +27140,53 @@ static void REGAL_CALL loader_glProvokingVertexEXT(GLenum mode)
   DispatchTable *_next = _driver._next;
   RegalAssert(_next);
   _next->call(&_next->glProvokingVertexEXT)(mode);
+}
+
+// GL_EXT_robustness
+
+static void REGAL_CALL loader_glGetnUniformfvEXT(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetnUniformfvEXT, "glGetnUniformfvEXT");
+  if (_driver.glGetnUniformfvEXT) {
+    _driver.glGetnUniformfvEXT(program, location, bufSize, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetnUniformfvEXT)(program, location, bufSize, params);
+}
+
+static void REGAL_CALL loader_glGetnUniformivEXT(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetnUniformivEXT, "glGetnUniformivEXT");
+  if (_driver.glGetnUniformivEXT) {
+    _driver.glGetnUniformivEXT(program, location, bufSize, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetnUniformivEXT)(program, location, bufSize, params);
+}
+
+static void REGAL_CALL loader_glReadnPixelsEXT(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glReadnPixelsEXT, "glReadnPixelsEXT");
+  if (_driver.glReadnPixelsEXT) {
+    _driver.glReadnPixelsEXT(x, y, width, height, format, type, bufSize, data);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glReadnPixelsEXT)(x, y, width, height, format, type, bufSize, data);
 }
 
 // GL_EXT_scene_marker
@@ -27337,6 +27885,53 @@ static void REGAL_CALL loader_glTextureNormalEXT(GLenum mode)
   DispatchTable *_next = _driver._next;
   RegalAssert(_next);
   _next->call(&_next->glTextureNormalEXT)(mode);
+}
+
+// GL_EXT_texture_storage
+
+static void REGAL_CALL loader_glTexStorage1DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexStorage1DEXT, "glTexStorage1DEXT");
+  if (_driver.glTexStorage1DEXT) {
+    _driver.glTexStorage1DEXT(target, levels, internalformat, width);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexStorage1DEXT)(target, levels, internalformat, width);
+}
+
+static void REGAL_CALL loader_glTexStorage2DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexStorage2DEXT, "glTexStorage2DEXT");
+  if (_driver.glTexStorage2DEXT) {
+    _driver.glTexStorage2DEXT(target, levels, internalformat, width, height);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexStorage2DEXT)(target, levels, internalformat, width, height);
+}
+
+static void REGAL_CALL loader_glTexStorage3DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexStorage3DEXT, "glTexStorage3DEXT");
+  if (_driver.glTexStorage3DEXT) {
+    _driver.glTexStorage3DEXT(target, levels, internalformat, width, height, depth);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexStorage3DEXT)(target, levels, internalformat, width, height, depth);
 }
 
 // GL_EXT_timer_query
@@ -28749,6 +29344,38 @@ static void REGAL_CALL loader_glVertexPointerListIBM(GLint size, GLenum type, GL
   _next->call(&_next->glVertexPointerListIBM)(size, type, stride, pointer, ptrstride);
 }
 
+// GL_IMG_multisampled_render_to_texture
+
+static void REGAL_CALL loader_glFramebufferTexture2DMultisampleIMG(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFramebufferTexture2DMultisampleIMG, "glFramebufferTexture2DMultisampleIMG");
+  if (_driver.glFramebufferTexture2DMultisampleIMG) {
+    _driver.glFramebufferTexture2DMultisampleIMG(target, attachment, textarget, texture, level, samples);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture2DMultisampleIMG)(target, attachment, textarget, texture, level, samples);
+}
+
+static void REGAL_CALL loader_glRenderbufferStorageMultisampleIMG(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glRenderbufferStorageMultisampleIMG, "glRenderbufferStorageMultisampleIMG");
+  if (_driver.glRenderbufferStorageMultisampleIMG) {
+    _driver.glRenderbufferStorageMultisampleIMG(target, samples, internalformat, width, height);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageMultisampleIMG)(target, samples, internalformat, width, height);
+}
+
 // GL_INGR_blend_func_separate
 
 static void REGAL_CALL loader_glBlendFuncSeparateINGR(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
@@ -29738,6 +30365,38 @@ static void REGAL_CALL loader_glCopyImageSubDataNV(GLuint srcName, GLenum srcTar
   _next->call(&_next->glCopyImageSubDataNV)(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
 }
 
+// GL_NV_coverage_sample
+
+static void REGAL_CALL loader_glCoverageMaskNV(GLboolean mask)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCoverageMaskNV, "glCoverageMaskNV");
+  if (_driver.glCoverageMaskNV) {
+    _driver.glCoverageMaskNV(mask);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCoverageMaskNV)(mask);
+}
+
+static void REGAL_CALL loader_glCoverageOperationNV(GLenum operation)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCoverageOperationNV, "glCoverageOperationNV");
+  if (_driver.glCoverageOperationNV) {
+    _driver.glCoverageOperationNV(operation);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCoverageOperationNV)(operation);
+}
+
 // GL_NV_depth_buffer_float
 
 static void REGAL_CALL loader_glClearDepthdNV(GLdouble depth)
@@ -29783,6 +30442,23 @@ static void REGAL_CALL loader_glDepthRangedNV(GLdouble zNear, GLdouble zFar)
   DispatchTable *_next = _driver._next;
   RegalAssert(_next);
   _next->call(&_next->glDepthRangedNV)(zNear, zFar);
+}
+
+// GL_NV_draw_buffers
+
+static void REGAL_CALL loader_glDrawBuffersNV(GLsizei n, const GLenum *bufs)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDrawBuffersNV, "glDrawBuffersNV");
+  if (_driver.glDrawBuffersNV) {
+    _driver.glDrawBuffersNV(n, bufs);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawBuffersNV)(n, bufs);
 }
 
 // GL_NV_evaluators
@@ -32703,6 +33379,23 @@ static void REGAL_CALL loader_glPrimitiveRestartNV(void)
   _next->call(&_next->glPrimitiveRestartNV)();
 }
 
+// GL_NV_read_buffer
+
+static void REGAL_CALL loader_glReadBufferNV(GLenum mode)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glReadBufferNV, "glReadBufferNV");
+  if (_driver.glReadBufferNV) {
+    _driver.glReadBufferNV(mode);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glReadBufferNV)(mode);
+}
+
 // GL_NV_register_combiners
 
 static void REGAL_CALL loader_glCombinerInputNV(GLenum stage, GLenum portion, GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage)
@@ -35314,6 +36007,405 @@ static void REGAL_CALL loader_glVideoCaptureStreamParameterivNV(GLuint video_cap
   _next->call(&_next->glVideoCaptureStreamParameterivNV)(video_capture_slot, stream, pname, params);
 }
 
+// GL_OES_blend_equation_separate
+
+static void REGAL_CALL loader_glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBlendEquationSeparateOES, "glBlendEquationSeparateOES");
+  if (_driver.glBlendEquationSeparateOES) {
+    _driver.glBlendEquationSeparateOES(modeRGB, modeAlpha);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlendEquationSeparateOES)(modeRGB, modeAlpha);
+}
+
+// GL_OES_blend_func_separate
+
+static void REGAL_CALL loader_glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBlendFuncSeparateOES, "glBlendFuncSeparateOES");
+  if (_driver.glBlendFuncSeparateOES) {
+    _driver.glBlendFuncSeparateOES(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlendFuncSeparateOES)(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+}
+
+// GL_OES_blend_subtract
+
+static void REGAL_CALL loader_glBlendEquationOES(GLenum mode)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBlendEquationOES, "glBlendEquationOES");
+  if (_driver.glBlendEquationOES) {
+    _driver.glBlendEquationOES(mode);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlendEquationOES)(mode);
+}
+
+// GL_OES_framebuffer_object
+
+static void REGAL_CALL loader_glBindFramebufferOES(GLenum target, GLuint framebuffer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBindFramebufferOES, "glBindFramebufferOES");
+  if (_driver.glBindFramebufferOES) {
+    _driver.glBindFramebufferOES(target, framebuffer);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBindFramebufferOES)(target, framebuffer);
+}
+
+static void REGAL_CALL loader_glBindRenderbufferOES(GLenum target, GLuint renderbuffer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBindRenderbufferOES, "glBindRenderbufferOES");
+  if (_driver.glBindRenderbufferOES) {
+    _driver.glBindRenderbufferOES(target, renderbuffer);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBindRenderbufferOES)(target, renderbuffer);
+}
+
+static GLenum REGAL_CALL loader_glCheckFramebufferStatusOES(GLenum target)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCheckFramebufferStatusOES, "glCheckFramebufferStatusOES");
+  if (_driver.glCheckFramebufferStatusOES) {
+    return _driver.glCheckFramebufferStatusOES(target);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glCheckFramebufferStatusOES)(target);
+}
+
+static void REGAL_CALL loader_glDeleteFramebuffersOES(GLsizei n, const GLuint *framebuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDeleteFramebuffersOES, "glDeleteFramebuffersOES");
+  if (_driver.glDeleteFramebuffersOES) {
+    _driver.glDeleteFramebuffersOES(n, framebuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteFramebuffersOES)(n, framebuffers);
+}
+
+static void REGAL_CALL loader_glDeleteRenderbuffersOES(GLsizei n, const GLuint *renderbuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDeleteRenderbuffersOES, "glDeleteRenderbuffersOES");
+  if (_driver.glDeleteRenderbuffersOES) {
+    _driver.glDeleteRenderbuffersOES(n, renderbuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteRenderbuffersOES)(n, renderbuffers);
+}
+
+static void REGAL_CALL loader_glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFramebufferRenderbufferOES, "glFramebufferRenderbufferOES");
+  if (_driver.glFramebufferRenderbufferOES) {
+    _driver.glFramebufferRenderbufferOES(target, attachment, renderbuffertarget, renderbuffer);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferRenderbufferOES)(target, attachment, renderbuffertarget, renderbuffer);
+}
+
+static void REGAL_CALL loader_glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFramebufferTexture2DOES, "glFramebufferTexture2DOES");
+  if (_driver.glFramebufferTexture2DOES) {
+    _driver.glFramebufferTexture2DOES(target, attachment, textarget, texture, level);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture2DOES)(target, attachment, textarget, texture, level);
+}
+
+static void REGAL_CALL loader_glGenFramebuffersOES(GLsizei n, GLuint *framebuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGenFramebuffersOES, "glGenFramebuffersOES");
+  if (_driver.glGenFramebuffersOES) {
+    _driver.glGenFramebuffersOES(n, framebuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenFramebuffersOES)(n, framebuffers);
+}
+
+static void REGAL_CALL loader_glGenRenderbuffersOES(GLsizei n, GLuint *renderbuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGenRenderbuffersOES, "glGenRenderbuffersOES");
+  if (_driver.glGenRenderbuffersOES) {
+    _driver.glGenRenderbuffersOES(n, renderbuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenRenderbuffersOES)(n, renderbuffers);
+}
+
+static void REGAL_CALL loader_glGenerateMipmapOES(GLenum target)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGenerateMipmapOES, "glGenerateMipmapOES");
+  if (_driver.glGenerateMipmapOES) {
+    _driver.glGenerateMipmapOES(target);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenerateMipmapOES)(target);
+}
+
+static void REGAL_CALL loader_glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetFramebufferAttachmentParameterivOES, "glGetFramebufferAttachmentParameterivOES");
+  if (_driver.glGetFramebufferAttachmentParameterivOES) {
+    _driver.glGetFramebufferAttachmentParameterivOES(target, attachment, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetFramebufferAttachmentParameterivOES)(target, attachment, pname, params);
+}
+
+static void REGAL_CALL loader_glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetRenderbufferParameterivOES, "glGetRenderbufferParameterivOES");
+  if (_driver.glGetRenderbufferParameterivOES) {
+    _driver.glGetRenderbufferParameterivOES(target, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetRenderbufferParameterivOES)(target, pname, params);
+}
+
+static GLboolean REGAL_CALL loader_glIsFramebufferOES(GLuint framebuffer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glIsFramebufferOES, "glIsFramebufferOES");
+  if (_driver.glIsFramebufferOES) {
+    return _driver.glIsFramebufferOES(framebuffer);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glIsFramebufferOES)(framebuffer);
+}
+
+static GLboolean REGAL_CALL loader_glIsRenderbufferOES(GLuint renderbuffer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glIsRenderbufferOES, "glIsRenderbufferOES");
+  if (_driver.glIsRenderbufferOES) {
+    return _driver.glIsRenderbufferOES(renderbuffer);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glIsRenderbufferOES)(renderbuffer);
+}
+
+static void REGAL_CALL loader_glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glRenderbufferStorageOES, "glRenderbufferStorageOES");
+  if (_driver.glRenderbufferStorageOES) {
+    _driver.glRenderbufferStorageOES(target, internalformat, width, height);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageOES)(target, internalformat, width, height);
+}
+
+// GL_OES_get_program_binary
+
+static void REGAL_CALL loader_glGetProgramBinaryOES(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetProgramBinaryOES, "glGetProgramBinaryOES");
+  if (_driver.glGetProgramBinaryOES) {
+    _driver.glGetProgramBinaryOES(program, bufSize, length, binaryFormat, binary);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetProgramBinaryOES)(program, bufSize, length, binaryFormat, binary);
+}
+
+static void REGAL_CALL loader_glProgramBinaryOES(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glProgramBinaryOES, "glProgramBinaryOES");
+  if (_driver.glProgramBinaryOES) {
+    _driver.glProgramBinaryOES(program, binaryFormat, binary, length);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glProgramBinaryOES)(program, binaryFormat, binary, length);
+}
+
+// GL_OES_mapbuffer
+
+static void REGAL_CALL loader_glGetBufferPointervOES(GLenum target, GLenum pname, GLvoid **params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetBufferPointervOES, "glGetBufferPointervOES");
+  if (_driver.glGetBufferPointervOES) {
+    _driver.glGetBufferPointervOES(target, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetBufferPointervOES)(target, pname, params);
+}
+
+static GLvoid *REGAL_CALL loader_glMapBufferOES(GLenum target, GLenum access)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glMapBufferOES, "glMapBufferOES");
+  if (_driver.glMapBufferOES) {
+    return _driver.glMapBufferOES(target, access);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glMapBufferOES)(target, access);
+}
+
+static GLboolean REGAL_CALL loader_glUnmapBufferOES(GLenum target)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glUnmapBufferOES, "glUnmapBufferOES");
+  if (_driver.glUnmapBufferOES) {
+    return _driver.glUnmapBufferOES(target);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glUnmapBufferOES)(target);
+}
+
+// GL_OES_matrix_palette
+
+static void REGAL_CALL loader_glCurrentPaletteMatrixOES(GLuint index)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCurrentPaletteMatrixOES, "glCurrentPaletteMatrixOES");
+  if (_driver.glCurrentPaletteMatrixOES) {
+    _driver.glCurrentPaletteMatrixOES(index);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCurrentPaletteMatrixOES)(index);
+}
+
+static void REGAL_CALL loader_glMatrixIndexPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glMatrixIndexPointerOES, "glMatrixIndexPointerOES");
+  if (_driver.glMatrixIndexPointerOES) {
+    _driver.glMatrixIndexPointerOES(size, type, stride, pointer);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glMatrixIndexPointerOES)(size, type, stride, pointer);
+}
+
+static void REGAL_CALL loader_glWeightPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glWeightPointerOES, "glWeightPointerOES");
+  if (_driver.glWeightPointerOES) {
+    _driver.glWeightPointerOES(size, type, stride, pointer);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glWeightPointerOES)(size, type, stride, pointer);
+}
+
 // GL_OES_single_precision
 
 static void REGAL_CALL loader_glClearDepthfOES(GLclampd depth)
@@ -35406,6 +36498,296 @@ static void REGAL_CALL loader_glOrthofOES(GLfloat l, GLfloat r, GLfloat b, GLflo
   _next->call(&_next->glOrthofOES)(l, r, b, t, n, f);
 }
 
+// GL_OES_texture_3D
+
+static void REGAL_CALL loader_glCompressedTexImage3DOES(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCompressedTexImage3DOES, "glCompressedTexImage3DOES");
+  if (_driver.glCompressedTexImage3DOES) {
+    _driver.glCompressedTexImage3DOES(target, level, internalformat, width, height, depth, border, imageSize, data);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCompressedTexImage3DOES)(target, level, internalformat, width, height, depth, border, imageSize, data);
+}
+
+static void REGAL_CALL loader_glCompressedTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCompressedTexSubImage3DOES, "glCompressedTexSubImage3DOES");
+  if (_driver.glCompressedTexSubImage3DOES) {
+    _driver.glCompressedTexSubImage3DOES(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCompressedTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+}
+
+static void REGAL_CALL loader_glCopyTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glCopyTexSubImage3DOES, "glCopyTexSubImage3DOES");
+  if (_driver.glCopyTexSubImage3DOES) {
+    _driver.glCopyTexSubImage3DOES(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCopyTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+}
+
+static void REGAL_CALL loader_glFramebufferTexture3DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glFramebufferTexture3DOES, "glFramebufferTexture3DOES");
+  if (_driver.glFramebufferTexture3DOES) {
+    _driver.glFramebufferTexture3DOES(target, attachment, textarget, texture, level, zoffset);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture3DOES)(target, attachment, textarget, texture, level, zoffset);
+}
+
+static void REGAL_CALL loader_glTexImage3DOES(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexImage3DOES, "glTexImage3DOES");
+  if (_driver.glTexImage3DOES) {
+    _driver.glTexImage3DOES(target, level, internalFormat, width, height, depth, border, format, type, pixels);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexImage3DOES)(target, level, internalFormat, width, height, depth, border, format, type, pixels);
+}
+
+static void REGAL_CALL loader_glTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexSubImage3DOES, "glTexSubImage3DOES");
+  if (_driver.glTexSubImage3DOES) {
+    _driver.glTexSubImage3DOES(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+}
+
+// GL_OES_texture_cube_map
+
+static void REGAL_CALL loader_glGetTexGenfvOES(GLenum coord, GLenum pname, GLfloat *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetTexGenfvOES, "glGetTexGenfvOES");
+  if (_driver.glGetTexGenfvOES) {
+    _driver.glGetTexGenfvOES(coord, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTexGenfvOES)(coord, pname, params);
+}
+
+static void REGAL_CALL loader_glGetTexGenivOES(GLenum coord, GLenum pname, GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetTexGenivOES, "glGetTexGenivOES");
+  if (_driver.glGetTexGenivOES) {
+    _driver.glGetTexGenivOES(coord, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTexGenivOES)(coord, pname, params);
+}
+
+static void REGAL_CALL loader_glGetTexGenxvOES(GLenum coord, GLenum pname, GLfixed *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetTexGenxvOES, "glGetTexGenxvOES");
+  if (_driver.glGetTexGenxvOES) {
+    _driver.glGetTexGenxvOES(coord, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTexGenxvOES)(coord, pname, params);
+}
+
+static void REGAL_CALL loader_glTexGenfOES(GLenum coord, GLenum pname, GLfloat param)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexGenfOES, "glTexGenfOES");
+  if (_driver.glTexGenfOES) {
+    _driver.glTexGenfOES(coord, pname, param);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenfOES)(coord, pname, param);
+}
+
+static void REGAL_CALL loader_glTexGenfvOES(GLenum coord, GLenum pname, const GLfloat *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexGenfvOES, "glTexGenfvOES");
+  if (_driver.glTexGenfvOES) {
+    _driver.glTexGenfvOES(coord, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenfvOES)(coord, pname, params);
+}
+
+static void REGAL_CALL loader_glTexGeniOES(GLenum coord, GLenum pname, GLint param)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexGeniOES, "glTexGeniOES");
+  if (_driver.glTexGeniOES) {
+    _driver.glTexGeniOES(coord, pname, param);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGeniOES)(coord, pname, param);
+}
+
+static void REGAL_CALL loader_glTexGenivOES(GLenum coord, GLenum pname, const GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexGenivOES, "glTexGenivOES");
+  if (_driver.glTexGenivOES) {
+    _driver.glTexGenivOES(coord, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenivOES)(coord, pname, params);
+}
+
+static void REGAL_CALL loader_glTexGenxOES(GLenum coord, GLenum pname, GLfixed param)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexGenxOES, "glTexGenxOES");
+  if (_driver.glTexGenxOES) {
+    _driver.glTexGenxOES(coord, pname, param);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenxOES)(coord, pname, param);
+}
+
+static void REGAL_CALL loader_glTexGenxvOES(GLenum coord, GLenum pname, const GLfixed *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glTexGenxvOES, "glTexGenxvOES");
+  if (_driver.glTexGenxvOES) {
+    _driver.glTexGenxvOES(coord, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenxvOES)(coord, pname, params);
+}
+
+// GL_OES_vertex_array_object
+
+static void REGAL_CALL loader_glBindVertexArrayOES(GLuint array)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glBindVertexArrayOES, "glBindVertexArrayOES");
+  if (_driver.glBindVertexArrayOES) {
+    _driver.glBindVertexArrayOES(array);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBindVertexArrayOES)(array);
+}
+
+static void REGAL_CALL loader_glDeleteVertexArraysOES(GLsizei n, const GLuint *arrays)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDeleteVertexArraysOES, "glDeleteVertexArraysOES");
+  if (_driver.glDeleteVertexArraysOES) {
+    _driver.glDeleteVertexArraysOES(n, arrays);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteVertexArraysOES)(n, arrays);
+}
+
+static void REGAL_CALL loader_glGenVertexArraysOES(GLsizei n, GLuint *arrays)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGenVertexArraysOES, "glGenVertexArraysOES");
+  if (_driver.glGenVertexArraysOES) {
+    _driver.glGenVertexArraysOES(n, arrays);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenVertexArraysOES)(n, arrays);
+}
+
+static GLboolean REGAL_CALL loader_glIsVertexArrayOES(GLuint array)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glIsVertexArrayOES, "glIsVertexArrayOES");
+  if (_driver.glIsVertexArrayOES) {
+    return _driver.glIsVertexArrayOES(array);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glIsVertexArrayOES)(array);
+}
+
 // GL_PGI_misc_hints
 
 static void REGAL_CALL loader_glHintPGI(GLenum target, GLint mode)
@@ -35421,6 +36803,300 @@ static void REGAL_CALL loader_glHintPGI(GLenum target, GLint mode)
   DispatchTable *_next = _driver._next;
   RegalAssert(_next);
   _next->call(&_next->glHintPGI)(target, mode);
+}
+
+// GL_QCOM_alpha_test
+
+static void REGAL_CALL loader_glAlphaFuncQCOM(GLenum func, GLclampf ref)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glAlphaFuncQCOM, "glAlphaFuncQCOM");
+  if (_driver.glAlphaFuncQCOM) {
+    _driver.glAlphaFuncQCOM(func, ref);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glAlphaFuncQCOM)(func, ref);
+}
+
+// GL_QCOM_driver_control
+
+static void REGAL_CALL loader_glDisableDriverControlQCOM(GLuint driverControl)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glDisableDriverControlQCOM, "glDisableDriverControlQCOM");
+  if (_driver.glDisableDriverControlQCOM) {
+    _driver.glDisableDriverControlQCOM(driverControl);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDisableDriverControlQCOM)(driverControl);
+}
+
+static void REGAL_CALL loader_glEnableDriverControlQCOM(GLuint driverControl)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glEnableDriverControlQCOM, "glEnableDriverControlQCOM");
+  if (_driver.glEnableDriverControlQCOM) {
+    _driver.glEnableDriverControlQCOM(driverControl);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glEnableDriverControlQCOM)(driverControl);
+}
+
+static void REGAL_CALL loader_glGetDriverControlStringQCOM(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetDriverControlStringQCOM, "glGetDriverControlStringQCOM");
+  if (_driver.glGetDriverControlStringQCOM) {
+    _driver.glGetDriverControlStringQCOM(driverControl, bufSize, length, driverControlString);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetDriverControlStringQCOM)(driverControl, bufSize, length, driverControlString);
+}
+
+static void REGAL_CALL loader_glGetDriverControlsQCOM(GLint *num, GLsizei size, GLuint *driverControls)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glGetDriverControlsQCOM, "glGetDriverControlsQCOM");
+  if (_driver.glGetDriverControlsQCOM) {
+    _driver.glGetDriverControlsQCOM(num, size, driverControls);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetDriverControlsQCOM)(num, size, driverControls);
+}
+
+// GL_QCOM_extended_get
+
+static void REGAL_CALL loader_glExtGetBufferPointervQCOM(GLenum target, GLvoid **params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetBufferPointervQCOM, "glExtGetBufferPointervQCOM");
+  if (_driver.glExtGetBufferPointervQCOM) {
+    _driver.glExtGetBufferPointervQCOM(target, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetBufferPointervQCOM)(target, params);
+}
+
+static void REGAL_CALL loader_glExtGetBuffersQCOM(GLuint *buffers, GLint maxBuffers, GLint *numBuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetBuffersQCOM, "glExtGetBuffersQCOM");
+  if (_driver.glExtGetBuffersQCOM) {
+    _driver.glExtGetBuffersQCOM(buffers, maxBuffers, numBuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetBuffersQCOM)(buffers, maxBuffers, numBuffers);
+}
+
+static void REGAL_CALL loader_glExtGetFramebuffersQCOM(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetFramebuffersQCOM, "glExtGetFramebuffersQCOM");
+  if (_driver.glExtGetFramebuffersQCOM) {
+    _driver.glExtGetFramebuffersQCOM(framebuffers, maxFramebuffers, numFramebuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetFramebuffersQCOM)(framebuffers, maxFramebuffers, numFramebuffers);
+}
+
+static void REGAL_CALL loader_glExtGetRenderbuffersQCOM(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetRenderbuffersQCOM, "glExtGetRenderbuffersQCOM");
+  if (_driver.glExtGetRenderbuffersQCOM) {
+    _driver.glExtGetRenderbuffersQCOM(renderbuffers, maxRenderbuffers, numRenderbuffers);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetRenderbuffersQCOM)(renderbuffers, maxRenderbuffers, numRenderbuffers);
+}
+
+static void REGAL_CALL loader_glExtGetTexLevelParameterivQCOM(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetTexLevelParameterivQCOM, "glExtGetTexLevelParameterivQCOM");
+  if (_driver.glExtGetTexLevelParameterivQCOM) {
+    _driver.glExtGetTexLevelParameterivQCOM(texture, face, level, pname, params);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetTexLevelParameterivQCOM)(texture, face, level, pname, params);
+}
+
+static void REGAL_CALL loader_glExtGetTexSubImageQCOM(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetTexSubImageQCOM, "glExtGetTexSubImageQCOM");
+  if (_driver.glExtGetTexSubImageQCOM) {
+    _driver.glExtGetTexSubImageQCOM(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, texels);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetTexSubImageQCOM)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, texels);
+}
+
+static void REGAL_CALL loader_glExtGetTexturesQCOM(GLuint *textures, GLint maxTextures, GLint *numTextures)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetTexturesQCOM, "glExtGetTexturesQCOM");
+  if (_driver.glExtGetTexturesQCOM) {
+    _driver.glExtGetTexturesQCOM(textures, maxTextures, numTextures);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetTexturesQCOM)(textures, maxTextures, numTextures);
+}
+
+static void REGAL_CALL loader_glExtTexObjectStateOverrideiQCOM(GLenum target, GLenum pname, GLint param)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtTexObjectStateOverrideiQCOM, "glExtTexObjectStateOverrideiQCOM");
+  if (_driver.glExtTexObjectStateOverrideiQCOM) {
+    _driver.glExtTexObjectStateOverrideiQCOM(target, pname, param);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtTexObjectStateOverrideiQCOM)(target, pname, param);
+}
+
+// GL_QCOM_extended_get2
+
+static void REGAL_CALL loader_glExtGetProgramBinarySourceQCOM(GLuint program, GLenum shadertype, GLchar *source, GLint *length)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetProgramBinarySourceQCOM, "glExtGetProgramBinarySourceQCOM");
+  if (_driver.glExtGetProgramBinarySourceQCOM) {
+    _driver.glExtGetProgramBinarySourceQCOM(program, shadertype, source, length);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetProgramBinarySourceQCOM)(program, shadertype, source, length);
+}
+
+static void REGAL_CALL loader_glExtGetProgramsQCOM(GLuint *programs, GLint maxPrograms, GLint *numPrograms)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetProgramsQCOM, "glExtGetProgramsQCOM");
+  if (_driver.glExtGetProgramsQCOM) {
+    _driver.glExtGetProgramsQCOM(programs, maxPrograms, numPrograms);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetProgramsQCOM)(programs, maxPrograms, numPrograms);
+}
+
+static void REGAL_CALL loader_glExtGetShadersQCOM(GLuint *shaders, GLint maxShaders, GLint *numShaders)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtGetShadersQCOM, "glExtGetShadersQCOM");
+  if (_driver.glExtGetShadersQCOM) {
+    _driver.glExtGetShadersQCOM(shaders, maxShaders, numShaders);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetShadersQCOM)(shaders, maxShaders, numShaders);
+}
+
+static GLboolean REGAL_CALL loader_glExtIsProgramBinaryQCOM(GLuint program)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glExtIsProgramBinaryQCOM, "glExtIsProgramBinaryQCOM");
+  if (_driver.glExtIsProgramBinaryQCOM) {
+    return _driver.glExtIsProgramBinaryQCOM(program);
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  return _next->call(&_next->glExtIsProgramBinaryQCOM)(program);
+}
+
+// GL_QCOM_tiled_rendering
+
+static void REGAL_CALL loader_glEndTilingQCOM(GLbitfield preserveMask)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glEndTilingQCOM, "glEndTilingQCOM");
+  if (_driver.glEndTilingQCOM) {
+    _driver.glEndTilingQCOM(preserveMask);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glEndTilingQCOM)(preserveMask);
+}
+
+static void REGAL_CALL loader_glStartTilingQCOM(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask)
+{
+  RegalContext * _context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_driver = _context->dispatcher.driver;
+  GetProcAddress(_driver.glStartTilingQCOM, "glStartTilingQCOM");
+  if (_driver.glStartTilingQCOM) {
+    _driver.glStartTilingQCOM(x, y, width, height, preserveMask);
+    return;
+  }
+  DispatchTable *_next = _driver._next;
+  RegalAssert(_next);
+  _next->call(&_next->glStartTilingQCOM)(x, y, width, height, preserveMask);
 }
 
 // GL_REGAL_ES1_1_compatibility
@@ -38298,6 +39974,28 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glTessellationFactorAMD = loader_glTessellationFactorAMD;
   tbl.glTessellationModeAMD = loader_glTessellationModeAMD;
 
+  // GL_ANGLE_framebuffer_blit
+
+  tbl.glBlitFramebufferANGLE = loader_glBlitFramebufferANGLE;
+
+  // GL_ANGLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleANGLE = loader_glRenderbufferStorageMultisampleANGLE;
+
+  // GL_ANGLE_instanced_arrays
+
+  tbl.glDrawArraysInstancedANGLE = loader_glDrawArraysInstancedANGLE;
+  tbl.glDrawElementsInstancedANGLE = loader_glDrawElementsInstancedANGLE;
+  tbl.glVertexAttribDivisorANGLE = loader_glVertexAttribDivisorANGLE;
+
+  // GL_ANGLE_translated_shader_source
+
+  tbl.glGetTranslatedShaderSourceANGLE = loader_glGetTranslatedShaderSourceANGLE;
+
+  // GL_APPLE_copy_texture_levels
+
+  tbl.glCopyTextureLevelsAPPLE = loader_glCopyTextureLevelsAPPLE;
+
   // GL_APPLE_element_array
 
   tbl.glDrawElementArrayAPPLE = loader_glDrawElementArrayAPPLE;
@@ -38328,11 +40026,26 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glFlushRenderAPPLE = loader_glFlushRenderAPPLE;
   tbl.glSwapAPPLE = loader_glSwapAPPLE;
 
+  // GL_APPLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleAPPLE = loader_glRenderbufferStorageMultisampleAPPLE;
+  tbl.glResolveMultisampleFramebufferAPPLE = loader_glResolveMultisampleFramebufferAPPLE;
+
   // GL_APPLE_object_purgeable
 
   tbl.glGetObjectParameterivAPPLE = loader_glGetObjectParameterivAPPLE;
   tbl.glObjectPurgeableAPPLE = loader_glObjectPurgeableAPPLE;
   tbl.glObjectUnpurgeableAPPLE = loader_glObjectUnpurgeableAPPLE;
+
+  // GL_APPLE_sync
+
+  tbl.glClientWaitSyncAPPLE = loader_glClientWaitSyncAPPLE;
+  tbl.glDeleteSyncAPPLE = loader_glDeleteSyncAPPLE;
+  tbl.glFenceSyncAPPLE = loader_glFenceSyncAPPLE;
+  tbl.glGetInteger64vAPPLE = loader_glGetInteger64vAPPLE;
+  tbl.glGetSyncivAPPLE = loader_glGetSyncivAPPLE;
+  tbl.glIsSyncAPPLE = loader_glIsSyncAPPLE;
+  tbl.glWaitSyncAPPLE = loader_glWaitSyncAPPLE;
 
   // GL_APPLE_texture_range
 
@@ -39348,6 +41061,11 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glCullParameterdvEXT = loader_glCullParameterdvEXT;
   tbl.glCullParameterfvEXT = loader_glCullParameterfvEXT;
 
+  // GL_EXT_debug_label
+
+  tbl.glGetObjectLabelEXT = loader_glGetObjectLabelEXT;
+  tbl.glLabelObjectEXT = loader_glLabelObjectEXT;
+
   // GL_EXT_debug_marker
 
   tbl.glInsertEventMarkerEXT = loader_glInsertEventMarkerEXT;
@@ -39591,6 +41309,10 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glVertexArrayVertexAttribOffsetEXT = loader_glVertexArrayVertexAttribOffsetEXT;
   tbl.glVertexArrayVertexOffsetEXT = loader_glVertexArrayVertexOffsetEXT;
 
+  // GL_EXT_discard_framebuffer
+
+  tbl.glDiscardFramebufferEXT = loader_glDiscardFramebufferEXT;
+
   // GL_EXT_draw_buffers2
 
   tbl.glColorMaskIndexedEXT = loader_glColorMaskIndexedEXT;
@@ -39741,6 +41463,11 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glTextureLightEXT = loader_glTextureLightEXT;
   tbl.glTextureMaterialEXT = loader_glTextureMaterialEXT;
 
+  // GL_EXT_map_buffer_range
+
+  tbl.glFlushMappedBufferRangeEXT = loader_glFlushMappedBufferRangeEXT;
+  tbl.glMapBufferRangeEXT = loader_glMapBufferRangeEXT;
+
   // GL_EXT_multi_draw_arrays
 
   tbl.glMultiDrawArraysEXT = loader_glMultiDrawArraysEXT;
@@ -39750,6 +41477,26 @@ void InitDispatchTableLoader(DispatchTable &tbl)
 
   tbl.glSampleMaskEXT = loader_glSampleMaskEXT;
   tbl.glSamplePatternEXT = loader_glSamplePatternEXT;
+
+  // GL_EXT_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleEXT = loader_glFramebufferTexture2DMultisampleEXT;
+
+  // GL_EXT_multiview_draw_buffers
+
+  tbl.glDrawBuffersIndexedEXT = loader_glDrawBuffersIndexedEXT;
+  tbl.glGetIntegeri_vEXT = loader_glGetIntegeri_vEXT;
+  tbl.glReadBufferIndexedEXT = loader_glReadBufferIndexedEXT;
+
+  // GL_EXT_occlusion_query_boolean
+
+  tbl.glBeginQueryEXT = loader_glBeginQueryEXT;
+  tbl.glDeleteQueriesEXT = loader_glDeleteQueriesEXT;
+  tbl.glEndQueryEXT = loader_glEndQueryEXT;
+  tbl.glGenQueriesEXT = loader_glGenQueriesEXT;
+  tbl.glGetQueryObjectuivEXT = loader_glGetQueryObjectuivEXT;
+  tbl.glGetQueryivEXT = loader_glGetQueryivEXT;
+  tbl.glIsQueryEXT = loader_glIsQueryEXT;
 
   // GL_EXT_paletted_texture
 
@@ -39779,6 +41526,12 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   // GL_EXT_provoking_vertex
 
   tbl.glProvokingVertexEXT = loader_glProvokingVertexEXT;
+
+  // GL_EXT_robustness
+
+  tbl.glGetnUniformfvEXT = loader_glGetnUniformfvEXT;
+  tbl.glGetnUniformivEXT = loader_glGetnUniformivEXT;
+  tbl.glReadnPixelsEXT = loader_glReadnPixelsEXT;
 
   // GL_EXT_scene_marker
 
@@ -39863,6 +41616,12 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   // GL_EXT_texture_perturb_normal
 
   tbl.glTextureNormalEXT = loader_glTextureNormalEXT;
+
+  // GL_EXT_texture_storage
+
+  tbl.glTexStorage1DEXT = loader_glTexStorage1DEXT;
+  tbl.glTexStorage2DEXT = loader_glTexStorage2DEXT;
+  tbl.glTexStorage3DEXT = loader_glTexStorage3DEXT;
 
   // GL_EXT_timer_query
 
@@ -39993,6 +41752,11 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glTexCoordPointerListIBM = loader_glTexCoordPointerListIBM;
   tbl.glVertexPointerListIBM = loader_glVertexPointerListIBM;
 
+  // GL_IMG_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleIMG = loader_glFramebufferTexture2DMultisampleIMG;
+  tbl.glRenderbufferStorageMultisampleIMG = loader_glRenderbufferStorageMultisampleIMG;
+
   // GL_INGR_blend_func_separate
 
   tbl.glBlendFuncSeparateINGR = loader_glBlendFuncSeparateINGR;
@@ -40091,11 +41855,20 @@ void InitDispatchTableLoader(DispatchTable &tbl)
 
   tbl.glCopyImageSubDataNV = loader_glCopyImageSubDataNV;
 
+  // GL_NV_coverage_sample
+
+  tbl.glCoverageMaskNV = loader_glCoverageMaskNV;
+  tbl.glCoverageOperationNV = loader_glCoverageOperationNV;
+
   // GL_NV_depth_buffer_float
 
   tbl.glClearDepthdNV = loader_glClearDepthdNV;
   tbl.glDepthBoundsdNV = loader_glDepthBoundsdNV;
   tbl.glDepthRangedNV = loader_glDepthRangedNV;
+
+  // GL_NV_draw_buffers
+
+  tbl.glDrawBuffersNV = loader_glDrawBuffersNV;
 
   // GL_NV_evaluators
 
@@ -40338,6 +42111,10 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glPrimitiveRestartIndexNV = loader_glPrimitiveRestartIndexNV;
   tbl.glPrimitiveRestartNV = loader_glPrimitiveRestartNV;
 
+  // GL_NV_read_buffer
+
+  tbl.glReadBufferNV = loader_glReadBufferNV;
+
   // GL_NV_register_combiners
 
   tbl.glCombinerInputNV = loader_glCombinerInputNV;
@@ -40550,6 +42327,53 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glVideoCaptureStreamParameterfvNV = loader_glVideoCaptureStreamParameterfvNV;
   tbl.glVideoCaptureStreamParameterivNV = loader_glVideoCaptureStreamParameterivNV;
 
+  // GL_OES_blend_equation_separate
+
+  tbl.glBlendEquationSeparateOES = loader_glBlendEquationSeparateOES;
+
+  // GL_OES_blend_func_separate
+
+  tbl.glBlendFuncSeparateOES = loader_glBlendFuncSeparateOES;
+
+  // GL_OES_blend_subtract
+
+  tbl.glBlendEquationOES = loader_glBlendEquationOES;
+
+  // GL_OES_framebuffer_object
+
+  tbl.glBindFramebufferOES = loader_glBindFramebufferOES;
+  tbl.glBindRenderbufferOES = loader_glBindRenderbufferOES;
+  tbl.glCheckFramebufferStatusOES = loader_glCheckFramebufferStatusOES;
+  tbl.glDeleteFramebuffersOES = loader_glDeleteFramebuffersOES;
+  tbl.glDeleteRenderbuffersOES = loader_glDeleteRenderbuffersOES;
+  tbl.glFramebufferRenderbufferOES = loader_glFramebufferRenderbufferOES;
+  tbl.glFramebufferTexture2DOES = loader_glFramebufferTexture2DOES;
+  tbl.glGenFramebuffersOES = loader_glGenFramebuffersOES;
+  tbl.glGenRenderbuffersOES = loader_glGenRenderbuffersOES;
+  tbl.glGenerateMipmapOES = loader_glGenerateMipmapOES;
+  tbl.glGetFramebufferAttachmentParameterivOES = loader_glGetFramebufferAttachmentParameterivOES;
+  tbl.glGetRenderbufferParameterivOES = loader_glGetRenderbufferParameterivOES;
+  tbl.glIsFramebufferOES = loader_glIsFramebufferOES;
+  tbl.glIsRenderbufferOES = loader_glIsRenderbufferOES;
+  tbl.glRenderbufferStorageOES = loader_glRenderbufferStorageOES;
+
+  // GL_OES_get_program_binary
+
+  tbl.glGetProgramBinaryOES = loader_glGetProgramBinaryOES;
+  tbl.glProgramBinaryOES = loader_glProgramBinaryOES;
+
+  // GL_OES_mapbuffer
+
+  tbl.glGetBufferPointervOES = loader_glGetBufferPointervOES;
+  tbl.glMapBufferOES = loader_glMapBufferOES;
+  tbl.glUnmapBufferOES = loader_glUnmapBufferOES;
+
+  // GL_OES_matrix_palette
+
+  tbl.glCurrentPaletteMatrixOES = loader_glCurrentPaletteMatrixOES;
+  tbl.glMatrixIndexPointerOES = loader_glMatrixIndexPointerOES;
+  tbl.glWeightPointerOES = loader_glWeightPointerOES;
+
   // GL_OES_single_precision
 
   tbl.glClearDepthfOES = loader_glClearDepthfOES;
@@ -40559,9 +42383,71 @@ void InitDispatchTableLoader(DispatchTable &tbl)
   tbl.glGetClipPlanefOES = loader_glGetClipPlanefOES;
   tbl.glOrthofOES = loader_glOrthofOES;
 
+  // GL_OES_texture_3D
+
+  tbl.glCompressedTexImage3DOES = loader_glCompressedTexImage3DOES;
+  tbl.glCompressedTexSubImage3DOES = loader_glCompressedTexSubImage3DOES;
+  tbl.glCopyTexSubImage3DOES = loader_glCopyTexSubImage3DOES;
+  tbl.glFramebufferTexture3DOES = loader_glFramebufferTexture3DOES;
+  tbl.glTexImage3DOES = loader_glTexImage3DOES;
+  tbl.glTexSubImage3DOES = loader_glTexSubImage3DOES;
+
+  // GL_OES_texture_cube_map
+
+  tbl.glGetTexGenfvOES = loader_glGetTexGenfvOES;
+  tbl.glGetTexGenivOES = loader_glGetTexGenivOES;
+  tbl.glGetTexGenxvOES = loader_glGetTexGenxvOES;
+  tbl.glTexGenfOES = loader_glTexGenfOES;
+  tbl.glTexGenfvOES = loader_glTexGenfvOES;
+  tbl.glTexGeniOES = loader_glTexGeniOES;
+  tbl.glTexGenivOES = loader_glTexGenivOES;
+  tbl.glTexGenxOES = loader_glTexGenxOES;
+  tbl.glTexGenxvOES = loader_glTexGenxvOES;
+
+  // GL_OES_vertex_array_object
+
+  tbl.glBindVertexArrayOES = loader_glBindVertexArrayOES;
+  tbl.glDeleteVertexArraysOES = loader_glDeleteVertexArraysOES;
+  tbl.glGenVertexArraysOES = loader_glGenVertexArraysOES;
+  tbl.glIsVertexArrayOES = loader_glIsVertexArrayOES;
+
   // GL_PGI_misc_hints
 
   tbl.glHintPGI = loader_glHintPGI;
+
+  // GL_QCOM_alpha_test
+
+  tbl.glAlphaFuncQCOM = loader_glAlphaFuncQCOM;
+
+  // GL_QCOM_driver_control
+
+  tbl.glDisableDriverControlQCOM = loader_glDisableDriverControlQCOM;
+  tbl.glEnableDriverControlQCOM = loader_glEnableDriverControlQCOM;
+  tbl.glGetDriverControlStringQCOM = loader_glGetDriverControlStringQCOM;
+  tbl.glGetDriverControlsQCOM = loader_glGetDriverControlsQCOM;
+
+  // GL_QCOM_extended_get
+
+  tbl.glExtGetBufferPointervQCOM = loader_glExtGetBufferPointervQCOM;
+  tbl.glExtGetBuffersQCOM = loader_glExtGetBuffersQCOM;
+  tbl.glExtGetFramebuffersQCOM = loader_glExtGetFramebuffersQCOM;
+  tbl.glExtGetRenderbuffersQCOM = loader_glExtGetRenderbuffersQCOM;
+  tbl.glExtGetTexLevelParameterivQCOM = loader_glExtGetTexLevelParameterivQCOM;
+  tbl.glExtGetTexSubImageQCOM = loader_glExtGetTexSubImageQCOM;
+  tbl.glExtGetTexturesQCOM = loader_glExtGetTexturesQCOM;
+  tbl.glExtTexObjectStateOverrideiQCOM = loader_glExtTexObjectStateOverrideiQCOM;
+
+  // GL_QCOM_extended_get2
+
+  tbl.glExtGetProgramBinarySourceQCOM = loader_glExtGetProgramBinarySourceQCOM;
+  tbl.glExtGetProgramsQCOM = loader_glExtGetProgramsQCOM;
+  tbl.glExtGetShadersQCOM = loader_glExtGetShadersQCOM;
+  tbl.glExtIsProgramBinaryQCOM = loader_glExtIsProgramBinaryQCOM;
+
+  // GL_QCOM_tiled_rendering
+
+  tbl.glEndTilingQCOM = loader_glEndTilingQCOM;
+  tbl.glStartTilingQCOM = loader_glStartTilingQCOM;
 
   // GL_REGAL_ES1_1_compatibility
 

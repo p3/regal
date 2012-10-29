@@ -3,8 +3,10 @@ from Api import Api
 from Api import Function, Typedef, Enum
 from Api import Return, Parameter, Input, Output, InputOutput
 from Api import Enumerant
+from Api import StateType, State
 
 gl = Api()
+
 GLenum = Typedef('GLenum','unsigned int')
 GLenum.default = '0'
 
@@ -2570,6 +2572,24 @@ GL_FACTOR_MIN_AMD = Enumerant('GL_FACTOR_MIN_AMD', 0x901c, 'GL_AMD_blend_minmax_
 defines.add(GL_FACTOR_MAX_AMD)
 defines.add(GL_FACTOR_MIN_AMD)
 
+# GL_AMD_compressed_3DC_texture
+
+GL_3DC_XY_AMD = Enumerant('GL_3DC_XY_AMD', 0x87fa, 'GL_AMD_compressed_3DC_texture')
+GL_3DC_X_AMD = Enumerant('GL_3DC_X_AMD', 0x87f9, 'GL_AMD_compressed_3DC_texture')
+
+defines.add(GL_3DC_XY_AMD)
+defines.add(GL_3DC_X_AMD)
+
+# GL_AMD_compressed_ATC_texture
+
+GL_ATC_RGBA_EXPLICIT_ALPHA_AMD = Enumerant('GL_ATC_RGBA_EXPLICIT_ALPHA_AMD', 0x8c93, 'GL_AMD_compressed_ATC_texture')
+GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD = Enumerant('GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD', 0x87ee, 'GL_AMD_compressed_ATC_texture')
+GL_ATC_RGB_AMD = Enumerant('GL_ATC_RGB_AMD', 0x8c92, 'GL_AMD_compressed_ATC_texture')
+
+defines.add(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD)
+defines.add(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD)
+defines.add(GL_ATC_RGB_AMD)
+
 # GL_AMD_debug_output
 
 GL_DEBUG_CATEGORY_API_ERROR_AMD = Enumerant('GL_DEBUG_CATEGORY_API_ERROR_AMD', 0x9149, 'GL_AMD_debug_output')
@@ -2648,6 +2668,12 @@ GL_EXTERNAL_VIRTUAL_MEMORY_BUFFER_AMD = Enumerant('GL_EXTERNAL_VIRTUAL_MEMORY_BU
 
 defines.add(GL_EXTERNAL_VIRTUAL_MEMORY_BUFFER_AMD)
 
+# GL_AMD_program_binary_Z400
+
+GL_Z400_BINARY_AMD = Enumerant('GL_Z400_BINARY_AMD', 0x8740, 'GL_AMD_program_binary_Z400')
+
+defines.add(GL_Z400_BINARY_AMD)
+
 # GL_AMD_query_buffer_object
 
 GL_QUERY_BUFFER_AMD = Enumerant('GL_QUERY_BUFFER_AMD', 0x9192, 'GL_AMD_query_buffer_object')
@@ -2699,6 +2725,68 @@ defines.add(GL_SAMPLER_BUFFER_AMD)
 defines.add(GL_TESSELLATION_FACTOR_AMD)
 defines.add(GL_TESSELLATION_MODE_AMD)
 defines.add(GL_UNSIGNED_INT_SAMPLER_BUFFER_AMD)
+
+# GL_ANGLE_framebuffer_blit
+
+GL_DRAW_FRAMEBUFFER_ANGLE = Enumerant('GL_DRAW_FRAMEBUFFER_ANGLE', 0x8ca9, 'GL_ANGLE_framebuffer_blit')
+GL_DRAW_FRAMEBUFFER_BINDING_ANGLE = Enumerant('GL_DRAW_FRAMEBUFFER_BINDING_ANGLE', 0x8ca6, 'GL_ANGLE_framebuffer_blit')
+GL_READ_FRAMEBUFFER_ANGLE = Enumerant('GL_READ_FRAMEBUFFER_ANGLE', 0x8ca8, 'GL_ANGLE_framebuffer_blit')
+GL_READ_FRAMEBUFFER_BINDING_ANGLE = Enumerant('GL_READ_FRAMEBUFFER_BINDING_ANGLE', 0x8caa, 'GL_ANGLE_framebuffer_blit')
+
+defines.add(GL_DRAW_FRAMEBUFFER_ANGLE)
+defines.add(GL_DRAW_FRAMEBUFFER_BINDING_ANGLE)
+defines.add(GL_READ_FRAMEBUFFER_ANGLE)
+defines.add(GL_READ_FRAMEBUFFER_BINDING_ANGLE)
+
+# GL_ANGLE_framebuffer_multisample
+
+GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE', 0x8d56, 'GL_ANGLE_framebuffer_multisample')
+GL_MAX_SAMPLES_ANGLE = Enumerant('GL_MAX_SAMPLES_ANGLE', 0x8d57, 'GL_ANGLE_framebuffer_multisample')
+GL_RENDERBUFFER_SAMPLES_ANGLE = Enumerant('GL_RENDERBUFFER_SAMPLES_ANGLE', 0x8cab, 'GL_ANGLE_framebuffer_multisample')
+
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE)
+defines.add(GL_MAX_SAMPLES_ANGLE)
+defines.add(GL_RENDERBUFFER_SAMPLES_ANGLE)
+
+# GL_ANGLE_instanced_arrays
+
+GL_VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE = Enumerant('GL_VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE', 0x88fe, 'GL_ANGLE_instanced_arrays')
+
+defines.add(GL_VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE)
+
+# GL_ANGLE_pack_reverse_row_order
+
+GL_PACK_REVERSE_ROW_ORDER_ANGLE = Enumerant('GL_PACK_REVERSE_ROW_ORDER_ANGLE', 0x93a4, 'GL_ANGLE_pack_reverse_row_order')
+
+defines.add(GL_PACK_REVERSE_ROW_ORDER_ANGLE)
+
+# GL_ANGLE_texture_compression_dxt5
+
+GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE = Enumerant('GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE', 0x83f2, 'GL_ANGLE_texture_compression_dxt5')
+GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE = Enumerant('GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE', 0x83f2, 'GL_ANGLE_texture_compression_dxt5')
+GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE = Enumerant('GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE', 0x83f3, 'GL_ANGLE_texture_compression_dxt5')
+GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE = Enumerant('GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE', 0x83f3, 'GL_ANGLE_texture_compression_dxt5')
+
+defines.add(GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE)
+defines.add(GL_COMPRESSED_RGBA_S3TC_DXT3_ANGLE)
+defines.add(GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE)
+defines.add(GL_COMPRESSED_RGBA_S3TC_DXT5_ANGLE)
+
+# GL_ANGLE_texture_usage
+
+GL_FRAMEBUFFER_ATTACHMENT_ANGLE = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_ANGLE', 0x93a3, 'GL_ANGLE_texture_usage')
+GL_NONE = Enumerant('GL_NONE', 0x0000, 'GL_ANGLE_texture_usage')
+GL_TEXTURE_USAGE_ANGLE = Enumerant('GL_TEXTURE_USAGE_ANGLE', 0x93a2, 'GL_ANGLE_texture_usage')
+
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_ANGLE)
+defines.add(GL_NONE)
+defines.add(GL_TEXTURE_USAGE_ANGLE)
+
+# GL_ANGLE_translated_shader_source
+
+GL_TRANSLATED_SHADER_SOURCE_LENGTH_ANGLE = Enumerant('GL_TRANSLATED_SHADER_SOURCE_LENGTH_ANGLE', 0x93a0, 'GL_ANGLE_translated_shader_source')
+
+defines.add(GL_TRANSLATED_SHADER_SOURCE_LENGTH_ANGLE)
 
 # GL_APPLE_aux_depth_stencil
 
@@ -2770,6 +2858,24 @@ GL_BUFFER_SERIALIZED_MODIFY_APPLE = Enumerant('GL_BUFFER_SERIALIZED_MODIFY_APPLE
 defines.add(GL_BUFFER_FLUSHING_UNMAP_APPLE)
 defines.add(GL_BUFFER_SERIALIZED_MODIFY_APPLE)
 
+# GL_APPLE_framebuffer_multisample
+
+GL_DRAW_FRAMEBUFFER_APPLE = Enumerant('GL_DRAW_FRAMEBUFFER_APPLE', 0x8ca9, 'GL_APPLE_framebuffer_multisample')
+GL_DRAW_FRAMEBUFFER_BINDING_APPLE = Enumerant('GL_DRAW_FRAMEBUFFER_BINDING_APPLE', 0x8ca6, 'GL_APPLE_framebuffer_multisample')
+GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_APPLE = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_APPLE', 0x8d56, 'GL_APPLE_framebuffer_multisample')
+GL_MAX_SAMPLES_APPLE = Enumerant('GL_MAX_SAMPLES_APPLE', 0x8d57, 'GL_APPLE_framebuffer_multisample')
+GL_READ_FRAMEBUFFER_APPLE = Enumerant('GL_READ_FRAMEBUFFER_APPLE', 0x8ca8, 'GL_APPLE_framebuffer_multisample')
+GL_READ_FRAMEBUFFER_BINDING_APPLE = Enumerant('GL_READ_FRAMEBUFFER_BINDING_APPLE', 0x8caa, 'GL_APPLE_framebuffer_multisample')
+GL_RENDERBUFFER_SAMPLES_APPLE = Enumerant('GL_RENDERBUFFER_SAMPLES_APPLE', 0x8cab, 'GL_APPLE_framebuffer_multisample')
+
+defines.add(GL_DRAW_FRAMEBUFFER_APPLE)
+defines.add(GL_DRAW_FRAMEBUFFER_BINDING_APPLE)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_APPLE)
+defines.add(GL_MAX_SAMPLES_APPLE)
+defines.add(GL_READ_FRAMEBUFFER_APPLE)
+defines.add(GL_READ_FRAMEBUFFER_BINDING_APPLE)
+defines.add(GL_RENDERBUFFER_SAMPLES_APPLE)
+
 # GL_APPLE_object_purgeable
 
 GL_BUFFER_OBJECT_APPLE = Enumerant('GL_BUFFER_OBJECT_APPLE', 0x85b3, 'GL_APPLE_object_purgeable')
@@ -2811,6 +2917,48 @@ defines.add(GL_UNPACK_ROW_BYTES_APPLE)
 GL_LIGHT_MODEL_SPECULAR_VECTOR_APPLE = Enumerant('GL_LIGHT_MODEL_SPECULAR_VECTOR_APPLE', 0x85b0, 'GL_APPLE_specular_vector')
 
 defines.add(GL_LIGHT_MODEL_SPECULAR_VECTOR_APPLE)
+
+# GL_APPLE_sync
+
+GL_ALREADY_SIGNALED_APPLE = Enumerant('GL_ALREADY_SIGNALED_APPLE', 0x911a, 'GL_APPLE_sync')
+GL_CONDITION_SATISFIED_APPLE = Enumerant('GL_CONDITION_SATISFIED_APPLE', 0x911c, 'GL_APPLE_sync')
+GL_MAX_SERVER_WAIT_TIMEOUT_APPLE = Enumerant('GL_MAX_SERVER_WAIT_TIMEOUT_APPLE', 0x9111, 'GL_APPLE_sync')
+GL_OBJECT_TYPE_APPLE = Enumerant('GL_OBJECT_TYPE_APPLE', 0x9112, 'GL_APPLE_sync')
+GL_SIGNALED_APPLE = Enumerant('GL_SIGNALED_APPLE', 0x9119, 'GL_APPLE_sync')
+GL_SYNC_CONDITION_APPLE = Enumerant('GL_SYNC_CONDITION_APPLE', 0x9113, 'GL_APPLE_sync')
+GL_SYNC_FENCE_APPLE = Enumerant('GL_SYNC_FENCE_APPLE', 0x9116, 'GL_APPLE_sync')
+GL_SYNC_FLAGS_APPLE = Enumerant('GL_SYNC_FLAGS_APPLE', 0x9115, 'GL_APPLE_sync')
+GL_SYNC_FLUSH_COMMANDS_BIT_APPLE = Enumerant('GL_SYNC_FLUSH_COMMANDS_BIT_APPLE', 0x0001, 'GL_APPLE_sync')
+GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE = Enumerant('GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE', 0x9117, 'GL_APPLE_sync')
+GL_SYNC_OBJECT_APPLE = Enumerant('GL_SYNC_OBJECT_APPLE', 0x8a53, 'GL_APPLE_sync')
+GL_SYNC_STATUS_APPLE = Enumerant('GL_SYNC_STATUS_APPLE', 0x9114, 'GL_APPLE_sync')
+GL_TIMEOUT_EXPIRED_APPLE = Enumerant('GL_TIMEOUT_EXPIRED_APPLE', 0x911b, 'GL_APPLE_sync')
+GL_TIMEOUT_IGNORED_APPLE = Enumerant('GL_TIMEOUT_IGNORED_APPLE', 0xffffffffffffffff, 'GL_APPLE_sync')
+GL_UNSIGNALED_APPLE = Enumerant('GL_UNSIGNALED_APPLE', 0x9118, 'GL_APPLE_sync')
+GL_WAIT_FAILED_APPLE = Enumerant('GL_WAIT_FAILED_APPLE', 0x911d, 'GL_APPLE_sync')
+
+defines.add(GL_ALREADY_SIGNALED_APPLE)
+defines.add(GL_CONDITION_SATISFIED_APPLE)
+defines.add(GL_MAX_SERVER_WAIT_TIMEOUT_APPLE)
+defines.add(GL_OBJECT_TYPE_APPLE)
+defines.add(GL_SIGNALED_APPLE)
+defines.add(GL_SYNC_CONDITION_APPLE)
+defines.add(GL_SYNC_FENCE_APPLE)
+defines.add(GL_SYNC_FLAGS_APPLE)
+defines.add(GL_SYNC_FLUSH_COMMANDS_BIT_APPLE)
+defines.add(GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE)
+defines.add(GL_SYNC_OBJECT_APPLE)
+defines.add(GL_SYNC_STATUS_APPLE)
+defines.add(GL_TIMEOUT_EXPIRED_APPLE)
+defines.add(GL_TIMEOUT_IGNORED_APPLE)
+defines.add(GL_UNSIGNALED_APPLE)
+defines.add(GL_WAIT_FAILED_APPLE)
+
+# GL_APPLE_texture_max_level
+
+GL_TEXTURE_MAX_LEVEL_APPLE = Enumerant('GL_TEXTURE_MAX_LEVEL_APPLE', 0x813d, 'GL_APPLE_texture_max_level')
+
+defines.add(GL_TEXTURE_MAX_LEVEL_APPLE)
 
 # GL_APPLE_texture_range
 
@@ -5682,6 +5830,18 @@ defines.add(GL_INT_2_10_10_10_REV)
 defines.add(GL_UNSIGNED_INT_2_10_10_10_REV)
 defines.add(GL_UNSIGNED_INT_2_10_10_10_REV)
 
+# GL_ARM_mali_program_binary
+
+GL_MALI_PROGRAM_BINARY_ARM = Enumerant('GL_MALI_PROGRAM_BINARY_ARM', 0x8f61, 'GL_ARM_mali_program_binary')
+
+defines.add(GL_MALI_PROGRAM_BINARY_ARM)
+
+# GL_ARM_mali_shader_binary
+
+GL_MALI_SHADER_BINARY_ARM = Enumerant('GL_MALI_SHADER_BINARY_ARM', 0x8f60, 'GL_ARM_mali_shader_binary')
+
+defines.add(GL_MALI_SHADER_BINARY_ARM)
+
 # GL_ATI_draw_buffers
 
 GL_DRAW_BUFFER0_ATI = Enumerant('GL_DRAW_BUFFER0_ATI', 0x8825, 'GL_ATI_draw_buffers')
@@ -6008,6 +6168,12 @@ defines.add(GL_VERTEX_STREAM5_ATI)
 defines.add(GL_VERTEX_STREAM6_ATI)
 defines.add(GL_VERTEX_STREAM7_ATI)
 
+# GL_DMP_shader_binary
+
+GL_SHADER_BINARY_DMP = Enumerant('GL_SHADER_BINARY_DMP', 0x9250, 'GL_DMP_shader_binary')
+
+defines.add(GL_SHADER_BINARY_DMP)
+
 # GL_EXT_422_pixels
 
 GL_422_AVERAGE_EXT = Enumerant('GL_422_AVERAGE_EXT', 0x80ce, 'GL_EXT_422_pixels')
@@ -6130,6 +6296,14 @@ defines.add(GL_CMYK_EXT)
 defines.add(GL_PACK_CMYK_HINT_EXT)
 defines.add(GL_UNPACK_CMYK_HINT_EXT)
 
+# GL_EXT_color_buffer_half_float
+
+GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT', 0x8211, 'GL_EXT_color_buffer_half_float')
+GL_UNSIGNED_NORMALIZED_EXT = Enumerant('GL_UNSIGNED_NORMALIZED_EXT', 0x8c17, 'GL_EXT_color_buffer_half_float')
+
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT)
+defines.add(GL_UNSIGNED_NORMALIZED_EXT)
+
 # GL_EXT_compiled_vertex_array
 
 GL_ARRAY_ELEMENT_LOCK_COUNT_EXT = Enumerant('GL_ARRAY_ELEMENT_LOCK_COUNT_EXT', 0x81a9, 'GL_EXT_compiled_vertex_array')
@@ -6224,6 +6398,22 @@ defines.add(GL_CULL_VERTEX_EXT)
 defines.add(GL_CULL_VERTEX_EYE_POSITION_EXT)
 defines.add(GL_CULL_VERTEX_OBJECT_POSITION_EXT)
 
+# GL_EXT_debug_label
+
+GL_BUFFER_OBJECT_EXT = Enumerant('GL_BUFFER_OBJECT_EXT', 0x9151, 'GL_EXT_debug_label')
+GL_PROGRAM_OBJECT_EXT = Enumerant('GL_PROGRAM_OBJECT_EXT', 0x8b40, 'GL_EXT_debug_label')
+GL_PROGRAM_PIPELINE_OBJECT_EXT = Enumerant('GL_PROGRAM_PIPELINE_OBJECT_EXT', 0x8a4f, 'GL_EXT_debug_label')
+GL_QUERY_OBJECT_EXT = Enumerant('GL_QUERY_OBJECT_EXT', 0x9153, 'GL_EXT_debug_label')
+GL_SHADER_OBJECT_EXT = Enumerant('GL_SHADER_OBJECT_EXT', 0x8b48, 'GL_EXT_debug_label')
+GL_VERTEX_ARRAY_OBJECT_EXT = Enumerant('GL_VERTEX_ARRAY_OBJECT_EXT', 0x9154, 'GL_EXT_debug_label')
+
+defines.add(GL_BUFFER_OBJECT_EXT)
+defines.add(GL_PROGRAM_OBJECT_EXT)
+defines.add(GL_PROGRAM_PIPELINE_OBJECT_EXT)
+defines.add(GL_QUERY_OBJECT_EXT)
+defines.add(GL_SHADER_OBJECT_EXT)
+defines.add(GL_VERTEX_ARRAY_OBJECT_EXT)
+
 # GL_EXT_depth_bounds_test
 
 GL_DEPTH_BOUNDS_EXT = Enumerant('GL_DEPTH_BOUNDS_EXT', 0x8891, 'GL_EXT_depth_bounds_test')
@@ -6241,6 +6431,16 @@ GL_TRANSPOSE_PROGRAM_MATRIX_EXT = Enumerant('GL_TRANSPOSE_PROGRAM_MATRIX_EXT', 0
 defines.add(GL_PROGRAM_MATRIX_EXT)
 defines.add(GL_PROGRAM_MATRIX_STACK_DEPTH_EXT)
 defines.add(GL_TRANSPOSE_PROGRAM_MATRIX_EXT)
+
+# GL_EXT_discard_framebuffer
+
+GL_COLOR_EXT = Enumerant('GL_COLOR_EXT', 0x1800, 'GL_EXT_discard_framebuffer')
+GL_DEPTH_EXT = Enumerant('GL_DEPTH_EXT', 0x1801, 'GL_EXT_discard_framebuffer')
+GL_STENCIL_EXT = Enumerant('GL_STENCIL_EXT', 0x1802, 'GL_EXT_discard_framebuffer')
+
+defines.add(GL_COLOR_EXT)
+defines.add(GL_DEPTH_EXT)
+defines.add(GL_STENCIL_EXT)
 
 # GL_EXT_draw_range_elements
 
@@ -6603,6 +6803,22 @@ defines.add(GL_TEXTURE_LIGHT_EXT)
 defines.add(GL_TEXTURE_MATERIAL_FACE_EXT)
 defines.add(GL_TEXTURE_MATERIAL_PARAMETER_EXT)
 
+# GL_EXT_map_buffer_range
+
+GL_MAP_FLUSH_EXPLICIT_BIT_EXT = Enumerant('GL_MAP_FLUSH_EXPLICIT_BIT_EXT', 0x0010, 'GL_EXT_map_buffer_range')
+GL_MAP_INVALIDATE_BUFFER_BIT_EXT = Enumerant('GL_MAP_INVALIDATE_BUFFER_BIT_EXT', 0x0008, 'GL_EXT_map_buffer_range')
+GL_MAP_INVALIDATE_RANGE_BIT_EXT = Enumerant('GL_MAP_INVALIDATE_RANGE_BIT_EXT', 0x0004, 'GL_EXT_map_buffer_range')
+GL_MAP_READ_BIT_EXT = Enumerant('GL_MAP_READ_BIT_EXT', 0x0001, 'GL_EXT_map_buffer_range')
+GL_MAP_UNSYNCHRONIZED_BIT_EXT = Enumerant('GL_MAP_UNSYNCHRONIZED_BIT_EXT', 0x0020, 'GL_EXT_map_buffer_range')
+GL_MAP_WRITE_BIT_EXT = Enumerant('GL_MAP_WRITE_BIT_EXT', 0x0002, 'GL_EXT_map_buffer_range')
+
+defines.add(GL_MAP_FLUSH_EXPLICIT_BIT_EXT)
+defines.add(GL_MAP_INVALIDATE_BUFFER_BIT_EXT)
+defines.add(GL_MAP_INVALIDATE_RANGE_BIT_EXT)
+defines.add(GL_MAP_READ_BIT_EXT)
+defines.add(GL_MAP_UNSYNCHRONIZED_BIT_EXT)
+defines.add(GL_MAP_WRITE_BIT_EXT)
+
 # GL_EXT_multisample
 
 GL_1PASS_EXT = Enumerant('GL_1PASS_EXT', 0x80a1, 'GL_EXT_multisample')
@@ -6640,6 +6856,46 @@ defines.add(GL_SAMPLE_MASK_EXT)
 defines.add(GL_SAMPLE_MASK_INVERT_EXT)
 defines.add(GL_SAMPLE_MASK_VALUE_EXT)
 defines.add(GL_SAMPLE_PATTERN_EXT)
+
+# GL_EXT_multisampled_render_to_texture
+
+GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT', 0x8d6c, 'GL_EXT_multisampled_render_to_texture')
+GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT', 0x8d56, 'GL_EXT_multisampled_render_to_texture')
+GL_MAX_SAMPLES_EXT = Enumerant('GL_MAX_SAMPLES_EXT', 0x8d57, 'GL_EXT_multisampled_render_to_texture')
+GL_RENDERBUFFER_SAMPLES_EXT = Enumerant('GL_RENDERBUFFER_SAMPLES_EXT', 0x8cab, 'GL_EXT_multisampled_render_to_texture')
+
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT)
+defines.add(GL_MAX_SAMPLES_EXT)
+defines.add(GL_RENDERBUFFER_SAMPLES_EXT)
+
+# GL_EXT_multiview_draw_buffers
+
+GL_COLOR_ATTACHMENT_EXT = Enumerant('GL_COLOR_ATTACHMENT_EXT', 0x90f0, 'GL_EXT_multiview_draw_buffers')
+GL_DRAW_BUFFER_EXT = Enumerant('GL_DRAW_BUFFER_EXT', 0x0c01, 'GL_EXT_multiview_draw_buffers')
+GL_MAX_MULTIVIEW_BUFFERS_EXT = Enumerant('GL_MAX_MULTIVIEW_BUFFERS_EXT', 0x90f2, 'GL_EXT_multiview_draw_buffers')
+GL_MULTIVIEW_EXT = Enumerant('GL_MULTIVIEW_EXT', 0x90f1, 'GL_EXT_multiview_draw_buffers')
+GL_READ_BUFFER_EXT = Enumerant('GL_READ_BUFFER_EXT', 0x0c02, 'GL_EXT_multiview_draw_buffers')
+
+defines.add(GL_COLOR_ATTACHMENT_EXT)
+defines.add(GL_DRAW_BUFFER_EXT)
+defines.add(GL_MAX_MULTIVIEW_BUFFERS_EXT)
+defines.add(GL_MULTIVIEW_EXT)
+defines.add(GL_READ_BUFFER_EXT)
+
+# GL_EXT_occlusion_query_boolean
+
+GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT = Enumerant('GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT', 0x8d6a, 'GL_EXT_occlusion_query_boolean')
+GL_ANY_SAMPLES_PASSED_EXT = Enumerant('GL_ANY_SAMPLES_PASSED_EXT', 0x8c2f, 'GL_EXT_occlusion_query_boolean')
+GL_CURRENT_QUERY_EXT = Enumerant('GL_CURRENT_QUERY_EXT', 0x8865, 'GL_EXT_occlusion_query_boolean')
+GL_QUERY_RESULT_AVAILABLE_EXT = Enumerant('GL_QUERY_RESULT_AVAILABLE_EXT', 0x8867, 'GL_EXT_occlusion_query_boolean')
+GL_QUERY_RESULT_EXT = Enumerant('GL_QUERY_RESULT_EXT', 0x8866, 'GL_EXT_occlusion_query_boolean')
+
+defines.add(GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT)
+defines.add(GL_ANY_SAMPLES_PASSED_EXT)
+defines.add(GL_CURRENT_QUERY_EXT)
+defines.add(GL_QUERY_RESULT_AVAILABLE_EXT)
+defines.add(GL_QUERY_RESULT_EXT)
 
 # GL_EXT_packed_depth_stencil
 
@@ -6787,11 +7043,51 @@ defines.add(GL_LAST_VERTEX_CONVENTION_EXT)
 defines.add(GL_PROVOKING_VERTEX_EXT)
 defines.add(GL_QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION_EXT)
 
+# GL_EXT_read_format_bgra
+
+GL_UNSIGNED_SHORT_1_5_5_5_REV_EXT = Enumerant('GL_UNSIGNED_SHORT_1_5_5_5_REV_EXT', 0x8366, 'GL_EXT_read_format_bgra')
+GL_UNSIGNED_SHORT_4_4_4_4_REV_EXT = Enumerant('GL_UNSIGNED_SHORT_4_4_4_4_REV_EXT', 0x8365, 'GL_EXT_read_format_bgra')
+
+defines.add(GL_UNSIGNED_SHORT_1_5_5_5_REV_EXT)
+defines.add(GL_UNSIGNED_SHORT_4_4_4_4_REV_EXT)
+
 # GL_EXT_rescale_normal
 
 GL_RESCALE_NORMAL_EXT = Enumerant('GL_RESCALE_NORMAL_EXT', 0x803a, 'GL_EXT_rescale_normal')
 
 defines.add(GL_RESCALE_NORMAL_EXT)
+
+# GL_EXT_robustness
+
+GL_CONTEXT_ROBUST_ACCESS_EXT = Enumerant('GL_CONTEXT_ROBUST_ACCESS_EXT', 0x90f3, 'GL_EXT_robustness')
+GL_GUILTY_CONTEXT_RESET_EXT = Enumerant('GL_GUILTY_CONTEXT_RESET_EXT', 0x8253, 'GL_EXT_robustness')
+GL_INNOCENT_CONTEXT_RESET_EXT = Enumerant('GL_INNOCENT_CONTEXT_RESET_EXT', 0x8254, 'GL_EXT_robustness')
+GL_LOSE_CONTEXT_ON_RESET_EXT = Enumerant('GL_LOSE_CONTEXT_ON_RESET_EXT', 0x8252, 'GL_EXT_robustness')
+GL_NO_ERROR = Enumerant('GL_NO_ERROR', 0x0000, 'GL_EXT_robustness')
+GL_NO_RESET_NOTIFICATION_EXT = Enumerant('GL_NO_RESET_NOTIFICATION_EXT', 0x8261, 'GL_EXT_robustness')
+GL_RESET_NOTIFICATION_STRATEGY_EXT = Enumerant('GL_RESET_NOTIFICATION_STRATEGY_EXT', 0x8256, 'GL_EXT_robustness')
+GL_UNKNOWN_CONTEXT_RESET_EXT = Enumerant('GL_UNKNOWN_CONTEXT_RESET_EXT', 0x8255, 'GL_EXT_robustness')
+
+defines.add(GL_CONTEXT_ROBUST_ACCESS_EXT)
+defines.add(GL_GUILTY_CONTEXT_RESET_EXT)
+defines.add(GL_INNOCENT_CONTEXT_RESET_EXT)
+defines.add(GL_LOSE_CONTEXT_ON_RESET_EXT)
+defines.add(GL_NO_ERROR)
+defines.add(GL_NO_RESET_NOTIFICATION_EXT)
+defines.add(GL_RESET_NOTIFICATION_STRATEGY_EXT)
+defines.add(GL_UNKNOWN_CONTEXT_RESET_EXT)
+
+# GL_EXT_sRGB
+
+GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING_EXT = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING_EXT', 0x8210, 'GL_EXT_sRGB')
+GL_SRGB8_ALPHA8_EXT = Enumerant('GL_SRGB8_ALPHA8_EXT', 0x8c43, 'GL_EXT_sRGB')
+GL_SRGB_ALPHA_EXT = Enumerant('GL_SRGB_ALPHA_EXT', 0x8c42, 'GL_EXT_sRGB')
+GL_SRGB_EXT = Enumerant('GL_SRGB_EXT', 0x8c40, 'GL_EXT_sRGB')
+
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING_EXT)
+defines.add(GL_SRGB8_ALPHA8_EXT)
+defines.add(GL_SRGB_ALPHA_EXT)
+defines.add(GL_SRGB_EXT)
 
 # GL_EXT_secondary_color
 
@@ -6826,6 +7122,12 @@ GL_SINGLE_COLOR_EXT = Enumerant('GL_SINGLE_COLOR_EXT', 0x81f9, 'GL_EXT_separate_
 defines.add(GL_LIGHT_MODEL_COLOR_CONTROL_EXT)
 defines.add(GL_SEPARATE_SPECULAR_COLOR_EXT)
 defines.add(GL_SINGLE_COLOR_EXT)
+
+# GL_EXT_shader_framebuffer_fetch
+
+GL_FRAGMENT_SHADER_DISCARDS_SAMPLES_EXT = Enumerant('GL_FRAGMENT_SHADER_DISCARDS_SAMPLES_EXT', 0x8a52, 'GL_EXT_shader_framebuffer_fetch')
+
+defines.add(GL_FRAGMENT_SHADER_DISCARDS_SAMPLES_EXT)
 
 # GL_EXT_shader_image_load_store
 
@@ -6940,6 +7242,18 @@ defines.add(GL_UNSIGNED_INT_IMAGE_BUFFER_EXT)
 defines.add(GL_UNSIGNED_INT_IMAGE_CUBE_EXT)
 defines.add(GL_UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY_EXT)
 defines.add(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT_EXT)
+
+# GL_EXT_shadow_samplers
+
+GL_COMPARE_REF_TO_TEXTURE_EXT = Enumerant('GL_COMPARE_REF_TO_TEXTURE_EXT', 0x884e, 'GL_EXT_shadow_samplers')
+GL_SAMPLER_2D_SHADOW_EXT = Enumerant('GL_SAMPLER_2D_SHADOW_EXT', 0x8b62, 'GL_EXT_shadow_samplers')
+GL_TEXTURE_COMPARE_FUNC_EXT = Enumerant('GL_TEXTURE_COMPARE_FUNC_EXT', 0x884d, 'GL_EXT_shadow_samplers')
+GL_TEXTURE_COMPARE_MODE_EXT = Enumerant('GL_TEXTURE_COMPARE_MODE_EXT', 0x884c, 'GL_EXT_shadow_samplers')
+
+defines.add(GL_COMPARE_REF_TO_TEXTURE_EXT)
+defines.add(GL_SAMPLER_2D_SHADOW_EXT)
+defines.add(GL_TEXTURE_COMPARE_FUNC_EXT)
+defines.add(GL_TEXTURE_COMPARE_MODE_EXT)
 
 # GL_EXT_shared_texture_palette
 
@@ -7247,6 +7561,16 @@ GL_TEXTURE_MAX_ANISOTROPY_EXT = Enumerant('GL_TEXTURE_MAX_ANISOTROPY_EXT', 0x84f
 defines.add(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT)
 defines.add(GL_TEXTURE_MAX_ANISOTROPY_EXT)
 
+# GL_EXT_texture_format_BGRA8888
+
+GL_BGRA_EXT = Enumerant('GL_BGRA_EXT', 0x80e1, 'GL_EXT_texture_format_BGRA8888')
+GL_BGRA_EXT = Enumerant('GL_BGRA_EXT', 0x80e1, 'GL_EXT_texture_format_BGRA8888')
+GL_BGRA_EXT = Enumerant('GL_BGRA_EXT', 0x80e1, 'GL_EXT_texture_format_BGRA8888')
+
+defines.add(GL_BGRA_EXT)
+defines.add(GL_BGRA_EXT)
+defines.add(GL_BGRA_EXT)
+
 # GL_EXT_texture_integer
 
 GL_ALPHA16I_EXT = Enumerant('GL_ALPHA16I_EXT', 0x8d8a, 'GL_EXT_texture_integer')
@@ -7399,6 +7723,14 @@ defines.add(GL_PROXY_TEXTURE_RECTANGLE_EXT)
 defines.add(GL_TEXTURE_BINDING_RECTANGLE_EXT)
 defines.add(GL_TEXTURE_RECTANGLE_EXT)
 
+# GL_EXT_texture_rg
+
+GL_RED_EXT = Enumerant('GL_RED_EXT', 0x1903, 'GL_EXT_texture_rg')
+GL_RG_EXT = Enumerant('GL_RG_EXT', 0x8227, 'GL_EXT_texture_rg')
+
+defines.add(GL_RED_EXT)
+defines.add(GL_RG_EXT)
+
 # GL_EXT_texture_sRGB
 
 GL_COMPRESSED_SLUMINANCE_ALPHA_EXT = Enumerant('GL_COMPRESSED_SLUMINANCE_ALPHA_EXT', 0x8c4b, 'GL_EXT_texture_sRGB')
@@ -7535,6 +7867,66 @@ defines.add(GL_RG_SNORM)
 defines.add(GL_SIGNED_NORMALIZED)
 defines.add(GL_SIGNED_NORMALIZED)
 
+# GL_EXT_texture_storage
+
+GL_ALPHA16F_EXT = Enumerant('GL_ALPHA16F_EXT', 0x881c, 'GL_EXT_texture_storage')
+GL_ALPHA32F_EXT = Enumerant('GL_ALPHA32F_EXT', 0x8816, 'GL_EXT_texture_storage')
+GL_ALPHA8_EXT = Enumerant('GL_ALPHA8_EXT', 0x803c, 'GL_EXT_texture_storage')
+GL_BGRA8_EXT = Enumerant('GL_BGRA8_EXT', 0x93a1, 'GL_EXT_texture_storage')
+GL_LUMINANCE16F_EXT = Enumerant('GL_LUMINANCE16F_EXT', 0x881e, 'GL_EXT_texture_storage')
+GL_LUMINANCE32F_EXT = Enumerant('GL_LUMINANCE32F_EXT', 0x8818, 'GL_EXT_texture_storage')
+GL_LUMINANCE8_ALPHA8_EXT = Enumerant('GL_LUMINANCE8_ALPHA8_EXT', 0x8045, 'GL_EXT_texture_storage')
+GL_LUMINANCE8_EXT = Enumerant('GL_LUMINANCE8_EXT', 0x8040, 'GL_EXT_texture_storage')
+GL_LUMINANCE_ALPHA16F_EXT = Enumerant('GL_LUMINANCE_ALPHA16F_EXT', 0x881f, 'GL_EXT_texture_storage')
+GL_LUMINANCE_ALPHA32F_EXT = Enumerant('GL_LUMINANCE_ALPHA32F_EXT', 0x8819, 'GL_EXT_texture_storage')
+GL_R16F_EXT = Enumerant('GL_R16F_EXT', 0x822d, 'GL_EXT_texture_storage')
+GL_R16F_EXT = Enumerant('GL_R16F_EXT', 0x822d, 'GL_EXT_texture_storage')
+GL_R32F_EXT = Enumerant('GL_R32F_EXT', 0x822e, 'GL_EXT_texture_storage')
+GL_R8_EXT = Enumerant('GL_R8_EXT', 0x8229, 'GL_EXT_texture_storage')
+GL_R8_EXT = Enumerant('GL_R8_EXT', 0x8229, 'GL_EXT_texture_storage')
+GL_RG16F_EXT = Enumerant('GL_RG16F_EXT', 0x822f, 'GL_EXT_texture_storage')
+GL_RG16F_EXT = Enumerant('GL_RG16F_EXT', 0x822f, 'GL_EXT_texture_storage')
+GL_RG32F_EXT = Enumerant('GL_RG32F_EXT', 0x8230, 'GL_EXT_texture_storage')
+GL_RG8_EXT = Enumerant('GL_RG8_EXT', 0x822b, 'GL_EXT_texture_storage')
+GL_RG8_EXT = Enumerant('GL_RG8_EXT', 0x822b, 'GL_EXT_texture_storage')
+GL_RGB16F_EXT = Enumerant('GL_RGB16F_EXT', 0x881b, 'GL_EXT_texture_storage')
+GL_RGB16F_EXT = Enumerant('GL_RGB16F_EXT', 0x881b, 'GL_EXT_texture_storage')
+GL_RGB32F_EXT = Enumerant('GL_RGB32F_EXT', 0x8815, 'GL_EXT_texture_storage')
+GL_RGBA16F_EXT = Enumerant('GL_RGBA16F_EXT', 0x881a, 'GL_EXT_texture_storage')
+GL_RGBA16F_EXT = Enumerant('GL_RGBA16F_EXT', 0x881a, 'GL_EXT_texture_storage')
+GL_RGBA32F_EXT = Enumerant('GL_RGBA32F_EXT', 0x8814, 'GL_EXT_texture_storage')
+GL_RGB_422_APPLE = Enumerant('GL_RGB_422_APPLE', 0x8a1f, 'GL_EXT_texture_storage')
+GL_TEXTURE_IMMUTABLE_FORMAT_EXT = Enumerant('GL_TEXTURE_IMMUTABLE_FORMAT_EXT', 0x912f, 'GL_EXT_texture_storage')
+
+defines.add(GL_ALPHA16F_EXT)
+defines.add(GL_ALPHA32F_EXT)
+defines.add(GL_ALPHA8_EXT)
+defines.add(GL_BGRA8_EXT)
+defines.add(GL_LUMINANCE16F_EXT)
+defines.add(GL_LUMINANCE32F_EXT)
+defines.add(GL_LUMINANCE8_ALPHA8_EXT)
+defines.add(GL_LUMINANCE8_EXT)
+defines.add(GL_LUMINANCE_ALPHA16F_EXT)
+defines.add(GL_LUMINANCE_ALPHA32F_EXT)
+defines.add(GL_R16F_EXT)
+defines.add(GL_R16F_EXT)
+defines.add(GL_R32F_EXT)
+defines.add(GL_R8_EXT)
+defines.add(GL_R8_EXT)
+defines.add(GL_RG16F_EXT)
+defines.add(GL_RG16F_EXT)
+defines.add(GL_RG32F_EXT)
+defines.add(GL_RG8_EXT)
+defines.add(GL_RG8_EXT)
+defines.add(GL_RGB16F_EXT)
+defines.add(GL_RGB16F_EXT)
+defines.add(GL_RGB32F_EXT)
+defines.add(GL_RGBA16F_EXT)
+defines.add(GL_RGBA16F_EXT)
+defines.add(GL_RGBA32F_EXT)
+defines.add(GL_RGB_422_APPLE)
+defines.add(GL_TEXTURE_IMMUTABLE_FORMAT_EXT)
+
 # GL_EXT_texture_swizzle
 
 GL_TEXTURE_SWIZZLE_A_EXT = Enumerant('GL_TEXTURE_SWIZZLE_A_EXT', 0x8e45, 'GL_EXT_texture_swizzle')
@@ -7548,6 +7940,12 @@ defines.add(GL_TEXTURE_SWIZZLE_B_EXT)
 defines.add(GL_TEXTURE_SWIZZLE_G_EXT)
 defines.add(GL_TEXTURE_SWIZZLE_RGBA_EXT)
 defines.add(GL_TEXTURE_SWIZZLE_R_EXT)
+
+# GL_EXT_texture_type_2_10_10_10_REV
+
+GL_UNSIGNED_INT_2_10_10_10_REV_EXT = Enumerant('GL_UNSIGNED_INT_2_10_10_10_REV_EXT', 0x8368, 'GL_EXT_texture_type_2_10_10_10_REV')
+
+defines.add(GL_UNSIGNED_INT_2_10_10_10_REV_EXT)
 
 # GL_EXT_timer_query
 
@@ -7588,6 +7986,16 @@ defines.add(GL_TRANSFORM_FEEDBACK_BUFFER_START_EXT)
 defines.add(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN_EXT)
 defines.add(GL_TRANSFORM_FEEDBACK_VARYINGS_EXT)
 defines.add(GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH_EXT)
+
+# GL_EXT_unpack_subimage
+
+GL_UNPACK_ROW_LENGTH = Enumerant('GL_UNPACK_ROW_LENGTH', 0x0cf2, 'GL_EXT_unpack_subimage')
+GL_UNPACK_SKIP_PIXELS = Enumerant('GL_UNPACK_SKIP_PIXELS', 0x0cf4, 'GL_EXT_unpack_subimage')
+GL_UNPACK_SKIP_ROWS = Enumerant('GL_UNPACK_SKIP_ROWS', 0x0cf3, 'GL_EXT_unpack_subimage')
+
+defines.add(GL_UNPACK_ROW_LENGTH)
+defines.add(GL_UNPACK_SKIP_PIXELS)
+defines.add(GL_UNPACK_SKIP_ROWS)
 
 # GL_EXT_vertex_array
 
@@ -7947,6 +8355,12 @@ GL_SYNC_X11_FENCE_EXT = Enumerant('GL_SYNC_X11_FENCE_EXT', 0x90e1, 'GL_EXT_x11_s
 
 defines.add(GL_SYNC_X11_FENCE_EXT)
 
+# GL_FJ_shader_binary_GCCSO
+
+GL_GCCSO_SHADER_BINARY_FJ = Enumerant('GL_GCCSO_SHADER_BINARY_FJ', 0x9260, 'GL_FJ_shader_binary_GCCSO')
+
+defines.add(GL_GCCSO_SHADER_BINARY_FJ)
+
 # GL_HP_occlusion_test
 
 GL_OCCLUSION_TEST_HP = Enumerant('GL_OCCLUSION_TEST_HP', 0x8165, 'GL_HP_occlusion_test')
@@ -8016,6 +8430,86 @@ defines.add(GL_TEXTURE_COORD_ARRAY_LIST_IBM)
 defines.add(GL_TEXTURE_COORD_ARRAY_LIST_STRIDE_IBM)
 defines.add(GL_VERTEX_ARRAY_LIST_IBM)
 defines.add(GL_VERTEX_ARRAY_LIST_STRIDE_IBM)
+
+# GL_IMG_multisampled_render_to_texture
+
+GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_IMG = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_IMG', 0x9134, 'GL_IMG_multisampled_render_to_texture')
+GL_MAX_SAMPLES_IMG = Enumerant('GL_MAX_SAMPLES_IMG', 0x9135, 'GL_IMG_multisampled_render_to_texture')
+GL_RENDERBUFFER_SAMPLES_IMG = Enumerant('GL_RENDERBUFFER_SAMPLES_IMG', 0x9133, 'GL_IMG_multisampled_render_to_texture')
+GL_TEXTURE_SAMPLES_IMG = Enumerant('GL_TEXTURE_SAMPLES_IMG', 0x9136, 'GL_IMG_multisampled_render_to_texture')
+
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_IMG)
+defines.add(GL_MAX_SAMPLES_IMG)
+defines.add(GL_RENDERBUFFER_SAMPLES_IMG)
+defines.add(GL_TEXTURE_SAMPLES_IMG)
+
+# GL_IMG_program_binary
+
+GL_SGX_PROGRAM_BINARY_IMG = Enumerant('GL_SGX_PROGRAM_BINARY_IMG', 0x9130, 'GL_IMG_program_binary')
+
+defines.add(GL_SGX_PROGRAM_BINARY_IMG)
+
+# GL_IMG_read_format
+
+GL_BGRA_IMG = Enumerant('GL_BGRA_IMG', 0x80e1, 'GL_IMG_read_format')
+GL_UNSIGNED_SHORT_4_4_4_4_REV_IMG = Enumerant('GL_UNSIGNED_SHORT_4_4_4_4_REV_IMG', 0x8365, 'GL_IMG_read_format')
+
+defines.add(GL_BGRA_IMG)
+defines.add(GL_UNSIGNED_SHORT_4_4_4_4_REV_IMG)
+
+# GL_IMG_shader_binary
+
+GL_SGX_BINARY_IMG = Enumerant('GL_SGX_BINARY_IMG', 0x8c0a, 'GL_IMG_shader_binary')
+
+defines.add(GL_SGX_BINARY_IMG)
+
+# GL_IMG_texture_compression_pvrtc
+
+GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG = Enumerant('GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG', 0x8c03, 'GL_IMG_texture_compression_pvrtc')
+GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG = Enumerant('GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG', 0x8c02, 'GL_IMG_texture_compression_pvrtc')
+GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG = Enumerant('GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG', 0x8c01, 'GL_IMG_texture_compression_pvrtc')
+GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG = Enumerant('GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG', 0x8c00, 'GL_IMG_texture_compression_pvrtc')
+
+defines.add(GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG)
+defines.add(GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG)
+defines.add(GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG)
+defines.add(GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG)
+
+# GL_IMG_texture_env_enhanced_fixed_function
+
+GL_ADD_BLEND_IMG = Enumerant('GL_ADD_BLEND_IMG', 0x8c09, 'GL_IMG_texture_env_enhanced_fixed_function')
+GL_DOT3_RGBA_IMG = Enumerant('GL_DOT3_RGBA_IMG', 0x86af, 'GL_IMG_texture_env_enhanced_fixed_function')
+GL_FACTOR_ALPHA_MODULATE_IMG = Enumerant('GL_FACTOR_ALPHA_MODULATE_IMG', 0x8c07, 'GL_IMG_texture_env_enhanced_fixed_function')
+GL_FRAGMENT_ALPHA_MODULATE_IMG = Enumerant('GL_FRAGMENT_ALPHA_MODULATE_IMG', 0x8c08, 'GL_IMG_texture_env_enhanced_fixed_function')
+GL_MODULATE_COLOR_IMG = Enumerant('GL_MODULATE_COLOR_IMG', 0x8c04, 'GL_IMG_texture_env_enhanced_fixed_function')
+GL_RECIP_ADD_SIGNED_ALPHA_IMG = Enumerant('GL_RECIP_ADD_SIGNED_ALPHA_IMG', 0x8c05, 'GL_IMG_texture_env_enhanced_fixed_function')
+GL_TEXTURE_ALPHA_MODULATE_IMG = Enumerant('GL_TEXTURE_ALPHA_MODULATE_IMG', 0x8c06, 'GL_IMG_texture_env_enhanced_fixed_function')
+
+defines.add(GL_ADD_BLEND_IMG)
+defines.add(GL_DOT3_RGBA_IMG)
+defines.add(GL_FACTOR_ALPHA_MODULATE_IMG)
+defines.add(GL_FRAGMENT_ALPHA_MODULATE_IMG)
+defines.add(GL_MODULATE_COLOR_IMG)
+defines.add(GL_RECIP_ADD_SIGNED_ALPHA_IMG)
+defines.add(GL_TEXTURE_ALPHA_MODULATE_IMG)
+
+# GL_IMG_user_clip_plane
+
+GL_CLIP_PLANE0_IMG = Enumerant('GL_CLIP_PLANE0_IMG', 0x3000, 'GL_IMG_user_clip_plane')
+GL_CLIP_PLANE1_IMG = Enumerant('GL_CLIP_PLANE1_IMG', 0x3001, 'GL_IMG_user_clip_plane')
+GL_CLIP_PLANE2_IMG = Enumerant('GL_CLIP_PLANE2_IMG', 0x3002, 'GL_IMG_user_clip_plane')
+GL_CLIP_PLANE3_IMG = Enumerant('GL_CLIP_PLANE3_IMG', 0x3003, 'GL_IMG_user_clip_plane')
+GL_CLIP_PLANE4_IMG = Enumerant('GL_CLIP_PLANE4_IMG', 0x3004, 'GL_IMG_user_clip_plane')
+GL_CLIP_PLANE5_IMG = Enumerant('GL_CLIP_PLANE5_IMG', 0x3005, 'GL_IMG_user_clip_plane')
+GL_MAX_CLIP_PLANES_IMG = Enumerant('GL_MAX_CLIP_PLANES_IMG', 0x0d32, 'GL_IMG_user_clip_plane')
+
+defines.add(GL_CLIP_PLANE0_IMG)
+defines.add(GL_CLIP_PLANE1_IMG)
+defines.add(GL_CLIP_PLANE2_IMG)
+defines.add(GL_CLIP_PLANE3_IMG)
+defines.add(GL_CLIP_PLANE4_IMG)
+defines.add(GL_CLIP_PLANE5_IMG)
+defines.add(GL_MAX_CLIP_PLANES_IMG)
 
 # GL_INGR_color_clamp
 
@@ -8289,6 +8783,30 @@ GL_DEPTH_STENCIL_TO_RGBA_NV = Enumerant('GL_DEPTH_STENCIL_TO_RGBA_NV', 0x886e, '
 defines.add(GL_DEPTH_STENCIL_TO_BGRA_NV)
 defines.add(GL_DEPTH_STENCIL_TO_RGBA_NV)
 
+# GL_NV_coverage_sample
+
+GL_COVERAGE_ALL_FRAGMENTS_NV = Enumerant('GL_COVERAGE_ALL_FRAGMENTS_NV', 0x8ed5, 'GL_NV_coverage_sample')
+GL_COVERAGE_ATTACHMENT_NV = Enumerant('GL_COVERAGE_ATTACHMENT_NV', 0x8ed2, 'GL_NV_coverage_sample')
+GL_COVERAGE_AUTOMATIC_NV = Enumerant('GL_COVERAGE_AUTOMATIC_NV', 0x8ed7, 'GL_NV_coverage_sample')
+GL_COVERAGE_BUFFERS_NV = Enumerant('GL_COVERAGE_BUFFERS_NV', 0x8ed3, 'GL_NV_coverage_sample')
+GL_COVERAGE_BUFFER_BIT_NV = Enumerant('GL_COVERAGE_BUFFER_BIT_NV', 0x8000, 'GL_NV_coverage_sample')
+GL_COVERAGE_COMPONENT4_NV = Enumerant('GL_COVERAGE_COMPONENT4_NV', 0x8ed1, 'GL_NV_coverage_sample')
+GL_COVERAGE_COMPONENT_NV = Enumerant('GL_COVERAGE_COMPONENT_NV', 0x8ed0, 'GL_NV_coverage_sample')
+GL_COVERAGE_EDGE_FRAGMENTS_NV = Enumerant('GL_COVERAGE_EDGE_FRAGMENTS_NV', 0x8ed6, 'GL_NV_coverage_sample')
+GL_EGL_COVERAGE_BUFFERS_NV = Enumerant('GL_EGL_COVERAGE_BUFFERS_NV', 0x30e0, 'GL_NV_coverage_sample')
+GL_EGL_COVERAGE_SAMPLES_NV = Enumerant('GL_EGL_COVERAGE_SAMPLES_NV', 0x30e1, 'GL_NV_coverage_sample')
+
+defines.add(GL_COVERAGE_ALL_FRAGMENTS_NV)
+defines.add(GL_COVERAGE_ATTACHMENT_NV)
+defines.add(GL_COVERAGE_AUTOMATIC_NV)
+defines.add(GL_COVERAGE_BUFFERS_NV)
+defines.add(GL_COVERAGE_BUFFER_BIT_NV)
+defines.add(GL_COVERAGE_COMPONENT4_NV)
+defines.add(GL_COVERAGE_COMPONENT_NV)
+defines.add(GL_COVERAGE_EDGE_FRAGMENTS_NV)
+defines.add(GL_EGL_COVERAGE_BUFFERS_NV)
+defines.add(GL_EGL_COVERAGE_SAMPLES_NV)
+
 # GL_NV_deep_texture3D
 
 GL_MAX_DEEP_3D_TEXTURE_DEPTH_NV = Enumerant('GL_MAX_DEEP_3D_TEXTURE_DEPTH_NV', 0x90d1, 'GL_NV_deep_texture3D')
@@ -8315,6 +8833,18 @@ GL_DEPTH_CLAMP_NV = Enumerant('GL_DEPTH_CLAMP_NV', 0x864f, 'GL_NV_depth_clamp')
 
 defines.add(GL_DEPTH_CLAMP_NV)
 
+# GL_NV_depth_nonlinear
+
+GL_DEPTH_COMPONENT16_NONLINEAR_NV = Enumerant('GL_DEPTH_COMPONENT16_NONLINEAR_NV', 0x8e2c, 'GL_NV_depth_nonlinear')
+GL_EGL_DEPTH_ENCODING_NONE_NV = Enumerant('GL_EGL_DEPTH_ENCODING_NONE_NV', 0x0000, 'GL_NV_depth_nonlinear')
+GL_EGL_DEPTH_ENCODING_NONLINEAR_NV = Enumerant('GL_EGL_DEPTH_ENCODING_NONLINEAR_NV', 0x30e3, 'GL_NV_depth_nonlinear')
+GL_EGL_DEPTH_ENCODING_NV = Enumerant('GL_EGL_DEPTH_ENCODING_NV', 0x30e2, 'GL_NV_depth_nonlinear')
+
+defines.add(GL_DEPTH_COMPONENT16_NONLINEAR_NV)
+defines.add(GL_EGL_DEPTH_ENCODING_NONE_NV)
+defines.add(GL_EGL_DEPTH_ENCODING_NONLINEAR_NV)
+defines.add(GL_EGL_DEPTH_ENCODING_NV)
+
 # GL_NV_depth_range_unclamped
 
 GL_CURRENT_SAMPLE_COUNT_QUERY_NV = Enumerant('GL_CURRENT_SAMPLE_COUNT_QUERY_NV', 0x8865, 'GL_NV_depth_range_unclamped')
@@ -8328,6 +8858,44 @@ defines.add(GL_QUERY_RESULT_AVAILABLE_NV)
 defines.add(GL_QUERY_RESULT_NV)
 defines.add(GL_SAMPLE_COUNT_BITS_NV)
 defines.add(GL_SAMPLE_COUNT_NV)
+
+# GL_NV_draw_buffers
+
+GL_DRAW_BUFFER0_NV = Enumerant('GL_DRAW_BUFFER0_NV', 0x8825, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER10_NV = Enumerant('GL_DRAW_BUFFER10_NV', 0x882f, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER11_NV = Enumerant('GL_DRAW_BUFFER11_NV', 0x8830, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER12_NV = Enumerant('GL_DRAW_BUFFER12_NV', 0x8831, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER13_NV = Enumerant('GL_DRAW_BUFFER13_NV', 0x8832, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER14_NV = Enumerant('GL_DRAW_BUFFER14_NV', 0x8833, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER15_NV = Enumerant('GL_DRAW_BUFFER15_NV', 0x8834, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER1_NV = Enumerant('GL_DRAW_BUFFER1_NV', 0x8826, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER2_NV = Enumerant('GL_DRAW_BUFFER2_NV', 0x8827, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER3_NV = Enumerant('GL_DRAW_BUFFER3_NV', 0x8828, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER4_NV = Enumerant('GL_DRAW_BUFFER4_NV', 0x8829, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER5_NV = Enumerant('GL_DRAW_BUFFER5_NV', 0x882a, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER6_NV = Enumerant('GL_DRAW_BUFFER6_NV', 0x882b, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER7_NV = Enumerant('GL_DRAW_BUFFER7_NV', 0x882c, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER8_NV = Enumerant('GL_DRAW_BUFFER8_NV', 0x882d, 'GL_NV_draw_buffers')
+GL_DRAW_BUFFER9_NV = Enumerant('GL_DRAW_BUFFER9_NV', 0x882e, 'GL_NV_draw_buffers')
+GL_MAX_DRAW_BUFFERS_NV = Enumerant('GL_MAX_DRAW_BUFFERS_NV', 0x8824, 'GL_NV_draw_buffers')
+
+defines.add(GL_DRAW_BUFFER0_NV)
+defines.add(GL_DRAW_BUFFER10_NV)
+defines.add(GL_DRAW_BUFFER11_NV)
+defines.add(GL_DRAW_BUFFER12_NV)
+defines.add(GL_DRAW_BUFFER13_NV)
+defines.add(GL_DRAW_BUFFER14_NV)
+defines.add(GL_DRAW_BUFFER15_NV)
+defines.add(GL_DRAW_BUFFER1_NV)
+defines.add(GL_DRAW_BUFFER2_NV)
+defines.add(GL_DRAW_BUFFER3_NV)
+defines.add(GL_DRAW_BUFFER4_NV)
+defines.add(GL_DRAW_BUFFER5_NV)
+defines.add(GL_DRAW_BUFFER6_NV)
+defines.add(GL_DRAW_BUFFER7_NV)
+defines.add(GL_DRAW_BUFFER8_NV)
+defines.add(GL_DRAW_BUFFER9_NV)
+defines.add(GL_MAX_DRAW_BUFFERS_NV)
 
 # GL_NV_evaluators
 
@@ -8404,6 +8972,76 @@ defines.add(GL_TEXTURE_BINDING_RENDERBUFFER_NV)
 defines.add(GL_TEXTURE_RENDERBUFFER_DATA_STORE_BINDING_NV)
 defines.add(GL_TEXTURE_RENDERBUFFER_NV)
 defines.add(GL_UNSIGNED_INT_SAMPLER_RENDERBUFFER_NV)
+
+# GL_NV_fbo_color_attachments
+
+GL_COLOR_ATTACHMENT0_NV = Enumerant('GL_COLOR_ATTACHMENT0_NV', 0x8ce0, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT0_NV = Enumerant('GL_COLOR_ATTACHMENT0_NV', 0x8ce0, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT10_NV = Enumerant('GL_COLOR_ATTACHMENT10_NV', 0x8cea, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT10_NV = Enumerant('GL_COLOR_ATTACHMENT10_NV', 0x8cea, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT11_NV = Enumerant('GL_COLOR_ATTACHMENT11_NV', 0x8ceb, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT11_NV = Enumerant('GL_COLOR_ATTACHMENT11_NV', 0x8ceb, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT12_NV = Enumerant('GL_COLOR_ATTACHMENT12_NV', 0x8cec, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT12_NV = Enumerant('GL_COLOR_ATTACHMENT12_NV', 0x8cec, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT13_NV = Enumerant('GL_COLOR_ATTACHMENT13_NV', 0x8ced, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT13_NV = Enumerant('GL_COLOR_ATTACHMENT13_NV', 0x8ced, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT14_NV = Enumerant('GL_COLOR_ATTACHMENT14_NV', 0x8cee, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT14_NV = Enumerant('GL_COLOR_ATTACHMENT14_NV', 0x8cee, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT15_NV = Enumerant('GL_COLOR_ATTACHMENT15_NV', 0x8cef, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT15_NV = Enumerant('GL_COLOR_ATTACHMENT15_NV', 0x8cef, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT1_NV = Enumerant('GL_COLOR_ATTACHMENT1_NV', 0x8ce1, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT1_NV = Enumerant('GL_COLOR_ATTACHMENT1_NV', 0x8ce1, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT2_NV = Enumerant('GL_COLOR_ATTACHMENT2_NV', 0x8ce2, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT2_NV = Enumerant('GL_COLOR_ATTACHMENT2_NV', 0x8ce2, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT3_NV = Enumerant('GL_COLOR_ATTACHMENT3_NV', 0x8ce3, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT3_NV = Enumerant('GL_COLOR_ATTACHMENT3_NV', 0x8ce3, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT4_NV = Enumerant('GL_COLOR_ATTACHMENT4_NV', 0x8ce4, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT4_NV = Enumerant('GL_COLOR_ATTACHMENT4_NV', 0x8ce4, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT5_NV = Enumerant('GL_COLOR_ATTACHMENT5_NV', 0x8ce5, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT5_NV = Enumerant('GL_COLOR_ATTACHMENT5_NV', 0x8ce5, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT6_NV = Enumerant('GL_COLOR_ATTACHMENT6_NV', 0x8ce6, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT6_NV = Enumerant('GL_COLOR_ATTACHMENT6_NV', 0x8ce6, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT7_NV = Enumerant('GL_COLOR_ATTACHMENT7_NV', 0x8ce7, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT7_NV = Enumerant('GL_COLOR_ATTACHMENT7_NV', 0x8ce7, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT8_NV = Enumerant('GL_COLOR_ATTACHMENT8_NV', 0x8ce8, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT8_NV = Enumerant('GL_COLOR_ATTACHMENT8_NV', 0x8ce8, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT9_NV = Enumerant('GL_COLOR_ATTACHMENT9_NV', 0x8ce9, 'GL_NV_fbo_color_attachments')
+GL_COLOR_ATTACHMENT9_NV = Enumerant('GL_COLOR_ATTACHMENT9_NV', 0x8ce9, 'GL_NV_fbo_color_attachments')
+GL_MAX_COLOR_ATTACHMENTS_NV = Enumerant('GL_MAX_COLOR_ATTACHMENTS_NV', 0x8cdf, 'GL_NV_fbo_color_attachments')
+
+defines.add(GL_COLOR_ATTACHMENT0_NV)
+defines.add(GL_COLOR_ATTACHMENT0_NV)
+defines.add(GL_COLOR_ATTACHMENT10_NV)
+defines.add(GL_COLOR_ATTACHMENT10_NV)
+defines.add(GL_COLOR_ATTACHMENT11_NV)
+defines.add(GL_COLOR_ATTACHMENT11_NV)
+defines.add(GL_COLOR_ATTACHMENT12_NV)
+defines.add(GL_COLOR_ATTACHMENT12_NV)
+defines.add(GL_COLOR_ATTACHMENT13_NV)
+defines.add(GL_COLOR_ATTACHMENT13_NV)
+defines.add(GL_COLOR_ATTACHMENT14_NV)
+defines.add(GL_COLOR_ATTACHMENT14_NV)
+defines.add(GL_COLOR_ATTACHMENT15_NV)
+defines.add(GL_COLOR_ATTACHMENT15_NV)
+defines.add(GL_COLOR_ATTACHMENT1_NV)
+defines.add(GL_COLOR_ATTACHMENT1_NV)
+defines.add(GL_COLOR_ATTACHMENT2_NV)
+defines.add(GL_COLOR_ATTACHMENT2_NV)
+defines.add(GL_COLOR_ATTACHMENT3_NV)
+defines.add(GL_COLOR_ATTACHMENT3_NV)
+defines.add(GL_COLOR_ATTACHMENT4_NV)
+defines.add(GL_COLOR_ATTACHMENT4_NV)
+defines.add(GL_COLOR_ATTACHMENT5_NV)
+defines.add(GL_COLOR_ATTACHMENT5_NV)
+defines.add(GL_COLOR_ATTACHMENT6_NV)
+defines.add(GL_COLOR_ATTACHMENT6_NV)
+defines.add(GL_COLOR_ATTACHMENT7_NV)
+defines.add(GL_COLOR_ATTACHMENT7_NV)
+defines.add(GL_COLOR_ATTACHMENT8_NV)
+defines.add(GL_COLOR_ATTACHMENT8_NV)
+defines.add(GL_COLOR_ATTACHMENT9_NV)
+defines.add(GL_COLOR_ATTACHMENT9_NV)
+defines.add(GL_MAX_COLOR_ATTACHMENTS_NV)
 
 # GL_NV_fence
 
@@ -8613,8 +9251,10 @@ defines.add(GL_MAX_SPOT_EXPONENT_NV)
 
 GL_COLOR_SAMPLES_NV = Enumerant('GL_COLOR_SAMPLES_NV', 0x8e20, 'GL_NV_multisample_coverage')
 GL_COVERAGE_SAMPLES_NV = Enumerant('GL_COVERAGE_SAMPLES_NV', 0x80a9, 'GL_NV_multisample_coverage')
+GL_COVERAGE_SAMPLES_NV = Enumerant('GL_COVERAGE_SAMPLES_NV', 0x80a9, 'GL_NV_multisample_coverage')
 
 defines.add(GL_COLOR_SAMPLES_NV)
+defines.add(GL_COVERAGE_SAMPLES_NV)
 defines.add(GL_COVERAGE_SAMPLES_NV)
 
 # GL_NV_multisample_filter_hint
@@ -8964,6 +9604,14 @@ GL_PRIMITIVE_RESTART_NV = Enumerant('GL_PRIMITIVE_RESTART_NV', 0x8558, 'GL_NV_pr
 
 defines.add(GL_PRIMITIVE_RESTART_INDEX_NV)
 defines.add(GL_PRIMITIVE_RESTART_NV)
+
+# GL_NV_read_buffer_front
+
+GL_READ_BUFFER_NV = Enumerant('GL_READ_BUFFER_NV', 0x0c02, 'GL_NV_read_buffer_front')
+GL_READ_BUFFER_NV = Enumerant('GL_READ_BUFFER_NV', 0x0c02, 'GL_NV_read_buffer_front')
+
+defines.add(GL_READ_BUFFER_NV)
+defines.add(GL_READ_BUFFER_NV)
 
 # GL_NV_register_combiners
 
@@ -9827,6 +10475,44 @@ defines.add(GL_Z4Y12Z4CB12Z4Y12Z4CR12_422_NV)
 defines.add(GL_Z6Y10Z6CB10Z6A10Z6Y10Z6CR10Z6A10_4224_NV)
 defines.add(GL_Z6Y10Z6CB10Z6Y10Z6CR10_422_NV)
 
+# GL_OES_blend_equation_separate
+
+GL_BLEND_EQUATION_ALPHA_OES = Enumerant('GL_BLEND_EQUATION_ALPHA_OES', 0x883d, 'GL_OES_blend_equation_separate')
+GL_BLEND_EQUATION_RGB_OES = Enumerant('GL_BLEND_EQUATION_RGB_OES', 0x8009, 'GL_OES_blend_equation_separate')
+
+defines.add(GL_BLEND_EQUATION_ALPHA_OES)
+defines.add(GL_BLEND_EQUATION_RGB_OES)
+
+# GL_OES_blend_func_separate
+
+GL_BLEND_DST_ALPHA_OES = Enumerant('GL_BLEND_DST_ALPHA_OES', 0x80ca, 'GL_OES_blend_func_separate')
+GL_BLEND_DST_RGB_OES = Enumerant('GL_BLEND_DST_RGB_OES', 0x80c8, 'GL_OES_blend_func_separate')
+GL_BLEND_SRC_ALPHA_OES = Enumerant('GL_BLEND_SRC_ALPHA_OES', 0x80cb, 'GL_OES_blend_func_separate')
+GL_BLEND_SRC_RGB_OES = Enumerant('GL_BLEND_SRC_RGB_OES', 0x80c9, 'GL_OES_blend_func_separate')
+
+defines.add(GL_BLEND_DST_ALPHA_OES)
+defines.add(GL_BLEND_DST_RGB_OES)
+defines.add(GL_BLEND_SRC_ALPHA_OES)
+defines.add(GL_BLEND_SRC_RGB_OES)
+
+# GL_OES_blend_subtract
+
+GL_BLEND_EQUATION_OES = Enumerant('GL_BLEND_EQUATION_OES', 0x8009, 'GL_OES_blend_subtract')
+GL_FUNC_ADD_OES = Enumerant('GL_FUNC_ADD_OES', 0x8006, 'GL_OES_blend_subtract')
+GL_FUNC_REVERSE_SUBTRACT_OES = Enumerant('GL_FUNC_REVERSE_SUBTRACT_OES', 0x800b, 'GL_OES_blend_subtract')
+GL_FUNC_SUBTRACT_OES = Enumerant('GL_FUNC_SUBTRACT_OES', 0x800a, 'GL_OES_blend_subtract')
+
+defines.add(GL_BLEND_EQUATION_OES)
+defines.add(GL_FUNC_ADD_OES)
+defines.add(GL_FUNC_REVERSE_SUBTRACT_OES)
+defines.add(GL_FUNC_SUBTRACT_OES)
+
+# GL_OES_compressed_ETC1_RGB8_texture
+
+GL_ETC1_RGB8_OES = Enumerant('GL_ETC1_RGB8_OES', 0x8d64, 'GL_OES_compressed_ETC1_RGB8_texture')
+
+defines.add(GL_ETC1_RGB8_OES)
+
 # GL_OES_compressed_paletted_texture
 
 GL_PALETTE4_R5_G6_B5_OES = Enumerant('GL_PALETTE4_R5_G6_B5_OES', 0x8b92, 'GL_OES_compressed_paletted_texture')
@@ -9851,6 +10537,194 @@ defines.add(GL_PALETTE8_RGB8_OES)
 defines.add(GL_PALETTE8_RGBA4_OES)
 defines.add(GL_PALETTE8_RGBA8_OES)
 
+# GL_OES_depth_texture
+
+GL_DEPTH_COMPONENT = Enumerant('GL_DEPTH_COMPONENT', 0x1902, 'GL_OES_depth_texture')
+GL_UNSIGNED_SHORT = Enumerant('GL_UNSIGNED_SHORT', 0x1403, 'GL_OES_depth_texture')
+
+defines.add(GL_DEPTH_COMPONENT)
+defines.add(GL_UNSIGNED_SHORT)
+
+# GL_OES_draw_texture
+
+GL_TEXTURE_CROP_RECT_OES = Enumerant('GL_TEXTURE_CROP_RECT_OES', 0x8b9d, 'GL_OES_draw_texture')
+
+defines.add(GL_TEXTURE_CROP_RECT_OES)
+
+# GL_OES_element_index_uint
+
+GL_UNSIGNED_INT = Enumerant('GL_UNSIGNED_INT', 0x1405, 'GL_OES_element_index_uint')
+GL_UNSIGNED_INT = Enumerant('GL_UNSIGNED_INT', 0x1405, 'GL_OES_element_index_uint')
+
+defines.add(GL_UNSIGNED_INT)
+defines.add(GL_UNSIGNED_INT)
+
+# GL_OES_framebuffer_object
+
+GL_COLOR_ATTACHMENT0_OES = Enumerant('GL_COLOR_ATTACHMENT0_OES', 0x8ce0, 'GL_OES_framebuffer_object')
+GL_DEPTH_ATTACHMENT_OES = Enumerant('GL_DEPTH_ATTACHMENT_OES', 0x8d00, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES', 0x8cd1, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES', 0x8cd0, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES', 0x8cd4, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES', 0x8cd3, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES = Enumerant('GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES', 0x8cd2, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_BINDING_OES = Enumerant('GL_FRAMEBUFFER_BINDING_OES', 0x8ca6, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_COMPLETE_OES = Enumerant('GL_FRAMEBUFFER_COMPLETE_OES', 0x8cd5, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES', 0x8cd6, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES', 0x8cd9, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES', 0x8cdb, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES', 0x8cda, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES', 0x8cd7, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES = Enumerant('GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES', 0x8cdc, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_OES = Enumerant('GL_FRAMEBUFFER_OES', 0x8d40, 'GL_OES_framebuffer_object')
+GL_FRAMEBUFFER_UNSUPPORTED_OES = Enumerant('GL_FRAMEBUFFER_UNSUPPORTED_OES', 0x8cdd, 'GL_OES_framebuffer_object')
+GL_INVALID_FRAMEBUFFER_OPERATION_OES = Enumerant('GL_INVALID_FRAMEBUFFER_OPERATION_OES', 0x0506, 'GL_OES_framebuffer_object')
+GL_MAX_RENDERBUFFER_SIZE_OES = Enumerant('GL_MAX_RENDERBUFFER_SIZE_OES', 0x84e8, 'GL_OES_framebuffer_object')
+GL_NONE_OES = Enumerant('GL_NONE_OES', 0x0000, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_ALPHA_SIZE_OES = Enumerant('GL_RENDERBUFFER_ALPHA_SIZE_OES', 0x8d53, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_BINDING_OES = Enumerant('GL_RENDERBUFFER_BINDING_OES', 0x8ca7, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_BLUE_SIZE_OES = Enumerant('GL_RENDERBUFFER_BLUE_SIZE_OES', 0x8d52, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_DEPTH_SIZE_OES = Enumerant('GL_RENDERBUFFER_DEPTH_SIZE_OES', 0x8d54, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_GREEN_SIZE_OES = Enumerant('GL_RENDERBUFFER_GREEN_SIZE_OES', 0x8d51, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_HEIGHT_OES = Enumerant('GL_RENDERBUFFER_HEIGHT_OES', 0x8d43, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_INTERNAL_FORMAT_OES = Enumerant('GL_RENDERBUFFER_INTERNAL_FORMAT_OES', 0x8d44, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_OES = Enumerant('GL_RENDERBUFFER_OES', 0x8d41, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_RED_SIZE_OES = Enumerant('GL_RENDERBUFFER_RED_SIZE_OES', 0x8d50, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_STENCIL_SIZE_OES = Enumerant('GL_RENDERBUFFER_STENCIL_SIZE_OES', 0x8d55, 'GL_OES_framebuffer_object')
+GL_RENDERBUFFER_WIDTH_OES = Enumerant('GL_RENDERBUFFER_WIDTH_OES', 0x8d42, 'GL_OES_framebuffer_object')
+GL_STENCIL_ATTACHMENT_OES = Enumerant('GL_STENCIL_ATTACHMENT_OES', 0x8d20, 'GL_OES_framebuffer_object')
+
+defines.add(GL_COLOR_ATTACHMENT0_OES)
+defines.add(GL_DEPTH_ATTACHMENT_OES)
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES)
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES)
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES)
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES)
+defines.add(GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES)
+defines.add(GL_FRAMEBUFFER_BINDING_OES)
+defines.add(GL_FRAMEBUFFER_COMPLETE_OES)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_FORMATS_OES)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES)
+defines.add(GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES)
+defines.add(GL_FRAMEBUFFER_OES)
+defines.add(GL_FRAMEBUFFER_UNSUPPORTED_OES)
+defines.add(GL_INVALID_FRAMEBUFFER_OPERATION_OES)
+defines.add(GL_MAX_RENDERBUFFER_SIZE_OES)
+defines.add(GL_NONE_OES)
+defines.add(GL_RENDERBUFFER_ALPHA_SIZE_OES)
+defines.add(GL_RENDERBUFFER_BINDING_OES)
+defines.add(GL_RENDERBUFFER_BLUE_SIZE_OES)
+defines.add(GL_RENDERBUFFER_DEPTH_SIZE_OES)
+defines.add(GL_RENDERBUFFER_GREEN_SIZE_OES)
+defines.add(GL_RENDERBUFFER_HEIGHT_OES)
+defines.add(GL_RENDERBUFFER_INTERNAL_FORMAT_OES)
+defines.add(GL_RENDERBUFFER_OES)
+defines.add(GL_RENDERBUFFER_RED_SIZE_OES)
+defines.add(GL_RENDERBUFFER_STENCIL_SIZE_OES)
+defines.add(GL_RENDERBUFFER_WIDTH_OES)
+defines.add(GL_STENCIL_ATTACHMENT_OES)
+
+# GL_OES_get_program_binary
+
+GL_NUM_PROGRAM_BINARY_FORMATS_OES = Enumerant('GL_NUM_PROGRAM_BINARY_FORMATS_OES', 0x87fe, 'GL_OES_get_program_binary')
+GL_PROGRAM_BINARY_FORMATS_OES = Enumerant('GL_PROGRAM_BINARY_FORMATS_OES', 0x87ff, 'GL_OES_get_program_binary')
+GL_PROGRAM_BINARY_LENGTH_OES = Enumerant('GL_PROGRAM_BINARY_LENGTH_OES', 0x8741, 'GL_OES_get_program_binary')
+
+defines.add(GL_NUM_PROGRAM_BINARY_FORMATS_OES)
+defines.add(GL_PROGRAM_BINARY_FORMATS_OES)
+defines.add(GL_PROGRAM_BINARY_LENGTH_OES)
+
+# GL_OES_mapbuffer
+
+GL_BUFFER_ACCESS_OES = Enumerant('GL_BUFFER_ACCESS_OES', 0x88bb, 'GL_OES_mapbuffer')
+GL_BUFFER_MAPPED_OES = Enumerant('GL_BUFFER_MAPPED_OES', 0x88bc, 'GL_OES_mapbuffer')
+GL_BUFFER_MAP_POINTER_OES = Enumerant('GL_BUFFER_MAP_POINTER_OES', 0x88bd, 'GL_OES_mapbuffer')
+GL_WRITE_ONLY_OES = Enumerant('GL_WRITE_ONLY_OES', 0x88b9, 'GL_OES_mapbuffer')
+
+defines.add(GL_BUFFER_ACCESS_OES)
+defines.add(GL_BUFFER_MAPPED_OES)
+defines.add(GL_BUFFER_MAP_POINTER_OES)
+defines.add(GL_WRITE_ONLY_OES)
+
+# GL_OES_matrix_get
+
+GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES = Enumerant('GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES', 0x0898, 'GL_OES_matrix_get')
+GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES = Enumerant('GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES', 0x0898, 'GL_OES_matrix_get')
+GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES = Enumerant('GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES', 0x0898, 'GL_OES_matrix_get')
+
+defines.add(GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES)
+defines.add(GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES)
+defines.add(GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES)
+
+# GL_OES_matrix_palette
+
+GL_CURRENT_PALETTE_MATRIX_OES = Enumerant('GL_CURRENT_PALETTE_MATRIX_OES', 0x8843, 'GL_OES_matrix_palette')
+GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES = Enumerant('GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES', 0x8b9e, 'GL_OES_matrix_palette')
+GL_MATRIX_INDEX_ARRAY_OES = Enumerant('GL_MATRIX_INDEX_ARRAY_OES', 0x8844, 'GL_OES_matrix_palette')
+GL_MATRIX_INDEX_ARRAY_POINTER_OES = Enumerant('GL_MATRIX_INDEX_ARRAY_POINTER_OES', 0x8849, 'GL_OES_matrix_palette')
+GL_MATRIX_INDEX_ARRAY_SIZE_OES = Enumerant('GL_MATRIX_INDEX_ARRAY_SIZE_OES', 0x8846, 'GL_OES_matrix_palette')
+GL_MATRIX_INDEX_ARRAY_STRIDE_OES = Enumerant('GL_MATRIX_INDEX_ARRAY_STRIDE_OES', 0x8848, 'GL_OES_matrix_palette')
+GL_MATRIX_INDEX_ARRAY_TYPE_OES = Enumerant('GL_MATRIX_INDEX_ARRAY_TYPE_OES', 0x8847, 'GL_OES_matrix_palette')
+GL_MATRIX_PALETTE_OES = Enumerant('GL_MATRIX_PALETTE_OES', 0x8840, 'GL_OES_matrix_palette')
+GL_MAX_PALETTE_MATRICES_OES = Enumerant('GL_MAX_PALETTE_MATRICES_OES', 0x8842, 'GL_OES_matrix_palette')
+GL_MAX_VERTEX_UNITS_OES = Enumerant('GL_MAX_VERTEX_UNITS_OES', 0x86a4, 'GL_OES_matrix_palette')
+GL_WEIGHT_ARRAY_BUFFER_BINDING_OES = Enumerant('GL_WEIGHT_ARRAY_BUFFER_BINDING_OES', 0x889e, 'GL_OES_matrix_palette')
+GL_WEIGHT_ARRAY_OES = Enumerant('GL_WEIGHT_ARRAY_OES', 0x86ad, 'GL_OES_matrix_palette')
+GL_WEIGHT_ARRAY_POINTER_OES = Enumerant('GL_WEIGHT_ARRAY_POINTER_OES', 0x86ac, 'GL_OES_matrix_palette')
+GL_WEIGHT_ARRAY_SIZE_OES = Enumerant('GL_WEIGHT_ARRAY_SIZE_OES', 0x86ab, 'GL_OES_matrix_palette')
+GL_WEIGHT_ARRAY_STRIDE_OES = Enumerant('GL_WEIGHT_ARRAY_STRIDE_OES', 0x86aa, 'GL_OES_matrix_palette')
+GL_WEIGHT_ARRAY_TYPE_OES = Enumerant('GL_WEIGHT_ARRAY_TYPE_OES', 0x86a9, 'GL_OES_matrix_palette')
+
+defines.add(GL_CURRENT_PALETTE_MATRIX_OES)
+defines.add(GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES)
+defines.add(GL_MATRIX_INDEX_ARRAY_OES)
+defines.add(GL_MATRIX_INDEX_ARRAY_POINTER_OES)
+defines.add(GL_MATRIX_INDEX_ARRAY_SIZE_OES)
+defines.add(GL_MATRIX_INDEX_ARRAY_STRIDE_OES)
+defines.add(GL_MATRIX_INDEX_ARRAY_TYPE_OES)
+defines.add(GL_MATRIX_PALETTE_OES)
+defines.add(GL_MAX_PALETTE_MATRICES_OES)
+defines.add(GL_MAX_VERTEX_UNITS_OES)
+defines.add(GL_WEIGHT_ARRAY_BUFFER_BINDING_OES)
+defines.add(GL_WEIGHT_ARRAY_OES)
+defines.add(GL_WEIGHT_ARRAY_POINTER_OES)
+defines.add(GL_WEIGHT_ARRAY_SIZE_OES)
+defines.add(GL_WEIGHT_ARRAY_STRIDE_OES)
+defines.add(GL_WEIGHT_ARRAY_TYPE_OES)
+
+# GL_OES_packed_depth_stencil
+
+GL_DEPTH_STENCIL_OES = Enumerant('GL_DEPTH_STENCIL_OES', 0x84f9, 'GL_OES_packed_depth_stencil')
+GL_UNSIGNED_INT_24_8_OES = Enumerant('GL_UNSIGNED_INT_24_8_OES', 0x84fa, 'GL_OES_packed_depth_stencil')
+
+defines.add(GL_DEPTH_STENCIL_OES)
+defines.add(GL_UNSIGNED_INT_24_8_OES)
+
+# GL_OES_point_size_array
+
+GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES = Enumerant('GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES', 0x8b9f, 'GL_OES_point_size_array')
+GL_POINT_SIZE_ARRAY_OES = Enumerant('GL_POINT_SIZE_ARRAY_OES', 0x8b9c, 'GL_OES_point_size_array')
+GL_POINT_SIZE_ARRAY_POINTER_OES = Enumerant('GL_POINT_SIZE_ARRAY_POINTER_OES', 0x898c, 'GL_OES_point_size_array')
+GL_POINT_SIZE_ARRAY_STRIDE_OES = Enumerant('GL_POINT_SIZE_ARRAY_STRIDE_OES', 0x898b, 'GL_OES_point_size_array')
+GL_POINT_SIZE_ARRAY_TYPE_OES = Enumerant('GL_POINT_SIZE_ARRAY_TYPE_OES', 0x898a, 'GL_OES_point_size_array')
+
+defines.add(GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES)
+defines.add(GL_POINT_SIZE_ARRAY_OES)
+defines.add(GL_POINT_SIZE_ARRAY_POINTER_OES)
+defines.add(GL_POINT_SIZE_ARRAY_STRIDE_OES)
+defines.add(GL_POINT_SIZE_ARRAY_TYPE_OES)
+
+# GL_OES_point_sprite
+
+GL_COORD_REPLACE_OES = Enumerant('GL_COORD_REPLACE_OES', 0x8862, 'GL_OES_point_sprite')
+GL_POINT_SPRITE_OES = Enumerant('GL_POINT_SPRITE_OES', 0x8861, 'GL_OES_point_sprite')
+
+defines.add(GL_COORD_REPLACE_OES)
+defines.add(GL_POINT_SPRITE_OES)
+
 # GL_OES_read_format
 
 GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES = Enumerant('GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES', 0x8b9b, 'GL_OES_read_format')
@@ -9858,6 +10732,172 @@ GL_IMPLEMENTATION_COLOR_READ_TYPE_OES = Enumerant('GL_IMPLEMENTATION_COLOR_READ_
 
 defines.add(GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES)
 defines.add(GL_IMPLEMENTATION_COLOR_READ_TYPE_OES)
+
+# GL_OES_required_internalformat
+
+GL_ALPHA8_OES = Enumerant('GL_ALPHA8_OES', 0x803c, 'GL_OES_required_internalformat')
+GL_DEPTH24_STENCIL8_OES = Enumerant('GL_DEPTH24_STENCIL8_OES', 0x88f0, 'GL_OES_required_internalformat')
+GL_DEPTH24_STENCIL8_OES = Enumerant('GL_DEPTH24_STENCIL8_OES', 0x88f0, 'GL_OES_required_internalformat')
+GL_DEPTH_COMPONENT16_OES = Enumerant('GL_DEPTH_COMPONENT16_OES', 0x81a5, 'GL_OES_required_internalformat')
+GL_DEPTH_COMPONENT16_OES = Enumerant('GL_DEPTH_COMPONENT16_OES', 0x81a5, 'GL_OES_required_internalformat')
+GL_DEPTH_COMPONENT24_OES = Enumerant('GL_DEPTH_COMPONENT24_OES', 0x81a6, 'GL_OES_required_internalformat')
+GL_DEPTH_COMPONENT24_OES = Enumerant('GL_DEPTH_COMPONENT24_OES', 0x81a6, 'GL_OES_required_internalformat')
+GL_DEPTH_COMPONENT32_OES = Enumerant('GL_DEPTH_COMPONENT32_OES', 0x81a7, 'GL_OES_required_internalformat')
+GL_DEPTH_COMPONENT32_OES = Enumerant('GL_DEPTH_COMPONENT32_OES', 0x81a7, 'GL_OES_required_internalformat')
+GL_LUMINANCE4_ALPHA4_OES = Enumerant('GL_LUMINANCE4_ALPHA4_OES', 0x8043, 'GL_OES_required_internalformat')
+GL_LUMINANCE8_ALPHA8_OES = Enumerant('GL_LUMINANCE8_ALPHA8_OES', 0x8045, 'GL_OES_required_internalformat')
+GL_LUMINANCE8_OES = Enumerant('GL_LUMINANCE8_OES', 0x8040, 'GL_OES_required_internalformat')
+GL_RGB10_A2_EXT = Enumerant('GL_RGB10_A2_EXT', 0x8059, 'GL_OES_required_internalformat')
+GL_RGB10_A2_EXT = Enumerant('GL_RGB10_A2_EXT', 0x8059, 'GL_OES_required_internalformat')
+GL_RGB10_EXT = Enumerant('GL_RGB10_EXT', 0x8052, 'GL_OES_required_internalformat')
+GL_RGB10_EXT = Enumerant('GL_RGB10_EXT', 0x8052, 'GL_OES_required_internalformat')
+GL_RGB565_OES = Enumerant('GL_RGB565_OES', 0x8d62, 'GL_OES_required_internalformat')
+GL_RGB565_OES = Enumerant('GL_RGB565_OES', 0x8d62, 'GL_OES_required_internalformat')
+GL_RGB5_A1_OES = Enumerant('GL_RGB5_A1_OES', 0x8057, 'GL_OES_required_internalformat')
+GL_RGB5_A1_OES = Enumerant('GL_RGB5_A1_OES', 0x8057, 'GL_OES_required_internalformat')
+GL_RGBA4_OES = Enumerant('GL_RGBA4_OES', 0x8056, 'GL_OES_required_internalformat')
+GL_RGBA4_OES = Enumerant('GL_RGBA4_OES', 0x8056, 'GL_OES_required_internalformat')
+
+defines.add(GL_ALPHA8_OES)
+defines.add(GL_DEPTH24_STENCIL8_OES)
+defines.add(GL_DEPTH24_STENCIL8_OES)
+defines.add(GL_DEPTH_COMPONENT16_OES)
+defines.add(GL_DEPTH_COMPONENT16_OES)
+defines.add(GL_DEPTH_COMPONENT24_OES)
+defines.add(GL_DEPTH_COMPONENT24_OES)
+defines.add(GL_DEPTH_COMPONENT32_OES)
+defines.add(GL_DEPTH_COMPONENT32_OES)
+defines.add(GL_LUMINANCE4_ALPHA4_OES)
+defines.add(GL_LUMINANCE8_ALPHA8_OES)
+defines.add(GL_LUMINANCE8_OES)
+defines.add(GL_RGB10_A2_EXT)
+defines.add(GL_RGB10_A2_EXT)
+defines.add(GL_RGB10_EXT)
+defines.add(GL_RGB10_EXT)
+defines.add(GL_RGB565_OES)
+defines.add(GL_RGB565_OES)
+defines.add(GL_RGB5_A1_OES)
+defines.add(GL_RGB5_A1_OES)
+defines.add(GL_RGBA4_OES)
+defines.add(GL_RGBA4_OES)
+
+# GL_OES_rgb8_rgba8
+
+GL_RGB8_OES = Enumerant('GL_RGB8_OES', 0x8051, 'GL_OES_rgb8_rgba8')
+GL_RGB8_OES = Enumerant('GL_RGB8_OES', 0x8051, 'GL_OES_rgb8_rgba8')
+GL_RGBA8_OES = Enumerant('GL_RGBA8_OES', 0x8058, 'GL_OES_rgb8_rgba8')
+GL_RGBA8_OES = Enumerant('GL_RGBA8_OES', 0x8058, 'GL_OES_rgb8_rgba8')
+GL_RGBA8_OES = Enumerant('GL_RGBA8_OES', 0x8058, 'GL_OES_rgb8_rgba8')
+
+defines.add(GL_RGB8_OES)
+defines.add(GL_RGB8_OES)
+defines.add(GL_RGBA8_OES)
+defines.add(GL_RGBA8_OES)
+defines.add(GL_RGBA8_OES)
+
+# GL_OES_standard_derivatives
+
+GL_FRAGMENT_SHADER_DERIVATIVE_HINT_OES = Enumerant('GL_FRAGMENT_SHADER_DERIVATIVE_HINT_OES', 0x8b8b, 'GL_OES_standard_derivatives')
+
+defines.add(GL_FRAGMENT_SHADER_DERIVATIVE_HINT_OES)
+
+# GL_OES_stencil1
+
+GL_STENCIL_INDEX1_OES = Enumerant('GL_STENCIL_INDEX1_OES', 0x8d46, 'GL_OES_stencil1')
+GL_STENCIL_INDEX1_OES = Enumerant('GL_STENCIL_INDEX1_OES', 0x8d46, 'GL_OES_stencil1')
+
+defines.add(GL_STENCIL_INDEX1_OES)
+defines.add(GL_STENCIL_INDEX1_OES)
+
+# GL_OES_stencil4
+
+GL_STENCIL_INDEX4_OES = Enumerant('GL_STENCIL_INDEX4_OES', 0x8d47, 'GL_OES_stencil4')
+GL_STENCIL_INDEX4_OES = Enumerant('GL_STENCIL_INDEX4_OES', 0x8d47, 'GL_OES_stencil4')
+
+defines.add(GL_STENCIL_INDEX4_OES)
+defines.add(GL_STENCIL_INDEX4_OES)
+
+# GL_OES_stencil8
+
+GL_STENCIL_INDEX8_OES = Enumerant('GL_STENCIL_INDEX8_OES', 0x8d48, 'GL_OES_stencil8')
+GL_STENCIL_INDEX8_OES = Enumerant('GL_STENCIL_INDEX8_OES', 0x8d48, 'GL_OES_stencil8')
+
+defines.add(GL_STENCIL_INDEX8_OES)
+defines.add(GL_STENCIL_INDEX8_OES)
+
+# GL_OES_surfaceless_context
+
+GL_FRAMEBUFFER_UNDEFINED_OES = Enumerant('GL_FRAMEBUFFER_UNDEFINED_OES', 0x8219, 'GL_OES_surfaceless_context')
+
+defines.add(GL_FRAMEBUFFER_UNDEFINED_OES)
+
+# GL_OES_texture_3D
+
+GL_MAX_3D_TEXTURE_SIZE_OES = Enumerant('GL_MAX_3D_TEXTURE_SIZE_OES', 0x8073, 'GL_OES_texture_3D')
+GL_TEXTURE_3D_OES = Enumerant('GL_TEXTURE_3D_OES', 0x806f, 'GL_OES_texture_3D')
+GL_TEXTURE_BINDING_3D_OES = Enumerant('GL_TEXTURE_BINDING_3D_OES', 0x806a, 'GL_OES_texture_3D')
+GL_TEXTURE_WRAP_R_OES = Enumerant('GL_TEXTURE_WRAP_R_OES', 0x8072, 'GL_OES_texture_3D')
+
+defines.add(GL_MAX_3D_TEXTURE_SIZE_OES)
+defines.add(GL_TEXTURE_3D_OES)
+defines.add(GL_TEXTURE_BINDING_3D_OES)
+defines.add(GL_TEXTURE_WRAP_R_OES)
+
+# GL_OES_texture_cube_map
+
+GL_MAX_CUBE_MAP_TEXTURE_SIZE_OES = Enumerant('GL_MAX_CUBE_MAP_TEXTURE_SIZE_OES', 0x851c, 'GL_OES_texture_cube_map')
+GL_NORMAL_MAP_OES = Enumerant('GL_NORMAL_MAP_OES', 0x8511, 'GL_OES_texture_cube_map')
+GL_REFLECTION_MAP_OES = Enumerant('GL_REFLECTION_MAP_OES', 0x8512, 'GL_OES_texture_cube_map')
+GL_TEXTURE_BINDING_CUBE_MAP_OES = Enumerant('GL_TEXTURE_BINDING_CUBE_MAP_OES', 0x8514, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_NEGATIVE_X_OES = Enumerant('GL_TEXTURE_CUBE_MAP_NEGATIVE_X_OES', 0x8516, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_OES = Enumerant('GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_OES', 0x8518, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_OES = Enumerant('GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_OES', 0x851a, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_OES = Enumerant('GL_TEXTURE_CUBE_MAP_OES', 0x8513, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_POSITIVE_X_OES = Enumerant('GL_TEXTURE_CUBE_MAP_POSITIVE_X_OES', 0x8515, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_POSITIVE_Y_OES = Enumerant('GL_TEXTURE_CUBE_MAP_POSITIVE_Y_OES', 0x8517, 'GL_OES_texture_cube_map')
+GL_TEXTURE_CUBE_MAP_POSITIVE_Z_OES = Enumerant('GL_TEXTURE_CUBE_MAP_POSITIVE_Z_OES', 0x8519, 'GL_OES_texture_cube_map')
+GL_TEXTURE_GEN_MODE_OES = Enumerant('GL_TEXTURE_GEN_MODE_OES', 0x2500, 'GL_OES_texture_cube_map')
+GL_TEXTURE_GEN_STR_OES = Enumerant('GL_TEXTURE_GEN_STR_OES', 0x8d60, 'GL_OES_texture_cube_map')
+
+defines.add(GL_MAX_CUBE_MAP_TEXTURE_SIZE_OES)
+defines.add(GL_NORMAL_MAP_OES)
+defines.add(GL_REFLECTION_MAP_OES)
+defines.add(GL_TEXTURE_BINDING_CUBE_MAP_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_NEGATIVE_X_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_POSITIVE_X_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_POSITIVE_Y_OES)
+defines.add(GL_TEXTURE_CUBE_MAP_POSITIVE_Z_OES)
+defines.add(GL_TEXTURE_GEN_MODE_OES)
+defines.add(GL_TEXTURE_GEN_STR_OES)
+
+# GL_OES_texture_mirrored_repeat
+
+GL_MIRRORED_REPEAT = Enumerant('GL_MIRRORED_REPEAT', 0x8370, 'GL_OES_texture_mirrored_repeat')
+
+defines.add(GL_MIRRORED_REPEAT)
+
+# GL_OES_vertex_array_object
+
+GL_VERTEX_ARRAY_BINDING_OES = Enumerant('GL_VERTEX_ARRAY_BINDING_OES', 0x85b5, 'GL_OES_vertex_array_object')
+
+defines.add(GL_VERTEX_ARRAY_BINDING_OES)
+
+# GL_OES_vertex_half_float
+
+GL_HALF_FLOAT_OES = Enumerant('GL_HALF_FLOAT_OES', 0x8d61, 'GL_OES_vertex_half_float')
+
+defines.add(GL_HALF_FLOAT_OES)
+
+# GL_OES_vertex_type_10_10_10_2
+
+GL_INT_10_10_10_2_OES = Enumerant('GL_INT_10_10_10_2_OES', 0x8df7, 'GL_OES_vertex_type_10_10_10_2')
+GL_UNSIGNED_INT_10_10_10_2_OES = Enumerant('GL_UNSIGNED_INT_10_10_10_2_OES', 0x8df6, 'GL_OES_vertex_type_10_10_10_2')
+
+defines.add(GL_INT_10_10_10_2_OES)
+defines.add(GL_UNSIGNED_INT_10_10_10_2_OES)
 
 # GL_OML_interlace
 
@@ -9982,6 +11022,136 @@ defines.add(GL_VERTEX23_BIT_PGI)
 defines.add(GL_VERTEX4_BIT_PGI)
 defines.add(GL_VERTEX_CONSISTENT_HINT_PGI)
 defines.add(GL_VERTEX_DATA_HINT_PGI)
+
+# GL_QCOM_alpha_test
+
+GL_ALPHA_TEST_FUNC_QCOM = Enumerant('GL_ALPHA_TEST_FUNC_QCOM', 0x0bc1, 'GL_QCOM_alpha_test')
+GL_ALPHA_TEST_QCOM = Enumerant('GL_ALPHA_TEST_QCOM', 0x0bc0, 'GL_QCOM_alpha_test')
+GL_ALPHA_TEST_REF_QCOM = Enumerant('GL_ALPHA_TEST_REF_QCOM', 0x0bc2, 'GL_QCOM_alpha_test')
+
+defines.add(GL_ALPHA_TEST_FUNC_QCOM)
+defines.add(GL_ALPHA_TEST_QCOM)
+defines.add(GL_ALPHA_TEST_REF_QCOM)
+
+# GL_QCOM_binning_control
+
+GL_BINNING_CONTROL_HINT_QCOM = Enumerant('GL_BINNING_CONTROL_HINT_QCOM', 0x8fb0, 'GL_QCOM_binning_control')
+GL_CPU_OPTIMIZED_QCOM = Enumerant('GL_CPU_OPTIMIZED_QCOM', 0x8fb1, 'GL_QCOM_binning_control')
+GL_DONT_CARE = Enumerant('GL_DONT_CARE', 0x1100, 'GL_QCOM_binning_control')
+GL_GPU_OPTIMIZED_QCOM = Enumerant('GL_GPU_OPTIMIZED_QCOM', 0x8fb2, 'GL_QCOM_binning_control')
+GL_RENDER_DIRECT_TO_FRAMEBUFFER_QCOM = Enumerant('GL_RENDER_DIRECT_TO_FRAMEBUFFER_QCOM', 0x8fb3, 'GL_QCOM_binning_control')
+
+defines.add(GL_BINNING_CONTROL_HINT_QCOM)
+defines.add(GL_CPU_OPTIMIZED_QCOM)
+defines.add(GL_DONT_CARE)
+defines.add(GL_GPU_OPTIMIZED_QCOM)
+defines.add(GL_RENDER_DIRECT_TO_FRAMEBUFFER_QCOM)
+
+# GL_QCOM_extended_get
+
+GL_STATE_RESTORE = Enumerant('GL_STATE_RESTORE', 0x8bdc, 'GL_QCOM_extended_get')
+GL_TEXTURE_DEPTH_QCOM = Enumerant('GL_TEXTURE_DEPTH_QCOM', 0x8bd4, 'GL_QCOM_extended_get')
+GL_TEXTURE_FORMAT_QCOM = Enumerant('GL_TEXTURE_FORMAT_QCOM', 0x8bd6, 'GL_QCOM_extended_get')
+GL_TEXTURE_HEIGHT_QCOM = Enumerant('GL_TEXTURE_HEIGHT_QCOM', 0x8bd3, 'GL_QCOM_extended_get')
+GL_TEXTURE_IMAGE_VALID_QCOM = Enumerant('GL_TEXTURE_IMAGE_VALID_QCOM', 0x8bd8, 'GL_QCOM_extended_get')
+GL_TEXTURE_INTERNAL_FORMAT_QCOM = Enumerant('GL_TEXTURE_INTERNAL_FORMAT_QCOM', 0x8bd5, 'GL_QCOM_extended_get')
+GL_TEXTURE_NUM_LEVELS_QCOM = Enumerant('GL_TEXTURE_NUM_LEVELS_QCOM', 0x8bd9, 'GL_QCOM_extended_get')
+GL_TEXTURE_OBJECT_VALID_QCOM = Enumerant('GL_TEXTURE_OBJECT_VALID_QCOM', 0x8bdb, 'GL_QCOM_extended_get')
+GL_TEXTURE_TARGET_QCOM = Enumerant('GL_TEXTURE_TARGET_QCOM', 0x8bda, 'GL_QCOM_extended_get')
+GL_TEXTURE_TYPE_QCOM = Enumerant('GL_TEXTURE_TYPE_QCOM', 0x8bd7, 'GL_QCOM_extended_get')
+GL_TEXTURE_WIDTH_QCOM = Enumerant('GL_TEXTURE_WIDTH_QCOM', 0x8bd2, 'GL_QCOM_extended_get')
+
+defines.add(GL_STATE_RESTORE)
+defines.add(GL_TEXTURE_DEPTH_QCOM)
+defines.add(GL_TEXTURE_FORMAT_QCOM)
+defines.add(GL_TEXTURE_HEIGHT_QCOM)
+defines.add(GL_TEXTURE_IMAGE_VALID_QCOM)
+defines.add(GL_TEXTURE_INTERNAL_FORMAT_QCOM)
+defines.add(GL_TEXTURE_NUM_LEVELS_QCOM)
+defines.add(GL_TEXTURE_OBJECT_VALID_QCOM)
+defines.add(GL_TEXTURE_TARGET_QCOM)
+defines.add(GL_TEXTURE_TYPE_QCOM)
+defines.add(GL_TEXTURE_WIDTH_QCOM)
+
+# GL_QCOM_perfmon_global_mode
+
+GL_PERFMON_GLOBAL_MODE_QCOM = Enumerant('GL_PERFMON_GLOBAL_MODE_QCOM', 0x8fa0, 'GL_QCOM_perfmon_global_mode')
+
+defines.add(GL_PERFMON_GLOBAL_MODE_QCOM)
+
+# GL_QCOM_tiled_rendering
+
+GL_COLOR_BUFFER_BIT0_QCOM = Enumerant('GL_COLOR_BUFFER_BIT0_QCOM', 0x0001, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT1_QCOM = Enumerant('GL_COLOR_BUFFER_BIT1_QCOM', 0x0002, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT2_QCOM = Enumerant('GL_COLOR_BUFFER_BIT2_QCOM', 0x0004, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT3_QCOM = Enumerant('GL_COLOR_BUFFER_BIT3_QCOM', 0x0008, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT4_QCOM = Enumerant('GL_COLOR_BUFFER_BIT4_QCOM', 0x0010, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT5_QCOM = Enumerant('GL_COLOR_BUFFER_BIT5_QCOM', 0x0020, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT6_QCOM = Enumerant('GL_COLOR_BUFFER_BIT6_QCOM', 0x0040, 'GL_QCOM_tiled_rendering')
+GL_COLOR_BUFFER_BIT7_QCOM = Enumerant('GL_COLOR_BUFFER_BIT7_QCOM', 0x0080, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT0_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT0_QCOM', 0x0100, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT1_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT1_QCOM', 0x0200, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT2_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT2_QCOM', 0x0400, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT3_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT3_QCOM', 0x0800, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT4_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT4_QCOM', 0x1000, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT5_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT5_QCOM', 0x2000, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT6_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT6_QCOM', 0x4000, 'GL_QCOM_tiled_rendering')
+GL_DEPTH_BUFFER_BIT7_QCOM = Enumerant('GL_DEPTH_BUFFER_BIT7_QCOM', 0x8000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT0_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT0_QCOM', 0x1000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT1_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT1_QCOM', 0x2000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT2_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT2_QCOM', 0x4000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT3_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT3_QCOM', 0x8000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT4_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT4_QCOM', 0x10000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT5_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT5_QCOM', 0x20000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT6_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT6_QCOM', 0x40000000, 'GL_QCOM_tiled_rendering')
+GL_MULTISAMPLE_BUFFER_BIT7_QCOM = Enumerant('GL_MULTISAMPLE_BUFFER_BIT7_QCOM', 0x80000000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT0_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT0_QCOM', 0x10000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT1_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT1_QCOM', 0x20000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT2_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT2_QCOM', 0x40000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT3_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT3_QCOM', 0x80000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT4_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT4_QCOM', 0x100000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT5_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT5_QCOM', 0x200000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT6_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT6_QCOM', 0x400000, 'GL_QCOM_tiled_rendering')
+GL_STENCIL_BUFFER_BIT7_QCOM = Enumerant('GL_STENCIL_BUFFER_BIT7_QCOM', 0x800000, 'GL_QCOM_tiled_rendering')
+
+defines.add(GL_COLOR_BUFFER_BIT0_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT1_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT2_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT3_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT4_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT5_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT6_QCOM)
+defines.add(GL_COLOR_BUFFER_BIT7_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT0_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT1_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT2_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT3_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT4_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT5_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT6_QCOM)
+defines.add(GL_DEPTH_BUFFER_BIT7_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT0_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT1_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT2_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT3_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT4_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT5_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT6_QCOM)
+defines.add(GL_MULTISAMPLE_BUFFER_BIT7_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT0_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT1_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT2_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT3_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT4_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT5_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT6_QCOM)
+defines.add(GL_STENCIL_BUFFER_BIT7_QCOM)
+
+# GL_QCOM_writeonly_rendering
+
+GL_WRITEONLY_RENDERING_QCOM = Enumerant('GL_WRITEONLY_RENDERING_QCOM', 0x8823, 'GL_QCOM_writeonly_rendering')
+
+defines.add(GL_WRITEONLY_RENDERING_QCOM)
 
 # GL_REGAL_enable
 
@@ -10506,6 +11676,12 @@ defines.add(GL_REPLACE_MIDDLE_SUN)
 defines.add(GL_REPLACE_OLDEST_SUN)
 defines.add(GL_RESTART_SUN)
 defines.add(GL_TRIANGLE_LIST_SUN)
+
+# GL_VIV_shader_binary
+
+GL_SHADER_BINARY_VIV = Enumerant('GL_SHADER_BINARY_VIV', 0x8fc4, 'GL_VIV_shader_binary')
+
+defines.add(GL_SHADER_BINARY_VIV)
 
 # GL_WIN_phong_shading
 
@@ -17589,6 +18765,106 @@ glTessellationModeAMD.trace = True
 glTessellationModeAMD.play = True
 gl.add(glTessellationModeAMD)
 
+# GL_ANGLE_framebuffer_blit
+
+glBlitFramebufferANGLE = Function('glBlitFramebufferANGLE')
+glBlitFramebufferANGLE.ret = Return('void')
+glBlitFramebufferANGLE.add( Input( 'srcX0','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'srcY0','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'srcX1','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'srcY1','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'dstX0','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'dstY0','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'dstX1','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'dstY1','GLint' ))
+glBlitFramebufferANGLE.add( Input( 'mask','GLbitfield' ))
+glBlitFramebufferANGLE.add( Input( 'filter','GLenum' ))
+glBlitFramebufferANGLE.version = ''
+glBlitFramebufferANGLE.category = 'GL_ANGLE_framebuffer_blit'
+glBlitFramebufferANGLE.trace = True
+glBlitFramebufferANGLE.play = True
+gl.add(glBlitFramebufferANGLE)
+
+# GL_ANGLE_framebuffer_multisample
+
+glRenderbufferStorageMultisampleANGLE = Function('glRenderbufferStorageMultisampleANGLE')
+glRenderbufferStorageMultisampleANGLE.ret = Return('void')
+glRenderbufferStorageMultisampleANGLE.add( Input( 'target','GLenum' ))
+glRenderbufferStorageMultisampleANGLE.add( Input( 'samples','GLsizei' ))
+glRenderbufferStorageMultisampleANGLE.add( Input( 'internalformat','GLenum' ))
+glRenderbufferStorageMultisampleANGLE.add( Input( 'width','GLsizei' ))
+glRenderbufferStorageMultisampleANGLE.add( Input( 'height','GLsizei' ))
+glRenderbufferStorageMultisampleANGLE.version = ''
+glRenderbufferStorageMultisampleANGLE.category = 'GL_ANGLE_framebuffer_multisample'
+glRenderbufferStorageMultisampleANGLE.trace = True
+glRenderbufferStorageMultisampleANGLE.play = True
+gl.add(glRenderbufferStorageMultisampleANGLE)
+
+# GL_ANGLE_instanced_arrays
+
+glDrawArraysInstancedANGLE = Function('glDrawArraysInstancedANGLE')
+glDrawArraysInstancedANGLE.ret = Return('void')
+glDrawArraysInstancedANGLE.add( Input( 'mode','GLenum' ))
+glDrawArraysInstancedANGLE.add( Input( 'first','GLint' ))
+glDrawArraysInstancedANGLE.add( Input( 'count','GLsizei' ))
+glDrawArraysInstancedANGLE.add( Input( 'primcount','GLsizei' ))
+glDrawArraysInstancedANGLE.version = ''
+glDrawArraysInstancedANGLE.category = 'GL_ANGLE_instanced_arrays'
+glDrawArraysInstancedANGLE.trace = True
+glDrawArraysInstancedANGLE.play = True
+gl.add(glDrawArraysInstancedANGLE)
+
+glDrawElementsInstancedANGLE = Function('glDrawElementsInstancedANGLE')
+glDrawElementsInstancedANGLE.ret = Return('void')
+glDrawElementsInstancedANGLE.add( Input( 'mode','GLenum' ))
+glDrawElementsInstancedANGLE.add( Input( 'count','GLsizei' ))
+glDrawElementsInstancedANGLE.add( Input( 'type','GLenum' ))
+glDrawElementsInstancedANGLE.add( Input( 'indices','const GLvoid *' ))
+glDrawElementsInstancedANGLE.add( Input( 'primcount','GLsizei' ))
+glDrawElementsInstancedANGLE.version = ''
+glDrawElementsInstancedANGLE.category = 'GL_ANGLE_instanced_arrays'
+glDrawElementsInstancedANGLE.trace = True
+glDrawElementsInstancedANGLE.play = True
+gl.add(glDrawElementsInstancedANGLE)
+
+glVertexAttribDivisorANGLE = Function('glVertexAttribDivisorANGLE')
+glVertexAttribDivisorANGLE.ret = Return('void')
+glVertexAttribDivisorANGLE.add( Input( 'index','GLuint' ))
+glVertexAttribDivisorANGLE.add( Input( 'divisor','GLuint' ))
+glVertexAttribDivisorANGLE.version = ''
+glVertexAttribDivisorANGLE.category = 'GL_ANGLE_instanced_arrays'
+glVertexAttribDivisorANGLE.trace = True
+glVertexAttribDivisorANGLE.play = True
+gl.add(glVertexAttribDivisorANGLE)
+
+# GL_ANGLE_translated_shader_source
+
+glGetTranslatedShaderSourceANGLE = Function('glGetTranslatedShaderSourceANGLE')
+glGetTranslatedShaderSourceANGLE.ret = Return('void')
+glGetTranslatedShaderSourceANGLE.add( Input( 'shader','GLuint' ))
+glGetTranslatedShaderSourceANGLE.add( Input( 'bufsize','GLsizei' ))
+glGetTranslatedShaderSourceANGLE.add( Input( 'length','GLsizei *' ))
+glGetTranslatedShaderSourceANGLE.add( Input( 'source','GLchar *' ))
+glGetTranslatedShaderSourceANGLE.version = ''
+glGetTranslatedShaderSourceANGLE.category = 'GL_ANGLE_translated_shader_source'
+glGetTranslatedShaderSourceANGLE.trace = True
+glGetTranslatedShaderSourceANGLE.play = True
+gl.add(glGetTranslatedShaderSourceANGLE)
+
+# GL_APPLE_copy_texture_levels
+
+glCopyTextureLevelsAPPLE = Function('glCopyTextureLevelsAPPLE')
+glCopyTextureLevelsAPPLE.ret = Return('void')
+glCopyTextureLevelsAPPLE.add( Input( 'destinationTexture','GLuint' ))
+glCopyTextureLevelsAPPLE.add( Input( 'sourceTexture','GLuint' ))
+glCopyTextureLevelsAPPLE.add( Input( 'sourceBaseLevel','GLint' ))
+glCopyTextureLevelsAPPLE.add( Input( 'sourceLevelCount','GLsizei' ))
+glCopyTextureLevelsAPPLE.version = ''
+glCopyTextureLevelsAPPLE.category = 'GL_APPLE_copy_texture_levels'
+glCopyTextureLevelsAPPLE.trace = True
+glCopyTextureLevelsAPPLE.play = True
+gl.add(glCopyTextureLevelsAPPLE)
+
 # GL_APPLE_element_array
 
 glDrawElementArrayAPPLE = Function('glDrawElementArrayAPPLE')
@@ -17779,6 +19055,29 @@ glSwapAPPLE.trace = True
 glSwapAPPLE.play = True
 gl.add(glSwapAPPLE)
 
+# GL_APPLE_framebuffer_multisample
+
+glRenderbufferStorageMultisampleAPPLE = Function('glRenderbufferStorageMultisampleAPPLE')
+glRenderbufferStorageMultisampleAPPLE.ret = Return('void')
+glRenderbufferStorageMultisampleAPPLE.add( Input( 'target','GLenum' ))
+glRenderbufferStorageMultisampleAPPLE.add( Input( 'samples','GLsizei' ))
+glRenderbufferStorageMultisampleAPPLE.add( Input( 'internalformat','GLenum' ))
+glRenderbufferStorageMultisampleAPPLE.add( Input( 'width','GLsizei' ))
+glRenderbufferStorageMultisampleAPPLE.add( Input( 'height','GLsizei' ))
+glRenderbufferStorageMultisampleAPPLE.version = ''
+glRenderbufferStorageMultisampleAPPLE.category = 'GL_APPLE_framebuffer_multisample'
+glRenderbufferStorageMultisampleAPPLE.trace = True
+glRenderbufferStorageMultisampleAPPLE.play = True
+gl.add(glRenderbufferStorageMultisampleAPPLE)
+
+glResolveMultisampleFramebufferAPPLE = Function('glResolveMultisampleFramebufferAPPLE')
+glResolveMultisampleFramebufferAPPLE.ret = Return('void')
+glResolveMultisampleFramebufferAPPLE.version = ''
+glResolveMultisampleFramebufferAPPLE.category = 'GL_APPLE_framebuffer_multisample'
+glResolveMultisampleFramebufferAPPLE.trace = True
+glResolveMultisampleFramebufferAPPLE.play = True
+gl.add(glResolveMultisampleFramebufferAPPLE)
+
 # GL_APPLE_object_purgeable
 
 glGetObjectParameterivAPPLE = Function('glGetObjectParameterivAPPLE')
@@ -17814,6 +19113,81 @@ glObjectUnpurgeableAPPLE.category = 'GL_APPLE_object_purgeable'
 glObjectUnpurgeableAPPLE.trace = True
 glObjectUnpurgeableAPPLE.play = True
 gl.add(glObjectUnpurgeableAPPLE)
+
+# GL_APPLE_sync
+
+glClientWaitSyncAPPLE = Function('glClientWaitSyncAPPLE')
+glClientWaitSyncAPPLE.ret = Return('GLenum')
+glClientWaitSyncAPPLE.add( Input( 'sync','GLsync' ))
+glClientWaitSyncAPPLE.add( Input( 'flags','GLbitfield' ))
+glClientWaitSyncAPPLE.add( Input( 'timeout','GLuint64' ))
+glClientWaitSyncAPPLE.version = ''
+glClientWaitSyncAPPLE.category = 'GL_APPLE_sync'
+glClientWaitSyncAPPLE.trace = True
+glClientWaitSyncAPPLE.play = True
+gl.add(glClientWaitSyncAPPLE)
+
+glDeleteSyncAPPLE = Function('glDeleteSyncAPPLE')
+glDeleteSyncAPPLE.ret = Return('void')
+glDeleteSyncAPPLE.add( Input( 'sync','GLsync' ))
+glDeleteSyncAPPLE.version = ''
+glDeleteSyncAPPLE.category = 'GL_APPLE_sync'
+glDeleteSyncAPPLE.trace = True
+glDeleteSyncAPPLE.play = True
+gl.add(glDeleteSyncAPPLE)
+
+glFenceSyncAPPLE = Function('glFenceSyncAPPLE')
+glFenceSyncAPPLE.ret = Return('GLsync')
+glFenceSyncAPPLE.add( Input( 'condition','GLenum' ))
+glFenceSyncAPPLE.add( Input( 'flags','GLbitfield' ))
+glFenceSyncAPPLE.version = ''
+glFenceSyncAPPLE.category = 'GL_APPLE_sync'
+glFenceSyncAPPLE.trace = True
+glFenceSyncAPPLE.play = True
+gl.add(glFenceSyncAPPLE)
+
+glGetInteger64vAPPLE = Function('glGetInteger64vAPPLE')
+glGetInteger64vAPPLE.ret = Return('void')
+glGetInteger64vAPPLE.add( Input( 'pname','GLenum' ))
+glGetInteger64vAPPLE.add( Input( 'params','GLint64 *' ))
+glGetInteger64vAPPLE.version = ''
+glGetInteger64vAPPLE.category = 'GL_APPLE_sync'
+glGetInteger64vAPPLE.trace = True
+glGetInteger64vAPPLE.play = True
+gl.add(glGetInteger64vAPPLE)
+
+glGetSyncivAPPLE = Function('glGetSyncivAPPLE')
+glGetSyncivAPPLE.ret = Return('void')
+glGetSyncivAPPLE.add( Input( 'sync','GLsync' ))
+glGetSyncivAPPLE.add( Input( 'pname','GLenum' ))
+glGetSyncivAPPLE.add( Input( 'bufSize','GLsizei' ))
+glGetSyncivAPPLE.add( Input( 'length','GLsizei *' ))
+glGetSyncivAPPLE.add( Input( 'values','GLint *' ))
+glGetSyncivAPPLE.version = ''
+glGetSyncivAPPLE.category = 'GL_APPLE_sync'
+glGetSyncivAPPLE.trace = True
+glGetSyncivAPPLE.play = True
+gl.add(glGetSyncivAPPLE)
+
+glIsSyncAPPLE = Function('glIsSyncAPPLE')
+glIsSyncAPPLE.ret = Return('GLboolean')
+glIsSyncAPPLE.add( Input( 'sync','GLsync' ))
+glIsSyncAPPLE.version = ''
+glIsSyncAPPLE.category = 'GL_APPLE_sync'
+glIsSyncAPPLE.trace = True
+glIsSyncAPPLE.play = True
+gl.add(glIsSyncAPPLE)
+
+glWaitSyncAPPLE = Function('glWaitSyncAPPLE')
+glWaitSyncAPPLE.ret = Return('void')
+glWaitSyncAPPLE.add( Input( 'sync','GLsync' ))
+glWaitSyncAPPLE.add( Input( 'flags','GLbitfield' ))
+glWaitSyncAPPLE.add( Input( 'timeout','GLuint64' ))
+glWaitSyncAPPLE.version = ''
+glWaitSyncAPPLE.category = 'GL_APPLE_sync'
+glWaitSyncAPPLE.trace = True
+glWaitSyncAPPLE.play = True
+gl.add(glWaitSyncAPPLE)
 
 # GL_APPLE_texture_range
 
@@ -26330,6 +27704,33 @@ glCullParameterfvEXT.trace = True
 glCullParameterfvEXT.play = True
 gl.add(glCullParameterfvEXT)
 
+# GL_EXT_debug_label
+
+glGetObjectLabelEXT = Function('glGetObjectLabelEXT')
+glGetObjectLabelEXT.ret = Return('void')
+glGetObjectLabelEXT.add( Input( 'type','GLenum' ))
+glGetObjectLabelEXT.add( Input( 'object','GLuint' ))
+glGetObjectLabelEXT.add( Input( 'bufSize','GLsizei' ))
+glGetObjectLabelEXT.add( Input( 'length','GLsizei *' ))
+glGetObjectLabelEXT.add( Input( 'label','GLchar *' ))
+glGetObjectLabelEXT.version = ''
+glGetObjectLabelEXT.category = 'GL_EXT_debug_label'
+glGetObjectLabelEXT.trace = True
+glGetObjectLabelEXT.play = True
+gl.add(glGetObjectLabelEXT)
+
+glLabelObjectEXT = Function('glLabelObjectEXT')
+glLabelObjectEXT.ret = Return('void')
+glLabelObjectEXT.add( Input( 'type','GLenum' ))
+glLabelObjectEXT.add( Input( 'object','GLuint' ))
+glLabelObjectEXT.add( Input( 'length','GLsizei' ))
+glLabelObjectEXT.add( Input( 'label','const GLchar *' ))
+glLabelObjectEXT.version = ''
+glLabelObjectEXT.category = 'GL_EXT_debug_label'
+glLabelObjectEXT.trace = True
+glLabelObjectEXT.play = True
+gl.add(glLabelObjectEXT)
+
 # GL_EXT_debug_marker
 
 glInsertEventMarkerEXT = Function('glInsertEventMarkerEXT')
@@ -29329,6 +30730,19 @@ glVertexArrayVertexOffsetEXT.trace = True
 glVertexArrayVertexOffsetEXT.play = True
 gl.add(glVertexArrayVertexOffsetEXT)
 
+# GL_EXT_discard_framebuffer
+
+glDiscardFramebufferEXT = Function('glDiscardFramebufferEXT')
+glDiscardFramebufferEXT.ret = Return('void')
+glDiscardFramebufferEXT.add( Input( 'target','GLenum' ))
+glDiscardFramebufferEXT.add( Input( 'numAttachments','GLsizei' ))
+glDiscardFramebufferEXT.add( Input( 'attachments','const GLenum *' ))
+glDiscardFramebufferEXT.version = ''
+glDiscardFramebufferEXT.category = 'GL_EXT_discard_framebuffer'
+glDiscardFramebufferEXT.trace = True
+glDiscardFramebufferEXT.play = True
+gl.add(glDiscardFramebufferEXT)
+
 # GL_EXT_draw_buffers2
 
 glColorMaskIndexedEXT = Function('glColorMaskIndexedEXT')
@@ -30504,6 +31918,31 @@ glTextureMaterialEXT.trace = True
 glTextureMaterialEXT.play = True
 gl.add(glTextureMaterialEXT)
 
+# GL_EXT_map_buffer_range
+
+glFlushMappedBufferRangeEXT = Function('glFlushMappedBufferRangeEXT')
+glFlushMappedBufferRangeEXT.ret = Return('void')
+glFlushMappedBufferRangeEXT.add( Input( 'target','GLenum' ))
+glFlushMappedBufferRangeEXT.add( Input( 'offset','GLintptr' ))
+glFlushMappedBufferRangeEXT.add( Input( 'length','GLsizeiptr' ))
+glFlushMappedBufferRangeEXT.version = ''
+glFlushMappedBufferRangeEXT.category = 'GL_EXT_map_buffer_range'
+glFlushMappedBufferRangeEXT.trace = True
+glFlushMappedBufferRangeEXT.play = True
+gl.add(glFlushMappedBufferRangeEXT)
+
+glMapBufferRangeEXT = Function('glMapBufferRangeEXT')
+glMapBufferRangeEXT.ret = Return('GLvoid *')
+glMapBufferRangeEXT.add( Input( 'target','GLenum' ))
+glMapBufferRangeEXT.add( Input( 'offset','GLintptr' ))
+glMapBufferRangeEXT.add( Input( 'length','GLsizeiptr' ))
+glMapBufferRangeEXT.add( Input( 'access','GLbitfield' ))
+glMapBufferRangeEXT.version = ''
+glMapBufferRangeEXT.category = 'GL_EXT_map_buffer_range'
+glMapBufferRangeEXT.trace = True
+glMapBufferRangeEXT.play = True
+gl.add(glMapBufferRangeEXT)
+
 # GL_EXT_multi_draw_arrays
 
 glMultiDrawArraysEXT = Function('glMultiDrawArraysEXT')
@@ -30551,6 +31990,128 @@ glSamplePatternEXT.category = 'GL_EXT_multisample'
 glSamplePatternEXT.trace = True
 glSamplePatternEXT.play = True
 gl.add(glSamplePatternEXT)
+
+# GL_EXT_multisampled_render_to_texture
+
+glFramebufferTexture2DMultisampleEXT = Function('glFramebufferTexture2DMultisampleEXT')
+glFramebufferTexture2DMultisampleEXT.ret = Return('void')
+glFramebufferTexture2DMultisampleEXT.add( Input( 'target','GLenum' ))
+glFramebufferTexture2DMultisampleEXT.add( Input( 'attachment','GLenum' ))
+glFramebufferTexture2DMultisampleEXT.add( Input( 'textarget','GLenum' ))
+glFramebufferTexture2DMultisampleEXT.add( Input( 'texture','GLuint' ))
+glFramebufferTexture2DMultisampleEXT.add( Input( 'level','GLint' ))
+glFramebufferTexture2DMultisampleEXT.add( Input( 'samples','GLsizei' ))
+glFramebufferTexture2DMultisampleEXT.version = ''
+glFramebufferTexture2DMultisampleEXT.category = 'GL_EXT_multisampled_render_to_texture'
+glFramebufferTexture2DMultisampleEXT.trace = True
+glFramebufferTexture2DMultisampleEXT.play = True
+gl.add(glFramebufferTexture2DMultisampleEXT)
+
+# GL_EXT_multiview_draw_buffers
+
+glDrawBuffersIndexedEXT = Function('glDrawBuffersIndexedEXT')
+glDrawBuffersIndexedEXT.ret = Return('void')
+glDrawBuffersIndexedEXT.add( Input( 'n','GLint' ))
+glDrawBuffersIndexedEXT.add( Input( 'location','const GLenum *' ))
+glDrawBuffersIndexedEXT.add( Input( 'indices','const GLint *' ))
+glDrawBuffersIndexedEXT.version = ''
+glDrawBuffersIndexedEXT.category = 'GL_EXT_multiview_draw_buffers'
+glDrawBuffersIndexedEXT.trace = True
+glDrawBuffersIndexedEXT.play = True
+gl.add(glDrawBuffersIndexedEXT)
+
+glGetIntegeri_vEXT = Function('glGetIntegeri_vEXT')
+glGetIntegeri_vEXT.ret = Return('void')
+glGetIntegeri_vEXT.add( Input( 'target','GLenum' ))
+glGetIntegeri_vEXT.add( Input( 'index','GLuint' ))
+glGetIntegeri_vEXT.add( Input( 'data','GLint *' ))
+glGetIntegeri_vEXT.version = ''
+glGetIntegeri_vEXT.category = 'GL_EXT_multiview_draw_buffers'
+glGetIntegeri_vEXT.trace = True
+glGetIntegeri_vEXT.play = True
+gl.add(glGetIntegeri_vEXT)
+
+glReadBufferIndexedEXT = Function('glReadBufferIndexedEXT')
+glReadBufferIndexedEXT.ret = Return('void')
+glReadBufferIndexedEXT.add( Input( 'src','GLenum' ))
+glReadBufferIndexedEXT.add( Input( 'index','GLint' ))
+glReadBufferIndexedEXT.version = ''
+glReadBufferIndexedEXT.category = 'GL_EXT_multiview_draw_buffers'
+glReadBufferIndexedEXT.trace = True
+glReadBufferIndexedEXT.play = True
+gl.add(glReadBufferIndexedEXT)
+
+# GL_EXT_occlusion_query_boolean
+
+glBeginQueryEXT = Function('glBeginQueryEXT')
+glBeginQueryEXT.ret = Return('void')
+glBeginQueryEXT.add( Input( 'target','GLenum' ))
+glBeginQueryEXT.add( Input( 'id','GLuint' ))
+glBeginQueryEXT.version = ''
+glBeginQueryEXT.category = 'GL_EXT_occlusion_query_boolean'
+glBeginQueryEXT.trace = True
+glBeginQueryEXT.play = True
+gl.add(glBeginQueryEXT)
+
+glDeleteQueriesEXT = Function('glDeleteQueriesEXT')
+glDeleteQueriesEXT.ret = Return('void')
+glDeleteQueriesEXT.add( Input( 'n','GLsizei' ))
+glDeleteQueriesEXT.add( Input( 'ids','const GLuint *' ))
+glDeleteQueriesEXT.version = ''
+glDeleteQueriesEXT.category = 'GL_EXT_occlusion_query_boolean'
+glDeleteQueriesEXT.trace = True
+glDeleteQueriesEXT.play = True
+gl.add(glDeleteQueriesEXT)
+
+glEndQueryEXT = Function('glEndQueryEXT')
+glEndQueryEXT.ret = Return('void')
+glEndQueryEXT.add( Input( 'target','GLenum' ))
+glEndQueryEXT.version = ''
+glEndQueryEXT.category = 'GL_EXT_occlusion_query_boolean'
+glEndQueryEXT.trace = True
+glEndQueryEXT.play = True
+gl.add(glEndQueryEXT)
+
+glGenQueriesEXT = Function('glGenQueriesEXT')
+glGenQueriesEXT.ret = Return('void')
+glGenQueriesEXT.add( Input( 'n','GLsizei' ))
+glGenQueriesEXT.add( Input( 'ids','GLuint *' ))
+glGenQueriesEXT.version = ''
+glGenQueriesEXT.category = 'GL_EXT_occlusion_query_boolean'
+glGenQueriesEXT.trace = True
+glGenQueriesEXT.play = True
+gl.add(glGenQueriesEXT)
+
+glGetQueryObjectuivEXT = Function('glGetQueryObjectuivEXT')
+glGetQueryObjectuivEXT.ret = Return('void')
+glGetQueryObjectuivEXT.add( Input( 'id','GLuint' ))
+glGetQueryObjectuivEXT.add( Input( 'pname','GLenum' ))
+glGetQueryObjectuivEXT.add( Input( 'params','GLuint *' ))
+glGetQueryObjectuivEXT.version = ''
+glGetQueryObjectuivEXT.category = 'GL_EXT_occlusion_query_boolean'
+glGetQueryObjectuivEXT.trace = True
+glGetQueryObjectuivEXT.play = True
+gl.add(glGetQueryObjectuivEXT)
+
+glGetQueryivEXT = Function('glGetQueryivEXT')
+glGetQueryivEXT.ret = Return('void')
+glGetQueryivEXT.add( Input( 'target','GLenum' ))
+glGetQueryivEXT.add( Input( 'pname','GLenum' ))
+glGetQueryivEXT.add( Input( 'params','GLint *' ))
+glGetQueryivEXT.version = ''
+glGetQueryivEXT.category = 'GL_EXT_occlusion_query_boolean'
+glGetQueryivEXT.trace = True
+glGetQueryivEXT.play = True
+gl.add(glGetQueryivEXT)
+
+glIsQueryEXT = Function('glIsQueryEXT')
+glIsQueryEXT.ret = Return('GLboolean')
+glIsQueryEXT.add( Input( 'id','GLuint' ))
+glIsQueryEXT.version = ''
+glIsQueryEXT.category = 'GL_EXT_occlusion_query_boolean'
+glIsQueryEXT.trace = True
+glIsQueryEXT.play = True
+gl.add(glIsQueryEXT)
 
 # GL_EXT_paletted_texture
 
@@ -30714,6 +32275,48 @@ glProvokingVertexEXT.category = 'GL_EXT_provoking_vertex'
 glProvokingVertexEXT.trace = True
 glProvokingVertexEXT.play = True
 gl.add(glProvokingVertexEXT)
+
+# GL_EXT_robustness
+
+glGetnUniformfvEXT = Function('glGetnUniformfvEXT')
+glGetnUniformfvEXT.ret = Return('void')
+glGetnUniformfvEXT.add( Input( 'program','GLuint' ))
+glGetnUniformfvEXT.add( Input( 'location','GLint' ))
+glGetnUniformfvEXT.add( Input( 'bufSize','GLsizei' ))
+glGetnUniformfvEXT.add( Input( 'params','GLfloat *' ))
+glGetnUniformfvEXT.version = ''
+glGetnUniformfvEXT.category = 'GL_EXT_robustness'
+glGetnUniformfvEXT.trace = True
+glGetnUniformfvEXT.play = True
+gl.add(glGetnUniformfvEXT)
+
+glGetnUniformivEXT = Function('glGetnUniformivEXT')
+glGetnUniformivEXT.ret = Return('void')
+glGetnUniformivEXT.add( Input( 'program','GLuint' ))
+glGetnUniformivEXT.add( Input( 'location','GLint' ))
+glGetnUniformivEXT.add( Input( 'bufSize','GLsizei' ))
+glGetnUniformivEXT.add( Input( 'params','GLint *' ))
+glGetnUniformivEXT.version = ''
+glGetnUniformivEXT.category = 'GL_EXT_robustness'
+glGetnUniformivEXT.trace = True
+glGetnUniformivEXT.play = True
+gl.add(glGetnUniformivEXT)
+
+glReadnPixelsEXT = Function('glReadnPixelsEXT')
+glReadnPixelsEXT.ret = Return('void')
+glReadnPixelsEXT.add( Input( 'x','GLint' ))
+glReadnPixelsEXT.add( Input( 'y','GLint' ))
+glReadnPixelsEXT.add( Input( 'width','GLsizei' ))
+glReadnPixelsEXT.add( Input( 'height','GLsizei' ))
+glReadnPixelsEXT.add( Input( 'format','GLenum' ))
+glReadnPixelsEXT.add( Input( 'type','GLenum' ))
+glReadnPixelsEXT.add( Input( 'bufSize','GLsizei' ))
+glReadnPixelsEXT.add( Input( 'data','GLvoid *' ))
+glReadnPixelsEXT.version = ''
+glReadnPixelsEXT.category = 'GL_EXT_robustness'
+glReadnPixelsEXT.trace = True
+glReadnPixelsEXT.play = True
+gl.add(glReadnPixelsEXT)
 
 # GL_EXT_scene_marker
 
@@ -31231,6 +32834,47 @@ glTextureNormalEXT.category = 'GL_EXT_texture_perturb_normal'
 glTextureNormalEXT.trace = True
 glTextureNormalEXT.play = True
 gl.add(glTextureNormalEXT)
+
+# GL_EXT_texture_storage
+
+glTexStorage1DEXT = Function('glTexStorage1DEXT')
+glTexStorage1DEXT.ret = Return('void')
+glTexStorage1DEXT.add( Input( 'target','GLenum' ))
+glTexStorage1DEXT.add( Input( 'levels','GLsizei' ))
+glTexStorage1DEXT.add( Input( 'internalformat','GLenum' ))
+glTexStorage1DEXT.add( Input( 'width','GLsizei' ))
+glTexStorage1DEXT.version = ''
+glTexStorage1DEXT.category = 'GL_EXT_texture_storage'
+glTexStorage1DEXT.trace = True
+glTexStorage1DEXT.play = True
+gl.add(glTexStorage1DEXT)
+
+glTexStorage2DEXT = Function('glTexStorage2DEXT')
+glTexStorage2DEXT.ret = Return('void')
+glTexStorage2DEXT.add( Input( 'target','GLenum' ))
+glTexStorage2DEXT.add( Input( 'levels','GLsizei' ))
+glTexStorage2DEXT.add( Input( 'internalformat','GLenum' ))
+glTexStorage2DEXT.add( Input( 'width','GLsizei' ))
+glTexStorage2DEXT.add( Input( 'height','GLsizei' ))
+glTexStorage2DEXT.version = ''
+glTexStorage2DEXT.category = 'GL_EXT_texture_storage'
+glTexStorage2DEXT.trace = True
+glTexStorage2DEXT.play = True
+gl.add(glTexStorage2DEXT)
+
+glTexStorage3DEXT = Function('glTexStorage3DEXT')
+glTexStorage3DEXT.ret = Return('void')
+glTexStorage3DEXT.add( Input( 'target','GLenum' ))
+glTexStorage3DEXT.add( Input( 'levels','GLsizei' ))
+glTexStorage3DEXT.add( Input( 'internalformat','GLenum' ))
+glTexStorage3DEXT.add( Input( 'width','GLsizei' ))
+glTexStorage3DEXT.add( Input( 'height','GLsizei' ))
+glTexStorage3DEXT.add( Input( 'depth','GLsizei' ))
+glTexStorage3DEXT.version = ''
+glTexStorage3DEXT.category = 'GL_EXT_texture_storage'
+glTexStorage3DEXT.trace = True
+glTexStorage3DEXT.play = True
+gl.add(glTexStorage3DEXT)
 
 # GL_EXT_timer_query
 
@@ -32281,6 +33925,35 @@ glVertexPointerListIBM.trace = True
 glVertexPointerListIBM.play = True
 gl.add(glVertexPointerListIBM)
 
+# GL_IMG_multisampled_render_to_texture
+
+glFramebufferTexture2DMultisampleIMG = Function('glFramebufferTexture2DMultisampleIMG')
+glFramebufferTexture2DMultisampleIMG.ret = Return('void')
+glFramebufferTexture2DMultisampleIMG.add( Input( 'target','GLenum' ))
+glFramebufferTexture2DMultisampleIMG.add( Input( 'attachment','GLenum' ))
+glFramebufferTexture2DMultisampleIMG.add( Input( 'textarget','GLenum' ))
+glFramebufferTexture2DMultisampleIMG.add( Input( 'texture','GLuint' ))
+glFramebufferTexture2DMultisampleIMG.add( Input( 'level','GLint' ))
+glFramebufferTexture2DMultisampleIMG.add( Input( 'samples','GLsizei' ))
+glFramebufferTexture2DMultisampleIMG.version = ''
+glFramebufferTexture2DMultisampleIMG.category = 'GL_IMG_multisampled_render_to_texture'
+glFramebufferTexture2DMultisampleIMG.trace = True
+glFramebufferTexture2DMultisampleIMG.play = True
+gl.add(glFramebufferTexture2DMultisampleIMG)
+
+glRenderbufferStorageMultisampleIMG = Function('glRenderbufferStorageMultisampleIMG')
+glRenderbufferStorageMultisampleIMG.ret = Return('void')
+glRenderbufferStorageMultisampleIMG.add( Input( 'target','GLenum' ))
+glRenderbufferStorageMultisampleIMG.add( Input( 'samples','GLsizei' ))
+glRenderbufferStorageMultisampleIMG.add( Input( 'internalformat','GLenum' ))
+glRenderbufferStorageMultisampleIMG.add( Input( 'width','GLsizei' ))
+glRenderbufferStorageMultisampleIMG.add( Input( 'height','GLsizei' ))
+glRenderbufferStorageMultisampleIMG.version = ''
+glRenderbufferStorageMultisampleIMG.category = 'GL_IMG_multisampled_render_to_texture'
+glRenderbufferStorageMultisampleIMG.trace = True
+glRenderbufferStorageMultisampleIMG.play = True
+gl.add(glRenderbufferStorageMultisampleIMG)
+
 # GL_INGR_blend_func_separate
 
 glBlendFuncSeparateINGR = Function('glBlendFuncSeparateINGR')
@@ -32993,6 +34666,26 @@ glCopyImageSubDataNV.trace = True
 glCopyImageSubDataNV.play = True
 gl.add(glCopyImageSubDataNV)
 
+# GL_NV_coverage_sample
+
+glCoverageMaskNV = Function('glCoverageMaskNV')
+glCoverageMaskNV.ret = Return('void')
+glCoverageMaskNV.add( Input( 'mask','GLboolean' ))
+glCoverageMaskNV.version = ''
+glCoverageMaskNV.category = 'GL_NV_coverage_sample'
+glCoverageMaskNV.trace = True
+glCoverageMaskNV.play = True
+gl.add(glCoverageMaskNV)
+
+glCoverageOperationNV = Function('glCoverageOperationNV')
+glCoverageOperationNV.ret = Return('void')
+glCoverageOperationNV.add( Input( 'operation','GLenum' ))
+glCoverageOperationNV.version = ''
+glCoverageOperationNV.category = 'GL_NV_coverage_sample'
+glCoverageOperationNV.trace = True
+glCoverageOperationNV.play = True
+gl.add(glCoverageOperationNV)
+
 # GL_NV_depth_buffer_float
 
 glClearDepthdNV = Function('glClearDepthdNV')
@@ -33023,6 +34716,18 @@ glDepthRangedNV.category = 'GL_NV_depth_buffer_float'
 glDepthRangedNV.trace = True
 glDepthRangedNV.play = True
 gl.add(glDepthRangedNV)
+
+# GL_NV_draw_buffers
+
+glDrawBuffersNV = Function('glDrawBuffersNV')
+glDrawBuffersNV.ret = Return('void')
+glDrawBuffersNV.add( Input( 'n','GLsizei' ))
+glDrawBuffersNV.add( Input( 'bufs','const GLenum *' ))
+glDrawBuffersNV.version = ''
+glDrawBuffersNV.category = 'GL_NV_draw_buffers'
+glDrawBuffersNV.trace = True
+glDrawBuffersNV.play = True
+gl.add(glDrawBuffersNV)
 
 # GL_NV_evaluators
 
@@ -35254,6 +36959,17 @@ glPrimitiveRestartNV.trace = True
 glPrimitiveRestartNV.play = True
 gl.add(glPrimitiveRestartNV)
 
+# GL_NV_read_buffer
+
+glReadBufferNV = Function('glReadBufferNV')
+glReadBufferNV.ret = Return('void')
+glReadBufferNV.add( Input( 'mode','GLenum' ))
+glReadBufferNV.version = ''
+glReadBufferNV.category = 'GL_NV_read_buffer'
+glReadBufferNV.trace = True
+glReadBufferNV.play = True
+gl.add(glReadBufferNV)
+
 # GL_NV_register_combiners
 
 glCombinerInputNV = Function('glCombinerInputNV')
@@ -37194,6 +38910,295 @@ glVideoCaptureStreamParameterivNV.trace = True
 glVideoCaptureStreamParameterivNV.play = True
 gl.add(glVideoCaptureStreamParameterivNV)
 
+# GL_OES_blend_equation_separate
+
+glBlendEquationSeparateOES = Function('glBlendEquationSeparateOES')
+glBlendEquationSeparateOES.ret = Return('void')
+glBlendEquationSeparateOES.add( Input( 'modeRGB','GLenum' ))
+glBlendEquationSeparateOES.add( Input( 'modeAlpha','GLenum' ))
+glBlendEquationSeparateOES.version = ''
+glBlendEquationSeparateOES.category = 'GL_OES_blend_equation_separate'
+glBlendEquationSeparateOES.trace = True
+glBlendEquationSeparateOES.play = True
+gl.add(glBlendEquationSeparateOES)
+
+# GL_OES_blend_func_separate
+
+glBlendFuncSeparateOES = Function('glBlendFuncSeparateOES')
+glBlendFuncSeparateOES.ret = Return('void')
+glBlendFuncSeparateOES.add( Input( 'sfactorRGB','GLenum' ))
+glBlendFuncSeparateOES.add( Input( 'dfactorRGB','GLenum' ))
+glBlendFuncSeparateOES.add( Input( 'sfactorAlpha','GLenum' ))
+glBlendFuncSeparateOES.add( Input( 'dfactorAlpha','GLenum' ))
+glBlendFuncSeparateOES.version = ''
+glBlendFuncSeparateOES.category = 'GL_OES_blend_func_separate'
+glBlendFuncSeparateOES.trace = True
+glBlendFuncSeparateOES.play = True
+gl.add(glBlendFuncSeparateOES)
+
+# GL_OES_blend_subtract
+
+glBlendEquationOES = Function('glBlendEquationOES')
+glBlendEquationOES.ret = Return('void')
+glBlendEquationOES.add( Input( 'mode','GLenum' ))
+glBlendEquationOES.version = ''
+glBlendEquationOES.category = 'GL_OES_blend_subtract'
+glBlendEquationOES.trace = True
+glBlendEquationOES.play = True
+gl.add(glBlendEquationOES)
+
+# GL_OES_framebuffer_object
+
+glBindFramebufferOES = Function('glBindFramebufferOES')
+glBindFramebufferOES.ret = Return('void')
+glBindFramebufferOES.add( Input( 'target','GLenum' ))
+glBindFramebufferOES.add( Input( 'framebuffer','GLuint' ))
+glBindFramebufferOES.version = ''
+glBindFramebufferOES.category = 'GL_OES_framebuffer_object'
+glBindFramebufferOES.trace = True
+glBindFramebufferOES.play = True
+gl.add(glBindFramebufferOES)
+
+glBindRenderbufferOES = Function('glBindRenderbufferOES')
+glBindRenderbufferOES.ret = Return('void')
+glBindRenderbufferOES.add( Input( 'target','GLenum' ))
+glBindRenderbufferOES.add( Input( 'renderbuffer','GLuint' ))
+glBindRenderbufferOES.version = ''
+glBindRenderbufferOES.category = 'GL_OES_framebuffer_object'
+glBindRenderbufferOES.trace = True
+glBindRenderbufferOES.play = True
+gl.add(glBindRenderbufferOES)
+
+glCheckFramebufferStatusOES = Function('glCheckFramebufferStatusOES')
+glCheckFramebufferStatusOES.ret = Return('GLenum')
+glCheckFramebufferStatusOES.add( Input( 'target','GLenum' ))
+glCheckFramebufferStatusOES.version = ''
+glCheckFramebufferStatusOES.category = 'GL_OES_framebuffer_object'
+glCheckFramebufferStatusOES.trace = True
+glCheckFramebufferStatusOES.play = True
+gl.add(glCheckFramebufferStatusOES)
+
+glDeleteFramebuffersOES = Function('glDeleteFramebuffersOES')
+glDeleteFramebuffersOES.ret = Return('void')
+glDeleteFramebuffersOES.add( Input( 'n','GLsizei' ))
+glDeleteFramebuffersOES.add( Input( 'framebuffers','const GLuint *' ))
+glDeleteFramebuffersOES.version = ''
+glDeleteFramebuffersOES.category = 'GL_OES_framebuffer_object'
+glDeleteFramebuffersOES.trace = True
+glDeleteFramebuffersOES.play = True
+gl.add(glDeleteFramebuffersOES)
+
+glDeleteRenderbuffersOES = Function('glDeleteRenderbuffersOES')
+glDeleteRenderbuffersOES.ret = Return('void')
+glDeleteRenderbuffersOES.add( Input( 'n','GLsizei' ))
+glDeleteRenderbuffersOES.add( Input( 'renderbuffers','const GLuint *' ))
+glDeleteRenderbuffersOES.version = ''
+glDeleteRenderbuffersOES.category = 'GL_OES_framebuffer_object'
+glDeleteRenderbuffersOES.trace = True
+glDeleteRenderbuffersOES.play = True
+gl.add(glDeleteRenderbuffersOES)
+
+glFramebufferRenderbufferOES = Function('glFramebufferRenderbufferOES')
+glFramebufferRenderbufferOES.ret = Return('void')
+glFramebufferRenderbufferOES.add( Input( 'target','GLenum' ))
+glFramebufferRenderbufferOES.add( Input( 'attachment','GLenum' ))
+glFramebufferRenderbufferOES.add( Input( 'renderbuffertarget','GLenum' ))
+glFramebufferRenderbufferOES.add( Input( 'renderbuffer','GLuint' ))
+glFramebufferRenderbufferOES.version = ''
+glFramebufferRenderbufferOES.category = 'GL_OES_framebuffer_object'
+glFramebufferRenderbufferOES.trace = True
+glFramebufferRenderbufferOES.play = True
+gl.add(glFramebufferRenderbufferOES)
+
+glFramebufferTexture2DOES = Function('glFramebufferTexture2DOES')
+glFramebufferTexture2DOES.ret = Return('void')
+glFramebufferTexture2DOES.add( Input( 'target','GLenum' ))
+glFramebufferTexture2DOES.add( Input( 'attachment','GLenum' ))
+glFramebufferTexture2DOES.add( Input( 'textarget','GLenum' ))
+glFramebufferTexture2DOES.add( Input( 'texture','GLuint' ))
+glFramebufferTexture2DOES.add( Input( 'level','GLint' ))
+glFramebufferTexture2DOES.version = ''
+glFramebufferTexture2DOES.category = 'GL_OES_framebuffer_object'
+glFramebufferTexture2DOES.trace = True
+glFramebufferTexture2DOES.play = True
+gl.add(glFramebufferTexture2DOES)
+
+glGenFramebuffersOES = Function('glGenFramebuffersOES')
+glGenFramebuffersOES.ret = Return('void')
+glGenFramebuffersOES.add( Input( 'n','GLsizei' ))
+glGenFramebuffersOES.add( Input( 'framebuffers','GLuint *' ))
+glGenFramebuffersOES.version = ''
+glGenFramebuffersOES.category = 'GL_OES_framebuffer_object'
+glGenFramebuffersOES.trace = True
+glGenFramebuffersOES.play = True
+gl.add(glGenFramebuffersOES)
+
+glGenRenderbuffersOES = Function('glGenRenderbuffersOES')
+glGenRenderbuffersOES.ret = Return('void')
+glGenRenderbuffersOES.add( Input( 'n','GLsizei' ))
+glGenRenderbuffersOES.add( Input( 'renderbuffers','GLuint *' ))
+glGenRenderbuffersOES.version = ''
+glGenRenderbuffersOES.category = 'GL_OES_framebuffer_object'
+glGenRenderbuffersOES.trace = True
+glGenRenderbuffersOES.play = True
+gl.add(glGenRenderbuffersOES)
+
+glGenerateMipmapOES = Function('glGenerateMipmapOES')
+glGenerateMipmapOES.ret = Return('void')
+glGenerateMipmapOES.add( Input( 'target','GLenum' ))
+glGenerateMipmapOES.version = ''
+glGenerateMipmapOES.category = 'GL_OES_framebuffer_object'
+glGenerateMipmapOES.trace = True
+glGenerateMipmapOES.play = True
+gl.add(glGenerateMipmapOES)
+
+glGetFramebufferAttachmentParameterivOES = Function('glGetFramebufferAttachmentParameterivOES')
+glGetFramebufferAttachmentParameterivOES.ret = Return('void')
+glGetFramebufferAttachmentParameterivOES.add( Input( 'target','GLenum' ))
+glGetFramebufferAttachmentParameterivOES.add( Input( 'attachment','GLenum' ))
+glGetFramebufferAttachmentParameterivOES.add( Input( 'pname','GLenum' ))
+glGetFramebufferAttachmentParameterivOES.add( Input( 'params','GLint *' ))
+glGetFramebufferAttachmentParameterivOES.version = ''
+glGetFramebufferAttachmentParameterivOES.category = 'GL_OES_framebuffer_object'
+glGetFramebufferAttachmentParameterivOES.trace = True
+glGetFramebufferAttachmentParameterivOES.play = True
+gl.add(glGetFramebufferAttachmentParameterivOES)
+
+glGetRenderbufferParameterivOES = Function('glGetRenderbufferParameterivOES')
+glGetRenderbufferParameterivOES.ret = Return('void')
+glGetRenderbufferParameterivOES.add( Input( 'target','GLenum' ))
+glGetRenderbufferParameterivOES.add( Input( 'pname','GLenum' ))
+glGetRenderbufferParameterivOES.add( Input( 'params','GLint *' ))
+glGetRenderbufferParameterivOES.version = ''
+glGetRenderbufferParameterivOES.category = 'GL_OES_framebuffer_object'
+glGetRenderbufferParameterivOES.trace = True
+glGetRenderbufferParameterivOES.play = True
+gl.add(glGetRenderbufferParameterivOES)
+
+glIsFramebufferOES = Function('glIsFramebufferOES')
+glIsFramebufferOES.ret = Return('GLboolean')
+glIsFramebufferOES.add( Input( 'framebuffer','GLuint' ))
+glIsFramebufferOES.version = ''
+glIsFramebufferOES.category = 'GL_OES_framebuffer_object'
+glIsFramebufferOES.trace = True
+glIsFramebufferOES.play = True
+gl.add(glIsFramebufferOES)
+
+glIsRenderbufferOES = Function('glIsRenderbufferOES')
+glIsRenderbufferOES.ret = Return('GLboolean')
+glIsRenderbufferOES.add( Input( 'renderbuffer','GLuint' ))
+glIsRenderbufferOES.version = ''
+glIsRenderbufferOES.category = 'GL_OES_framebuffer_object'
+glIsRenderbufferOES.trace = True
+glIsRenderbufferOES.play = True
+gl.add(glIsRenderbufferOES)
+
+glRenderbufferStorageOES = Function('glRenderbufferStorageOES')
+glRenderbufferStorageOES.ret = Return('void')
+glRenderbufferStorageOES.add( Input( 'target','GLenum' ))
+glRenderbufferStorageOES.add( Input( 'internalformat','GLenum' ))
+glRenderbufferStorageOES.add( Input( 'width','GLsizei' ))
+glRenderbufferStorageOES.add( Input( 'height','GLsizei' ))
+glRenderbufferStorageOES.version = ''
+glRenderbufferStorageOES.category = 'GL_OES_framebuffer_object'
+glRenderbufferStorageOES.trace = True
+glRenderbufferStorageOES.play = True
+gl.add(glRenderbufferStorageOES)
+
+# GL_OES_get_program_binary
+
+glGetProgramBinaryOES = Function('glGetProgramBinaryOES')
+glGetProgramBinaryOES.ret = Return('void')
+glGetProgramBinaryOES.add( Input( 'program','GLuint' ))
+glGetProgramBinaryOES.add( Input( 'bufSize','GLsizei' ))
+glGetProgramBinaryOES.add( Input( 'length','GLsizei *' ))
+glGetProgramBinaryOES.add( Input( 'binaryFormat','GLenum *' ))
+glGetProgramBinaryOES.add( Input( 'binary','GLvoid *' ))
+glGetProgramBinaryOES.version = ''
+glGetProgramBinaryOES.category = 'GL_OES_get_program_binary'
+glGetProgramBinaryOES.trace = True
+glGetProgramBinaryOES.play = True
+gl.add(glGetProgramBinaryOES)
+
+glProgramBinaryOES = Function('glProgramBinaryOES')
+glProgramBinaryOES.ret = Return('void')
+glProgramBinaryOES.add( Input( 'program','GLuint' ))
+glProgramBinaryOES.add( Input( 'binaryFormat','GLenum' ))
+glProgramBinaryOES.add( Input( 'binary','const GLvoid *' ))
+glProgramBinaryOES.add( Input( 'length','GLint' ))
+glProgramBinaryOES.version = ''
+glProgramBinaryOES.category = 'GL_OES_get_program_binary'
+glProgramBinaryOES.trace = True
+glProgramBinaryOES.play = True
+gl.add(glProgramBinaryOES)
+
+# GL_OES_mapbuffer
+
+glGetBufferPointervOES = Function('glGetBufferPointervOES')
+glGetBufferPointervOES.ret = Return('void')
+glGetBufferPointervOES.add( Input( 'target','GLenum' ))
+glGetBufferPointervOES.add( Input( 'pname','GLenum' ))
+glGetBufferPointervOES.add( Input( 'params','GLvoid **' ))
+glGetBufferPointervOES.version = ''
+glGetBufferPointervOES.category = 'GL_OES_mapbuffer'
+glGetBufferPointervOES.trace = True
+glGetBufferPointervOES.play = True
+gl.add(glGetBufferPointervOES)
+
+glMapBufferOES = Function('glMapBufferOES')
+glMapBufferOES.ret = Return('GLvoid *')
+glMapBufferOES.add( Input( 'target','GLenum' ))
+glMapBufferOES.add( Input( 'access','GLenum' ))
+glMapBufferOES.version = ''
+glMapBufferOES.category = 'GL_OES_mapbuffer'
+glMapBufferOES.trace = True
+glMapBufferOES.play = True
+gl.add(glMapBufferOES)
+
+glUnmapBufferOES = Function('glUnmapBufferOES')
+glUnmapBufferOES.ret = Return('GLboolean')
+glUnmapBufferOES.add( Input( 'target','GLenum' ))
+glUnmapBufferOES.version = ''
+glUnmapBufferOES.category = 'GL_OES_mapbuffer'
+glUnmapBufferOES.trace = True
+glUnmapBufferOES.play = True
+gl.add(glUnmapBufferOES)
+
+# GL_OES_matrix_palette
+
+glCurrentPaletteMatrixOES = Function('glCurrentPaletteMatrixOES')
+glCurrentPaletteMatrixOES.ret = Return('void')
+glCurrentPaletteMatrixOES.add( Input( 'index','GLuint' ))
+glCurrentPaletteMatrixOES.version = ''
+glCurrentPaletteMatrixOES.category = 'GL_OES_matrix_palette'
+glCurrentPaletteMatrixOES.trace = True
+glCurrentPaletteMatrixOES.play = True
+gl.add(glCurrentPaletteMatrixOES)
+
+glMatrixIndexPointerOES = Function('glMatrixIndexPointerOES')
+glMatrixIndexPointerOES.ret = Return('void')
+glMatrixIndexPointerOES.add( Input( 'size','GLint' ))
+glMatrixIndexPointerOES.add( Input( 'type','GLenum' ))
+glMatrixIndexPointerOES.add( Input( 'stride','GLsizei' ))
+glMatrixIndexPointerOES.add( Input( 'pointer','GLvoid *' ))
+glMatrixIndexPointerOES.version = ''
+glMatrixIndexPointerOES.category = 'GL_OES_matrix_palette'
+glMatrixIndexPointerOES.trace = True
+glMatrixIndexPointerOES.play = True
+gl.add(glMatrixIndexPointerOES)
+
+glWeightPointerOES = Function('glWeightPointerOES')
+glWeightPointerOES.ret = Return('void')
+glWeightPointerOES.add( Input( 'size','GLint' ))
+glWeightPointerOES.add( Input( 'type','GLenum' ))
+glWeightPointerOES.add( Input( 'stride','GLsizei' ))
+glWeightPointerOES.add( Input( 'pointer','GLvoid *' ))
+glWeightPointerOES.version = ''
+glWeightPointerOES.category = 'GL_OES_matrix_palette'
+glWeightPointerOES.trace = True
+glWeightPointerOES.play = True
+gl.add(glWeightPointerOES)
+
 # GL_OES_single_precision
 
 glClearDepthfOES = Function('glClearDepthfOES')
@@ -37263,6 +39268,253 @@ glOrthofOES.trace = True
 glOrthofOES.play = True
 gl.add(glOrthofOES)
 
+# GL_OES_texture_3D
+
+glCompressedTexImage3DOES = Function('glCompressedTexImage3DOES')
+glCompressedTexImage3DOES.ret = Return('void')
+glCompressedTexImage3DOES.add( Input( 'target','GLenum' ))
+glCompressedTexImage3DOES.add( Input( 'level','GLint' ))
+glCompressedTexImage3DOES.add( Input( 'internalformat','GLenum' ))
+glCompressedTexImage3DOES.add( Input( 'width','GLsizei' ))
+glCompressedTexImage3DOES.add( Input( 'height','GLsizei' ))
+glCompressedTexImage3DOES.add( Input( 'depth','GLsizei' ))
+glCompressedTexImage3DOES.add( Input( 'border','GLint' ))
+glCompressedTexImage3DOES.add( Input( 'imageSize','GLsizei' ))
+glCompressedTexImage3DOES.add( Input( 'data','const GLvoid *' ))
+glCompressedTexImage3DOES.version = ''
+glCompressedTexImage3DOES.category = 'GL_OES_texture_3D'
+glCompressedTexImage3DOES.trace = True
+glCompressedTexImage3DOES.play = True
+gl.add(glCompressedTexImage3DOES)
+
+glCompressedTexSubImage3DOES = Function('glCompressedTexSubImage3DOES')
+glCompressedTexSubImage3DOES.ret = Return('void')
+glCompressedTexSubImage3DOES.add( Input( 'target','GLenum' ))
+glCompressedTexSubImage3DOES.add( Input( 'level','GLint' ))
+glCompressedTexSubImage3DOES.add( Input( 'xoffset','GLint' ))
+glCompressedTexSubImage3DOES.add( Input( 'yoffset','GLint' ))
+glCompressedTexSubImage3DOES.add( Input( 'zoffset','GLint' ))
+glCompressedTexSubImage3DOES.add( Input( 'width','GLsizei' ))
+glCompressedTexSubImage3DOES.add( Input( 'height','GLsizei' ))
+glCompressedTexSubImage3DOES.add( Input( 'depth','GLsizei' ))
+glCompressedTexSubImage3DOES.add( Input( 'format','GLenum' ))
+glCompressedTexSubImage3DOES.add( Input( 'imageSize','GLsizei' ))
+glCompressedTexSubImage3DOES.add( Input( 'data','const GLvoid *' ))
+glCompressedTexSubImage3DOES.version = ''
+glCompressedTexSubImage3DOES.category = 'GL_OES_texture_3D'
+glCompressedTexSubImage3DOES.trace = True
+glCompressedTexSubImage3DOES.play = True
+gl.add(glCompressedTexSubImage3DOES)
+
+glCopyTexSubImage3DOES = Function('glCopyTexSubImage3DOES')
+glCopyTexSubImage3DOES.ret = Return('void')
+glCopyTexSubImage3DOES.add( Input( 'target','GLenum' ))
+glCopyTexSubImage3DOES.add( Input( 'level','GLint' ))
+glCopyTexSubImage3DOES.add( Input( 'xoffset','GLint' ))
+glCopyTexSubImage3DOES.add( Input( 'yoffset','GLint' ))
+glCopyTexSubImage3DOES.add( Input( 'zoffset','GLint' ))
+glCopyTexSubImage3DOES.add( Input( 'x','GLint' ))
+glCopyTexSubImage3DOES.add( Input( 'y','GLint' ))
+glCopyTexSubImage3DOES.add( Input( 'width','GLsizei' ))
+glCopyTexSubImage3DOES.add( Input( 'height','GLsizei' ))
+glCopyTexSubImage3DOES.version = ''
+glCopyTexSubImage3DOES.category = 'GL_OES_texture_3D'
+glCopyTexSubImage3DOES.trace = True
+glCopyTexSubImage3DOES.play = True
+gl.add(glCopyTexSubImage3DOES)
+
+glFramebufferTexture3DOES = Function('glFramebufferTexture3DOES')
+glFramebufferTexture3DOES.ret = Return('void')
+glFramebufferTexture3DOES.add( Input( 'target','GLenum' ))
+glFramebufferTexture3DOES.add( Input( 'attachment','GLenum' ))
+glFramebufferTexture3DOES.add( Input( 'textarget','GLenum' ))
+glFramebufferTexture3DOES.add( Input( 'texture','GLuint' ))
+glFramebufferTexture3DOES.add( Input( 'level','GLint' ))
+glFramebufferTexture3DOES.add( Input( 'zoffset','GLint' ))
+glFramebufferTexture3DOES.version = ''
+glFramebufferTexture3DOES.category = 'GL_OES_texture_3D'
+glFramebufferTexture3DOES.trace = True
+glFramebufferTexture3DOES.play = True
+gl.add(glFramebufferTexture3DOES)
+
+glTexImage3DOES = Function('glTexImage3DOES')
+glTexImage3DOES.ret = Return('void')
+glTexImage3DOES.add( Input( 'target','GLenum' ))
+glTexImage3DOES.add( Input( 'level','GLint' ))
+glTexImage3DOES.add( Input( 'internalFormat','GLenum' ))
+glTexImage3DOES.add( Input( 'width','GLsizei' ))
+glTexImage3DOES.add( Input( 'height','GLsizei' ))
+glTexImage3DOES.add( Input( 'depth','GLsizei' ))
+glTexImage3DOES.add( Input( 'border','GLint' ))
+glTexImage3DOES.add( Input( 'format','GLenum' ))
+glTexImage3DOES.add( Input( 'type','GLenum' ))
+glTexImage3DOES.add( Input( 'pixels','const GLvoid *' ))
+glTexImage3DOES.version = ''
+glTexImage3DOES.category = 'GL_OES_texture_3D'
+glTexImage3DOES.trace = True
+glTexImage3DOES.play = True
+gl.add(glTexImage3DOES)
+
+glTexSubImage3DOES = Function('glTexSubImage3DOES')
+glTexSubImage3DOES.ret = Return('void')
+glTexSubImage3DOES.add( Input( 'target','GLenum' ))
+glTexSubImage3DOES.add( Input( 'level','GLint' ))
+glTexSubImage3DOES.add( Input( 'xoffset','GLint' ))
+glTexSubImage3DOES.add( Input( 'yoffset','GLint' ))
+glTexSubImage3DOES.add( Input( 'zoffset','GLint' ))
+glTexSubImage3DOES.add( Input( 'width','GLsizei' ))
+glTexSubImage3DOES.add( Input( 'height','GLsizei' ))
+glTexSubImage3DOES.add( Input( 'depth','GLsizei' ))
+glTexSubImage3DOES.add( Input( 'format','GLenum' ))
+glTexSubImage3DOES.add( Input( 'type','GLenum' ))
+glTexSubImage3DOES.add( Input( 'pixels','const GLvoid *' ))
+glTexSubImage3DOES.version = ''
+glTexSubImage3DOES.category = 'GL_OES_texture_3D'
+glTexSubImage3DOES.trace = True
+glTexSubImage3DOES.play = True
+gl.add(glTexSubImage3DOES)
+
+# GL_OES_texture_cube_map
+
+glGetTexGenfvOES = Function('glGetTexGenfvOES')
+glGetTexGenfvOES.ret = Return('void')
+glGetTexGenfvOES.add( Input( 'coord','GLenum' ))
+glGetTexGenfvOES.add( Input( 'pname','GLenum' ))
+glGetTexGenfvOES.add( Input( 'params','GLfloat *' ))
+glGetTexGenfvOES.version = ''
+glGetTexGenfvOES.category = 'GL_OES_texture_cube_map'
+glGetTexGenfvOES.trace = True
+glGetTexGenfvOES.play = True
+gl.add(glGetTexGenfvOES)
+
+glGetTexGenivOES = Function('glGetTexGenivOES')
+glGetTexGenivOES.ret = Return('void')
+glGetTexGenivOES.add( Input( 'coord','GLenum' ))
+glGetTexGenivOES.add( Input( 'pname','GLenum' ))
+glGetTexGenivOES.add( Input( 'params','GLint *' ))
+glGetTexGenivOES.version = ''
+glGetTexGenivOES.category = 'GL_OES_texture_cube_map'
+glGetTexGenivOES.trace = True
+glGetTexGenivOES.play = True
+gl.add(glGetTexGenivOES)
+
+glGetTexGenxvOES = Function('glGetTexGenxvOES')
+glGetTexGenxvOES.ret = Return('void')
+glGetTexGenxvOES.add( Input( 'coord','GLenum' ))
+glGetTexGenxvOES.add( Input( 'pname','GLenum' ))
+glGetTexGenxvOES.add( Input( 'params','GLfixed *' ))
+glGetTexGenxvOES.version = ''
+glGetTexGenxvOES.category = 'GL_OES_texture_cube_map'
+glGetTexGenxvOES.trace = True
+glGetTexGenxvOES.play = True
+gl.add(glGetTexGenxvOES)
+
+glTexGenfOES = Function('glTexGenfOES')
+glTexGenfOES.ret = Return('void')
+glTexGenfOES.add( Input( 'coord','GLenum' ))
+glTexGenfOES.add( Input( 'pname','GLenum' ))
+glTexGenfOES.add( Input( 'param','GLfloat' ))
+glTexGenfOES.version = ''
+glTexGenfOES.category = 'GL_OES_texture_cube_map'
+glTexGenfOES.trace = True
+glTexGenfOES.play = True
+gl.add(glTexGenfOES)
+
+glTexGenfvOES = Function('glTexGenfvOES')
+glTexGenfvOES.ret = Return('void')
+glTexGenfvOES.add( Input( 'coord','GLenum' ))
+glTexGenfvOES.add( Input( 'pname','GLenum' ))
+glTexGenfvOES.add( Input( 'params','const GLfloat *' ))
+glTexGenfvOES.version = ''
+glTexGenfvOES.category = 'GL_OES_texture_cube_map'
+glTexGenfvOES.trace = True
+glTexGenfvOES.play = True
+gl.add(glTexGenfvOES)
+
+glTexGeniOES = Function('glTexGeniOES')
+glTexGeniOES.ret = Return('void')
+glTexGeniOES.add( Input( 'coord','GLenum' ))
+glTexGeniOES.add( Input( 'pname','GLenum' ))
+glTexGeniOES.add( Input( 'param','GLint' ))
+glTexGeniOES.version = ''
+glTexGeniOES.category = 'GL_OES_texture_cube_map'
+glTexGeniOES.trace = True
+glTexGeniOES.play = True
+gl.add(glTexGeniOES)
+
+glTexGenivOES = Function('glTexGenivOES')
+glTexGenivOES.ret = Return('void')
+glTexGenivOES.add( Input( 'coord','GLenum' ))
+glTexGenivOES.add( Input( 'pname','GLenum' ))
+glTexGenivOES.add( Input( 'params','const GLint *' ))
+glTexGenivOES.version = ''
+glTexGenivOES.category = 'GL_OES_texture_cube_map'
+glTexGenivOES.trace = True
+glTexGenivOES.play = True
+gl.add(glTexGenivOES)
+
+glTexGenxOES = Function('glTexGenxOES')
+glTexGenxOES.ret = Return('void')
+glTexGenxOES.add( Input( 'coord','GLenum' ))
+glTexGenxOES.add( Input( 'pname','GLenum' ))
+glTexGenxOES.add( Input( 'param','GLfixed' ))
+glTexGenxOES.version = ''
+glTexGenxOES.category = 'GL_OES_texture_cube_map'
+glTexGenxOES.trace = True
+glTexGenxOES.play = True
+gl.add(glTexGenxOES)
+
+glTexGenxvOES = Function('glTexGenxvOES')
+glTexGenxvOES.ret = Return('void')
+glTexGenxvOES.add( Input( 'coord','GLenum' ))
+glTexGenxvOES.add( Input( 'pname','GLenum' ))
+glTexGenxvOES.add( Input( 'params','const GLfixed *' ))
+glTexGenxvOES.version = ''
+glTexGenxvOES.category = 'GL_OES_texture_cube_map'
+glTexGenxvOES.trace = True
+glTexGenxvOES.play = True
+gl.add(glTexGenxvOES)
+
+# GL_OES_vertex_array_object
+
+glBindVertexArrayOES = Function('glBindVertexArrayOES')
+glBindVertexArrayOES.ret = Return('void')
+glBindVertexArrayOES.add( Input( 'array','GLuint' ))
+glBindVertexArrayOES.version = ''
+glBindVertexArrayOES.category = 'GL_OES_vertex_array_object'
+glBindVertexArrayOES.trace = True
+glBindVertexArrayOES.play = True
+gl.add(glBindVertexArrayOES)
+
+glDeleteVertexArraysOES = Function('glDeleteVertexArraysOES')
+glDeleteVertexArraysOES.ret = Return('void')
+glDeleteVertexArraysOES.add( Input( 'n','GLsizei' ))
+glDeleteVertexArraysOES.add( Input( 'arrays','const GLuint *' ))
+glDeleteVertexArraysOES.version = ''
+glDeleteVertexArraysOES.category = 'GL_OES_vertex_array_object'
+glDeleteVertexArraysOES.trace = True
+glDeleteVertexArraysOES.play = True
+gl.add(glDeleteVertexArraysOES)
+
+glGenVertexArraysOES = Function('glGenVertexArraysOES')
+glGenVertexArraysOES.ret = Return('void')
+glGenVertexArraysOES.add( Input( 'n','GLsizei' ))
+glGenVertexArraysOES.add( Input( 'arrays','GLuint *' ))
+glGenVertexArraysOES.version = ''
+glGenVertexArraysOES.category = 'GL_OES_vertex_array_object'
+glGenVertexArraysOES.trace = True
+glGenVertexArraysOES.play = True
+gl.add(glGenVertexArraysOES)
+
+glIsVertexArrayOES = Function('glIsVertexArrayOES')
+glIsVertexArrayOES.ret = Return('GLboolean')
+glIsVertexArrayOES.add( Input( 'array','GLuint' ))
+glIsVertexArrayOES.version = ''
+glIsVertexArrayOES.category = 'GL_OES_vertex_array_object'
+glIsVertexArrayOES.trace = True
+glIsVertexArrayOES.play = True
+gl.add(glIsVertexArrayOES)
+
 # GL_PGI_misc_hints
 
 glHintPGI = Function('glHintPGI')
@@ -37274,6 +39526,229 @@ glHintPGI.category = 'GL_PGI_misc_hints'
 glHintPGI.trace = True
 glHintPGI.play = True
 gl.add(glHintPGI)
+
+# GL_QCOM_alpha_test
+
+glAlphaFuncQCOM = Function('glAlphaFuncQCOM')
+glAlphaFuncQCOM.ret = Return('void')
+glAlphaFuncQCOM.add( Input( 'func','GLenum' ))
+glAlphaFuncQCOM.add( Input( 'ref','GLclampf' ))
+glAlphaFuncQCOM.version = ''
+glAlphaFuncQCOM.category = 'GL_QCOM_alpha_test'
+glAlphaFuncQCOM.trace = True
+glAlphaFuncQCOM.play = True
+gl.add(glAlphaFuncQCOM)
+
+# GL_QCOM_driver_control
+
+glDisableDriverControlQCOM = Function('glDisableDriverControlQCOM')
+glDisableDriverControlQCOM.ret = Return('void')
+glDisableDriverControlQCOM.add( Input( 'driverControl','GLuint' ))
+glDisableDriverControlQCOM.version = ''
+glDisableDriverControlQCOM.category = 'GL_QCOM_driver_control'
+glDisableDriverControlQCOM.trace = True
+glDisableDriverControlQCOM.play = True
+gl.add(glDisableDriverControlQCOM)
+
+glEnableDriverControlQCOM = Function('glEnableDriverControlQCOM')
+glEnableDriverControlQCOM.ret = Return('void')
+glEnableDriverControlQCOM.add( Input( 'driverControl','GLuint' ))
+glEnableDriverControlQCOM.version = ''
+glEnableDriverControlQCOM.category = 'GL_QCOM_driver_control'
+glEnableDriverControlQCOM.trace = True
+glEnableDriverControlQCOM.play = True
+gl.add(glEnableDriverControlQCOM)
+
+glGetDriverControlStringQCOM = Function('glGetDriverControlStringQCOM')
+glGetDriverControlStringQCOM.ret = Return('void')
+glGetDriverControlStringQCOM.add( Input( 'driverControl','GLuint' ))
+glGetDriverControlStringQCOM.add( Input( 'bufSize','GLsizei' ))
+glGetDriverControlStringQCOM.add( Input( 'length','GLsizei *' ))
+glGetDriverControlStringQCOM.add( Input( 'driverControlString','GLchar *' ))
+glGetDriverControlStringQCOM.version = ''
+glGetDriverControlStringQCOM.category = 'GL_QCOM_driver_control'
+glGetDriverControlStringQCOM.trace = True
+glGetDriverControlStringQCOM.play = True
+gl.add(glGetDriverControlStringQCOM)
+
+glGetDriverControlsQCOM = Function('glGetDriverControlsQCOM')
+glGetDriverControlsQCOM.ret = Return('void')
+glGetDriverControlsQCOM.add( Input( 'num','GLint *' ))
+glGetDriverControlsQCOM.add( Input( 'size','GLsizei' ))
+glGetDriverControlsQCOM.add( Input( 'driverControls','GLuint *' ))
+glGetDriverControlsQCOM.version = ''
+glGetDriverControlsQCOM.category = 'GL_QCOM_driver_control'
+glGetDriverControlsQCOM.trace = True
+glGetDriverControlsQCOM.play = True
+gl.add(glGetDriverControlsQCOM)
+
+# GL_QCOM_extended_get
+
+glExtGetBufferPointervQCOM = Function('glExtGetBufferPointervQCOM')
+glExtGetBufferPointervQCOM.ret = Return('void')
+glExtGetBufferPointervQCOM.add( Input( 'target','GLenum' ))
+glExtGetBufferPointervQCOM.add( Input( 'params','GLvoid **' ))
+glExtGetBufferPointervQCOM.version = ''
+glExtGetBufferPointervQCOM.category = 'GL_QCOM_extended_get'
+glExtGetBufferPointervQCOM.trace = True
+glExtGetBufferPointervQCOM.play = True
+gl.add(glExtGetBufferPointervQCOM)
+
+glExtGetBuffersQCOM = Function('glExtGetBuffersQCOM')
+glExtGetBuffersQCOM.ret = Return('void')
+glExtGetBuffersQCOM.add( Input( 'buffers','GLuint *' ))
+glExtGetBuffersQCOM.add( Input( 'maxBuffers','GLint' ))
+glExtGetBuffersQCOM.add( Input( 'numBuffers','GLint *' ))
+glExtGetBuffersQCOM.version = ''
+glExtGetBuffersQCOM.category = 'GL_QCOM_extended_get'
+glExtGetBuffersQCOM.trace = True
+glExtGetBuffersQCOM.play = True
+gl.add(glExtGetBuffersQCOM)
+
+glExtGetFramebuffersQCOM = Function('glExtGetFramebuffersQCOM')
+glExtGetFramebuffersQCOM.ret = Return('void')
+glExtGetFramebuffersQCOM.add( Input( 'framebuffers','GLuint *' ))
+glExtGetFramebuffersQCOM.add( Input( 'maxFramebuffers','GLint' ))
+glExtGetFramebuffersQCOM.add( Input( 'numFramebuffers','GLint *' ))
+glExtGetFramebuffersQCOM.version = ''
+glExtGetFramebuffersQCOM.category = 'GL_QCOM_extended_get'
+glExtGetFramebuffersQCOM.trace = True
+glExtGetFramebuffersQCOM.play = True
+gl.add(glExtGetFramebuffersQCOM)
+
+glExtGetRenderbuffersQCOM = Function('glExtGetRenderbuffersQCOM')
+glExtGetRenderbuffersQCOM.ret = Return('void')
+glExtGetRenderbuffersQCOM.add( Input( 'renderbuffers','GLuint *' ))
+glExtGetRenderbuffersQCOM.add( Input( 'maxRenderbuffers','GLint' ))
+glExtGetRenderbuffersQCOM.add( Input( 'numRenderbuffers','GLint *' ))
+glExtGetRenderbuffersQCOM.version = ''
+glExtGetRenderbuffersQCOM.category = 'GL_QCOM_extended_get'
+glExtGetRenderbuffersQCOM.trace = True
+glExtGetRenderbuffersQCOM.play = True
+gl.add(glExtGetRenderbuffersQCOM)
+
+glExtGetTexLevelParameterivQCOM = Function('glExtGetTexLevelParameterivQCOM')
+glExtGetTexLevelParameterivQCOM.ret = Return('void')
+glExtGetTexLevelParameterivQCOM.add( Input( 'texture','GLuint' ))
+glExtGetTexLevelParameterivQCOM.add( Input( 'face','GLenum' ))
+glExtGetTexLevelParameterivQCOM.add( Input( 'level','GLint' ))
+glExtGetTexLevelParameterivQCOM.add( Input( 'pname','GLenum' ))
+glExtGetTexLevelParameterivQCOM.add( Input( 'params','GLint *' ))
+glExtGetTexLevelParameterivQCOM.version = ''
+glExtGetTexLevelParameterivQCOM.category = 'GL_QCOM_extended_get'
+glExtGetTexLevelParameterivQCOM.trace = True
+glExtGetTexLevelParameterivQCOM.play = True
+gl.add(glExtGetTexLevelParameterivQCOM)
+
+glExtGetTexSubImageQCOM = Function('glExtGetTexSubImageQCOM')
+glExtGetTexSubImageQCOM.ret = Return('void')
+glExtGetTexSubImageQCOM.add( Input( 'target','GLenum' ))
+glExtGetTexSubImageQCOM.add( Input( 'level','GLint' ))
+glExtGetTexSubImageQCOM.add( Input( 'xoffset','GLint' ))
+glExtGetTexSubImageQCOM.add( Input( 'yoffset','GLint' ))
+glExtGetTexSubImageQCOM.add( Input( 'zoffset','GLint' ))
+glExtGetTexSubImageQCOM.add( Input( 'width','GLsizei' ))
+glExtGetTexSubImageQCOM.add( Input( 'height','GLsizei' ))
+glExtGetTexSubImageQCOM.add( Input( 'depth','GLsizei' ))
+glExtGetTexSubImageQCOM.add( Input( 'format','GLenum' ))
+glExtGetTexSubImageQCOM.add( Input( 'type','GLenum' ))
+glExtGetTexSubImageQCOM.add( Input( 'texels','GLvoid *' ))
+glExtGetTexSubImageQCOM.version = ''
+glExtGetTexSubImageQCOM.category = 'GL_QCOM_extended_get'
+glExtGetTexSubImageQCOM.trace = True
+glExtGetTexSubImageQCOM.play = True
+gl.add(glExtGetTexSubImageQCOM)
+
+glExtGetTexturesQCOM = Function('glExtGetTexturesQCOM')
+glExtGetTexturesQCOM.ret = Return('void')
+glExtGetTexturesQCOM.add( Input( 'textures','GLuint *' ))
+glExtGetTexturesQCOM.add( Input( 'maxTextures','GLint' ))
+glExtGetTexturesQCOM.add( Input( 'numTextures','GLint *' ))
+glExtGetTexturesQCOM.version = ''
+glExtGetTexturesQCOM.category = 'GL_QCOM_extended_get'
+glExtGetTexturesQCOM.trace = True
+glExtGetTexturesQCOM.play = True
+gl.add(glExtGetTexturesQCOM)
+
+glExtTexObjectStateOverrideiQCOM = Function('glExtTexObjectStateOverrideiQCOM')
+glExtTexObjectStateOverrideiQCOM.ret = Return('void')
+glExtTexObjectStateOverrideiQCOM.add( Input( 'target','GLenum' ))
+glExtTexObjectStateOverrideiQCOM.add( Input( 'pname','GLenum' ))
+glExtTexObjectStateOverrideiQCOM.add( Input( 'param','GLint' ))
+glExtTexObjectStateOverrideiQCOM.version = ''
+glExtTexObjectStateOverrideiQCOM.category = 'GL_QCOM_extended_get'
+glExtTexObjectStateOverrideiQCOM.trace = True
+glExtTexObjectStateOverrideiQCOM.play = True
+gl.add(glExtTexObjectStateOverrideiQCOM)
+
+# GL_QCOM_extended_get2
+
+glExtGetProgramBinarySourceQCOM = Function('glExtGetProgramBinarySourceQCOM')
+glExtGetProgramBinarySourceQCOM.ret = Return('void')
+glExtGetProgramBinarySourceQCOM.add( Input( 'program','GLuint' ))
+glExtGetProgramBinarySourceQCOM.add( Input( 'shadertype','GLenum' ))
+glExtGetProgramBinarySourceQCOM.add( Input( 'source','GLchar *' ))
+glExtGetProgramBinarySourceQCOM.add( Input( 'length','GLint *' ))
+glExtGetProgramBinarySourceQCOM.version = ''
+glExtGetProgramBinarySourceQCOM.category = 'GL_QCOM_extended_get2'
+glExtGetProgramBinarySourceQCOM.trace = True
+glExtGetProgramBinarySourceQCOM.play = True
+gl.add(glExtGetProgramBinarySourceQCOM)
+
+glExtGetProgramsQCOM = Function('glExtGetProgramsQCOM')
+glExtGetProgramsQCOM.ret = Return('void')
+glExtGetProgramsQCOM.add( Input( 'programs','GLuint *' ))
+glExtGetProgramsQCOM.add( Input( 'maxPrograms','GLint' ))
+glExtGetProgramsQCOM.add( Input( 'numPrograms','GLint *' ))
+glExtGetProgramsQCOM.version = ''
+glExtGetProgramsQCOM.category = 'GL_QCOM_extended_get2'
+glExtGetProgramsQCOM.trace = True
+glExtGetProgramsQCOM.play = True
+gl.add(glExtGetProgramsQCOM)
+
+glExtGetShadersQCOM = Function('glExtGetShadersQCOM')
+glExtGetShadersQCOM.ret = Return('void')
+glExtGetShadersQCOM.add( Input( 'shaders','GLuint *' ))
+glExtGetShadersQCOM.add( Input( 'maxShaders','GLint' ))
+glExtGetShadersQCOM.add( Input( 'numShaders','GLint *' ))
+glExtGetShadersQCOM.version = ''
+glExtGetShadersQCOM.category = 'GL_QCOM_extended_get2'
+glExtGetShadersQCOM.trace = True
+glExtGetShadersQCOM.play = True
+gl.add(glExtGetShadersQCOM)
+
+glExtIsProgramBinaryQCOM = Function('glExtIsProgramBinaryQCOM')
+glExtIsProgramBinaryQCOM.ret = Return('GLboolean')
+glExtIsProgramBinaryQCOM.add( Input( 'program','GLuint' ))
+glExtIsProgramBinaryQCOM.version = ''
+glExtIsProgramBinaryQCOM.category = 'GL_QCOM_extended_get2'
+glExtIsProgramBinaryQCOM.trace = True
+glExtIsProgramBinaryQCOM.play = True
+gl.add(glExtIsProgramBinaryQCOM)
+
+# GL_QCOM_tiled_rendering
+
+glEndTilingQCOM = Function('glEndTilingQCOM')
+glEndTilingQCOM.ret = Return('void')
+glEndTilingQCOM.add( Input( 'preserveMask','GLbitfield' ))
+glEndTilingQCOM.version = ''
+glEndTilingQCOM.category = 'GL_QCOM_tiled_rendering'
+glEndTilingQCOM.trace = True
+glEndTilingQCOM.play = True
+gl.add(glEndTilingQCOM)
+
+glStartTilingQCOM = Function('glStartTilingQCOM')
+glStartTilingQCOM.ret = Return('void')
+glStartTilingQCOM.add( Input( 'x','GLuint' ))
+glStartTilingQCOM.add( Input( 'y','GLuint' ))
+glStartTilingQCOM.add( Input( 'width','GLuint' ))
+glStartTilingQCOM.add( Input( 'height','GLuint' ))
+glStartTilingQCOM.add( Input( 'preserveMask','GLbitfield' ))
+glStartTilingQCOM.version = ''
+glStartTilingQCOM.category = 'GL_QCOM_tiled_rendering'
+glStartTilingQCOM.trace = True
+glStartTilingQCOM.play = True
+gl.add(glStartTilingQCOM)
 
 # GL_REGAL_ES1_0_compatibility
 
@@ -39566,3 +42041,56 @@ glAddSwapHintRectWIN.trace = True
 glAddSwapHintRectWIN.play = True
 gl.add(glAddSwapHintRectWIN)
 
+# state types
+
+B = StateType('B', 'B', 'Boolean')
+BMU = StateType('BMU', 'BMU', 'Basic machine units')
+C = StateType('C', 'C', 'Color (floating-point R, G, B, and A values)')
+E = StateType('E', 'E', 'Enumerated value (as described in spec body)')
+CI = StateType('CI', 'CI', 'Color index (floating-point index value)')
+T = StateType('T', 'T', 'Texture coordinates (floating-point (s, t, r, q) values)')
+N = StateType('N', 'N', 'Normal coordinates (floating-point (x, y, z) values)')
+V = StateType('V', 'V', 'Vertex, including associated data')
+Z = StateType('Z', 'Z', 'Integer')
+Zplus = StateType('Zplus', 'Z+', 'Non-negative integer or enumerated value')
+Zk = StateType('Zk', 'Zk', 'k-valued integer')
+Zkstar = StateType('Zkstar', 'Zk*', 'k-valued integer (k is minimum)')
+R = StateType('R', 'R', 'Floating-point number')
+Rplus = StateType('Rplus', 'R+', 'Non-negative floating-point number')
+Rab = StateType('Rab', 'R[a,b]', 'Floating-point number in the range [a,b]')
+Rk = StateType('Rk', 'Rk', 'k-tuple of floating-point numbers')
+P = StateType('P', 'P', 'Position ((x, y, z, w) floating-point coordinates)')
+D = StateType('D', 'D', 'Direction ((x, y, z) floating-point coordinates)')
+M4 = StateType('M4', 'M4', '4 x 4 floating-point matrix')
+S = StateType('S', 'S', 'null-terminated string')
+I = StateType('I', 'I', 'Image')
+A = StateType('A', 'A', 'Attribute stack entry, including mask')
+Y = StateType('Y', 'Y', 'Pointer (data type unspecified)')
+nbytype = StateType('nbytype', 'n x type', 'n copies of type type')
+nstarbytype = StateType('nstarbytype', 'n* x type', 'n copies of type type where n is minimum)')
+
+gl.add(B)
+gl.add(BMU)
+gl.add(C)
+gl.add(E)
+gl.add(CI)
+gl.add(T)
+gl.add(N)
+gl.add(V)
+gl.add(Z)
+gl.add(Zplus)
+gl.add(Zk)
+gl.add(Zkstar)
+gl.add(R)
+gl.add(Rplus)
+gl.add(Rab)
+gl.add(Rk)
+gl.add(P)
+gl.add(D)
+gl.add(M4)
+gl.add(S)
+gl.add(I)
+gl.add(A)
+gl.add(Y)
+gl.add(nbytype)
+gl.add(nstarbytype)

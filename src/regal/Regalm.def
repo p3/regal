@@ -12,6 +12,7 @@ EXPORTS
   rglAlphaFragmentOp2ATI
   rglAlphaFragmentOp3ATI
   rglAlphaFunc
+  rglAlphaFuncQCOM
   rglAlphaFuncx
   rglApplyTextureEXT
   rglAreProgramsResidentNV
@@ -32,6 +33,7 @@ EXPORTS
   rglBeginPerfMonitorAMD
   rglBeginQuery
   rglBeginQueryARB
+  rglBeginQueryEXT
   rglBeginQueryIndexed
   rglBeginSceneEXT
   rglBeginTransformFeedback
@@ -57,6 +59,7 @@ EXPORTS
   rglBindFragmentShaderATI
   rglBindFramebuffer
   rglBindFramebufferEXT
+  rglBindFramebufferOES
   rglBindImageTexture
   rglBindImageTextureEXT
   rglBindLightParameterEXT
@@ -68,6 +71,7 @@ EXPORTS
   rglBindProgramPipeline
   rglBindRenderbuffer
   rglBindRenderbufferEXT
+  rglBindRenderbufferOES
   rglBindSampler
   rglBindTexGenParameterEXT
   rglBindTexture
@@ -77,6 +81,7 @@ EXPORTS
   rglBindTransformFeedbackNV
   rglBindVertexArray
   rglBindVertexArrayAPPLE
+  rglBindVertexArrayOES
   rglBindVertexBuffer
   rglBindVertexShaderEXT
   rglBindVideoCaptureStreamBufferNV
@@ -98,9 +103,11 @@ EXPORTS
   rglBlendEquation
   rglBlendEquationEXT
   rglBlendEquationIndexedAMD
+  rglBlendEquationOES
   rglBlendEquationSeparate
   rglBlendEquationSeparateEXT
   rglBlendEquationSeparateIndexedAMD
+  rglBlendEquationSeparateOES
   rglBlendEquationSeparatei
   rglBlendEquationSeparateiARB
   rglBlendEquationi
@@ -111,11 +118,13 @@ EXPORTS
   rglBlendFuncSeparateEXT
   rglBlendFuncSeparateINGR
   rglBlendFuncSeparateIndexedAMD
+  rglBlendFuncSeparateOES
   rglBlendFuncSeparatei
   rglBlendFuncSeparateiARB
   rglBlendFunci
   rglBlendFunciARB
   rglBlitFramebuffer
+  rglBlitFramebufferANGLE
   rglBlitFramebufferEXT
   rglBufferAddressRangeNV
   rglBufferData
@@ -128,6 +137,7 @@ EXPORTS
   rglCallLists
   rglCheckFramebufferStatus
   rglCheckFramebufferStatusEXT
+  rglCheckFramebufferStatusOES
   rglCheckNamedFramebufferStatusEXT
   rglClampColor
   rglClampColorARB
@@ -157,6 +167,7 @@ EXPORTS
   rglClientActiveVertexStreamATI
   rglClientAttribDefaultEXT
   rglClientWaitSync
+  rglClientWaitSyncAPPLE
   rglClipPlane
   rglClipPlanef
   rglClipPlanefOES
@@ -253,12 +264,14 @@ EXPORTS
   rglCompressedTexImage2DARB
   rglCompressedTexImage3D
   rglCompressedTexImage3DARB
+  rglCompressedTexImage3DOES
   rglCompressedTexSubImage1D
   rglCompressedTexSubImage1DARB
   rglCompressedTexSubImage2D
   rglCompressedTexSubImage2DARB
   rglCompressedTexSubImage3D
   rglCompressedTexSubImage3DARB
+  rglCompressedTexSubImage3DOES
   rglCompressedTextureImage1DEXT
   rglCompressedTextureImage2DEXT
   rglCompressedTextureImage3DEXT
@@ -305,8 +318,10 @@ EXPORTS
   rglCopyTexSubImage2DEXT
   rglCopyTexSubImage3D
   rglCopyTexSubImage3DEXT
+  rglCopyTexSubImage3DOES
   rglCopyTextureImage1DEXT
   rglCopyTextureImage2DEXT
+  rglCopyTextureLevelsAPPLE
   rglCopyTextureSubImage1DEXT
   rglCopyTextureSubImage2DEXT
   rglCopyTextureSubImage3DEXT
@@ -314,6 +329,8 @@ EXPORTS
   rglCoverFillPathNV
   rglCoverStrokePathInstancedNV
   rglCoverStrokePathNV
+  rglCoverageMaskNV
+  rglCoverageOperationNV
   rglCreateProgram
   rglCreateProgramObjectARB
   rglCreateShader
@@ -325,6 +342,7 @@ EXPORTS
   rglCullParameterdvEXT
   rglCullParameterfvEXT
   rglCurrentPaletteMatrixARB
+  rglCurrentPaletteMatrixOES
   rglDebugMessageCallback
   rglDebugMessageCallbackAMD
   rglDebugMessageCallbackARB
@@ -346,6 +364,7 @@ EXPORTS
   rglDeleteFragmentShaderATI
   rglDeleteFramebuffers
   rglDeleteFramebuffersEXT
+  rglDeleteFramebuffersOES
   rglDeleteLists
   rglDeleteNamedStringARB
   rglDeleteNamesAMD
@@ -359,17 +378,21 @@ EXPORTS
   rglDeleteProgramsNV
   rglDeleteQueries
   rglDeleteQueriesARB
+  rglDeleteQueriesEXT
   rglDeleteRenderbuffers
   rglDeleteRenderbuffersEXT
+  rglDeleteRenderbuffersOES
   rglDeleteSamplers
   rglDeleteShader
   rglDeleteSync
+  rglDeleteSyncAPPLE
   rglDeleteTextures
   rglDeleteTexturesEXT
   rglDeleteTransformFeedbacks
   rglDeleteTransformFeedbacksNV
   rglDeleteVertexArrays
   rglDeleteVertexArraysAPPLE
+  rglDeleteVertexArraysOES
   rglDeleteVertexShaderEXT
   rglDepthBoundsEXT
   rglDepthBoundsdNV
@@ -389,6 +412,7 @@ EXPORTS
   rglDisableClientState
   rglDisableClientStateIndexedEXT
   rglDisableClientStateiEXT
+  rglDisableDriverControlQCOM
   rglDisableIndexedEXT
   rglDisableVariantClientStateEXT
   rglDisableVertexArrayAttribEXT
@@ -397,12 +421,14 @@ EXPORTS
   rglDisableVertexAttribArray
   rglDisableVertexAttribArrayARB
   rglDisablei
+  rglDiscardFramebufferEXT
   rglDispatchCompute
   rglDispatchComputeIndirect
   rglDrawArrays
   rglDrawArraysEXT
   rglDrawArraysIndirect
   rglDrawArraysInstanced
+  rglDrawArraysInstancedANGLE
   rglDrawArraysInstancedARB
   rglDrawArraysInstancedBaseInstance
   rglDrawArraysInstancedEXT
@@ -411,12 +437,15 @@ EXPORTS
   rglDrawBuffers
   rglDrawBuffersARB
   rglDrawBuffersATI
+  rglDrawBuffersIndexedEXT
+  rglDrawBuffersNV
   rglDrawElementArrayAPPLE
   rglDrawElementArrayATI
   rglDrawElements
   rglDrawElementsBaseVertex
   rglDrawElementsIndirect
   rglDrawElementsInstanced
+  rglDrawElementsInstancedANGLE
   rglDrawElementsInstancedARB
   rglDrawElementsInstancedBaseInstance
   rglDrawElementsInstancedBaseVertex
@@ -446,6 +475,7 @@ EXPORTS
   rglEnableClientState
   rglEnableClientStateIndexedEXT
   rglEnableClientStateiEXT
+  rglEnableDriverControlQCOM
   rglEnableIndexedEXT
   rglEnableVariantClientStateEXT
   rglEnableVertexArrayAttribEXT
@@ -464,8 +494,10 @@ EXPORTS
   rglEndPerfMonitorAMD
   rglEndQuery
   rglEndQueryARB
+  rglEndQueryEXT
   rglEndQueryIndexed
   rglEndSceneEXT
+  rglEndTilingQCOM
   rglEndTransformFeedback
   rglEndTransformFeedbackEXT
   rglEndTransformFeedbackNV
@@ -486,9 +518,22 @@ EXPORTS
   rglEvalPoint1
   rglEvalPoint2
   rglExecuteProgramNV
+  rglExtGetBufferPointervQCOM
+  rglExtGetBuffersQCOM
+  rglExtGetFramebuffersQCOM
+  rglExtGetProgramBinarySourceQCOM
+  rglExtGetProgramsQCOM
+  rglExtGetRenderbuffersQCOM
+  rglExtGetShadersQCOM
+  rglExtGetTexLevelParameterivQCOM
+  rglExtGetTexSubImageQCOM
+  rglExtGetTexturesQCOM
+  rglExtIsProgramBinaryQCOM
+  rglExtTexObjectStateOverrideiQCOM
   rglExtractComponentEXT
   rglFeedbackBuffer
   rglFenceSync
+  rglFenceSyncAPPLE
   rglFinalCombinerInputNV
   rglFinish
   rglFinishAsyncSGIX
@@ -500,6 +545,7 @@ EXPORTS
   rglFlush
   rglFlushMappedBufferRange
   rglFlushMappedBufferRangeAPPLE
+  rglFlushMappedBufferRangeEXT
   rglFlushMappedNamedBufferRangeEXT
   rglFlushPixelDataRangeNV
   rglFlushRasterSGIX
@@ -561,13 +607,18 @@ EXPORTS
   rglFramebufferReadBufferEXT
   rglFramebufferRenderbuffer
   rglFramebufferRenderbufferEXT
+  rglFramebufferRenderbufferOES
   rglFramebufferTexture
   rglFramebufferTexture1D
   rglFramebufferTexture1DEXT
   rglFramebufferTexture2D
   rglFramebufferTexture2DEXT
+  rglFramebufferTexture2DMultisampleEXT
+  rglFramebufferTexture2DMultisampleIMG
+  rglFramebufferTexture2DOES
   rglFramebufferTexture3D
   rglFramebufferTexture3DEXT
+  rglFramebufferTexture3DOES
   rglFramebufferTextureARB
   rglFramebufferTextureEXT
   rglFramebufferTextureFace
@@ -590,6 +641,7 @@ EXPORTS
   rglGenFragmentShadersATI
   rglGenFramebuffers
   rglGenFramebuffersEXT
+  rglGenFramebuffersOES
   rglGenLists
   rglGenNamesAMD
   rglGenOcclusionQueriesNV
@@ -600,8 +652,10 @@ EXPORTS
   rglGenProgramsNV
   rglGenQueries
   rglGenQueriesARB
+  rglGenQueriesEXT
   rglGenRenderbuffers
   rglGenRenderbuffersEXT
+  rglGenRenderbuffersOES
   rglGenSamplers
   rglGenSymbolsEXT
   rglGenTextures
@@ -610,9 +664,11 @@ EXPORTS
   rglGenTransformFeedbacksNV
   rglGenVertexArrays
   rglGenVertexArraysAPPLE
+  rglGenVertexArraysOES
   rglGenVertexShadersEXT
   rglGenerateMipmap
   rglGenerateMipmapEXT
+  rglGenerateMipmapOES
   rglGenerateMultiTexMipmapEXT
   rglGenerateTextureMipmapEXT
   rglGetActiveAtomicCounterBufferiv
@@ -643,6 +699,7 @@ EXPORTS
   rglGetBufferParameterui64vNV
   rglGetBufferPointerv
   rglGetBufferPointervARB
+  rglGetBufferPointervOES
   rglGetBufferSubData
   rglGetBufferSubDataARB
   rglGetClipPlane
@@ -681,6 +738,8 @@ EXPORTS
   rglGetDoublei_v
   rglGetDoublei_vEXT
   rglGetDoublev
+  rglGetDriverControlStringQCOM
+  rglGetDriverControlsQCOM
   rglGetError
   rglGetExtensionREGAL
   rglGetFenceivNV
@@ -705,6 +764,7 @@ EXPORTS
   rglGetFragmentMaterialivSGIX
   rglGetFramebufferAttachmentParameteriv
   rglGetFramebufferAttachmentParameterivEXT
+  rglGetFramebufferAttachmentParameterivOES
   rglGetFramebufferParameteriv
   rglGetFramebufferParameterivEXT
   rglGetGraphicsResetStatusARB
@@ -722,8 +782,10 @@ EXPORTS
   rglGetInstrumentsSGIX
   rglGetInteger64i_v
   rglGetInteger64v
+  rglGetInteger64vAPPLE
   rglGetIntegerIndexedvEXT
   rglGetIntegeri_v
+  rglGetIntegeri_vEXT
   rglGetIntegerui64i_vNV
   rglGetIntegerui64vNV
   rglGetIntegerv
@@ -789,6 +851,7 @@ EXPORTS
   rglGetObjectBufferfvATI
   rglGetObjectBufferivATI
   rglGetObjectLabel
+  rglGetObjectLabelEXT
   rglGetObjectParameterfvARB
   rglGetObjectParameterivAPPLE
   rglGetObjectParameterivARB
@@ -827,6 +890,7 @@ EXPORTS
   rglGetPointervEXT
   rglGetPolygonStipple
   rglGetProgramBinary
+  rglGetProgramBinaryOES
   rglGetProgramEnvParameterIivNV
   rglGetProgramEnvParameterIuivNV
   rglGetProgramEnvParameterdvARB
@@ -863,10 +927,13 @@ EXPORTS
   rglGetQueryObjectui64vEXT
   rglGetQueryObjectuiv
   rglGetQueryObjectuivARB
+  rglGetQueryObjectuivEXT
   rglGetQueryiv
   rglGetQueryivARB
+  rglGetQueryivEXT
   rglGetRenderbufferParameteriv
   rglGetRenderbufferParameterivEXT
+  rglGetRenderbufferParameterivOES
   rglGetSamplerParameterIiv
   rglGetSamplerParameterIuiv
   rglGetSamplerParameterfv
@@ -884,6 +951,7 @@ EXPORTS
   rglGetSubroutineIndex
   rglGetSubroutineUniformLocation
   rglGetSynciv
+  rglGetSyncivAPPLE
   rglGetTexBumpParameterfvATI
   rglGetTexBumpParameterivATI
   rglGetTexEnvfv
@@ -892,7 +960,10 @@ EXPORTS
   rglGetTexFilterFuncSGIS
   rglGetTexGendv
   rglGetTexGenfv
+  rglGetTexGenfvOES
   rglGetTexGeniv
+  rglGetTexGenivOES
+  rglGetTexGenxvOES
   rglGetTexImage
   rglGetTexLevelParameterfv
   rglGetTexLevelParameteriv
@@ -917,6 +988,7 @@ EXPORTS
   rglGetTransformFeedbackVarying
   rglGetTransformFeedbackVaryingEXT
   rglGetTransformFeedbackVaryingNV
+  rglGetTranslatedShaderSourceANGLE
   rglGetUniformBlockIndex
   rglGetUniformBufferSizeEXT
   rglGetUniformIndices
@@ -990,7 +1062,9 @@ EXPORTS
   rglGetnTexImageARB
   rglGetnUniformdvARB
   rglGetnUniformfvARB
+  rglGetnUniformfvEXT
   rglGetnUniformivARB
+  rglGetnUniformivEXT
   rglGetnUniformuivARB
   rglGlobalAlphaFactorbSUN
   rglGlobalAlphaFactordSUN
@@ -1050,6 +1124,7 @@ EXPORTS
   rglIsFenceNV
   rglIsFramebuffer
   rglIsFramebufferEXT
+  rglIsFramebufferOES
   rglIsImageHandleResidentNV
   rglIsList
   rglIsNameAMD
@@ -1066,12 +1141,15 @@ EXPORTS
   rglIsProgramPipeline
   rglIsQuery
   rglIsQueryARB
+  rglIsQueryEXT
   rglIsRenderbuffer
   rglIsRenderbufferEXT
+  rglIsRenderbufferOES
   rglIsSampler
   rglIsShader
   rglIsSupportedREGAL
   rglIsSync
+  rglIsSyncAPPLE
   rglIsTexture
   rglIsTextureEXT
   rglIsTextureHandleResidentNV
@@ -1080,7 +1158,9 @@ EXPORTS
   rglIsVariantEnabledEXT
   rglIsVertexArray
   rglIsVertexArrayAPPLE
+  rglIsVertexArrayOES
   rglIsVertexAttribEnabledAPPLE
+  rglLabelObjectEXT
   rglLightEnviEXT
   rglLightEnviSGIX
   rglLightModelf
@@ -1133,7 +1213,9 @@ EXPORTS
   rglMap2f
   rglMapBuffer
   rglMapBufferARB
+  rglMapBufferOES
   rglMapBufferRange
+  rglMapBufferRangeEXT
   rglMapControlPointsNV
   rglMapGrid1d
   rglMapGrid1f
@@ -1156,6 +1238,7 @@ EXPORTS
   rglMaterialxv
   rglMatrixFrustumEXT
   rglMatrixIndexPointerARB
+  rglMatrixIndexPointerOES
   rglMatrixIndexubvARB
   rglMatrixIndexuivARB
   rglMatrixIndexusvARB
@@ -1463,6 +1546,7 @@ EXPORTS
   rglPrioritizeTextures
   rglPrioritizeTexturesEXT
   rglProgramBinary
+  rglProgramBinaryOES
   rglProgramBufferParametersIivNV
   rglProgramBufferParametersIuivNV
   rglProgramBufferParametersfvNV
@@ -1658,11 +1742,14 @@ EXPORTS
   rglRasterPos4s
   rglRasterPos4sv
   rglReadBuffer
+  rglReadBufferIndexedEXT
+  rglReadBufferNV
   rglReadBufferRegion
   rglReadInstrumentsSGIX
   rglReadPixels
   rglReadVideoPixelsSUN
   rglReadnPixelsARB
+  rglReadnPixelsEXT
   rglRectd
   rglRectdv
   rglRectf
@@ -1677,8 +1764,12 @@ EXPORTS
   rglRenderbufferStorage
   rglRenderbufferStorageEXT
   rglRenderbufferStorageMultisample
+  rglRenderbufferStorageMultisampleANGLE
+  rglRenderbufferStorageMultisampleAPPLE
   rglRenderbufferStorageMultisampleCoverageNV
   rglRenderbufferStorageMultisampleEXT
+  rglRenderbufferStorageMultisampleIMG
+  rglRenderbufferStorageOES
   rglReplacementCodePointerSUN
   rglReplacementCodeubSUN
   rglReplacementCodeubvSUN
@@ -1708,6 +1799,7 @@ EXPORTS
   rglResetMinmax
   rglResetMinmaxEXT
   rglResizeBuffersMESA
+  rglResolveMultisampleFramebufferAPPLE
   rglResumeTransformFeedback
   rglResumeTransformFeedbackNV
   rglRotated
@@ -1800,6 +1892,7 @@ EXPORTS
   rglSpriteParameteriSGIX
   rglSpriteParameterivSGIX
   rglStartInstrumentsSGIX
+  rglStartTilingQCOM
   rglStencilClearTagEXT
   rglStencilFillPathInstancedNV
   rglStencilFillPathNV
@@ -1919,9 +2012,15 @@ EXPORTS
   rglTexGend
   rglTexGendv
   rglTexGenf
+  rglTexGenfOES
   rglTexGenfv
+  rglTexGenfvOES
   rglTexGeni
+  rglTexGeniOES
   rglTexGeniv
+  rglTexGenivOES
+  rglTexGenxOES
+  rglTexGenxvOES
   rglTexImage1D
   rglTexImage2D
   rglTexImage2DMultisample
@@ -1930,6 +2029,7 @@ EXPORTS
   rglTexImage3DEXT
   rglTexImage3DMultisample
   rglTexImage3DMultisampleCoverageNV
+  rglTexImage3DOES
   rglTexImage4DSGIS
   rglTexParameterIiv
   rglTexParameterIivEXT
@@ -1945,9 +2045,12 @@ EXPORTS
   rglTexScissorFuncINTEL
   rglTexScissorINTEL
   rglTexStorage1D
+  rglTexStorage1DEXT
   rglTexStorage2D
+  rglTexStorage2DEXT
   rglTexStorage2DMultisample
   rglTexStorage3D
+  rglTexStorage3DEXT
   rglTexStorage3DMultisample
   rglTexSubImage1D
   rglTexSubImage1DEXT
@@ -1955,6 +2058,7 @@ EXPORTS
   rglTexSubImage2DEXT
   rglTexSubImage3D
   rglTexSubImage3DEXT
+  rglTexSubImage3DOES
   rglTexSubImage4DSGIS
   rglTextureBarrierNV
   rglTextureBufferEXT
@@ -2100,6 +2204,7 @@ EXPORTS
   rglUnlockArraysEXT
   rglUnmapBuffer
   rglUnmapBufferARB
+  rglUnmapBufferOES
   rglUnmapNamedBufferEXT
   rglUnmapObjectBufferATI
   rglUpdateObjectBufferATI
@@ -2284,6 +2389,7 @@ EXPORTS
   rglVertexAttribArrayObjectATI
   rglVertexAttribBinding
   rglVertexAttribDivisor
+  rglVertexAttribDivisorANGLE
   rglVertexAttribDivisorARB
   rglVertexAttribFormat
   rglVertexAttribFormatNV
@@ -2456,8 +2562,10 @@ EXPORTS
   rglViewportIndexedf
   rglViewportIndexedfv
   rglWaitSync
+  rglWaitSyncAPPLE
   rglWeightPathsNV
   rglWeightPointerARB
+  rglWeightPointerOES
   rglWeightbvARB
   rglWeightdvARB
   rglWeightfvARB

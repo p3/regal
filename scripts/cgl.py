@@ -3,8 +3,10 @@ from Api import Api
 from Api import Function, Typedef, Enum
 from Api import Return, Parameter, Input, Output, InputOutput
 from Api import Enumerant
+from Api import StateType, State
 
 cgl = Api()
+
 CGLContextObj = Typedef('CGLContextObj','void *')
 CGLContextObj.default = '0'
 

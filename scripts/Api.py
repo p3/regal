@@ -8,6 +8,8 @@ class Api:
     self.typedefs  = []
     self.enums     = []
     self.variables = []
+    self.states = []
+    self.stateTypes = []
     self.conditional = ''
 
   def add(self, item):
@@ -20,6 +22,10 @@ class Api:
       self.enums.append(item)
     elif isinstance(item, Parameter):
       self.variables.append(item)
+    elif isinstance(item, StateType):
+      self.stateTypes.append(item)
+    elif isinstance(item, State):
+      self.states.append(item)
     else:
       raise TypeError, 'Unsupported Api type'
 
@@ -150,3 +156,26 @@ class Enumerant:
     self.deprecated = ''
     self.category   = category
     self.public     = True
+
+class StateType:
+
+  def __init__(self, name = '', code = '', explanation = ''):
+
+    self.name = name
+    self.code = code
+    self.explanation = explanation
+    self.ctype = []
+    self.size = 1
+    self.params = 0
+
+class State:
+
+  def __init__(self, getValue, type, getCommand, initialValue, description, section, attribute):
+
+    self.getValue = getValue
+    self.type = type
+    self.getCommand = getCommand
+    self.initialValue = initialValue
+    self.description = description
+    self.section = section
+    self.attribute = attribute

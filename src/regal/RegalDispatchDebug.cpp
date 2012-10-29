@@ -5961,6 +5961,79 @@ static void REGAL_CALL debug_glTessellationModeAMD(GLenum mode)
   _next->call(&_next->glTessellationModeAMD)(mode);
 }
 
+// GL_ANGLE_framebuffer_blit
+
+static void REGAL_CALL debug_glBlitFramebufferANGLE(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlitFramebufferANGLE)(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+}
+
+// GL_ANGLE_framebuffer_multisample
+
+static void REGAL_CALL debug_glRenderbufferStorageMultisampleANGLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageMultisampleANGLE)(target, samples, internalformat, width, height);
+}
+
+// GL_ANGLE_instanced_arrays
+
+static void REGAL_CALL debug_glDrawArraysInstancedANGLE(GLenum mode, GLint first, GLsizei count, GLsizei primcount)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawArraysInstancedANGLE)(mode, first, count, primcount);
+}
+
+static void REGAL_CALL debug_glDrawElementsInstancedANGLE(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawElementsInstancedANGLE)(mode, count, type, indices, primcount);
+}
+
+static void REGAL_CALL debug_glVertexAttribDivisorANGLE(GLuint index, GLuint divisor)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glVertexAttribDivisorANGLE)(index, divisor);
+}
+
+// GL_ANGLE_translated_shader_source
+
+static void REGAL_CALL debug_glGetTranslatedShaderSourceANGLE(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTranslatedShaderSourceANGLE)(shader, bufsize, length, source);
+}
+
+// GL_APPLE_copy_texture_levels
+
+static void REGAL_CALL debug_glCopyTextureLevelsAPPLE(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCopyTextureLevelsAPPLE)(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+}
+
 // GL_APPLE_element_array
 
 static void REGAL_CALL debug_glDrawElementArrayAPPLE(GLenum mode, GLint first, GLsizei count)
@@ -6134,6 +6207,26 @@ static void REGAL_CALL debug_glSwapAPPLE(void)
   _next->call(&_next->glSwapAPPLE)();
 }
 
+// GL_APPLE_framebuffer_multisample
+
+static void REGAL_CALL debug_glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageMultisampleAPPLE)(target, samples, internalformat, width, height);
+}
+
+static void REGAL_CALL debug_glResolveMultisampleFramebufferAPPLE(void)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glResolveMultisampleFramebufferAPPLE)();
+}
+
 // GL_APPLE_object_purgeable
 
 static void REGAL_CALL debug_glGetObjectParameterivAPPLE(GLenum objectType, GLuint name, GLenum pname, GLint *params)
@@ -6163,6 +6256,74 @@ static GLenum REGAL_CALL debug_glObjectUnpurgeableAPPLE(GLenum objectType, GLuin
   RegalAssert(_next);
   GLenum  ret = _next->call(&_next->glObjectUnpurgeableAPPLE)(objectType, name, option);
   return ret;
+}
+
+// GL_APPLE_sync
+
+static GLenum REGAL_CALL debug_glClientWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLenum  ret = _next->call(&_next->glClientWaitSyncAPPLE)(sync, flags, timeout);
+  return ret;
+}
+
+static void REGAL_CALL debug_glDeleteSyncAPPLE(GLsync sync)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteSyncAPPLE)(sync);
+}
+
+static GLsync REGAL_CALL debug_glFenceSyncAPPLE(GLenum condition, GLbitfield flags)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLsync  ret = _next->call(&_next->glFenceSyncAPPLE)(condition, flags);
+  return ret;
+}
+
+static void REGAL_CALL debug_glGetInteger64vAPPLE(GLenum pname, GLint64 *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetInteger64vAPPLE)(pname, params);
+}
+
+static void REGAL_CALL debug_glGetSyncivAPPLE(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetSyncivAPPLE)(sync, pname, bufSize, length, values);
+}
+
+static GLboolean REGAL_CALL debug_glIsSyncAPPLE(GLsync sync)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glIsSyncAPPLE)(sync);
+  return ret;
+}
+
+static void REGAL_CALL debug_glWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glWaitSyncAPPLE)(sync, flags, timeout);
 }
 
 // GL_APPLE_texture_range
@@ -12982,6 +13143,26 @@ static void REGAL_CALL debug_glCullParameterfvEXT(GLenum pname, GLfloat *params)
   _next->call(&_next->glCullParameterfvEXT)(pname, params);
 }
 
+// GL_EXT_debug_label
+
+static void REGAL_CALL debug_glGetObjectLabelEXT(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetObjectLabelEXT)(type, object, bufSize, length, label);
+}
+
+static void REGAL_CALL debug_glLabelObjectEXT(GLenum type, GLuint object, GLsizei length, const GLchar *label)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glLabelObjectEXT)(type, object, length, label);
+}
+
 // GL_EXT_debug_marker
 
 static void REGAL_CALL debug_glInsertEventMarkerEXT(GLsizei length, const GLchar *marker)
@@ -15098,6 +15279,17 @@ static void REGAL_CALL debug_glVertexArrayVertexOffsetEXT(GLuint vaobj, GLuint b
   _next->call(&_next->glVertexArrayVertexOffsetEXT)(vaobj, buffer, size, type, stride, offset);
 }
 
+// GL_EXT_discard_framebuffer
+
+static void REGAL_CALL debug_glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDiscardFramebufferEXT)(target, numAttachments, attachments);
+}
+
 // GL_EXT_draw_buffers2
 
 static void REGAL_CALL debug_glColorMaskIndexedEXT(GLuint buf, GLboolean r, GLboolean g, GLboolean b, GLboolean a)
@@ -16078,6 +16270,27 @@ static void REGAL_CALL debug_glTextureMaterialEXT(GLenum face, GLenum mode)
   _next->call(&_next->glTextureMaterialEXT)(face, mode);
 }
 
+// GL_EXT_map_buffer_range
+
+static void REGAL_CALL debug_glFlushMappedBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFlushMappedBufferRangeEXT)(target, offset, length);
+}
+
+static GLvoid *REGAL_CALL debug_glMapBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLvoid * ret = _next->call(&_next->glMapBufferRangeEXT)(target, offset, length, access);
+  return ret;
+}
+
 // GL_EXT_multi_draw_arrays
 
 static void REGAL_CALL debug_glMultiDrawArraysEXT(GLenum mode, const GLint *first, const GLsizei *count, GLsizei primcount)
@@ -16116,6 +16329,112 @@ static void REGAL_CALL debug_glSamplePatternEXT(GLenum pattern)
   DispatchTable *_next = _context->dispatcher.debug._next;
   RegalAssert(_next);
   _next->call(&_next->glSamplePatternEXT)(pattern);
+}
+
+// GL_EXT_multisampled_render_to_texture
+
+static void REGAL_CALL debug_glFramebufferTexture2DMultisampleEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture2DMultisampleEXT)(target, attachment, textarget, texture, level, samples);
+}
+
+// GL_EXT_multiview_draw_buffers
+
+static void REGAL_CALL debug_glDrawBuffersIndexedEXT(GLint n, const GLenum *location, const GLint *indices)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawBuffersIndexedEXT)(n, location, indices);
+}
+
+static void REGAL_CALL debug_glGetIntegeri_vEXT(GLenum target, GLuint index, GLint *data)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetIntegeri_vEXT)(target, index, data);
+}
+
+static void REGAL_CALL debug_glReadBufferIndexedEXT(GLenum src, GLint index)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glReadBufferIndexedEXT)(src, index);
+}
+
+// GL_EXT_occlusion_query_boolean
+
+static void REGAL_CALL debug_glBeginQueryEXT(GLenum target, GLuint id)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBeginQueryEXT)(target, id);
+}
+
+static void REGAL_CALL debug_glDeleteQueriesEXT(GLsizei n, const GLuint *ids)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteQueriesEXT)(n, ids);
+}
+
+static void REGAL_CALL debug_glEndQueryEXT(GLenum target)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glEndQueryEXT)(target);
+}
+
+static void REGAL_CALL debug_glGenQueriesEXT(GLsizei n, GLuint *ids)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenQueriesEXT)(n, ids);
+}
+
+static void REGAL_CALL debug_glGetQueryObjectuivEXT(GLuint id, GLenum pname, GLuint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetQueryObjectuivEXT)(id, pname, params);
+}
+
+static void REGAL_CALL debug_glGetQueryivEXT(GLenum target, GLenum pname, GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetQueryivEXT)(target, pname, params);
+}
+
+static GLboolean REGAL_CALL debug_glIsQueryEXT(GLuint id)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glIsQueryEXT)(id);
+  return ret;
 }
 
 // GL_EXT_paletted_texture
@@ -16252,6 +16571,35 @@ static void REGAL_CALL debug_glProvokingVertexEXT(GLenum mode)
   DispatchTable *_next = _context->dispatcher.debug._next;
   RegalAssert(_next);
   _next->call(&_next->glProvokingVertexEXT)(mode);
+}
+
+// GL_EXT_robustness
+
+static void REGAL_CALL debug_glGetnUniformfvEXT(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetnUniformfvEXT)(program, location, bufSize, params);
+}
+
+static void REGAL_CALL debug_glGetnUniformivEXT(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetnUniformivEXT)(program, location, bufSize, params);
+}
+
+static void REGAL_CALL debug_glReadnPixelsEXT(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glReadnPixelsEXT)(x, y, width, height, format, type, bufSize, data);
 }
 
 // GL_EXT_scene_marker
@@ -16686,6 +17034,35 @@ static void REGAL_CALL debug_glTextureNormalEXT(GLenum mode)
   DispatchTable *_next = _context->dispatcher.debug._next;
   RegalAssert(_next);
   _next->call(&_next->glTextureNormalEXT)(mode);
+}
+
+// GL_EXT_texture_storage
+
+static void REGAL_CALL debug_glTexStorage1DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexStorage1DEXT)(target, levels, internalformat, width);
+}
+
+static void REGAL_CALL debug_glTexStorage2DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexStorage2DEXT)(target, levels, internalformat, width, height);
+}
+
+static void REGAL_CALL debug_glTexStorage3DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexStorage3DEXT)(target, levels, internalformat, width, height, depth);
 }
 
 // GL_EXT_timer_query
@@ -17558,6 +17935,26 @@ static void REGAL_CALL debug_glVertexPointerListIBM(GLint size, GLenum type, GLi
   _next->call(&_next->glVertexPointerListIBM)(size, type, stride, pointer, ptrstride);
 }
 
+// GL_IMG_multisampled_render_to_texture
+
+static void REGAL_CALL debug_glFramebufferTexture2DMultisampleIMG(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture2DMultisampleIMG)(target, attachment, textarget, texture, level, samples);
+}
+
+static void REGAL_CALL debug_glRenderbufferStorageMultisampleIMG(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageMultisampleIMG)(target, samples, internalformat, width, height);
+}
+
 // GL_INGR_blend_func_separate
 
 static void REGAL_CALL debug_glBlendFuncSeparateINGR(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
@@ -18173,6 +18570,26 @@ static void REGAL_CALL debug_glCopyImageSubDataNV(GLuint srcName, GLenum srcTarg
   _next->call(&_next->glCopyImageSubDataNV)(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
 }
 
+// GL_NV_coverage_sample
+
+static void REGAL_CALL debug_glCoverageMaskNV(GLboolean mask)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCoverageMaskNV)(mask);
+}
+
+static void REGAL_CALL debug_glCoverageOperationNV(GLenum operation)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCoverageOperationNV)(operation);
+}
+
 // GL_NV_depth_buffer_float
 
 static void REGAL_CALL debug_glClearDepthdNV(GLdouble depth)
@@ -18200,6 +18617,17 @@ static void REGAL_CALL debug_glDepthRangedNV(GLdouble zNear, GLdouble zFar)
   DispatchTable *_next = _context->dispatcher.debug._next;
   RegalAssert(_next);
   _next->call(&_next->glDepthRangedNV)(zNear, zFar);
+}
+
+// GL_NV_draw_buffers
+
+static void REGAL_CALL debug_glDrawBuffersNV(GLsizei n, const GLenum *bufs)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDrawBuffersNV)(n, bufs);
 }
 
 // GL_NV_evaluators
@@ -19980,6 +20408,17 @@ static void REGAL_CALL debug_glPrimitiveRestartNV(void)
   _next->call(&_next->glPrimitiveRestartNV)();
 }
 
+// GL_NV_read_buffer
+
+static void REGAL_CALL debug_glReadBufferNV(GLenum mode)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glReadBufferNV)(mode);
+}
+
 // GL_NV_register_combiners
 
 static void REGAL_CALL debug_glCombinerInputNV(GLenum stage, GLenum portion, GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage)
@@ -21573,6 +22012,259 @@ static void REGAL_CALL debug_glVideoCaptureStreamParameterivNV(GLuint video_capt
   _next->call(&_next->glVideoCaptureStreamParameterivNV)(video_capture_slot, stream, pname, params);
 }
 
+// GL_OES_blend_equation_separate
+
+static void REGAL_CALL debug_glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlendEquationSeparateOES)(modeRGB, modeAlpha);
+}
+
+// GL_OES_blend_func_separate
+
+static void REGAL_CALL debug_glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlendFuncSeparateOES)(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+}
+
+// GL_OES_blend_subtract
+
+static void REGAL_CALL debug_glBlendEquationOES(GLenum mode)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBlendEquationOES)(mode);
+}
+
+// GL_OES_framebuffer_object
+
+static void REGAL_CALL debug_glBindFramebufferOES(GLenum target, GLuint framebuffer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBindFramebufferOES)(target, framebuffer);
+}
+
+static void REGAL_CALL debug_glBindRenderbufferOES(GLenum target, GLuint renderbuffer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBindRenderbufferOES)(target, renderbuffer);
+}
+
+static GLenum REGAL_CALL debug_glCheckFramebufferStatusOES(GLenum target)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLenum  ret = _next->call(&_next->glCheckFramebufferStatusOES)(target);
+  return ret;
+}
+
+static void REGAL_CALL debug_glDeleteFramebuffersOES(GLsizei n, const GLuint *framebuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteFramebuffersOES)(n, framebuffers);
+}
+
+static void REGAL_CALL debug_glDeleteRenderbuffersOES(GLsizei n, const GLuint *renderbuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteRenderbuffersOES)(n, renderbuffers);
+}
+
+static void REGAL_CALL debug_glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferRenderbufferOES)(target, attachment, renderbuffertarget, renderbuffer);
+}
+
+static void REGAL_CALL debug_glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture2DOES)(target, attachment, textarget, texture, level);
+}
+
+static void REGAL_CALL debug_glGenFramebuffersOES(GLsizei n, GLuint *framebuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenFramebuffersOES)(n, framebuffers);
+}
+
+static void REGAL_CALL debug_glGenRenderbuffersOES(GLsizei n, GLuint *renderbuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenRenderbuffersOES)(n, renderbuffers);
+}
+
+static void REGAL_CALL debug_glGenerateMipmapOES(GLenum target)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenerateMipmapOES)(target);
+}
+
+static void REGAL_CALL debug_glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetFramebufferAttachmentParameterivOES)(target, attachment, pname, params);
+}
+
+static void REGAL_CALL debug_glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetRenderbufferParameterivOES)(target, pname, params);
+}
+
+static GLboolean REGAL_CALL debug_glIsFramebufferOES(GLuint framebuffer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glIsFramebufferOES)(framebuffer);
+  return ret;
+}
+
+static GLboolean REGAL_CALL debug_glIsRenderbufferOES(GLuint renderbuffer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glIsRenderbufferOES)(renderbuffer);
+  return ret;
+}
+
+static void REGAL_CALL debug_glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glRenderbufferStorageOES)(target, internalformat, width, height);
+}
+
+// GL_OES_get_program_binary
+
+static void REGAL_CALL debug_glGetProgramBinaryOES(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetProgramBinaryOES)(program, bufSize, length, binaryFormat, binary);
+}
+
+static void REGAL_CALL debug_glProgramBinaryOES(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glProgramBinaryOES)(program, binaryFormat, binary, length);
+}
+
+// GL_OES_mapbuffer
+
+static void REGAL_CALL debug_glGetBufferPointervOES(GLenum target, GLenum pname, GLvoid **params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetBufferPointervOES)(target, pname, params);
+}
+
+static GLvoid *REGAL_CALL debug_glMapBufferOES(GLenum target, GLenum access)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLvoid * ret = _next->call(&_next->glMapBufferOES)(target, access);
+  return ret;
+}
+
+static GLboolean REGAL_CALL debug_glUnmapBufferOES(GLenum target)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glUnmapBufferOES)(target);
+  return ret;
+}
+
+// GL_OES_matrix_palette
+
+static void REGAL_CALL debug_glCurrentPaletteMatrixOES(GLuint index)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCurrentPaletteMatrixOES)(index);
+}
+
+static void REGAL_CALL debug_glMatrixIndexPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glMatrixIndexPointerOES)(size, type, stride, pointer);
+}
+
+static void REGAL_CALL debug_glWeightPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glWeightPointerOES)(size, type, stride, pointer);
+}
+
 // GL_OES_single_precision
 
 static void REGAL_CALL debug_glClearDepthfOES(GLclampd depth)
@@ -21629,6 +22321,184 @@ static void REGAL_CALL debug_glOrthofOES(GLfloat l, GLfloat r, GLfloat b, GLfloa
   _next->call(&_next->glOrthofOES)(l, r, b, t, n, f);
 }
 
+// GL_OES_texture_3D
+
+static void REGAL_CALL debug_glCompressedTexImage3DOES(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCompressedTexImage3DOES)(target, level, internalformat, width, height, depth, border, imageSize, data);
+}
+
+static void REGAL_CALL debug_glCompressedTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCompressedTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+}
+
+static void REGAL_CALL debug_glCopyTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glCopyTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+}
+
+static void REGAL_CALL debug_glFramebufferTexture3DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glFramebufferTexture3DOES)(target, attachment, textarget, texture, level, zoffset);
+}
+
+static void REGAL_CALL debug_glTexImage3DOES(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexImage3DOES)(target, level, internalFormat, width, height, depth, border, format, type, pixels);
+}
+
+static void REGAL_CALL debug_glTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+}
+
+// GL_OES_texture_cube_map
+
+static void REGAL_CALL debug_glGetTexGenfvOES(GLenum coord, GLenum pname, GLfloat *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTexGenfvOES)(coord, pname, params);
+}
+
+static void REGAL_CALL debug_glGetTexGenivOES(GLenum coord, GLenum pname, GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTexGenivOES)(coord, pname, params);
+}
+
+static void REGAL_CALL debug_glGetTexGenxvOES(GLenum coord, GLenum pname, GLfixed *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetTexGenxvOES)(coord, pname, params);
+}
+
+static void REGAL_CALL debug_glTexGenfOES(GLenum coord, GLenum pname, GLfloat param)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenfOES)(coord, pname, param);
+}
+
+static void REGAL_CALL debug_glTexGenfvOES(GLenum coord, GLenum pname, const GLfloat *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenfvOES)(coord, pname, params);
+}
+
+static void REGAL_CALL debug_glTexGeniOES(GLenum coord, GLenum pname, GLint param)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGeniOES)(coord, pname, param);
+}
+
+static void REGAL_CALL debug_glTexGenivOES(GLenum coord, GLenum pname, const GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenivOES)(coord, pname, params);
+}
+
+static void REGAL_CALL debug_glTexGenxOES(GLenum coord, GLenum pname, GLfixed param)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenxOES)(coord, pname, param);
+}
+
+static void REGAL_CALL debug_glTexGenxvOES(GLenum coord, GLenum pname, const GLfixed *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glTexGenxvOES)(coord, pname, params);
+}
+
+// GL_OES_vertex_array_object
+
+static void REGAL_CALL debug_glBindVertexArrayOES(GLuint array)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glBindVertexArrayOES)(array);
+}
+
+static void REGAL_CALL debug_glDeleteVertexArraysOES(GLsizei n, const GLuint *arrays)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDeleteVertexArraysOES)(n, arrays);
+}
+
+static void REGAL_CALL debug_glGenVertexArraysOES(GLsizei n, GLuint *arrays)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGenVertexArraysOES)(n, arrays);
+}
+
+static GLboolean REGAL_CALL debug_glIsVertexArrayOES(GLuint array)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glIsVertexArrayOES)(array);
+  return ret;
+}
+
 // GL_PGI_misc_hints
 
 static void REGAL_CALL debug_glHintPGI(GLenum target, GLint mode)
@@ -21638,6 +22508,188 @@ static void REGAL_CALL debug_glHintPGI(GLenum target, GLint mode)
   DispatchTable *_next = _context->dispatcher.debug._next;
   RegalAssert(_next);
   _next->call(&_next->glHintPGI)(target, mode);
+}
+
+// GL_QCOM_alpha_test
+
+static void REGAL_CALL debug_glAlphaFuncQCOM(GLenum func, GLclampf ref)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glAlphaFuncQCOM)(func, ref);
+}
+
+// GL_QCOM_driver_control
+
+static void REGAL_CALL debug_glDisableDriverControlQCOM(GLuint driverControl)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glDisableDriverControlQCOM)(driverControl);
+}
+
+static void REGAL_CALL debug_glEnableDriverControlQCOM(GLuint driverControl)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glEnableDriverControlQCOM)(driverControl);
+}
+
+static void REGAL_CALL debug_glGetDriverControlStringQCOM(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetDriverControlStringQCOM)(driverControl, bufSize, length, driverControlString);
+}
+
+static void REGAL_CALL debug_glGetDriverControlsQCOM(GLint *num, GLsizei size, GLuint *driverControls)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glGetDriverControlsQCOM)(num, size, driverControls);
+}
+
+// GL_QCOM_extended_get
+
+static void REGAL_CALL debug_glExtGetBufferPointervQCOM(GLenum target, GLvoid **params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetBufferPointervQCOM)(target, params);
+}
+
+static void REGAL_CALL debug_glExtGetBuffersQCOM(GLuint *buffers, GLint maxBuffers, GLint *numBuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetBuffersQCOM)(buffers, maxBuffers, numBuffers);
+}
+
+static void REGAL_CALL debug_glExtGetFramebuffersQCOM(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetFramebuffersQCOM)(framebuffers, maxFramebuffers, numFramebuffers);
+}
+
+static void REGAL_CALL debug_glExtGetRenderbuffersQCOM(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetRenderbuffersQCOM)(renderbuffers, maxRenderbuffers, numRenderbuffers);
+}
+
+static void REGAL_CALL debug_glExtGetTexLevelParameterivQCOM(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetTexLevelParameterivQCOM)(texture, face, level, pname, params);
+}
+
+static void REGAL_CALL debug_glExtGetTexSubImageQCOM(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetTexSubImageQCOM)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, texels);
+}
+
+static void REGAL_CALL debug_glExtGetTexturesQCOM(GLuint *textures, GLint maxTextures, GLint *numTextures)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetTexturesQCOM)(textures, maxTextures, numTextures);
+}
+
+static void REGAL_CALL debug_glExtTexObjectStateOverrideiQCOM(GLenum target, GLenum pname, GLint param)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtTexObjectStateOverrideiQCOM)(target, pname, param);
+}
+
+// GL_QCOM_extended_get2
+
+static void REGAL_CALL debug_glExtGetProgramBinarySourceQCOM(GLuint program, GLenum shadertype, GLchar *source, GLint *length)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetProgramBinarySourceQCOM)(program, shadertype, source, length);
+}
+
+static void REGAL_CALL debug_glExtGetProgramsQCOM(GLuint *programs, GLint maxPrograms, GLint *numPrograms)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetProgramsQCOM)(programs, maxPrograms, numPrograms);
+}
+
+static void REGAL_CALL debug_glExtGetShadersQCOM(GLuint *shaders, GLint maxShaders, GLint *numShaders)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glExtGetShadersQCOM)(shaders, maxShaders, numShaders);
+}
+
+static GLboolean REGAL_CALL debug_glExtIsProgramBinaryQCOM(GLuint program)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  GLboolean  ret = _next->call(&_next->glExtIsProgramBinaryQCOM)(program);
+  return ret;
+}
+
+// GL_QCOM_tiled_rendering
+
+static void REGAL_CALL debug_glEndTilingQCOM(GLbitfield preserveMask)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glEndTilingQCOM)(preserveMask);
+}
+
+static void REGAL_CALL debug_glStartTilingQCOM(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask)
+{
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.debug._next;
+  RegalAssert(_next);
+  _next->call(&_next->glStartTilingQCOM)(x, y, width, height, preserveMask);
 }
 
 // GL_REGAL_ES1_1_compatibility
@@ -23687,6 +24739,28 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glTessellationFactorAMD = debug_glTessellationFactorAMD;
   tbl.glTessellationModeAMD = debug_glTessellationModeAMD;
 
+  // GL_ANGLE_framebuffer_blit
+
+  tbl.glBlitFramebufferANGLE = debug_glBlitFramebufferANGLE;
+
+  // GL_ANGLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleANGLE = debug_glRenderbufferStorageMultisampleANGLE;
+
+  // GL_ANGLE_instanced_arrays
+
+  tbl.glDrawArraysInstancedANGLE = debug_glDrawArraysInstancedANGLE;
+  tbl.glDrawElementsInstancedANGLE = debug_glDrawElementsInstancedANGLE;
+  tbl.glVertexAttribDivisorANGLE = debug_glVertexAttribDivisorANGLE;
+
+  // GL_ANGLE_translated_shader_source
+
+  tbl.glGetTranslatedShaderSourceANGLE = debug_glGetTranslatedShaderSourceANGLE;
+
+  // GL_APPLE_copy_texture_levels
+
+  tbl.glCopyTextureLevelsAPPLE = debug_glCopyTextureLevelsAPPLE;
+
   // GL_APPLE_element_array
 
   tbl.glDrawElementArrayAPPLE = debug_glDrawElementArrayAPPLE;
@@ -23717,11 +24791,26 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glFlushRenderAPPLE = debug_glFlushRenderAPPLE;
   tbl.glSwapAPPLE = debug_glSwapAPPLE;
 
+  // GL_APPLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleAPPLE = debug_glRenderbufferStorageMultisampleAPPLE;
+  tbl.glResolveMultisampleFramebufferAPPLE = debug_glResolveMultisampleFramebufferAPPLE;
+
   // GL_APPLE_object_purgeable
 
   tbl.glGetObjectParameterivAPPLE = debug_glGetObjectParameterivAPPLE;
   tbl.glObjectPurgeableAPPLE = debug_glObjectPurgeableAPPLE;
   tbl.glObjectUnpurgeableAPPLE = debug_glObjectUnpurgeableAPPLE;
+
+  // GL_APPLE_sync
+
+  tbl.glClientWaitSyncAPPLE = debug_glClientWaitSyncAPPLE;
+  tbl.glDeleteSyncAPPLE = debug_glDeleteSyncAPPLE;
+  tbl.glFenceSyncAPPLE = debug_glFenceSyncAPPLE;
+  tbl.glGetInteger64vAPPLE = debug_glGetInteger64vAPPLE;
+  tbl.glGetSyncivAPPLE = debug_glGetSyncivAPPLE;
+  tbl.glIsSyncAPPLE = debug_glIsSyncAPPLE;
+  tbl.glWaitSyncAPPLE = debug_glWaitSyncAPPLE;
 
   // GL_APPLE_texture_range
 
@@ -24737,6 +25826,11 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glCullParameterdvEXT = debug_glCullParameterdvEXT;
   tbl.glCullParameterfvEXT = debug_glCullParameterfvEXT;
 
+  // GL_EXT_debug_label
+
+  tbl.glGetObjectLabelEXT = debug_glGetObjectLabelEXT;
+  tbl.glLabelObjectEXT = debug_glLabelObjectEXT;
+
   // GL_EXT_debug_marker
 
   tbl.glInsertEventMarkerEXT = debug_glInsertEventMarkerEXT;
@@ -24980,6 +26074,10 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glVertexArrayVertexAttribOffsetEXT = debug_glVertexArrayVertexAttribOffsetEXT;
   tbl.glVertexArrayVertexOffsetEXT = debug_glVertexArrayVertexOffsetEXT;
 
+  // GL_EXT_discard_framebuffer
+
+  tbl.glDiscardFramebufferEXT = debug_glDiscardFramebufferEXT;
+
   // GL_EXT_draw_buffers2
 
   tbl.glColorMaskIndexedEXT = debug_glColorMaskIndexedEXT;
@@ -25130,6 +26228,11 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glTextureLightEXT = debug_glTextureLightEXT;
   tbl.glTextureMaterialEXT = debug_glTextureMaterialEXT;
 
+  // GL_EXT_map_buffer_range
+
+  tbl.glFlushMappedBufferRangeEXT = debug_glFlushMappedBufferRangeEXT;
+  tbl.glMapBufferRangeEXT = debug_glMapBufferRangeEXT;
+
   // GL_EXT_multi_draw_arrays
 
   tbl.glMultiDrawArraysEXT = debug_glMultiDrawArraysEXT;
@@ -25139,6 +26242,26 @@ void InitDispatchTableDebug(DispatchTable &tbl)
 
   tbl.glSampleMaskEXT = debug_glSampleMaskEXT;
   tbl.glSamplePatternEXT = debug_glSamplePatternEXT;
+
+  // GL_EXT_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleEXT = debug_glFramebufferTexture2DMultisampleEXT;
+
+  // GL_EXT_multiview_draw_buffers
+
+  tbl.glDrawBuffersIndexedEXT = debug_glDrawBuffersIndexedEXT;
+  tbl.glGetIntegeri_vEXT = debug_glGetIntegeri_vEXT;
+  tbl.glReadBufferIndexedEXT = debug_glReadBufferIndexedEXT;
+
+  // GL_EXT_occlusion_query_boolean
+
+  tbl.glBeginQueryEXT = debug_glBeginQueryEXT;
+  tbl.glDeleteQueriesEXT = debug_glDeleteQueriesEXT;
+  tbl.glEndQueryEXT = debug_glEndQueryEXT;
+  tbl.glGenQueriesEXT = debug_glGenQueriesEXT;
+  tbl.glGetQueryObjectuivEXT = debug_glGetQueryObjectuivEXT;
+  tbl.glGetQueryivEXT = debug_glGetQueryivEXT;
+  tbl.glIsQueryEXT = debug_glIsQueryEXT;
 
   // GL_EXT_paletted_texture
 
@@ -25168,6 +26291,12 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   // GL_EXT_provoking_vertex
 
   tbl.glProvokingVertexEXT = debug_glProvokingVertexEXT;
+
+  // GL_EXT_robustness
+
+  tbl.glGetnUniformfvEXT = debug_glGetnUniformfvEXT;
+  tbl.glGetnUniformivEXT = debug_glGetnUniformivEXT;
+  tbl.glReadnPixelsEXT = debug_glReadnPixelsEXT;
 
   // GL_EXT_scene_marker
 
@@ -25252,6 +26381,12 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   // GL_EXT_texture_perturb_normal
 
   tbl.glTextureNormalEXT = debug_glTextureNormalEXT;
+
+  // GL_EXT_texture_storage
+
+  tbl.glTexStorage1DEXT = debug_glTexStorage1DEXT;
+  tbl.glTexStorage2DEXT = debug_glTexStorage2DEXT;
+  tbl.glTexStorage3DEXT = debug_glTexStorage3DEXT;
 
   // GL_EXT_timer_query
 
@@ -25382,6 +26517,11 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glTexCoordPointerListIBM = debug_glTexCoordPointerListIBM;
   tbl.glVertexPointerListIBM = debug_glVertexPointerListIBM;
 
+  // GL_IMG_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleIMG = debug_glFramebufferTexture2DMultisampleIMG;
+  tbl.glRenderbufferStorageMultisampleIMG = debug_glRenderbufferStorageMultisampleIMG;
+
   // GL_INGR_blend_func_separate
 
   tbl.glBlendFuncSeparateINGR = debug_glBlendFuncSeparateINGR;
@@ -25480,11 +26620,20 @@ void InitDispatchTableDebug(DispatchTable &tbl)
 
   tbl.glCopyImageSubDataNV = debug_glCopyImageSubDataNV;
 
+  // GL_NV_coverage_sample
+
+  tbl.glCoverageMaskNV = debug_glCoverageMaskNV;
+  tbl.glCoverageOperationNV = debug_glCoverageOperationNV;
+
   // GL_NV_depth_buffer_float
 
   tbl.glClearDepthdNV = debug_glClearDepthdNV;
   tbl.glDepthBoundsdNV = debug_glDepthBoundsdNV;
   tbl.glDepthRangedNV = debug_glDepthRangedNV;
+
+  // GL_NV_draw_buffers
+
+  tbl.glDrawBuffersNV = debug_glDrawBuffersNV;
 
   // GL_NV_evaluators
 
@@ -25727,6 +26876,10 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glPrimitiveRestartIndexNV = debug_glPrimitiveRestartIndexNV;
   tbl.glPrimitiveRestartNV = debug_glPrimitiveRestartNV;
 
+  // GL_NV_read_buffer
+
+  tbl.glReadBufferNV = debug_glReadBufferNV;
+
   // GL_NV_register_combiners
 
   tbl.glCombinerInputNV = debug_glCombinerInputNV;
@@ -25939,6 +27092,53 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glVideoCaptureStreamParameterfvNV = debug_glVideoCaptureStreamParameterfvNV;
   tbl.glVideoCaptureStreamParameterivNV = debug_glVideoCaptureStreamParameterivNV;
 
+  // GL_OES_blend_equation_separate
+
+  tbl.glBlendEquationSeparateOES = debug_glBlendEquationSeparateOES;
+
+  // GL_OES_blend_func_separate
+
+  tbl.glBlendFuncSeparateOES = debug_glBlendFuncSeparateOES;
+
+  // GL_OES_blend_subtract
+
+  tbl.glBlendEquationOES = debug_glBlendEquationOES;
+
+  // GL_OES_framebuffer_object
+
+  tbl.glBindFramebufferOES = debug_glBindFramebufferOES;
+  tbl.glBindRenderbufferOES = debug_glBindRenderbufferOES;
+  tbl.glCheckFramebufferStatusOES = debug_glCheckFramebufferStatusOES;
+  tbl.glDeleteFramebuffersOES = debug_glDeleteFramebuffersOES;
+  tbl.glDeleteRenderbuffersOES = debug_glDeleteRenderbuffersOES;
+  tbl.glFramebufferRenderbufferOES = debug_glFramebufferRenderbufferOES;
+  tbl.glFramebufferTexture2DOES = debug_glFramebufferTexture2DOES;
+  tbl.glGenFramebuffersOES = debug_glGenFramebuffersOES;
+  tbl.glGenRenderbuffersOES = debug_glGenRenderbuffersOES;
+  tbl.glGenerateMipmapOES = debug_glGenerateMipmapOES;
+  tbl.glGetFramebufferAttachmentParameterivOES = debug_glGetFramebufferAttachmentParameterivOES;
+  tbl.glGetRenderbufferParameterivOES = debug_glGetRenderbufferParameterivOES;
+  tbl.glIsFramebufferOES = debug_glIsFramebufferOES;
+  tbl.glIsRenderbufferOES = debug_glIsRenderbufferOES;
+  tbl.glRenderbufferStorageOES = debug_glRenderbufferStorageOES;
+
+  // GL_OES_get_program_binary
+
+  tbl.glGetProgramBinaryOES = debug_glGetProgramBinaryOES;
+  tbl.glProgramBinaryOES = debug_glProgramBinaryOES;
+
+  // GL_OES_mapbuffer
+
+  tbl.glGetBufferPointervOES = debug_glGetBufferPointervOES;
+  tbl.glMapBufferOES = debug_glMapBufferOES;
+  tbl.glUnmapBufferOES = debug_glUnmapBufferOES;
+
+  // GL_OES_matrix_palette
+
+  tbl.glCurrentPaletteMatrixOES = debug_glCurrentPaletteMatrixOES;
+  tbl.glMatrixIndexPointerOES = debug_glMatrixIndexPointerOES;
+  tbl.glWeightPointerOES = debug_glWeightPointerOES;
+
   // GL_OES_single_precision
 
   tbl.glClearDepthfOES = debug_glClearDepthfOES;
@@ -25948,9 +27148,71 @@ void InitDispatchTableDebug(DispatchTable &tbl)
   tbl.glGetClipPlanefOES = debug_glGetClipPlanefOES;
   tbl.glOrthofOES = debug_glOrthofOES;
 
+  // GL_OES_texture_3D
+
+  tbl.glCompressedTexImage3DOES = debug_glCompressedTexImage3DOES;
+  tbl.glCompressedTexSubImage3DOES = debug_glCompressedTexSubImage3DOES;
+  tbl.glCopyTexSubImage3DOES = debug_glCopyTexSubImage3DOES;
+  tbl.glFramebufferTexture3DOES = debug_glFramebufferTexture3DOES;
+  tbl.glTexImage3DOES = debug_glTexImage3DOES;
+  tbl.glTexSubImage3DOES = debug_glTexSubImage3DOES;
+
+  // GL_OES_texture_cube_map
+
+  tbl.glGetTexGenfvOES = debug_glGetTexGenfvOES;
+  tbl.glGetTexGenivOES = debug_glGetTexGenivOES;
+  tbl.glGetTexGenxvOES = debug_glGetTexGenxvOES;
+  tbl.glTexGenfOES = debug_glTexGenfOES;
+  tbl.glTexGenfvOES = debug_glTexGenfvOES;
+  tbl.glTexGeniOES = debug_glTexGeniOES;
+  tbl.glTexGenivOES = debug_glTexGenivOES;
+  tbl.glTexGenxOES = debug_glTexGenxOES;
+  tbl.glTexGenxvOES = debug_glTexGenxvOES;
+
+  // GL_OES_vertex_array_object
+
+  tbl.glBindVertexArrayOES = debug_glBindVertexArrayOES;
+  tbl.glDeleteVertexArraysOES = debug_glDeleteVertexArraysOES;
+  tbl.glGenVertexArraysOES = debug_glGenVertexArraysOES;
+  tbl.glIsVertexArrayOES = debug_glIsVertexArrayOES;
+
   // GL_PGI_misc_hints
 
   tbl.glHintPGI = debug_glHintPGI;
+
+  // GL_QCOM_alpha_test
+
+  tbl.glAlphaFuncQCOM = debug_glAlphaFuncQCOM;
+
+  // GL_QCOM_driver_control
+
+  tbl.glDisableDriverControlQCOM = debug_glDisableDriverControlQCOM;
+  tbl.glEnableDriverControlQCOM = debug_glEnableDriverControlQCOM;
+  tbl.glGetDriverControlStringQCOM = debug_glGetDriverControlStringQCOM;
+  tbl.glGetDriverControlsQCOM = debug_glGetDriverControlsQCOM;
+
+  // GL_QCOM_extended_get
+
+  tbl.glExtGetBufferPointervQCOM = debug_glExtGetBufferPointervQCOM;
+  tbl.glExtGetBuffersQCOM = debug_glExtGetBuffersQCOM;
+  tbl.glExtGetFramebuffersQCOM = debug_glExtGetFramebuffersQCOM;
+  tbl.glExtGetRenderbuffersQCOM = debug_glExtGetRenderbuffersQCOM;
+  tbl.glExtGetTexLevelParameterivQCOM = debug_glExtGetTexLevelParameterivQCOM;
+  tbl.glExtGetTexSubImageQCOM = debug_glExtGetTexSubImageQCOM;
+  tbl.glExtGetTexturesQCOM = debug_glExtGetTexturesQCOM;
+  tbl.glExtTexObjectStateOverrideiQCOM = debug_glExtTexObjectStateOverrideiQCOM;
+
+  // GL_QCOM_extended_get2
+
+  tbl.glExtGetProgramBinarySourceQCOM = debug_glExtGetProgramBinarySourceQCOM;
+  tbl.glExtGetProgramsQCOM = debug_glExtGetProgramsQCOM;
+  tbl.glExtGetShadersQCOM = debug_glExtGetShadersQCOM;
+  tbl.glExtIsProgramBinaryQCOM = debug_glExtIsProgramBinaryQCOM;
+
+  // GL_QCOM_tiled_rendering
+
+  tbl.glEndTilingQCOM = debug_glEndTilingQCOM;
+  tbl.glStartTilingQCOM = debug_glStartTilingQCOM;
 
   // GL_REGAL_ES1_1_compatibility
 

@@ -14370,6 +14370,170 @@ static void REGAL_CALL error_glTessellationModeAMD(GLenum mode)
   }
 }
 
+// GL_ANGLE_framebuffer_blit
+
+static void REGAL_CALL error_glBlitFramebufferANGLE(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+  Internal("error_glBlitFramebufferANGLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBlitFramebufferANGLE)(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBlitFramebufferANGLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_ANGLE_framebuffer_multisample
+
+static void REGAL_CALL error_glRenderbufferStorageMultisampleANGLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  Internal("error_glRenderbufferStorageMultisampleANGLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glRenderbufferStorageMultisampleANGLE)(target, samples, internalformat, width, height);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glRenderbufferStorageMultisampleANGLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_ANGLE_instanced_arrays
+
+static void REGAL_CALL error_glDrawArraysInstancedANGLE(GLenum mode, GLint first, GLsizei count, GLsizei primcount)
+{
+  Internal("error_glDrawArraysInstancedANGLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDrawArraysInstancedANGLE)(mode, first, count, primcount);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDrawArraysInstancedANGLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glDrawElementsInstancedANGLE(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount)
+{
+  Internal("error_glDrawElementsInstancedANGLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDrawElementsInstancedANGLE)(mode, count, type, indices, primcount);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDrawElementsInstancedANGLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glVertexAttribDivisorANGLE(GLuint index, GLuint divisor)
+{
+  Internal("error_glVertexAttribDivisorANGLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glVertexAttribDivisorANGLE)(index, divisor);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glVertexAttribDivisorANGLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_ANGLE_translated_shader_source
+
+static void REGAL_CALL error_glGetTranslatedShaderSourceANGLE(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source)
+{
+  Internal("error_glGetTranslatedShaderSourceANGLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetTranslatedShaderSourceANGLE)(shader, bufsize, length, source);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetTranslatedShaderSourceANGLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_APPLE_copy_texture_levels
+
+static void REGAL_CALL error_glCopyTextureLevelsAPPLE(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount)
+{
+  Internal("error_glCopyTextureLevelsAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCopyTextureLevelsAPPLE)(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCopyTextureLevelsAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_APPLE_element_array
 
 static void REGAL_CALL error_glDrawElementArrayAPPLE(GLenum mode, GLint first, GLsizei count)
@@ -14777,6 +14941,52 @@ static void REGAL_CALL error_glSwapAPPLE(void)
   }
 }
 
+// GL_APPLE_framebuffer_multisample
+
+static void REGAL_CALL error_glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  Internal("error_glRenderbufferStorageMultisampleAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glRenderbufferStorageMultisampleAPPLE)(target, samples, internalformat, width, height);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glRenderbufferStorageMultisampleAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glResolveMultisampleFramebufferAPPLE(void)
+{
+  Internal("error_glResolveMultisampleFramebufferAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glResolveMultisampleFramebufferAPPLE)();
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glResolveMultisampleFramebufferAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_APPLE_object_purgeable
 
 static void REGAL_CALL error_glGetObjectParameterivAPPLE(GLenum objectType, GLuint name, GLenum pname, GLint *params)
@@ -14845,6 +15055,165 @@ static GLenum REGAL_CALL error_glObjectUnpurgeableAPPLE(GLenum objectType, GLuin
     }
   }
 return ret;
+}
+
+// GL_APPLE_sync
+
+static GLenum REGAL_CALL error_glClientWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  Internal("error_glClientWaitSyncAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLenum  ret = _next->call(&_next->glClientWaitSyncAPPLE)(sync, flags, timeout);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glClientWaitSyncAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static void REGAL_CALL error_glDeleteSyncAPPLE(GLsync sync)
+{
+  Internal("error_glDeleteSyncAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDeleteSyncAPPLE)(sync);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDeleteSyncAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLsync REGAL_CALL error_glFenceSyncAPPLE(GLenum condition, GLbitfield flags)
+{
+  Internal("error_glFenceSyncAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLsync  ret = _next->call(&_next->glFenceSyncAPPLE)(condition, flags);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFenceSyncAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static void REGAL_CALL error_glGetInteger64vAPPLE(GLenum pname, GLint64 *params)
+{
+  Internal("error_glGetInteger64vAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetInteger64vAPPLE)(pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetInteger64vAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetSyncivAPPLE(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values)
+{
+  Internal("error_glGetSyncivAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetSyncivAPPLE)(sync, pname, bufSize, length, values);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetSyncivAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLboolean REGAL_CALL error_glIsSyncAPPLE(GLsync sync)
+{
+  Internal("error_glIsSyncAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glIsSyncAPPLE)(sync);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glIsSyncAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static void REGAL_CALL error_glWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  Internal("error_glWaitSyncAPPLE","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glWaitSyncAPPLE)(sync, flags, timeout);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glWaitSyncAPPLE : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
 }
 
 // GL_APPLE_texture_range
@@ -31180,6 +31549,52 @@ static void REGAL_CALL error_glCullParameterfvEXT(GLenum pname, GLfloat *params)
   }
 }
 
+// GL_EXT_debug_label
+
+static void REGAL_CALL error_glGetObjectLabelEXT(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label)
+{
+  Internal("error_glGetObjectLabelEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetObjectLabelEXT)(type, object, bufSize, length, label);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetObjectLabelEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glLabelObjectEXT(GLenum type, GLuint object, GLsizei length, const GLchar *label)
+{
+  Internal("error_glLabelObjectEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glLabelObjectEXT)(type, object, length, label);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glLabelObjectEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_EXT_debug_marker
 
 static void REGAL_CALL error_glInsertEventMarkerEXT(GLsizei length, const GLchar *marker)
@@ -36338,6 +36753,30 @@ static void REGAL_CALL error_glVertexArrayVertexOffsetEXT(GLuint vaobj, GLuint b
   }
 }
 
+// GL_EXT_discard_framebuffer
+
+static void REGAL_CALL error_glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments)
+{
+  Internal("error_glDiscardFramebufferEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDiscardFramebufferEXT)(target, numAttachments, attachments);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDiscardFramebufferEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_EXT_draw_buffers2
 
 static void REGAL_CALL error_glColorMaskIndexedEXT(GLuint buf, GLboolean r, GLboolean g, GLboolean b, GLboolean a)
@@ -38683,6 +39122,53 @@ static void REGAL_CALL error_glTextureMaterialEXT(GLenum face, GLenum mode)
   }
 }
 
+// GL_EXT_map_buffer_range
+
+static void REGAL_CALL error_glFlushMappedBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length)
+{
+  Internal("error_glFlushMappedBufferRangeEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glFlushMappedBufferRangeEXT)(target, offset, length);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFlushMappedBufferRangeEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLvoid *REGAL_CALL error_glMapBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+  Internal("error_glMapBufferRangeEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLvoid * ret = _next->call(&_next->glMapBufferRangeEXT)(target, offset, length, access);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glMapBufferRangeEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
 // GL_EXT_multi_draw_arrays
 
 static void REGAL_CALL error_glMultiDrawArraysEXT(GLenum mode, const GLint *first, const GLsizei *count, GLsizei primcount)
@@ -38773,6 +39259,255 @@ static void REGAL_CALL error_glSamplePatternEXT(GLenum pattern)
         _context->err.callback( _error );
     }
   }
+}
+
+// GL_EXT_multisampled_render_to_texture
+
+static void REGAL_CALL error_glFramebufferTexture2DMultisampleEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  Internal("error_glFramebufferTexture2DMultisampleEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glFramebufferTexture2DMultisampleEXT)(target, attachment, textarget, texture, level, samples);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFramebufferTexture2DMultisampleEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_EXT_multiview_draw_buffers
+
+static void REGAL_CALL error_glDrawBuffersIndexedEXT(GLint n, const GLenum *location, const GLint *indices)
+{
+  Internal("error_glDrawBuffersIndexedEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDrawBuffersIndexedEXT)(n, location, indices);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDrawBuffersIndexedEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetIntegeri_vEXT(GLenum target, GLuint index, GLint *data)
+{
+  Internal("error_glGetIntegeri_vEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetIntegeri_vEXT)(target, index, data);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetIntegeri_vEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glReadBufferIndexedEXT(GLenum src, GLint index)
+{
+  Internal("error_glReadBufferIndexedEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glReadBufferIndexedEXT)(src, index);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glReadBufferIndexedEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_EXT_occlusion_query_boolean
+
+static void REGAL_CALL error_glBeginQueryEXT(GLenum target, GLuint id)
+{
+  Internal("error_glBeginQueryEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBeginQueryEXT)(target, id);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBeginQueryEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glDeleteQueriesEXT(GLsizei n, const GLuint *ids)
+{
+  Internal("error_glDeleteQueriesEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDeleteQueriesEXT)(n, ids);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDeleteQueriesEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glEndQueryEXT(GLenum target)
+{
+  Internal("error_glEndQueryEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glEndQueryEXT)(target);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glEndQueryEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGenQueriesEXT(GLsizei n, GLuint *ids)
+{
+  Internal("error_glGenQueriesEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGenQueriesEXT)(n, ids);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGenQueriesEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetQueryObjectuivEXT(GLuint id, GLenum pname, GLuint *params)
+{
+  Internal("error_glGetQueryObjectuivEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetQueryObjectuivEXT)(id, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetQueryObjectuivEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetQueryivEXT(GLenum target, GLenum pname, GLint *params)
+{
+  Internal("error_glGetQueryivEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetQueryivEXT)(target, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetQueryivEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLboolean REGAL_CALL error_glIsQueryEXT(GLuint id)
+{
+  Internal("error_glIsQueryEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glIsQueryEXT)(id);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glIsQueryEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
 }
 
 // GL_EXT_paletted_texture
@@ -39087,6 +39822,74 @@ static void REGAL_CALL error_glProvokingVertexEXT(GLenum mode)
     _error = _next->call(&_next->glGetError)();
     if (_error!=GL_NO_ERROR) {
       Error("glProvokingVertexEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_EXT_robustness
+
+static void REGAL_CALL error_glGetnUniformfvEXT(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+  Internal("error_glGetnUniformfvEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetnUniformfvEXT)(program, location, bufSize, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetnUniformfvEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetnUniformivEXT(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+  Internal("error_glGetnUniformivEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetnUniformivEXT)(program, location, bufSize, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetnUniformivEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glReadnPixelsEXT(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+  Internal("error_glReadnPixelsEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glReadnPixelsEXT)(x, y, width, height, format, type, bufSize, data);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glReadnPixelsEXT : ",Token::GLerrorToString(_error));
       if (_context->err.callback)
         _context->err.callback( _error );
     }
@@ -40106,6 +40909,74 @@ static void REGAL_CALL error_glTextureNormalEXT(GLenum mode)
     _error = _next->call(&_next->glGetError)();
     if (_error!=GL_NO_ERROR) {
       Error("glTextureNormalEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_EXT_texture_storage
+
+static void REGAL_CALL error_glTexStorage1DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  Internal("error_glTexStorage1DEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexStorage1DEXT)(target, levels, internalformat, width);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexStorage1DEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexStorage2DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  Internal("error_glTexStorage2DEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexStorage2DEXT)(target, levels, internalformat, width, height);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexStorage2DEXT : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexStorage3DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+  Internal("error_glTexStorage3DEXT","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexStorage3DEXT)(target, levels, internalformat, width, height, depth);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexStorage3DEXT : ",Token::GLerrorToString(_error));
       if (_context->err.callback)
         _context->err.callback( _error );
     }
@@ -42191,6 +43062,52 @@ static void REGAL_CALL error_glVertexPointerListIBM(GLint size, GLenum type, GLi
   }
 }
 
+// GL_IMG_multisampled_render_to_texture
+
+static void REGAL_CALL error_glFramebufferTexture2DMultisampleIMG(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  Internal("error_glFramebufferTexture2DMultisampleIMG","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glFramebufferTexture2DMultisampleIMG)(target, attachment, textarget, texture, level, samples);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFramebufferTexture2DMultisampleIMG : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glRenderbufferStorageMultisampleIMG(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  Internal("error_glRenderbufferStorageMultisampleIMG","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glRenderbufferStorageMultisampleIMG)(target, samples, internalformat, width, height);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glRenderbufferStorageMultisampleIMG : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_INGR_blend_func_separate
 
 static void REGAL_CALL error_glBlendFuncSeparateINGR(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
@@ -43651,6 +44568,52 @@ static void REGAL_CALL error_glCopyImageSubDataNV(GLuint srcName, GLenum srcTarg
   }
 }
 
+// GL_NV_coverage_sample
+
+static void REGAL_CALL error_glCoverageMaskNV(GLboolean mask)
+{
+  Internal("error_glCoverageMaskNV","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCoverageMaskNV)(mask);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCoverageMaskNV : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glCoverageOperationNV(GLenum operation)
+{
+  Internal("error_glCoverageOperationNV","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCoverageOperationNV)(operation);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCoverageOperationNV : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_NV_depth_buffer_float
 
 static void REGAL_CALL error_glClearDepthdNV(GLdouble depth)
@@ -43713,6 +44676,30 @@ static void REGAL_CALL error_glDepthRangedNV(GLdouble zNear, GLdouble zFar)
     _error = _next->call(&_next->glGetError)();
     if (_error!=GL_NO_ERROR) {
       Error("glDepthRangedNV : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_NV_draw_buffers
+
+static void REGAL_CALL error_glDrawBuffersNV(GLsizei n, const GLenum *bufs)
+{
+  Internal("error_glDrawBuffersNV","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDrawBuffersNV)(n, bufs);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDrawBuffersNV : ",Token::GLerrorToString(_error));
       if (_context->err.callback)
         _context->err.callback( _error );
     }
@@ -48006,6 +48993,30 @@ static void REGAL_CALL error_glPrimitiveRestartNV(void)
   }
 }
 
+// GL_NV_read_buffer
+
+static void REGAL_CALL error_glReadBufferNV(GLenum mode)
+{
+  Internal("error_glReadBufferNV","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glReadBufferNV)(mode);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glReadBufferNV : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_NV_register_combiners
 
 static void REGAL_CALL error_glCombinerInputNV(GLenum stage, GLenum portion, GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage)
@@ -51848,6 +52859,597 @@ static void REGAL_CALL error_glVideoCaptureStreamParameterivNV(GLuint video_capt
   }
 }
 
+// GL_OES_blend_equation_separate
+
+static void REGAL_CALL error_glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha)
+{
+  Internal("error_glBlendEquationSeparateOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBlendEquationSeparateOES)(modeRGB, modeAlpha);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBlendEquationSeparateOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_blend_func_separate
+
+static void REGAL_CALL error_glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
+{
+  Internal("error_glBlendFuncSeparateOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBlendFuncSeparateOES)(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBlendFuncSeparateOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_blend_subtract
+
+static void REGAL_CALL error_glBlendEquationOES(GLenum mode)
+{
+  Internal("error_glBlendEquationOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBlendEquationOES)(mode);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBlendEquationOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_framebuffer_object
+
+static void REGAL_CALL error_glBindFramebufferOES(GLenum target, GLuint framebuffer)
+{
+  Internal("error_glBindFramebufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBindFramebufferOES)(target, framebuffer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBindFramebufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glBindRenderbufferOES(GLenum target, GLuint renderbuffer)
+{
+  Internal("error_glBindRenderbufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBindRenderbufferOES)(target, renderbuffer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBindRenderbufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLenum REGAL_CALL error_glCheckFramebufferStatusOES(GLenum target)
+{
+  Internal("error_glCheckFramebufferStatusOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLenum  ret = _next->call(&_next->glCheckFramebufferStatusOES)(target);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCheckFramebufferStatusOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static void REGAL_CALL error_glDeleteFramebuffersOES(GLsizei n, const GLuint *framebuffers)
+{
+  Internal("error_glDeleteFramebuffersOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDeleteFramebuffersOES)(n, framebuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDeleteFramebuffersOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glDeleteRenderbuffersOES(GLsizei n, const GLuint *renderbuffers)
+{
+  Internal("error_glDeleteRenderbuffersOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDeleteRenderbuffersOES)(n, renderbuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDeleteRenderbuffersOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+  Internal("error_glFramebufferRenderbufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glFramebufferRenderbufferOES)(target, attachment, renderbuffertarget, renderbuffer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFramebufferRenderbufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+{
+  Internal("error_glFramebufferTexture2DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glFramebufferTexture2DOES)(target, attachment, textarget, texture, level);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFramebufferTexture2DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGenFramebuffersOES(GLsizei n, GLuint *framebuffers)
+{
+  Internal("error_glGenFramebuffersOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGenFramebuffersOES)(n, framebuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGenFramebuffersOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGenRenderbuffersOES(GLsizei n, GLuint *renderbuffers)
+{
+  Internal("error_glGenRenderbuffersOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGenRenderbuffersOES)(n, renderbuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGenRenderbuffersOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGenerateMipmapOES(GLenum target)
+{
+  Internal("error_glGenerateMipmapOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGenerateMipmapOES)(target);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGenerateMipmapOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint *params)
+{
+  Internal("error_glGetFramebufferAttachmentParameterivOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetFramebufferAttachmentParameterivOES)(target, attachment, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetFramebufferAttachmentParameterivOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint *params)
+{
+  Internal("error_glGetRenderbufferParameterivOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetRenderbufferParameterivOES)(target, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetRenderbufferParameterivOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLboolean REGAL_CALL error_glIsFramebufferOES(GLuint framebuffer)
+{
+  Internal("error_glIsFramebufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glIsFramebufferOES)(framebuffer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glIsFramebufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static GLboolean REGAL_CALL error_glIsRenderbufferOES(GLuint renderbuffer)
+{
+  Internal("error_glIsRenderbufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glIsRenderbufferOES)(renderbuffer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glIsRenderbufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static void REGAL_CALL error_glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  Internal("error_glRenderbufferStorageOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glRenderbufferStorageOES)(target, internalformat, width, height);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glRenderbufferStorageOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_get_program_binary
+
+static void REGAL_CALL error_glGetProgramBinaryOES(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary)
+{
+  Internal("error_glGetProgramBinaryOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetProgramBinaryOES)(program, bufSize, length, binaryFormat, binary);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetProgramBinaryOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glProgramBinaryOES(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length)
+{
+  Internal("error_glProgramBinaryOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glProgramBinaryOES)(program, binaryFormat, binary, length);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glProgramBinaryOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_mapbuffer
+
+static void REGAL_CALL error_glGetBufferPointervOES(GLenum target, GLenum pname, GLvoid **params)
+{
+  Internal("error_glGetBufferPointervOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetBufferPointervOES)(target, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetBufferPointervOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLvoid *REGAL_CALL error_glMapBufferOES(GLenum target, GLenum access)
+{
+  Internal("error_glMapBufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLvoid * ret = _next->call(&_next->glMapBufferOES)(target, access);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glMapBufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+static GLboolean REGAL_CALL error_glUnmapBufferOES(GLenum target)
+{
+  Internal("error_glUnmapBufferOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glUnmapBufferOES)(target);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glUnmapBufferOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+// GL_OES_matrix_palette
+
+static void REGAL_CALL error_glCurrentPaletteMatrixOES(GLuint index)
+{
+  Internal("error_glCurrentPaletteMatrixOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCurrentPaletteMatrixOES)(index);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCurrentPaletteMatrixOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glMatrixIndexPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  Internal("error_glMatrixIndexPointerOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glMatrixIndexPointerOES)(size, type, stride, pointer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glMatrixIndexPointerOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glWeightPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  Internal("error_glWeightPointerOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glWeightPointerOES)(size, type, stride, pointer);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glWeightPointerOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
 // GL_OES_single_precision
 
 static void REGAL_CALL error_glClearDepthfOES(GLclampd depth)
@@ -51982,6 +53584,431 @@ static void REGAL_CALL error_glOrthofOES(GLfloat l, GLfloat r, GLfloat b, GLfloa
   }
 }
 
+// GL_OES_texture_3D
+
+static void REGAL_CALL error_glCompressedTexImage3DOES(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data)
+{
+  Internal("error_glCompressedTexImage3DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCompressedTexImage3DOES)(target, level, internalformat, width, height, depth, border, imageSize, data);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCompressedTexImage3DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glCompressedTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+  Internal("error_glCompressedTexSubImage3DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCompressedTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCompressedTexSubImage3DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glCopyTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+  Internal("error_glCopyTexSubImage3DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glCopyTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glCopyTexSubImage3DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glFramebufferTexture3DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset)
+{
+  Internal("error_glFramebufferTexture3DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glFramebufferTexture3DOES)(target, attachment, textarget, texture, level, zoffset);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glFramebufferTexture3DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexImage3DOES(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  Internal("error_glTexImage3DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexImage3DOES)(target, level, internalFormat, width, height, depth, border, format, type, pixels);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexImage3DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  Internal("error_glTexSubImage3DOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexSubImage3DOES)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexSubImage3DOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_texture_cube_map
+
+static void REGAL_CALL error_glGetTexGenfvOES(GLenum coord, GLenum pname, GLfloat *params)
+{
+  Internal("error_glGetTexGenfvOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetTexGenfvOES)(coord, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetTexGenfvOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetTexGenivOES(GLenum coord, GLenum pname, GLint *params)
+{
+  Internal("error_glGetTexGenivOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetTexGenivOES)(coord, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetTexGenivOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetTexGenxvOES(GLenum coord, GLenum pname, GLfixed *params)
+{
+  Internal("error_glGetTexGenxvOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetTexGenxvOES)(coord, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetTexGenxvOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexGenfOES(GLenum coord, GLenum pname, GLfloat param)
+{
+  Internal("error_glTexGenfOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexGenfOES)(coord, pname, param);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexGenfOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexGenfvOES(GLenum coord, GLenum pname, const GLfloat *params)
+{
+  Internal("error_glTexGenfvOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexGenfvOES)(coord, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexGenfvOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexGeniOES(GLenum coord, GLenum pname, GLint param)
+{
+  Internal("error_glTexGeniOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexGeniOES)(coord, pname, param);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexGeniOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexGenivOES(GLenum coord, GLenum pname, const GLint *params)
+{
+  Internal("error_glTexGenivOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexGenivOES)(coord, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexGenivOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexGenxOES(GLenum coord, GLenum pname, GLfixed param)
+{
+  Internal("error_glTexGenxOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexGenxOES)(coord, pname, param);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexGenxOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glTexGenxvOES(GLenum coord, GLenum pname, const GLfixed *params)
+{
+  Internal("error_glTexGenxvOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glTexGenxvOES)(coord, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glTexGenxvOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_OES_vertex_array_object
+
+static void REGAL_CALL error_glBindVertexArrayOES(GLuint array)
+{
+  Internal("error_glBindVertexArrayOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glBindVertexArrayOES)(array);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glBindVertexArrayOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glDeleteVertexArraysOES(GLsizei n, const GLuint *arrays)
+{
+  Internal("error_glDeleteVertexArraysOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDeleteVertexArraysOES)(n, arrays);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDeleteVertexArraysOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGenVertexArraysOES(GLsizei n, GLuint *arrays)
+{
+  Internal("error_glGenVertexArraysOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGenVertexArraysOES)(n, arrays);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGenVertexArraysOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLboolean REGAL_CALL error_glIsVertexArrayOES(GLuint array)
+{
+  Internal("error_glIsVertexArrayOES","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glIsVertexArrayOES)(array);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glIsVertexArrayOES : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
 // GL_PGI_misc_hints
 
 static void REGAL_CALL error_glHintPGI(GLenum target, GLint mode)
@@ -52000,6 +54027,435 @@ static void REGAL_CALL error_glHintPGI(GLenum target, GLint mode)
     _error = _next->call(&_next->glGetError)();
     if (_error!=GL_NO_ERROR) {
       Error("glHintPGI : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_QCOM_alpha_test
+
+static void REGAL_CALL error_glAlphaFuncQCOM(GLenum func, GLclampf ref)
+{
+  Internal("error_glAlphaFuncQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glAlphaFuncQCOM)(func, ref);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glAlphaFuncQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_QCOM_driver_control
+
+static void REGAL_CALL error_glDisableDriverControlQCOM(GLuint driverControl)
+{
+  Internal("error_glDisableDriverControlQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glDisableDriverControlQCOM)(driverControl);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glDisableDriverControlQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glEnableDriverControlQCOM(GLuint driverControl)
+{
+  Internal("error_glEnableDriverControlQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glEnableDriverControlQCOM)(driverControl);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glEnableDriverControlQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetDriverControlStringQCOM(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString)
+{
+  Internal("error_glGetDriverControlStringQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetDriverControlStringQCOM)(driverControl, bufSize, length, driverControlString);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetDriverControlStringQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glGetDriverControlsQCOM(GLint *num, GLsizei size, GLuint *driverControls)
+{
+  Internal("error_glGetDriverControlsQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glGetDriverControlsQCOM)(num, size, driverControls);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glGetDriverControlsQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_QCOM_extended_get
+
+static void REGAL_CALL error_glExtGetBufferPointervQCOM(GLenum target, GLvoid **params)
+{
+  Internal("error_glExtGetBufferPointervQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetBufferPointervQCOM)(target, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetBufferPointervQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetBuffersQCOM(GLuint *buffers, GLint maxBuffers, GLint *numBuffers)
+{
+  Internal("error_glExtGetBuffersQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetBuffersQCOM)(buffers, maxBuffers, numBuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetBuffersQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetFramebuffersQCOM(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers)
+{
+  Internal("error_glExtGetFramebuffersQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetFramebuffersQCOM)(framebuffers, maxFramebuffers, numFramebuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetFramebuffersQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetRenderbuffersQCOM(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers)
+{
+  Internal("error_glExtGetRenderbuffersQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetRenderbuffersQCOM)(renderbuffers, maxRenderbuffers, numRenderbuffers);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetRenderbuffersQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetTexLevelParameterivQCOM(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params)
+{
+  Internal("error_glExtGetTexLevelParameterivQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetTexLevelParameterivQCOM)(texture, face, level, pname, params);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetTexLevelParameterivQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetTexSubImageQCOM(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels)
+{
+  Internal("error_glExtGetTexSubImageQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetTexSubImageQCOM)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, texels);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetTexSubImageQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetTexturesQCOM(GLuint *textures, GLint maxTextures, GLint *numTextures)
+{
+  Internal("error_glExtGetTexturesQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetTexturesQCOM)(textures, maxTextures, numTextures);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetTexturesQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtTexObjectStateOverrideiQCOM(GLenum target, GLenum pname, GLint param)
+{
+  Internal("error_glExtTexObjectStateOverrideiQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtTexObjectStateOverrideiQCOM)(target, pname, param);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtTexObjectStateOverrideiQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+// GL_QCOM_extended_get2
+
+static void REGAL_CALL error_glExtGetProgramBinarySourceQCOM(GLuint program, GLenum shadertype, GLchar *source, GLint *length)
+{
+  Internal("error_glExtGetProgramBinarySourceQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetProgramBinarySourceQCOM)(program, shadertype, source, length);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetProgramBinarySourceQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetProgramsQCOM(GLuint *programs, GLint maxPrograms, GLint *numPrograms)
+{
+  Internal("error_glExtGetProgramsQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetProgramsQCOM)(programs, maxPrograms, numPrograms);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetProgramsQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glExtGetShadersQCOM(GLuint *shaders, GLint maxShaders, GLint *numShaders)
+{
+  Internal("error_glExtGetShadersQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glExtGetShadersQCOM)(shaders, maxShaders, numShaders);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtGetShadersQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static GLboolean REGAL_CALL error_glExtIsProgramBinaryQCOM(GLuint program)
+{
+  Internal("error_glExtIsProgramBinaryQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  GLboolean  ret = _next->call(&_next->glExtIsProgramBinaryQCOM)(program);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glExtIsProgramBinaryQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+return ret;
+}
+
+// GL_QCOM_tiled_rendering
+
+static void REGAL_CALL error_glEndTilingQCOM(GLbitfield preserveMask)
+{
+  Internal("error_glEndTilingQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glEndTilingQCOM)(preserveMask);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glEndTilingQCOM : ",Token::GLerrorToString(_error));
+      if (_context->err.callback)
+        _context->err.callback( _error );
+    }
+  }
+}
+
+static void REGAL_CALL error_glStartTilingQCOM(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask)
+{
+  Internal("error_glStartTilingQCOM","()");
+  RegalContext *_context = GET_REGAL_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable *_next = _context->dispatcher.error._next;
+  RegalAssert(_next);
+  GLenum _error = GL_NO_ERROR;
+  if (!_context->err.inBeginEnd)
+    _error = _next->call(&_next->glGetError)();
+  RegalAssert(_error==GL_NO_ERROR);
+  _next->call(&_next->glStartTilingQCOM)(x, y, width, height, preserveMask);
+  if (!_context->err.inBeginEnd) {
+    _error = _next->call(&_next->glGetError)();
+    if (_error!=GL_NO_ERROR) {
+      Error("glStartTilingQCOM : ",Token::GLerrorToString(_error));
       if (_context->err.callback)
         _context->err.callback( _error );
     }
@@ -55873,6 +58329,28 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glTessellationFactorAMD = error_glTessellationFactorAMD;
   tbl.glTessellationModeAMD = error_glTessellationModeAMD;
 
+  // GL_ANGLE_framebuffer_blit
+
+  tbl.glBlitFramebufferANGLE = error_glBlitFramebufferANGLE;
+
+  // GL_ANGLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleANGLE = error_glRenderbufferStorageMultisampleANGLE;
+
+  // GL_ANGLE_instanced_arrays
+
+  tbl.glDrawArraysInstancedANGLE = error_glDrawArraysInstancedANGLE;
+  tbl.glDrawElementsInstancedANGLE = error_glDrawElementsInstancedANGLE;
+  tbl.glVertexAttribDivisorANGLE = error_glVertexAttribDivisorANGLE;
+
+  // GL_ANGLE_translated_shader_source
+
+  tbl.glGetTranslatedShaderSourceANGLE = error_glGetTranslatedShaderSourceANGLE;
+
+  // GL_APPLE_copy_texture_levels
+
+  tbl.glCopyTextureLevelsAPPLE = error_glCopyTextureLevelsAPPLE;
+
   // GL_APPLE_element_array
 
   tbl.glDrawElementArrayAPPLE = error_glDrawElementArrayAPPLE;
@@ -55903,11 +58381,26 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glFlushRenderAPPLE = error_glFlushRenderAPPLE;
   tbl.glSwapAPPLE = error_glSwapAPPLE;
 
+  // GL_APPLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleAPPLE = error_glRenderbufferStorageMultisampleAPPLE;
+  tbl.glResolveMultisampleFramebufferAPPLE = error_glResolveMultisampleFramebufferAPPLE;
+
   // GL_APPLE_object_purgeable
 
   tbl.glGetObjectParameterivAPPLE = error_glGetObjectParameterivAPPLE;
   tbl.glObjectPurgeableAPPLE = error_glObjectPurgeableAPPLE;
   tbl.glObjectUnpurgeableAPPLE = error_glObjectUnpurgeableAPPLE;
+
+  // GL_APPLE_sync
+
+  tbl.glClientWaitSyncAPPLE = error_glClientWaitSyncAPPLE;
+  tbl.glDeleteSyncAPPLE = error_glDeleteSyncAPPLE;
+  tbl.glFenceSyncAPPLE = error_glFenceSyncAPPLE;
+  tbl.glGetInteger64vAPPLE = error_glGetInteger64vAPPLE;
+  tbl.glGetSyncivAPPLE = error_glGetSyncivAPPLE;
+  tbl.glIsSyncAPPLE = error_glIsSyncAPPLE;
+  tbl.glWaitSyncAPPLE = error_glWaitSyncAPPLE;
 
   // GL_APPLE_texture_range
 
@@ -56923,6 +59416,11 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glCullParameterdvEXT = error_glCullParameterdvEXT;
   tbl.glCullParameterfvEXT = error_glCullParameterfvEXT;
 
+  // GL_EXT_debug_label
+
+  tbl.glGetObjectLabelEXT = error_glGetObjectLabelEXT;
+  tbl.glLabelObjectEXT = error_glLabelObjectEXT;
+
   // GL_EXT_debug_marker
 
   tbl.glInsertEventMarkerEXT = error_glInsertEventMarkerEXT;
@@ -57166,6 +59664,10 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glVertexArrayVertexAttribOffsetEXT = error_glVertexArrayVertexAttribOffsetEXT;
   tbl.glVertexArrayVertexOffsetEXT = error_glVertexArrayVertexOffsetEXT;
 
+  // GL_EXT_discard_framebuffer
+
+  tbl.glDiscardFramebufferEXT = error_glDiscardFramebufferEXT;
+
   // GL_EXT_draw_buffers2
 
   tbl.glColorMaskIndexedEXT = error_glColorMaskIndexedEXT;
@@ -57316,6 +59818,11 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glTextureLightEXT = error_glTextureLightEXT;
   tbl.glTextureMaterialEXT = error_glTextureMaterialEXT;
 
+  // GL_EXT_map_buffer_range
+
+  tbl.glFlushMappedBufferRangeEXT = error_glFlushMappedBufferRangeEXT;
+  tbl.glMapBufferRangeEXT = error_glMapBufferRangeEXT;
+
   // GL_EXT_multi_draw_arrays
 
   tbl.glMultiDrawArraysEXT = error_glMultiDrawArraysEXT;
@@ -57325,6 +59832,26 @@ void InitDispatchTableError(DispatchTable &tbl)
 
   tbl.glSampleMaskEXT = error_glSampleMaskEXT;
   tbl.glSamplePatternEXT = error_glSamplePatternEXT;
+
+  // GL_EXT_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleEXT = error_glFramebufferTexture2DMultisampleEXT;
+
+  // GL_EXT_multiview_draw_buffers
+
+  tbl.glDrawBuffersIndexedEXT = error_glDrawBuffersIndexedEXT;
+  tbl.glGetIntegeri_vEXT = error_glGetIntegeri_vEXT;
+  tbl.glReadBufferIndexedEXT = error_glReadBufferIndexedEXT;
+
+  // GL_EXT_occlusion_query_boolean
+
+  tbl.glBeginQueryEXT = error_glBeginQueryEXT;
+  tbl.glDeleteQueriesEXT = error_glDeleteQueriesEXT;
+  tbl.glEndQueryEXT = error_glEndQueryEXT;
+  tbl.glGenQueriesEXT = error_glGenQueriesEXT;
+  tbl.glGetQueryObjectuivEXT = error_glGetQueryObjectuivEXT;
+  tbl.glGetQueryivEXT = error_glGetQueryivEXT;
+  tbl.glIsQueryEXT = error_glIsQueryEXT;
 
   // GL_EXT_paletted_texture
 
@@ -57354,6 +59881,12 @@ void InitDispatchTableError(DispatchTable &tbl)
   // GL_EXT_provoking_vertex
 
   tbl.glProvokingVertexEXT = error_glProvokingVertexEXT;
+
+  // GL_EXT_robustness
+
+  tbl.glGetnUniformfvEXT = error_glGetnUniformfvEXT;
+  tbl.glGetnUniformivEXT = error_glGetnUniformivEXT;
+  tbl.glReadnPixelsEXT = error_glReadnPixelsEXT;
 
   // GL_EXT_scene_marker
 
@@ -57438,6 +59971,12 @@ void InitDispatchTableError(DispatchTable &tbl)
   // GL_EXT_texture_perturb_normal
 
   tbl.glTextureNormalEXT = error_glTextureNormalEXT;
+
+  // GL_EXT_texture_storage
+
+  tbl.glTexStorage1DEXT = error_glTexStorage1DEXT;
+  tbl.glTexStorage2DEXT = error_glTexStorage2DEXT;
+  tbl.glTexStorage3DEXT = error_glTexStorage3DEXT;
 
   // GL_EXT_timer_query
 
@@ -57568,6 +60107,11 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glTexCoordPointerListIBM = error_glTexCoordPointerListIBM;
   tbl.glVertexPointerListIBM = error_glVertexPointerListIBM;
 
+  // GL_IMG_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleIMG = error_glFramebufferTexture2DMultisampleIMG;
+  tbl.glRenderbufferStorageMultisampleIMG = error_glRenderbufferStorageMultisampleIMG;
+
   // GL_INGR_blend_func_separate
 
   tbl.glBlendFuncSeparateINGR = error_glBlendFuncSeparateINGR;
@@ -57666,11 +60210,20 @@ void InitDispatchTableError(DispatchTable &tbl)
 
   tbl.glCopyImageSubDataNV = error_glCopyImageSubDataNV;
 
+  // GL_NV_coverage_sample
+
+  tbl.glCoverageMaskNV = error_glCoverageMaskNV;
+  tbl.glCoverageOperationNV = error_glCoverageOperationNV;
+
   // GL_NV_depth_buffer_float
 
   tbl.glClearDepthdNV = error_glClearDepthdNV;
   tbl.glDepthBoundsdNV = error_glDepthBoundsdNV;
   tbl.glDepthRangedNV = error_glDepthRangedNV;
+
+  // GL_NV_draw_buffers
+
+  tbl.glDrawBuffersNV = error_glDrawBuffersNV;
 
   // GL_NV_evaluators
 
@@ -57913,6 +60466,10 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glPrimitiveRestartIndexNV = error_glPrimitiveRestartIndexNV;
   tbl.glPrimitiveRestartNV = error_glPrimitiveRestartNV;
 
+  // GL_NV_read_buffer
+
+  tbl.glReadBufferNV = error_glReadBufferNV;
+
   // GL_NV_register_combiners
 
   tbl.glCombinerInputNV = error_glCombinerInputNV;
@@ -58125,6 +60682,53 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glVideoCaptureStreamParameterfvNV = error_glVideoCaptureStreamParameterfvNV;
   tbl.glVideoCaptureStreamParameterivNV = error_glVideoCaptureStreamParameterivNV;
 
+  // GL_OES_blend_equation_separate
+
+  tbl.glBlendEquationSeparateOES = error_glBlendEquationSeparateOES;
+
+  // GL_OES_blend_func_separate
+
+  tbl.glBlendFuncSeparateOES = error_glBlendFuncSeparateOES;
+
+  // GL_OES_blend_subtract
+
+  tbl.glBlendEquationOES = error_glBlendEquationOES;
+
+  // GL_OES_framebuffer_object
+
+  tbl.glBindFramebufferOES = error_glBindFramebufferOES;
+  tbl.glBindRenderbufferOES = error_glBindRenderbufferOES;
+  tbl.glCheckFramebufferStatusOES = error_glCheckFramebufferStatusOES;
+  tbl.glDeleteFramebuffersOES = error_glDeleteFramebuffersOES;
+  tbl.glDeleteRenderbuffersOES = error_glDeleteRenderbuffersOES;
+  tbl.glFramebufferRenderbufferOES = error_glFramebufferRenderbufferOES;
+  tbl.glFramebufferTexture2DOES = error_glFramebufferTexture2DOES;
+  tbl.glGenFramebuffersOES = error_glGenFramebuffersOES;
+  tbl.glGenRenderbuffersOES = error_glGenRenderbuffersOES;
+  tbl.glGenerateMipmapOES = error_glGenerateMipmapOES;
+  tbl.glGetFramebufferAttachmentParameterivOES = error_glGetFramebufferAttachmentParameterivOES;
+  tbl.glGetRenderbufferParameterivOES = error_glGetRenderbufferParameterivOES;
+  tbl.glIsFramebufferOES = error_glIsFramebufferOES;
+  tbl.glIsRenderbufferOES = error_glIsRenderbufferOES;
+  tbl.glRenderbufferStorageOES = error_glRenderbufferStorageOES;
+
+  // GL_OES_get_program_binary
+
+  tbl.glGetProgramBinaryOES = error_glGetProgramBinaryOES;
+  tbl.glProgramBinaryOES = error_glProgramBinaryOES;
+
+  // GL_OES_mapbuffer
+
+  tbl.glGetBufferPointervOES = error_glGetBufferPointervOES;
+  tbl.glMapBufferOES = error_glMapBufferOES;
+  tbl.glUnmapBufferOES = error_glUnmapBufferOES;
+
+  // GL_OES_matrix_palette
+
+  tbl.glCurrentPaletteMatrixOES = error_glCurrentPaletteMatrixOES;
+  tbl.glMatrixIndexPointerOES = error_glMatrixIndexPointerOES;
+  tbl.glWeightPointerOES = error_glWeightPointerOES;
+
   // GL_OES_single_precision
 
   tbl.glClearDepthfOES = error_glClearDepthfOES;
@@ -58134,9 +60738,71 @@ void InitDispatchTableError(DispatchTable &tbl)
   tbl.glGetClipPlanefOES = error_glGetClipPlanefOES;
   tbl.glOrthofOES = error_glOrthofOES;
 
+  // GL_OES_texture_3D
+
+  tbl.glCompressedTexImage3DOES = error_glCompressedTexImage3DOES;
+  tbl.glCompressedTexSubImage3DOES = error_glCompressedTexSubImage3DOES;
+  tbl.glCopyTexSubImage3DOES = error_glCopyTexSubImage3DOES;
+  tbl.glFramebufferTexture3DOES = error_glFramebufferTexture3DOES;
+  tbl.glTexImage3DOES = error_glTexImage3DOES;
+  tbl.glTexSubImage3DOES = error_glTexSubImage3DOES;
+
+  // GL_OES_texture_cube_map
+
+  tbl.glGetTexGenfvOES = error_glGetTexGenfvOES;
+  tbl.glGetTexGenivOES = error_glGetTexGenivOES;
+  tbl.glGetTexGenxvOES = error_glGetTexGenxvOES;
+  tbl.glTexGenfOES = error_glTexGenfOES;
+  tbl.glTexGenfvOES = error_glTexGenfvOES;
+  tbl.glTexGeniOES = error_glTexGeniOES;
+  tbl.glTexGenivOES = error_glTexGenivOES;
+  tbl.glTexGenxOES = error_glTexGenxOES;
+  tbl.glTexGenxvOES = error_glTexGenxvOES;
+
+  // GL_OES_vertex_array_object
+
+  tbl.glBindVertexArrayOES = error_glBindVertexArrayOES;
+  tbl.glDeleteVertexArraysOES = error_glDeleteVertexArraysOES;
+  tbl.glGenVertexArraysOES = error_glGenVertexArraysOES;
+  tbl.glIsVertexArrayOES = error_glIsVertexArrayOES;
+
   // GL_PGI_misc_hints
 
   tbl.glHintPGI = error_glHintPGI;
+
+  // GL_QCOM_alpha_test
+
+  tbl.glAlphaFuncQCOM = error_glAlphaFuncQCOM;
+
+  // GL_QCOM_driver_control
+
+  tbl.glDisableDriverControlQCOM = error_glDisableDriverControlQCOM;
+  tbl.glEnableDriverControlQCOM = error_glEnableDriverControlQCOM;
+  tbl.glGetDriverControlStringQCOM = error_glGetDriverControlStringQCOM;
+  tbl.glGetDriverControlsQCOM = error_glGetDriverControlsQCOM;
+
+  // GL_QCOM_extended_get
+
+  tbl.glExtGetBufferPointervQCOM = error_glExtGetBufferPointervQCOM;
+  tbl.glExtGetBuffersQCOM = error_glExtGetBuffersQCOM;
+  tbl.glExtGetFramebuffersQCOM = error_glExtGetFramebuffersQCOM;
+  tbl.glExtGetRenderbuffersQCOM = error_glExtGetRenderbuffersQCOM;
+  tbl.glExtGetTexLevelParameterivQCOM = error_glExtGetTexLevelParameterivQCOM;
+  tbl.glExtGetTexSubImageQCOM = error_glExtGetTexSubImageQCOM;
+  tbl.glExtGetTexturesQCOM = error_glExtGetTexturesQCOM;
+  tbl.glExtTexObjectStateOverrideiQCOM = error_glExtTexObjectStateOverrideiQCOM;
+
+  // GL_QCOM_extended_get2
+
+  tbl.glExtGetProgramBinarySourceQCOM = error_glExtGetProgramBinarySourceQCOM;
+  tbl.glExtGetProgramsQCOM = error_glExtGetProgramsQCOM;
+  tbl.glExtGetShadersQCOM = error_glExtGetShadersQCOM;
+  tbl.glExtIsProgramBinaryQCOM = error_glExtIsProgramBinaryQCOM;
+
+  // GL_QCOM_tiled_rendering
+
+  tbl.glEndTilingQCOM = error_glEndTilingQCOM;
+  tbl.glStartTilingQCOM = error_glStartTilingQCOM;
 
   // GL_REGAL_ES1_1_compatibility
 

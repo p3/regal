@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.nvidia.minimalAndroid;
+package com.regal.dreamtorus;
 
 // Wrapper for native library
 
-public class MinimalAndroidLib {
+public class DreamtorusLib {
 
      static {
-         System.loadLibrary("minimalAndroid");
+         System.loadLibrary("dreamtorus");
      }
 
     /**

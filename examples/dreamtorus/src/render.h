@@ -31,5 +31,6 @@ For more information, please refer to <http://unlicense.org/>
 
 #pragma once
 
+extern void dreamTorusInit();
 extern void dreamTorusReshape( int w, int h );
 extern void dreamTorusDisplay( bool clear );

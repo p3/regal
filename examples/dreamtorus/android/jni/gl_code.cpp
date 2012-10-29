@@ -42,30 +42,24 @@ For more information, please refer to <http://unlicense.org/>
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-static bool initialized = false;
-
-void initialize()
-{
-  if (!initialized)
-  {
-    initialized = true;
-    RegalMakeCurrent( eglGetCurrentContext() );
-  }
-}
-
 extern "C"
 {
-  JNIEXPORT void JNICALL Java_com_nvidia_minimalAndroid_MinimalAndroidLib_init(JNIEnv * env, jobject obj,  jint width, jint height);
-  JNIEXPORT void JNICALL Java_com_nvidia_minimalAndroid_MinimalAndroidLib_step(JNIEnv * env, jobject obj);
+  JNIEXPORT void JNICALL Java_com_regal_dreamtorus_DreamtorusLib_init(JNIEnv *env, jobject obj,  jint width, jint height);
+  JNIEXPORT void JNICALL Java_com_regal_dreamtorus_DreamtorusLib_step(JNIEnv *env, jobject obj);
 };
 
-JNIEXPORT void JNICALL Java_com_nvidia_minimalAndroid_MinimalAndroidLib_init(JNIEnv * env, jobject obj,  jint width, jint height)
+JNIEXPORT void JNICALL Java_com_regal_dreamtorus_DreamtorusLib_init(JNIEnv *env, jobject obj,  jint width, jint height)
 {
-  initialize();
+  // On Android there is a new context each time the application
+  // is activated - we ought to clean up the Regal resources for
+  // the old context, but there is no API for that yet.
+
+  RegalMakeCurrent(eglGetCurrentContext());
+  dreamTorusInit();
   dreamTorusReshape(width, height);
 }
 
-JNIEXPORT void JNICALL Java_com_nvidia_minimalAndroid_MinimalAndroidLib_step(JNIEnv * env, jobject obj)
+JNIEXPORT void JNICALL Java_com_regal_dreamtorus_DreamtorusLib_step(JNIEnv *env, jobject obj)
 {
   glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
   dreamTorusDisplay( false );

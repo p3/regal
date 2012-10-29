@@ -16244,6 +16244,16 @@ static void REGAL_CALL emu_glMultiDrawElementsIndirectAMD(GLenum mode, GLenum ty
 
 // GL_AMD_vertex_shader_tessellator
 
+// GL_ANGLE_framebuffer_blit
+
+// GL_ANGLE_framebuffer_multisample
+
+// GL_ANGLE_instanced_arrays
+
+// GL_ANGLE_translated_shader_source
+
+// GL_APPLE_copy_texture_levels
+
 // GL_APPLE_element_array
 
 static void REGAL_CALL emu_glDrawElementArrayAPPLE(GLenum mode, GLint first, GLsizei count)
@@ -16340,7 +16350,11 @@ static void REGAL_CALL emu_glMultiDrawElementArrayAPPLE(GLenum mode, const GLint
 
 // GL_APPLE_flush_render
 
+// GL_APPLE_framebuffer_multisample
+
 // GL_APPLE_object_purgeable
+
+// GL_APPLE_sync
 
 // GL_APPLE_texture_range
 
@@ -19512,6 +19526,8 @@ static void REGAL_CALL emu_glDrawElementArrayATI(GLenum mode, GLsizei count)
 // GL_EXT_copy_texture
 
 // GL_EXT_cull_vertex
+
+// GL_EXT_debug_label
 
 // GL_EXT_debug_marker
 
@@ -29579,6 +29595,8 @@ static GLboolean REGAL_CALL emu_glUnmapNamedBufferEXT(GLuint buffer)
 
 }
 
+// GL_EXT_discard_framebuffer
+
 // GL_EXT_draw_buffers2
 
 static void REGAL_CALL emu_glDisableIndexedEXT(GLenum target, GLuint index)
@@ -30113,6 +30131,64 @@ static void REGAL_CALL emu_glFramebufferTextureFaceEXT(GLenum target, GLenum att
 
 // GL_EXT_light_texture
 
+// GL_EXT_map_buffer_range
+
+static void REGAL_CALL emu_glFlushMappedBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length)
+{
+   RegalContext *_context = GET_REGAL_CONTEXT();
+   RegalAssert(_context);
+
+   // prefix
+   switch( _context->emuLevel ) {
+       case 7 :
+       case 6 :
+       case 5 :
+       case 4 :
+         #if REGAL_EMU_DSA
+         if (_context->dsa) {
+           Push<int> pushLevel(_context->emuLevel);
+           _context->emuLevel = 3;
+           _context->dsa->RestoreBuffer( _context );
+         }
+         #endif
+       case 1 :
+       default:
+           break;
+   }
+
+   DispatchTable *_next = _context->dispatcher.emulation._next;
+   RegalAssert(_next);
+    _next->call(& _next->glFlushMappedBufferRangeEXT)(target, offset, length);
+}
+
+static GLvoid *REGAL_CALL emu_glMapBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+   RegalContext *_context = GET_REGAL_CONTEXT();
+   RegalAssert(_context);
+
+   // prefix
+   switch( _context->emuLevel ) {
+       case 7 :
+       case 6 :
+       case 5 :
+       case 4 :
+         #if REGAL_EMU_DSA
+         if (_context->dsa) {
+           Push<int> pushLevel(_context->emuLevel);
+           _context->emuLevel = 3;
+           _context->dsa->RestoreBuffer( _context );
+         }
+         #endif
+       case 1 :
+       default:
+           break;
+   }
+
+   DispatchTable *_next = _context->dispatcher.emulation._next;
+   RegalAssert(_next);
+   return  _next->call(& _next->glMapBufferRangeEXT)(target, offset, length, access);
+}
+
 // GL_EXT_multi_draw_arrays
 
 static void REGAL_CALL emu_glMultiDrawArraysEXT(GLenum mode, const GLint *first, const GLsizei *count, GLsizei primcount)
@@ -30205,6 +30281,12 @@ static void REGAL_CALL emu_glMultiDrawElementsEXT(GLenum mode, GLsizei *count, G
 
 // GL_EXT_multisample
 
+// GL_EXT_multisampled_render_to_texture
+
+// GL_EXT_multiview_draw_buffers
+
+// GL_EXT_occlusion_query_boolean
+
 // GL_EXT_paletted_texture
 
 // GL_EXT_pixel_transform
@@ -30214,6 +30296,8 @@ static void REGAL_CALL emu_glMultiDrawElementsEXT(GLenum mode, GLsizei *count, G
 // GL_EXT_polygon_offset
 
 // GL_EXT_provoking_vertex
+
+// GL_EXT_robustness
 
 // GL_EXT_scene_marker
 
@@ -31079,6 +31163,8 @@ static void REGAL_CALL emu_glBindTextureEXT(GLenum target, GLuint texture)
 
 // GL_EXT_texture_perturb_normal
 
+// GL_EXT_texture_storage
+
 // GL_EXT_timer_query
 
 // GL_EXT_transform_feedback
@@ -31147,6 +31233,8 @@ static void REGAL_CALL emu_glDrawArraysEXT(GLenum mode, GLint first, GLsizei cou
 
 // GL_IBM_vertex_array_lists
 
+// GL_IMG_multisampled_render_to_texture
+
 // GL_INGR_blend_func_separate
 
 // GL_INTEL_parallel_arrays
@@ -31169,7 +31257,11 @@ static void REGAL_CALL emu_glDrawArraysEXT(GLenum mode, GLint first, GLsizei cou
 
 // GL_NV_copy_image
 
+// GL_NV_coverage_sample
+
 // GL_NV_depth_buffer_float
+
+// GL_NV_draw_buffers
 
 // GL_NV_evaluators
 
@@ -31708,6 +31800,8 @@ static void REGAL_CALL emu_glProgramLocalParametersI4uivNV(GLenum target, GLuint
 
 // GL_NV_primitive_restart
 
+// GL_NV_read_buffer
+
 // GL_NV_register_combiners
 
 // GL_NV_register_combiners2
@@ -31792,9 +31886,68 @@ static void REGAL_CALL emu_glTexImage3DMultisampleCoverageNV(GLenum target, GLsi
 
 // GL_NV_video_capture
 
+// GL_OES_blend_equation_separate
+
+// GL_OES_blend_func_separate
+
+// GL_OES_blend_subtract
+
+// GL_OES_framebuffer_object
+
+// GL_OES_get_program_binary
+
+// GL_OES_mapbuffer
+
+// GL_OES_matrix_palette
+
 // GL_OES_single_precision
 
+// GL_OES_texture_3D
+
+// GL_OES_texture_cube_map
+
+// GL_OES_vertex_array_object
+
+static void REGAL_CALL emu_glBindVertexArrayOES(GLuint array)
+{
+   RegalContext *_context = GET_REGAL_CONTEXT();
+   RegalAssert(_context);
+
+   // prefix
+   switch( _context->emuLevel ) {
+       case 7 :
+       case 6 :
+       case 5 :
+       case 4 :
+       case 3 :
+         #if REGAL_EMU_IFF
+         if (_context->iff) {
+           Push<int> pushLevel(_context->emuLevel);
+           _context->emuLevel = 2;
+           _context->iff->ShadowVao( _context, array );
+         }
+         #endif
+       case 1 :
+       default:
+           break;
+   }
+
+   DispatchTable *_next = _context->dispatcher.emulation._next;
+   RegalAssert(_next);
+    _next->call(& _next->glBindVertexArrayOES)(array);
+}
+
 // GL_PGI_misc_hints
+
+// GL_QCOM_alpha_test
+
+// GL_QCOM_driver_control
+
+// GL_QCOM_extended_get
+
+// GL_QCOM_extended_get2
+
+// GL_QCOM_tiled_rendering
 
 // GL_REGAL_ES1_1_compatibility
 
@@ -32670,6 +32823,11 @@ void InitDispatchTableEmu(DispatchTable &tbl)
    tbl.glFramebufferTextureEXT = emu_glFramebufferTextureEXT;
    tbl.glFramebufferTextureFaceEXT = emu_glFramebufferTextureFaceEXT;
 
+// GL_EXT_map_buffer_range
+
+   tbl.glFlushMappedBufferRangeEXT = emu_glFlushMappedBufferRangeEXT;
+   tbl.glMapBufferRangeEXT = emu_glMapBufferRangeEXT;
+
 // GL_EXT_multi_draw_arrays
 
    tbl.glMultiDrawArraysEXT = emu_glMultiDrawArraysEXT;
@@ -32741,6 +32899,10 @@ void InitDispatchTableEmu(DispatchTable &tbl)
 
    tbl.glTexImage2DMultisampleCoverageNV = emu_glTexImage2DMultisampleCoverageNV;
    tbl.glTexImage3DMultisampleCoverageNV = emu_glTexImage3DMultisampleCoverageNV;
+
+// GL_OES_vertex_array_object
+
+   tbl.glBindVertexArrayOES = emu_glBindVertexArrayOES;
 
 // GL_SGIS_texture4D
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nvidia.minimalAndroid;
+package com.regal.dreamtorus;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,13 +24,13 @@ import android.view.WindowManager;
 import java.io.File;
 
 
-public class MinimalAndroidActivity extends Activity {
+public class DreamtorusActivity extends Activity {
 
-    MinimalAndroidView mView;
+    DreamtorusView mView;
 
     @Override protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mView = new MinimalAndroidView(getApplication());
+        mView = new DreamtorusView(getApplication());
 	setContentView(mView);
     }
 

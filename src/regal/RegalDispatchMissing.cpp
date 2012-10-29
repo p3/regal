@@ -5047,6 +5047,85 @@ void REGAL_CALL missing_glTessellationModeAMD(GLenum mode)
   Warning( "glTessellationModeAMD not available." );
 }
 
+// GL_ANGLE_framebuffer_blit
+
+void REGAL_CALL missing_glBlitFramebufferANGLE(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+  UNUSED_PARAMETER(srcX0);
+  UNUSED_PARAMETER(srcY0);
+  UNUSED_PARAMETER(srcX1);
+  UNUSED_PARAMETER(srcY1);
+  UNUSED_PARAMETER(dstX0);
+  UNUSED_PARAMETER(dstY0);
+  UNUSED_PARAMETER(dstX1);
+  UNUSED_PARAMETER(dstY1);
+  UNUSED_PARAMETER(mask);
+  UNUSED_PARAMETER(filter);
+  Warning( "glBlitFramebufferANGLE not available." );
+}
+
+// GL_ANGLE_framebuffer_multisample
+
+void REGAL_CALL missing_glRenderbufferStorageMultisampleANGLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(samples);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  Warning( "glRenderbufferStorageMultisampleANGLE not available." );
+}
+
+// GL_ANGLE_instanced_arrays
+
+void REGAL_CALL missing_glDrawArraysInstancedANGLE(GLenum mode, GLint first, GLsizei count, GLsizei primcount)
+{
+  UNUSED_PARAMETER(mode);
+  UNUSED_PARAMETER(first);
+  UNUSED_PARAMETER(count);
+  UNUSED_PARAMETER(primcount);
+  Warning( "glDrawArraysInstancedANGLE not available." );
+}
+
+void REGAL_CALL missing_glDrawElementsInstancedANGLE(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount)
+{
+  UNUSED_PARAMETER(mode);
+  UNUSED_PARAMETER(count);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(indices);
+  UNUSED_PARAMETER(primcount);
+  Warning( "glDrawElementsInstancedANGLE not available." );
+}
+
+void REGAL_CALL missing_glVertexAttribDivisorANGLE(GLuint index, GLuint divisor)
+{
+  UNUSED_PARAMETER(index);
+  UNUSED_PARAMETER(divisor);
+  Warning( "glVertexAttribDivisorANGLE not available." );
+}
+
+// GL_ANGLE_translated_shader_source
+
+void REGAL_CALL missing_glGetTranslatedShaderSourceANGLE(GLuint shader, GLsizei bufsize, GLsizei *length, GLchar *source)
+{
+  UNUSED_PARAMETER(shader);
+  UNUSED_PARAMETER(bufsize);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(source);
+  Warning( "glGetTranslatedShaderSourceANGLE not available." );
+}
+
+// GL_APPLE_copy_texture_levels
+
+void REGAL_CALL missing_glCopyTextureLevelsAPPLE(GLuint destinationTexture, GLuint sourceTexture, GLint sourceBaseLevel, GLsizei sourceLevelCount)
+{
+  UNUSED_PARAMETER(destinationTexture);
+  UNUSED_PARAMETER(sourceTexture);
+  UNUSED_PARAMETER(sourceBaseLevel);
+  UNUSED_PARAMETER(sourceLevelCount);
+  Warning( "glCopyTextureLevelsAPPLE not available." );
+}
+
 // GL_APPLE_element_array
 
 void REGAL_CALL missing_glDrawElementArrayAPPLE(GLenum mode, GLint first, GLsizei count)
@@ -5186,6 +5265,23 @@ void REGAL_CALL missing_glSwapAPPLE(void)
   Warning( "glSwapAPPLE not available." );
 }
 
+// GL_APPLE_framebuffer_multisample
+
+void REGAL_CALL missing_glRenderbufferStorageMultisampleAPPLE(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(samples);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  Warning( "glRenderbufferStorageMultisampleAPPLE not available." );
+}
+
+void REGAL_CALL missing_glResolveMultisampleFramebufferAPPLE(void)
+{
+  Warning( "glResolveMultisampleFramebufferAPPLE not available." );
+}
+
 // GL_APPLE_object_purgeable
 
 void REGAL_CALL missing_glGetObjectParameterivAPPLE(GLenum objectType, GLuint name, GLenum pname, GLint *params)
@@ -5213,6 +5309,63 @@ GLenum REGAL_CALL missing_glObjectUnpurgeableAPPLE(GLenum objectType, GLuint nam
   UNUSED_PARAMETER(option);
   Warning( "glObjectUnpurgeableAPPLE not available." );
   return (GLenum )0;
+}
+
+// GL_APPLE_sync
+
+GLenum REGAL_CALL missing_glClientWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  UNUSED_PARAMETER(sync);
+  UNUSED_PARAMETER(flags);
+  UNUSED_PARAMETER(timeout);
+  Warning( "glClientWaitSyncAPPLE not available." );
+  return (GLenum )0;
+}
+
+void REGAL_CALL missing_glDeleteSyncAPPLE(GLsync sync)
+{
+  UNUSED_PARAMETER(sync);
+  Warning( "glDeleteSyncAPPLE not available." );
+}
+
+GLsync REGAL_CALL missing_glFenceSyncAPPLE(GLenum condition, GLbitfield flags)
+{
+  UNUSED_PARAMETER(condition);
+  UNUSED_PARAMETER(flags);
+  Warning( "glFenceSyncAPPLE not available." );
+  return (GLsync )0;
+}
+
+void REGAL_CALL missing_glGetInteger64vAPPLE(GLenum pname, GLint64 *params)
+{
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetInteger64vAPPLE not available." );
+}
+
+void REGAL_CALL missing_glGetSyncivAPPLE(GLsync sync, GLenum pname, GLsizei bufSize, GLsizei *length, GLint *values)
+{
+  UNUSED_PARAMETER(sync);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(values);
+  Warning( "glGetSyncivAPPLE not available." );
+}
+
+GLboolean REGAL_CALL missing_glIsSyncAPPLE(GLsync sync)
+{
+  UNUSED_PARAMETER(sync);
+  Warning( "glIsSyncAPPLE not available." );
+  return (GLboolean )0;
+}
+
+void REGAL_CALL missing_glWaitSyncAPPLE(GLsync sync, GLbitfield flags, GLuint64 timeout)
+{
+  UNUSED_PARAMETER(sync);
+  UNUSED_PARAMETER(flags);
+  UNUSED_PARAMETER(timeout);
+  Warning( "glWaitSyncAPPLE not available." );
 }
 
 // GL_APPLE_texture_range
@@ -11555,6 +11708,27 @@ void REGAL_CALL missing_glCullParameterfvEXT(GLenum pname, GLfloat *params)
   Warning( "glCullParameterfvEXT not available." );
 }
 
+// GL_EXT_debug_label
+
+void REGAL_CALL missing_glGetObjectLabelEXT(GLenum type, GLuint object, GLsizei bufSize, GLsizei *length, GLchar *label)
+{
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(object);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(label);
+  Warning( "glGetObjectLabelEXT not available." );
+}
+
+void REGAL_CALL missing_glLabelObjectEXT(GLenum type, GLuint object, GLsizei length, const GLchar *label)
+{
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(object);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(label);
+  Warning( "glLabelObjectEXT not available." );
+}
+
 // GL_EXT_debug_marker
 
 void REGAL_CALL missing_glInsertEventMarkerEXT(GLsizei length, const GLchar *marker)
@@ -13856,6 +14030,16 @@ void REGAL_CALL missing_glVertexArrayVertexOffsetEXT(GLuint vaobj, GLuint buffer
   Warning( "glVertexArrayVertexOffsetEXT not available." );
 }
 
+// GL_EXT_discard_framebuffer
+
+void REGAL_CALL missing_glDiscardFramebufferEXT(GLenum target, GLsizei numAttachments, const GLenum *attachments)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(numAttachments);
+  UNUSED_PARAMETER(attachments);
+  Warning( "glDiscardFramebufferEXT not available." );
+}
+
 // GL_EXT_draw_buffers2
 
 void REGAL_CALL missing_glColorMaskIndexedEXT(GLuint buf, GLboolean r, GLboolean g, GLboolean b, GLboolean a)
@@ -14721,6 +14905,26 @@ void REGAL_CALL missing_glTextureMaterialEXT(GLenum face, GLenum mode)
   Warning( "glTextureMaterialEXT not available." );
 }
 
+// GL_EXT_map_buffer_range
+
+void REGAL_CALL missing_glFlushMappedBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(offset);
+  UNUSED_PARAMETER(length);
+  Warning( "glFlushMappedBufferRangeEXT not available." );
+}
+
+GLvoid *REGAL_CALL missing_glMapBufferRangeEXT(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(offset);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(access);
+  Warning( "glMapBufferRangeEXT not available." );
+  return NULL;
+}
+
 // GL_EXT_multi_draw_arrays
 
 void REGAL_CALL missing_glMultiDrawArraysEXT(GLenum mode, const GLint *first, const GLsizei *count, GLsizei primcount)
@@ -14755,6 +14959,96 @@ void REGAL_CALL missing_glSamplePatternEXT(GLenum pattern)
 {
   UNUSED_PARAMETER(pattern);
   Warning( "glSamplePatternEXT not available." );
+}
+
+// GL_EXT_multisampled_render_to_texture
+
+void REGAL_CALL missing_glFramebufferTexture2DMultisampleEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(attachment);
+  UNUSED_PARAMETER(textarget);
+  UNUSED_PARAMETER(texture);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(samples);
+  Warning( "glFramebufferTexture2DMultisampleEXT not available." );
+}
+
+// GL_EXT_multiview_draw_buffers
+
+void REGAL_CALL missing_glDrawBuffersIndexedEXT(GLint n, const GLenum *location, const GLint *indices)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(location);
+  UNUSED_PARAMETER(indices);
+  Warning( "glDrawBuffersIndexedEXT not available." );
+}
+
+void REGAL_CALL missing_glGetIntegeri_vEXT(GLenum target, GLuint index, GLint *data)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(index);
+  UNUSED_PARAMETER(data);
+  Warning( "glGetIntegeri_vEXT not available." );
+}
+
+void REGAL_CALL missing_glReadBufferIndexedEXT(GLenum src, GLint index)
+{
+  UNUSED_PARAMETER(src);
+  UNUSED_PARAMETER(index);
+  Warning( "glReadBufferIndexedEXT not available." );
+}
+
+// GL_EXT_occlusion_query_boolean
+
+void REGAL_CALL missing_glBeginQueryEXT(GLenum target, GLuint id)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(id);
+  Warning( "glBeginQueryEXT not available." );
+}
+
+void REGAL_CALL missing_glDeleteQueriesEXT(GLsizei n, const GLuint *ids)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(ids);
+  Warning( "glDeleteQueriesEXT not available." );
+}
+
+void REGAL_CALL missing_glEndQueryEXT(GLenum target)
+{
+  UNUSED_PARAMETER(target);
+  Warning( "glEndQueryEXT not available." );
+}
+
+void REGAL_CALL missing_glGenQueriesEXT(GLsizei n, GLuint *ids)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(ids);
+  Warning( "glGenQueriesEXT not available." );
+}
+
+void REGAL_CALL missing_glGetQueryObjectuivEXT(GLuint id, GLenum pname, GLuint *params)
+{
+  UNUSED_PARAMETER(id);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetQueryObjectuivEXT not available." );
+}
+
+void REGAL_CALL missing_glGetQueryivEXT(GLenum target, GLenum pname, GLint *params)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetQueryivEXT not available." );
+}
+
+GLboolean REGAL_CALL missing_glIsQueryEXT(GLuint id)
+{
+  UNUSED_PARAMETER(id);
+  Warning( "glIsQueryEXT not available." );
+  return (GLboolean )0;
 }
 
 // GL_EXT_paletted_texture
@@ -14876,6 +15170,39 @@ void REGAL_CALL missing_glProvokingVertexEXT(GLenum mode)
 {
   UNUSED_PARAMETER(mode);
   Warning( "glProvokingVertexEXT not available." );
+}
+
+// GL_EXT_robustness
+
+void REGAL_CALL missing_glGetnUniformfvEXT(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+  UNUSED_PARAMETER(program);
+  UNUSED_PARAMETER(location);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetnUniformfvEXT not available." );
+}
+
+void REGAL_CALL missing_glGetnUniformivEXT(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+  UNUSED_PARAMETER(program);
+  UNUSED_PARAMETER(location);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetnUniformivEXT not available." );
+}
+
+void REGAL_CALL missing_glReadnPixelsEXT(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+  UNUSED_PARAMETER(x);
+  UNUSED_PARAMETER(y);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(format);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(data);
+  Warning( "glReadnPixelsEXT not available." );
 }
 
 // GL_EXT_scene_marker
@@ -15261,6 +15588,38 @@ void REGAL_CALL missing_glTextureNormalEXT(GLenum mode)
 {
   UNUSED_PARAMETER(mode);
   Warning( "glTextureNormalEXT not available." );
+}
+
+// GL_EXT_texture_storage
+
+void REGAL_CALL missing_glTexStorage1DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(levels);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  Warning( "glTexStorage1DEXT not available." );
+}
+
+void REGAL_CALL missing_glTexStorage2DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(levels);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  Warning( "glTexStorage2DEXT not available." );
+}
+
+void REGAL_CALL missing_glTexStorage3DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(levels);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(depth);
+  Warning( "glTexStorage3DEXT not available." );
 }
 
 // GL_EXT_timer_query
@@ -16042,6 +16401,29 @@ void REGAL_CALL missing_glVertexPointerListIBM(GLint size, GLenum type, GLint st
   Warning( "glVertexPointerListIBM not available." );
 }
 
+// GL_IMG_multisampled_render_to_texture
+
+void REGAL_CALL missing_glFramebufferTexture2DMultisampleIMG(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLsizei samples)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(attachment);
+  UNUSED_PARAMETER(textarget);
+  UNUSED_PARAMETER(texture);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(samples);
+  Warning( "glFramebufferTexture2DMultisampleIMG not available." );
+}
+
+void REGAL_CALL missing_glRenderbufferStorageMultisampleIMG(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(samples);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  Warning( "glRenderbufferStorageMultisampleIMG not available." );
+}
+
 // GL_INGR_blend_func_separate
 
 void REGAL_CALL missing_glBlendFuncSeparateINGR(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
@@ -16567,6 +16949,20 @@ void REGAL_CALL missing_glCopyImageSubDataNV(GLuint srcName, GLenum srcTarget, G
   Warning( "glCopyImageSubDataNV not available." );
 }
 
+// GL_NV_coverage_sample
+
+void REGAL_CALL missing_glCoverageMaskNV(GLboolean mask)
+{
+  UNUSED_PARAMETER(mask);
+  Warning( "glCoverageMaskNV not available." );
+}
+
+void REGAL_CALL missing_glCoverageOperationNV(GLenum operation)
+{
+  UNUSED_PARAMETER(operation);
+  Warning( "glCoverageOperationNV not available." );
+}
+
 // GL_NV_depth_buffer_float
 
 void REGAL_CALL missing_glClearDepthdNV(GLdouble depth)
@@ -16587,6 +16983,15 @@ void REGAL_CALL missing_glDepthRangedNV(GLdouble zNear, GLdouble zFar)
   UNUSED_PARAMETER(zNear);
   UNUSED_PARAMETER(zFar);
   Warning( "glDepthRangedNV not available." );
+}
+
+// GL_NV_draw_buffers
+
+void REGAL_CALL missing_glDrawBuffersNV(GLsizei n, const GLenum *bufs)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(bufs);
+  Warning( "glDrawBuffersNV not available." );
 }
 
 // GL_NV_evaluators
@@ -18249,6 +18654,14 @@ void REGAL_CALL missing_glPrimitiveRestartNV(void)
   Warning( "glPrimitiveRestartNV not available." );
 }
 
+// GL_NV_read_buffer
+
+void REGAL_CALL missing_glReadBufferNV(GLenum mode)
+{
+  UNUSED_PARAMETER(mode);
+  Warning( "glReadBufferNV not available." );
+}
+
 // GL_NV_register_combiners
 
 void REGAL_CALL missing_glCombinerInputNV(GLenum stage, GLenum portion, GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage)
@@ -19680,6 +20093,222 @@ void REGAL_CALL missing_glVideoCaptureStreamParameterivNV(GLuint video_capture_s
   Warning( "glVideoCaptureStreamParameterivNV not available." );
 }
 
+// GL_OES_blend_equation_separate
+
+void REGAL_CALL missing_glBlendEquationSeparateOES(GLenum modeRGB, GLenum modeAlpha)
+{
+  UNUSED_PARAMETER(modeRGB);
+  UNUSED_PARAMETER(modeAlpha);
+  Warning( "glBlendEquationSeparateOES not available." );
+}
+
+// GL_OES_blend_func_separate
+
+void REGAL_CALL missing_glBlendFuncSeparateOES(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
+{
+  UNUSED_PARAMETER(sfactorRGB);
+  UNUSED_PARAMETER(dfactorRGB);
+  UNUSED_PARAMETER(sfactorAlpha);
+  UNUSED_PARAMETER(dfactorAlpha);
+  Warning( "glBlendFuncSeparateOES not available." );
+}
+
+// GL_OES_blend_subtract
+
+void REGAL_CALL missing_glBlendEquationOES(GLenum mode)
+{
+  UNUSED_PARAMETER(mode);
+  Warning( "glBlendEquationOES not available." );
+}
+
+// GL_OES_framebuffer_object
+
+void REGAL_CALL missing_glBindFramebufferOES(GLenum target, GLuint framebuffer)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(framebuffer);
+  Warning( "glBindFramebufferOES not available." );
+}
+
+void REGAL_CALL missing_glBindRenderbufferOES(GLenum target, GLuint renderbuffer)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(renderbuffer);
+  Warning( "glBindRenderbufferOES not available." );
+}
+
+GLenum REGAL_CALL missing_glCheckFramebufferStatusOES(GLenum target)
+{
+  UNUSED_PARAMETER(target);
+  Warning( "glCheckFramebufferStatusOES not available." );
+  return (GLenum )0;
+}
+
+void REGAL_CALL missing_glDeleteFramebuffersOES(GLsizei n, const GLuint *framebuffers)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(framebuffers);
+  Warning( "glDeleteFramebuffersOES not available." );
+}
+
+void REGAL_CALL missing_glDeleteRenderbuffersOES(GLsizei n, const GLuint *renderbuffers)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(renderbuffers);
+  Warning( "glDeleteRenderbuffersOES not available." );
+}
+
+void REGAL_CALL missing_glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(attachment);
+  UNUSED_PARAMETER(renderbuffertarget);
+  UNUSED_PARAMETER(renderbuffer);
+  Warning( "glFramebufferRenderbufferOES not available." );
+}
+
+void REGAL_CALL missing_glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(attachment);
+  UNUSED_PARAMETER(textarget);
+  UNUSED_PARAMETER(texture);
+  UNUSED_PARAMETER(level);
+  Warning( "glFramebufferTexture2DOES not available." );
+}
+
+void REGAL_CALL missing_glGenFramebuffersOES(GLsizei n, GLuint *framebuffers)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(framebuffers);
+  Warning( "glGenFramebuffersOES not available." );
+}
+
+void REGAL_CALL missing_glGenRenderbuffersOES(GLsizei n, GLuint *renderbuffers)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(renderbuffers);
+  Warning( "glGenRenderbuffersOES not available." );
+}
+
+void REGAL_CALL missing_glGenerateMipmapOES(GLenum target)
+{
+  UNUSED_PARAMETER(target);
+  Warning( "glGenerateMipmapOES not available." );
+}
+
+void REGAL_CALL missing_glGetFramebufferAttachmentParameterivOES(GLenum target, GLenum attachment, GLenum pname, GLint *params)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(attachment);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetFramebufferAttachmentParameterivOES not available." );
+}
+
+void REGAL_CALL missing_glGetRenderbufferParameterivOES(GLenum target, GLenum pname, GLint *params)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetRenderbufferParameterivOES not available." );
+}
+
+GLboolean REGAL_CALL missing_glIsFramebufferOES(GLuint framebuffer)
+{
+  UNUSED_PARAMETER(framebuffer);
+  Warning( "glIsFramebufferOES not available." );
+  return (GLboolean )0;
+}
+
+GLboolean REGAL_CALL missing_glIsRenderbufferOES(GLuint renderbuffer)
+{
+  UNUSED_PARAMETER(renderbuffer);
+  Warning( "glIsRenderbufferOES not available." );
+  return (GLboolean )0;
+}
+
+void REGAL_CALL missing_glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  Warning( "glRenderbufferStorageOES not available." );
+}
+
+// GL_OES_get_program_binary
+
+void REGAL_CALL missing_glGetProgramBinaryOES(GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, GLvoid *binary)
+{
+  UNUSED_PARAMETER(program);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(binaryFormat);
+  UNUSED_PARAMETER(binary);
+  Warning( "glGetProgramBinaryOES not available." );
+}
+
+void REGAL_CALL missing_glProgramBinaryOES(GLuint program, GLenum binaryFormat, const GLvoid *binary, GLint length)
+{
+  UNUSED_PARAMETER(program);
+  UNUSED_PARAMETER(binaryFormat);
+  UNUSED_PARAMETER(binary);
+  UNUSED_PARAMETER(length);
+  Warning( "glProgramBinaryOES not available." );
+}
+
+// GL_OES_mapbuffer
+
+void REGAL_CALL missing_glGetBufferPointervOES(GLenum target, GLenum pname, GLvoid **params)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetBufferPointervOES not available." );
+}
+
+GLvoid *REGAL_CALL missing_glMapBufferOES(GLenum target, GLenum access)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(access);
+  Warning( "glMapBufferOES not available." );
+  return NULL;
+}
+
+GLboolean REGAL_CALL missing_glUnmapBufferOES(GLenum target)
+{
+  UNUSED_PARAMETER(target);
+  Warning( "glUnmapBufferOES not available." );
+  return (GLboolean )0;
+}
+
+// GL_OES_matrix_palette
+
+void REGAL_CALL missing_glCurrentPaletteMatrixOES(GLuint index)
+{
+  UNUSED_PARAMETER(index);
+  Warning( "glCurrentPaletteMatrixOES not available." );
+}
+
+void REGAL_CALL missing_glMatrixIndexPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  UNUSED_PARAMETER(size);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(stride);
+  UNUSED_PARAMETER(pointer);
+  Warning( "glMatrixIndexPointerOES not available." );
+}
+
+void REGAL_CALL missing_glWeightPointerOES(GLint size, GLenum type, GLsizei stride, GLvoid *pointer)
+{
+  UNUSED_PARAMETER(size);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(stride);
+  UNUSED_PARAMETER(pointer);
+  Warning( "glWeightPointerOES not available." );
+}
+
 // GL_OES_single_precision
 
 void REGAL_CALL missing_glClearDepthfOES(GLclampd depth)
@@ -19731,6 +20360,197 @@ void REGAL_CALL missing_glOrthofOES(GLfloat l, GLfloat r, GLfloat b, GLfloat t, 
   Warning( "glOrthofOES not available." );
 }
 
+// GL_OES_texture_3D
+
+void REGAL_CALL missing_glCompressedTexImage3DOES(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const GLvoid *data)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(internalformat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(depth);
+  UNUSED_PARAMETER(border);
+  UNUSED_PARAMETER(imageSize);
+  UNUSED_PARAMETER(data);
+  Warning( "glCompressedTexImage3DOES not available." );
+}
+
+void REGAL_CALL missing_glCompressedTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(xoffset);
+  UNUSED_PARAMETER(yoffset);
+  UNUSED_PARAMETER(zoffset);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(depth);
+  UNUSED_PARAMETER(format);
+  UNUSED_PARAMETER(imageSize);
+  UNUSED_PARAMETER(data);
+  Warning( "glCompressedTexSubImage3DOES not available." );
+}
+
+void REGAL_CALL missing_glCopyTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(xoffset);
+  UNUSED_PARAMETER(yoffset);
+  UNUSED_PARAMETER(zoffset);
+  UNUSED_PARAMETER(x);
+  UNUSED_PARAMETER(y);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  Warning( "glCopyTexSubImage3DOES not available." );
+}
+
+void REGAL_CALL missing_glFramebufferTexture3DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(attachment);
+  UNUSED_PARAMETER(textarget);
+  UNUSED_PARAMETER(texture);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(zoffset);
+  Warning( "glFramebufferTexture3DOES not available." );
+}
+
+void REGAL_CALL missing_glTexImage3DOES(GLenum target, GLint level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(internalFormat);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(depth);
+  UNUSED_PARAMETER(border);
+  UNUSED_PARAMETER(format);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(pixels);
+  Warning( "glTexImage3DOES not available." );
+}
+
+void REGAL_CALL missing_glTexSubImage3DOES(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(xoffset);
+  UNUSED_PARAMETER(yoffset);
+  UNUSED_PARAMETER(zoffset);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(depth);
+  UNUSED_PARAMETER(format);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(pixels);
+  Warning( "glTexSubImage3DOES not available." );
+}
+
+// GL_OES_texture_cube_map
+
+void REGAL_CALL missing_glGetTexGenfvOES(GLenum coord, GLenum pname, GLfloat *params)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetTexGenfvOES not available." );
+}
+
+void REGAL_CALL missing_glGetTexGenivOES(GLenum coord, GLenum pname, GLint *params)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetTexGenivOES not available." );
+}
+
+void REGAL_CALL missing_glGetTexGenxvOES(GLenum coord, GLenum pname, GLfixed *params)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glGetTexGenxvOES not available." );
+}
+
+void REGAL_CALL missing_glTexGenfOES(GLenum coord, GLenum pname, GLfloat param)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(param);
+  Warning( "glTexGenfOES not available." );
+}
+
+void REGAL_CALL missing_glTexGenfvOES(GLenum coord, GLenum pname, const GLfloat *params)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glTexGenfvOES not available." );
+}
+
+void REGAL_CALL missing_glTexGeniOES(GLenum coord, GLenum pname, GLint param)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(param);
+  Warning( "glTexGeniOES not available." );
+}
+
+void REGAL_CALL missing_glTexGenivOES(GLenum coord, GLenum pname, const GLint *params)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glTexGenivOES not available." );
+}
+
+void REGAL_CALL missing_glTexGenxOES(GLenum coord, GLenum pname, GLfixed param)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(param);
+  Warning( "glTexGenxOES not available." );
+}
+
+void REGAL_CALL missing_glTexGenxvOES(GLenum coord, GLenum pname, const GLfixed *params)
+{
+  UNUSED_PARAMETER(coord);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glTexGenxvOES not available." );
+}
+
+// GL_OES_vertex_array_object
+
+void REGAL_CALL missing_glBindVertexArrayOES(GLuint array)
+{
+  UNUSED_PARAMETER(array);
+  Warning( "glBindVertexArrayOES not available." );
+}
+
+void REGAL_CALL missing_glDeleteVertexArraysOES(GLsizei n, const GLuint *arrays)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(arrays);
+  Warning( "glDeleteVertexArraysOES not available." );
+}
+
+void REGAL_CALL missing_glGenVertexArraysOES(GLsizei n, GLuint *arrays)
+{
+  UNUSED_PARAMETER(n);
+  UNUSED_PARAMETER(arrays);
+  Warning( "glGenVertexArraysOES not available." );
+}
+
+GLboolean REGAL_CALL missing_glIsVertexArrayOES(GLuint array)
+{
+  UNUSED_PARAMETER(array);
+  Warning( "glIsVertexArrayOES not available." );
+  return (GLboolean )0;
+}
+
 // GL_PGI_misc_hints
 
 void REGAL_CALL missing_glHintPGI(GLenum target, GLint mode)
@@ -19738,6 +20558,173 @@ void REGAL_CALL missing_glHintPGI(GLenum target, GLint mode)
   UNUSED_PARAMETER(target);
   UNUSED_PARAMETER(mode);
   Warning( "glHintPGI not available." );
+}
+
+// GL_QCOM_alpha_test
+
+void REGAL_CALL missing_glAlphaFuncQCOM(GLenum func, GLclampf ref)
+{
+  UNUSED_PARAMETER(func);
+  UNUSED_PARAMETER(ref);
+  Warning( "glAlphaFuncQCOM not available." );
+}
+
+// GL_QCOM_driver_control
+
+void REGAL_CALL missing_glDisableDriverControlQCOM(GLuint driverControl)
+{
+  UNUSED_PARAMETER(driverControl);
+  Warning( "glDisableDriverControlQCOM not available." );
+}
+
+void REGAL_CALL missing_glEnableDriverControlQCOM(GLuint driverControl)
+{
+  UNUSED_PARAMETER(driverControl);
+  Warning( "glEnableDriverControlQCOM not available." );
+}
+
+void REGAL_CALL missing_glGetDriverControlStringQCOM(GLuint driverControl, GLsizei bufSize, GLsizei *length, GLchar *driverControlString)
+{
+  UNUSED_PARAMETER(driverControl);
+  UNUSED_PARAMETER(bufSize);
+  UNUSED_PARAMETER(length);
+  UNUSED_PARAMETER(driverControlString);
+  Warning( "glGetDriverControlStringQCOM not available." );
+}
+
+void REGAL_CALL missing_glGetDriverControlsQCOM(GLint *num, GLsizei size, GLuint *driverControls)
+{
+  UNUSED_PARAMETER(num);
+  UNUSED_PARAMETER(size);
+  UNUSED_PARAMETER(driverControls);
+  Warning( "glGetDriverControlsQCOM not available." );
+}
+
+// GL_QCOM_extended_get
+
+void REGAL_CALL missing_glExtGetBufferPointervQCOM(GLenum target, GLvoid **params)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(params);
+  Warning( "glExtGetBufferPointervQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetBuffersQCOM(GLuint *buffers, GLint maxBuffers, GLint *numBuffers)
+{
+  UNUSED_PARAMETER(buffers);
+  UNUSED_PARAMETER(maxBuffers);
+  UNUSED_PARAMETER(numBuffers);
+  Warning( "glExtGetBuffersQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetFramebuffersQCOM(GLuint *framebuffers, GLint maxFramebuffers, GLint *numFramebuffers)
+{
+  UNUSED_PARAMETER(framebuffers);
+  UNUSED_PARAMETER(maxFramebuffers);
+  UNUSED_PARAMETER(numFramebuffers);
+  Warning( "glExtGetFramebuffersQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetRenderbuffersQCOM(GLuint *renderbuffers, GLint maxRenderbuffers, GLint *numRenderbuffers)
+{
+  UNUSED_PARAMETER(renderbuffers);
+  UNUSED_PARAMETER(maxRenderbuffers);
+  UNUSED_PARAMETER(numRenderbuffers);
+  Warning( "glExtGetRenderbuffersQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetTexLevelParameterivQCOM(GLuint texture, GLenum face, GLint level, GLenum pname, GLint *params)
+{
+  UNUSED_PARAMETER(texture);
+  UNUSED_PARAMETER(face);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(params);
+  Warning( "glExtGetTexLevelParameterivQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetTexSubImageQCOM(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLvoid *texels)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(level);
+  UNUSED_PARAMETER(xoffset);
+  UNUSED_PARAMETER(yoffset);
+  UNUSED_PARAMETER(zoffset);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(depth);
+  UNUSED_PARAMETER(format);
+  UNUSED_PARAMETER(type);
+  UNUSED_PARAMETER(texels);
+  Warning( "glExtGetTexSubImageQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetTexturesQCOM(GLuint *textures, GLint maxTextures, GLint *numTextures)
+{
+  UNUSED_PARAMETER(textures);
+  UNUSED_PARAMETER(maxTextures);
+  UNUSED_PARAMETER(numTextures);
+  Warning( "glExtGetTexturesQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtTexObjectStateOverrideiQCOM(GLenum target, GLenum pname, GLint param)
+{
+  UNUSED_PARAMETER(target);
+  UNUSED_PARAMETER(pname);
+  UNUSED_PARAMETER(param);
+  Warning( "glExtTexObjectStateOverrideiQCOM not available." );
+}
+
+// GL_QCOM_extended_get2
+
+void REGAL_CALL missing_glExtGetProgramBinarySourceQCOM(GLuint program, GLenum shadertype, GLchar *source, GLint *length)
+{
+  UNUSED_PARAMETER(program);
+  UNUSED_PARAMETER(shadertype);
+  UNUSED_PARAMETER(source);
+  UNUSED_PARAMETER(length);
+  Warning( "glExtGetProgramBinarySourceQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetProgramsQCOM(GLuint *programs, GLint maxPrograms, GLint *numPrograms)
+{
+  UNUSED_PARAMETER(programs);
+  UNUSED_PARAMETER(maxPrograms);
+  UNUSED_PARAMETER(numPrograms);
+  Warning( "glExtGetProgramsQCOM not available." );
+}
+
+void REGAL_CALL missing_glExtGetShadersQCOM(GLuint *shaders, GLint maxShaders, GLint *numShaders)
+{
+  UNUSED_PARAMETER(shaders);
+  UNUSED_PARAMETER(maxShaders);
+  UNUSED_PARAMETER(numShaders);
+  Warning( "glExtGetShadersQCOM not available." );
+}
+
+GLboolean REGAL_CALL missing_glExtIsProgramBinaryQCOM(GLuint program)
+{
+  UNUSED_PARAMETER(program);
+  Warning( "glExtIsProgramBinaryQCOM not available." );
+  return (GLboolean )0;
+}
+
+// GL_QCOM_tiled_rendering
+
+void REGAL_CALL missing_glEndTilingQCOM(GLbitfield preserveMask)
+{
+  UNUSED_PARAMETER(preserveMask);
+  Warning( "glEndTilingQCOM not available." );
+}
+
+void REGAL_CALL missing_glStartTilingQCOM(GLuint x, GLuint y, GLuint width, GLuint height, GLbitfield preserveMask)
+{
+  UNUSED_PARAMETER(x);
+  UNUSED_PARAMETER(y);
+  UNUSED_PARAMETER(width);
+  UNUSED_PARAMETER(height);
+  UNUSED_PARAMETER(preserveMask);
+  Warning( "glStartTilingQCOM not available." );
 }
 
 // GL_REGAL_ES1_1_compatibility
@@ -21703,6 +22690,28 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glTessellationFactorAMD = missing_glTessellationFactorAMD;
   tbl.glTessellationModeAMD = missing_glTessellationModeAMD;
 
+  // GL_ANGLE_framebuffer_blit
+
+  tbl.glBlitFramebufferANGLE = missing_glBlitFramebufferANGLE;
+
+  // GL_ANGLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleANGLE = missing_glRenderbufferStorageMultisampleANGLE;
+
+  // GL_ANGLE_instanced_arrays
+
+  tbl.glDrawArraysInstancedANGLE = missing_glDrawArraysInstancedANGLE;
+  tbl.glDrawElementsInstancedANGLE = missing_glDrawElementsInstancedANGLE;
+  tbl.glVertexAttribDivisorANGLE = missing_glVertexAttribDivisorANGLE;
+
+  // GL_ANGLE_translated_shader_source
+
+  tbl.glGetTranslatedShaderSourceANGLE = missing_glGetTranslatedShaderSourceANGLE;
+
+  // GL_APPLE_copy_texture_levels
+
+  tbl.glCopyTextureLevelsAPPLE = missing_glCopyTextureLevelsAPPLE;
+
   // GL_APPLE_element_array
 
   tbl.glDrawElementArrayAPPLE = missing_glDrawElementArrayAPPLE;
@@ -21733,11 +22742,26 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glFlushRenderAPPLE = missing_glFlushRenderAPPLE;
   tbl.glSwapAPPLE = missing_glSwapAPPLE;
 
+  // GL_APPLE_framebuffer_multisample
+
+  tbl.glRenderbufferStorageMultisampleAPPLE = missing_glRenderbufferStorageMultisampleAPPLE;
+  tbl.glResolveMultisampleFramebufferAPPLE = missing_glResolveMultisampleFramebufferAPPLE;
+
   // GL_APPLE_object_purgeable
 
   tbl.glGetObjectParameterivAPPLE = missing_glGetObjectParameterivAPPLE;
   tbl.glObjectPurgeableAPPLE = missing_glObjectPurgeableAPPLE;
   tbl.glObjectUnpurgeableAPPLE = missing_glObjectUnpurgeableAPPLE;
+
+  // GL_APPLE_sync
+
+  tbl.glClientWaitSyncAPPLE = missing_glClientWaitSyncAPPLE;
+  tbl.glDeleteSyncAPPLE = missing_glDeleteSyncAPPLE;
+  tbl.glFenceSyncAPPLE = missing_glFenceSyncAPPLE;
+  tbl.glGetInteger64vAPPLE = missing_glGetInteger64vAPPLE;
+  tbl.glGetSyncivAPPLE = missing_glGetSyncivAPPLE;
+  tbl.glIsSyncAPPLE = missing_glIsSyncAPPLE;
+  tbl.glWaitSyncAPPLE = missing_glWaitSyncAPPLE;
 
   // GL_APPLE_texture_range
 
@@ -22753,6 +23777,11 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glCullParameterdvEXT = missing_glCullParameterdvEXT;
   tbl.glCullParameterfvEXT = missing_glCullParameterfvEXT;
 
+  // GL_EXT_debug_label
+
+  tbl.glGetObjectLabelEXT = missing_glGetObjectLabelEXT;
+  tbl.glLabelObjectEXT = missing_glLabelObjectEXT;
+
   // GL_EXT_debug_marker
 
   tbl.glInsertEventMarkerEXT = missing_glInsertEventMarkerEXT;
@@ -22996,6 +24025,10 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glVertexArrayVertexAttribOffsetEXT = missing_glVertexArrayVertexAttribOffsetEXT;
   tbl.glVertexArrayVertexOffsetEXT = missing_glVertexArrayVertexOffsetEXT;
 
+  // GL_EXT_discard_framebuffer
+
+  tbl.glDiscardFramebufferEXT = missing_glDiscardFramebufferEXT;
+
   // GL_EXT_draw_buffers2
 
   tbl.glColorMaskIndexedEXT = missing_glColorMaskIndexedEXT;
@@ -23146,6 +24179,11 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glTextureLightEXT = missing_glTextureLightEXT;
   tbl.glTextureMaterialEXT = missing_glTextureMaterialEXT;
 
+  // GL_EXT_map_buffer_range
+
+  tbl.glFlushMappedBufferRangeEXT = missing_glFlushMappedBufferRangeEXT;
+  tbl.glMapBufferRangeEXT = missing_glMapBufferRangeEXT;
+
   // GL_EXT_multi_draw_arrays
 
   tbl.glMultiDrawArraysEXT = missing_glMultiDrawArraysEXT;
@@ -23155,6 +24193,26 @@ void InitDispatchTableMissing(DispatchTable &tbl)
 
   tbl.glSampleMaskEXT = missing_glSampleMaskEXT;
   tbl.glSamplePatternEXT = missing_glSamplePatternEXT;
+
+  // GL_EXT_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleEXT = missing_glFramebufferTexture2DMultisampleEXT;
+
+  // GL_EXT_multiview_draw_buffers
+
+  tbl.glDrawBuffersIndexedEXT = missing_glDrawBuffersIndexedEXT;
+  tbl.glGetIntegeri_vEXT = missing_glGetIntegeri_vEXT;
+  tbl.glReadBufferIndexedEXT = missing_glReadBufferIndexedEXT;
+
+  // GL_EXT_occlusion_query_boolean
+
+  tbl.glBeginQueryEXT = missing_glBeginQueryEXT;
+  tbl.glDeleteQueriesEXT = missing_glDeleteQueriesEXT;
+  tbl.glEndQueryEXT = missing_glEndQueryEXT;
+  tbl.glGenQueriesEXT = missing_glGenQueriesEXT;
+  tbl.glGetQueryObjectuivEXT = missing_glGetQueryObjectuivEXT;
+  tbl.glGetQueryivEXT = missing_glGetQueryivEXT;
+  tbl.glIsQueryEXT = missing_glIsQueryEXT;
 
   // GL_EXT_paletted_texture
 
@@ -23184,6 +24242,12 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   // GL_EXT_provoking_vertex
 
   tbl.glProvokingVertexEXT = missing_glProvokingVertexEXT;
+
+  // GL_EXT_robustness
+
+  tbl.glGetnUniformfvEXT = missing_glGetnUniformfvEXT;
+  tbl.glGetnUniformivEXT = missing_glGetnUniformivEXT;
+  tbl.glReadnPixelsEXT = missing_glReadnPixelsEXT;
 
   // GL_EXT_scene_marker
 
@@ -23268,6 +24332,12 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   // GL_EXT_texture_perturb_normal
 
   tbl.glTextureNormalEXT = missing_glTextureNormalEXT;
+
+  // GL_EXT_texture_storage
+
+  tbl.glTexStorage1DEXT = missing_glTexStorage1DEXT;
+  tbl.glTexStorage2DEXT = missing_glTexStorage2DEXT;
+  tbl.glTexStorage3DEXT = missing_glTexStorage3DEXT;
 
   // GL_EXT_timer_query
 
@@ -23398,6 +24468,11 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glTexCoordPointerListIBM = missing_glTexCoordPointerListIBM;
   tbl.glVertexPointerListIBM = missing_glVertexPointerListIBM;
 
+  // GL_IMG_multisampled_render_to_texture
+
+  tbl.glFramebufferTexture2DMultisampleIMG = missing_glFramebufferTexture2DMultisampleIMG;
+  tbl.glRenderbufferStorageMultisampleIMG = missing_glRenderbufferStorageMultisampleIMG;
+
   // GL_INGR_blend_func_separate
 
   tbl.glBlendFuncSeparateINGR = missing_glBlendFuncSeparateINGR;
@@ -23496,11 +24571,20 @@ void InitDispatchTableMissing(DispatchTable &tbl)
 
   tbl.glCopyImageSubDataNV = missing_glCopyImageSubDataNV;
 
+  // GL_NV_coverage_sample
+
+  tbl.glCoverageMaskNV = missing_glCoverageMaskNV;
+  tbl.glCoverageOperationNV = missing_glCoverageOperationNV;
+
   // GL_NV_depth_buffer_float
 
   tbl.glClearDepthdNV = missing_glClearDepthdNV;
   tbl.glDepthBoundsdNV = missing_glDepthBoundsdNV;
   tbl.glDepthRangedNV = missing_glDepthRangedNV;
+
+  // GL_NV_draw_buffers
+
+  tbl.glDrawBuffersNV = missing_glDrawBuffersNV;
 
   // GL_NV_evaluators
 
@@ -23743,6 +24827,10 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glPrimitiveRestartIndexNV = missing_glPrimitiveRestartIndexNV;
   tbl.glPrimitiveRestartNV = missing_glPrimitiveRestartNV;
 
+  // GL_NV_read_buffer
+
+  tbl.glReadBufferNV = missing_glReadBufferNV;
+
   // GL_NV_register_combiners
 
   tbl.glCombinerInputNV = missing_glCombinerInputNV;
@@ -23955,6 +25043,53 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glVideoCaptureStreamParameterfvNV = missing_glVideoCaptureStreamParameterfvNV;
   tbl.glVideoCaptureStreamParameterivNV = missing_glVideoCaptureStreamParameterivNV;
 
+  // GL_OES_blend_equation_separate
+
+  tbl.glBlendEquationSeparateOES = missing_glBlendEquationSeparateOES;
+
+  // GL_OES_blend_func_separate
+
+  tbl.glBlendFuncSeparateOES = missing_glBlendFuncSeparateOES;
+
+  // GL_OES_blend_subtract
+
+  tbl.glBlendEquationOES = missing_glBlendEquationOES;
+
+  // GL_OES_framebuffer_object
+
+  tbl.glBindFramebufferOES = missing_glBindFramebufferOES;
+  tbl.glBindRenderbufferOES = missing_glBindRenderbufferOES;
+  tbl.glCheckFramebufferStatusOES = missing_glCheckFramebufferStatusOES;
+  tbl.glDeleteFramebuffersOES = missing_glDeleteFramebuffersOES;
+  tbl.glDeleteRenderbuffersOES = missing_glDeleteRenderbuffersOES;
+  tbl.glFramebufferRenderbufferOES = missing_glFramebufferRenderbufferOES;
+  tbl.glFramebufferTexture2DOES = missing_glFramebufferTexture2DOES;
+  tbl.glGenFramebuffersOES = missing_glGenFramebuffersOES;
+  tbl.glGenRenderbuffersOES = missing_glGenRenderbuffersOES;
+  tbl.glGenerateMipmapOES = missing_glGenerateMipmapOES;
+  tbl.glGetFramebufferAttachmentParameterivOES = missing_glGetFramebufferAttachmentParameterivOES;
+  tbl.glGetRenderbufferParameterivOES = missing_glGetRenderbufferParameterivOES;
+  tbl.glIsFramebufferOES = missing_glIsFramebufferOES;
+  tbl.glIsRenderbufferOES = missing_glIsRenderbufferOES;
+  tbl.glRenderbufferStorageOES = missing_glRenderbufferStorageOES;
+
+  // GL_OES_get_program_binary
+
+  tbl.glGetProgramBinaryOES = missing_glGetProgramBinaryOES;
+  tbl.glProgramBinaryOES = missing_glProgramBinaryOES;
+
+  // GL_OES_mapbuffer
+
+  tbl.glGetBufferPointervOES = missing_glGetBufferPointervOES;
+  tbl.glMapBufferOES = missing_glMapBufferOES;
+  tbl.glUnmapBufferOES = missing_glUnmapBufferOES;
+
+  // GL_OES_matrix_palette
+
+  tbl.glCurrentPaletteMatrixOES = missing_glCurrentPaletteMatrixOES;
+  tbl.glMatrixIndexPointerOES = missing_glMatrixIndexPointerOES;
+  tbl.glWeightPointerOES = missing_glWeightPointerOES;
+
   // GL_OES_single_precision
 
   tbl.glClearDepthfOES = missing_glClearDepthfOES;
@@ -23964,9 +25099,71 @@ void InitDispatchTableMissing(DispatchTable &tbl)
   tbl.glGetClipPlanefOES = missing_glGetClipPlanefOES;
   tbl.glOrthofOES = missing_glOrthofOES;
 
+  // GL_OES_texture_3D
+
+  tbl.glCompressedTexImage3DOES = missing_glCompressedTexImage3DOES;
+  tbl.glCompressedTexSubImage3DOES = missing_glCompressedTexSubImage3DOES;
+  tbl.glCopyTexSubImage3DOES = missing_glCopyTexSubImage3DOES;
+  tbl.glFramebufferTexture3DOES = missing_glFramebufferTexture3DOES;
+  tbl.glTexImage3DOES = missing_glTexImage3DOES;
+  tbl.glTexSubImage3DOES = missing_glTexSubImage3DOES;
+
+  // GL_OES_texture_cube_map
+
+  tbl.glGetTexGenfvOES = missing_glGetTexGenfvOES;
+  tbl.glGetTexGenivOES = missing_glGetTexGenivOES;
+  tbl.glGetTexGenxvOES = missing_glGetTexGenxvOES;
+  tbl.glTexGenfOES = missing_glTexGenfOES;
+  tbl.glTexGenfvOES = missing_glTexGenfvOES;
+  tbl.glTexGeniOES = missing_glTexGeniOES;
+  tbl.glTexGenivOES = missing_glTexGenivOES;
+  tbl.glTexGenxOES = missing_glTexGenxOES;
+  tbl.glTexGenxvOES = missing_glTexGenxvOES;
+
+  // GL_OES_vertex_array_object
+
+  tbl.glBindVertexArrayOES = missing_glBindVertexArrayOES;
+  tbl.glDeleteVertexArraysOES = missing_glDeleteVertexArraysOES;
+  tbl.glGenVertexArraysOES = missing_glGenVertexArraysOES;
+  tbl.glIsVertexArrayOES = missing_glIsVertexArrayOES;
+
   // GL_PGI_misc_hints
 
   tbl.glHintPGI = missing_glHintPGI;
+
+  // GL_QCOM_alpha_test
+
+  tbl.glAlphaFuncQCOM = missing_glAlphaFuncQCOM;
+
+  // GL_QCOM_driver_control
+
+  tbl.glDisableDriverControlQCOM = missing_glDisableDriverControlQCOM;
+  tbl.glEnableDriverControlQCOM = missing_glEnableDriverControlQCOM;
+  tbl.glGetDriverControlStringQCOM = missing_glGetDriverControlStringQCOM;
+  tbl.glGetDriverControlsQCOM = missing_glGetDriverControlsQCOM;
+
+  // GL_QCOM_extended_get
+
+  tbl.glExtGetBufferPointervQCOM = missing_glExtGetBufferPointervQCOM;
+  tbl.glExtGetBuffersQCOM = missing_glExtGetBuffersQCOM;
+  tbl.glExtGetFramebuffersQCOM = missing_glExtGetFramebuffersQCOM;
+  tbl.glExtGetRenderbuffersQCOM = missing_glExtGetRenderbuffersQCOM;
+  tbl.glExtGetTexLevelParameterivQCOM = missing_glExtGetTexLevelParameterivQCOM;
+  tbl.glExtGetTexSubImageQCOM = missing_glExtGetTexSubImageQCOM;
+  tbl.glExtGetTexturesQCOM = missing_glExtGetTexturesQCOM;
+  tbl.glExtTexObjectStateOverrideiQCOM = missing_glExtTexObjectStateOverrideiQCOM;
+
+  // GL_QCOM_extended_get2
+
+  tbl.glExtGetProgramBinarySourceQCOM = missing_glExtGetProgramBinarySourceQCOM;
+  tbl.glExtGetProgramsQCOM = missing_glExtGetProgramsQCOM;
+  tbl.glExtGetShadersQCOM = missing_glExtGetShadersQCOM;
+  tbl.glExtIsProgramBinaryQCOM = missing_glExtIsProgramBinaryQCOM;
+
+  // GL_QCOM_tiled_rendering
+
+  tbl.glEndTilingQCOM = missing_glEndTilingQCOM;
+  tbl.glStartTilingQCOM = missing_glStartTilingQCOM;
 
   // GL_REGAL_ES1_1_compatibility
 

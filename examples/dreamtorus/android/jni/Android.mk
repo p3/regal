@@ -17,7 +17,7 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := libminimalAndroid
+LOCAL_MODULE    := libdreamtorus
 LOCAL_CFLAGS    := -Werror
 LOCAL_ARM_MODE  := arm
 
