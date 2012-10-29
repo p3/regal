@@ -32,6 +32,11 @@
   OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+  Intended formatting conventions:
+  $ astyle --style=allman --indent=spaces=2 --indent-switches
+*/
+
 #ifndef __REGAL_TOKEN_H__
 #define __REGAL_TOKEN_H__
 

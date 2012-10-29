@@ -32,6 +32,11 @@
   OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+  Intended formatting conventions:
+  $ astyle --style=allman --indent=spaces=2 --indent-switches
+*/
+
 #include "pch.h" /* For MS precompiled header support */
 
 #include "RegalUtil.h"
@@ -86,7 +91,8 @@ RegalContext::RegalContext()
   depthPushAttrib(0)
 {
   Internal("RegalContext::RegalContext","()");
-  if (Config::enableDebug) {
+  if (Config::enableDebug)
+  {
     dbg = new DebugInfo();
     dbg->Init(this);
   }

@@ -256,6 +256,21 @@ Windows
 Linux
 -----
 
+* RedHat/Fedora recommended packages:
+
+ * 32-bit:
+
+  ``$ sudo yum install zlib-devel libpng-devel``
+
+ * 64-bit
+
+  ``$ sudo yum install zlib-devel.i686   libpng-devel.i686``
+  ``$ sudo yum install zlib-devel.x86_64 libpng-devel.x86_64``
+
+* Ubuntu/Debian/Mint recommended packages:
+
+ ``$ apt-get install libxmu-dev``
+
 * Use GNU make with Makefile
 
  ``$ make -f Makefile CCACHE=ccache STRIP=``
@@ -271,10 +286,6 @@ Linux
  ``$ REGAL_FORCE_EMULATION=0; bin/dreamtorus``
 
  ``$ REGAL_LOG_DRIVER=1; bin/dreamtorus``
-
-* Note that you may need to install libxmu-dev before building:
-
- ``$ apt-get install libxmu-dev``
 
 OS X
 ----

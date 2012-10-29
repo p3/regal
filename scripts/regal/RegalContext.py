@@ -169,7 +169,8 @@ ${EMU_MEMBER_CONSTRUCT}#endif
   depthPushAttrib(0)
 {
   Internal("RegalContext::RegalContext","()");
-  if (Config::enableDebug) {
+  if (Config::enableDebug)
+  {
     dbg = new DebugInfo();
     dbg->Init(this);
   }

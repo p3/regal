@@ -258,7 +258,8 @@ def apiFuncDefineCode(apis, args):
           c += '\n'
           c += '  #if !REGAL_STATIC_EGL\n'
 
-        c += '  if (dispatchTableGlobal.%s == NULL) {\n' % name
+        c += '  if (!dispatchTableGlobal.%s)\n' % name
+        c += '  {\n'
         c += '    GetProcAddress( dispatchTableGlobal.%s, "%s" );\n' % ( name, name )
         c += '    RegalAssert(dispatchTableGlobal.%s!=%s);\n' % ( name, name )
         c += '    if (dispatchTableGlobal.%s==%s)\n' % ( name, name )
@@ -276,7 +277,8 @@ def apiFuncDefineCode(apis, args):
 
         c += listToString(indent(emuCodeGen(emue,'impl'),'  '))
 
-        c += '  if (dispatchTableGlobal.%s) {\n' % name
+        c += '  if (dispatchTableGlobal.%s)\n' % name
+        c += '  {\n'
         c += '    %s\n' % debugPrintFunction( function, 'Driver' )
         c += '    '
         if not typeIsVoid(rType):
@@ -300,9 +302,9 @@ def apiFuncDefineCode(apis, args):
           c += '  return ret;\n'
       c += '}\n\n'
 
-      tmp.append( (category, c) )
+      tmp.append( (category, indent(c,'  ') ) )
 
-    tmp = listToString(unfoldCategory(tmp))
+    tmp = listToString(unfoldCategory(tmp,'  /* %s */'))
 
     if api.name in cond:
       tmp = wrapIf(cond[api.name], tmp)
@@ -637,15 +639,11 @@ using namespace REGAL_NAMESPACE_INTERNAL;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Logging;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
 
-#ifdef __cplusplus
 extern "C" {
-#endif
 
 ${API_FUNC_DEFINE}
 
-#ifdef __cplusplus
 }
-#endif
 
 REGAL_GLOBAL_END
 ''')
