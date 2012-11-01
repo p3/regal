@@ -48,6 +48,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalPrivate.h"
 #include "RegalDispatcher.h"
 #include "RegalDispatchError.h"
+#include "RegalSharedList.h"
 
 #if defined(__native_client__)
 #define __gl2_h_  // HACK - revisit
@@ -74,11 +75,12 @@ struct RegalVao;
 
 struct RegalContext
 {
-  RegalContext();
+  RegalContext(RegalContext *other = NULL);  // Not a copy constructor, optional other for sharing
   ~RegalContext();
 
   void Init(RegalContext *share_ctx);
 
+  bool                initialized;
   Dispatcher          dispatcher;
   DispatchErrorState  err;
   DebugInfo          *dbg;
@@ -104,6 +106,15 @@ struct RegalContext
   Thread              thread;
 
   GLLOGPROCREGAL      logCallback;
+
+  // The shared group of contexts
+
+  shared_list<RegalContext *> shareGroup;
+
+  // Get a context in the share group that is
+  // already initialized, and isn't this one.
+
+  RegalContext *sharingWith();
 
   // Per-frame state and configuration
 

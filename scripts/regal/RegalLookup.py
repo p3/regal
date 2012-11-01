@@ -69,9 +69,9 @@ def generateLookupSource(apis, args):
       else:
         if i.name == "gl":
           code.append("  offsetof(%s,%s)/sizeof(void *),"%(table,j))
-        else:          
+        else:
           code.append("  ((char *)(&dispatchTableGlobal.%s)-(char *)(&dispatchTableGlobal))/sizeof(void *),"%(j))
-    
+
     code.append( '  0')
     code.append('};')
     code.append('')

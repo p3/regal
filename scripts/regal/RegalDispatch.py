@@ -110,7 +110,7 @@ def apiDispatchTableDefineCode(apis, args):
     {
       // Find the next enabled dispatch table
       for (i = i->_next; !i->_enabled; i = i->_next) { RegalAssert(i); }
-      
+
       // Get the function pointer
       RegalAssert(i);
       RegalAssert(i->_enabled);

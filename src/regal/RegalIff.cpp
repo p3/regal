@@ -1826,7 +1826,7 @@ void RFF::State::Process( RegalIff * ffn ) {
       }
     }
   }
-  p.hash = compute_hash(p);
+  p.hash = (GLuint) compute_hash(p);
 }
 
 void RFF::UpdateUniforms( RegalContext * ctx ) {

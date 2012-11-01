@@ -72,7 +72,7 @@ egl.add(__eglMustCastToProperFunctionPointerType)
 defines = Enum('defines')
 egl.add(defines)
 
-# 
+#
 
 EGLAPI = Enumerant('EGLAPI', 'KHRONOS_APICALL', '')
 EGLAPIENTRY = Enumerant('EGLAPIENTRY', 'KHRONOS_APIENTRY', '')

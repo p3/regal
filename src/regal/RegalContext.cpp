@@ -64,8 +64,9 @@ REGAL_NAMESPACE_BEGIN
 
 using namespace Logging;
 
-RegalContext::RegalContext()
-: dispatcher(),
+RegalContext::RegalContext(RegalContext *other)
+: initialized(false),
+  dispatcher(),
   dbg(NULL),
   info(NULL),
   marker(NULL),
@@ -91,11 +92,18 @@ RegalContext::RegalContext()
   depthPushAttrib(0)
 {
   Internal("RegalContext::RegalContext","()");
+
   if (Config::enableDebug)
   {
     dbg = new DebugInfo();
     dbg->Init(this);
   }
+
+  if (other)
+    shareGroup = other->shareGroup;
+
+  shareGroup.push_back(this);
+
   frameTimer.restart();
 }
 
@@ -103,6 +111,9 @@ void
 RegalContext::Init(RegalContext *share_ctx)
 {
   Internal("RegalContext::Init","()");
+
+  RegalAssert(!initialized);
+  initialized = true;
 
   info = new ContextInfo();
   RegalAssert(this);
@@ -191,6 +202,11 @@ RegalContext::Init(RegalContext *share_ctx)
 RegalContext::~RegalContext()
 {
   Internal("RegalContext::~RegalContext","()");
+
+  // Remove this context from the share group.
+
+  shareGroup->remove(this);
+
   delete info;
   delete marker;
 
@@ -203,6 +219,26 @@ RegalContext::~RegalContext()
   delete iff;
   delete vao;
 #endif
+}
+
+RegalContext *
+RegalContext::sharingWith()
+{
+  Internal("RegalContext::sharingWith","()");
+
+  // Look for the first non-NULL, not this, initialized
+  // context in the share group.  The only way this would
+  // be expected to fail is if none of the contexts have
+  // been made current, triggering initialization.
+  //
+  // Note - linear search, but shouldn't need to look at too many
+  // contexts in the share group.
+
+  for (shared_list<RegalContext *>::iterator i = shareGroup.begin(); i!=shareGroup.end(); ++i)
+    if (*i && this!=*i && (*i)->initialized)
+      return *i;
+
+  return NULL;
 }
 
 REGAL_NAMESPACE_END

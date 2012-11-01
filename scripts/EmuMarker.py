@@ -24,16 +24,16 @@ formulae = {
     },
 
     # GL_GREMEDY_string_marker
-    
+
     'GL_GREMEDY_string_marker' : {
         'entries' : [ 'glStringMarkerGREMEDY' ],
         'impl' : [ '_context->marker->InsertEventMarker( *_context, ${arg0plus} );',
                    'RegalAssert(_context->info);',
                    'if (!_context->info->gl_gremedy_string_marker) return;' ]
     },
-    
+
     # GL_GREMEDY_frame_terminator
-    
+
     'GL_GREMEDY_frame_terminator' : {
         'entries' : [ 'glFrameTerminatorGREMEDY' ],
         'impl' : [ '_context->frame++;',

@@ -214,6 +214,8 @@ Regal OpenGL extensions
 In Progress
 ===========
 
+* Context sharing support
+* Pointer-based API
 * glPushAttrib emulation
 
 Planned Features
@@ -323,7 +325,7 @@ Regal code, API database and generators are `BSD <http://opensource.org/licenses
 
 ::
 
-  Copyright (c) 2011 NVIDIA Corporation
+  Copyright (c) 2011-2012 NVIDIA Corporation
   Copyright (c) 2011-2012 Cass Everitt
   Copyright (c) 2012 Scott Nations
   Copyright (c) 2012 Mathias Schott
@@ -351,9 +353,15 @@ Regal code, API database and generators are `BSD <http://opensource.org/licenses
   OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
   OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Boost is licensed under `Boost Software License <http://www.boost.org/users/license.html>`_.
+`Boost <http://www.boost.org/>`_ is licensed under `Boost Software License <http://www.boost.org/users/license.html>`_.
 
-GLEW is licensed under `BSD and MIT License <http://glew.sourceforge.net/credits.html>`_.
+`zlib <http://www.zlib.net/>`_ by Jean-loup Gailly and Mark Adler is licensed under `zLib License <http://www.zlib.net/zlib_license.html>`_.
+
+`libpng <http://www.libpng.org/pub/png/libpng.html>`_ by Glenn Randers-Pehrson et. al. is licensed under `libpng license <http://www.libpng.org/pub/png/src/libpng-LICENSE.txt>`_.
+
+`lookup3 <http://www.burtleburtle.net/bob/hash/doobs.html>`_ by Bob Jenkins is public domain.
+
+`GLEW <http://glew.sourceforge.net/>`_ is licensed under `BSD and MIT License <http://glew.sourceforge.net/credits.html>`_.
 
 GLU is licensed under `SGI FREE SOFTWARE LICENSE B <http://oss.sgi.com/projects/FreeB/>`_.
 

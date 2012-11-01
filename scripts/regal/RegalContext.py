@@ -69,6 +69,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalPrivate.h"
 #include "RegalDispatcher.h"
 #include "RegalDispatchError.h"
+#include "RegalSharedList.h"
 
 #if defined(__native_client__)
 #define __gl2_h_  // HACK - revisit
@@ -87,11 +88,12 @@ ${EMU_FORWARD_DECLARE}
 
 struct RegalContext
 {
-  RegalContext();
+  RegalContext(RegalContext *other = NULL);  // Not a copy constructor, optional other for sharing
   ~RegalContext();
 
   void Init(RegalContext *share_ctx);
 
+  bool                initialized;
   Dispatcher          dispatcher;
   DispatchErrorState  err;
   DebugInfo          *dbg;
@@ -108,8 +110,17 @@ ${EMU_MEMBER_DECLARE}
 
   GLLOGPROCREGAL      logCallback;
 
+  // The shared group of contexts
+
+  shared_list<RegalContext *> shareGroup;
+
+  // Get a context in the share group that is
+  // already initialized, and isn't this one.
+
+  RegalContext *sharingWith();
+
   // Per-frame state and configuration
-  
+
   size_t              frame;
   Timer               frameTimer;
 
@@ -150,8 +161,9 @@ REGAL_NAMESPACE_BEGIN
 
 using namespace Logging;
 
-RegalContext::RegalContext()
-: dispatcher(),
+RegalContext::RegalContext(RegalContext *other)
+: initialized(false),
+  dispatcher(),
   dbg(NULL),
   info(NULL),
 ${MEMBER_CONSTRUCT}#if REGAL_EMULATION
@@ -169,11 +181,18 @@ ${EMU_MEMBER_CONSTRUCT}#endif
   depthPushAttrib(0)
 {
   Internal("RegalContext::RegalContext","()");
+
   if (Config::enableDebug)
   {
     dbg = new DebugInfo();
     dbg->Init(this);
   }
+
+  if (other)
+    shareGroup = other->shareGroup;
+
+  shareGroup.push_back(this);
+
   frameTimer.restart();
 }
 
@@ -181,6 +200,9 @@ void
 RegalContext::Init(RegalContext *share_ctx)
 {
   Internal("RegalContext::Init","()");
+
+  RegalAssert(!initialized);
+  initialized = true;
 
   info = new ContextInfo();
   RegalAssert(this);
@@ -214,10 +236,35 @@ ${EMU_MEMBER_INIT}
 RegalContext::~RegalContext()
 {
   Internal("RegalContext::~RegalContext","()");
+
+  // Remove this context from the share group.
+
+  shareGroup->remove(this);
+
   delete info;
 ${MEMBER_CLEANUP}
 #if REGAL_EMULATION
 ${EMU_MEMBER_CLEANUP}#endif
+}
+
+RegalContext *
+RegalContext::sharingWith()
+{
+  Internal("RegalContext::sharingWith","()");
+
+  // Look for the first non-NULL, not this, initialized
+  // context in the share group.  The only way this would
+  // be expected to fail is if none of the contexts have
+  // been made current, triggering initialization.
+  //
+  // Note - linear search, but shouldn't need to look at too many
+  // contexts in the share group.
+
+  for (shared_list<RegalContext *>::iterator i = shareGroup.begin(); i!=shareGroup.end(); ++i)
+    if (*i && this!=*i && (*i)->initialized)
+      return *i;
+
+  return NULL;
 }
 
 REGAL_NAMESPACE_END
