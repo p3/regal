@@ -50,10 +50,9 @@ REGAL_NAMESPACE_BEGIN
 
 struct RegalBin : public RegalEmu
 {
-  void Init( RegalContext &ctx, RegalContext *share_ctx )
+  void Init( RegalContext &ctx )
   {
     UNUSED_PARAMETER(ctx);
-    UNUSED_PARAMETER(share_ctx);
   }
 
   void ShaderBinary( RegalContext * ctx, GLsizei count, const GLuint *shaders, GLenum binaryFormat, const void * binary, GLsizei length)

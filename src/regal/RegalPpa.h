@@ -48,11 +48,12 @@ REGAL_GLOBAL_BEGIN
 
 #include <GL/Regal.h>
 
-#include "RegalContextInfo.h"
 #include "RegalState.h"
 #include "RegalEmu.h"
 #include "RegalLog.h"
 #include "RegalToken.h"
+#include "RegalContext.h"
+#include "RegalContextInfo.h"
 
 REGAL_GLOBAL_END
 
@@ -62,10 +63,9 @@ REGAL_NAMESPACE_BEGIN
 
 struct RegalPpa : public RegalEmu, State::Stencil, State::Depth, State::Polygon
 {
-  void Init(RegalContext &ctx, RegalContext *share_ctx)
+  void Init(RegalContext &ctx)
   {
     UNUSED_PARAMETER(ctx);
-    UNUSED_PARAMETER(share_ctx);
   }
 
   void PushAttrib(RegalContext *ctx, GLbitfield mask)

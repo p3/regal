@@ -75,16 +75,21 @@ struct RegalVao;
 
 struct RegalContext
 {
-  RegalContext(RegalContext *other = NULL);  // Not a copy constructor, optional other for sharing
+  RegalContext();
   ~RegalContext();
 
-  void Init(RegalContext *share_ctx);
+  void Init();
 
   bool                initialized;
   Dispatcher          dispatcher;
   DispatchErrorState  err;
   DebugInfo          *dbg;
   ContextInfo        *info;
+
+  //
+  // Emulation
+  //
+
   Marker             *marker;
 #if REGAL_EMULATION
   // Fixed function emulation
@@ -103,20 +108,29 @@ struct RegalContext
   #endif
 
   RegalSystemContext  sysCtx;
-  Thread              thread;
+  Thread::Thread      thread;
 
   GLLOGPROCREGAL      logCallback;
 
-  // The shared group of contexts
+  //
+  // Regal context sharing
+  //
 
   shared_list<RegalContext *> shareGroup;
 
-  // Get a context in the share group that is
-  // already initialized, and isn't this one.
+  // Query that any of the contexts in the share
+  // group are already initialized
 
-  RegalContext *sharingWith();
+  bool groupInitialized() const;
 
+  // Get any context in the share group that is
+  // already initialized
+
+  RegalContext *groupInitializedContext();
+
+  //
   // Per-frame state and configuration
+  //
 
   size_t              frame;
   Timer               frameTimer;

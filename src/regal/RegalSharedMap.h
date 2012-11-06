@@ -79,12 +79,12 @@ class shared_map : public shared_ptr< ::std::map<K,V> >
 
     // Expose std::map API
 
-    inline       V &operator[](const K &k)         { RegalAssert(parent::get()); return parent::get()->operator[](k); }
-    inline const V &operator[](const K &k) const   { RegalAssert(parent::get()); return parent::get()->operator[](k); }
+    inline       V &operator[](const K &k)       { RegalAssert(parent::get()); return parent::get()->operator[](k); }
+    inline const V &operator[](const K &k) const { RegalAssert(parent::get()); return parent::get()->operator[](k); }
 
-    inline size_type erase( const K &k)            { RegalAssert(parent::get()); return parent::get()->erase(k);      }
+    inline size_type erase( const K &k)          { RegalAssert(parent::get()); return parent::get()->erase(k);      }
 
-    inline const size_type count(const K &k) const { RegalAssert(parent::get()); return parent::get()->count(k);      }
+    inline size_type count(const K &k) const     { RegalAssert(parent::get()); return parent::get()->count(k);      }
 };
 
 REGAL_NAMESPACE_END

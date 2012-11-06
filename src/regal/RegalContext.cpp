@@ -64,7 +64,7 @@ REGAL_NAMESPACE_BEGIN
 
 using namespace Logging;
 
-RegalContext::RegalContext(RegalContext *other)
+RegalContext::RegalContext()
 : initialized(false),
   dispatcher(),
   dbg(NULL),
@@ -99,21 +99,17 @@ RegalContext::RegalContext(RegalContext *other)
     dbg->Init(this);
   }
 
-  if (other)
-    shareGroup = other->shareGroup;
-
   shareGroup.push_back(this);
 
   frameTimer.restart();
 }
 
 void
-RegalContext::Init(RegalContext *share_ctx)
+RegalContext::Init()
 {
   Internal("RegalContext::Init","()");
 
   RegalAssert(!initialized);
-  initialized = true;
 
   info = new ContextInfo();
   RegalAssert(this);
@@ -146,7 +142,7 @@ RegalContext::Init(RegalContext *share_ctx)
     {
       vao = new RegalVao;
       emuLevel = 1;
-      vao->Init(*this, share_ctx);
+      vao->Init(*this);
     }
     #endif /* REGAL_EMU_VAO */
     #if REGAL_EMU_IFF
@@ -154,7 +150,7 @@ RegalContext::Init(RegalContext *share_ctx)
     {
       iff = new RegalIff;
       emuLevel = 2;
-      iff->Init(*this, share_ctx);
+      iff->Init(*this);
     }
     #endif /* REGAL_EMU_IFF */
     #if REGAL_EMU_DSA
@@ -166,7 +162,7 @@ RegalContext::Init(RegalContext *share_ctx)
       info->regalExtensions = ::boost::print::detail::join(info->regalExtensionsSet,std::string(" "));
       dsa = new RegalDsa;
       emuLevel = 3;
-      dsa->Init(*this, share_ctx);
+      dsa->Init(*this);
     }
     #endif /* REGAL_EMU_DSA */
     #if REGAL_EMU_BIN
@@ -174,7 +170,7 @@ RegalContext::Init(RegalContext *share_ctx)
     {
       bin = new RegalBin;
       emuLevel = 4;
-      bin->Init(*this, share_ctx);
+      bin->Init(*this);
     }
     #endif /* REGAL_EMU_BIN */
     #if REGAL_EMU_PPA
@@ -182,7 +178,7 @@ RegalContext::Init(RegalContext *share_ctx)
     {
       ppa = new RegalPpa;
       emuLevel = 5;
-      ppa->Init(*this, share_ctx);
+      ppa->Init(*this);
     }
     #endif /* REGAL_EMU_PPA */
     #if REGAL_EMU_OBJ
@@ -190,13 +186,15 @@ RegalContext::Init(RegalContext *share_ctx)
     {
       obj = new RegalObj;
       emuLevel = 6;
-      obj->Init(*this, share_ctx);
+      obj->Init(*this);
     }
     #endif /* REGAL_EMU_OBJ */
     emuLevel = 7;
 
   }
 #endif
+
+  initialized = true;
 }
 
 RegalContext::~RegalContext()
@@ -221,22 +219,40 @@ RegalContext::~RegalContext()
 #endif
 }
 
-RegalContext *
-RegalContext::sharingWith()
+bool
+RegalContext::groupInitialized() const
 {
-  Internal("RegalContext::sharingWith","()");
+  Internal("RegalContext::groupInitialized","()");
 
-  // Look for the first non-NULL, not this, initialized
-  // context in the share group.  The only way this would
-  // be expected to fail is if none of the contexts have
-  // been made current, triggering initialization.
+  for (shared_list<RegalContext *>::const_iterator i = shareGroup.begin(); i!=shareGroup.end(); ++i)
+  {
+    RegalAssert(*i);
+    if ((*i)->initialized)
+      return true;
+  }
+
+  return false;
+}
+
+RegalContext *
+RegalContext::groupInitializedContext()
+{
+  Internal("RegalContext::groupInitializedContext","()");
+
+  // Look for any initialized context in the share group.
+  // The only way this would be expected to fail is if none
+  // of the contexts have been made current, triggering
+  // initialization.
   //
   // Note - linear search, but shouldn't need to look at too many
   // contexts in the share group.
 
   for (shared_list<RegalContext *>::iterator i = shareGroup.begin(); i!=shareGroup.end(); ++i)
-    if (*i && this!=*i && (*i)->initialized)
+  {
+    RegalAssert(*i);
+    if ((*i)->initialized)
       return *i;
+  }
 
   return NULL;
 }

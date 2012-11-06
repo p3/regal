@@ -37,21 +37,17 @@ REGAL_GLOBAL_BEGIN
 
 #include <GL/Regal.h>
 
-#include <cstdio>
-#include <cstring>
-
-#if !REGAL_SYS_WGL
-#include <pthread.h>
-#endif
-
 #include "RegalUtil.h"
 #include "RegalConfig.h"
 #include "RegalLookup.h"
+#include "RegalThread.h"
 #include "RegalDispatch.h"
 
 REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
+
+struct RegalContext;
 
 inline GLfloat  fixedToFloat (const GLfixed  v) { return v / 65536.0f;          }
 inline GLdouble fixedToDouble(const GLfixed  v) { return v / 65536.0;           }
@@ -155,129 +151,8 @@ const GLuint RFF2AInvMap16[] = {
 const GLuint RFF2ATexBegin16 = 8;
 const GLuint RFF2ATexEnd16 = 16;
 
-// end attrib mapping
-
-struct RegalContext;
-
-extern RegalContext *currentContext;
-
-#if REGAL_NO_TLS
-
-typedef int Thread;
-
-inline void *RegalPrivateGetCurrentContext()
-{
-  return currentContext;
-}
-
-#else // REGAL_NO_TLS
-
-#if REGAL_SYS_WGL
-#if REGAL_WIN_TLS
-
-  // Windows TLS API
-
-  typedef DWORD Thread;
-
-  extern "C" { DWORD __stdcall TlsAlloc    (void);          }
-  extern "C" { int   __stdcall TlsFree     (DWORD);         }
-  extern "C" { void* __stdcall TlsGetValue (DWORD);         }
-  extern "C" { int   __stdcall TlsSetValue (DWORD, void *); }
-
-  extern DWORD regalCurrentContextTLSIDX;
-
-  inline void * RegalPrivateGetCurrentContext()
-  {
-    return TlsGetValue( regalCurrentContextTLSIDX );
-  }
-
-#else // REGAL_WIN_TLS
-
-  // Windows __declspec( thread )
-
-  typedef DWORD Thread;
-
-  extern __declspec( thread ) void *regalCurrentContext;
-
-  inline void * RegalPrivateGetCurrentContext()
-  {
-    return regalCurrentContext;
-  }
-
-#endif // REGAL_WIN_TLS
-#else  // REGAL_SYS_WGL
-#if REGAL_SYS_OSX
-
-  // Mac OS X
-
-  typedef pthread_t Thread;
-  extern pthread_key_t regalPrivateCurrentContextKey;
-
-  inline void *RegalPrivateGetCurrentContext()
-  {
-    void *v = pthread_getspecific(regalPrivateCurrentContextKey);
-    if (!v) {
-      RegalMakeCurrent(CGLGetCurrentContext());
-      return pthread_getspecific(regalPrivateCurrentContextKey);
-    }
-    return v;
-  }
-
-#else  // REGAL_SYS_OSX
-
-  // Linux, etc
-
-  typedef pthread_t Thread;
-  extern pthread_key_t regalPrivateCurrentContextKey;
-
-  inline void *RegalPrivateGetCurrentContext()
-  {
-    return pthread_getspecific(regalPrivateCurrentContextKey);
-  }
-
-#endif // REGAL_SYS_OSX
-#endif // REGAL_SYS_WGL
-#endif // REGAL_NO_TLS
-
-#if REGAL_SYS_WGL
-extern "C" { DWORD __stdcall GetCurrentProcessId (void);          }
-extern "C" { DWORD __stdcall GetCurrentThreadId  (void);          }
-#endif
-
-// Current process ID
-
-inline std::size_t procId()
-{
-#if REGAL_SYS_WGL
-	return static_cast<std::size_t>(GetCurrentProcessId());
-#elif REGAL_SYS_OSX || REGAL_SYS_OSX || REGAL_SYS_IOS || REGAL_SYS_ANDROID || REGAL_SYS_GLX
-	return (std::size_t) getpid();
-#else
-  return 0;
-#endif
-}
-
-// Current thread ID
-
-inline std::size_t threadId()
-{
-#if REGAL_SYS_WGL
-	return static_cast<std::size_t>(GetCurrentThreadId());
-#elif REGAL_SYS_OSX || REGAL_SYS_OSX || REGAL_SYS_IOS || REGAL_SYS_ANDROID || REGAL_SYS_GLX
-
-  // Revisit - pthread_self returns an opaque handle which isn't truely
-  // a thread identified.
-
-	return (std::size_t) pthread_self();
-#else
-  return 0;
-#endif
-}
-
 REGAL_NAMESPACE_END
 
-#include "RegalContext.h"
-
-#define GET_REGAL_CONTEXT() ((::REGAL_NAMESPACE_INTERNAL::RegalContext *) ::REGAL_NAMESPACE_INTERNAL::RegalPrivateGetCurrentContext())
+#define GET_REGAL_CONTEXT() ((::REGAL_NAMESPACE_INTERNAL::RegalContext *) ::REGAL_NAMESPACE_INTERNAL::Thread::CurrentContext())
 
 #endif // REGAL_PRIVATE_H

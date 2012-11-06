@@ -49,7 +49,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalPush.h"
 #include "RegalToken.h"
 #include "RegalHelper.h"
-#include "RegalPrivate.h"
+#include "RegalContext.h"
 
 using namespace ::REGAL_NAMESPACE_INTERNAL::Logging;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Token;

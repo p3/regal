@@ -81,6 +81,8 @@ class shared_list : public shared_ptr< ::std::list<T> >
 
     // Expose std::list API
 
+    inline size_type size()        const { RegalAssert(parent::get()); return parent::get()->size();  }
+
     inline void push_front(const T &x)   { RegalAssert(parent::get()); parent::get()->push_front(x);  }
     inline void push_back (const T &x)   { RegalAssert(parent::get()); parent::get()->push_back(x);   }
 

@@ -88,16 +88,21 @@ ${EMU_FORWARD_DECLARE}
 
 struct RegalContext
 {
-  RegalContext(RegalContext *other = NULL);  // Not a copy constructor, optional other for sharing
+  RegalContext();
   ~RegalContext();
 
-  void Init(RegalContext *share_ctx);
+  void Init();
 
   bool                initialized;
   Dispatcher          dispatcher;
   DispatchErrorState  err;
   DebugInfo          *dbg;
   ContextInfo        *info;
+
+  //
+  // Emulation
+  //
+
 ${EMU_MEMBER_DECLARE}
 
   #if defined(__native_client__)
@@ -106,20 +111,29 @@ ${EMU_MEMBER_DECLARE}
   #endif
 
   RegalSystemContext  sysCtx;
-  Thread              thread;
+  Thread::Thread      thread;
 
   GLLOGPROCREGAL      logCallback;
 
-  // The shared group of contexts
+  //
+  // Regal context sharing
+  //
 
   shared_list<RegalContext *> shareGroup;
 
-  // Get a context in the share group that is
-  // already initialized, and isn't this one.
+  // Query that any of the contexts in the share
+  // group are already initialized
 
-  RegalContext *sharingWith();
+  bool groupInitialized() const;
 
+  // Get any context in the share group that is
+  // already initialized
+
+  RegalContext *groupInitializedContext();
+
+  //
   // Per-frame state and configuration
+  //
 
   size_t              frame;
   Timer               frameTimer;
@@ -161,7 +175,7 @@ REGAL_NAMESPACE_BEGIN
 
 using namespace Logging;
 
-RegalContext::RegalContext(RegalContext *other)
+RegalContext::RegalContext()
 : initialized(false),
   dispatcher(),
   dbg(NULL),
@@ -188,21 +202,17 @@ ${EMU_MEMBER_CONSTRUCT}#endif
     dbg->Init(this);
   }
 
-  if (other)
-    shareGroup = other->shareGroup;
-
   shareGroup.push_back(this);
 
   frameTimer.restart();
 }
 
 void
-RegalContext::Init(RegalContext *share_ctx)
+RegalContext::Init()
 {
   Internal("RegalContext::Init","()");
 
   RegalAssert(!initialized);
-  initialized = true;
 
   info = new ContextInfo();
   RegalAssert(this);
@@ -231,6 +241,8 @@ ${MEMBER_INIT}
 ${EMU_MEMBER_INIT}
   }
 #endif
+
+  initialized = true;
 }
 
 RegalContext::~RegalContext()
@@ -247,22 +259,40 @@ ${MEMBER_CLEANUP}
 ${EMU_MEMBER_CLEANUP}#endif
 }
 
-RegalContext *
-RegalContext::sharingWith()
+bool
+RegalContext::groupInitialized() const
 {
-  Internal("RegalContext::sharingWith","()");
+  Internal("RegalContext::groupInitialized","()");
 
-  // Look for the first non-NULL, not this, initialized
-  // context in the share group.  The only way this would
-  // be expected to fail is if none of the contexts have
-  // been made current, triggering initialization.
+  for (shared_list<RegalContext *>::const_iterator i = shareGroup.begin(); i!=shareGroup.end(); ++i)
+  {
+    RegalAssert(*i);
+    if ((*i)->initialized)
+      return true;
+  }
+
+  return false;
+}
+
+RegalContext *
+RegalContext::groupInitializedContext()
+{
+  Internal("RegalContext::groupInitializedContext","()");
+
+  // Look for any initialized context in the share group.
+  // The only way this would be expected to fail is if none
+  // of the contexts have been made current, triggering
+  // initialization.
   //
   // Note - linear search, but shouldn't need to look at too many
   // contexts in the share group.
 
   for (shared_list<RegalContext *>::iterator i = shareGroup.begin(); i!=shareGroup.end(); ++i)
-    if (*i && this!=*i && (*i)->initialized)
+  {
+    RegalAssert(*i);
+    if ((*i)->initialized)
       return *i;
+  }
 
   return NULL;
 }
@@ -354,7 +384,7 @@ def generateContextSource(apis, args):
 
             init += '%s = new %s;\n' % ( emu[revi]['member'], emu[revi]['type'] )
             init += 'emuLevel = %d;\n' % ( int(emu[revi]['level']) - 1)
-            init += '%s->Init(*this, share_ctx);\n' % emu[revi]['member']
+            init += '%s->Init(*this);\n' % emu[revi]['member']
             emuMemberInit += indent(wrapIf(emu[revi]['ifdef'],wrapCIf(emu[revi]['conditional'],init)),'    ')
 
     emuMemberInit += '    emuLevel = %d;\n' % ( len( emu ) - 1 )
