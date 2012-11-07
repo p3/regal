@@ -1018,13 +1018,14 @@ void GenerateFragmentShaderSource( RFF * rff, string_list & src ) {
         src << "    s = vec4( 0.0f, 0.0f, 0.0f, 0.0f );\n";
         break;
     }
+    GLuint obj = rff->textureBinding[i];
     switch( t.unit.env.mode ) {
       case RFF::TEM_Replace:
       case RFF::TEM_Modulate:
       case RFF::TEM_Add:
       case RFF::TEM_Decal:
       case RFF::TEM_Blend:
-        AddTexEnv( i, t.unit.env.mode, t.unit.fmt, src );
+        AddTexEnv( i, t.unit.env.mode, rff->textureObjToFmt[obj], src );
         break;
       case RFF::TEM_Combine:
         AddTexEnvCombine( t.unit.env, src );
@@ -1557,10 +1558,8 @@ void RFF::ShadowMultiTexBinding( GLenum texunit, GLenum target, GLuint obj ) {
     return;
   }
   // assert( textureInfo.count( obj ) == 0 || target == textureInfo[activeTextureIndex].target );
-  GLint fmt = textureObjToFmt[ obj ];
   TextureUnit & tu = textureUnit[ activeTextureIndex ];
   textureBinding[ activeTextureIndex ] = obj;
-  tu.fmt = fmt;
   tu.ttb = static_cast<GLubyte>(TargetToBitfield( target ));
   ffstate.raw.ver = ver.Update();
 }
@@ -1587,7 +1586,6 @@ void RFF::ShadowTexInfo( GLenum target, GLint internalFormat ) {
     return;
   }
   ShadowTextureInfo( textureBinding[ shadowActiveTextureIndex ], target, internalFormat );
-  textureUnit[ shadowActiveTextureIndex ].fmt = fmtmap[ internalFormat ];
 }
 
 void RFF::TexEnv( GLenum texunit, GLenum target, GLenum pname, const GLfloat *v ) {

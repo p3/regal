@@ -1060,7 +1060,6 @@ struct RegalIff : public RegalEmu
     }
 
     GLubyte ttb;
-    GLint fmt;
     TextureEnv env;
   };
 
