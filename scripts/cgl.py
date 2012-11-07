@@ -305,7 +305,7 @@ CGLError.add(kCGLBadConnection)
 defines = Enum('defines')
 cgl.add(defines)
 
-# 
+#
 
 kCGL0Bit = Enumerant('kCGL0Bit', 0x0001, '')
 kCGL10Bit = Enumerant('kCGL10Bit', 0x0100, '')

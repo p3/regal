@@ -32,6 +32,11 @@
   OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+  Intended formatting conventions:
+  $ astyle --style=allman --indent=spaces=2 --indent-switches
+*/
+
 #ifndef __REGAL_CONTEXT_H__
 #define __REGAL_CONTEXT_H__
 
@@ -43,6 +48,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalPrivate.h"
 #include "RegalDispatcher.h"
 #include "RegalDispatchError.h"
+#include "RegalSharedList.h"
 
 #if defined(__native_client__)
 #define __gl2_h_  // HACK - revisit
@@ -72,12 +78,18 @@ struct RegalContext
   RegalContext();
   ~RegalContext();
 
-  void Init(RegalContext *share_ctx);
+  void Init();
 
+  bool                initialized;
   Dispatcher          dispatcher;
   DispatchErrorState  err;
   DebugInfo          *dbg;
   ContextInfo        *info;
+
+  //
+  // Emulation
+  //
+
   Marker             *marker;
 #if REGAL_EMULATION
   // Fixed function emulation
@@ -96,11 +108,29 @@ struct RegalContext
   #endif
 
   RegalSystemContext  sysCtx;
-  Thread              thread;
+  Thread::Thread      thread;
 
   GLLOGPROCREGAL      logCallback;
 
+  //
+  // Regal context sharing
+  //
+
+  shared_list<RegalContext *> shareGroup;
+
+  // Query that any of the contexts in the share
+  // group are already initialized
+
+  bool groupInitialized() const;
+
+  // Get any context in the share group that is
+  // already initialized
+
+  RegalContext *groupInitializedContext();
+
+  //
   // Per-frame state and configuration
+  //
 
   size_t              frame;
   Timer               frameTimer;

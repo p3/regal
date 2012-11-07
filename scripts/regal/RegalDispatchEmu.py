@@ -102,36 +102,38 @@ def apiEmuFuncDefineCode(apis, args):
                 continue
 
             code += '\nstatic %sREGAL_CALL %s%s(%s) \n{\n' % (rType, 'emu_', name, params)
-            code += '   RegalContext *_context = GET_REGAL_CONTEXT();\n'
-            code += '   RegalAssert(_context);\n'
+            code += '  RegalContext *_context = GET_REGAL_CONTEXT();\n'
+            code += '  RegalAssert(_context);\n'
             code += '\n'
 
             level = [ (emu[i], emuFindEntry( function, emu[i]['formulae'], emu[i]['member'] )) for i in range( len( emue ) - 1 ) ]
 
             if not all(i[1]==None or not 'prefix' in i[1] and not 'impl' in i[1] for i in level):
-              code += '   // prefix\n'
-              code += '   switch( _context->emuLevel ) {\n'
+              code += '  // prefix\n'
+              code += '  switch( _context->emuLevel )\n'
+              code += '  {\n'
               for i in level:
                   l,e = i[0], i[1]
-                  code += '       case %d :\n' % l['level']
+                  code += '    case %d :\n' % l['level']
                   if l['ifdef']:
-                      code += '         #if %s\n' % l['ifdef']
+                      code += '      #if %s\n' % l['ifdef']
                   if e != None and 'prefix' in e and len(e['prefix']):
                       if l['member'] :
-                          code += '         if (_context->%s) {\n' % l['member']
-                          code += '           Push<int> pushLevel(_context->emuLevel);\n'
-                          code += '           _context->emuLevel = %d;\n' %( int(l['level']) - 1 )
+                          code += '      if (_context->%s)\n' % l['member']
+                          code += '      {\n'
+                          code += '        Push<int> pushLevel(_context->emuLevel);\n'
+                          code += '        _context->emuLevel = %d;\n' %( int(l['level']) - 1 )
                       for j in e['prefix'] :
-                          code += '           %s\n' % j
+                          code += '        %s\n' % j
                       if l['member'] :
-                          code += '         }\n'
+                          code += '      }\n'
                   if e!= None and 'impl' in e and l['member']:
-                      code += '         if (_context->%s) break;\n' % l['member'];
+                      code += '      if (_context->%s) break;\n' % l['member'];
                   if l['ifdef']:
-                      code += '         #endif\n'
-              code += '       default:\n'
-              code += '           break;\n'
-              code += '   }\n\n'
+                      code += '      #endif\n'
+              code += '    default:\n'
+              code += '      break;\n'
+              code += '  }\n\n'
 
             # Remap, as necessary
             remap = getattr(function, 'regalRemap', None)
@@ -146,56 +148,59 @@ def apiEmuFuncDefineCode(apis, args):
                   es2Name   = es2Name[0:j]
 
             if not all(i[1]==None or not 'impl' in i[1] for i in level):
-              code += '   // impl\n'
-              code += '   switch( _context->emuLevel ) {\n'
+              code += '  // impl\n'
+              code += '  switch( _context->emuLevel )\n'
+              code += '  {\n'
               for i in level:
                   l,e = i[0], i[1]
-                  code += '       case %d :\n' % l['level']
+                  code += '    case %d :\n' % l['level']
                   if l['ifdef']:
-                      code += '         #if %s\n' % l['ifdef']
+                      code += '      #if %s\n' % l['ifdef']
                   if e != None and 'impl' in e and len(e['impl']):
                       if l['member'] :
-                        code += '         if (_context->%s) {\n' % l['member']
-                        code += '           Push<int> pushLevel(_context->emuLevel);\n'
-                        code += '           _context->emuLevel = %d;\n' %( int(l['level']) - 1 )
+                        code += '      if (_context->%s)\n' % l['member']
+                        code += '      {\n'
+                        code += '        Push<int> pushLevel(_context->emuLevel);\n'
+                        code += '        _context->emuLevel = %d;\n' %( int(l['level']) - 1 )
                       for j in e['impl'] :
-                          code += '           %s\n' % j
+                          code += '        %s\n' % j
                       if l['member'] :
                           if typeIsVoid(rType):
-                              code += '           return;\n'
-                          code += '         }\n'
+                              code += '        return;\n'
+                          code += '      }\n'
                   if l['ifdef']:
-                      code += '         #endif\n'
-              code += '       default: {\n'
+                      code += '      #endif\n'
+              code += '    default: \n'
+              code += '    {\n'
 
               # glEnable/glDisable/glIsEnabled constraints for ES 2.0
               # http://www.khronos.org/opengles/sdk/docs/man/xhtml/glEnable.xml
 
               if name=='glEnable' or name=='glDisable' or name=='glIsEnabled':
-                code += '         if (_context->info->gles)\n'
-                code += '           switch (cap)\n'
-                code += '           {\n'
+                code += '       if (_context->info->gles)\n'
+                code += '         switch (cap)\n'
+                code += '         {\n'
                 for i in api.enums:
                   if i.name=='defines':
                     for j in i.enumerants:
                       if getattr(j,'esVersions',None) != None and getattr(j,'enableCap',None) != None and 2.0 in j.esVersions and j.enableCap == True:
-                        code += '             case %s:\n'%(j.name)
-                code += '               break;\n'
-                code += '             default:\n'
-                code += '               Warning("%s does not support ",GLenumToString(cap)," for ES 2.0.");\n'%(name)
+                        code += '           case %s:\n'%(j.name)
+                code += '             break;\n'
+                code += '           default:\n'
+                code += '             Warning("%s does not support ",GLenumToString(cap)," for ES 2.0.");\n'%(name)
                 if name=='glIsEnabled':
-                  code += '               return GL_FALSE;\n'
+                  code += '             return GL_FALSE;\n'
                 else:
-                  code += '               return;\n'
-                code += '           }\n'
+                  code += '             return;\n'
+                code += '         }\n'
 
               # glHint constraints for ES 2.0
               # http://www.khronos.org/opengles/sdk/docs/man/xhtml/glHint.xml
 
               if name=='glHint':
-                code += '         if (_context->info->gles)\n'
-                code += '           switch (target)\n'
-                code += '           {\n'
+                code += '       if (_context->info->gles)\n'
+                code += '         switch (target)\n'
+                code += '         {\n'
                 for i in api.enums:
                   if i.name=='defines':
                     for j in i.enumerants:
@@ -204,49 +209,49 @@ def apiEmuFuncDefineCode(apis, args):
                       if getattr(j,'hint',None)==None:
                         continue
                       if getattr(j,'esVersions',None) != None and getattr(j,'hint',None) != None and 2.0 in j.esVersions and j.hint == True:
-                        code += '             case %s:\n'%(j.name)
-                code += '               break;\n'
-                code += '             default:\n'
-                code += '               Warning("%s does not support ",GLenumToString(target)," for ES 2.0.");\n'%(name)
-                code += '               return;\n'
-                code += '           }\n'
+                        code += '           case %s:\n'%(j.name)
+                code += '             break;\n'
+                code += '           default:\n'
+                code += '             Warning("%s does not support ",GLenumToString(target)," for ES 2.0.");\n'%(name)
+                code += '             return;\n'
+                code += '         }\n'
 
-              code += '         DispatchTable *_next = _context->dispatcher.emulation._next;\n'
-              code += '         RegalAssert(_next);\n'
-
-              if es2Name != None:
-                code += '         '
-                code += 'if (_context->info->gles)\n'
-                code += '         '
-                if not typeIsVoid(rType):
-                    code += '  return '
-                code += '  _next->call(&_next->%s)(%s);\n' % ( es2Name, es2Params )
-                code += '         else\n  '
-
-              code += '         '
-              if not typeIsVoid(rType):
-                  code += 'return '
-              code += ' _next->call(&_next->%s)(%s);\n' % ( name, callParams )
-
-              code += '         break;\n'
-              code += '       }\n\n'
-              code += '   }\n\n'
-            else:
-              code += '   DispatchTable *_next = _context->dispatcher.emulation._next;\n'
-              code += '   RegalAssert(_next);\n'
-              code += '   '
+              code += '      DispatchTable *_next = _context->dispatcher.emulation._next;\n'
+              code += '      RegalAssert(_next);\n'
 
               if es2Name != None:
+                code += '      '
                 code += 'if (_context->info->gles)\n'
-                code += '     '
+                code += '        '
                 if not typeIsVoid(rType):
                     code += 'return '
-                code += ' _next->call(& _next->%s)(%s);\n' % ( es2Name, es2Params )
+                code += '_next->call(&_next->%s)(%s);\n' % ( es2Name, es2Params )
+                code += '      else\n  '
+
+              code += '      '
+              if not typeIsVoid(rType):
+                  code += 'return '
+              code += '_next->call(&_next->%s)(%s);\n' % ( name, callParams )
+
+              code += '      break;\n'
+              code += '    }\n\n'
+              code += '  }\n\n'
+            else:
+              code += '  DispatchTable *_next = _context->dispatcher.emulation._next;\n'
+              code += '  RegalAssert(_next);\n'
+              code += '  '
+
+              if es2Name != None:
+                code += 'if (_context->info->gles)\n'
+                code += '    '
+                if not typeIsVoid(rType):
+                    code += 'return '
+                code += '_next->call(& _next->%s)(%s);\n' % ( es2Name, es2Params )
                 code += '   else\n     '
 
               if not typeIsVoid(rType):
                   code += 'return '
-              code += ' _next->call(& _next->%s)(%s);\n' % ( name, callParams )
+              code += '_next->call(& _next->%s)(%s);\n' % ( name, callParams )
             code += '}\n\n'
 
         if api.name in cond:

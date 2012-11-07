@@ -42,8 +42,8 @@ REGAL_GLOBAL_BEGIN
 #include "RegalLog.h"
 #include "RegalTimer.h"
 #include "RegalMarker.h"
+#include "RegalThread.h"
 #include "RegalContext.h"
-#include "RegalPrivate.h"
 
 #ifndef REGAL_SYS_WGL
 #include <pthread.h>
@@ -252,7 +252,7 @@ namespace Logging {
     // (recursive) logging.
 
 #if !defined(REGAL_SYS_WGL) && !REGAL_NO_TLS
-    if (!regalPrivateCurrentContextKey || !pthread_getspecific(regalPrivateCurrentContextKey))
+    if (!Thread::currentContextKey || !pthread_getspecific(Thread::currentContextKey))
       return 0;
 #endif
 
@@ -293,8 +293,8 @@ namespace Logging {
     string_list os;
     os << "{\n";
     os << ::boost::print::json::member(::boost::print::json::pair("cat",prefix));
-    os << ::boost::print::json::member(::boost::print::json::pair("pid",procId()));
-    os << ::boost::print::json::member(::boost::print::json::pair("tid",threadId()%(1<<16)));
+    os << ::boost::print::json::member(::boost::print::json::pair("pid",Thread::procId()));
+    os << ::boost::print::json::member(::boost::print::json::pair("tid",Thread::threadId()%(1<<16)));
     os << ::boost::print::json::member(::boost::print::json::pair("ts",timer.now()));
 
     if (!name)
@@ -389,7 +389,7 @@ namespace Logging {
       RegalContext *rCtx = NULL;
 
 #if !defined(REGAL_SYS_WGL) && !REGAL_NO_TLS
-      if (regalPrivateCurrentContextKey && pthread_getspecific(regalPrivateCurrentContextKey))
+      if (Thread::currentContextKey && pthread_getspecific(Thread::currentContextKey))
         rCtx = GET_REGAL_CONTEXT();
 #else
       rCtx = GET_REGAL_CONTEXT();

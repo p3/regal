@@ -1,6 +1,10 @@
 #ifndef LOOKUP3_H
 #define LOOKUP3_H
 
+// #ifndef VALGRIND
+// #define VALGRIND
+// #endif
+
 #ifdef __cplusplus
 namespace Lookup3 {
 #endif
@@ -82,7 +86,8 @@ typedef unsigned __int32 uint32_t;
 
 #define hashsize(n) ((uint32_t)1<<(n))
 #define hashmask(n) (hashsize(n)-1)
-#define rot(x,k) (((x)<<(k)) | ((x)>>(32-(k))))
+
+inline uint32_t rot(uint32_t x,uint32_t k) { return (x<<k) | (x>>(32-k)); }
 
 /*
 -------------------------------------------------------------------------------
@@ -128,14 +133,15 @@ on, and rotates are much kinder to the top and bottom bits, so I used
 rotates.
 -------------------------------------------------------------------------------
 */
-#define mix(a,b,c) \
-{ \
-  a -= c;  a ^= rot(c, 4);  c += b; \
-  b -= a;  b ^= rot(a, 6);  a += c; \
-  c -= b;  c ^= rot(b, 8);  b += a; \
-  a -= c;  a ^= rot(c,16);  c += b; \
-  b -= a;  b ^= rot(a,19);  a += c; \
-  c -= b;  c ^= rot(b, 4);  b += a; \
+
+inline void mix(uint32_t &a,uint32_t &b,uint32_t &c)
+{
+  a -= c;  a ^= rot(c, 4);  c += b;
+  b -= a;  b ^= rot(a, 6);  a += c;
+  c -= b;  c ^= rot(b, 8);  b += a;
+  a -= c;  a ^= rot(c,16);  c += b;
+  b -= a;  b ^= rot(a,19);  a += c;
+  c -= b;  c ^= rot(b, 4);  b += a;
 }
 
 /*
@@ -163,15 +169,16 @@ and these came close:
  11  8 15 26 3 22 24
 -------------------------------------------------------------------------------
 */
-#define final(a,b,c) \
-{ \
-  c ^= b; c -= rot(b,14); \
-  a ^= c; a -= rot(c,11); \
-  b ^= a; b -= rot(a,25); \
-  c ^= b; c -= rot(b,16); \
-  a ^= c; a -= rot(c,4);  \
-  b ^= a; b -= rot(a,14); \
-  c ^= b; c -= rot(b,24); \
+
+inline void final(uint32_t &a,uint32_t &b,uint32_t &c)
+{
+  c ^= b; c -= rot(b,14);
+  a ^= c; a -= rot(c,11);
+  b ^= a; b -= rot(a,25);
+  c ^= b; c -= rot(b,16);
+  a ^= c; a -= rot(c,4); 
+  b ^= a; b -= rot(a,14);
+  c ^= b; c -= rot(b,24);
 }
 
 /*
@@ -188,9 +195,10 @@ and these came close:
 --------------------------------------------------------------------
 */
 inline uint32_t hashword(
-const uint32_t *k,                   /* the key, an array of uint32_t values */
-size_t          length,               /* the length of the key, in uint32_ts */
-uint32_t        initval)         /* the previous hash, or an arbitrary value */
+  const uint32_t *k,               /* the key, an array of uint32_t values */
+  size_t          length,          /* the length of the key, in uint32_ts */
+  uint32_t        initval          /* the previous hash, or an arbitrary value */
+)
 {
   uint32_t a,b,c;
 

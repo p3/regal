@@ -46,11 +46,13 @@ typedef boost::print::string_list<string> string_list;
 #include "RegalLog.h"
 #include "RegalToken.h"
 
+#include "lookup3.h"
+
 REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
-#define REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS 4
+#define REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS 2
 
 using namespace ::REGAL_NAMESPACE_INTERNAL::Logging;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
@@ -1463,13 +1465,8 @@ void Program::Uniforms( RegalContext * ctx, DispatchTable & tbl )
   for( size_t i = 1; i < sizeof(regalFFUniformInfo)/sizeof(regalFFUniformInfo[0]); i++ ) {
     const RegalFFUniformInfo & ri = regalFFUniformInfo[i];
     GLint slot = tbl.call(&tbl.glGetUniformLocation)( pg, ri.name );
-    if( slot > -1 ) {
-      UniformInfo ui;
-      ui.slot = slot;
-      ui.ver = 0;
-      ui.ver = ~ui.ver;
-      uniforms[ ri.val ] = ui;
-    }
+    if (slot > -1)
+      uniforms[ ri.val ] = UniformInfo(slot,~GLuint64(0));
   }
 }
 
@@ -1764,6 +1761,11 @@ void RFF::TexEnv( GLenum texunit, GLenum target, GLenum pname, const GLint *v ) 
   }
 }
 
+inline size_t compute_hash(const Store &val)
+{
+  return Lookup3::hashlittle(reinterpret_cast<const char *>(&val) + sizeof(GLuint), sizeof(Store)-sizeof(GLuint64)-sizeof(GLuint), 0);
+}
+
 void RFF::State::Process( RegalIff * ffn ) {
   const Store & r = raw;
   Store & p = processed;
@@ -1774,6 +1776,7 @@ void RFF::State::Process( RegalIff * ffn ) {
   }
 
   p = r;
+
   r3::Matrix4f identity;
   if( p.fog.enable == false ) {
     p.fog.useDepth = true;
@@ -1823,12 +1826,7 @@ void RFF::State::Process( RegalIff * ffn ) {
       }
     }
   }
-  GLuint h = 0;
-  GLuint * pc = (GLuint *)&p;
-  for( size_t i = 1; i < (sizeof( Store ) - sizeof( GLuint64 )) / sizeof( GLuint ); i++ ) {
-    h ^= pc[i];
-  }
-  p.hash = h;
+  p.hash = (GLuint) compute_hash(p);
 }
 
 void RFF::UpdateUniforms( RegalContext * ctx ) {
@@ -2014,32 +2012,27 @@ void RFF::UpdateUniforms( RegalContext * ctx ) {
   }
 }
 
-inline bool operator == ( const RFF::State::Store & lhs, const RFF::State::Store & rhs ) {
-  //fprintf( stderr, "Size of lhs.processed == %d", (int)sizeof( lhs.processed ) );
-  const GLuint * L = (const GLuint *)&lhs;
-  const GLuint * R = (const GLuint *)&rhs;
-  for( int i = 0; i < int( ( sizeof( lhs ) - sizeof( lhs.ver ) ) / sizeof( GLuint ) ) ; i++ ) {
-    if( L[i] != R[i] ) return false;
-  }
-  return true;
+inline bool operator == ( const RFF::State::Store & lhs, const RFF::State::Store & rhs )
+{
+  return memcmp(&lhs,&rhs,sizeof( RFF::State::Store ) - sizeof( lhs.ver ))==0;
 }
 
-inline GLuint ProgHashToSet( GLuint hash ) {
-  // assuming ways is 4 bits
-  GLuint set = ( hash ^ ( hash >> 4 ) ) & 0x0f0f0f0f;
-  set = ( set ^ ( set >> 8 ) ) & 0x000f000f;
-  set = ( set ^ ( set >> 16 ) ) & 0x0000000f;
-  return set;
+inline size_t ProgHashToSet( size_t hash ) {
+  return hash & ( ( 1 << ( REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS - REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ) ) - 1 );
 }
+
+std::vector<GLuint> wayhist(1 << ( REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS - REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ),0);
+std::vector<GLuint> evicthist(1 << ( REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS - REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ),0);
 
 void RFF::UseFixedFunctionProgram( RegalContext * ctx ) {
   if( currprog != NULL && currprog->ver == ver.Current() ) {
     return;
   }
   ffstate.Process( this );
-  int base = ProgHashToSet( ffstate.processed.hash ) << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS;
+  size_t base = ProgHashToSet( ffstate.processed.hash ) << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS;
   int match = -1;
-  for( int i = 0; i < 1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS; i++ ) {
+  for( int i = 0; i < (1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS); i++ ) {
+    assert(i<(1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS));
     if( ffprogs[ base + i ].store == ffstate.processed ) {
       match = i;
       break;
@@ -2047,6 +2040,17 @@ void RFF::UseFixedFunctionProgram( RegalContext * ctx ) {
   }
   Program * p = NULL;
   if( match < 0 ) {
+    wayhist[ base >> REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ]++;
+
+#if 0
+    fprintf( stderr, "wayhist: " );
+    GLuint sum = 0;
+    for( int i = 0; i < 1 << ( REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS - REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ); i++ ) {
+      fprintf( stderr, "%4d ", wayhist[i] );
+      sum += wayhist[i];
+    }
+    fprintf( stderr, "-- %d\n", sum );
+#endif
     match = 0;
     progcount++;
     for( int i = 0; i < 1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS; i++ ) {
@@ -2062,6 +2066,16 @@ void RFF::UseFixedFunctionProgram( RegalContext * ctx ) {
       tbl.call(&tbl.glDeleteShader)( p->fs );
       tbl.call(&tbl.glDeleteProgram)( p->pg );
       *p = Program();
+      evicthist[ base >> REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ]++;
+#if 0
+      fprintf( stderr, "evicthist: " );
+      GLuint sum = 0;
+      for( int i = 0; i < 1 << ( REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS - REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SET_BITS ); i++ ) {
+        fprintf( stderr, "%4d ", evicthist[i] );
+        sum += evicthist[i];
+      }
+      fprintf( stderr, "-- %d\n", sum );
+#endif
     }
     string_list vsSrc;
     GenerateVertexShaderSource( this, ffstate, vsSrc );

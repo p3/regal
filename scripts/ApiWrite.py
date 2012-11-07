@@ -78,7 +78,10 @@ defines = Enum('defines')
 '''%(name)
 
   for i in enumerants:
-    print >>file, '# %s'%i[0].category
+    if len(i[0].category):
+      print >>file, '# %s'%i[0].category
+    else:
+      print >>file, '#'
     print >>file, ''
     for j in i:
       print >>file, '%s = Enumerant(\'%s\','%(j.name,j.name),
@@ -119,7 +122,10 @@ def writeFunctions(file,name,functions):
   f = sorted( [ sorted( f[i], key = lambda k : k.name) for i in f.keys() ], cmp=cmpCategory )
 
   for i in f:
-    print >>file, '# %s'%i[0].category
+    if len(i[0].category):
+      print >>file, '# %s'%i[0].category
+    else:
+      print >>file, '#'
     print >>file, ''
     for j in i:
       print >>file, '%s = Function(\'%s\')'%(j.name,j.name)

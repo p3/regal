@@ -36,18 +36,23 @@ REGAL_GLOBAL_BEGIN
 // - Except for Mac
 // - Except for gcc before 4.4.x
 // - Except for MS Visual Studio before VC10
+// - Except for Android
 
 #ifndef REGAL_NO_TR1
 #  ifdef __APPLE__
 #    define REGAL_NO_TR1 1
-#  else 
-#    ifdef __GNUC__
-#      if __GNUC__<4 || (__GNUC__==4 && __GNUC_MINOR__<4)
+#  else
+#    ifdef __ANDROID__
+#      define REGAL_NO_TR1 1
+#    else
+#      ifdef __GNUC__
+#        if __GNUC__<4 || (__GNUC__==4 && __GNUC_MINOR__<4)
+#          define REGAL_NO_TR1 1
+#        endif
+#      endif
+#      if defined(_MSC_VER) && _MSC_VER<1600
 #        define REGAL_NO_TR1 1
 #      endif
-#    endif
-#    if defined(_MSC_VER) && _MSC_VER<1600
-#      define REGAL_NO_TR1 1
 #    endif
 #  endif
 #endif
@@ -78,17 +83,17 @@ using ::std::tr1::shared_ptr;
 // support multi-threading.
 
 template<typename T>
-class shared_ptr 
+class shared_ptr
 {
   public:
     inline shared_ptr() : _value(NULL), _count(NULL) {}
-    
+
     template<typename U>
     inline explicit shared_ptr(U *value) : _value(value), _count(NULL)
     {
       // Inc-ref
     }
-    
+
     template<typename U>
     inline shared_ptr(const shared_ptr<U> &other)
     : _value(other._value),
@@ -112,7 +117,7 @@ class shared_ptr
 
       return *this;
     }
-    
+
     template<typename U>
     inline shared_ptr &operator=(const shared_ptr<U> &other)
     {
@@ -129,30 +134,30 @@ class shared_ptr
     }
 
     inline void reset(T *value)
-    { 
+    {
       operator=(value);
     }
 
     inline void reset(shared_ptr<T> &other)
-    { 
+    {
       operator=(other);
     }
-    
+
     template<typename U>
     inline void reset(U *value)
-    { 
+    {
       operator=(value);
     }
-    
+
     inline       T &operator*()        { return *_value; }
     inline const T &operator*()  const { return *_value; }
-    
+
     inline       T *operator->()       { return _value; }
     inline const T *operator->() const { return _value; }
-    
+
     inline       T *get()              { return _value; }
     inline const T *get()        const { return _value; }
-    
+
   private:
     T      *_value;
     size_t *_count;
@@ -162,4 +167,4 @@ class shared_ptr
 
 REGAL_NAMESPACE_END
 
-#endif // REGAL_SHARED_PTR_H
+#endif

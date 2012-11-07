@@ -52,8 +52,8 @@ REGAL_GLOBAL_BEGIN
 
 #include "RegalPpa.h"
 #include "RegalLog.h"
+#include "RegalThread.h"
 #include "RegalFavicon.h"
-#include "RegalPrivate.h"
 #include "RegalContextInfo.h"
 
 #include <map>
@@ -72,7 +72,7 @@ REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
-extern map<Thread, RegalContext *> th2rc;
+extern map<Thread::Thread, RegalContext *> th2rc;
 
 namespace Http
 {
@@ -171,7 +171,7 @@ namespace Http
         }
         else
         {
-          for (map<Thread, RegalContext *>::const_iterator i = th2rc.begin(); i!=th2rc.end(); ++i)
+          for (map<Thread::Thread, RegalContext *>::const_iterator i = th2rc.begin(); i!=th2rc.end(); ++i)
           {
             RegalContext *ctx = i->second;
 

@@ -43,7 +43,13 @@
 #define REGAL_MAX_VERTEX_ATTRIBS 16
 #define REGAL_IMMEDIATE_BUFFER_SIZE 8192
 
+// Configurable
+
 #define REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS 8
+
+// Derived
+
+#define REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE      (1<<REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS)
 
 #if REGAL_EMULATION
 
@@ -59,8 +65,9 @@ REGAL_GLOBAL_BEGIN
 
 #include "RegalEmu.h"
 #include "RegalPrivate.h"
+#include "RegalContext.h"
 #include "RegalContextInfo.h"
-#include "RegalSharedPtr.h"
+#include "RegalSharedMap.h"
 #include "linear.h"
 
 REGAL_GLOBAL_END
@@ -296,8 +303,29 @@ template <> inline GLfloat RFFToFloatN( int i, const int * p ) { return GLfloat(
 
 
 
-struct RegalIff : public RegalEmu {
+struct RegalIff : public RegalEmu
+{
+  RegalIff()
+  {
+  }
 
+  RegalIff(const RegalIff &other)
+  {
+    UNUSED_PARAMETER(other);
+  }
+
+  RegalIff &operator=(const RegalIff &other)
+  {
+    UNUSED_PARAMETER(other);
+    if (&other!=this)
+    {
+    }
+    return *this;
+  }
+
+  ~RegalIff()
+  {
+  }
 
   // Vertex arrays
   GLuint catIndex;
@@ -970,17 +998,28 @@ struct RegalIff : public RegalEmu {
     TCO_OneMinusAlpha
   };
 
-  struct TexenvCombineState {
+  struct TexenvCombineState
+  {
     TexenvCombineState()
     {
-      memset( this, 0, sizeof( *this ) );
+      memset( this, 0, sizeof(TexenvCombineState) );
       mode = TEC_Invalid;
       src0 = src1 = src2 = TCS_Invalid;
       op0 = op1 = op2 = TCO_Invalid;
     }
-    TexenvCombineState( const TexenvCombineState & cpy ) {
-      memcpy( this, &cpy, sizeof( *this) );
+
+    TexenvCombineState( const TexenvCombineState &other )
+    {
+      memcpy(this, &other, sizeof(TexenvCombineState) );
     }
+
+    TexenvCombineState &operator=(const TexenvCombineState &other)
+    {
+      if (&other!=this)
+        memcpy(this, &other, sizeof(TexenvCombineState));
+      return *this;
+    }
+
     TexenvCombine mode;
     TexenvCombineSrc src0;
     TexenvCombineSrc src1;
@@ -990,18 +1029,36 @@ struct RegalIff : public RegalEmu {
     TexenvCombineOp op2;
   };
 
-  struct TextureEnv {
+  struct TextureEnv
+  {
     TextureEnv()
-    : mode( TEM_Modulate )
-    {}
+    : mode(TEM_Modulate)
+    {
+    }
+
     TexenvMode mode;
     TexenvCombineState rgb, a;
   };
 
-  struct TextureUnit {
+  struct TextureUnit
+  {
     TextureUnit()
-    : ttb( 0 )
-    {}
+    {
+      memset(this,0,sizeof(TextureUnit));
+    }
+
+    TextureUnit(const TextureUnit &other)
+    {
+      memcpy(this,&other,sizeof(TextureUnit));
+    }
+
+    TextureUnit &operator=(const TextureUnit &other)
+    {
+      if (&other!=this)
+        memcpy(this,&other,sizeof(TextureUnit));
+      return *this;
+    }
+
     GLubyte ttb;
     TextureEnv env;
   };
@@ -1030,45 +1087,61 @@ struct RegalIff : public RegalEmu {
 
   struct State {
 
-    struct Texgen {
+    struct Texgen
+    {
       Texgen()
       {
-        memset( this, 0, sizeof( *this ) );
-        enable = false;
+        memset(this, 0, sizeof(Texgen));
         mode = TG_EyeLinear;
       }
-      Texgen( const Texgen & cpy ) {
-        memcpy( this, &cpy, sizeof( *this) );
+
+      Texgen(const Texgen &other)
+      {
+        memcpy(this, &other, sizeof(Texgen));
+      }
+
+      Texgen &operator=(const Texgen &other)
+      {
+        if (&other!=this)
+          memcpy(this, &other, sizeof(Texgen));
+        return *this;
       }
 
       GLboolean enable;
       TexgenMode mode;
     };
 
-    struct TexgenUniform {
+    struct TexgenUniform
+    {
       TexgenUniform()
-      : obj( 0, 0, 0, 0 )
-      , eye( 0, 0, 0, 0 )
-      , objVer( 0 )
-      , eyeVer( 0 )
-      {}
+      {
+        memset(this, 0, sizeof(TexgenUniform));
+      }
       Float4 obj;
       Float4 eye;
       GLuint64 objVer;
       GLuint64 eyeVer;
     };
 
-    struct Texture {
+    struct Texture
+    {
       Texture()
       {
-        memset( this, 0, sizeof( *this ) );
-        enables = 0;
-        useMatrix = false;
+        memset(this, 0, sizeof(Texture));
         texgen[0] = texgen[1] = texgen[2] = texgen[3] = Texgen();
         unit = TextureUnit();
       }
-      Texture( const Texture & cpy ) {
-        memcpy( this, &cpy, sizeof( *this) );
+
+      Texture(const Texture &other)
+      {
+        memcpy(this, &other, sizeof(Texture));
+      }
+
+      Texture &operator=(const Texture &other)
+      {
+        if (&other!=this)
+          memcpy(this, &other, sizeof(Texture));
+        return *this;
       }
 
       GLubyte enables;
@@ -1206,10 +1279,14 @@ struct RegalIff : public RegalEmu {
       GLuint64 ver;
     };
 
-    struct Store {
+    // Iff::State::Store
+
+    struct Store
+    {
       Store()
       {
-        memset( this, 0, sizeof( *this ) );
+        memset(this, 0, sizeof(Store));
+
         // all the booleans and uints want zero initialization anyway, so don't bother doing them individually
         alphaTest = AlphaTest();
         fog = Fog();
@@ -1229,8 +1306,16 @@ struct RegalIff : public RegalEmu {
         }
       }
 
-      Store( const Store & cpy ) {
-        memcpy( this, &cpy, sizeof( *this) );
+      Store(const Store &other)
+      {
+        memcpy(this, &other, sizeof(Store));
+      }
+
+      Store &operator=(const Store &other)
+      {
+        if (&other!=this)
+          memcpy(this, &other, sizeof(Store));
+        return *this;
       }
 
       GLuint hash;
@@ -1282,6 +1367,9 @@ struct RegalIff : public RegalEmu {
       GLuint64 ver;
     };
 
+    State()                   : raw(), processed() {                          }
+    State(const State &other) : raw(), processed() { UNUSED_PARAMETER(other); }
+    ~State()                  {}
 
     Store raw;
     Store processed;
@@ -1367,41 +1455,86 @@ struct RegalIff : public RegalEmu {
     std::vector<El> stack;
   };
 
-  struct Program {
-    struct UniformInfo {
-      UniformInfo() : slot( -1 ), ver( 0 ) {}
-      GLint slot;
+  // Iff::Program
+
+  struct Program
+  {
+
+    // Iff::Program::UniformInfo
+
+    struct UniformInfo
+    {
+      UniformInfo(const GLint s = -1, const GLuint64 v = 0)
+      {
+        memset(this, 0, sizeof(UniformInfo));
+        slot = s;
+        ver = v;
+      }
+
+      UniformInfo(const UniformInfo &other)
+      {
+        memcpy(this, &other, sizeof(UniformInfo));
+      }
+
+      UniformInfo &operator=(const UniformInfo &other)
+      {
+        if (&other!=this)
+          memcpy(this, &other, sizeof(UniformInfo));
+        return *this;
+      }
+
+      GLint    slot;
       GLuint64 ver;
     };
 
+   // Iff::Program
+
     Program()
-    : pg( 0 )
-    , vs( 0 )
-    , fs( 0 )
-    , ver( 0 )
-    , progcount( 0 )
-    {}
+    : uniforms(),
+      store()
+    {
+      // Clear plain-old-data (POD) memory
+      memset(this, 0, reinterpret_cast<char *>(&this->uniforms)-reinterpret_cast<char *>(this));
+    }
+
+    Program(const Program &other)
+    : uniforms(other.uniforms),
+      store(other.store)
+    {
+      // Copy plain-old-data (POD) memory
+      memcpy(this, &other, reinterpret_cast<char *>(&this->uniforms)-reinterpret_cast<char *>(this));
+    }
+
+    Program &operator=(const Program &other)
+    {
+      if (&other!=this)
+      {
+        // Copy plain-old-data (POD) memory
+        memcpy(this, &other, reinterpret_cast<char *>(&this->uniforms)-reinterpret_cast<char *>(this));
+        uniforms = other.uniforms;
+        store    = other.store;
+      }
+      return *this;
+    }
+
+    // POD
+
     GLuint pg;
     GLuint vs, fs;
     GLuint64 ver;
+    int progcount;
+
+    // non-POD
+
     std::map< RegalFFUniformEnum, UniformInfo> uniforms;
     State::Store store;
-    int progcount;
+
     void Init( RegalContext * ctx, const State::Store & sstore, const GLchar *vsSrc, const GLchar *fsSrc );
     void Init( RegalContext * ctx, const State::Store & sstore );
     void Shader( RegalContext * ctx, DispatchTable & tbl, GLenum type, GLuint & shader, const GLchar *src );
     void Attribs( RegalContext * ctx );
     void Samplers( RegalContext * ctx, DispatchTable & tbl );
     void Uniforms( RegalContext * ctx, DispatchTable & tbl );
-  };
-
-  struct TexFmtMap : public shared_ptr<std::map<GLuint, GLint> >
-  {
-    inline GLint &operator[](GLuint name)
-    {
-      RegalAssert(get());
-      return operator*()[name];
-    }
   };
 
   MatrixStack modelview;
@@ -1425,7 +1558,8 @@ struct RegalIff : public RegalEmu {
 
   Program  ffprogs[ 1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS ];
 
-  TexFmtMap textureObjToFmt;
+  shared_map<GLuint, GLint> textureObjToFmt;
+
   // Program uniforms are tied to context state, so we cannot share IFF
   // programs, however we share user programs in general.
   std::map<GLenum, GLenum>  fmtmap;
@@ -2054,7 +2188,7 @@ struct RegalIff : public RegalEmu {
   }
 
   //
-  void Init( RegalContext &ctx, RegalContext *share_ctx )
+  void Init( RegalContext &ctx )
   {
     shadowMatrixMode = 0;
     shadowActiveTextureIndex = 0;
@@ -2065,10 +2199,9 @@ struct RegalIff : public RegalEmu {
     gles = false;
     legacy = false;
 
-    if (share_ctx)
-      textureObjToFmt = share_ctx->iff->textureObjToFmt;
-    else
-      textureObjToFmt.reset(new std::map<GLuint, GLint>());
+    RegalContext *sharingWith = ctx.groupInitializedContext();
+    if (sharingWith)
+      textureObjToFmt = sharingWith->iff->textureObjToFmt;
 
     InitVertexArray( &ctx );
     InitFixedFunction( &ctx );

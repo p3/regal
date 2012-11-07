@@ -66,12 +66,12 @@ def apiErrorFuncDefineCode(apis, args):
         code += '    _error = _next->call(&_next->glGetError)();\n'
         code += '  RegalAssert(_error==GL_NO_ERROR);\n'
         code += '  '
-        if name == 'glBegin': 
+        if name == 'glBegin':
           code += '_context->err.inBeginEnd = true;\n'
         if not typeIsVoid(rType):
           code += '%s ret = ' % rType
         code += '_next->call(&_next->%s)(%s);\n' % ( name, callParams )
-        if name == 'glEnd': 
+        if name == 'glEnd':
           code += '_context->err.inBeginEnd = false;\n'
         code += '  if (!_context->err.inBeginEnd) {\n'
         code += '    _error = _next->call(&_next->glGetError)();\n'

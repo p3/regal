@@ -123,6 +123,9 @@ ${API_FUNC_DECLARE}
 #if REGAL_SYS_NACL
 #include <stdint.h>
 struct PPB_OpenGLES2;
+typedef int32_t RegalSystemContext;
+#else
+typedef void * RegalSystemContext;
 #endif
 
 /* Regal-specific API... try to keep this minimal
@@ -136,21 +139,28 @@ extern "C" {
 typedef void (*RegalErrorCallback)(GLenum);
 REGAL_DECL RegalErrorCallback RegalSetErrorCallback( RegalErrorCallback callback );
 
+/*  RegalShareContext is optional.  It must be called before any call
+ *  to RegalMakeCurrent.  It specifies that a context is sharing state
+ *  with one already known to Regal.
+ */
+
+REGAL_DECL void RegalShareContext(RegalSystemContext ctx, RegalSystemContext other);
+
+/*  RegalMakeCurrent
+ *
+ */
+
 #if REGAL_SYS_NACL
-typedef int32_t RegalSystemContext;
-// RegalCreateContext is optional and provides information on whether two
-// contexts share underlying data. It has to be called before calling
-// RegalMakeCurrent on the same sysCtx.
-REGAL_DECL void RegalCreateContext( RegalSystemContext sysCtx,
-                                    PPB_OpenGLES2 *interface,
-                                    RegalSystemContext share_group );
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx, struct PPB_OpenGLES2 *interface );
 #else
-typedef void * RegalSystemContext;
-REGAL_DECL void RegalCreateContext( RegalSystemContext sysCtx,
-                                    RegalSystemContext share_group );
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx );
 #endif
+
+/*  RegalDestroyContext - release resources used by Regal context.
+ *
+ */
+
+REGAL_DECL void RegalDestroyContext(RegalSystemContext ctx);
 
 #ifdef __cplusplus
 }
@@ -258,7 +268,8 @@ def apiFuncDefineCode(apis, args):
           c += '\n'
           c += '  #if !REGAL_STATIC_EGL\n'
 
-        c += '  if (dispatchTableGlobal.%s == NULL) {\n' % name
+        c += '  if (!dispatchTableGlobal.%s)\n' % name
+        c += '  {\n'
         c += '    GetProcAddress( dispatchTableGlobal.%s, "%s" );\n' % ( name, name )
         c += '    RegalAssert(dispatchTableGlobal.%s!=%s);\n' % ( name, name )
         c += '    if (dispatchTableGlobal.%s==%s)\n' % ( name, name )
@@ -276,7 +287,8 @@ def apiFuncDefineCode(apis, args):
 
         c += listToString(indent(emuCodeGen(emue,'impl'),'  '))
 
-        c += '  if (dispatchTableGlobal.%s) {\n' % name
+        c += '  if (dispatchTableGlobal.%s)\n' % name
+        c += '  {\n'
         c += '    %s\n' % debugPrintFunction( function, 'Driver' )
         c += '    '
         if not typeIsVoid(rType):
@@ -300,9 +312,9 @@ def apiFuncDefineCode(apis, args):
           c += '  return ret;\n'
       c += '}\n\n'
 
-      tmp.append( (category, c) )
+      tmp.append( (category, indent(c,'  ') ) )
 
-    tmp = listToString(unfoldCategory(tmp))
+    tmp = listToString(unfoldCategory(tmp,'  /* %s */'))
 
     if api.name in cond:
       tmp = wrapIf(cond[api.name], tmp)
@@ -637,15 +649,11 @@ using namespace REGAL_NAMESPACE_INTERNAL;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Logging;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
 
-#ifdef __cplusplus
 extern "C" {
-#endif
 
 ${API_FUNC_DEFINE}
 
-#ifdef __cplusplus
 }
-#endif
 
 REGAL_GLOBAL_END
 ''')

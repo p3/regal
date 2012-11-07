@@ -75,10 +75,9 @@ struct RegalDsa : public RegalEmu {
     Cache drv;
     Cache dsa;
 
-    void Init( RegalContext &ctx, RegalContext *share_ctx )
+    void Init( RegalContext &ctx )
     {
         UNUSED_PARAMETER(ctx);
-        UNUSED_PARAMETER(share_ctx);
 
         callDepth = 0;
         drv.matrixMode = GL_MODELVIEW;

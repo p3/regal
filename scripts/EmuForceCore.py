@@ -9,7 +9,8 @@ formulae = {
         'entries' : [ 'CGLChoosePixelFormat' ],
         'impl' : [
                     'Init::init();',
-                    'static const CGLPixelFormatAttribute nattribs[] = {',
+                    'static const CGLPixelFormatAttribute nattribs[] =',
+                    '{',
                     '  kCGLPFAOpenGLProfile,',
                     '  (CGLPixelFormatAttribute)0x3200,',
                     '  (CGLPixelFormatAttribute)0',

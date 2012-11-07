@@ -119,7 +119,8 @@ def emuCodeGen(emue,section):
   for i in emue:
     if i != None and i.get(section)!=None:
       if i.get('member')!=None:
-        tmp.append('if (_context->%s) {\n' % i['member'])
+        tmp.append('if (_context->%s)\n' % i['member'])
+        tmp.append('{\n')
         tmp.extend(['  %s' % j for j in i[section] ])
         tmp.append('}\n')
       else:

@@ -32,6 +32,11 @@
   OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+  Intended formatting conventions:
+  $ astyle --style=allman --indent=spaces=2 --indent-switches
+*/
+
 #include "pch.h" /* For MS precompiled header support */
 
 #include "RegalUtil.h"
@@ -44,7 +49,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalPush.h"
 #include "RegalToken.h"
 #include "RegalHelper.h"
-#include "RegalPrivate.h"
+#include "RegalContext.h"
 
 using namespace ::REGAL_NAMESPACE_INTERNAL::Logging;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Token;

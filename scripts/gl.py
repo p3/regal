@@ -16034,7 +16034,7 @@ glWindowPos3sv.trace = True
 glWindowPos3sv.play = True
 gl.add(glWindowPos3sv)
 
-# 
+#
 
 glActiveTexture = Function('glActiveTexture')
 glActiveTexture.ret = Return('void')
