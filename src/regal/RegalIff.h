@@ -1045,6 +1045,7 @@ struct RegalIff : public RegalEmu
     TextureUnit()
     {
       memset(this,0,sizeof(TextureUnit));
+      env = TextureEnv();
     }
 
     TextureUnit(const TextureUnit &other)

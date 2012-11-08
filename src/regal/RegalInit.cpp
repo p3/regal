@@ -240,7 +240,7 @@ REGAL_DECL void RegalShareContext(RegalSystemContext a, RegalSystemContext b)
   ::REGAL_NAMESPACE_INTERNAL::Init::init();
 
   // NOTE: Access to sc2rc and other parts of the function (including
-  // various one-time-init in RegalCreateContext) are not thread-safe.
+  // various one-time-init in RegalMakeCurrent) are not thread-safe.
 
   SC2RC::iterator iA = sc2rc.find(a);
   SC2RC::iterator iB = sc2rc.find(b);
@@ -255,6 +255,7 @@ REGAL_DECL void RegalShareContext(RegalSystemContext a, RegalSystemContext b)
   if (contextA && contextA->groupInitializedContext() && contextB && contextB->groupInitializedContext())
   {
     Warning("Regal can't share initialized context groups.");
+    RegalAssert(false);
     return;
   }
 
@@ -276,7 +277,8 @@ REGAL_DECL void RegalShareContext(RegalSystemContext a, RegalSystemContext b)
     contextB->sysCtx = b;
   }
 
-  // Share all the Regal contexts in b into a
+  // Share all the Regal contexts in B into A's shareGroup, then assign that
+  // group (now having all contexts) to every context in B.
 
   std::list<RegalContext *> tmp = *contextB->shareGroup;
 
@@ -305,7 +307,7 @@ REGAL_DECL void RegalMakeCurrent( RegalSystemContext sysCtx )
   if (sysCtx)
   {
     // NOTE: Access to sc2rc and other parts of the function (including
-    // various one-time-init in RegalCreateContext) are not thread-safe.
+    // various one-time-init in RegalMakeCurrent) are not thread-safe.
 
     SC2RC::iterator i = sc2rc.find(sysCtx);
     RegalContext *ctx = i!=sc2rc.end() ? i->second : NULL;
@@ -401,7 +403,7 @@ REGAL_DECL void RegalDestroyContext(RegalSystemContext sysCtx)
   if (sysCtx)
   {
     // NOTE: Access to sc2rc and other parts of the function (including
-    // various one-time-init in RegalCreateContext) are not thread-safe.
+    // various one-time-init in RegalMakeCurrent) are not thread-safe.
 
     SC2RC::iterator i = sc2rc.find(sysCtx);
     RegalContext *ctx = i!=sc2rc.end() ? i->second : NULL;
