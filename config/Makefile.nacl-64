@@ -14,6 +14,7 @@ LD  := $(M_PREFIX)-nacl-g++ -m64
 STRIP ?=
 endif
 
+BIN_EXTENSION = _64.nexe
 EXT.DYNAMIC = so
 LDFLAGS.EXTRA =
 LIBDIR =

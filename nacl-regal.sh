@@ -27,7 +27,4 @@ export PKG_CONFIG_LIBDIR=${NACL_SDK_USR_LIB}
 export FREETYPE_CONFIG=${NACL_SDK_USR_BIN}/freetype-config
 export PATH=${NACL_BIN_PATH}:${PATH};
 
-
-make -f Makefile SYSTEM=nacl-${NACL_PACKAGES_BITSIZE} $*
-
-exit 0
+exec make -f Makefile SYSTEM=nacl-${NACL_PACKAGES_BITSIZE} $*

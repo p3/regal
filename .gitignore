@@ -30,3 +30,5 @@ testing/*/*.so
 testing/*/*.so.1
 testing/*/*.dylib
 testing/*/gold
+examples/nacl/lib64
+examples/nacl/*.nexe

@@ -15,11 +15,14 @@
 #include "ppapi/c/ppp_input_event.h"
 #include "ppapi/c/ppb_graphics_3d.h"
 #include "ppapi/c/ppb_instance.h"
-#include "ppapi/c/ppb_opengles2.h"
 #include "ppapi/c/ppb_input_event.h"
 
 #include <GL/Regal.h>
 #include <GL/RegalGLU.h>
+
+// need to include this after Regal so to avoid GL type
+// conflicts.
+#include "ppapi/c/ppb_opengles2.h"
 
 static PPB_Messaging* ppb_messaging_interface = NULL;
 static PPB_Var* ppb_var_interface = NULL;
@@ -183,7 +186,6 @@ static void glutSolidSphere(float radius, int slices, int stacks) {
 static void materialDemo() {
   myReshape(512, 512);
   {
-    static float rtri = 0.0;
     GLfloat ambient[] = { 0.1, 0.0, 0.0, 1.0 };
     GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat position[] = { 0.0, 3.0, 2.0, 0.0 };

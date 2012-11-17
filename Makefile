@@ -549,7 +549,7 @@ endif
 # Examples
 
 ifneq ($(filter nacl%,$(SYSTEM)),)
-regal.bin: lib bin
+regal.bin: lib bin bin/nacl$(BIN_EXTENSION) examples/nacl/nacl.nmf
 else
 regal.bin: lib bin bin/glewinfo bin/dreamtorus bin/tiger
 endif
@@ -583,6 +583,30 @@ bin/dreamtorus: $(DREAMTORUS.OBJS) lib/$(LIB.SHARED)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
 endif
+
+NACL.SRCS       += examples/nacl/main.cpp
+NACL.SRCS.NAMES := $(notdir $(NACL.SRCS))
+NACL.OBJS       := $(addprefix tmp/$(SYSTEM)/nacl/static/,$(NACL.SRCS.NAMES))
+NACL.OBJS       := $(NACL.OBJS:.cpp=.o)
+NACL.CFLAGS     := -Iinclude
+NACL.LIBS       += -L./lib -Wl,-Bstatic -lRegal -Wl,-Bdynamic
+NACL.LIBS       += -lpng -lz -lm -lpthread -lppapi -lppapi_gles2 -lstdc++
+
+tmp/$(SYSTEM)/nacl/static/%.o: examples/nacl/%.cpp
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(NACL.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+bin/nacl$(BIN_EXTENSION): lib/$(LIB.STATIC) $(NACL.OBJS)
+	$(CC) -o $@ $(NACL.OBJS) $(NACL.LIBS)
+ifneq ($(STRIP),)
+	$(STRIP) -x $@
+endif
+
+TOOLCHAIN=$(NACL_SDK_ROOT)/toolchain/linux_x86_glibc
+
+# Uncomment this to enable automatic regeneration of the nacl nmf file
+#examples/nacl/nacl.nmf: bin/nacl$(BIN_EXTENSION)
+	#$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ -D $(TOOLCHAIN)/x86_64-nacl/bin/objdump -t glibc bin/nacl* -L $(TOOLCHAIN)/x86_64-nacl/lib32 -L $(TOOLCHAIN)/x86_64-nacl/lib -s examples/nacl
 
 # GLUT and GLU dependency for non-Mac, non-Nacl builds
 
