@@ -315,7 +315,7 @@ Android
 iOS
 ---
 
-NaCL
+PPAPI and NaCl
 ----
 
 Questions and Answers

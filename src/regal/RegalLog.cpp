@@ -425,9 +425,6 @@ namespace Logging {
         fprintf(logOutput, "%s", m.c_str());
         fflush(logOutput);
 #elif REGAL_SYS_ANDROID
-#elif REGAL_SYS_NACL
-        fprintf(logOutput, "%s", m.c_str());
-        fflush(logOutput);
 #else
         fprintf(logOutput, "%s", m.c_str());
         fflush(logOutput);

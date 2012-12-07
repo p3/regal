@@ -104,7 +104,7 @@ def generateLoaderSource(apis, args):
   substitute['LOCAL_INCLUDE']   = ''
   substitute['API_DISPATCH_FUNC_DEFINE'] = funcDefine
   substitute['API_DISPATCH_FUNC_INIT'] = funcInit
-  substitute['IFDEF'] = '#if REGAL_DRIVER && !defined(__native_client__)\n\n'
+  substitute['IFDEF'] = '#if REGAL_DRIVER && !REGAL_SYS_PPAPI\n\n'
   substitute['ENDIF'] = '#endif\n'
 
   outputCode( '%s/RegalDispatchLoader.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))

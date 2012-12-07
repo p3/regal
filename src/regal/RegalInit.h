@@ -86,7 +86,7 @@ public:
 
   static void               shareContext(RegalSystemContext a, RegalSystemContext b);
   
-  #if REGAL_SYS_NACL
+  #if REGAL_SYS_PPAPI
   static void              makeCurrent(RegalSystemContext sysCtx, PPB_OpenGLES2 *interface);
   #else
   static void              makeCurrent(RegalSystemContext sysCtx);

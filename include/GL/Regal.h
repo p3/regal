@@ -56,8 +56,8 @@
 #  endif
 # endif
 #elif defined(__native_client__)
-# ifndef REGAL_SYS_NACL
-#  define REGAL_SYS_NACL 1
+# ifndef REGAL_SYS_PPAPI
+#  define REGAL_SYS_PPAPI 1
 # endif
 #elif defined(__ANDROID__)
 # ifndef REGAL_SYS_ANDROID
@@ -66,7 +66,7 @@
 # ifndef REGAL_SYS_EGL
 #  define REGAL_SYS_EGL 1
 # endif
-#elif !defined(_WIN32) && !defined(__APPLE__) && !defined(__native_client__)
+#elif !defined(_WIN32) && !defined(__APPLE__) && !REGAL_SYS_PPAPI
 # ifndef REGAL_SYS_GLX
 #  define REGAL_SYS_GLX 1
 # endif
@@ -35729,7 +35729,7 @@ REGAL_DECL EGLenum REGAL_CALL eglQueryAPI(void);
 #ifndef __REGAL_API_H
 #define __REGAL_API_H
 
-#if REGAL_SYS_NACL
+#if REGAL_SYS_PPAPI
 #include <stdint.h>
 struct PPB_OpenGLES2;
 typedef int32_t RegalSystemContext;
@@ -35759,7 +35759,7 @@ REGAL_DECL void RegalShareContext(RegalSystemContext ctx, RegalSystemContext oth
  *
  */
 
-#if REGAL_SYS_NACL
+#if REGAL_SYS_PPAPI
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx, struct PPB_OpenGLES2 *interface );
 #else
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx );

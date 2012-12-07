@@ -120,7 +120,7 @@ ${API_FUNC_DECLARE}
 #ifndef __REGAL_API_H
 #define __REGAL_API_H
 
-#if REGAL_SYS_NACL
+#if REGAL_SYS_PPAPI
 #include <stdint.h>
 struct PPB_OpenGLES2;
 typedef int32_t RegalSystemContext;
@@ -150,7 +150,7 @@ REGAL_DECL void RegalShareContext(RegalSystemContext ctx, RegalSystemContext oth
  *
  */
 
-#if REGAL_SYS_NACL
+#if REGAL_SYS_PPAPI
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx, struct PPB_OpenGLES2 *interface );
 #else
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx );

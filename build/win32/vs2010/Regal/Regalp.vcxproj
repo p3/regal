@@ -245,7 +245,7 @@
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchLoader.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchLog.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchMissing.cpp" />
-    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchNacl.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchPpapi.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchStaticEGL.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchStaticES2.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatcher.cpp" />

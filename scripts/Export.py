@@ -38,7 +38,7 @@ from RegalDispatchEmu     import *
 from RegalDispatchLog     import *
 from RegalDispatchLoader  import *
 from RegalDispatchMissing import *
-from RegalDispatchNacl    import *
+from RegalDispatchPpapi   import *
 from RegalDispatchStaticEGL import *
 from RegalDispatchStaticES2 import *
 
@@ -155,7 +155,7 @@ def generate(apis, args):
   generateDebugSource( apis, args )
   generateLoaderSource( apis, args )
   generateMissingSource( apis, args )
-  generateNaclSource( apis, args )
+  generatePpapiSource( apis, args )
   generateStaticES2Source( apis, args )
   generateStaticEGLSource( apis, args )
   generatePublicHeader(apis, args)

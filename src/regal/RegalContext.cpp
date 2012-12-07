@@ -81,9 +81,9 @@ RegalContext::RegalContext()
   iff(NULL),
   vao(NULL),
 #endif
-#if defined(__native_client__)
-  naclES2(NULL),
-  naclResource(NULL),
+#if REGAL_SYS_PPAPI
+  ppapiES2(NULL),
+  ppapiResource(NULL),
 #endif
   sysCtx(NULL),
   thread(0),

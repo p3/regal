@@ -255,7 +255,7 @@ void *GetProcAddress( const char *entry )
   return NULL;
 }
 
-#elif REGAL_SYS_NACL
+#elif REGAL_SYS_PPAPI
 
 void *GetProcAddress( const char *entry )
 {

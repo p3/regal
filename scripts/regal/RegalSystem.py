@@ -20,8 +20,8 @@ regalSys = '''#if _WIN32
 #  endif
 # endif
 #elif defined(__native_client__)
-# ifndef REGAL_SYS_NACL
-#  define REGAL_SYS_NACL 1
+# ifndef REGAL_SYS_PPAPI
+#  define REGAL_SYS_PPAPI 1
 # endif
 #elif defined(__ANDROID__)
 # ifndef REGAL_SYS_ANDROID
@@ -30,7 +30,7 @@ regalSys = '''#if _WIN32
 # ifndef REGAL_SYS_EGL
 #  define REGAL_SYS_EGL 1
 # endif
-#elif !defined(_WIN32) && !defined(__APPLE__) && !defined(__native_client__)
+#elif !defined(_WIN32) && !defined(__APPLE__) && !REGAL_SYS_PPAPI
 # ifndef REGAL_SYS_GLX
 #  define REGAL_SYS_GLX 1
 # endif
