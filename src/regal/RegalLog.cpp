@@ -45,13 +45,13 @@ REGAL_GLOBAL_BEGIN
 #include "RegalThread.h"
 #include "RegalContext.h"
 
-#ifndef REGAL_SYS_WGL
+#if !(REGAL_SYS_WGL || (REGAL_SYS_PPAPI && !defined(__native_client__)))
 #include <pthread.h>
 #endif
 
 // Otherwise we'd need to #include <windows.h>
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL || (REGAL_SYS_PPAPI && !defined(__native_client__))
 extern "C"
 {
   __declspec(dllimport) void __stdcall OutputDebugStringA( __in_opt const char* lpOutputString);
@@ -425,6 +425,7 @@ namespace Logging {
         fprintf(logOutput, "%s", m.c_str());
         fflush(logOutput);
 #elif REGAL_SYS_ANDROID
+
 #else
         fprintf(logOutput, "%s", m.c_str());
         fflush(logOutput);

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Regalp</ProjectName>
+    <ProjectGuid>{B1B741DA-8B0E-E80F-D98D-652992A3D518}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\Regalp\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\Regalp\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\Regalp\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\Regalp\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>REGAL_WIN_TLS=1;REGAL_POINTER=1;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Release\Win32\Regalp\</AssemblerListingLocation>
+      <ObjectFileName>Release\Win32\Regalp\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\Win32\regalp.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Release\Win32\regalp.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>../../../../src/regal/Regal.def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\Win32\regalp.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>Release\Win32\regalp.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>REGAL_WIN_TLS=1;REGAL_POINTER=1;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Release\x64\Regalp\</AssemblerListingLocation>
+      <ObjectFileName>Release\x64\Regalp\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\x64\regalp.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Release\x64\regalp.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>../../../../src/regal/Regal.def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\x64\regalp.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <ImportLibrary>Release\x64\regalp.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>REGAL_WIN_TLS=1;REGAL_POINTER=1;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Debug\Win32\Regalp\</AssemblerListingLocation>
+      <ObjectFileName>Debug\Win32\Regalp\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\Win32\regalp.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Debug\Win32\regalp.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>../../../../src/regal/Regal.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>Debug\Win32\regalp.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>Debug\Win32\regalp.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>REGAL_WIN_TLS=1;REGAL_POINTER=1;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Debug\x64\Regalp\</AssemblerListingLocation>
+      <ObjectFileName>Debug\x64\Regalp\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\x64\regalp.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>Debug\x64\regalp.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Debug\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>../../../../src/regal/Regal.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>Debug\x64\regalp.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <ImportLibrary>Debug\x64\regalp.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\Regal\RegalMac.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\Regal.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalBin.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalConfig.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalConfig.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalContext.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalContext.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalContextInfo.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalContextInfo.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalDebugInfo.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalDispatch.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchDebug.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchEmu.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchError.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalDispatchError.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchGlobal.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchLoader.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchLog.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchMissing.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchNacl.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchStaticEGL.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatchStaticES2.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDispatcher.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalDispatcher.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalDllMain.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalDsa.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalEmu.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalEnum.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalFavicon.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalFavicon.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalHelper.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalHelper.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalHttp.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalHttp.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalIff.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalIff.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalInit.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalInit.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalLog.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalLog.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalLookup.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalLookup.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalMarker.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalMarker.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalObj.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPpa.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPpc.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPrecompile.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPrivate.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPush.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalState.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalSystem.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalTimer.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalToken.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalToken.h" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalUtil.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalUtil.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalVao.h" />
+    <ClInclude Include="..\..\..\..\src\regal\linear.h" />
+    <ClInclude Include="..\..\..\..\src\regal\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\include\GL\Regal.h" />
+    <None Include="..\..\..\..\src\lookup3\lookup3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\src\regal\Regal.def" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

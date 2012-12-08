@@ -32,3 +32,4 @@ testing/*/*.dylib
 testing/*/gold
 examples/nacl/lib64
 examples/nacl/*.nexe
+build/ppapi/vs2010/Regal/win

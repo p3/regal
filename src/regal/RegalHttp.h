@@ -49,7 +49,7 @@ REGAL_NAMESPACE_BEGIN
 
 // Http is disabled for NaCL, for now
 
-#if defined(__native_client__)
+#if REGAL_SYS_PPAPI
 #undef REGAL_NO_HTTP
 #define REGAL_NO_HTTP 1
 #endif

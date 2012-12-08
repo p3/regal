@@ -35,7 +35,7 @@
 
 REGAL_GLOBAL_BEGIN
 
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WGL || (REGAL_SYS_PPAPI && !defined(__native_client__))
   extern "C" { int __stdcall QueryPerformanceFrequency (signed long long *lpFrequency);        }
   extern "C" { int __stdcall QueryPerformanceCounter   (signed long long *lpPerformanceCount); }
 #else
@@ -62,7 +62,7 @@ struct Timer
   Timer::Value _start;    /* Zero by default */
 };
 
-#ifdef REGAL_SYS_WGL
+#if REGAL_SYS_WGL || (REGAL_SYS_PPAPI && !defined(__native_client__))
 
 inline
 Timer::Timer()
