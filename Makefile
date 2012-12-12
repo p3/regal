@@ -658,6 +658,60 @@ endif
 
 ######################################
 
+#
+# googletest
+#
+
+GTEST.SRCS       += src/googletest/src/gtest-death-test.cc
+GTEST.SRCS       += src/googletest/src/gtest-filepath.cc
+#GTEST.SRCS       += src/googletest/src/gtest-internal-inl.h
+GTEST.SRCS       += src/googletest/src/gtest-port.cc
+GTEST.SRCS       += src/googletest/src/gtest-printers.cc
+GTEST.SRCS       += src/googletest/src/gtest-test-part.cc
+GTEST.SRCS       += src/googletest/src/gtest-typed-test.cc
+GTEST.SRCS       += src/googletest/src/gtest.cc
+GTEST.SRCS.NAMES := $(notdir $(GTEST.SRCS))
+GTEST.OBJS       := $(addprefix tmp/$(SYSTEM)/gtest/static/,$(GTEST.SRCS.NAMES))
+GTEST.OBJS       := $(GTEST.OBJS:.cc=.o)
+GTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googletest
+GTEST.STATIC     := libgtest.a
+
+tmp/$(SYSTEM)/gtest/static/%.o: src/googletest/src/%.cc
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(GTEST.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+lib/$(GTEST.STATIC): $(GTEST.OBJS)
+	$(CCACHE) $(AR) cr $@ $^
+ifneq ($(STRIP),)
+	$(STRIP) -x $@
+endif
+
+#
+# RegalTests
+#
+
+REGALTESTS.SRCS       += tests/test_main.cpp
+REGALTESTS.SRCS.NAMES := $(notdir $(REGALTESTS.SRCS))
+REGALTESTS.OBJS       := $(addprefix tmp/$(SYSTEM)/regal_tests/static/,$(REGALTESTS.SRCS.NAMES))
+REGALTESTS.OBJS       := $(REGALTESTS.OBJS:.cpp=.o)
+REGALTESTS.CFLAGS     := -Isrc/googletest/include -Isrc/regal
+REGALTESTS.LIBS       := -Llib -lgtest -lRegal
+
+tmp/$(SYSTEM)/regal_tests/static/%.o: tests/%.cpp
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(CFLAGS) $(REGALTESTS.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+bin/RegalTests: bin $(REGALTESTS.OBJS) lib/$(GTEST.STATIC) lib/$(LIB.SHARED)
+	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(REGALTESTS.OBJS) $(LIB.LDFLAGS) $(REGALTESTS.LIBS)
+ifneq ($(STRIP),)
+	$(STRIP) -x $@
+endif
+
+test: bin/RegalTests
+	bin/RegalTests
+
+######################################
+
 clean:
 	$(RM) -r tmp/
 	$(RM) -r lib/
@@ -665,6 +719,6 @@ clean:
 	$(RM) glew.pc glewmx.pc
 
 
-.PHONY: export
+.PHONY: export test
 .PHONY: regal.lib regal.bin all
 .PHONY: clean distclean tardist dist-win32 dist-src
