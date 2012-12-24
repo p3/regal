@@ -215,4 +215,4 @@ def generateDispatchHeader(apis, args):
   substitute['API_GLOBAL_DISPATCH_TABLE_DEFINE'] = globalDispatchTableDefine
   substitute['API_DISPATCH_TABLE_DEFINE'] = dispatchTableDefine
 
-  outputCode( '%s/RegalDispatch.h' % args.outdir, dispatchHeaderTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatch.h' % args.srcdir, dispatchHeaderTemplate.substitute(substitute))

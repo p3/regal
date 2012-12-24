@@ -76,4 +76,4 @@ def generateStaticES2Source(apis, args):
   substitute['IFDEF'] = '#if REGAL_DRIVER && REGAL_STATIC_ES2\n\n'
   substitute['ENDIF'] = '#endif\n'
 
-  outputCode( '%s/RegalDispatchStaticES2.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchStaticES2.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))

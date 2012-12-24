@@ -98,4 +98,4 @@ def generateStaticEGLSource(apis, args):
   substitute['IFDEF'] = '#if REGAL_SYS_EGL && REGAL_DRIVER && REGAL_STATIC_EGL\n\n'
   substitute['ENDIF'] = '#endif\n'
 
-  outputCode( '%s/RegalDispatchStaticEGL.cpp' % args.outdir, dispatchGlobalSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchStaticEGL.cpp' % args.srcdir, dispatchGlobalSourceTemplate.substitute(substitute))

@@ -114,4 +114,4 @@ def generateErrorSource(apis, args):
   substitute['API_DISPATCH_FUNC_INIT'] = funcInit
   substitute['IFDEF'] = '#if REGAL_ERROR\n\n'
   substitute['ENDIF'] = '#endif\n'
-  outputCode( '%s/RegalDispatchError.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchError.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))

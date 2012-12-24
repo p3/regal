@@ -91,4 +91,4 @@ def generateSystemHeader(apis, args):
   substitute['REGAL_SYS']     = regalSys
   substitute['HEADER_NAME']   = "REGAL_SYSTEM"
 
-  outputCode( '%s/RegalSystem.h' % args.outdir, systemTemplate.substitute(substitute))
+  outputCode( '%s/RegalSystem.h' % args.srcdir, systemTemplate.substitute(substitute))

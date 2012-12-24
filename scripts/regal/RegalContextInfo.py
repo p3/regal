@@ -517,7 +517,7 @@ def generateContextInfoHeader(apis, args):
     substitute['COPYRIGHT']       = args.copyright
     substitute['HEADER_NAME']     = "REGAL_CONTEXT_INFO"
     substitute['VERSION_DECLARE'] = versionDeclareCode(apis,args)
-    outputCode( '%s/RegalContextInfo.h' % args.outdir, contextInfoHeaderTemplate.substitute(substitute))
+    outputCode( '%s/RegalContextInfo.h' % args.srcdir, contextInfoHeaderTemplate.substitute(substitute))
 
 def generateContextInfoSource(apis, args):
 
@@ -529,4 +529,4 @@ def generateContextInfoSource(apis, args):
     substitute['VERSION_DETECT'] = versionDetectCode(apis,args)
     substitute['EXT_INIT']       = extensionStringCode(apis,args)
     substitute['EXT_CODE']       = getExtensionCode(apis,args)
-    outputCode( '%s/RegalContextInfo.cpp' % args.outdir, contextInfoSourceTemplate.substitute(substitute))
+    outputCode( '%s/RegalContextInfo.cpp' % args.srcdir, contextInfoSourceTemplate.substitute(substitute))

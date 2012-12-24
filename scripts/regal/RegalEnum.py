@@ -59,5 +59,5 @@ def generateEnumHeader(apis, args):
   substitute['REGAL_ENUM']    = '\n'.join(regalEnum)
   substitute['HEADER_NAME']   = "REGAL_ENUM"
 
-  outputCode( '%s/RegalEnum.h' % args.outdir, enumHeaderTemplate.substitute(substitute))
+  outputCode( '%s/RegalEnum.h' % args.srcdir, enumHeaderTemplate.substitute(substitute))
 

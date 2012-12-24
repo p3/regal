@@ -346,7 +346,7 @@ def generateContextHeader(apis, args):
     substitute['EMU_FORWARD_DECLARE'] = emuForwardDeclare
     substitute['EMU_MEMBER_DECLARE'] = emuMemberDeclare
 
-    outputCode( '%s/RegalContext.h' % args.outdir, contextHeaderTemplate.substitute(substitute))
+    outputCode( '%s/RegalContext.h' % args.srcdir, contextHeaderTemplate.substitute(substitute))
 
 def generateContextSource(apis, args):
 
@@ -417,4 +417,4 @@ def generateContextSource(apis, args):
     substitute['EMU_MEMBER_INIT']      = emuMemberInit
     substitute['EMU_MEMBER_CLEANUP']   = emuMemberCleanup
 
-    outputCode( '%s/RegalContext.cpp' % args.outdir, contextSourceTemplate.substitute(substitute))
+    outputCode( '%s/RegalContext.cpp' % args.srcdir, contextSourceTemplate.substitute(substitute))

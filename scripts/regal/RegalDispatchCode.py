@@ -209,4 +209,4 @@ def generateDispatchCode(apis, args):
   substitute['API_FUNC_DEFINE'] = code
   substitute['API_GLOBAL_DISPATCH_INIT'] = funcInit
 
-  outputCode( '%s/RegalDispatchCode.cpp' % args.outdir, dispatchCodeTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchCode.cpp' % args.srcdir, dispatchCodeTemplate.substitute(substitute))

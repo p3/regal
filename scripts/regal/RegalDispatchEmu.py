@@ -448,4 +448,4 @@ def generateEmuSource(apis, args):
   substitute['IFDEF'] = '#if REGAL_EMULATION\n\n'
   substitute['ENDIF'] = '#endif\n'
 
-  outputCode( '%s/RegalDispatchEmu.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchEmu.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))

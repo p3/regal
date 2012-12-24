@@ -104,5 +104,5 @@ def generatePpapiSource(apis, args):
   substitute['IFDEF'] = '#if REGAL_DRIVER && REGAL_SYS_PPAPI\n'
   substitute['ENDIF'] = '#endif\n'
 
-  outputCode( '%s/RegalDispatchPpapi.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchPpapi.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))
 

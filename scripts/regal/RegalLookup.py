@@ -87,7 +87,7 @@ def generateLookupSource(apis, args):
   substitute['COPYRIGHT']     = args.copyright
   substitute['CODE']          = '\n'.join(code)
 
-  outputCode( '%s/RegalLookup.cpp' % args.outdir, lookupSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalLookup.cpp' % args.srcdir, lookupSourceTemplate.substitute(substitute))
 
 ##############################################################################################
 
@@ -181,5 +181,5 @@ inline size_t %s(const char *name)
   substitute['HEADER_NAME']   = "REGAL_LOOKUP"
   substitute['CODE']          = '\n'.join(code)
 
-  outputCode( '%s/RegalLookup.h' % args.outdir, lookupHeaderTemplate.substitute(substitute))
+  outputCode( '%s/RegalLookup.h' % args.srcdir, lookupHeaderTemplate.substitute(substitute))
 

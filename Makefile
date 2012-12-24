@@ -48,7 +48,7 @@ all: regal.lib glew.lib glu.lib glut.lib regal.bin
 # REGAL shared and static libraries
 
 export:
-	scripts/Export.py --api gl 4.2 --api wgl 4.0 --api glx 4.0 --api cgl 1.4 --api egl 1.0 --outdir src/regal
+	scripts/Export.py --api gl 4.2 --api wgl 4.0 --api glx 4.0 --api cgl 1.4 --api egl 1.0 --outdir .
 
 lib:
 	mkdir lib

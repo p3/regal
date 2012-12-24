@@ -107,4 +107,4 @@ def generateLoaderSource(apis, args):
   substitute['IFDEF'] = '#if REGAL_DRIVER && !REGAL_SYS_PPAPI\n\n'
   substitute['ENDIF'] = '#endif\n'
 
-  outputCode( '%s/RegalDispatchLoader.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchLoader.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))

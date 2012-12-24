@@ -91,5 +91,5 @@ def generateMissingSource(apis, args):
   substitute['IFDEF'] = ''
   substitute['ENDIF'] = ''
 
-  outputCode( '%s/RegalDispatchMissing.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchMissing.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))
 

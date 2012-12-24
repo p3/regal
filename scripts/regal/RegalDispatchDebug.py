@@ -112,5 +112,5 @@ def generateDebugSource(apis, args):
   substitute['IFDEF'] = '#if REGAL_DEBUG\n\n'
   substitute['ENDIF'] = '#endif\n'
 
-  outputCode( '%s/RegalDispatchDebug.cpp' % args.outdir, dispatchSourceTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchDebug.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))
 

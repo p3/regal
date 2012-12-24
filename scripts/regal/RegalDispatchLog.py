@@ -201,4 +201,4 @@ def generateDispatchLog(apis, args):
   substitute['API_FUNC_DEFINE'] = code
   substitute['API_GLOBAL_DISPATCH_INIT'] = funcInit
 
-  outputCode( '%s/RegalDispatchLog.cpp' % args.outdir, dispatchLogTemplate.substitute(substitute))
+  outputCode( '%s/RegalDispatchLog.cpp' % args.srcdir, dispatchLogTemplate.substitute(substitute))
