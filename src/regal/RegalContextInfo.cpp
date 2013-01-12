@@ -730,7 +730,8 @@ ContextInfo::ContextInfo()
   egl_nv_system_time(false),
 #endif
 
-  maxVertexAttribs(0)
+  maxVertexAttribs(0),
+  maxVaryings(0)
 {
    Internal("ContextInfo::ContextInfo","()");
 }

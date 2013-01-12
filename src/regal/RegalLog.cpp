@@ -51,7 +51,7 @@ REGAL_GLOBAL_BEGIN
 
 // Otherwise we'd need to #include <windows.h>
 
-#if REGAL_SYS_WGL || (REGAL_SYS_PPAPI && !defined(__native_client__))
+#if defined(_WIN32) && !defined(__native_client__)
 extern "C"
 {
   __declspec(dllimport) void __stdcall OutputDebugStringA( __in_opt const char* lpOutputString);

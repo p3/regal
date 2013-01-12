@@ -82,23 +82,14 @@ extern "C" {
 #endif
 
 #include <stddef.h>
-#if REGAL_SYS_WGL
+#if defined(_WIN32)
   typedef __int64 int64_t;
   typedef unsigned __int64 uint64_t;
-  #ifdef  REGAL_SYS_WGL_DECLARE_WGL
-    #ifndef _WINDEF_
-      struct HDC__ {int unused;};
-      typedef struct HDC__* HDC;
-      struct HGLRC__ {int unused;};
-      typedef struct HGLRC__* HGLRC;
-    #endif
-  #endif
-#elif REGAL_SYS_PPAPI
-  #if defined(__native_client__)
-    #include <inttypes.h>
-  #else
-    typedef __int64 int64_t;
-    typedef unsigned __int64 uint64_t;
+  #if defined(REGAL_SYS_WGL_DECLARE_WGL) && !defined(_WINDEF_)
+    struct HDC__ {int unused;};
+    typedef struct HDC__* HDC;
+    struct HGLRC__ {int unused;};
+    typedef struct HGLRC__* HGLRC;
   #endif
 #else
   #include <inttypes.h>

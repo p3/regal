@@ -103,7 +103,8 @@ using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
 ContextInfo::ContextInfo()
 : regal_ext_direct_state_access(false),
 ${VERSION_INIT}
-  maxVertexAttribs(0)
+  maxVertexAttribs(0),
+  maxVaryings(0)
 {
    Internal("ContextInfo::ContextInfo","()");
 }
