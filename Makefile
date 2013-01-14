@@ -174,6 +174,7 @@ LIB.LIBS           :=
 LIB.SRCS           :=
 LIB.SRCS           += src/regal/RegalPixelConversions.cpp
 LIB.SRCS           += src/regal/RegalTexC.cpp
+LIB.SRCS           += src/regal/RegalPpca.cpp
 LIB.SRCS           += src/regal/RegalIff.cpp
 LIB.SRCS           += src/regal/Regal.cpp
 LIB.SRCS           += src/regal/RegalToken.cpp
@@ -761,6 +762,7 @@ endif
 
 REGALTEST.SRCS       += tests/test_main.cpp
 REGALTEST.SRCS       += tests/RegalDispatchGMock.cpp
+REGALTEST.SRCS       += tests/testRegalPpca.cpp
 REGALTEST.SRCS       += tests/testRegalState.cpp
 REGALTEST.SRCS       += tests/testRegalTexC.cpp
 REGALTEST.SRCS       += tests/testRegalPixelConversions.cpp

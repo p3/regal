@@ -426,6 +426,7 @@ def generateEmuSource(apis, args):
 #include "RegalBin.h"
 #include "RegalEmu.h"
 #include "RegalPpa.h"
+#include "RegalPpca.h"
 #include "RegalIff.h"
 #include "RegalMarker.h"
 #include "RegalObj.h"

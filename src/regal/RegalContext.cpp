@@ -54,6 +54,7 @@ REGAL_GLOBAL_BEGIN
 #if REGAL_EMULATION
 #include "RegalObj.h"
 #include "RegalPpa.h"
+#include "RegalPpca.h"
 #include "RegalBin.h"
 #include "RegalDsa.h"
 #include "RegalIff.h"
@@ -79,6 +80,7 @@ RegalContext::RegalContext()
   emuLevel(0),
   obj(NULL),
   ppa(NULL),
+  ppca(NULL),
   bin(NULL),
   dsa(NULL),
   iff(NULL),
@@ -142,7 +144,7 @@ RegalContext::Init()
   {
     RegalAssert(info);
     // emu
-    emuLevel = 9;
+    emuLevel = 10;
     #if REGAL_EMU_TEXC
     if (Config::enableEmuTexC)
     {
@@ -195,11 +197,19 @@ RegalContext::Init()
       bin->Init(*this);
     }
     #endif /* REGAL_EMU_BIN */
+    #if REGAL_EMU_PPCA
+    if (Config::enableEmuPpca)
+    {
+      ppca = new Emu::Ppca;
+      emuLevel = 7;
+      ppca->Init(*this);
+    }
+    #endif /* REGAL_EMU_PPCA */
     #if REGAL_EMU_PPA
     if (Config::enableEmuPpa)
     {
       ppa = new RegalPpa;
-      emuLevel = 7;
+      emuLevel = 8;
       ppa->Init(*this);
     }
     #endif /* REGAL_EMU_PPA */
@@ -207,11 +217,11 @@ RegalContext::Init()
     if (Config::enableEmuObj)
     {
       obj = new RegalObj;
-      emuLevel = 8;
+      emuLevel = 9;
       obj->Init(*this);
     }
     #endif /* REGAL_EMU_OBJ */
-    emuLevel = 9;
+    emuLevel = 10;
 
   }
 #endif
@@ -239,6 +249,9 @@ RegalContext::~RegalContext()
   #if REGAL_EMU_PPA
   delete ppa;
   #endif /* REGAL_EMU_PPA */
+  #if REGAL_EMU_PPCA
+  delete ppca;
+  #endif /* REGAL_EMU_PPCA */
   #if REGAL_EMU_BIN
   delete bin;
   #endif /* REGAL_EMU_BIN */
