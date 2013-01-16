@@ -64,10 +64,6 @@ all: regal.lib glew.lib glu.lib glut.lib regal.bin bin/regaltest
 export:
 	scripts/Export.py --api gl 4.2 --api wgl 4.0 --api glx 4.0 --api cgl 1.4 --api egl 1.0 --outdir .
 
-lib:
-	mkdir lib
-
-
 #
 # zlib
 #
@@ -112,7 +108,8 @@ tmp/$(SYSTEM)/zlib/static/%.o: src/zlib/src/%.c
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(ZLIB.CFLAGS) $(CFLAGS) $(PICFLAG) -o $@ -c $<
 
-lib/$(ZLIB.STATIC): lib $(ZLIB.OBJS)
+lib/$(ZLIB.STATIC): $(ZLIB.OBJS)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(AR) cr $@ $(ZLIB.OBJS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -162,7 +159,8 @@ tmp/$(SYSTEM)/libpng/static/%.o: src/libpng/src/%.c
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(LIBPNG.CFLAGS) $(CFLAGS) $(PICFLAG) -o $@ -c $<
 
-lib/$(LIBPNG.STATIC): lib $(LIBPNG.OBJS)
+lib/$(LIBPNG.STATIC): $(LIBPNG.OBJS)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(AR) cr $@ $(LIBPNG.OBJS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -287,6 +285,7 @@ endif
 regal.lib: zlib.lib libpng.lib lib/$(LIB.SHARED) lib/$(LIB.STATIC)
 
 lib/$(LIB.STATIC): $(LIB.OBJS)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(AR) cr $@ $^
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -356,33 +355,9 @@ tmp/$(SYSTEM)/glew/shared/%.o: src/glew/src/%.c
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(PICFLAG) $(GLEW.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-lib/$(GLEW.SHARED): lib $(GLEW.OBJS) lib/$(LIB.SHARED)
-	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) -o $@ $(GLEW.OBJS) $(LIB.LDFLAGS) $(GLEW.LIBS)  -lpthread
-ifneq ($(STRIP),)
-	$(STRIP) -x $@
-endif
-
-#
-# RegalGLEW glewinfo
-#
-
-GLEWINFO.SRCS       += src/glew/src/glewinfo.c 
-GLEWINFO.SRCS.NAMES := $(notdir $(GLEWINFO.SRCS))
-GLEWINFO.OBJS       := $(addprefix tmp/$(SYSTEM)/glewinfo/static/,$(GLEWINFO.SRCS.NAMES))
-GLEWINFO.OBJS       := $(GLEWINFO.OBJS:.c=.o)
-GLEWINFO.CFLAGS     := -Iinclude -Isrc/glew/include -DGLEW_REGAL -DGLEW_NO_GLU
-GLEWINFO.LIBS       += -Llib -lRegal -lRegalGLEW $(LDFLAGS.GLUT) $(LDFLAGS.GLU) $(LDFLAGS.AGL)
-
-ifneq ($(filter linux%,$(SYSTEM)),)
-GLEWINFO.LIBS       += -lX11
-endif
-
-tmp/$(SYSTEM)/glewinfo/static/%.o: src/glew/src/%.c
+lib/$(GLEW.SHARED): $(GLEW.OBJS) lib/$(LIB.SHARED)
 	@mkdir -p $(dir $@)
-	$(CCACHE) $(CC) $(GLEWINFO.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
-
-bin/glewinfo: bin $(GLEWINFO.OBJS) lib/$(LIB.SHARED) lib/$(GLEW.SHARED)
-	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(GLEWINFO.OBJS) $(LIB.LDFLAGS) $(GLEWINFO.LIBS)
+	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) -o $@ $(GLEW.OBJS) $(LIB.LDFLAGS) $(GLEW.LIBS)  -lpthread
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
 endif
@@ -521,7 +496,8 @@ tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libnurbs/nurbtess/%.cc
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-lib/$(GLU.SHARED): lib $(GLU.OBJS)
+lib/$(GLU.SHARED): $(GLU.OBJS) lib/$(LIB.SHARED) 
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) $(GLU.LIBS) $(LIB.LDFLAGS) -o $@ $(GLU.OBJS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -613,13 +589,39 @@ tmp/$(SYSTEM)/glut/shared/%.o: src/glut/src/%.c
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(GLUT.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) -o $@ -c $<
 
-lib/$(GLUT.SHARED): lib $(GLUT.OBJS) lib/$(GLU.SHARED) lib/$(LIB.SHARED)
+lib/$(GLUT.SHARED): $(GLUT.OBJS) lib/$(GLU.SHARED) lib/$(LIB.SHARED)
 	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) -o $@ $(GLUT.OBJS) $(GLUT.LIBS) 
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
 endif
 
 endif
+endif
+
+#
+# RegalGLEW glewinfo
+#
+
+GLEWINFO.SRCS       += src/glew/src/glewinfo.c 
+GLEWINFO.SRCS.NAMES := $(notdir $(GLEWINFO.SRCS))
+GLEWINFO.OBJS       := $(addprefix tmp/$(SYSTEM)/glewinfo/static/,$(GLEWINFO.SRCS.NAMES))
+GLEWINFO.OBJS       := $(GLEWINFO.OBJS:.c=.o)
+GLEWINFO.CFLAGS     := -Iinclude -Isrc/glew/include -DGLEW_REGAL -DGLEW_NO_GLU
+GLEWINFO.LIBS       += -Llib -lRegal -lRegalGLEW $(LDFLAGS.GLUT) $(LDFLAGS.GLU) $(LDFLAGS.AGL)
+
+ifneq ($(filter linux%,$(SYSTEM)),)
+GLEWINFO.LIBS       += -lX11
+endif
+
+tmp/$(SYSTEM)/glewinfo/static/%.o: src/glew/src/%.c
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(GLEWINFO.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+bin/glewinfo: $(GLEWINFO.OBJS) lib/$(LIB.SHARED) lib/$(GLEW.SHARED) lib/$(GLUT.SHARED) lib/$(GLU.SHARED)
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(GLEWINFO.OBJS) $(LIB.LDFLAGS) $(GLEWINFO.LIBS)
+ifneq ($(STRIP),)
+	$(STRIP) -x $@
 endif
 
 # Examples
@@ -629,9 +631,6 @@ regal.bin: bin/nacl$(BIN_EXTENSION) examples/nacl/nacl.nmf
 else
 regal.bin: bin/glewinfo bin/dreamtorus bin/tiger
 endif
-
-bin:
-	mkdir bin
 
 #
 # dreamtorus
@@ -654,7 +653,8 @@ tmp/$(SYSTEM)/dreamtorus/static/%.o: examples/dreamtorus/glut/code/%.cpp
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(DREAMTORUS.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/dreamtorus: bin $(DREAMTORUS.OBJS) lib/$(LIB.SHARED) 
+bin/dreamtorus: $(DREAMTORUS.OBJS) lib/$(LIB.SHARED) lib/$(GLUT.SHARED) lib/$(GLU.SHARED)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(DREAMTORUS.OBJS) $(LIB.LDFLAGS) $(DREAMTORUS.LIBS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -672,7 +672,8 @@ tmp/$(SYSTEM)/nacl/static/%.o: examples/nacl/%.cpp
 	@mkdir -p $(dir $@)
 	$(CC) $(NACL.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/nacl$(BIN_EXTENSION): bin lib/$(LIB.STATIC) $(NACL.OBJS)
+bin/nacl$(BIN_EXTENSION): lib/$(LIB.STATIC) $(NACL.OBJS)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ $(NACL.OBJS) $(NACL.LIBS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -710,7 +711,8 @@ tmp/$(SYSTEM)/tiger/static/%.o: examples/tiger/%.c
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(TIGER.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/tiger: bin $(TIGER.OBJS) lib/$(GLEW.SHARED) lib/$(LIB.SHARED)
+bin/tiger: $(TIGER.OBJS) lib/$(GLEW.SHARED) lib/$(LIB.SHARED) lib/$(GLEW.SHARED) lib/$(GLUT.SHARED) lib/$(GLU.SHARED)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(TIGER.OBJS) $(TIGER.LIBS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -727,28 +729,27 @@ endif
 ######################################
 
 #
-# googletest
+# googletest + googlemock
 #
 
-GTEST.SRCS       += src/googletest/src/gtest-death-test.cc
-GTEST.SRCS       += src/googletest/src/gtest-filepath.cc
-#GTEST.SRCS       += src/googletest/src/gtest-internal-inl.h
-GTEST.SRCS       += src/googletest/src/gtest-port.cc
-GTEST.SRCS       += src/googletest/src/gtest-printers.cc
-GTEST.SRCS       += src/googletest/src/gtest-test-part.cc
-GTEST.SRCS       += src/googletest/src/gtest-typed-test.cc
-GTEST.SRCS       += src/googletest/src/gtest.cc
+GTEST.SRCS       += src/googletest/src/gtest-all.cc
+GTEST.SRCS       += src/googlemock/src/gmock-all.cc
 GTEST.SRCS.NAMES := $(notdir $(GTEST.SRCS))
 GTEST.OBJS       := $(addprefix tmp/$(SYSTEM)/gtest/static/,$(GTEST.SRCS.NAMES))
 GTEST.OBJS       := $(GTEST.OBJS:.cc=.o)
-GTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googletest
+GTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googletest -Isrc/googlemock/include -Isrc/googlemock
 GTEST.STATIC     := libgtest.a
 
-tmp/$(SYSTEM)/gtest/static/%.o: src/googletest/src/%.cc
+tmp/$(SYSTEM)/gtest/static/gtest-all.o: src/googletest/src/gtest-all.cc
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(GTEST.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-lib/$(GTEST.STATIC): lib $(GTEST.OBJS)
+tmp/$(SYSTEM)/gtest/static/gmock-all.o: src/googlemock/src/gmock-all.cc
+	@mkdir -p $(dir $@)
+	$(CCACHE) $(CC) $(GTEST.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+lib/$(GTEST.STATIC): $(GTEST.OBJS)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(AR) cr $@ $(GTEST.OBJS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
@@ -759,20 +760,23 @@ endif
 #
 
 REGALTEST.SRCS       += tests/test_main.cpp
+REGALTEST.SRCS       += tests/RegalDispatchGMock.cpp
+REGALTEST.SRCS       += tests/testRegalState.cpp
 REGALTEST.SRCS       += tests/testRegalTexC.cpp
 REGALTEST.SRCS       += tests/testRegalPixelConversions.cpp
 REGALTEST.SRCS       += tests/testStringList.cpp
 REGALTEST.SRCS.NAMES := $(notdir $(REGALTEST.SRCS))
 REGALTEST.OBJS       := $(addprefix tmp/$(SYSTEM)/regal_tests/static/,$(REGALTEST.SRCS.NAMES))
 REGALTEST.OBJS       := $(REGALTEST.OBJS:.cpp=.o)
-REGALTEST.CFLAGS     := -Isrc/googletest/include -Isrc/regal -Isrc/boost
-REGALTEST.LIBS       := -Llib -lgtest -lRegal -lm -ldl
+REGALTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googlemock/include -Isrc/regal -Isrc/boost
+REGALTEST.LIBS       := -Llib -lgtest lib/$(LIB.STATIC) -lm -ldl
 
 tmp/$(SYSTEM)/regal_tests/static/%.o: tests/%.cpp
 	@mkdir -p $(dir $@)
 	$(CCACHE) $(CC) $(LIB.CFLAGS) $(REGALTEST.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/regaltest: bin $(REGALTEST.OBJS) lib/$(GTEST.STATIC) lib/$(LIB.STATIC) lib/$(LIBPNG.STATIC) lib/$(ZLIB.STATIC)
+bin/regaltest: $(REGALTEST.OBJS) lib/$(GTEST.STATIC) lib/$(LIB.STATIC) lib/$(LIBPNG.STATIC) lib/$(ZLIB.STATIC)
+	@mkdir -p $(dir $@)
 	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(REGALTEST.OBJS) $(LIB.LDFLAGS) $(REGALTEST.LIBS) $(LIB.LIBS)
 ifneq ($(STRIP),)
 	$(STRIP) -x $@
