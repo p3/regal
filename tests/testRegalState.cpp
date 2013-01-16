@@ -1,10 +1,11 @@
+
 /*
   Copyright (c) 2011-2012 NVIDIA Corporation
   Copyright (c) 2011-2012 Cass Everitt
   Copyright (c) 2012 Scott Nations
   Copyright (c) 2012 Mathias Schott
   Copyright (c) 2012 Nigel Stewart
-  Copyright (c) 2012 Google Inc
+  Copyright (c) 2013 Google Inc
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
@@ -30,8 +31,50 @@
 */
 
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+#include "RegalDispatchGMock.h"
+#include "RegalDispatch.h"
+#include "RegalState.h"
+
+namespace {
+
+using namespace Regal;
+
+// ====================================
+// Regal::State::Depth
+// ====================================
+
+TEST( RegalStateDepth, SetDispatchesCorrectly ) {
+  // Note: This test was written to demonstrate the first use of gmock in
+  // Regal.
+
+  RegalGMockInterface mock;
+
+  DispatchTable dt;
+  InitDispatchTableGMock(dt);
+
+  State::Depth depth;
+
+  // Set some non-default state to look for.
+  depth.enable = GL_TRUE;
+  depth.func = GL_LEQUAL;
+  depth.clear = 0.5;
+  depth.mask = GL_FALSE;
+
+  // Set up call expectations on the gmock interface. Note that by default calls
+  // are allowed to be made in any order.
+  EXPECT_CALL( mock, glEnable( GL_DEPTH_TEST ) );
+  EXPECT_CALL( mock, glDepthFunc( GL_LEQUAL ) );
+  EXPECT_CALL( mock, glClearDepth( 0.5 ) );
+  EXPECT_CALL( mock, glDepthMask( GL_FALSE ) );
+
+  // Invoke the function under test, to ensure it is dispatching calls
+  // correctly.
+  depth.set(dt);
+
+  // The expectations set above are implicitly checked here by the mock interface
+  // destructor.
 }
+
+}  // namespace
