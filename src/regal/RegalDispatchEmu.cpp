@@ -255,6 +255,14 @@ static void REGAL_CALL emu_glClipPlane(GLenum plane, const GLdouble *equation)
   {
     case 9 :
     case 8 :
+      #if REGAL_EMU_PPA
+      if (_context->ppa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 7;
+        _context->ppa->glClipPlane( plane, equation );
+      }
+      #endif
     case 7 :
     case 6 :
     case 5 :
@@ -4437,6 +4445,14 @@ static void REGAL_CALL emu_glMatrixMode(GLenum mode)
   {
     case 9 :
     case 8 :
+      #if REGAL_EMU_PPA
+      if (_context->ppa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 7;
+        _context->ppa->glMatrixMode( mode );
+      }
+      #endif
     case 7 :
     case 6 :
       #if REGAL_EMU_DSA

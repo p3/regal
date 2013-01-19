@@ -45,4 +45,12 @@ ppaFormulae = {
       '}',
     ],
   },
+  'TrackMatrixMode' : {
+    'entries'    : [ 'glMatrixMode' ],
+    'prefix'     : [ '_context->ppa->glMatrixMode( ${arg0plus} );', ],
+  },
+  'TrackClipPlane' : {
+    'entries'    : [ 'glClipPlane' ],
+    'prefix'     : [ '_context->ppa->glClipPlane( ${arg0plus} );', ],
+  },
 }
