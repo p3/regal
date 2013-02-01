@@ -1399,6 +1399,22 @@ void REGAL_CALL gmock_glVertexPointer(GLint size, GLenum type, GLsizei stride, c
   return RegalGMockInterface::current->glVertexPointer(size, type, stride, pointer);
 }
 
+void REGAL_CALL gmock_glClientActiveTexture(GLenum texture) {
+  return RegalGMockInterface::current->glClientActiveTexture(texture);
+}
+
+void REGAL_CALL gmock_glFogCoordPointer(GLenum type, GLsizei stride, const GLvoid *pointer) {
+  return RegalGMockInterface::current->glFogCoordPointer(type, stride, pointer);
+}
+
+void REGAL_CALL gmock_glSecondaryColorPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer) {
+  return RegalGMockInterface::current->glSecondaryColorPointer(size, type, stride, pointer);
+}
+
+void REGAL_CALL gmock_glBindBuffer(GLenum target, GLuint buffer) {
+  return RegalGMockInterface::current->glBindBuffer(target, buffer);
+}
+
 void REGAL_CALL gmock_glAttachShader(GLuint program, GLuint shader) {
   return RegalGMockInterface::current->glAttachShader(program, shader);
 }
@@ -1771,6 +1787,38 @@ void REGAL_CALL gmock_glVertexAttribPointer(GLuint index, GLint size, GLenum typ
   return RegalGMockInterface::current->glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
+void REGAL_CALL gmock_glPrimitiveRestartIndex(GLuint index) {
+  return RegalGMockInterface::current->glPrimitiveRestartIndex(index);
+}
+
+void REGAL_CALL gmock_glBindVertexArray(GLuint array) {
+  return RegalGMockInterface::current->glBindVertexArray(array);
+}
+
+void REGAL_CALL gmock_glBindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride) {
+  return RegalGMockInterface::current->glBindVertexBuffer(bindingindex, buffer, offset, stride);
+}
+
+void REGAL_CALL gmock_glVertexAttribBinding(GLuint attribindex, GLuint bindingindex) {
+  return RegalGMockInterface::current->glVertexAttribBinding(attribindex, bindingindex);
+}
+
+void REGAL_CALL gmock_glVertexAttribFormat(GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset) {
+  return RegalGMockInterface::current->glVertexAttribFormat(attribindex, size, type, normalized, relativeoffset);
+}
+
+void REGAL_CALL gmock_glVertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset) {
+  return RegalGMockInterface::current->glVertexAttribIFormat(attribindex, size, type, relativeoffset);
+}
+
+void REGAL_CALL gmock_glVertexBindingDivisor(GLuint bindingindex, GLuint divisor) {
+  return RegalGMockInterface::current->glVertexBindingDivisor(bindingindex, divisor);
+}
+
+void REGAL_CALL gmock_glClientAttribDefaultEXT(GLbitfield mask) {
+  return RegalGMockInterface::current->glClientAttribDefaultEXT(mask);
+}
+
 } // namespace
 
 RegalGMockInterface::RegalGMockInterface()
@@ -2123,6 +2171,10 @@ void InitDispatchTableGMock(DispatchTable &tbl)
   tbl.glTexSubImage1D = gmock_glTexSubImage1D;
   tbl.glTexSubImage2D = gmock_glTexSubImage2D;
   tbl.glVertexPointer = gmock_glVertexPointer;
+  tbl.glClientActiveTexture = gmock_glClientActiveTexture;
+  tbl.glFogCoordPointer = gmock_glFogCoordPointer;
+  tbl.glSecondaryColorPointer = gmock_glSecondaryColorPointer;
+  tbl.glBindBuffer = gmock_glBindBuffer;
   tbl.glAttachShader = gmock_glAttachShader;
   tbl.glBindAttribLocation = gmock_glBindAttribLocation;
   tbl.glBlendEquationSeparate = gmock_glBlendEquationSeparate;
@@ -2216,6 +2268,14 @@ void InitDispatchTableGMock(DispatchTable &tbl)
   tbl.glVertexAttrib4uiv = gmock_glVertexAttrib4uiv;
   tbl.glVertexAttrib4usv = gmock_glVertexAttrib4usv;
   tbl.glVertexAttribPointer = gmock_glVertexAttribPointer;
+  tbl.glPrimitiveRestartIndex = gmock_glPrimitiveRestartIndex;
+  tbl.glBindVertexArray = gmock_glBindVertexArray;
+  tbl.glBindVertexBuffer = gmock_glBindVertexBuffer;
+  tbl.glVertexAttribBinding = gmock_glVertexAttribBinding;
+  tbl.glVertexAttribFormat = gmock_glVertexAttribFormat;
+  tbl.glVertexAttribIFormat = gmock_glVertexAttribIFormat;
+  tbl.glVertexBindingDivisor = gmock_glVertexBindingDivisor;
+  tbl.glClientAttribDefaultEXT = gmock_glClientAttribDefaultEXT;
 }
 
 REGAL_NAMESPACE_END

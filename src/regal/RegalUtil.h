@@ -163,6 +163,10 @@
 #define REGAL_EMU_PPA 1
 #endif
 
+#ifndef REGAL_EMU_PPCA
+#define REGAL_EMU_PPCA 1
+#endif
+
 #ifndef REGAL_EMU_OBJ
 #define REGAL_EMU_OBJ 1
 #endif

@@ -397,6 +397,10 @@ struct RegalGMockInterface
   MOCK_METHOD7(glTexSubImage1D, void(GLenum, GLint, GLint, GLsizei, GLenum, GLenum, const GLvoid *));
   MOCK_METHOD9(glTexSubImage2D, void(GLenum, GLint, GLint, GLint, GLsizei, GLsizei, GLenum, GLenum, const GLvoid *));
   MOCK_METHOD4(glVertexPointer, void(GLint, GLenum, GLsizei, const GLvoid *));
+  MOCK_METHOD1(glClientActiveTexture, void(GLenum));
+  MOCK_METHOD3(glFogCoordPointer, void(GLenum, GLsizei, const GLvoid *));
+  MOCK_METHOD4(glSecondaryColorPointer, void(GLint, GLenum, GLsizei, const GLvoid *));
+  MOCK_METHOD2(glBindBuffer, void(GLenum, GLuint));
   MOCK_METHOD2(glAttachShader, void(GLuint, GLuint));
   MOCK_METHOD3(glBindAttribLocation, void(GLuint, GLuint, const GLchar *));
   MOCK_METHOD2(glBlendEquationSeparate, void(GLenum, GLenum));
@@ -490,6 +494,14 @@ struct RegalGMockInterface
   MOCK_METHOD2(glVertexAttrib4uiv, void(GLuint, const GLuint *));
   MOCK_METHOD2(glVertexAttrib4usv, void(GLuint, const GLushort *));
   MOCK_METHOD6(glVertexAttribPointer, void(GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid *));
+  MOCK_METHOD1(glPrimitiveRestartIndex, void(GLuint));
+  MOCK_METHOD1(glBindVertexArray, void(GLuint));
+  MOCK_METHOD4(glBindVertexBuffer, void(GLuint, GLuint, GLintptr, GLsizei));
+  MOCK_METHOD2(glVertexAttribBinding, void(GLuint, GLuint));
+  MOCK_METHOD5(glVertexAttribFormat, void(GLuint, GLint, GLenum, GLboolean, GLuint));
+  MOCK_METHOD4(glVertexAttribIFormat, void(GLuint, GLint, GLenum, GLuint));
+  MOCK_METHOD2(glVertexBindingDivisor, void(GLuint, GLuint));
+  MOCK_METHOD1(glClientAttribDefaultEXT, void(GLbitfield));
 };
 
 void InitDispatchTableGMock(DispatchTable &tbl);

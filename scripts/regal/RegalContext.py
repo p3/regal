@@ -26,6 +26,7 @@ from EmuDsa    import dsaFormulae
 from EmuVao    import vaoFormulae
 from EmuSo     import soFormulae
 from EmuPpc    import ppcFormulae
+from EmuPpca   import ppcaFormulae
 from EmuPpa    import ppaFormulae
 from EmuIff    import iffFormulae
 from EmuBin    import binFormulae
@@ -59,6 +60,7 @@ emu = [
     { 'type' : 'RegalObj',    'include' : 'RegalObj.h',  'member' : 'obj',    'conditional' : 'Config::enableEmuObj',                            'ifdef' : 'REGAL_EMU_OBJ',    'formulae' : objFormulae    },
     #{ 'type' : 'RegalPpc',   'include' : 'RegalPpc.h',  'member' : 'ppc',    'conditional' : None,                                              'ifdef' : '',                 'formulae' : ppcFormulae    },
     { 'type' : 'Emu::Ppa',    'include' : 'RegalPpa.h',  'member' : 'ppa',    'conditional' : 'Config::enableEmuPpa',                            'ifdef' : 'REGAL_EMU_PPA',    'formulae' : ppaFormulae    },
+    { 'type' : 'Emu::Ppca',   'include' : 'RegalPpca.h', 'member' : 'ppca',   'conditional' : 'Config::enableEmuPpca',                           'ifdef' : 'REGAL_EMU_PPCA',   'formulae' : ppcaFormulae   },
     { 'type' : 'RegalBin',    'include' : 'RegalBin.h',  'member' : 'bin',    'conditional' : 'Config::enableEmuBin',                            'ifdef' : 'REGAL_EMU_BIN',    'formulae' : binFormulae    },
     { 'type' : 'RegalDsa',    'include' : 'RegalDsa.h',  'member' : 'dsa',    'conditional' : 'Config::enableEmuDsa',                            'ifdef' : 'REGAL_EMU_DSA',    'formulae' : dsaFormulae    },
     { 'type' : 'Emu::Iff',    'include' : 'RegalIff.h',  'member' : 'iff',    'conditional' : 'Config::enableEmuIff',                            'ifdef' : 'REGAL_EMU_IFF',    'formulae' : iffFormulae    },
@@ -329,14 +331,8 @@ def generateContextHeader(apis, args):
 
     for i in emu:
       if i.get('member')!=None:
-        if i['type']=='Emu::Iff':
-          emuForwardDeclare += 'namespace Emu { struct Iff; };\n'
-        elif i['type']=='Emu::So':
-          emuForwardDeclare += 'namespace Emu { struct So; };\n'
-        elif i['type']=='Emu::TexC':
-          emuForwardDeclare += 'namespace Emu { struct TexC; };\n'
-        elif i['type']=='Emu::Ppa':
-          emuForwardDeclare += 'namespace Emu { struct Ppa; };\n'
+        if i['type'].startswith('Emu::'):
+          emuForwardDeclare += 'namespace Emu { struct %s; };\n' % i['type'][5:]
         else:
           emuForwardDeclare += 'struct %s;\n' % i['type']
         emuMemberDeclare  += '  %-18s *%s;\n' % ( i['type'], i['member'] )

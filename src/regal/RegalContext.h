@@ -69,6 +69,7 @@ struct Frame;
 #if REGAL_EMULATION
 struct RegalObj;
 namespace Emu { struct Ppa; };
+namespace Emu { struct Ppca; };
 struct RegalBin;
 struct RegalDsa;
 namespace Emu { struct Iff; };
@@ -101,6 +102,7 @@ struct RegalContext
   int emuLevel;
   RegalObj           *obj;
   Emu::Ppa           *ppa;
+  Emu::Ppca          *ppca;
   RegalBin           *bin;
   RegalDsa           *dsa;
   Emu::Iff           *iff;

@@ -67,6 +67,7 @@ namespace Config
   // Initial emulation layer enable/disable
 
   extern bool enableEmuPpa;
+  extern bool enableEmuPpca;
   extern bool enableEmuObj;
   extern bool enableEmuBin;
   extern bool enableEmuDsa;

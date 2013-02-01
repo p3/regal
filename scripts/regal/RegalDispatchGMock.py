@@ -134,6 +134,27 @@ def dispatchGMockDefineFuctionFragment(args):
     return dispatchGMockDefineNotMockedFuctionFragmentTemplate.substitute(args)
 
 
+functionCategoriesToMock = [
+    'GL_VERSION_1_0',
+    'GL_VERSION_1_1',
+    'GL_VERSION_2_0']
+
+
+explicitFunctionsToMock = frozenset([
+    'glBindBuffer',
+    'glBindVertexArray',
+    'glBindVertexBuffer',
+    'glClientActiveTexture',
+    'glClientAttribDefaultEXT',
+    'glFogCoordPointer',
+    'glPrimitiveRestartIndex',
+    'glSecondaryColorPointer',
+    'glVertexAttribBinding',
+    'glVertexAttribFormat',
+    'glVertexAttribIFormat',
+    'glVertexBindingDivisor'])
+
+
 def generateGMockFunctionApi(apis):
   for api in apis:
     if api.name != 'gl':
@@ -144,8 +165,8 @@ def generateGMockFunctionApi(apis):
         continue
       if getattr(function, 'regalOnly', False):
         continue
-      if not function.category in [ 'GL_VERSION_1_0', 'GL_VERSION_1_1', 'GL_VERSION_2_0'] and \
-         not function.name     in [ ]:
+      if (function.category not in functionCategoriesToMock and
+          function.name not in explicitFunctionsToMock):
         continue
 
       yield dict(

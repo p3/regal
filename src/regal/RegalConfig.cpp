@@ -63,6 +63,7 @@ namespace Config {
   bool enableDriver     = REGAL_DRIVER;
 
   bool enableEmuPpa     = REGAL_EMU_PPA;
+  bool enableEmuPpca    = REGAL_EMU_PPCA;
   bool enableEmuObj     = REGAL_EMU_OBJ;
   bool enableEmuBin     = REGAL_EMU_BIN;
   bool enableEmuDsa     = REGAL_EMU_DSA;
@@ -184,7 +185,12 @@ namespace Config {
 
 #if REGAL_EMU_PPA
     tmp = GetEnv( "REGAL_EMU_PPA" );
-    if (tmp) enableEmuObj = atoi(tmp)!=0;
+    if (tmp) enableEmuPpa = atoi(tmp)!=0;
+#endif
+
+#if REGAL_EMU_PPCA
+    tmp = GetEnv( "REGAL_EMU_PPCA" );
+    if (tmp) enableEmuPpca = atoi(tmp)!=0;
 #endif
 
 #if REGAL_EMU_OBJ
@@ -314,6 +320,7 @@ namespace Config {
     Info("REGAL_DRIVER             ", enableDriver     ? "enabled" : "disabled");
 
     Info("REGAL_EMU_PPA            ", enableEmuPpa     ? "enabled" : "disabled");
+    Info("REGAL_EMU_PPCA           ", enableEmuPpca    ? "enabled" : "disabled");
     Info("REGAL_EMU_OBJ            ", enableEmuObj     ? "enabled" : "disabled");
     Info("REGAL_EMU_BIN            ", enableEmuBin     ? "enabled" : "disabled");
     Info("REGAL_EMU_DSA            ", enableEmuDsa     ? "enabled" : "disabled");
