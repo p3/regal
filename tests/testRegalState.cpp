@@ -104,6 +104,7 @@ TEST( RegalStateTransform, WorksAsExpected ) {
   t1.matrixMode = 100;
   t1.normalize = 101;
   t1.rescaleNormal = 102;
+  t1.depthClamp = 103;
 
   t2.swap( t1 );
 
@@ -119,6 +120,7 @@ TEST( RegalStateTransform, WorksAsExpected ) {
   EXPECT_EQ( static_cast<GLenum>( GL_MODELVIEW ), t1.matrixMode );
   EXPECT_EQ( static_cast<GLboolean>( GL_FALSE ), t1.normalize );
   EXPECT_EQ( static_cast<GLboolean>( GL_FALSE ), t1.rescaleNormal );
+  EXPECT_EQ( static_cast<GLboolean>( GL_FALSE ), t1.depthClamp );
 
   // Test that t2 has the artificial state
 
@@ -132,6 +134,7 @@ TEST( RegalStateTransform, WorksAsExpected ) {
   EXPECT_EQ( static_cast<GLenum>( 100 ), t2.matrixMode );
   EXPECT_EQ( static_cast<GLboolean>( 101 ), t2.normalize );
   EXPECT_EQ( static_cast<GLboolean>( 102 ), t2.rescaleNormal );
+  EXPECT_EQ( static_cast<GLboolean>( 103 ), t2.depthClamp );
 
   t2.glMatrixMode( GL_MODELVIEW );
   EXPECT_EQ( static_cast<GLenum>( GL_MODELVIEW ), t2.matrixMode );
@@ -201,10 +204,12 @@ TEST( RegalStateTransform, TransitionSetsStateCorrectly ) {
     target.matrixMode = 108;
     target.normalize = GL_TRUE;
     target.rescaleNormal = GL_TRUE;
+    target.depthClamp = GL_TRUE;
 
     EXPECT_CALL( mock, glMatrixMode( static_cast<GLenum> ( 108 ) ) );
     EXPECT_CALL( mock, glEnable( GL_NORMALIZE ) );
     EXPECT_CALL( mock, glEnable( GL_RESCALE_NORMAL ) );
+    EXPECT_CALL( mock, glEnable( GL_DEPTH_CLAMP ) );
 
     target.transition( dt, current );
 
@@ -220,6 +225,19 @@ TEST( RegalStateTransform, TransitionSetsStateCorrectly ) {
 
     EXPECT_CALL( mock, glDisable( GL_NORMALIZE ) );
     EXPECT_CALL( mock, glDisable( GL_RESCALE_NORMAL ) );
+
+    target.transition( dt, current );
+
+    Mock::VerifyAndClear( &mock );
+  }
+
+  {
+    State::Transform current;
+    State::Transform target;
+
+    current.depthClamp = GL_TRUE;
+
+    EXPECT_CALL( mock, glDisable( GL_DEPTH_CLAMP ) );
 
     target.transition( dt, current );
 

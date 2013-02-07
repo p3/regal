@@ -815,13 +815,17 @@ namespace State {
 
   struct Transform
   {
+    // This state matches glspec43.compatability.20120806.pdf Table 23.10,
+    // except possibly extended a bit to allow for extra clip planes.
+
     ClipPlane   clipPlane[REGAL_FIXED_FUNCTION_MAX_CLIP_PLANES];
     GLenum      matrixMode;
     GLboolean   normalize;
     GLboolean   rescaleNormal;
+    GLboolean   depthClamp;
 
     inline Transform()
-    : matrixMode(GL_MODELVIEW), normalize(GL_FALSE), rescaleNormal(GL_FALSE)
+    : matrixMode(GL_MODELVIEW), normalize(GL_FALSE), rescaleNormal(GL_FALSE), depthClamp(GL_FALSE)
     {
     }
 
@@ -836,6 +840,7 @@ namespace State {
       std::swap(matrixMode,other.matrixMode);
       std::swap(normalize,other.normalize);
       std::swap(rescaleNormal,other.rescaleNormal);
+      std::swap(depthClamp,other.depthClamp);
       return *this;
     }
 
@@ -882,6 +887,9 @@ namespace State {
       if (current.rescaleNormal != rescaleNormal)
         Enable::setEnable(dt, GL_RESCALE_NORMAL, rescaleNormal);
 
+      if (current.depthClamp != depthClamp )
+        Enable::setEnable(dt, GL_DEPTH_CLAMP, depthClamp );
+
       return *this;
     }
 
@@ -897,6 +905,7 @@ namespace State {
       tmp << print_string("glMatrixMode(",Token::toString(matrixMode),");",delim);
       tmp << print_string(normalize     ? "glEnable" : "glDisable","(GL_NORMALIZE);",delim);
       tmp << print_string(rescaleNormal ? "glEnable" : "glDisable","(GL_RESCALE_NORMAL);",delim);
+      tmp << print_string(depthClamp    ? "glEnable" : "glDisable","(GL_DEPTH_CLAMP);",delim);
       return tmp;
     }
   };

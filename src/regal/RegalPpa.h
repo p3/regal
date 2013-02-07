@@ -246,6 +246,7 @@ struct Ppa : public RegalEmu, State::Stencil, State::Depth, State::Polygon, Stat
       case GL_POLYGON_OFFSET_POINT: State::Polygon::offsetPoint     = enabled; break;
       case GL_NORMALIZE:            State::Transform::normalize     = enabled; break;
       case GL_RESCALE_NORMAL:       State::Transform::rescaleNormal = enabled; break;
+      case GL_DEPTH_CLAMP:          State::Transform::depthClamp    = enabled; break;
       default:                                                                 break;
     }
 
