@@ -271,7 +271,7 @@ TEST( RegalClientStateVertexArrayFixedState, BasicOperations ) {
 
   // Set unique data for the array source for all attributes.
   for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    state.SetData( i, i * 10 + 1, i * 10 + 2, i * 10 + 3, i * 10 + 4 );
+    state.SetData( i, i * 10 + 1, i * 10 + 2, i * 10 + 3, i * 10 + 4, i * 10 + 5 );
   }
 
   // Calls with out-of-bound values should silently return as a no-op.
@@ -279,8 +279,8 @@ TEST( RegalClientStateVertexArrayFixedState, BasicOperations ) {
   // detected soon.
   state.SetEnable( INVALID_ATTRIB_INDEX, true );
   state.SetEnable( COUNT_ATTRIBS, true );
-  state.SetData( INVALID_ATTRIB_INDEX, 0xdead, 0xdead, 0xdead, 0xdead );
-  state.SetData( COUNT_ATTRIBS, 0xdead, 0xdead, 0xdead, 0xdead );
+  state.SetData( INVALID_ATTRIB_INDEX, 0xdead, 0xdead, 0xdead, 0xdead, 0xdead );
+  state.SetData( COUNT_ATTRIBS, 0xdead, 0xdead, 0xdead, 0xdead, 0xdead );
 
   // Peform a swap, so that it is effectively tested too
   swap( state, other );
@@ -295,10 +295,11 @@ TEST( RegalClientStateVertexArrayFixedState, BasicOperations ) {
       EXPECT_FALSE( attrib.enabled );
     }
 
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 1 ), attrib.source.size   );
-    EXPECT_EQ( static_cast<GLenum>( i * 10 + 2 ), attrib.source.type   );
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 3 ), attrib.source.stride );
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 4 ), attrib.source.offset );
+    EXPECT_EQ( static_cast<GLuint>( i * 10 + 1 ), attrib.source.buffer );
+    EXPECT_EQ( static_cast<GLint> ( i * 10 + 2 ), attrib.source.size   );
+    EXPECT_EQ( static_cast<GLenum>( i * 10 + 3 ), attrib.source.type   );
+    EXPECT_EQ( static_cast<GLint> ( i * 10 + 4 ), attrib.source.stride );
+    EXPECT_EQ( static_cast<GLint> ( i * 10 + 5 ), attrib.source.offset );
   }
 
   // Verify the expected default state set previously ended up in the swapped
@@ -306,6 +307,7 @@ TEST( RegalClientStateVertexArrayFixedState, BasicOperations ) {
   for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
     const State::Attrib& attrib = state.attrib[ i ];
     EXPECT_FALSE( attrib.enabled ) << "index " << i;
+    EXPECT_EQ( 0u, attrib.source.buffer ) << "index " << i;
     if ( ( i == indexAttribIndex ) || ( i == fogCoordAttribIndex ) || ( i == edgeFlagAttribIndex ) ) {
       EXPECT_EQ( 1, attrib.source.size ) << "index " << i;
     } else if ( ( i == secondaryColorAttribIndex ) || ( i == normalAttribIndex ) ) {
@@ -346,46 +348,53 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
 
   // The vertex position attribute array uses all the array state we have.
   target.SetEnable ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  target.SetData   ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 10, 11, 12, 13 );
+  target.SetData   ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 10, 11, 12, 13, 14 );
   EXPECT_CALL( mock, glEnableClientState( GL_VERTEX_ARRAY ) );
-  EXPECT_CALL( mock, glVertexPointer    ( 10, 11, 12, reinterpret_cast<const GLvoid*>( 13 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 10 ) );
+  EXPECT_CALL( mock, glVertexPointer    ( 11, 12, 13, reinterpret_cast<const GLvoid*>( 14 ) ) );
 
   // The vertex normal attribute array does not need the first size argument.
   target.SetEnable( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), 20, 21, 22, 23 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), 20, 21, 22, 23, 24 );
   EXPECT_CALL( mock, glEnableClientState( GL_NORMAL_ARRAY ) );
-  EXPECT_CALL( mock, glNormalPointer    ( 21, 22, reinterpret_cast<const GLvoid*>( 23 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 20 ) );
+  EXPECT_CALL( mock, glNormalPointer    ( 22, 23, reinterpret_cast<const GLvoid*>( 24 ) ) );
 
   // The color attribute array uses all the array state we have.
   target.SetEnable( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), 30, 31, 32, 33 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), 30, 31, 32, 33, 34 );
   EXPECT_CALL( mock, glEnableClientState( GL_COLOR_ARRAY ) );
-  EXPECT_CALL( mock, glColorPointer     ( 30, 31, 32, reinterpret_cast<const GLvoid*>( 33 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 30 ) );
+  EXPECT_CALL( mock, glColorPointer     ( 31, 32, 33, reinterpret_cast<const GLvoid*>( 34 ) ) );
 
   // The secondary color attribute array uses all the array state we have.
   target.SetEnable( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), 40, 41, 42, 43 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), 40, 41, 42, 43, 44 );
   EXPECT_CALL( mock, glEnableClientState    ( GL_SECONDARY_COLOR_ARRAY ) );
-  EXPECT_CALL( mock, glSecondaryColorPointer( 40, 41, 42, reinterpret_cast<const GLvoid*>( 43 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 40 ) );
+  EXPECT_CALL( mock, glSecondaryColorPointer( 41, 42, 43, reinterpret_cast<const GLvoid*>( 44 ) ) );
 
   // The index attribute array does not need the first size argument.
   target.SetEnable( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), 50, 51, 52, 53 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), 50, 51, 52, 53, 54 );
   EXPECT_CALL( mock, glEnableClientState( GL_INDEX_ARRAY ) );
-  EXPECT_CALL( mock, glIndexPointer     ( 51, 52, reinterpret_cast<const GLvoid*>( 53 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 50 ) );
+  EXPECT_CALL( mock, glIndexPointer     ( 52, 53, reinterpret_cast<const GLvoid*>( 54 ) ) );
 
   // The edge flag attribute array does not need the size or the type
   // arguments.
   target.SetEnable( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), 60, 61, 62, 63 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), 60, 61, 62, 63, 64 );
   EXPECT_CALL( mock, glEnableClientState( GL_EDGE_FLAG_ARRAY ) );
-  EXPECT_CALL( mock, glEdgeFlagPointer  ( 62, reinterpret_cast<const GLvoid*>( 63 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 60 ) );
+  EXPECT_CALL( mock, glEdgeFlagPointer  ( 63, reinterpret_cast<const GLvoid*>( 64 ) ) );
 
   // The fog coordiante attribute array does not need the size argument.
   target.SetEnable( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), 70, 71, 72, 73 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), 70, 71, 72, 73, 74 );
   EXPECT_CALL( mock, glEnableClientState( GL_FOG_COORD_ARRAY ) );
-  EXPECT_CALL( mock, glFogCoordPointer  ( 71, 72, reinterpret_cast<const GLvoid*>( 73 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 70 ) );
+  EXPECT_CALL( mock, glFogCoordPointer  ( 72, 73, reinterpret_cast<const GLvoid*>( 74 ) ) );
 
   // There are multiple texture coordinate arrays, one for each texture unit.
   // They use all the array state we have.
@@ -394,19 +403,23 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
   // Note below we indicate that GL_TEXTURE0 is already selected, so there
   // should be no call to select it again.
   target.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 ), 80, 81, 82, 83 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 ), 80, 81, 82, 83, 84 );
   target.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE5 ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE5 ), 90, 91, 92, 93 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE5 ), 90, 91, 92, 93, 94 );
   EXPECT_CALL( mock, glEnableClientState  ( GL_TEXTURE_COORD_ARRAY ) ).Times( 2 );
   EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE5 ) );
-  EXPECT_CALL( mock, glTexCoordPointer    ( 80, 81, 82, reinterpret_cast<const GLvoid*>( 83 ) ) );
-  EXPECT_CALL( mock, glTexCoordPointer    ( 90, 91, 92, reinterpret_cast<const GLvoid*>( 93 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 80 ) );
+  EXPECT_CALL( mock, glTexCoordPointer    ( 81, 82, 83, reinterpret_cast<const GLvoid*>( 84 ) ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 90 ) );
+  EXPECT_CALL( mock, glTexCoordPointer    ( 91, 92, 93, reinterpret_cast<const GLvoid*>( 94 ) ) );
 
   // Perform the requested transition
-  GLuint clientActiveTexture = GL_TEXTURE0;
-  Transition( dt, current, target, clientActiveTexture );
+  GLenum clientActiveTexture = GL_TEXTURE0;
+  GLuint arrayBufferBinding = 0;
+  Transition( dt, current, target, clientActiveTexture, arrayBufferBinding );
   // Verify that we've updated the shadowed selected texture unit as expected.
   EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE5 ), clientActiveTexture );
+  EXPECT_EQ( static_cast<GLuint>( 90 ), arrayBufferBinding );
   // Verify the call expectations, and reset for another test.
   Mock::VerifyAndClear( &mock );
   target.Reset();
@@ -414,9 +427,9 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
 
   // Verify state gets disabled/reset to default from non-default.
   current.SetEnable( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  current.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4 );
+  current.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4, 5 );
   current.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), true );
-  current.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), 80, 81, 82, 83 );
+  current.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), 80, 81, 82, 83, 84 );
   EXPECT_CALL( mock, glDisableClientState ( GL_VERTEX_ARRAY ) );
   EXPECT_CALL( mock, glVertexPointer      ( 4, GL_FLOAT, 0, NULL ) );
   EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE1 ) );
@@ -428,14 +441,16 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
   EXPECT_CALL( mock, glDisableClientState( GL_NORMAL_ARRAY ) );
 
   // Setting array data is a distinct operation
-  current.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), 30, 31, 32, 33 );
+  current.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), 30, 31, 32, 33, 34 );
   EXPECT_CALL( mock, glColorPointer     ( 4, GL_FLOAT, 0, NULL ) );
 
   // Perform the requested transition
   clientActiveTexture = GL_TEXTURE0;
-  Transition( dt, current, target, clientActiveTexture );
+  arrayBufferBinding = 0;
+  Transition( dt, current, target, clientActiveTexture, arrayBufferBinding );
   // Verify that we've updated the shadowed selected texture unit as expected.
   EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE1 ), clientActiveTexture );
+  EXPECT_EQ( static_cast<GLuint>( 0 ), arrayBufferBinding );
   // Verify the call expectations, and reset for another test.
   Mock::VerifyAndClear( &mock );
   target.Reset();
@@ -443,14 +458,16 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
 
   // Identical state is a no-op in terms of calls.
   current.SetEnable( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  current.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4 );
+  current.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4, 5 );
   target.SetEnable ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  target.SetData   ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4 );
+  target.SetData   ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4, 5 );
 
   clientActiveTexture = GL_TEXTURE4;
-  Transition( dt, current, target, clientActiveTexture );
+  arrayBufferBinding = 123;
+  Transition( dt, current, target, clientActiveTexture, arrayBufferBinding );
   // Verify that the shadowed selected texture unit is not updated.
   EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE4 ), clientActiveTexture );
+  EXPECT_EQ( static_cast<GLuint>( 123 ), arrayBufferBinding );
 }
 
 // ====================================
@@ -1097,47 +1114,58 @@ TEST ( RegalPpca, ClientVertexArrayStateFFShadowing ) {
   EXPECT_FALSE( state.attrib[ texture0AttribIndex + 5 ].enabled );
 
   for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
+    state.attrib[ i ].source.buffer = 0;
     state.attrib[ i ].source.size = 0;
     state.attrib[ i ].source.type = 0;
     state.attrib[ i ].source.stride = 0;
   }
 
+  ppca.vas.arrayBufferBinding = 123;
+
   ppca.ShadowVertexPointer( 4, GL_FLOAT, 1001, NULL );
+  EXPECT_EQ( 123u, state.attrib[ vertexAttribIndex ].source.buffer );
   EXPECT_EQ( 4, state.attrib[ vertexAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ vertexAttribIndex ].source.type );
   EXPECT_EQ( 1001, state.attrib[ vertexAttribIndex ].source.stride );
 
   ppca.ShadowNormalPointer( GL_FLOAT, 1002, NULL );
+  EXPECT_EQ( 123u, state.attrib[ normalAttribIndex ].source.buffer );
   EXPECT_EQ( 3, state.attrib[ normalAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ normalAttribIndex ].source.type );
   EXPECT_EQ( 1002, state.attrib[ normalAttribIndex ].source.stride );
 
   ppca.ShadowColorPointer( 4, GL_FLOAT, 1003, NULL );
+  EXPECT_EQ( 123u, state.attrib[ colorAttribIndex ].source.buffer );
   EXPECT_EQ( 4, state.attrib[ colorAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex ].source.type );
   EXPECT_EQ( 1003, state.attrib[ colorAttribIndex ].source.stride );
 
   ppca.ShadowSecondaryColorPointer( 3, GL_FLOAT, 1004, NULL );
+  EXPECT_EQ( 123u, state.attrib[ secondaryColorAttribIndex ].source.buffer );
   EXPECT_EQ( 3, state.attrib[ secondaryColorAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ secondaryColorAttribIndex ].source.type );
   EXPECT_EQ( 1004, state.attrib[ secondaryColorAttribIndex ].source.stride );
 
   ppca.ShadowIndexPointer( GL_INT, 1005, NULL );
+  EXPECT_EQ( 123u, state.attrib[ indexAttribIndex ].source.buffer );
   EXPECT_EQ( 1, state.attrib[ indexAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_INT ), state.attrib[ indexAttribIndex ].source.type );
   EXPECT_EQ( 1005, state.attrib[ indexAttribIndex ].source.stride );
 
   ppca.ShadowEdgeFlagPointer( 1006, NULL );
+  EXPECT_EQ( 123u, state.attrib[ edgeFlagAttribIndex ].source.buffer );
   EXPECT_EQ( 1, state.attrib[ edgeFlagAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_BOOL ), state.attrib[ edgeFlagAttribIndex ].source.type );
   EXPECT_EQ( 1006, state.attrib[ edgeFlagAttribIndex ].source.stride );
 
   ppca.ShadowFogCoordPointer( GL_FLOAT, 1007, NULL );
+  EXPECT_EQ( 123u, state.attrib[ fogCoordAttribIndex ].source.buffer );
   EXPECT_EQ( 1, state.attrib[ fogCoordAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ fogCoordAttribIndex ].source.type );
   EXPECT_EQ( 1007, state.attrib[ fogCoordAttribIndex ].source.stride );
 
   ppca.ShadowTexCoordPointer( 2, GL_FLOAT, 1008, NULL );
+  EXPECT_EQ( 123u, state.attrib[ texture0AttribIndex + 2 ].source.buffer );
   EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 2 ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 2 ].source.type );
   EXPECT_EQ( 1008, state.attrib[ texture0AttribIndex + 2 ].source.stride );
@@ -1145,56 +1173,66 @@ TEST ( RegalPpca, ClientVertexArrayStateFFShadowing ) {
 
 
   ppca.ShadowMultiTexCoordPointerDSA( GL_TEXTURE5, 2, GL_FLOAT, 2005, NULL );
+  EXPECT_EQ( 123u, state.attrib[ texture0AttribIndex + 5 ].source.buffer );
   EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 5 ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 5 ].source.type );
   EXPECT_EQ( 2005, state.attrib[ texture0AttribIndex + 5 ].source.stride );
 
 
 
-  ppca.ShadowVertexArrayVertexOffsetDSA( 0, 0, 3, GL_FLOAT, 3001, 0 );
+  ppca.ShadowVertexArrayVertexOffsetDSA( 0, 3001, 3, GL_FLOAT, 3002, 0 );
+  EXPECT_EQ( 3001u, state.attrib[ vertexAttribIndex ].source.buffer );
   EXPECT_EQ( 3, state.attrib[ vertexAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ vertexAttribIndex ].source.type );
-  EXPECT_EQ( 3001, state.attrib[ vertexAttribIndex ].source.stride );
+  EXPECT_EQ( 3002, state.attrib[ vertexAttribIndex ].source.stride );
 
-  ppca.ShadowVertexArrayColorOffsetDSA ( 0, 0, 4, GL_FLOAT, 3002, 0 );
+  ppca.ShadowVertexArrayColorOffsetDSA ( 0, 3003, 4, GL_FLOAT, 3004, 0 );
+  EXPECT_EQ( 3003u, state.attrib[ colorAttribIndex ].source.buffer );
   EXPECT_EQ( 4, state.attrib[ colorAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex ].source.type );
-  EXPECT_EQ( 3002, state.attrib[ colorAttribIndex ].source.stride );
+  EXPECT_EQ( 3004, state.attrib[ colorAttribIndex ].source.stride );
 
-  ppca.ShadowVertexArrayEdgeFlagOffsetDSA ( 0, 0, 3003, 0 );
+  ppca.ShadowVertexArrayEdgeFlagOffsetDSA ( 0, 3005, 3006, 0 );
+  EXPECT_EQ( 3005u, state.attrib[ edgeFlagAttribIndex ].source.buffer );
   EXPECT_EQ( 1, state.attrib[ edgeFlagAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_BOOL ), state.attrib[ edgeFlagAttribIndex ].source.type );
-  EXPECT_EQ( 3003, state.attrib[ edgeFlagAttribIndex ].source.stride );
+  EXPECT_EQ( 3006, state.attrib[ edgeFlagAttribIndex ].source.stride );
 
-  ppca.ShadowVertexArrayIndexOffsetDSA ( 0, 0, GL_INT, 3004, 0 );
+  ppca.ShadowVertexArrayIndexOffsetDSA ( 0, 3007, GL_INT, 3008, 0 );
+  EXPECT_EQ( 3007u, state.attrib[ indexAttribIndex ].source.buffer );
   EXPECT_EQ( 1, state.attrib[ indexAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_INT ), state.attrib[ indexAttribIndex ].source.type );
-  EXPECT_EQ( 3004, state.attrib[ indexAttribIndex ].source.stride );
+  EXPECT_EQ( 3008, state.attrib[ indexAttribIndex ].source.stride );
 
-  ppca.ShadowVertexArrayNormalOffsetDSA ( 0, 0, GL_FLOAT, 3005, 0 );
+  ppca.ShadowVertexArrayNormalOffsetDSA ( 0, 3009, GL_FLOAT, 3010, 0 );
+  EXPECT_EQ( 3009u, state.attrib[ normalAttribIndex ].source.buffer );
   EXPECT_EQ( 3, state.attrib[ normalAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ normalAttribIndex ].source.type );
-  EXPECT_EQ( 3005, state.attrib[ normalAttribIndex ].source.stride );
+  EXPECT_EQ( 3010, state.attrib[ normalAttribIndex ].source.stride );
 
-  ppca.ShadowVertexArrayTexCoordOffsetDSA( 0, 0, 2, GL_FLOAT, 3006, 0 );
+  ppca.ShadowVertexArrayTexCoordOffsetDSA( 0, 3011, 2, GL_FLOAT, 3012, 0 );
+  EXPECT_EQ( 3011u, state.attrib[ texture0AttribIndex + 2 ].source.buffer );
   EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 2 ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 2 ].source.type );
-  EXPECT_EQ( 3006, state.attrib[ texture0AttribIndex + 2 ].source.stride );
+  EXPECT_EQ( 3012, state.attrib[ texture0AttribIndex + 2 ].source.stride );
 
-  ppca.ShadowVertexArrayMultiTexCoordOffsetDSA( 0, 0, GL_TEXTURE5, 2, GL_FLOAT, 3007, 0 );
+  ppca.ShadowVertexArrayMultiTexCoordOffsetDSA( 0, 3013, GL_TEXTURE5, 2, GL_FLOAT, 3014, 0 );
+  EXPECT_EQ( 3013u, state.attrib[ texture0AttribIndex + 5 ].source.buffer );
   EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 5 ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 5 ].source.type );
-  EXPECT_EQ( 3007, state.attrib[ texture0AttribIndex + 5 ].source.stride );
+  EXPECT_EQ( 3014, state.attrib[ texture0AttribIndex + 5 ].source.stride );
 
-  ppca.ShadowVertexArrayFogCoordOffsetDSA ( 0, 0, GL_FLOAT, 3008, 0 );
+  ppca.ShadowVertexArrayFogCoordOffsetDSA ( 0, 3015, GL_FLOAT, 3016, 0 );
+  EXPECT_EQ( 3015u, state.attrib[ fogCoordAttribIndex ].source.buffer );
   EXPECT_EQ( 1, state.attrib[ fogCoordAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ fogCoordAttribIndex ].source.type );
-  EXPECT_EQ( 3008, state.attrib[ fogCoordAttribIndex ].source.stride );
+  EXPECT_EQ( 3016, state.attrib[ fogCoordAttribIndex ].source.stride );
 
-  ppca.ShadowVertexArraySecondaryColorOffsetDSA ( 0, 0, 3, GL_FLOAT, 3009, 0 );
+  ppca.ShadowVertexArraySecondaryColorOffsetDSA ( 0, 3017, 3, GL_FLOAT, 3018, 0 );
+  EXPECT_EQ( 3017u, state.attrib[ secondaryColorAttribIndex ].source.buffer );
   EXPECT_EQ( 3, state.attrib[ secondaryColorAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ secondaryColorAttribIndex ].source.type );
-  EXPECT_EQ( 3009, state.attrib[ secondaryColorAttribIndex ].source.stride );
+  EXPECT_EQ( 3018, state.attrib[ secondaryColorAttribIndex ].source.stride );
 }
 
 TEST ( RegalPpca, ClientVertexArrayStatePrimitiveRestart ) {

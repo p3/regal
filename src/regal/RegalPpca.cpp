@@ -178,7 +178,7 @@ namespace Fixed {
 namespace {
 
 bool operator != ( const State::Source& lhs, const State::Source& rhs ) {
-  return ( lhs.size != rhs.size ) || ( lhs.type != rhs.type ) || ( lhs.stride != rhs.stride ) || ( lhs.offset != rhs.offset );
+  return ( lhs.buffer != rhs.buffer ) || ( lhs.size != rhs.size ) || ( lhs.type != rhs.type ) || ( lhs.stride != rhs.stride ) || ( lhs.offset != rhs.offset );
 }
 
 void ApplyAttribPointer( const State::Source& target, void (REGAL_CALL *dispatchAttribPointer )( GLint, GLenum, GLsizei, const GLvoid* ) ) {
@@ -198,17 +198,21 @@ void ApplyClientStateEnable( const DispatchTable& dt, GLenum array, bool enable 
 }
 
 template <typename T>
-void Transition( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum array, T dispatchAttribPointer ) {
+void Transition( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum array, T dispatchAttribPointer, GLuint& inoutArrayBufferBinding ) {
   if ( target.enabled != current.enabled ) {
     ApplyClientStateEnable( dt, array, target.enabled );
   }
 
   if ( target.source != current.source ) {
+    if ( target.source.buffer != inoutArrayBufferBinding ) {
+      dt.glBindBuffer( GL_ARRAY_BUFFER, target.source.buffer );
+      inoutArrayBufferBinding = target.source.buffer;
+    }
     ApplyAttribPointer( target.source, dispatchAttribPointer );
   }
 }
 
-void TransitionTextureCoords( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum texture, GLenum& inoutClientActiveTexture ) {
+void TransitionTextureCoords( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum texture, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding ) {
   bool sourceDelta = target.source != current.source;
 
   if ( ( current.enabled != target.enabled ) || sourceDelta ) {
@@ -223,12 +227,17 @@ void TransitionTextureCoords( const DispatchTable& dt, const State::Attrib& curr
   }
 
   if ( sourceDelta ) {
+    if ( target.source.buffer != inoutArrayBufferBinding ) {
+      dt.glBindBuffer( GL_ARRAY_BUFFER, target.source.buffer );
+      inoutArrayBufferBinding = target.source.buffer;
+    }
     ApplyAttribPointer( target.source, dt.glTexCoordPointer );
   }
 }
 
 void swap( State::Source& lhs, State::Source& rhs ) {
   using std::swap;
+  swap( lhs.buffer, rhs.buffer );
   swap( lhs.size, rhs.size );
   swap( lhs.type, rhs.type );
   swap( lhs.stride, rhs.stride );
@@ -247,6 +256,7 @@ void State::Reset() {
   for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
     attrib[ i ].enabled = false;
 
+    attrib[ i ].source.buffer = 0;
     attrib[ i ].source.size   = 4;
     attrib[ i ].source.type   = GL_FLOAT;
     attrib[ i ].source.stride = 0;
@@ -275,12 +285,13 @@ void State::SetEnable( size_t attribIndex, bool enabled ) {
   attrib[ attribIndex ].enabled = enabled;
 }
 
-void State::SetData( size_t attribIndex, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
+void State::SetData( size_t attribIndex, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
   if ( attribIndex >= COUNT_ATTRIBS ) {
     return;
   }
   State::Source& source = attrib[ attribIndex ].source;
 
+  source.buffer = buffer;
   source.size = size;
   source.type = type;
   source.stride = stride;
@@ -329,7 +340,7 @@ size_t IndexedArrayNameToAttribIndex( GLenum array, GLuint index ) {
   }
 }
 
-void Transition( const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture ) {
+void Transition( const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding ) {
   RegalAssert( dt.glEnableClientState );
   RegalAssert( dt.glDisableClientState );
 
@@ -344,16 +355,16 @@ void Transition( const DispatchTable& dt, const State& current, const State& tar
   RegalAssert( dt.glClientActiveTexture );
   RegalAssert( dt.glTexCoordPointer );
 
-  Transition( dt, current.attrib[ 0 ], target.attrib [ 0 ], GL_VERTEX_ARRAY,          dt.glVertexPointer );
-  Transition( dt, current.attrib[ 1 ], target.attrib [ 1 ], GL_NORMAL_ARRAY,          dt.glNormalPointer );
-  Transition( dt, current.attrib[ 2 ], target.attrib [ 2 ], GL_COLOR_ARRAY,           dt.glColorPointer );
-  Transition( dt, current.attrib[ 3 ], target.attrib [ 3 ], GL_SECONDARY_COLOR_ARRAY, dt.glSecondaryColorPointer );
-  Transition( dt, current.attrib[ 4 ], target.attrib [ 4 ], GL_INDEX_ARRAY,           dt.glIndexPointer );
-  Transition( dt, current.attrib[ 5 ], target.attrib [ 5 ], GL_EDGE_FLAG_ARRAY,       dt.glEdgeFlagPointer );
-  Transition( dt, current.attrib[ 6 ], target.attrib [ 6 ], GL_FOG_COORD_ARRAY,       dt.glFogCoordPointer );
+  Transition( dt, current.attrib[ 0 ], target.attrib [ 0 ], GL_VERTEX_ARRAY,          dt.glVertexPointer, inoutArrayBufferBinding );
+  Transition( dt, current.attrib[ 1 ], target.attrib [ 1 ], GL_NORMAL_ARRAY,          dt.glNormalPointer, inoutArrayBufferBinding );
+  Transition( dt, current.attrib[ 2 ], target.attrib [ 2 ], GL_COLOR_ARRAY,           dt.glColorPointer, inoutArrayBufferBinding );
+  Transition( dt, current.attrib[ 3 ], target.attrib [ 3 ], GL_SECONDARY_COLOR_ARRAY, dt.glSecondaryColorPointer, inoutArrayBufferBinding );
+  Transition( dt, current.attrib[ 4 ], target.attrib [ 4 ], GL_INDEX_ARRAY,           dt.glIndexPointer, inoutArrayBufferBinding );
+  Transition( dt, current.attrib[ 5 ], target.attrib [ 5 ], GL_EDGE_FLAG_ARRAY,       dt.glEdgeFlagPointer, inoutArrayBufferBinding );
+  Transition( dt, current.attrib[ 6 ], target.attrib [ 6 ], GL_FOG_COORD_ARRAY,       dt.glFogCoordPointer, inoutArrayBufferBinding );
 
   for ( size_t i = 0; i < COUNT_TEXTURE_COORD_ATTRIBS; ++i ) {
-    TransitionTextureCoords( dt, current.attrib[ 7 + i ], target.attrib[ 7 + i ], static_cast<GLenum>(GL_TEXTURE0 + i), inoutClientActiveTexture );
+    TransitionTextureCoords( dt, current.attrib[ 7 + i ], target.attrib[ 7 + i ], static_cast<GLenum>(GL_TEXTURE0 + i), inoutClientActiveTexture, inoutArrayBufferBinding );
   }
 }
 
@@ -605,8 +616,9 @@ void Transition( const DispatchTable& dt, const State& current, const State& tar
   }
 
   GLenum clientActiveTexture = current.clientActiveTexture;
+  GLuint arrayBufferBinding = current.arrayBufferBinding;
 
-  Transition( dt, current.vertexArrayObjectZero.fixed, target.vertexArrayObjectZero.fixed, clientActiveTexture );
+  Transition( dt, current.vertexArrayObjectZero.fixed, target.vertexArrayObjectZero.fixed, clientActiveTexture, arrayBufferBinding );
   Transition( dt, current.vertexArrayObjectZero.generic, target.vertexArrayObjectZero.generic );
 
   if ( target.vertexArrayObjectZero.elementArrayBufferBinding != current.vertexArrayObjectZero.elementArrayBufferBinding ) {
@@ -623,7 +635,7 @@ void Transition( const DispatchTable& dt, const State& current, const State& tar
     dt.glClientActiveTexture( target.clientActiveTexture );
   }
 
-  if ( target.arrayBufferBinding != current.arrayBufferBinding ) {
+  if ( target.arrayBufferBinding != arrayBufferBinding ) {
     dt.glBindBuffer( GL_ARRAY_BUFFER, target.arrayBufferBinding );
   }
 
@@ -1144,7 +1156,7 @@ void Ppca::ShadowVertexPointer( GLint size, GLenum type, GLsizei stride, const G
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), vas.arrayBufferBinding, size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowNormalPointer( GLenum type, GLsizei stride, const GLvoid* pointer ) {
@@ -1174,7 +1186,7 @@ void Ppca::ShadowNormalPointer( GLenum type, GLsizei stride, const GLvoid* point
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), 3, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), vas.arrayBufferBinding, 3, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowColorPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer ) {
@@ -1223,7 +1235,7 @@ void Ppca::ShadowColorPointer( GLint size, GLenum type, GLsizei stride, const GL
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), vas.arrayBufferBinding, size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowSecondaryColorPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer ) {
@@ -1271,7 +1283,7 @@ void Ppca::ShadowSecondaryColorPointer( GLint size, GLenum type, GLsizei stride,
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), vas.arrayBufferBinding, size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowIndexPointer( GLenum type, GLsizei stride, const GLvoid* pointer ) {
@@ -1297,7 +1309,7 @@ void Ppca::ShadowIndexPointer( GLenum type, GLsizei stride, const GLvoid* pointe
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), 1, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), vas.arrayBufferBinding, 1, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowEdgeFlagPointer( GLsizei stride, const GLvoid* pointer ) {
@@ -1312,7 +1324,7 @@ void Ppca::ShadowEdgeFlagPointer( GLsizei stride, const GLvoid* pointer ) {
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), 1, GL_BOOL, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), vas.arrayBufferBinding, 1, GL_BOOL, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowFogCoordPointer( GLenum type, GLsizei stride, const GLvoid* pointer ) {
@@ -1336,7 +1348,7 @@ void Ppca::ShadowFogCoordPointer( GLenum type, GLsizei stride, const GLvoid* poi
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), 1, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), vas.arrayBufferBinding, 1, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowTexCoordPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer ) {
@@ -1378,7 +1390,7 @@ void Ppca::ShadowTexCoordPointer( GLint size, GLenum type, GLsizei stride, const
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), vas.arrayBufferBinding, size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 
@@ -1607,7 +1619,7 @@ void Ppca::ShadowInterleavedArrays( GLenum format, GLsizei stride, const GLvoid*
 
   if ( tsize != 0 ) {
     vao->fixed.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), true );
-    vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), tsize, GL_FLOAT, stride, data );
+    vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), vas.arrayBufferBinding, tsize, GL_FLOAT, stride, data );
     data += tsize * sizeof( GLfloat );
   } else {
     vao->fixed.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), false );
@@ -1615,7 +1627,7 @@ void Ppca::ShadowInterleavedArrays( GLenum format, GLsizei stride, const GLvoid*
 
   if ( csize != 0 ) {
     vao->fixed.SetEnable( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), true );
-    vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), csize, ctype, stride, data );
+    vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), vas.arrayBufferBinding, csize, ctype, stride, data );
     if ( ctype == GL_FLOAT ) {
       data += csize * sizeof( GLfloat );
     } else {
@@ -1627,14 +1639,14 @@ void Ppca::ShadowInterleavedArrays( GLenum format, GLsizei stride, const GLvoid*
 
   if ( nsize != 0 ) {
     vao->fixed.SetEnable( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), true );
-    vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), 3, GL_FLOAT, stride, data );
+    vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), vas.arrayBufferBinding, 3, GL_FLOAT, stride, data );
     data += nsize * sizeof( GLfloat );
   } else {
     vao->fixed.SetEnable( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), false );
   }
 
   vao->fixed.SetEnable( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), vsize, GL_FLOAT, stride, data );
+  vao->fixed.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), vas.arrayBufferBinding, vsize, GL_FLOAT, stride, data );
   data += vsize * sizeof( GLfloat );
 
   // Disable all other non-texture coordinate fixed-function arrays.
@@ -1718,7 +1730,7 @@ void Ppca::ShadowMultiTexCoordPointerDSA( GLenum texunit, GLint size, GLenum typ
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, texunit ), size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, texunit ), vas.arrayBufferBinding, size, type, stride, reinterpret_cast<GLintptr>( pointer ) );
 }
 
 void Ppca::ShadowEnableClientStateIndexedDSA( GLenum cap, GLuint index ) {
@@ -1739,8 +1751,6 @@ void Ppca::ShadowDisableClientStateIndexedDSA( GLenum cap, GLuint index ) {
 
 
 void Ppca::ShadowVertexArrayVertexOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1778,12 +1788,10 @@ void Ppca::ShadowVertexArrayVertexOffsetDSA( GLuint vaobj, GLuint buffer, GLint 
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), size, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), buffer, size, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayColorOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1829,12 +1837,10 @@ void Ppca::ShadowVertexArrayColorOffsetDSA( GLuint vaobj, GLuint buffer, GLint s
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), size, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), buffer, size, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayEdgeFlagOffsetDSA( GLuint vaobj, GLuint buffer, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1846,12 +1852,10 @@ void Ppca::ShadowVertexArrayEdgeFlagOffsetDSA( GLuint vaobj, GLuint buffer, GLsi
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), 1, GL_BOOL, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), buffer, 1, GL_BOOL, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayIndexOffsetDSA( GLuint vaobj, GLuint buffer, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1874,12 +1878,10 @@ void Ppca::ShadowVertexArrayIndexOffsetDSA( GLuint vaobj, GLuint buffer, GLenum 
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), 1, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), buffer, 1, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayNormalOffsetDSA( GLuint vaobj, GLuint buffer, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1906,12 +1908,10 @@ void Ppca::ShadowVertexArrayNormalOffsetDSA( GLuint vaobj, GLuint buffer, GLenum
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), 3, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), buffer, 3, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayTexCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1950,12 +1950,10 @@ void Ppca::ShadowVertexArrayTexCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLin
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), size, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, vas.clientActiveTexture ), buffer, size, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayMultiTexCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLenum texunit, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -1998,12 +1996,10 @@ void Ppca::ShadowVertexArrayMultiTexCoordOffsetDSA( GLuint vaobj, GLuint buffer,
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, texunit ), size, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, texunit ), buffer, size, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayFogCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -2024,12 +2020,10 @@ void Ppca::ShadowVertexArrayFogCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLen
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), 1, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), buffer, 1, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArraySecondaryColorOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset ) {
-  UNUSED_PARAMETER( buffer );
-
   VertexArrayObjectState* vao = vas.GetVertexArrayObject( vaobj );
   if ( vao == NULL ) {
     return;
@@ -2074,7 +2068,7 @@ void Ppca::ShadowVertexArraySecondaryColorOffsetDSA( GLuint vaobj, GLuint buffer
     return;
   }
 
-  vao->fixed.SetData( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), size, type, stride, offset );
+  vao->fixed.SetData( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), buffer, size, type, stride, offset );
 }
 
 void Ppca::ShadowVertexArrayVertexAttribOffsetDSA( GLuint vaobj, GLuint buffer, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLintptr offset ) {

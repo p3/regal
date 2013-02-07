@@ -112,6 +112,7 @@ const size_t INVALID_ATTRIB_INDEX = ~0u;
 struct State
 {
   struct Source {
+    GLuint buffer;
     GLint size;
     GLenum type;
     GLsizei stride;
@@ -126,7 +127,7 @@ struct State
   void Reset();
 
   void SetEnable ( size_t attribIndex, bool enabled );
-  void SetData   ( size_t attribIndex, GLint size, GLenum type, GLsizei stride, GLintptr offset );
+  void SetData   ( size_t attribIndex, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset );
 
   Attrib attrib[ COUNT_ATTRIBS ];
 };
@@ -136,7 +137,7 @@ void swap( State& lhs, State& rhs );
 size_t ArrayNameToAttribIndex( GLenum array, GLenum texunit=GL_TEXTURE0 );
 size_t IndexedArrayNameToAttribIndex( GLenum array, GLuint index );
 
-void Transition( const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture );
+void Transition( const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding );
 
 } // namespace Fixed
 } // namespace VertexArray
