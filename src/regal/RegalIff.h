@@ -2085,6 +2085,7 @@ struct Iff
   void MatrixPop( GLenum mode ) {
     SetCurrentMatrixStack( mode );
     currMatrixStack->Pop();
+    UpdateMatrixVer();
   }
 
   void UpdateMatrixVer() {
