@@ -186,11 +186,8 @@ def generate(apis, args):
 
 ##############################################################################################
 
-# Class Export
 
-class Export:
-
-  def __init__(self):
+def main():
 
     parser = OptionParser()
     parser.add_option('-a', '--api',       dest = 'apis',      metavar = 'API VERSION', action = 'append', nargs = 2, help = 'generate loader for API and VERSION')
@@ -240,4 +237,5 @@ class Export:
 
     generate(apis, genArgs)
 
-export = Export()
+if __name__ == '__main__':
+  main()
