@@ -48,7 +48,7 @@ TEST( RegalTexC, RegalConvertedBuffer ) {
   PixelStorageStateGLES20 pss;
   pss.Reset();
 
-  uint16_t orig[] = {0x001f, 0x03e0, 0x7c00, 0x8000, 0x5555, 0xaaaa};
+  uint16_t orig[] = {0xf800, 0x07c0, 0x003e, 0x0001, 0x5555, 0xaaaa};
 
   ConvertedBuffer buffer( pss, GL_RGB, GL_UNSIGNED_BYTE );
   ASSERT_TRUE( buffer.ConvertFrom ( 2, 2, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, orig ) );

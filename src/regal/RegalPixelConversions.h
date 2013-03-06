@@ -55,39 +55,40 @@ using ::boost::uint8_t;
 using ::boost::uint16_t;
 using ::boost::uint32_t;
 
-// Each unpacker function unpacks pixel data from some arbitrary format into a
-// a simple full-size format.  Each packer function packs pixel data into some
-// arbitrary format from a simple full-size format.  Taken together, the two
-// can be used to convert from a variety of formats.
-//
-// The 32 bit forms pack and unpack to an intermediate 32 bit RGBA 8888 format.
-//
-// Note that when unpacking, if the source format does not support a particular
-// component (such as Alpha or Blue), the unpacked form will have zero values
-// for that component.
-
-// typedef void Unpacker32 ( const void* src,     uint32_t* dst, size_t cnt );
-// typedef void Packer32   ( const uint32_t* src, void* dst,     size_t cnt );
-
-// These functions retrieve a specific packer or unpacker function for a
-// specific OpenGL texture format and type, and return NULL if no such
-// conversion is known.
-
-// Unpacker32 *GetUnpacker32 ( GLenum format, GLenum type );
-// Packer32   *GetPacker32   ( GLenum format, GLenum type );
-
+// The IConversion interface hides the implementation details of the conversion
+// module behind a standard interface.
 class IConversion
 {
  public:
+  // Unpacks pixel data from an arbitrary format into a destination RGBA_8888
+  // format.
   virtual void Unpack32 ( const void*     src, uint32_t* dst, size_t cnt ) const = 0;
+
+  // Packs the pixel data from a source RGBA_8888 format into an arbitary
+  // format.
   virtual void Pack32   ( const uint32_t* src, void*     dst, size_t cnt ) const = 0;
+
+  // Utility function. Gets the size in bytes of a packed pixel in the format
+  // the interface deals with.
   virtual size_t GetPackedPixelByteSize() = 0;
+
+  // Utility function. Gets the size in bytes
   virtual size_t GetPackedPixelAlignmentSize() = 0;
+
+  // Utility function. Gets the number of components in each pixel. For example
+  // a luminosity only texture would have 1, an RGB texture would have three,
+  // and an RGBA texture would have four.
   virtual size_t GetPackedPixelComponents() = 0;
+
  protected:
+  // The conversion interfaces are actually static. There is no need to destroy
+  // them.
   virtual ~IConversion() {};
 };
 
+// Gets the conversion interface for the given OpenGL format and type values,
+// or NULL if there is no conversion defined.
+// Note that there is no need to delete or otherwise free the interface.
 IConversion *GetConversionInterface(GLenum format, GLenum type);
 
 REGAL_NAMESPACE_END

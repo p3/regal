@@ -129,6 +129,59 @@ TEST( RegalPixelConversions, Component ) {
     EXPECT_EQ( i, Component<0xff0>::u8( i * 16 ) );
     EXPECT_EQ( i * 16u, Component<0xff0>::p8( i ) );
   }
+
+  // Ensure we can decode a component in the high bits correctly.
+  EXPECT_EQ( 0xff000000, Component<0xff000000>::COMPONENT_MASK );
+  EXPECT_EQ( 24u,        Component<0xff000000>::LEADING_BIT_COUNT );
+  EXPECT_EQ( 8u,         Component<0xff000000>::COMPONENT_BIT_COUNT );
+  EXPECT_EQ( 0xffu,      Component<0xff000000>::u8( 0xff000000 ) );
+}
+
+TEST( RegalPixelConversions, PackUnpack8888 ) {
+  // Test packing and unpacking RGBA 8888 data.
+
+  // Get the conversion interface for this type.
+  IConversion* conversion = GetConversionInterface( GL_RGBA, GL_UNSIGNED_BYTE );
+  ASSERT_NE ( static_cast<IConversion*>( NULL ), conversion );
+
+  // Verify we have the expected packed pixel information
+  EXPECT_EQ ( 4u, conversion->GetPackedPixelByteSize() );
+  EXPECT_EQ ( 4u, conversion->GetPackedPixelAlignmentSize() );
+  EXPECT_EQ ( 4u, conversion->GetPackedPixelComponents() );
+
+  // Set up some data arrays.
+  uint8_t orig[] = {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x18};
+  uint32_t intermediate[ 4 ] = { 0 };  // Extra room for testing
+  uint8_t packed[ 16 ] = { 0 }; // Extra room for testing
+
+  // Convert from the packed to the unpacked intermediate format.
+  conversion->Unpack32( orig, intermediate, 2 );
+
+  EXPECT_EQ( 0x78563412u, intermediate[ 0 ] );
+  EXPECT_EQ( 0xf0debc9au, intermediate[ 1 ] );
+  EXPECT_EQ( 0u, intermediate[ 2 ] );
+  EXPECT_EQ( 0u, intermediate[ 3 ] );
+
+  // This should work regardless of starting position
+  conversion->Unpack32( orig + 1, intermediate, 2 );
+
+  EXPECT_EQ( 0x9a785634u, intermediate[ 0 ] );
+  EXPECT_EQ( 0x18f0debcu, intermediate[ 1 ] );
+  EXPECT_EQ( 0u, intermediate[ 2 ] );
+  EXPECT_EQ( 0u, intermediate[ 3 ] );
+
+  // Converting to the packed should also work.
+  conversion->Pack32( intermediate, packed, 2 );
+
+  EXPECT_EQ( 0x34u, packed[ 0 ] );
+  EXPECT_EQ( 0x56u, packed[ 1 ] );
+  EXPECT_EQ( 0x78u, packed[ 2 ] );
+  EXPECT_EQ( 0x9au, packed[ 3 ] );
+  EXPECT_EQ( 0xbcu, packed[ 4 ] );
+  EXPECT_EQ( 0xdeu, packed[ 5 ] );
+  EXPECT_EQ( 0xf0u, packed[ 6 ] );
+  EXPECT_EQ( 0x18u, packed[ 7 ] );
+  EXPECT_EQ( 0u,    packed[ 8 ] );
 }
 
 TEST( RegalPixelConversions, PackUnpack888 ) {
@@ -190,7 +243,7 @@ TEST( RegalPixelConversions, PackUnpack565 ) {
   EXPECT_EQ ( 2u, conversion->GetPackedPixelAlignmentSize() );
   EXPECT_EQ ( 3u, conversion->GetPackedPixelComponents() );
 
-  uint16_t orig[] = {0x001f, 0x07e0, 0xf800, 0x5555, 0xaaaa};
+  uint16_t orig[] = {0xf800, 0x07e0, 0x001f, 0x5555, 0xaaaa};
   uint32_t intermediate[ 8 ] = { 0 };  // Extra room for testing
   uint8_t  packed[ 16 ] = { 0 }; // Extra room for testing
 
@@ -200,20 +253,20 @@ TEST( RegalPixelConversions, PackUnpack565 ) {
   EXPECT_EQ( 0x000000ffu, intermediate[ 0 ] );
   EXPECT_EQ( 0x0000ff00u, intermediate[ 1 ] );
   EXPECT_EQ( 0x00ff0000u, intermediate[ 2 ] );
-  EXPECT_EQ( 0x0052aaadu, intermediate[ 3 ] );
-  EXPECT_EQ( 0x00ad5552u, intermediate[ 4 ] );
+  EXPECT_EQ( 0x00adaa52u, intermediate[ 3 ] );
+  EXPECT_EQ( 0x005255adu, intermediate[ 4 ] );
   EXPECT_EQ( 0u, intermediate[ 5 ] );
   EXPECT_EQ( 0u, intermediate[ 6 ] );
 
   // Convert back to packed.
   conversion->Pack32( intermediate, packed, 5 );
 
-  EXPECT_EQ( 0x1fu, packed[ 0 ] );
-  EXPECT_EQ( 0x00u, packed[ 1 ] );
+  EXPECT_EQ( 0x00u, packed[ 0 ] );
+  EXPECT_EQ( 0xf8u, packed[ 1 ] );
   EXPECT_EQ( 0xe0u, packed[ 2 ] );
   EXPECT_EQ( 0x07u, packed[ 3 ] );
-  EXPECT_EQ( 0x00u, packed[ 4 ] );
-  EXPECT_EQ( 0xf8u, packed[ 5 ] );
+  EXPECT_EQ( 0x1fu, packed[ 4 ] );
+  EXPECT_EQ( 0x00u, packed[ 5 ] );
   EXPECT_EQ( 0x55u, packed[ 6 ] );
   EXPECT_EQ( 0x55u, packed[ 7 ] );
   EXPECT_EQ( 0xaau, packed[ 8 ] );
@@ -223,12 +276,12 @@ TEST( RegalPixelConversions, PackUnpack565 ) {
   // This should work even if not-aligned!
   conversion->Pack32( intermediate, packed + 1, 5 );
 
-  EXPECT_EQ( 0x1fu, packed[ 1 ] );
-  EXPECT_EQ( 0x00u, packed[ 2 ] );
+  EXPECT_EQ( 0x00u, packed[ 1 ] );
+  EXPECT_EQ( 0xf8u, packed[ 2 ] );
   EXPECT_EQ( 0xe0u, packed[ 3 ] );
   EXPECT_EQ( 0x07u, packed[ 4 ] );
-  EXPECT_EQ( 0x00u, packed[ 5 ] );
-  EXPECT_EQ( 0xf8u, packed[ 6 ] );
+  EXPECT_EQ( 0x1fu, packed[ 5 ] );
+  EXPECT_EQ( 0x00u, packed[ 6 ] );
   EXPECT_EQ( 0x55u, packed[ 7 ] );
   EXPECT_EQ( 0x55u, packed[ 8 ] );
   EXPECT_EQ( 0xaau, packed[ 9 ] );
@@ -241,8 +294,8 @@ TEST( RegalPixelConversions, PackUnpack565 ) {
   EXPECT_EQ( 0x000000ffu, intermediate[ 0 ] );
   EXPECT_EQ( 0x0000ff00u, intermediate[ 1 ] );
   EXPECT_EQ( 0x00ff0000u, intermediate[ 2 ] );
-  EXPECT_EQ( 0x0052aaadu, intermediate[ 3 ] );
-  EXPECT_EQ( 0x00ad5552u, intermediate[ 4 ] );
+  EXPECT_EQ( 0x00adaa52u, intermediate[ 3 ] );
+  EXPECT_EQ( 0x005255adu, intermediate[ 4 ] );
   EXPECT_EQ( 0u, intermediate[ 5 ] );
   EXPECT_EQ( 0u, intermediate[ 6 ] );
 }
@@ -259,7 +312,7 @@ TEST( RegalPixelConversions, PackUnpack1555 ) {
   EXPECT_EQ ( 2u, conversion->GetPackedPixelAlignmentSize() );
   EXPECT_EQ ( 4u, conversion->GetPackedPixelComponents() );
 
-  uint16_t orig[] = {0x8000, 0x7c00, 0x03e0, 0x001f, 0x5555, 0xaaaa};
+  uint16_t orig[] = {0x0001, 0xf800, 0x07c0, 0x003e, 0x5555, 0xaaaa};
   uint32_t intermediate[ 8 ] = { 0 };  // Extra room for testing
   uint8_t  packed[ 16 ] = { 0 }; // Extra room for testing
 
@@ -267,24 +320,24 @@ TEST( RegalPixelConversions, PackUnpack1555 ) {
   conversion->Unpack32( orig, intermediate, 6 );
 
   EXPECT_EQ( 0xff000000u, intermediate[ 0 ] );
-  EXPECT_EQ( 0x00ff0000u, intermediate[ 1 ] );
+  EXPECT_EQ( 0x000000ffu, intermediate[ 1 ] );
   EXPECT_EQ( 0x0000ff00u, intermediate[ 2 ] );
-  EXPECT_EQ( 0x000000ffu, intermediate[ 3 ] );
-  EXPECT_EQ( 0x00ad52adu, intermediate[ 4 ] );
-  EXPECT_EQ( 0xff52ad52u, intermediate[ 5 ] );
+  EXPECT_EQ( 0x00ff0000u, intermediate[ 3 ] );
+  EXPECT_EQ( 0xff52ad52u, intermediate[ 4 ] );
+  EXPECT_EQ( 0x00ad52adu, intermediate[ 5 ] );
   EXPECT_EQ( 0u, intermediate[ 6 ] );
   EXPECT_EQ( 0u, intermediate[ 7 ] );
 
   // Convert back to packed.
   conversion->Pack32( intermediate, packed, 6 );
 
-  EXPECT_EQ( 0x00u, packed[ 0 ] );
-  EXPECT_EQ( 0x80u, packed[ 1 ] );
+  EXPECT_EQ( 0x01u, packed[ 0 ] );
+  EXPECT_EQ( 0x00u, packed[ 1 ] );
   EXPECT_EQ( 0x00u, packed[ 2 ] );
-  EXPECT_EQ( 0x7cu, packed[ 3 ] );
-  EXPECT_EQ( 0xe0u, packed[ 4 ] );
-  EXPECT_EQ( 0x03u, packed[ 5 ] );
-  EXPECT_EQ( 0x1fu, packed[ 6 ] );
+  EXPECT_EQ( 0xf8u, packed[ 3 ] );
+  EXPECT_EQ( 0xc0u, packed[ 4 ] );
+  EXPECT_EQ( 0x07u, packed[ 5 ] );
+  EXPECT_EQ( 0x3eu, packed[ 6 ] );
   EXPECT_EQ( 0x00u, packed[ 7 ] );
   EXPECT_EQ( 0x55u, packed[ 8 ] );
   EXPECT_EQ( 0x55u, packed[ 9 ] );

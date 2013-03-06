@@ -74,8 +74,8 @@ template <uint32_t CM_ > struct Component
   enum Value
   {
     COMPONENT_MASK      = CM_,
-    LEADING_BIT_COUNT   = StaticLZC<COMPONENT_MASK>::value,
-    COMPONENT_BIT_COUNT = StaticLZC<~( COMPONENT_MASK >> LEADING_BIT_COUNT )>::value
+    LEADING_BIT_COUNT   = StaticLZC<CM_>::value,
+    COMPONENT_BIT_COUNT = StaticLZC<~( CM_ >> LEADING_BIT_COUNT )>::value
   };
 
   // This function ensures that unpacked integers are nicely expanded to fill

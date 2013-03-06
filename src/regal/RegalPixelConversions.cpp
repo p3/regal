@@ -121,6 +121,21 @@ struct Registry : public RegistryBase, public IConversion
 // Note: The list below is just what is needed for GLES 2.0, and can be easily
 // and automatically extended by just adding new instances to describe the
 // format.
+//
+// Note: The bit-packed pixel types use an component ordering (such as
+// GL_UNSIGNED_SHORT_5_6_5 with red in the highest bits) which is different
+// than that used by the non-bit-packed pixel types (such as GL_UNSIGNED_BYTE,
+// with red in the lowest bits). When reading the non-bit-packed pixels from.
+// memory, they are read as part of a larger native integer type, and since red
+// is first in memory, red ends up in the lowest bits on a little endian
+// machine.
+//
+// TODO: Clean up the apparent confusion in the component ordering. The GL
+// specification calls for red (or whatever the first component is) in the
+// highest bits in all the bit-packed formats.
+//
+// TODO: Support big endian ordering, doing so in a way which allows
+// glPixelStore(GL_UNPACK_SWAP_BYTES, GL_TRUE) to be handled.
 // ===========================================================================
 
 // 8bpp
@@ -131,16 +146,15 @@ Registry<GL_LUMINANCE,       GL_UNSIGNED_BYTE,          Pixel<uint8_t,  1,   0xf
 Registry<GL_RGBA,            GL_RGB5,                   Pixel<uint16_t, 2, 0x001f, 0x03e0, 0x7c00,      0>     > rgb_555_;
 
 // 16bpp
-Registry<GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,          Pixel<uint16_t, 2, 0xff,    0,    0, 0xff>             > la_88_;
-Registry<GL_RGB,             GL_UNSIGNED_SHORT_5_6_5,   Pixel<uint16_t, 2, 0x001f, 0x07e0, 0xf800,      0>     > rgb_565_;
-Registry<GL_RGBA,            GL_UNSIGNED_SHORT_4_4_4_4, Pixel<uint16_t, 2, 0x000f, 0x00f0, 0x0f00, 0xf000>     > rgba_4444_;
-Registry<GL_RGBA,            GL_UNSIGNED_SHORT_5_5_5_1, Pixel<uint16_t, 2, 0x001f, 0x03e0, 0x7c00, 0x8000>     > rgba_5551_;
+Registry<GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,          Pixel<uint16_t, 2, 0x00ff,      0,      0, 0xff00>     > la_88_;
+Registry<GL_RGB,             GL_UNSIGNED_SHORT_5_6_5,   Pixel<uint16_t, 2, 0xf800, 0x07e0, 0x001f,      0>     > rgb_565_;
+Registry<GL_RGBA,            GL_UNSIGNED_SHORT_4_4_4_4, Pixel<uint16_t, 2, 0xf000, 0x0f00, 0x00f0, 0x000f>     > rgba_4444_;
+Registry<GL_RGBA,            GL_UNSIGNED_SHORT_5_5_5_1, Pixel<uint16_t, 2, 0xf800, 0x07c0, 0x003e, 0x0001>     > rgba_5551_;
 
 // 24bpp (needs some special handling)
 Registry<GL_RGB,             GL_UNSIGNED_BYTE,          PixelAny<uint24_t, 3, 0x0000ff, 0x00ff00, 0xff0000, 0> > rgb_888_;
 
 // 32bpp
-// FIXME(lpique) Conversions to/from GL_RGBA GL_UNSIGNED_BYTE should just be a memcpy since it matches the intermediate format!
 Registry<GL_RGBA,            GL_UNSIGNED_BYTE,          Pixel<uint32_t, 4, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000> > rgba_8888_;
 
 }  // namespace
