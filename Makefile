@@ -21,7 +21,9 @@
 include config/version
 
 SHELL = /bin/sh
-SYSTEM ?= $(shell config/config.guess | cut -d - -f 3 | sed -e 's/[0-9\.]//g;')
+ifndef SYSTEM
+SYSTEM := $(shell config/config.guess | cut -d - -f 3 | sed -e 's/[0-9\.]//g;')
+endif
 SYSTEM.SUPPORTED = $(shell test -f config/Makefile.$(SYSTEM) && echo 1)
 
 ifeq ($(SYSTEM.SUPPORTED), 1)
@@ -61,7 +63,12 @@ ifeq ($(MODE),release)
 OPT = $(CFLAGS.RELEASE)
 endif
 
+ifeq ($(filter nacl%,$(SYSTEM)),)
+ENABLE_SHARED = 1
+endif
+
 ifndef V
+LOG_CXX = @echo " [CXX] $@";
 LOG_CC = @echo " [CC] $@";
 LOG_LD = @echo " [LD] $@";
 LOG_AR = @echo " [AR] $@";
@@ -164,7 +171,7 @@ endif
 LIB.LDFLAGS        := -lstdc++ -pthread -lm
 LIB.LIBS           :=
 
-ifeq ($(filter nacl%,$(SYSTEM)),)
+ifdef ENABLE_SHARED
 LIB.LDFLAGS        += -ldl
 endif
 
@@ -253,7 +260,7 @@ endif
 
 regal.lib: zlib.lib libpng.lib lib/$(SYSTEM)/$(LIB.STATIC)
 
-ifeq ($(filter nacl%,$(SYSTEM)),)
+ifdef ENABLE_SHARED
 regal.lib: lib/$(SYSTEM)/$(LIB.SHARED)
 endif
 
@@ -264,6 +271,7 @@ ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
 
+ifdef ENABLE_SHARED
 lib/$(SYSTEM)/$(LIB.SHARED): lib/$(SYSTEM)/$(LIBPNG.STATIC) lib/$(SYSTEM)/$(ZLIB.STATIC) $(LIB.SOBJS)
 	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.SO) -o $@ $(LIB.SOBJS) $(LIB.LIBS) $(LIB.LDFLAGS)
 ifneq ($(LN),)
@@ -276,14 +284,15 @@ endif
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
+endif
 
 tmp/$(SYSTEM)/regal/static/%.o: src/regal/%.cpp $(LIB.DEPS)
 	@mkdir -p $(dir $@)
-	$(LOG_CC)$(CCACHE) $(CC) $(LIB.CFLAGS) $(CFLAGS) $(CFLAGS.SO) $(LIB.INCLUDE) -o $@ -c $<
+	$(LOG_CXX)$(CCACHE) $(CC) $(LIB.CFLAGS) $(CFLAGS) $(CFLAGS.SO) $(LIB.INCLUDE) -o $@ -c $<
 
 tmp/$(SYSTEM)/regal/shared/%.o: src/regal/%.cpp $(LIB.DEPS)
 	@mkdir -p $(dir $@)
-	$(LOG_CC)$(CCACHE) $(CC) $(LIB.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(LIB.INCLUDE) -o $@ -c $<
+	$(LOG_CXX)$(CCACHE) $(CC) $(LIB.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(LIB.INCLUDE) -o $@ -c $<
 
 tmp/$(SYSTEM)/regal/static/%.o: src/mongoose/%.c $(LIB.DEPS)
 	@mkdir -p $(dir $@)
@@ -361,7 +370,7 @@ GLU.STATIC     := libRegalGLU.a
 
 glu.lib: lib/$(SYSTEM)/$(GLU.STATIC)
 
-ifeq ($(filter nacl%,$(SYSTEM)),)
+ifdef ENABLE_SHARED
 glu.lib: lib/$(SYSTEM)/$(GLU.SHARED)
 endif
 
@@ -385,11 +394,13 @@ tmp/$(SYSTEM)/glu/shared/%.o: src/glu/libnurbs/nurbtess/%.cc
 	@mkdir -p $(dir $@)
 	$(LOG_CC)$(CCACHE) $(CC) $(PICFLAG) $(GLU.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
+ifdef ENABLE_SHARED
 lib/$(SYSTEM)/$(GLU.SHARED): $(GLU.OBJS) lib/$(SYSTEM)/$(LIB.SHARED)
 	@mkdir -p $(dir $@)
 	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) $(GLU.LIBS) $(LIB.LDFLAGS) -o $@ $(GLU.OBJS)
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
+endif
 endif
 
 lib/$(SYSTEM)/$(GLU.STATIC): $(GLU.OBJS)
@@ -412,9 +423,8 @@ GLUT.LIBS       += -pthread -lm
 GLUT.SHARED     := libRegalGLUT.$(EXT.DYNAMIC)
 GLUT.STATIC     := libRegalGLUT.a
 
-ifeq ($(filter nacl%,$(SYSTEM)),)
+ifdef ENABLE_SHARED
 glut.lib: lib/$(SYSTEM)/$(GLUT.SHARED)
-endif
 
 tmp/$(SYSTEM)/glut/shared/%.o: src/glut/src/%.c
 	@mkdir -p $(dir $@)
@@ -424,6 +434,7 @@ lib/$(SYSTEM)/$(GLUT.SHARED): $(GLUT.OBJS) lib/$(SYSTEM)/$(GLU.SHARED) lib/$(SYS
 	$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(LDFLAGS.DYNAMIC) -o $@ $(GLUT.OBJS) $(GLUT.LIBS)
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
+endif
 endif
 
 #
@@ -462,9 +473,8 @@ endif
 
 # Examples
 
-regal.bin:
 ifneq ($(filter nacl%,$(SYSTEM)),)
-regal.bin: bin/$(SYSTEM)/nacl$(BIN_EXTENSION) examples/nacl/nacl.nmf
+regal.bin: bin/nacl/nacl$(BIN_EXTENSION) examples/nacl/nacl.nmf
 else
 regal.bin: bin/$(SYSTEM)/glewinfo bin/$(SYSTEM)/dreamtorus bin/$(SYSTEM)/tiger bin/$(SYSTEM)/regaltest$(BIN_EXTENSION)
 endif
@@ -490,11 +500,13 @@ tmp/$(SYSTEM)/dreamtorus/static/%.o: examples/dreamtorus/glut/code/%.cpp
 	@mkdir -p $(dir $@)
 	$(LOG_CC)$(CCACHE) $(CC) $(DREAMTORUS.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
+ifdef ENABLE_SHARED
 bin/$(SYSTEM)/dreamtorus: $(DREAMTORUS.OBJS) lib/$(SYSTEM)/$(LIB.SHARED)
 	@mkdir -p $(dir $@)
 	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(DREAMTORUS.OBJS) $(DREAMTORUS.LIBS) $(LIB.LDFLAGS)
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
+endif
 endif
 
 # dreamtorus GLUT and GLU dependency for non-Mac, non-Nacl builds
@@ -506,7 +518,7 @@ endif
 endif
 
 #
-# NaCL example
+# NaCl example
 #
 
 NACL.SRCS       += examples/nacl/main.c
@@ -521,16 +533,16 @@ tmp/$(SYSTEM)/nacl/static/%.o: examples/nacl/%.c
 	@mkdir -p $(dir $@)
 	$(LOG_CC)$(CC) $(CFLAGS) -std=gnu99 $(NACL.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/$(SYSTEM)/nacl$(BIN_EXTENSION): lib/$(SYSTEM)/$(LIB.STATIC) $(NACL.OBJS)
+bin/nacl/nacl$(BIN_EXTENSION): lib/$(SYSTEM)/$(LIB.STATIC) $(NACL.OBJS)
 	@mkdir -p $(dir $@)
 	$(LOG_LD)$(LD) $(LDFLAGS.EXTRA) -o $@ $(NACL.OBJS) $(NACL.LIBS)
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
 
-# Uncomment this to enable automatic regeneration of the nacl nmf file
-examples/nacl/nacl.nmf: bin/$(SYSTEM)/nacl$(BIN_EXTENSION)
-	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ -D $(NACL_TOOLCHAIN)/x86_64-nacl/bin/objdump bin/$(SYSTEM)/nacl*.nexe -L $(NACL_TOOLCHAIN)/x86_64-nacl/lib32 -L $(NACL_TOOLCHAIN)/x86_64-nacl/lib -s examples/nacl
+examples/nacl/nacl.nmf: bin/nacl/nacl$(BIN_EXTENSION)
+	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ bin/nacl/nacl*.nexe -s examples/nacl
+
 
 #
 # tiger
@@ -558,7 +570,6 @@ ifneq ($(STRIP),)
 endif
 
 # GLUT and GLU dependency for non-Nacl, non-Mac
-
 ifeq ($(filter nacl%,$(SYSTEM)),)
 ifeq ($(filter darwin%,$(SYSTEM)),)
 bin/$(SYSTEM)/tiger:      lib/$(SYSTEM)/$(GLUT.SHARED) lib/$(SYSTEM)/$(GLU.SHARED)
@@ -612,13 +623,13 @@ REGALTEST.OBJS       := $(REGALTEST.OBJS:.cpp=.o)
 REGALTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googlemock/include -Isrc/regal -Isrc/boost
 REGALTEST.LIBS       := -Llib/$(SYSTEM) -lgtest lib/$(SYSTEM)/$(LIB.STATIC) $(LDFLAGS.X11) -lm
 
-ifeq ($(filter nacl%,$(SYSTEM)),)
+ifdef ENABLE_SHARED
 REGALTEST.LIBS += -ldl
 endif
 
 tmp/$(SYSTEM)/regal_tests/static/%.o: tests/%.cpp
 	@mkdir -p $(dir $@)
-	$(LOG_CC)$(CCACHE) $(CC) $(LIB.CFLAGS) $(REGALTEST.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+	$(LOG_CXX)$(CCACHE) $(CC) $(LIB.CFLAGS) $(REGALTEST.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
 bin/$(SYSTEM)/regaltest$(BIN_EXTENSION): $(REGALTEST.OBJS) lib/$(SYSTEM)/$(GTEST.STATIC) lib/$(SYSTEM)/$(LIB.STATIC) lib/$(SYSTEM)/$(LIBPNG.STATIC) lib/$(SYSTEM)/$(ZLIB.STATIC)
 	@mkdir -p $(dir $@)
