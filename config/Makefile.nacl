@@ -6,4 +6,8 @@ endif
 
 NACL_TOOLCHAIN=$(NACL_SDK_ROOT)/toolchain/linux_x86_glibc
 
-CFLAGS.EXTRA += -I$(NACL_SDK_ROOT)/include
+CFLAGS.EXTRA += -I$(NACL_SDK_ROOT)/include -MMD
+WARN = -Wall -Werror -Wno-unused-parameter \
+   -Wno-char-subscripts -Wno-strict-aliasing
+CFLAGS.DEBUG = -g
+CFLAGS.RELEASE = -O2

@@ -1377,8 +1377,6 @@ static pid_t spawn_process(struct mg_connection *conn, const char *prog,
   pid_t pid;
   const char *interp;
 
-  envblk = NULL; // Unused
-
   if ((pid = fork()) == -1) {
     // Parent
     send_http_error(conn, 500, http_500_error, "fork(): %s", strerror(ERRNO));

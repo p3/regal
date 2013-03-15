@@ -6,6 +6,7 @@ CXX := i686-nacl-g++
 LD  := i686-nacl-g++
 STRIP  := i686-nacl-strip
 
+WARN += -Wno-uninitialized
 PICFLAG = -fPIC
 BIN_EXTENSION = _32.nexe
 EXT.DYNAMIC = so
@@ -16,9 +17,6 @@ LDFLAGS.GLU = -lRegalGLU
 LDFLAGS.GLUT = -lRegalGLUT
 LDFLAGS.STATIC =
 LDFLAGS.DYNAMIC = -shared
-WARN = -Wall -W -Wno-unused-parameter
-CFLAGS.DEBUG = -g
-CFLAGS.RELEASE = -O2
 BIN.SUFFIX =
 LIB.SONAME = lib$(NAME).so.$(SO_MAJOR)
 LIB.DEVLNK = lib$(NAME).so

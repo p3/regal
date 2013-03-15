@@ -54,6 +54,14 @@
 #endif
 #endif
 
+#ifndef REGAL_UNUSED
+#ifdef __GNUC__
+#define REGAL_UNUSED __attribute__(unused)
+#else
+#define REGAL_UNUSED
+#endif
+#endif
+
 #define REGAL_QUOTE(str) #str
 #define REGAL_EQUOTE(str) REGAL_QUOTE(str)
 

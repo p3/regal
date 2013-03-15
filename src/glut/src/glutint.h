@@ -626,7 +626,7 @@ extern GLboolean __glutTryDirect;
 extern Window __glutRoot;
 extern XSizeHints __glutSizeHints;
 extern char **__glutArgv;
-#endif __APPLE__
+#endif // __APPLE__
 
 extern char *__glutProgramName;
 
@@ -801,6 +801,6 @@ extern LONG WINAPI __glutWindowProc(HWND win, UINT msg, WPARAM w, LPARAM l);
 extern HDC XHDC;
 #endif
 
-#endif __APPLE__
+#endif // __APPLE__
 
 #endif /* __glutint_h__ */

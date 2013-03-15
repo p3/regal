@@ -59,7 +59,7 @@ void Frame::capture(RegalContext &context)
 
   if (Logging::frameTime)
   {
-    Timer::Value elapsed = frameTimer.restart();
+    Timer::Value REGAL_UNUSED elapsed = frameTimer.restart();
     UNUSED_PARAMETER(elapsed); // Unused if info logging disabled at compile-time
     Info("Frame ",frame,' ',elapsed/1000," msec, ",1000000.0/elapsed," FPS.");
 

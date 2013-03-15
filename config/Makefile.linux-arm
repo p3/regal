@@ -11,7 +11,8 @@ LDFLAGS.GLU = -lRegalGLU
 LDFLAGS.GLUT = -lRegalGLUT
 LDFLAGS.STATIC =
 LDFLAGS.DYNAMIC = -shared
-WARN = -Wall -W -Wno-unused-parameter
+CFLAGS.EXTRA  += -MMD
+WARN = -Wall -Werror -Wno-uninitialized
 CFLAGS.DEBUG   = -g -O0
 CFLAGS.RELEASE = -O1
 LIB.CFLAGS    += -DREGAL_SYS_GLX=1 -DREGAL_SYS_EGL=1

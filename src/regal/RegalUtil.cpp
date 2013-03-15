@@ -112,6 +112,7 @@ enum Library
   LIBRARY_EGL
 };
 
+#ifndef __native_client__
 static
 const char *libraryLocation(const Library &library)
 {
@@ -263,6 +264,7 @@ const char *libraryLocation(const Library &library)
 
   return ret;
 }
+#endif
 
 #if REGAL_SYS_OSX
 

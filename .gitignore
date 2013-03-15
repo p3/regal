@@ -31,5 +31,7 @@ testing/*/*.so.1
 testing/*/*.dylib
 testing/*/gold
 examples/nacl/lib64
+examples/nacl/lib32
 examples/nacl/*.nexe
+examples/nacl/*.nmf
 build/ppapi/vs2010/Regal/win
