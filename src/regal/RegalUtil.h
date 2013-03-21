@@ -343,6 +343,12 @@
 
 //
 
+#ifndef REGAL_FORCE_DESKTOP_GLSL
+#define REGAL_FORCE_DESKTOP_GLSL 0
+#endif
+
+//
+
 #ifndef REGAL_STATIC_ES2
 #define REGAL_STATIC_ES2 0
 #endif

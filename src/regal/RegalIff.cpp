@@ -134,7 +134,13 @@ void GenerateVertexShaderSource( const Iff * rff, const Iff::State & state, stri
   }
 
   if( gles ) {
+#if REGAL_FORCE_DESKTOP_GLSL
+    // Desktop version 140 corresponds to OpenGL 3.1,
+    // which corresponds to the functionality of ES2.
+    src << "#version 140\n";
+#else
     src << "#version 100\n";
+#endif
   } else if ( legacy ) {
     src << "#version 120\n";
   } else {
@@ -911,7 +917,11 @@ void GenerateFragmentShaderSource( Iff * rff, string_list &src )
 
   const Store & st = rff->ffstate.processed;
   if( rff->gles ) {
+#if REGAL_FORCE_DESKTOP_GLSL
+    src << "#version 140\n";
+#else
     src << "#version 100\n";
+#endif
   } else if( rff->legacy ) {
     src << "#version 120\n";
   } else {
@@ -2307,7 +2317,11 @@ void Iff::ShaderSource( RegalContext *ctx, GLuint shader, GLsizei count, const G
       ss << "#version 120\n";
       ss << "#define precision\n";
     } else {
+#if REGAL_FORCE_DESKTOP_GLSL
+      ss << "#version 140\n";
+#else
       ss << "#version 100\n";
+#endif
     }
   }
   else if (legacy)
