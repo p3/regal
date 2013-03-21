@@ -1378,7 +1378,7 @@ void Program::Init( RegalContext * ctx, const Store & sstore, const GLchar *vsSr
 {
   Internal("Regal::Program::Init","()");
 
-  ver = 0;
+  ver = -1;  // Force uniform update on first use.
   progcount = 0;
   RegalAssert(ctx);
   DispatchTable & tbl = ctx->dispatcher.emulation;
