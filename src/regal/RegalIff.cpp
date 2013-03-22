@@ -1401,6 +1401,7 @@ void Program::Init( RegalContext * ctx, const Store & sstore, const GLchar *vsSr
   GLint status = 0;
   tbl.call(&tbl.glGetProgramiv)( pg, GL_LINK_STATUS, &status );
   if ( !status ) {
+    dbgLogLen = 0;
     tbl.call(&tbl.glGetProgramInfoLog)( pg, (1<<15) - 2, &dbgLogLen, dbgLog );
     dbgLog[ dbgLogLen ] = 0;
     if( dbgLogLen > 0 ) {
@@ -1429,6 +1430,7 @@ void Program::Shader( RegalContext * ctx, DispatchTable & tbl, GLenum type, GLui
   GLint status = 0;
   tbl.call(&tbl.glGetShaderiv)( shader, GL_COMPILE_STATUS, &status );
   if ( !status ) {
+    dbgLogLen = 0;
     tbl.call(&tbl.glGetShaderInfoLog)( shader, (1<<15) - 2, &dbgLogLen, dbgLog );
     dbgLog[ dbgLogLen ] = 0;
     if( dbgLogLen > 0 ) {
