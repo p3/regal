@@ -1,6 +1,6 @@
-include config/nacl.inc
-
 NACL_ARCH := arm
+
+include config/nacl.inc
 
 NACL_TOOLCHAIN := $(NACL_SDK_ROOT)/toolchain/$(NACL_OS)_arm_$(NACL_LIBC)
 
@@ -12,10 +12,8 @@ RANLIB :=
 STRIP  ?=
 
 #WARN += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
-#WARN += -Wno-conversion-null
 BIN_EXTENSION = _arm.nexe
 EXT.DYNAMIC = so
-LDFLAGS.EXTRA =
 LIBDIR =
 LDFLAGS.GL =
 LDFLAGS.GLU = -lRegalGLU

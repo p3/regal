@@ -1,8 +1,10 @@
-include config/nacl.inc
-
 NACL_ARCH := i686
 
+include config/nacl.inc
+
 NACL_TOOLCHAIN := $(NACL_SDK_ROOT)/toolchain/$(NACL_OS)_x86_$(NACL_LIBC)
+NACL_SEL_LDR   := $(NACL_SDK_ROOT)/tools/sel_ldr_x86_32
+NACL_IRT       := $(NACL_SDK_ROOT)/tools/irt_core_x86_32.nexe
 
 CC     := $(NACL_TOOLCHAIN)/bin/i686-nacl-gcc
 CXX    := $(NACL_TOOLCHAIN)/bin/i686-nacl-g++
@@ -15,7 +17,6 @@ WARN += -Wno-uninitialized -Wno-conversion-null
 PICFLAG = -fPIC
 BIN_EXTENSION = _32.nexe
 EXT.DYNAMIC = so
-LDFLAGS.EXTRA =
 LIBDIR =
 LDFLAGS.GL =
 LDFLAGS.GLU = -lRegalGLU

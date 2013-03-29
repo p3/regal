@@ -511,7 +511,7 @@ jsonslAction(jsonsl_t jsn, jsonsl_action_t action, struct jsonsl_state_st *state
 static int
 jsonslError(jsonsl_t jsn, jsonsl_error_t err, struct jsonsl_state_st *state, char *at)
 {
-  Parser *parser = reinterpret_cast<Parser *>(jsn->data);
+  Parser REGAL_UNUSED * parser = reinterpret_cast<Parser *>(jsn->data);
   RegalAssert(parser);
   UNUSED_PARAMETER(parser);
   UNUSED_PARAMETER(err);

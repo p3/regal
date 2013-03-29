@@ -37,7 +37,8 @@
 
 namespace {
 
-using namespace Regal;
+using Regal::IConversion;
+using Regal::GetConversionInterface;
 
 #include "RegalPixelConversions.inl"
 

@@ -1,6 +1,6 @@
-include config/nacl.inc
-
 NACL_ARCH := pnacl
+
+include config/nacl.inc
 
 NACL_TOOLCHAIN := $(NACL_SDK_ROOT)/toolchain/$(NACL_OS)_x86_pnacl/$(NACL_LIBC)
 

@@ -675,6 +675,8 @@ REGALTEST.LIBS       := -Llib/$(SYSTEM) -lgtest lib/$(SYSTEM)/$(LIB.STATIC) $(LD
 
 ifeq ($(filter nacl%,$(SYSTEM)),)
 REGALTEST.LIBS += -ldl
+else
+REGALTEST.LIBS += -lnacl_io
 endif
 
 -include $(REGALTEST.DEPS)
@@ -690,8 +692,15 @@ ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
 
+ifneq ($(NACL_ARCH),arm)
 test: bin/$(SYSTEM)/regaltest$(BIN_EXTENSION)
+	@echo Running tests: $^
+ifeq ($(filter nacl%,$(SYSTEM)),)
 	$^
+else
+	"$(NACL_SEL_LDR)" -a -B "$(NACL_IRT)" -- $^
+endif
+endif
 
 ######################################
 

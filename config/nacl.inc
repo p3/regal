@@ -41,6 +41,20 @@ endif
 
 export CCACHE_COMPILERCHECK=echo $(SYSTEM)$(NACL_LIBC)
 
+ifeq ($(NACL_ARCH),i686)
+NACL_LIBTYPE=$(NACL_LIBC)_x86_32
+else
+NACL_LIBTYPE=$(NACL_LIBC)_$(NACL_ARCH)
+endif
+
+ifeq ($(MODE),debug)
+LDFLAGS.EXTRA += -L$(NACL_SDK_ROOT)/ports/lib/$(NACL_LIBTYPE)/Debug
+LDFLAGS.EXTRA += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBTYPE)/Debug
+else
+LDFLAGS.EXTRA += -L$(NACL_SDK_ROOT)/ports/lib/$(NACL_LIBTYPE)/Release
+LDFLAGS.EXTRA += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBTYPE)/Release
+endif
+
 CFLAGS.EXTRA += -I$(NACL_SDK_ROOT)/include -MMD
 WARN = -Wall -Wno-unused-parameter -Wno-char-subscripts -Wno-strict-aliasing
 # WARN += -Werror
