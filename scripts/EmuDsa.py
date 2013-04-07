@@ -276,25 +276,24 @@ dsaFormulae = {
     },
     'SelectorFramebufferCommands' : {
         'entries' : [
-            'glRenderbufferStorage(Multisample|MultisampleCoverage|)(ARB|EXT|NV|)',
             'glFramebufferTexture(1D|2D|3D|Layer|Face|)(ARB|EXT|)',
             'glFramebufferRenderbuffer(ARB|EXT|)',
             'glDrawBuffer(s|)(ARB|EXT|NV|)'
-            'glGet(Renderbuffer|FramebufferAttachment)Parameteriv(ARB|EXT|)',
+            'glGet(FramebufferAttachment)Parameteriv(ARB|EXT|)',
         ],
         'prefix' : [ '_context->dsa->RestoreFramebuffer( _context );' ],
     },
     'SelectorFramebufferCommands2' : {
         'entries' : [
-            'gl()Named(RenderbufferStorage)(Multisample|MultisampleCoverage|)EXT',
             'gl()Named(FramebufferTexture)(1D|2D|3D|Layer|Face|)EXT',
             'gl()Named(FramebufferRenderbuffer)()EXT',
-            'gl(Get)Named(Renderbuffer|FramebufferAttachment)(Parameteriv)EXT',
+            'gl(Get)Named(FramebufferAttachment)(Parameteriv)EXT',
         ],
         'subst' : {
             'nondsa' : {
                 '.*CoverageEXT' : 'gl${m1}${m2}${m3}NV',
                 '.*MultisampleEXT' : 'gl${m1}${m2}${m3}EXT',
+                '.*FaceEXT' : 'gl${m1}${m2}${m3}ARB',
                 'default' : 'gl${m1}${m2}${m3}',
             },
         },
@@ -317,6 +316,40 @@ dsaFormulae = {
             'return _dispatch.call(&_dispatch.glCheckFramebufferStatus)( ${arg1plus} );',
         ],
     },
+
+    'BindRenderbuffer' : {
+        'entries' : [ 'glBindRenderbuffer(EXT|)' ],
+        'impl' : [
+            'if (!_context->dsa->ShadowRenderbuffer( ${arg0}, ${arg1} ) ) {',
+            '    _dispatch.call(&_dispatch.glBindRenderbuffer)( ${arg0}, ${arg1} );',
+            '}',
+        ],
+    },
+    'SelectorRenderbufferCommands' : {
+        'entries' : [
+            'glRenderbufferStorage(Multisample|MultisampleCoverage|)(ARB|EXT|NV|)',
+            'glGetRenderbufferParameteriv(ARB|EXT|)',
+        ],
+        'prefix' : [ '_context->dsa->RestoreRenderbuffer( _context );' ],
+    },
+    'SelectorRenderbufferCommands2' : {
+        'entries' : [
+            'gl()Named(RenderbufferStorage)(Multisample|MultisampleCoverage|)EXT',
+            'gl(Get)Named(Renderbuffer)(Parameteriv)EXT',
+        ],
+        'subst' : {
+            'nondsa' : {
+                '.*CoverageEXT' : 'gl${m1}${m2}${m3}NV',
+                '.*MultisampleEXT' : 'gl${m1}${m2}${m3}',
+                'default' : 'gl${m1}${m2}${m3}',
+            },
+        },
+        'impl' : [
+            '_context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, ${arg0});',
+            '_dispatch.call(&_dispatch.${nondsa})( GL_RENDERBUFFER, ${arg1plus} );',
+        ],
+    },
+
     'ClientAttribDefault' : {
         'entries' : ['glClientAttribDefaultEXT'],
         'impl' : [ '_context->dsa->ClientAttribDefault( _context, ${arg0} );' ],
@@ -397,6 +430,7 @@ dsaFormulae = {
         'entries' : [
           'glDelete(Buffers)(ARB|)',
           'glDelete(Framebuffers)(EXT|OES|)',
+          'glDelete(Renderbuffers)(EXT|OES|)',
           'glDelete(Program)',
           'glDelete(Programs)(ARB|NV)',
           'glDelete(Textures)(EXT|)',

@@ -29472,6 +29472,64 @@ static void REGAL_CALL emu_glBindFramebuffer(GLenum target, GLuint framebuffer)
 
 }
 
+static void REGAL_CALL emu_glBindRenderbuffer(GLenum target, GLuint renderbuffer)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        if (!_context->dsa->ShadowRenderbuffer( target, renderbuffer ) ) {
+            _dispatch.call(&_dispatch.glBindRenderbuffer)( target, renderbuffer );
+        }
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glBindRenderbuffer)(target, renderbuffer);
+      break;
+    }
+
+  }
+
+}
+
 static void REGAL_CALL emu_glBlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
 {
   RegalContext *_context = REGAL_GET_CONTEXT();
@@ -29573,6 +29631,40 @@ static void REGAL_CALL emu_glDeleteFramebuffers(GLsizei n, const GLuint *framebu
   DispatchTable *_next = _dispatch._next;
   RegalAssert(_next);
   _next->call(& _next->glDeleteFramebuffers)(n, framebuffers);
+}
+
+static void REGAL_CALL emu_glDeleteRenderbuffers(GLsizei n, const GLuint *renderbuffers)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->dsa->DeleteRenderbuffers( _context, n, renderbuffers );
+      }
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  DispatchTable *_next = _dispatch._next;
+  RegalAssert(_next);
+  _next->call(& _next->glDeleteRenderbuffers)(n, renderbuffers);
 }
 
 static void REGAL_CALL emu_glFramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
@@ -29819,6 +29911,40 @@ static void REGAL_CALL emu_glGenerateMipmap(GLenum target)
 
 }
 
+static void REGAL_CALL emu_glGetRenderbufferParameteriv(GLenum target, GLenum pname, GLint *params)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->dsa->RestoreRenderbuffer( _context );
+      }
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  DispatchTable *_next = _dispatch._next;
+  RegalAssert(_next);
+  _next->call(& _next->glGetRenderbufferParameteriv)(target, pname, params);
+}
+
 static void REGAL_CALL emu_glRenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
 {
   RegalContext *_context = REGAL_GET_CONTEXT();
@@ -29840,7 +29966,7 @@ static void REGAL_CALL emu_glRenderbufferStorage(GLenum target, GLenum internalf
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->RestoreFramebuffer( _context );
+        _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
     case 1 :
@@ -29874,7 +30000,7 @@ static void REGAL_CALL emu_glRenderbufferStorageMultisample(GLenum target, GLsiz
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->RestoreFramebuffer( _context );
+        _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
     case 1 :
@@ -43429,8 +43555,8 @@ static void REGAL_CALL emu_glGetNamedRenderbufferParameterivEXT(GLuint renderbuf
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, renderbuffer);
-        _dispatch.call(&_dispatch.glGetRenderbufferParameteriv)( GL_FRAMEBUFFER, pname, params );
+        _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
+        _dispatch.call(&_dispatch.glGetRenderbufferParameteriv)( GL_RENDERBUFFER, pname, params );
         return;
       }
       #endif
@@ -47375,7 +47501,7 @@ static void REGAL_CALL emu_glNamedFramebufferTextureFaceEXT(GLuint framebuffer, 
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
-        _dispatch.call(&_dispatch.glFramebufferTextureFace)( GL_FRAMEBUFFER, attachment, texture, level, face );
+        _dispatch.call(&_dispatch.glFramebufferTextureFaceARB)( GL_FRAMEBUFFER, attachment, texture, level, face );
         return;
       }
       #endif
@@ -48172,8 +48298,8 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageEXT(GLuint renderbuffer, GL
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, renderbuffer);
-        _dispatch.call(&_dispatch.glRenderbufferStorage)( GL_FRAMEBUFFER, internalformat, width, height );
+        _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
+        _dispatch.call(&_dispatch.glRenderbufferStorage)( GL_RENDERBUFFER, internalformat, width, height );
         return;
       }
       #endif
@@ -48229,8 +48355,8 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageMultisampleCoverageEXT(GLui
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, renderbuffer);
-        _dispatch.call(&_dispatch.glRenderbufferStorageMultisampleCoverageNV)( GL_FRAMEBUFFER, coverageSamples, colorSamples, internalformat, width, height );
+        _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
+        _dispatch.call(&_dispatch.glRenderbufferStorageMultisampleCoverageNV)( GL_RENDERBUFFER, coverageSamples, colorSamples, internalformat, width, height );
         return;
       }
       #endif
@@ -48286,8 +48412,8 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageMultisampleEXT(GLuint rende
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, renderbuffer);
-        _dispatch.call(&_dispatch.glRenderbufferStorageMultisampleEXT)( GL_FRAMEBUFFER, samples, internalformat, width, height );
+        _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
+        _dispatch.call(&_dispatch.glRenderbufferStorageMultisample)( GL_RENDERBUFFER, samples, internalformat, width, height );
         return;
       }
       #endif
@@ -53272,7 +53398,7 @@ static void REGAL_CALL emu_glRenderbufferStorageMultisampleEXT(GLenum target, GL
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->RestoreFramebuffer( _context );
+        _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
     case 1 :
@@ -53368,6 +53494,64 @@ static void REGAL_CALL emu_glBindFramebufferEXT(GLenum target, GLuint framebuffe
 
 }
 
+static void REGAL_CALL emu_glBindRenderbufferEXT(GLenum target, GLuint renderbuffer)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        if (!_context->dsa->ShadowRenderbuffer( target, renderbuffer ) ) {
+            _dispatch.call(&_dispatch.glBindRenderbuffer)( target, renderbuffer );
+        }
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glBindRenderbufferEXT)(target, renderbuffer);
+      break;
+    }
+
+  }
+
+}
+
 static void REGAL_CALL emu_glDeleteFramebuffersEXT(GLsizei n, const GLuint *framebuffers)
 {
   RegalContext *_context = REGAL_GET_CONTEXT();
@@ -53400,6 +53584,40 @@ static void REGAL_CALL emu_glDeleteFramebuffersEXT(GLsizei n, const GLuint *fram
   DispatchTable *_next = _dispatch._next;
   RegalAssert(_next);
   _next->call(& _next->glDeleteFramebuffersEXT)(n, framebuffers);
+}
+
+static void REGAL_CALL emu_glDeleteRenderbuffersEXT(GLsizei n, const GLuint *renderbuffers)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->dsa->DeleteRenderbuffers( _context, n, renderbuffers );
+      }
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  DispatchTable *_next = _dispatch._next;
+  RegalAssert(_next);
+  _next->call(& _next->glDeleteRenderbuffersEXT)(n, renderbuffers);
 }
 
 static void REGAL_CALL emu_glFramebufferRenderbufferEXT(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
@@ -53612,6 +53830,40 @@ static void REGAL_CALL emu_glGenerateMipmapEXT(GLenum target)
 
 }
 
+static void REGAL_CALL emu_glGetRenderbufferParameterivEXT(GLenum target, GLenum pname, GLint *params)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->dsa->RestoreRenderbuffer( _context );
+      }
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  DispatchTable *_next = _dispatch._next;
+  RegalAssert(_next);
+  _next->call(& _next->glGetRenderbufferParameterivEXT)(target, pname, params);
+}
+
 static void REGAL_CALL emu_glRenderbufferStorageEXT(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
 {
   RegalContext *_context = REGAL_GET_CONTEXT();
@@ -53633,7 +53885,7 @@ static void REGAL_CALL emu_glRenderbufferStorageEXT(GLenum target, GLenum intern
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->RestoreFramebuffer( _context );
+        _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
     case 1 :
@@ -55986,7 +56238,7 @@ static void REGAL_CALL emu_glRenderbufferStorageMultisampleCoverageNV(GLenum tar
       {
         Push<int> pushLevel(_context->emuLevel);
         _context->emuLevel = 5;
-        _context->dsa->RestoreFramebuffer( _context );
+        _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
     case 1 :
@@ -56804,6 +57056,40 @@ static void REGAL_CALL emu_glDeleteFramebuffersOES(GLsizei n, const GLuint *fram
   DispatchTable *_next = _dispatch._next;
   RegalAssert(_next);
   _next->call(& _next->glDeleteFramebuffersOES)(n, framebuffers);
+}
+
+static void REGAL_CALL emu_glDeleteRenderbuffersOES(GLsizei n, const GLuint *renderbuffers)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->dsa->DeleteRenderbuffers( _context, n, renderbuffers );
+      }
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  DispatchTable *_next = _dispatch._next;
+  RegalAssert(_next);
+  _next->call(& _next->glDeleteRenderbuffersOES)(n, renderbuffers);
 }
 
 // GL_OES_get_program_binary
@@ -57763,14 +58049,17 @@ void InitDispatchTableEmu(DispatchTable &tbl)
 // GL_ARB_framebuffer_object
 
    tbl.glBindFramebuffer = emu_glBindFramebuffer;
+   tbl.glBindRenderbuffer = emu_glBindRenderbuffer;
    tbl.glBlitFramebuffer = emu_glBlitFramebuffer;
    tbl.glDeleteFramebuffers = emu_glDeleteFramebuffers;
+   tbl.glDeleteRenderbuffers = emu_glDeleteRenderbuffers;
    tbl.glFramebufferRenderbuffer = emu_glFramebufferRenderbuffer;
    tbl.glFramebufferTexture1D = emu_glFramebufferTexture1D;
    tbl.glFramebufferTexture2D = emu_glFramebufferTexture2D;
    tbl.glFramebufferTexture3D = emu_glFramebufferTexture3D;
    tbl.glFramebufferTextureLayer = emu_glFramebufferTextureLayer;
    tbl.glGenerateMipmap = emu_glGenerateMipmap;
+   tbl.glGetRenderbufferParameteriv = emu_glGetRenderbufferParameteriv;
    tbl.glRenderbufferStorage = emu_glRenderbufferStorage;
    tbl.glRenderbufferStorageMultisample = emu_glRenderbufferStorageMultisample;
 
@@ -58266,12 +58555,15 @@ void InitDispatchTableEmu(DispatchTable &tbl)
 // GL_EXT_framebuffer_object
 
    tbl.glBindFramebufferEXT = emu_glBindFramebufferEXT;
+   tbl.glBindRenderbufferEXT = emu_glBindRenderbufferEXT;
    tbl.glDeleteFramebuffersEXT = emu_glDeleteFramebuffersEXT;
+   tbl.glDeleteRenderbuffersEXT = emu_glDeleteRenderbuffersEXT;
    tbl.glFramebufferRenderbufferEXT = emu_glFramebufferRenderbufferEXT;
    tbl.glFramebufferTexture1DEXT = emu_glFramebufferTexture1DEXT;
    tbl.glFramebufferTexture2DEXT = emu_glFramebufferTexture2DEXT;
    tbl.glFramebufferTexture3DEXT = emu_glFramebufferTexture3DEXT;
    tbl.glGenerateMipmapEXT = emu_glGenerateMipmapEXT;
+   tbl.glGetRenderbufferParameterivEXT = emu_glGetRenderbufferParameterivEXT;
    tbl.glRenderbufferStorageEXT = emu_glRenderbufferStorageEXT;
 
 // GL_EXT_geometry_shader4
@@ -58381,6 +58673,7 @@ void InitDispatchTableEmu(DispatchTable &tbl)
 
    tbl.glBindFramebufferOES = emu_glBindFramebufferOES;
    tbl.glDeleteFramebuffersOES = emu_glDeleteFramebuffersOES;
+   tbl.glDeleteRenderbuffersOES = emu_glDeleteRenderbuffersOES;
 
 // GL_OES_vertex_array_object
 

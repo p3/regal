@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -69,6 +69,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\Regalm\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\Regalm\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">regalm32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">regalm32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">regalm32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">regalm32</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -92,7 +96,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\Win32\regalm32.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>../../../../src/regal/Regalm.def</ModuleDefinitionFile>
@@ -133,7 +136,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\x64\regalm32.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>../../../../src/regal/Regalm.def</ModuleDefinitionFile>
@@ -171,7 +173,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\Win32\regalm32.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>../../../../src/regal/Regalm.def</ModuleDefinitionFile>
@@ -211,7 +212,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\x64\regalm32.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Debug\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>../../../../src/regal/Regalm.def</ModuleDefinitionFile>
@@ -330,7 +330,6 @@
   <ItemGroup>
     <None Include="..\..\..\..\src\regal\Regalm.def" />
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -74,6 +74,8 @@ struct Dsa : public RegalEmu
         GLuint glslProgram;
         GLuint framebuffer;
         GLuint framebufferTarget;
+        GLuint renderbuffer;
+        GLuint renderbufferTarget;
     };
     Cache drv;
     Cache dsa;
@@ -96,6 +98,8 @@ struct Dsa : public RegalEmu
         drv.glslProgram = 0;
         drv.framebuffer = 0;
         drv.framebufferTarget = 0;
+        drv.renderbuffer = 0;
+        drv.renderbufferTarget = 0;
 
         dsa.matrixMode = REGAL_DSA_INVALID;
         dsa.activeTexture = REGAL_DSA_INVALID;
@@ -110,6 +114,8 @@ struct Dsa : public RegalEmu
         dsa.glslProgram = REGAL_DSA_INVALID;
         dsa.framebuffer = REGAL_DSA_INVALID;
         dsa.framebufferTarget = REGAL_DSA_INVALID;
+        dsa.renderbuffer = REGAL_DSA_INVALID;
+        dsa.renderbufferTarget = REGAL_DSA_INVALID;
     }
 
     void Restore( RegalContext * ctx ) {
@@ -262,6 +268,40 @@ struct Dsa : public RegalEmu
             }
         }
         RestoreFramebuffer( ctx );
+    }
+    ////////////////////////////////////////////////////////////////////////
+    bool NotRenderbuffer( GLenum target, GLuint renderbuffer ) const {
+        return dsa.renderbuffer != REGAL_DSA_INVALID ?
+        ( ( target != dsa.renderbufferTarget ) || ( renderbuffer != dsa.renderbuffer ) ) :
+        ( ( target != drv.renderbufferTarget ) || ( renderbuffer != drv.renderbuffer ) ) ;
+
+    }
+    bool ShadowRenderbuffer( GLenum realRenderbufferTarget, GLuint realRenderbuffer ) {
+        drv.renderbufferTarget = realRenderbufferTarget;
+        drv.renderbuffer = realRenderbuffer;
+        return dsa.renderbuffer != REGAL_DSA_INVALID;
+    }
+    void DsaRenderbuffer( RegalContext * ctx, GLenum target, GLuint renderbuffer ) {
+        if( NotRenderbuffer( target, renderbuffer ) ) {
+            dsa.renderbufferTarget = target;
+            dsa.renderbuffer = renderbuffer;
+            ctx->dispatcher.emulation.glBindRenderbuffer( dsa.renderbufferTarget, dsa.renderbuffer );
+        }
+    }
+    void RestoreRenderbuffer( RegalContext * ctx ) {
+        if( dsa.renderbuffer != REGAL_DSA_INVALID ) {
+            ctx->dispatcher.emulation.glBindRenderbuffer( drv.renderbufferTarget, drv.renderbuffer );
+            dsa.renderbufferTarget = REGAL_DSA_INVALID;
+            dsa.renderbuffer = REGAL_DSA_INVALID;
+        }
+    }
+    void DeleteRenderbuffers( RegalContext * ctx, GLsizei n, const GLuint *renderbuffers ) {
+        for( int i  = 0; i < n; i++ ) {
+            if( renderbuffers[i] == drv.renderbuffer ) {
+                drv.renderbuffer = 0;
+            }
+        }
+        RestoreRenderbuffer( ctx );
     }
 
 #define REGAL_DSA_NUM_ASM_TARGET_INDEXES 5
