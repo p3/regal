@@ -496,8 +496,22 @@ struct So : public RegalEmu
         return !passthru;
     }
 
-    template <typename T> bool GetTexParameterv( RegalContext &ctx, GLuint tex, GLenum pname, T * params )
+    template <typename T> bool GetTexParameterv( RegalContext &ctx, GLenum target, GLenum pname, T * params )
     {
+        GLuint tti = TT_Enum2Index(target);
+
+        if (tti >= REGAL_NUM_TEXTURE_TARGETS)
+            return false;
+
+        TextureUnit &tu = textureUnits[activeTextureUnit];
+
+        TextureState* txs = tu.boundTextureObjects[tti];
+
+        if (!txs)
+            return false;
+
+        GLuint tex = txs->name;
+
         if (!tex || textureObjects.count(tex) < 1)
             return false;
 
