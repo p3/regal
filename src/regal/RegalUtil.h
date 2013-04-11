@@ -205,6 +205,10 @@
 #define REGAL_EMU_BIN 1
 #endif
 
+#ifndef REGAL_EMU_TEXSTO
+#define REGAL_EMU_TEXSTO 1
+#endif
+
 #ifndef REGAL_EMU_XFER
 #define REGAL_EMU_XFER 1
 #endif
@@ -253,6 +257,10 @@
 
 #ifndef REGAL_FORCE_EMU_BIN
 #define REGAL_FORCE_EMU_BIN 0
+#endif
+
+#ifndef REGAL_FORCE_EMU_TEXSTO
+#define REGAL_FORCE_EMU_TEXSTO 0
 #endif
 
 #ifndef REGAL_FORCE_EMU_XFER

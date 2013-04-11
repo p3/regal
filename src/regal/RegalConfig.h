@@ -88,6 +88,7 @@ namespace Config
   extern bool enableEmuPpca;
   extern bool enableEmuObj;
   extern bool enableEmuBin;
+  extern bool enableEmuTexSto;
   extern bool enableEmuXfer;
   extern bool enableEmuDsa;
   extern bool enableEmuIff;
@@ -102,6 +103,7 @@ namespace Config
   extern bool forceEmuPpca;
   extern bool forceEmuObj;
   extern bool forceEmuBin;
+  extern bool forceEmuTexSto;
   extern bool forceEmuXfer;
   extern bool forceEmuDsa;
   extern bool forceEmuIff;

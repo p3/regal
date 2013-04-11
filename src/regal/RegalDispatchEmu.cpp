@@ -59,6 +59,7 @@ using namespace std;
 
 #include "RegalBreak.h"
 #include "RegalBin.h"
+#include "RegalTexSto.h"
 #include "RegalXfer.h"
 #include "RegalEmu.h"
 #include "RegalPpa.h"
@@ -224,15 +225,15 @@ static void REGAL_CALL emu_glBegin(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -2833,15 +2834,15 @@ static void REGAL_CALL emu_glDisable(GLenum cap)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -3166,15 +3167,15 @@ static void REGAL_CALL emu_glEnable(GLenum cap)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -4627,15 +4628,15 @@ static void REGAL_CALL emu_glGetBooleanv(GLenum pname, GLboolean *params)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGet( _context, pname );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -4744,15 +4745,15 @@ static void REGAL_CALL emu_glGetDoublev(GLenum pname, GLdouble *params)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGet( _context, pname );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -4868,15 +4869,15 @@ static void REGAL_CALL emu_glGetFloatv(GLenum pname, GLfloat *params)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGet( _context, pname );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -5003,15 +5004,15 @@ static void REGAL_CALL emu_glGetIntegerv(GLenum pname, GLint *params)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGet( _context, pname );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -5248,16 +5249,16 @@ static void REGAL_CALL emu_glGetTexEnvfv(GLenum target, GLenum pname, GLfloat *p
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -5315,16 +5316,16 @@ static void REGAL_CALL emu_glGetTexEnviv(GLenum target, GLenum pname, GLint *par
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -5775,15 +5776,18 @@ static void REGAL_CALL emu_glGetTexParameterfv(GLenum target, GLenum pname, GLfl
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
+      #endif
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
       #endif
     case 5 :
     case 4 :
@@ -5805,6 +5809,18 @@ static void REGAL_CALL emu_glGetTexParameterfv(GLenum target, GLenum pname, GLfl
     case 8 :
     case 7 :
     case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        RegalAssert(_context);
+        if ( !_context->texsto->GetTexParameterv( _context, target, pname, params ) ) {
+           _context->dispatcher.emulation.glGetTexParameterfv( target, pname, params );
+        }
+        return;
+      }
+      #endif
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -5847,15 +5863,18 @@ static void REGAL_CALL emu_glGetTexParameteriv(GLenum target, GLenum pname, GLin
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
+      #endif
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
       #endif
     case 5 :
     case 4 :
@@ -5877,6 +5896,18 @@ static void REGAL_CALL emu_glGetTexParameteriv(GLenum target, GLenum pname, GLin
     case 8 :
     case 7 :
     case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        RegalAssert(_context);
+        if ( !_context->texsto->GetTexParameterv( _context, target, pname, params ) ) {
+           _context->dispatcher.emulation.glGetTexParameteriv( target, pname, params );
+        }
+        return;
+      }
+      #endif
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -6011,15 +6042,15 @@ static GLboolean REGAL_CALL emu_glIsEnabled(GLenum cap)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreIsEnabled( _context, cap );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -6749,15 +6780,15 @@ static void REGAL_CALL emu_glLoadIdentity(void)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -6815,15 +6846,15 @@ static void REGAL_CALL emu_glLoadMatrixd(const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -6881,15 +6912,15 @@ static void REGAL_CALL emu_glLoadMatrixf(const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -7747,10 +7778,10 @@ static void REGAL_CALL emu_glMatrixMode(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -7769,18 +7800,18 @@ static void REGAL_CALL emu_glMatrixMode(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowMatrixMode(mode)) {
           _dispatch.call(&_dispatch.glMatrixMode)(mode);
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -7821,15 +7852,15 @@ static void REGAL_CALL emu_glMultMatrixd(const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -7887,15 +7918,15 @@ static void REGAL_CALL emu_glMultMatrixf(const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -8668,15 +8699,15 @@ static void REGAL_CALL emu_glPixelStoref(GLenum pname, GLfloat param)
       #endif
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->PixelStore( _context, pname, param );
       }
       #endif
+    case 7 :
     case 6 :
     case 5 :
     case 4 :
@@ -8754,15 +8785,15 @@ static void REGAL_CALL emu_glPixelStorei(GLenum pname, GLint param)
       #endif
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->PixelStore( _context, pname, param );
       }
       #endif
+    case 7 :
     case 6 :
     case 5 :
     case 4 :
@@ -9180,15 +9211,15 @@ static void REGAL_CALL emu_glPopMatrix(void)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -9292,15 +9323,15 @@ static void REGAL_CALL emu_glPushMatrix(void)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -11552,15 +11583,15 @@ static void REGAL_CALL emu_glRotated(GLdouble angle, GLdouble x, GLdouble y, GLd
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -11618,15 +11649,15 @@ static void REGAL_CALL emu_glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloa
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -11684,15 +11715,15 @@ static void REGAL_CALL emu_glScaled(GLdouble x, GLdouble y, GLdouble z)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -11750,15 +11781,15 @@ static void REGAL_CALL emu_glScalef(GLfloat x, GLfloat y, GLfloat z)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -13873,16 +13904,16 @@ static void REGAL_CALL emu_glTexEnvf(GLenum target, GLenum pname, GLfloat param)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -13940,16 +13971,16 @@ static void REGAL_CALL emu_glTexEnvfv(GLenum target, GLenum pname, const GLfloat
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14007,16 +14038,16 @@ static void REGAL_CALL emu_glTexEnvi(GLenum target, GLenum pname, GLint param)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14074,16 +14105,16 @@ static void REGAL_CALL emu_glTexEnviv(GLenum target, GLenum pname, const GLint *
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14257,15 +14288,15 @@ static void REGAL_CALL emu_glTexGenf(GLenum coord, GLenum pname, GLfloat param)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14323,15 +14354,15 @@ static void REGAL_CALL emu_glTexGenfv(GLenum coord, GLenum pname, const GLfloat 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14389,15 +14420,15 @@ static void REGAL_CALL emu_glTexGeni(GLenum coord, GLenum pname, GLint param)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14455,15 +14486,15 @@ static void REGAL_CALL emu_glTexGeniv(GLenum coord, GLenum pname, const GLint *p
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -14598,10 +14629,10 @@ static void REGAL_CALL emu_glTexImage2D(GLenum target, GLint level, GLint intern
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
+    case 7 :
     case 6 :
     case 5 :
       #if REGAL_EMU_IFF
@@ -14631,16 +14662,16 @@ static void REGAL_CALL emu_glTexImage2D(GLenum target, GLint level, GLint intern
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->TexImage2D( _context, target, level, internalformat, width, height, border, format, type, pixels );
         return;
       }
       #endif
+    case 7 :
     case 6 :
     case 5 :
     case 4 :
@@ -14684,16 +14715,16 @@ static void REGAL_CALL emu_glTexParameterf(GLenum target, GLenum pname, GLfloat 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -14778,16 +14809,16 @@ static void REGAL_CALL emu_glTexParameterfv(GLenum target, GLenum pname, const G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -14850,16 +14881,16 @@ static void REGAL_CALL emu_glTexParameteri(GLenum target, GLenum pname, GLint pa
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -14944,16 +14975,16 @@ static void REGAL_CALL emu_glTexParameteriv(GLenum target, GLenum pname, const G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -15016,15 +15047,15 @@ static void REGAL_CALL emu_glTranslated(GLdouble x, GLdouble y, GLdouble z)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -15082,15 +15113,15 @@ static void REGAL_CALL emu_glTranslatef(GLfloat x, GLfloat y, GLfloat z)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -16588,10 +16619,10 @@ static void REGAL_CALL emu_glBindTexture(GLenum target, GLuint texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -16636,18 +16667,18 @@ static void REGAL_CALL emu_glBindTexture(GLenum target, GLuint texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowTexture( target, texture )) {
             _dispatch.call(&_dispatch.glBindTexture)( target, texture );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -16737,15 +16768,15 @@ static void REGAL_CALL emu_glColorPointer(GLint size, GLenum type, GLsizei strid
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -16857,13 +16888,22 @@ static void REGAL_CALL emu_glDeleteTextures(GLsizei n, const GLuint *textures)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteTextures( _context, n, textures );
+      }
+      #endif
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        RegalAssert(_context);
+        _context->texsto->DeleteTextures( _context, n, textures );
       }
       #endif
     case 5 :
@@ -16956,16 +16996,16 @@ static void REGAL_CALL emu_glDisableClientState(GLenum cap)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreClientActiveTexture( _context );
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -17039,15 +17079,15 @@ static void REGAL_CALL emu_glDrawArrays(GLenum mode, GLint first, GLsizei count)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -17101,15 +17141,15 @@ static void REGAL_CALL emu_glDrawElements(GLenum mode, GLsizei count, GLenum typ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -17237,16 +17277,16 @@ static void REGAL_CALL emu_glEnableClientState(GLenum cap)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreClientActiveTexture( _context );
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -17560,15 +17600,15 @@ static void REGAL_CALL emu_glNormalPointer(GLenum type, GLsizei stride, const GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -17775,16 +17815,16 @@ static void REGAL_CALL emu_glTexCoordPointer(GLint size, GLenum type, GLsizei st
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreClientActiveTexture( _context );
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -17857,10 +17897,10 @@ static void REGAL_CALL emu_glTexSubImage2D(GLenum target, GLint level, GLint xof
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
+    case 7 :
     case 6 :
     case 5 :
       #if REGAL_EMU_IFF
@@ -17885,16 +17925,16 @@ static void REGAL_CALL emu_glTexSubImage2D(GLenum target, GLint level, GLint xof
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->TexSubImage2D( _context, target, level, xoffset, yoffset, width, height, format, type, pixels );
         return;
       }
       #endif
+    case 7 :
     case 6 :
     case 5 :
     case 4 :
@@ -17977,15 +18017,15 @@ static void REGAL_CALL emu_glVertexPointer(GLint size, GLenum type, GLsizei stri
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -18233,19 +18273,19 @@ static void REGAL_CALL emu_glActiveTexture(GLenum texture)
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->ShadowActiveTexture( texture );
       }
       #endif
-    case 6 :
+    case 7 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -18273,18 +18313,18 @@ static void REGAL_CALL emu_glActiveTexture(GLenum texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if( false == _context->dsa->ShadowActiveTexture( texture ) ) {
             _dispatch.call(&_dispatch.glActiveTexture)( texture );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -18358,10 +18398,10 @@ static void REGAL_CALL emu_glClientActiveTexture(GLenum texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -18399,18 +18439,18 @@ static void REGAL_CALL emu_glClientActiveTexture(GLenum texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowClientActiveTexture( texture )) {
           _dispatch.call(&_dispatch.glClientActiveTexture)( texture );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -18457,7 +18497,6 @@ static void REGAL_CALL emu_glCompressedTexImage2D(GLenum target, GLint level, GL
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
@@ -18474,12 +18513,11 @@ static void REGAL_CALL emu_glCompressedTexImage2D(GLenum target, GLint level, GL
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->CompressedTexImage2D( _context, target, level, internalformat, width, height, border, imageSize, data );
         return;
       }
@@ -18511,7 +18549,6 @@ static void REGAL_CALL emu_glCompressedTexSubImage2D(GLenum target, GLint level,
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
@@ -18528,12 +18565,11 @@ static void REGAL_CALL emu_glCompressedTexSubImage2D(GLenum target, GLint level,
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->CompressedTexSubImage2D( _context, target, level, xoffset, yoffset, width, height, format, imageSize, data );
         return;
       }
@@ -18566,15 +18602,15 @@ static void REGAL_CALL emu_glLoadTransposeMatrixd(const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -18632,15 +18668,15 @@ static void REGAL_CALL emu_glLoadTransposeMatrixf(const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -18698,15 +18734,15 @@ static void REGAL_CALL emu_glMultTransposeMatrixd(const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -18764,15 +18800,15 @@ static void REGAL_CALL emu_glMultTransposeMatrixf(const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreMatrixMode( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -20799,15 +20835,15 @@ static void REGAL_CALL emu_glMultiDrawArrays(GLenum mode, const GLint *first, co
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -20861,15 +20897,15 @@ static void REGAL_CALL emu_glMultiDrawElements(GLenum mode, const GLsizei *count
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -21859,15 +21895,15 @@ static void REGAL_CALL emu_glSecondaryColorPointer(GLint size, GLenum type, GLsi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -23170,10 +23206,10 @@ static void REGAL_CALL emu_glBindBuffer(GLenum target, GLuint buffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -23216,12 +23252,11 @@ static void REGAL_CALL emu_glBindBuffer(GLenum target, GLuint buffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowBuffer( target, buffer ) ) {
             _dispatch.call(&_dispatch.glBindBuffer)(target, buffer);
         }
@@ -23256,12 +23291,11 @@ static void REGAL_CALL emu_glBufferData(GLenum target, GLsizeiptr size, const GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23290,12 +23324,11 @@ static void REGAL_CALL emu_glBufferSubData(GLenum target, GLintptr offset, GLsiz
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23335,12 +23368,11 @@ static void REGAL_CALL emu_glDeleteBuffers(GLsizei n, const GLuint *buffers)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteBuffers( _context, n, buffers );
       }
       #endif
@@ -23434,12 +23466,11 @@ static void REGAL_CALL emu_glGetBufferParameteriv(GLenum target, GLenum pname, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23468,12 +23499,11 @@ static void REGAL_CALL emu_glGetBufferPointerv(GLenum target, GLenum pname, GLvo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23502,12 +23532,11 @@ static void REGAL_CALL emu_glGetBufferSubData(GLenum target, GLintptr offset, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23578,12 +23607,11 @@ static GLvoid *REGAL_CALL emu_glMapBuffer(GLenum target, GLenum access)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23612,12 +23640,11 @@ static GLboolean REGAL_CALL emu_glUnmapBuffer(GLenum target)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -23704,12 +23731,11 @@ static void REGAL_CALL emu_glDeleteProgram(GLuint program)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteGlslProgram( _context, program );
       }
       #endif
@@ -24425,12 +24451,11 @@ static void REGAL_CALL emu_glUniform1f(GLint location, GLfloat v0)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24459,12 +24484,11 @@ static void REGAL_CALL emu_glUniform1fv(GLint location, GLsizei count, const GLf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24493,12 +24517,11 @@ static void REGAL_CALL emu_glUniform1i(GLint location, GLint v0)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24527,12 +24550,11 @@ static void REGAL_CALL emu_glUniform1iv(GLint location, GLsizei count, const GLi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24561,12 +24583,11 @@ static void REGAL_CALL emu_glUniform2f(GLint location, GLfloat v0, GLfloat v1)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24595,12 +24616,11 @@ static void REGAL_CALL emu_glUniform2fv(GLint location, GLsizei count, const GLf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24629,12 +24649,11 @@ static void REGAL_CALL emu_glUniform2i(GLint location, GLint v0, GLint v1)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24663,12 +24682,11 @@ static void REGAL_CALL emu_glUniform2iv(GLint location, GLsizei count, const GLi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24697,12 +24715,11 @@ static void REGAL_CALL emu_glUniform3f(GLint location, GLfloat v0, GLfloat v1, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24731,12 +24748,11 @@ static void REGAL_CALL emu_glUniform3fv(GLint location, GLsizei count, const GLf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24765,12 +24781,11 @@ static void REGAL_CALL emu_glUniform3i(GLint location, GLint v0, GLint v1, GLint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24799,12 +24814,11 @@ static void REGAL_CALL emu_glUniform3iv(GLint location, GLsizei count, const GLi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24833,12 +24847,11 @@ static void REGAL_CALL emu_glUniform4f(GLint location, GLfloat v0, GLfloat v1, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24867,12 +24880,11 @@ static void REGAL_CALL emu_glUniform4fv(GLint location, GLsizei count, const GLf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24901,12 +24913,11 @@ static void REGAL_CALL emu_glUniform4i(GLint location, GLint v0, GLint v1, GLint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24935,12 +24946,11 @@ static void REGAL_CALL emu_glUniform4iv(GLint location, GLsizei count, const GLi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -24969,12 +24979,11 @@ static void REGAL_CALL emu_glUniformMatrix2fv(GLint location, GLsizei count, GLb
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -25003,12 +25012,11 @@ static void REGAL_CALL emu_glUniformMatrix3fv(GLint location, GLsizei count, GLb
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -25037,12 +25045,11 @@ static void REGAL_CALL emu_glUniformMatrix4fv(GLint location, GLsizei count, GLb
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -25071,10 +25078,10 @@ static void REGAL_CALL emu_glUseProgram(GLuint program)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -25093,18 +25100,18 @@ static void REGAL_CALL emu_glUseProgram(GLuint program)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if( false == _context->dsa->ShadowGlslProgram( program ) ) {
           _dispatch.call(&_dispatch.glUseProgram)(program);
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -27188,12 +27195,11 @@ static void REGAL_CALL emu_glUniformMatrix2x3fv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27222,12 +27228,11 @@ static void REGAL_CALL emu_glUniformMatrix2x4fv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27256,12 +27261,11 @@ static void REGAL_CALL emu_glUniformMatrix3x2fv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27290,12 +27294,11 @@ static void REGAL_CALL emu_glUniformMatrix3x4fv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27324,12 +27327,11 @@ static void REGAL_CALL emu_glUniformMatrix4x2fv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27358,12 +27360,11 @@ static void REGAL_CALL emu_glUniformMatrix4x3fv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27568,6 +27569,9 @@ static void REGAL_CALL emu_glGetTexParameterIiv(GLenum target, GLenum pname, GLi
     case 8 :
     case 7 :
     case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -27588,6 +27592,18 @@ static void REGAL_CALL emu_glGetTexParameterIiv(GLenum target, GLenum pname, GLi
     case 8 :
     case 7 :
     case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        RegalAssert(_context);
+        if ( !_context->texsto->GetTexParameterv( _context, target, pname, params ) ) {
+           _context->dispatcher.emulation.glGetTexParameterIiv( target, pname, params );
+        }
+        return;
+      }
+      #endif
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -27631,6 +27647,9 @@ static void REGAL_CALL emu_glGetTexParameterIuiv(GLenum target, GLenum pname, GL
     case 8 :
     case 7 :
     case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -27651,6 +27670,18 @@ static void REGAL_CALL emu_glGetTexParameterIuiv(GLenum target, GLenum pname, GL
     case 8 :
     case 7 :
     case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        RegalAssert(_context);
+        if ( !_context->texsto->GetTexParameterv( _context, target, pname, params ) ) {
+           _context->dispatcher.emulation.glGetTexParameterIuiv( target, pname, params );
+        }
+        return;
+      }
+      #endif
     case 5 :
     case 4 :
       #if REGAL_EMU_SO
@@ -27819,12 +27850,11 @@ static void REGAL_CALL emu_glUniform1ui(GLint location, GLuint v0)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27853,12 +27883,11 @@ static void REGAL_CALL emu_glUniform1uiv(GLint location, GLsizei count, const GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27887,12 +27916,11 @@ static void REGAL_CALL emu_glUniform2ui(GLint location, GLuint v0, GLuint v1)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27921,12 +27949,11 @@ static void REGAL_CALL emu_glUniform2uiv(GLint location, GLsizei count, const GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27955,12 +27982,11 @@ static void REGAL_CALL emu_glUniform3ui(GLint location, GLuint v0, GLuint v1, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -27989,12 +28015,11 @@ static void REGAL_CALL emu_glUniform3uiv(GLint location, GLsizei count, const GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -28023,12 +28048,11 @@ static void REGAL_CALL emu_glUniform4ui(GLint location, GLuint v0, GLuint v1, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -28057,12 +28081,11 @@ static void REGAL_CALL emu_glUniform4uiv(GLint location, GLsizei count, const GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -28093,15 +28116,15 @@ static void REGAL_CALL emu_glDrawArraysInstanced(GLenum mode, GLint start, GLsiz
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -28155,15 +28178,15 @@ static void REGAL_CALL emu_glDrawElementsInstanced(GLenum mode, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -28247,12 +28270,11 @@ static void REGAL_CALL emu_glTexBuffer(GLenum target, GLenum internalformat, GLu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
@@ -28284,12 +28306,11 @@ static void REGAL_CALL emu_glFramebufferTexture(GLenum target, GLenum attachment
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -28318,12 +28339,11 @@ static void REGAL_CALL emu_glFramebufferTextureFace(GLenum target, GLenum attach
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -28394,15 +28414,15 @@ static void REGAL_CALL emu_glMultiDrawArraysIndirectAMD(GLenum mode, const GLvoi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -28456,15 +28476,15 @@ static void REGAL_CALL emu_glMultiDrawElementsIndirectAMD(GLenum mode, GLenum ty
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -28610,15 +28630,15 @@ static void REGAL_CALL emu_glDrawElementArrayAPPLE(GLenum mode, GLint first, GLs
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -28717,15 +28737,15 @@ static void REGAL_CALL emu_glMultiDrawElementArrayAPPLE(GLenum mode, const GLint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -28875,12 +28895,11 @@ static void REGAL_CALL emu_glDeleteVertexArraysAPPLE(GLsizei n, const GLuint *ar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteVaos( _context, n, arrays );
       }
       #endif
@@ -29037,12 +29056,11 @@ static void REGAL_CALL emu_glCopyBufferSubData(GLenum readtarget, GLenum writeta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -29129,15 +29147,15 @@ static void REGAL_CALL emu_glDrawElementsBaseVertex(GLenum mode, GLsizei count, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29191,15 +29209,15 @@ static void REGAL_CALL emu_glDrawElementsInstancedBaseVertex(GLenum mode, GLsize
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29346,15 +29364,15 @@ static void REGAL_CALL emu_glMultiDrawElementsBaseVertex(GLenum mode, const GLsi
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29410,15 +29428,15 @@ static void REGAL_CALL emu_glDrawArraysIndirect(GLenum mode, const GLvoid *indir
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29472,15 +29490,15 @@ static void REGAL_CALL emu_glDrawElementsIndirect(GLenum mode, GLenum type, cons
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29536,15 +29554,15 @@ static void REGAL_CALL emu_glDrawArraysInstancedARB(GLenum mode, GLint start, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29598,15 +29616,15 @@ static void REGAL_CALL emu_glDrawElementsInstancedARB(GLenum mode, GLsizei count
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -29664,10 +29682,10 @@ static void REGAL_CALL emu_glBindFramebuffer(GLenum target, GLuint framebuffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -29689,18 +29707,18 @@ static void REGAL_CALL emu_glBindFramebuffer(GLenum target, GLuint framebuffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowFramebuffer( target, framebuffer ) ) {
             _dispatch.call(&_dispatch.glBindFramebuffer)( target, framebuffer );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -29745,7 +29763,6 @@ static void REGAL_CALL emu_glBindRenderbuffer(GLenum target, GLuint renderbuffer
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -29763,12 +29780,11 @@ static void REGAL_CALL emu_glBindRenderbuffer(GLenum target, GLuint renderbuffer
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowRenderbuffer( target, renderbuffer ) ) {
             _dispatch.call(&_dispatch.glBindRenderbuffer)( target, renderbuffer );
         }
@@ -29872,12 +29888,11 @@ static void REGAL_CALL emu_glDeleteFramebuffers(GLsizei n, const GLuint *framebu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteFramebuffers( _context, n, framebuffers );
       }
       #endif
@@ -29906,12 +29921,11 @@ static void REGAL_CALL emu_glDeleteRenderbuffers(GLsizei n, const GLuint *render
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteRenderbuffers( _context, n, renderbuffers );
       }
       #endif
@@ -29940,12 +29954,11 @@ static void REGAL_CALL emu_glFramebufferRenderbuffer(GLenum target, GLenum attac
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -29974,12 +29987,11 @@ static void REGAL_CALL emu_glFramebufferTexture1D(GLenum target, GLenum attachme
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30008,12 +30020,11 @@ static void REGAL_CALL emu_glFramebufferTexture2D(GLenum target, GLenum attachme
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30042,12 +30053,11 @@ static void REGAL_CALL emu_glFramebufferTexture3D(GLenum target, GLenum attachme
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30076,12 +30086,11 @@ static void REGAL_CALL emu_glFramebufferTextureLayer(GLenum target, GLenum attac
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30110,16 +30119,16 @@ static void REGAL_CALL emu_glGenerateMipmap(GLenum target)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -30184,12 +30193,11 @@ static void REGAL_CALL emu_glGetRenderbufferParameteriv(GLenum target, GLenum pn
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -30218,12 +30226,11 @@ static void REGAL_CALL emu_glRenderbufferStorage(GLenum target, GLenum internalf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -30252,12 +30259,11 @@ static void REGAL_CALL emu_glRenderbufferStorageMultisample(GLenum target, GLsiz
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -30288,12 +30294,11 @@ static void REGAL_CALL emu_glFramebufferTextureARB(GLenum target, GLenum attachm
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30322,12 +30327,11 @@ static void REGAL_CALL emu_glFramebufferTextureFaceARB(GLenum target, GLenum att
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30356,12 +30360,11 @@ static void REGAL_CALL emu_glFramebufferTextureLayerARB(GLenum target, GLenum at
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -30394,12 +30397,11 @@ static void REGAL_CALL emu_glUniform1d(GLint location, GLdouble x)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30428,12 +30430,11 @@ static void REGAL_CALL emu_glUniform1dv(GLint location, GLsizei count, const GLd
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30462,12 +30463,11 @@ static void REGAL_CALL emu_glUniform2d(GLint location, GLdouble x, GLdouble y)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30496,12 +30496,11 @@ static void REGAL_CALL emu_glUniform2dv(GLint location, GLsizei count, const GLd
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30530,12 +30529,11 @@ static void REGAL_CALL emu_glUniform3d(GLint location, GLdouble x, GLdouble y, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30564,12 +30562,11 @@ static void REGAL_CALL emu_glUniform3dv(GLint location, GLsizei count, const GLd
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30598,12 +30595,11 @@ static void REGAL_CALL emu_glUniform4d(GLint location, GLdouble x, GLdouble y, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30632,12 +30628,11 @@ static void REGAL_CALL emu_glUniform4dv(GLint location, GLsizei count, const GLd
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30666,12 +30661,11 @@ static void REGAL_CALL emu_glUniformMatrix2dv(GLint location, GLsizei count, GLb
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30700,12 +30694,11 @@ static void REGAL_CALL emu_glUniformMatrix2x3dv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30734,12 +30727,11 @@ static void REGAL_CALL emu_glUniformMatrix2x4dv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30768,12 +30760,11 @@ static void REGAL_CALL emu_glUniformMatrix3dv(GLint location, GLsizei count, GLb
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30802,12 +30793,11 @@ static void REGAL_CALL emu_glUniformMatrix3x2dv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30836,12 +30826,11 @@ static void REGAL_CALL emu_glUniformMatrix3x4dv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30870,12 +30859,11 @@ static void REGAL_CALL emu_glUniformMatrix4dv(GLint location, GLsizei count, GLb
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30904,12 +30892,11 @@ static void REGAL_CALL emu_glUniformMatrix4x2dv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30938,12 +30925,11 @@ static void REGAL_CALL emu_glUniformMatrix4x3dv(GLint location, GLsizei count, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreGlslProgram( _context );
       }
       #endif
@@ -30984,12 +30970,11 @@ static void REGAL_CALL emu_glFlushMappedBufferRange(GLenum target, GLintptr offs
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -31018,12 +31003,11 @@ static GLvoid *REGAL_CALL emu_glMapBufferRange(GLenum target, GLintptr offset, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -31056,15 +31040,15 @@ static void REGAL_CALL emu_glMultiDrawArraysIndirect(GLenum mode, const GLvoid *
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -31118,15 +31102,15 @@ static void REGAL_CALL emu_glMultiDrawElementsIndirect(GLenum mode, GLenum type,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -34873,7 +34857,6 @@ static void REGAL_CALL emu_glCompressedTexImage2DARB(GLenum target, GLint level,
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
@@ -34890,12 +34873,11 @@ static void REGAL_CALL emu_glCompressedTexImage2DARB(GLenum target, GLint level,
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->CompressedTexImage2D( _context, target, level, internalformat, width, height, border, imageSize, data );
         return;
       }
@@ -34927,7 +34909,6 @@ static void REGAL_CALL emu_glCompressedTexSubImage2DARB(GLenum target, GLint lev
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
@@ -34944,12 +34925,11 @@ static void REGAL_CALL emu_glCompressedTexSubImage2DARB(GLenum target, GLint lev
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->CompressedTexSubImage2D( _context, target, level, xoffset, yoffset, width, height, format, imageSize, data );
         return;
       }
@@ -35041,7 +35021,7 @@ static void REGAL_CALL emu_glTexImage3DMultisample(GLenum target, GLsizei sample
 
 // GL_ARB_texture_storage
 
-static void REGAL_CALL emu_glTextureStorage1DEXT(GLuint texture, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+static void REGAL_CALL emu_glTexStorage1D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
 {
   RegalContext *_context = REGAL_GET_CONTEXT();
   RegalAssert(_context);
@@ -35055,6 +35035,8 @@ static void REGAL_CALL emu_glTextureStorage1DEXT(GLuint texture, GLenum target, 
     case 10 :
     case 9 :
     case 8 :
+    case 7 :
+    case 6 :
       #if REGAL_EMU_TEXSTO
       if (_context->texsto) break;
       #endif
@@ -35071,12 +35053,181 @@ static void REGAL_CALL emu_glTextureStorage1DEXT(GLuint texture, GLenum target, 
     case 10 :
     case 9 :
     case 8 :
+    case 7 :
+    case 6 :
       #if REGAL_EMU_TEXSTO
       if (_context->texsto)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 7;
-        _context->texsto->TextureStorage( _context, texture, target, levels, internalformat, width );
+        _context->emuLevel = 5;
+        _context->texsto->TextureStorage( _context, target, levels, internalformat, width );
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glTexStorage1D)(target, levels, internalformat, width);
+      break;
+    }
+
+  }
+
+}
+
+static void REGAL_CALL emu_glTexStorage2D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->texsto->TextureStorage( _context, target, levels, internalformat, width, height );
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glTexStorage2D)(target, levels, internalformat, width, height);
+      break;
+    }
+
+  }
+
+}
+
+static void REGAL_CALL emu_glTexStorage3D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->texsto->TextureStorage( _context, target, levels, internalformat, width, height, depth );
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glTexStorage3D)(target, levels, internalformat, width, height, depth);
+      break;
+    }
+
+  }
+
+}
+
+static void REGAL_CALL emu_glTextureStorage1DEXT(GLuint texture, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 6;
+        _context->dsa->DsaTexture( _context, target, texture );
+        _dispatch.call(&_dispatch.glTexStorage1D)( target, levels, internalformat, width );
         return;
       }
       #endif
@@ -35107,8 +35258,9 @@ static void REGAL_CALL emu_glTextureStorage2DEXT(GLuint texture, GLenum target, 
     case 10 :
     case 9 :
     case 8 :
-      #if REGAL_EMU_TEXSTO
-      if (_context->texsto) break;
+    case 7 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa) break;
       #endif
     case 1 :
     default:
@@ -35123,12 +35275,14 @@ static void REGAL_CALL emu_glTextureStorage2DEXT(GLuint texture, GLenum target, 
     case 10 :
     case 9 :
     case 8 :
-      #if REGAL_EMU_TEXSTO
-      if (_context->texsto)
+    case 7 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 7;
-        _context->texsto->TextureStorage( _context, texture, target, levels, internalformat, width, height );
+        _context->emuLevel = 6;
+        _context->dsa->DsaTexture( _context, target, texture );
+        _dispatch.call(&_dispatch.glTexStorage2D)( target, levels, internalformat, width, height );
         return;
       }
       #endif
@@ -35159,8 +35313,9 @@ static void REGAL_CALL emu_glTextureStorage3DEXT(GLuint texture, GLenum target, 
     case 10 :
     case 9 :
     case 8 :
-      #if REGAL_EMU_TEXSTO
-      if (_context->texsto) break;
+    case 7 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa) break;
       #endif
     case 1 :
     default:
@@ -35175,12 +35330,14 @@ static void REGAL_CALL emu_glTextureStorage3DEXT(GLuint texture, GLenum target, 
     case 10 :
     case 9 :
     case 8 :
-      #if REGAL_EMU_TEXSTO
-      if (_context->texsto)
+    case 7 :
+      #if REGAL_EMU_DSA
+      if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 7;
-        _context->texsto->TextureStorage( _context, texture, target, levels, internalformat, width, height, depth );
+        _context->emuLevel = 6;
+        _context->dsa->DsaTexture( _context, target, texture );
+        _dispatch.call(&_dispatch.glTexStorage3D)( target, levels, internalformat, width, height, depth );
         return;
       }
       #endif
@@ -35473,10 +35630,10 @@ static void REGAL_CALL emu_glBindVertexArray(GLuint array)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -35514,18 +35671,18 @@ static void REGAL_CALL emu_glBindVertexArray(GLuint array)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowVao( array )) {
             _dispatch.call(&_dispatch.glBindVertexArray)( array );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -35577,15 +35734,15 @@ static void REGAL_CALL emu_glDeleteVertexArrays(GLsizei n, const GLuint *arrays)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteVaos( _context, n, arrays );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -36015,10 +36172,10 @@ static void REGAL_CALL emu_glBindBufferARB(GLenum target, GLuint buffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -36053,12 +36210,11 @@ static void REGAL_CALL emu_glBindBufferARB(GLenum target, GLuint buffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowBuffer( target, buffer ) ) {
             _dispatch.call(&_dispatch.glBindBuffer)(target, buffer);
         }
@@ -36165,12 +36321,11 @@ static void REGAL_CALL emu_glDeleteBuffersARB(GLsizei n, const GLuint *buffers)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteBuffers( _context, n, buffers );
       }
       #endif
@@ -36306,15 +36461,15 @@ static GLvoid *REGAL_CALL emu_glMapBufferARB(GLenum target, GLenum access)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -36381,12 +36536,11 @@ static GLboolean REGAL_CALL emu_glUnmapBufferARB(GLenum target)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -36417,10 +36571,10 @@ static void REGAL_CALL emu_glBindProgramARB(GLenum target, GLuint program)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -36442,18 +36596,18 @@ static void REGAL_CALL emu_glBindProgramARB(GLenum target, GLuint program)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowAsmProgram( target, program ) ) {
             _dispatch.call(&_dispatch.glBindProgramARB)( target, program );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -36498,12 +36652,11 @@ static void REGAL_CALL emu_glDeleteProgramsARB(GLsizei n, const GLuint *programs
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteAsmPrograms( _context, n, programs );
       }
       #endif
@@ -36739,12 +36892,11 @@ static void REGAL_CALL emu_glGetProgramEnvParameterdvARB(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -36773,12 +36925,11 @@ static void REGAL_CALL emu_glGetProgramEnvParameterfvARB(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -36807,12 +36958,11 @@ static void REGAL_CALL emu_glGetProgramLocalParameterdvARB(GLenum target, GLuint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -36841,12 +36991,11 @@ static void REGAL_CALL emu_glGetProgramLocalParameterfvARB(GLenum target, GLuint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37222,12 +37371,11 @@ static void REGAL_CALL emu_glProgramEnvParameter4dARB(GLenum target, GLuint inde
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37256,12 +37404,11 @@ static void REGAL_CALL emu_glProgramEnvParameter4dvARB(GLenum target, GLuint ind
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37290,12 +37437,11 @@ static void REGAL_CALL emu_glProgramEnvParameter4fARB(GLenum target, GLuint inde
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37324,12 +37470,11 @@ static void REGAL_CALL emu_glProgramEnvParameter4fvARB(GLenum target, GLuint ind
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37358,12 +37503,11 @@ static void REGAL_CALL emu_glProgramLocalParameter4dARB(GLenum target, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37392,12 +37536,11 @@ static void REGAL_CALL emu_glProgramLocalParameter4dvARB(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37426,12 +37569,11 @@ static void REGAL_CALL emu_glProgramLocalParameter4fARB(GLenum target, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -37460,12 +37602,11 @@ static void REGAL_CALL emu_glProgramLocalParameter4fvARB(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -39735,7 +39876,6 @@ static void REGAL_CALL emu_glGetDoublei_v(GLenum target, GLuint index, GLdouble 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -39753,12 +39893,11 @@ static void REGAL_CALL emu_glGetDoublei_v(GLenum target, GLuint index, GLdouble 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if ( ! _context->dsa->GetIndexedv( _context, target, index, v ) ) {
           _dispatch.call(&_dispatch.glGetDoublei_v)(target, index, v);
         }
@@ -39793,7 +39932,6 @@ static void REGAL_CALL emu_glGetFloati_v(GLenum target, GLuint index, GLfloat *v
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -39811,12 +39949,11 @@ static void REGAL_CALL emu_glGetFloati_v(GLenum target, GLuint index, GLfloat *v
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if ( ! _context->dsa->GetIndexedv( _context, target, index, v ) ) {
           _dispatch.call(&_dispatch.glGetFloati_v)(target, index, v);
         }
@@ -40031,15 +40168,15 @@ static void REGAL_CALL emu_glDrawElementArrayATI(GLenum mode, GLsizei count)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -40184,10 +40321,10 @@ static void REGAL_CALL emu_glBindMultiTextureEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -40211,12 +40348,11 @@ static void REGAL_CALL emu_glBindMultiTextureEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _context->dsa->ShadowDsaTexture( target, texture );
         _dispatch.call(&_dispatch.glBindTexture)( target, texture );
@@ -40251,7 +40387,6 @@ static GLenum REGAL_CALL emu_glCheckNamedFramebufferStatusEXT(GLuint framebuffer
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40269,12 +40404,11 @@ static GLenum REGAL_CALL emu_glCheckNamedFramebufferStatusEXT(GLuint framebuffer
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         return _dispatch.call(&_dispatch.glCheckFramebufferStatus)( target );
       }
@@ -40309,7 +40443,6 @@ static void REGAL_CALL emu_glClientAttribDefaultEXT(GLbitfield mask)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40336,12 +40469,11 @@ static void REGAL_CALL emu_glClientAttribDefaultEXT(GLbitfield mask)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->ClientAttribDefault( _context, mask );
         return;
       }
@@ -40374,7 +40506,6 @@ static void REGAL_CALL emu_glCompressedMultiTexImage1DEXT(GLenum texunit, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40392,12 +40523,11 @@ static void REGAL_CALL emu_glCompressedMultiTexImage1DEXT(GLenum texunit, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCompressedTexImage1D)( target, level, internalformat, width, border, imageSize, data );
         return;
@@ -40431,7 +40561,6 @@ static void REGAL_CALL emu_glCompressedMultiTexImage2DEXT(GLenum texunit, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40449,12 +40578,11 @@ static void REGAL_CALL emu_glCompressedMultiTexImage2DEXT(GLenum texunit, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCompressedTexImage2D)( target, level, internalformat, width, height, border, imageSize, bits );
         return;
@@ -40488,7 +40616,6 @@ static void REGAL_CALL emu_glCompressedMultiTexImage3DEXT(GLenum texunit, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40506,12 +40633,11 @@ static void REGAL_CALL emu_glCompressedMultiTexImage3DEXT(GLenum texunit, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCompressedTexImage3D)( target, level, internalformat, width, height, depth, border, imageSize, bits );
         return;
@@ -40545,7 +40671,6 @@ static void REGAL_CALL emu_glCompressedMultiTexSubImage1DEXT(GLenum texunit, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40563,12 +40688,11 @@ static void REGAL_CALL emu_glCompressedMultiTexSubImage1DEXT(GLenum texunit, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCompressedTexSubImage1D)( target, level, xoffset, width, format, imageSize, data );
         return;
@@ -40602,7 +40726,6 @@ static void REGAL_CALL emu_glCompressedMultiTexSubImage2DEXT(GLenum texunit, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40620,12 +40743,11 @@ static void REGAL_CALL emu_glCompressedMultiTexSubImage2DEXT(GLenum texunit, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCompressedTexSubImage2D)( target, level, xoffset, yoffset, width, height, format, imageSize, data );
         return;
@@ -40659,7 +40781,6 @@ static void REGAL_CALL emu_glCompressedMultiTexSubImage3DEXT(GLenum texunit, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40677,12 +40798,11 @@ static void REGAL_CALL emu_glCompressedMultiTexSubImage3DEXT(GLenum texunit, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCompressedTexSubImage3D)( target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data );
         return;
@@ -40716,7 +40836,6 @@ static void REGAL_CALL emu_glCompressedTextureImage1DEXT(GLuint texture, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40734,12 +40853,11 @@ static void REGAL_CALL emu_glCompressedTextureImage1DEXT(GLuint texture, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCompressedTexImage1D)( target, level, internalformat, width, border, imageSize, bits );
         return;
@@ -40773,7 +40891,6 @@ static void REGAL_CALL emu_glCompressedTextureImage2DEXT(GLuint texture, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40791,12 +40908,11 @@ static void REGAL_CALL emu_glCompressedTextureImage2DEXT(GLuint texture, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCompressedTexImage2D)( target, level, internalformat, width, height, border, imageSize, bits );
         return;
@@ -40830,7 +40946,6 @@ static void REGAL_CALL emu_glCompressedTextureImage3DEXT(GLuint texture, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40848,12 +40963,11 @@ static void REGAL_CALL emu_glCompressedTextureImage3DEXT(GLuint texture, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCompressedTexImage3D)( target, level, internalformat, width, height, depth, border, imageSize, bits );
         return;
@@ -40887,7 +41001,6 @@ static void REGAL_CALL emu_glCompressedTextureSubImage1DEXT(GLuint texture, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40905,12 +41018,11 @@ static void REGAL_CALL emu_glCompressedTextureSubImage1DEXT(GLuint texture, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCompressedTexSubImage1D)( target, level, xoffset, width, format, imageSize, bits );
         return;
@@ -40944,7 +41056,6 @@ static void REGAL_CALL emu_glCompressedTextureSubImage2DEXT(GLuint texture, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -40962,12 +41073,11 @@ static void REGAL_CALL emu_glCompressedTextureSubImage2DEXT(GLuint texture, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCompressedTexSubImage2D)( target, level, xoffset, yoffset, width, height, format, imageSize, bits );
         return;
@@ -41001,7 +41111,6 @@ static void REGAL_CALL emu_glCompressedTextureSubImage3DEXT(GLuint texture, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41019,12 +41128,11 @@ static void REGAL_CALL emu_glCompressedTextureSubImage3DEXT(GLuint texture, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCompressedTexSubImage3D)( target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits );
         return;
@@ -41058,7 +41166,6 @@ static void REGAL_CALL emu_glCopyMultiTexImage1DEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41076,12 +41183,11 @@ static void REGAL_CALL emu_glCopyMultiTexImage1DEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCopyTexImage1D)( target, level, internalformat, x, y, width, border );
         return;
@@ -41115,7 +41221,6 @@ static void REGAL_CALL emu_glCopyMultiTexImage2DEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41133,12 +41238,11 @@ static void REGAL_CALL emu_glCopyMultiTexImage2DEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCopyTexImage2D)( target, level, internalformat, x, y, width, height, border );
         return;
@@ -41172,7 +41276,6 @@ static void REGAL_CALL emu_glCopyMultiTexSubImage1DEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41190,12 +41293,11 @@ static void REGAL_CALL emu_glCopyMultiTexSubImage1DEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCopyTexSubImage1D)( target, level, xoffset, x, y, width );
         return;
@@ -41229,7 +41331,6 @@ static void REGAL_CALL emu_glCopyMultiTexSubImage2DEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41247,12 +41348,11 @@ static void REGAL_CALL emu_glCopyMultiTexSubImage2DEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCopyTexSubImage2D)( target, level, xoffset, yoffset, x, y, width, height );
         return;
@@ -41286,7 +41386,6 @@ static void REGAL_CALL emu_glCopyMultiTexSubImage3DEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41304,12 +41403,11 @@ static void REGAL_CALL emu_glCopyMultiTexSubImage3DEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glCopyTexSubImage3D)( target, level, xoffset, yoffset, zoffset, x, y, width, height );
         return;
@@ -41343,7 +41441,6 @@ static void REGAL_CALL emu_glCopyTextureImage1DEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41361,12 +41458,11 @@ static void REGAL_CALL emu_glCopyTextureImage1DEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCopyTexImage1D)( target, level, internalformat, x, y, width, border );
         return;
@@ -41400,7 +41496,6 @@ static void REGAL_CALL emu_glCopyTextureImage2DEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41418,12 +41513,11 @@ static void REGAL_CALL emu_glCopyTextureImage2DEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCopyTexImage2D)( target, level, internalformat, x, y, width, height, border );
         return;
@@ -41457,7 +41551,6 @@ static void REGAL_CALL emu_glCopyTextureSubImage1DEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41475,12 +41568,11 @@ static void REGAL_CALL emu_glCopyTextureSubImage1DEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCopyTexSubImage1D)( target, level, xoffset, x, y, width );
         return;
@@ -41514,7 +41606,6 @@ static void REGAL_CALL emu_glCopyTextureSubImage2DEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41532,12 +41623,11 @@ static void REGAL_CALL emu_glCopyTextureSubImage2DEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCopyTexSubImage2D)( target, level, xoffset, yoffset, x, y, width, height );
         return;
@@ -41571,7 +41661,6 @@ static void REGAL_CALL emu_glCopyTextureSubImage3DEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41589,12 +41678,11 @@ static void REGAL_CALL emu_glCopyTextureSubImage3DEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glCopyTexSubImage3D)( target, level, xoffset, yoffset, zoffset, x, y, width, height );
         return;
@@ -41636,7 +41724,6 @@ static void REGAL_CALL emu_glDisableClientStateIndexedEXT(GLenum array, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41654,12 +41741,11 @@ static void REGAL_CALL emu_glDisableClientStateIndexedEXT(GLenum array, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaClientActiveTexture( _context, index + GL_TEXTURE0 );
         _dispatch.call(&_dispatch.glDisableClientState)( array );
         return;
@@ -41701,7 +41787,6 @@ static void REGAL_CALL emu_glDisableClientStateiEXT(GLenum array, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41719,12 +41804,11 @@ static void REGAL_CALL emu_glDisableClientStateiEXT(GLenum array, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaClientActiveTexture( _context, index + GL_TEXTURE0 );
         _dispatch.call(&_dispatch.glDisableClientState)( array );
         return;
@@ -41826,7 +41910,6 @@ static void REGAL_CALL emu_glEnableClientStateIndexedEXT(GLenum array, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41844,12 +41927,11 @@ static void REGAL_CALL emu_glEnableClientStateIndexedEXT(GLenum array, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaClientActiveTexture( _context, index + GL_TEXTURE0 );
         _dispatch.call(&_dispatch.glEnableClientState)( array );
         return;
@@ -41891,7 +41973,6 @@ static void REGAL_CALL emu_glEnableClientStateiEXT(GLenum array, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -41909,12 +41990,11 @@ static void REGAL_CALL emu_glEnableClientStateiEXT(GLenum array, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaClientActiveTexture( _context, index + GL_TEXTURE0 );
         _dispatch.call(&_dispatch.glEnableClientState)( array );
         return;
@@ -42008,7 +42088,6 @@ static void REGAL_CALL emu_glFlushMappedNamedBufferRangeEXT(GLuint buffer, GLint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42026,12 +42105,11 @@ static void REGAL_CALL emu_glFlushMappedNamedBufferRangeEXT(GLuint buffer, GLint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         _dispatch.call(&_dispatch.glFlushMappedBufferRange)( GL_ARRAY_BUFFER, offset, length );
         return;
@@ -42065,7 +42143,6 @@ static void REGAL_CALL emu_glFramebufferDrawBufferEXT(GLuint framebuffer, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42083,12 +42160,11 @@ static void REGAL_CALL emu_glFramebufferDrawBufferEXT(GLuint framebuffer, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glDrawBuffer)( mode );
         return;
@@ -42122,7 +42198,6 @@ static void REGAL_CALL emu_glFramebufferDrawBuffersEXT(GLuint framebuffer, GLsiz
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42140,12 +42215,11 @@ static void REGAL_CALL emu_glFramebufferDrawBuffersEXT(GLuint framebuffer, GLsiz
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glDrawBuffers)( n, bufs );
         return;
@@ -42179,7 +42253,6 @@ static void REGAL_CALL emu_glFramebufferReadBufferEXT(GLuint framebuffer, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42197,12 +42270,11 @@ static void REGAL_CALL emu_glFramebufferReadBufferEXT(GLuint framebuffer, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glReadBuffer)( mode );
         return;
@@ -42236,7 +42308,6 @@ static void REGAL_CALL emu_glGenerateMultiTexMipmapEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42254,12 +42325,11 @@ static void REGAL_CALL emu_glGenerateMultiTexMipmapEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGenerateMipmap)( target );
         return;
@@ -42293,7 +42363,6 @@ static void REGAL_CALL emu_glGenerateTextureMipmapEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42311,12 +42380,11 @@ static void REGAL_CALL emu_glGenerateTextureMipmapEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGenerateMipmap)( target );
         return;
@@ -42350,7 +42418,6 @@ static void REGAL_CALL emu_glGetCompressedMultiTexImageEXT(GLenum texunit, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42368,12 +42435,11 @@ static void REGAL_CALL emu_glGetCompressedMultiTexImageEXT(GLenum texunit, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetCompressedTexImage)( target, lod, img );
         return;
@@ -42407,7 +42473,6 @@ static void REGAL_CALL emu_glGetCompressedTextureImageEXT(GLuint texture, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42425,12 +42490,11 @@ static void REGAL_CALL emu_glGetCompressedTextureImageEXT(GLuint texture, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetCompressedTexImage)( target, lod, img );
         return;
@@ -42464,7 +42528,6 @@ static void REGAL_CALL emu_glGetDoubleIndexedvEXT(GLenum target, GLuint index, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42482,12 +42545,11 @@ static void REGAL_CALL emu_glGetDoubleIndexedvEXT(GLenum target, GLuint index, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if ( ! _context->dsa->GetIndexedv( _context, target, index, data ) ) {
           _dispatch.call(&_dispatch.glGetDoubleIndexedvEXT)(target, index, data);
         }
@@ -42522,7 +42584,6 @@ static void REGAL_CALL emu_glGetDoublei_vEXT(GLenum target, GLuint index, GLdoub
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42540,12 +42601,11 @@ static void REGAL_CALL emu_glGetDoublei_vEXT(GLenum target, GLuint index, GLdoub
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if ( ! _context->dsa->GetIndexedv( _context, target, index, data ) ) {
           _dispatch.call(&_dispatch.glGetDoublei_vEXT)(target, index, data);
         }
@@ -42580,7 +42640,6 @@ static void REGAL_CALL emu_glGetFloatIndexedvEXT(GLenum target, GLuint index, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42598,12 +42657,11 @@ static void REGAL_CALL emu_glGetFloatIndexedvEXT(GLenum target, GLuint index, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if ( ! _context->dsa->GetIndexedv( _context, target, index, data ) ) {
           _dispatch.call(&_dispatch.glGetFloatIndexedvEXT)(target, index, data);
         }
@@ -42638,7 +42696,6 @@ static void REGAL_CALL emu_glGetFloati_vEXT(GLenum target, GLuint index, GLfloat
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42656,12 +42713,11 @@ static void REGAL_CALL emu_glGetFloati_vEXT(GLenum target, GLuint index, GLfloat
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if ( ! _context->dsa->GetIndexedv( _context, target, index, data ) ) {
           _dispatch.call(&_dispatch.glGetFloati_vEXT)(target, index, data);
         }
@@ -42696,7 +42752,6 @@ static void REGAL_CALL emu_glGetFramebufferParameterivEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42714,12 +42769,11 @@ static void REGAL_CALL emu_glGetFramebufferParameterivEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer );
         _dispatch.call(&_dispatch.glGetIntegerv)(pname, params);
         return;
@@ -42753,7 +42807,6 @@ static void REGAL_CALL emu_glGetMultiTexEnvfvEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42771,12 +42824,11 @@ static void REGAL_CALL emu_glGetMultiTexEnvfvEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexEnvfv)( target, pname, params );
         return;
@@ -42810,7 +42862,6 @@ static void REGAL_CALL emu_glGetMultiTexEnvivEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -42828,12 +42879,11 @@ static void REGAL_CALL emu_glGetMultiTexEnvivEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexEnviv)( target, pname, params );
         return;
@@ -42867,10 +42917,10 @@ static void REGAL_CALL emu_glGetMultiTexGendvEXT(GLenum texunit, GLenum coord, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -42889,17 +42939,17 @@ static void REGAL_CALL emu_glGetMultiTexGendvEXT(GLenum texunit, GLenum coord, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexGendv)( coord, pname, params );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -42941,10 +42991,10 @@ static void REGAL_CALL emu_glGetMultiTexGenfvEXT(GLenum texunit, GLenum coord, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -42963,17 +43013,17 @@ static void REGAL_CALL emu_glGetMultiTexGenfvEXT(GLenum texunit, GLenum coord, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexGenfv)( coord, pname, params );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -43015,10 +43065,10 @@ static void REGAL_CALL emu_glGetMultiTexGenivEXT(GLenum texunit, GLenum coord, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -43037,17 +43087,17 @@ static void REGAL_CALL emu_glGetMultiTexGenivEXT(GLenum texunit, GLenum coord, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexGeniv)( coord, pname, params );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -43089,7 +43139,6 @@ static void REGAL_CALL emu_glGetMultiTexImageEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43107,12 +43156,11 @@ static void REGAL_CALL emu_glGetMultiTexImageEXT(GLenum texunit, GLenum target, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexImage)( target, level, format, type, pixels );
         return;
@@ -43146,7 +43194,6 @@ static void REGAL_CALL emu_glGetMultiTexLevelParameterfvEXT(GLenum texunit, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43164,12 +43211,11 @@ static void REGAL_CALL emu_glGetMultiTexLevelParameterfvEXT(GLenum texunit, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexLevelParameterfv)( target, level, pname, params );
         return;
@@ -43203,7 +43249,6 @@ static void REGAL_CALL emu_glGetMultiTexLevelParameterivEXT(GLenum texunit, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43221,12 +43266,11 @@ static void REGAL_CALL emu_glGetMultiTexLevelParameterivEXT(GLenum texunit, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexLevelParameteriv)( target, level, pname, params );
         return;
@@ -43260,7 +43304,6 @@ static void REGAL_CALL emu_glGetMultiTexParameterIivEXT(GLenum texunit, GLenum t
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43278,12 +43321,11 @@ static void REGAL_CALL emu_glGetMultiTexParameterIivEXT(GLenum texunit, GLenum t
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexParameterIiv)( target, pname, params );
         return;
@@ -43317,7 +43359,6 @@ static void REGAL_CALL emu_glGetMultiTexParameterIuivEXT(GLenum texunit, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43335,12 +43376,11 @@ static void REGAL_CALL emu_glGetMultiTexParameterIuivEXT(GLenum texunit, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexParameterIuiv)( target, pname, params );
         return;
@@ -43374,7 +43414,6 @@ static void REGAL_CALL emu_glGetMultiTexParameterfvEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43392,12 +43431,11 @@ static void REGAL_CALL emu_glGetMultiTexParameterfvEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexParameterfv)( target, pname, params );
         return;
@@ -43431,7 +43469,6 @@ static void REGAL_CALL emu_glGetMultiTexParameterivEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43449,12 +43486,11 @@ static void REGAL_CALL emu_glGetMultiTexParameterivEXT(GLenum texunit, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glGetTexParameteriv)( target, pname, params );
         return;
@@ -43488,7 +43524,6 @@ static void REGAL_CALL emu_glGetNamedBufferParameterivEXT(GLuint buffer, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43506,12 +43541,11 @@ static void REGAL_CALL emu_glGetNamedBufferParameterivEXT(GLuint buffer, GLenum 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         _dispatch.call(&_dispatch.glGetBufferParameteriv)( GL_ARRAY_BUFFER, pname, params );
         return;
@@ -43545,7 +43579,6 @@ static void REGAL_CALL emu_glGetNamedBufferPointervEXT(GLuint buffer, GLenum pna
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43563,12 +43596,11 @@ static void REGAL_CALL emu_glGetNamedBufferPointervEXT(GLuint buffer, GLenum pna
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         _dispatch.call(&_dispatch.glGetBufferPointerv)( GL_ARRAY_BUFFER, pname, params );
         return;
@@ -43602,7 +43634,6 @@ static void REGAL_CALL emu_glGetNamedBufferSubDataEXT(GLuint buffer, GLintptr of
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43620,12 +43651,11 @@ static void REGAL_CALL emu_glGetNamedBufferSubDataEXT(GLuint buffer, GLintptr of
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         _dispatch.call(&_dispatch.glGetBufferSubData)( GL_ARRAY_BUFFER, offset, size, data );
         return;
@@ -43659,7 +43689,6 @@ static void REGAL_CALL emu_glGetNamedFramebufferAttachmentParameterivEXT(GLuint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43677,12 +43706,11 @@ static void REGAL_CALL emu_glGetNamedFramebufferAttachmentParameterivEXT(GLuint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glGetFramebufferAttachmentParameteriv)( GL_FRAMEBUFFER, attachment, pname, params );
         return;
@@ -43716,7 +43744,6 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterIivEXT(GLuint program,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43734,12 +43761,11 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterIivEXT(GLuint program,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glGetProgramLocalParameterIivNV)( target, index, params );
         return;
@@ -43773,7 +43799,6 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterIuivEXT(GLuint program
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43791,12 +43816,11 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterIuivEXT(GLuint program
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glGetProgramLocalParameterIuivNV)( target, index, params );
         return;
@@ -43830,7 +43854,6 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterdvEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43848,12 +43871,11 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterdvEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glGetProgramLocalParameterdvARB)( target, index, params );
         return;
@@ -43887,7 +43909,6 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterfvEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43905,12 +43926,11 @@ static void REGAL_CALL emu_glGetNamedProgramLocalParameterfvEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glGetProgramLocalParameterfvARB)( target, index, params );
         return;
@@ -43944,7 +43964,6 @@ static void REGAL_CALL emu_glGetNamedProgramStringEXT(GLuint program, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -43962,12 +43981,11 @@ static void REGAL_CALL emu_glGetNamedProgramStringEXT(GLuint program, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glGetProgramStringARB)( target, pname, string );
         return;
@@ -44001,7 +44019,6 @@ static void REGAL_CALL emu_glGetNamedProgramivEXT(GLuint program, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44019,12 +44036,11 @@ static void REGAL_CALL emu_glGetNamedProgramivEXT(GLuint program, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glGetProgramivARB)( target, pname, params );
         return;
@@ -44058,7 +44074,6 @@ static void REGAL_CALL emu_glGetNamedRenderbufferParameterivEXT(GLuint renderbuf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44076,12 +44091,11 @@ static void REGAL_CALL emu_glGetNamedRenderbufferParameterivEXT(GLuint renderbuf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
         _dispatch.call(&_dispatch.glGetRenderbufferParameteriv)( GL_RENDERBUFFER, pname, params );
         return;
@@ -44115,7 +44129,6 @@ static void REGAL_CALL emu_glGetPointerIndexedvEXT(GLenum target, GLuint index, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44133,12 +44146,11 @@ static void REGAL_CALL emu_glGetPointerIndexedvEXT(GLenum target, GLuint index, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         // if ( ! _context->dsa->GetIndexedv( _context, target, index, data ) ) {
         //     _dispatch.call(&_dispatch.glGetPointerIndexedvEXT)(target, index, data);
         // }
@@ -44173,7 +44185,6 @@ static void REGAL_CALL emu_glGetTextureImageEXT(GLuint texture, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44191,12 +44202,11 @@ static void REGAL_CALL emu_glGetTextureImageEXT(GLuint texture, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexImage)( target, level, format, type, pixels );
         return;
@@ -44230,7 +44240,6 @@ static void REGAL_CALL emu_glGetTextureLevelParameterfvEXT(GLuint texture, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44248,12 +44257,11 @@ static void REGAL_CALL emu_glGetTextureLevelParameterfvEXT(GLuint texture, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexLevelParameterfv)( target, level, pname, params );
         return;
@@ -44287,7 +44295,6 @@ static void REGAL_CALL emu_glGetTextureLevelParameterivEXT(GLuint texture, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44305,12 +44312,11 @@ static void REGAL_CALL emu_glGetTextureLevelParameterivEXT(GLuint texture, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexLevelParameteriv)( target, level, pname, params );
         return;
@@ -44344,7 +44350,6 @@ static void REGAL_CALL emu_glGetTextureParameterIivEXT(GLuint texture, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44362,12 +44367,11 @@ static void REGAL_CALL emu_glGetTextureParameterIivEXT(GLuint texture, GLenum ta
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexParameterIiv)( target, pname, params );
         return;
@@ -44401,7 +44405,6 @@ static void REGAL_CALL emu_glGetTextureParameterIuivEXT(GLuint texture, GLenum t
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44419,12 +44422,11 @@ static void REGAL_CALL emu_glGetTextureParameterIuivEXT(GLuint texture, GLenum t
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexParameterIuiv)( target, pname, params );
         return;
@@ -44458,7 +44460,6 @@ static void REGAL_CALL emu_glGetTextureParameterfvEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44476,12 +44477,11 @@ static void REGAL_CALL emu_glGetTextureParameterfvEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexParameterfv)( target, pname, params );
         return;
@@ -44515,7 +44515,6 @@ static void REGAL_CALL emu_glGetTextureParameterivEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44533,12 +44532,11 @@ static void REGAL_CALL emu_glGetTextureParameterivEXT(GLuint texture, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glGetTexParameteriv)( target, pname, params );
         return;
@@ -44572,7 +44570,6 @@ static GLvoid *REGAL_CALL emu_glMapNamedBufferEXT(GLuint buffer, GLenum access)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44590,12 +44587,11 @@ static GLvoid *REGAL_CALL emu_glMapNamedBufferEXT(GLuint buffer, GLenum access)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         return _dispatch.call(&_dispatch.glMapBuffer)( GL_ARRAY_BUFFER, access );
       }
@@ -44627,7 +44623,6 @@ static GLvoid *REGAL_CALL emu_glMapNamedBufferRangeEXT(GLuint buffer, GLintptr o
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -44645,12 +44640,11 @@ static GLvoid *REGAL_CALL emu_glMapNamedBufferRangeEXT(GLuint buffer, GLintptr o
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         return _dispatch.call(&_dispatch.glMapBufferRange)( GL_ARRAY_BUFFER, offset, length, access );
       }
@@ -44682,10 +44676,10 @@ static void REGAL_CALL emu_glMatrixFrustumEXT(GLenum mode, GLdouble left, GLdoub
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -44704,17 +44698,17 @@ static void REGAL_CALL emu_glMatrixFrustumEXT(GLenum mode, GLdouble left, GLdoub
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glFrustum)(left, right, bottom, top, zNear, zFar);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -44753,10 +44747,10 @@ static void REGAL_CALL emu_glMatrixLoadIdentityEXT(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -44775,17 +44769,17 @@ static void REGAL_CALL emu_glMatrixLoadIdentityEXT(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glLoadIdentity)();
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -44824,10 +44818,10 @@ static void REGAL_CALL emu_glMatrixLoadTransposedEXT(GLenum mode, const GLdouble
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -44846,17 +44840,17 @@ static void REGAL_CALL emu_glMatrixLoadTransposedEXT(GLenum mode, const GLdouble
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glLoadTransposeMatrixd)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -44895,10 +44889,10 @@ static void REGAL_CALL emu_glMatrixLoadTransposefEXT(GLenum mode, const GLfloat 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -44917,17 +44911,17 @@ static void REGAL_CALL emu_glMatrixLoadTransposefEXT(GLenum mode, const GLfloat 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glLoadTransposeMatrixf)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -44966,10 +44960,10 @@ static void REGAL_CALL emu_glMatrixLoaddEXT(GLenum mode, const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -44988,17 +44982,17 @@ static void REGAL_CALL emu_glMatrixLoaddEXT(GLenum mode, const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glLoadMatrixd)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45037,10 +45031,10 @@ static void REGAL_CALL emu_glMatrixLoadfEXT(GLenum mode, const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45059,17 +45053,17 @@ static void REGAL_CALL emu_glMatrixLoadfEXT(GLenum mode, const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glLoadMatrixf)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45108,10 +45102,10 @@ static void REGAL_CALL emu_glMatrixMultTransposedEXT(GLenum mode, const GLdouble
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45130,17 +45124,17 @@ static void REGAL_CALL emu_glMatrixMultTransposedEXT(GLenum mode, const GLdouble
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glMultTransposeMatrixd)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45179,10 +45173,10 @@ static void REGAL_CALL emu_glMatrixMultTransposefEXT(GLenum mode, const GLfloat 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45201,17 +45195,17 @@ static void REGAL_CALL emu_glMatrixMultTransposefEXT(GLenum mode, const GLfloat 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glMultTransposeMatrixf)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45250,10 +45244,10 @@ static void REGAL_CALL emu_glMatrixMultdEXT(GLenum mode, const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45272,17 +45266,17 @@ static void REGAL_CALL emu_glMatrixMultdEXT(GLenum mode, const GLdouble *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glMultMatrixd)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45321,10 +45315,10 @@ static void REGAL_CALL emu_glMatrixMultfEXT(GLenum mode, const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45343,17 +45337,17 @@ static void REGAL_CALL emu_glMatrixMultfEXT(GLenum mode, const GLfloat *m)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glMultMatrixf)(m);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45392,10 +45386,10 @@ static void REGAL_CALL emu_glMatrixOrthoEXT(GLenum mode, GLdouble left, GLdouble
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45414,17 +45408,17 @@ static void REGAL_CALL emu_glMatrixOrthoEXT(GLenum mode, GLdouble left, GLdouble
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glOrtho)(left, right, bottom, top, zNear, zFar);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45463,10 +45457,10 @@ static void REGAL_CALL emu_glMatrixPopEXT(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45485,17 +45479,17 @@ static void REGAL_CALL emu_glMatrixPopEXT(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glPopMatrix)();
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45534,10 +45528,10 @@ static void REGAL_CALL emu_glMatrixPushEXT(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45556,17 +45550,17 @@ static void REGAL_CALL emu_glMatrixPushEXT(GLenum mode)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glPushMatrix)();
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45605,10 +45599,10 @@ static void REGAL_CALL emu_glMatrixRotatedEXT(GLenum mode, GLdouble angle, GLdou
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45627,17 +45621,17 @@ static void REGAL_CALL emu_glMatrixRotatedEXT(GLenum mode, GLdouble angle, GLdou
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glRotated)(angle, x, y, z);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45676,10 +45670,10 @@ static void REGAL_CALL emu_glMatrixRotatefEXT(GLenum mode, GLfloat angle, GLfloa
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45698,17 +45692,17 @@ static void REGAL_CALL emu_glMatrixRotatefEXT(GLenum mode, GLfloat angle, GLfloa
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glRotatef)(angle, x, y, z);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45747,10 +45741,10 @@ static void REGAL_CALL emu_glMatrixScaledEXT(GLenum mode, GLdouble x, GLdouble y
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45769,17 +45763,17 @@ static void REGAL_CALL emu_glMatrixScaledEXT(GLenum mode, GLdouble x, GLdouble y
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glScaled)(x, y, z);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45818,10 +45812,10 @@ static void REGAL_CALL emu_glMatrixScalefEXT(GLenum mode, GLfloat x, GLfloat y, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45840,17 +45834,17 @@ static void REGAL_CALL emu_glMatrixScalefEXT(GLenum mode, GLfloat x, GLfloat y, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glScalef)(x, y, z);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45889,10 +45883,10 @@ static void REGAL_CALL emu_glMatrixTranslatedEXT(GLenum mode, GLdouble x, GLdoub
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45911,17 +45905,17 @@ static void REGAL_CALL emu_glMatrixTranslatedEXT(GLenum mode, GLdouble x, GLdoub
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glTranslated)(x, y, z);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -45960,10 +45954,10 @@ static void REGAL_CALL emu_glMatrixTranslatefEXT(GLenum mode, GLfloat x, GLfloat
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -45982,17 +45976,17 @@ static void REGAL_CALL emu_glMatrixTranslatefEXT(GLenum mode, GLfloat x, GLfloat
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaMatrixMode( _context, mode );
         _dispatch.call(&_dispatch.glTranslatef)(x, y, z);
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46031,7 +46025,6 @@ static void REGAL_CALL emu_glMultiTexBufferEXT(GLenum texunit, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46049,12 +46042,11 @@ static void REGAL_CALL emu_glMultiTexBufferEXT(GLenum texunit, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexBuffer)( target, internalformat, buffer );
         return;
@@ -46096,7 +46088,6 @@ static void REGAL_CALL emu_glMultiTexCoordPointerEXT(GLenum texunit, GLint size,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46114,12 +46105,11 @@ static void REGAL_CALL emu_glMultiTexCoordPointerEXT(GLenum texunit, GLint size,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaClientActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexCoordPointer)( size, type, stride, pointer );
         return;
@@ -46153,10 +46143,10 @@ static void REGAL_CALL emu_glMultiTexEnvfEXT(GLenum texunit, GLenum target, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -46175,17 +46165,17 @@ static void REGAL_CALL emu_glMultiTexEnvfEXT(GLenum texunit, GLenum target, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexEnvf)( target, pname, param );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46224,10 +46214,10 @@ static void REGAL_CALL emu_glMultiTexEnvfvEXT(GLenum texunit, GLenum target, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -46246,17 +46236,17 @@ static void REGAL_CALL emu_glMultiTexEnvfvEXT(GLenum texunit, GLenum target, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexEnvfv)( target, pname, params );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46295,10 +46285,10 @@ static void REGAL_CALL emu_glMultiTexEnviEXT(GLenum texunit, GLenum target, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -46317,17 +46307,17 @@ static void REGAL_CALL emu_glMultiTexEnviEXT(GLenum texunit, GLenum target, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexEnvi)( target, pname, param );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46366,10 +46356,10 @@ static void REGAL_CALL emu_glMultiTexEnvivEXT(GLenum texunit, GLenum target, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -46388,17 +46378,17 @@ static void REGAL_CALL emu_glMultiTexEnvivEXT(GLenum texunit, GLenum target, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexEnviv)( target, pname, params );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46437,7 +46427,6 @@ static void REGAL_CALL emu_glMultiTexGendEXT(GLenum texunit, GLenum coord, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46455,12 +46444,11 @@ static void REGAL_CALL emu_glMultiTexGendEXT(GLenum texunit, GLenum coord, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexGend)( coord, pname, param );
         return;
@@ -46494,7 +46482,6 @@ static void REGAL_CALL emu_glMultiTexGendvEXT(GLenum texunit, GLenum coord, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46512,12 +46499,11 @@ static void REGAL_CALL emu_glMultiTexGendvEXT(GLenum texunit, GLenum coord, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexGendv)( coord, pname, params );
         return;
@@ -46551,7 +46537,6 @@ static void REGAL_CALL emu_glMultiTexGenfEXT(GLenum texunit, GLenum coord, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46569,12 +46554,11 @@ static void REGAL_CALL emu_glMultiTexGenfEXT(GLenum texunit, GLenum coord, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexGenf)( coord, pname, param );
         return;
@@ -46608,7 +46592,6 @@ static void REGAL_CALL emu_glMultiTexGenfvEXT(GLenum texunit, GLenum coord, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46626,12 +46609,11 @@ static void REGAL_CALL emu_glMultiTexGenfvEXT(GLenum texunit, GLenum coord, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexGenfv)( coord, pname, params );
         return;
@@ -46665,7 +46647,6 @@ static void REGAL_CALL emu_glMultiTexGeniEXT(GLenum texunit, GLenum coord, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46683,12 +46664,11 @@ static void REGAL_CALL emu_glMultiTexGeniEXT(GLenum texunit, GLenum coord, GLenu
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexGeni)( coord, pname, param );
         return;
@@ -46722,7 +46702,6 @@ static void REGAL_CALL emu_glMultiTexGenivEXT(GLenum texunit, GLenum coord, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46740,12 +46719,11 @@ static void REGAL_CALL emu_glMultiTexGenivEXT(GLenum texunit, GLenum coord, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexGeniv)( coord, pname, params );
         return;
@@ -46779,10 +46757,10 @@ static void REGAL_CALL emu_glMultiTexImage1DEXT(GLenum texunit, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46806,12 +46784,11 @@ static void REGAL_CALL emu_glMultiTexImage1DEXT(GLenum texunit, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexImage1D)( target, level, internalformat, width, border, format, type, pixels );
         return;
@@ -46845,10 +46822,10 @@ static void REGAL_CALL emu_glMultiTexImage2DEXT(GLenum texunit, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46872,12 +46849,11 @@ static void REGAL_CALL emu_glMultiTexImage2DEXT(GLenum texunit, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexImage2D)( target, level, internalformat, width, height, border, format, type, pixels );
         return;
@@ -46911,10 +46887,10 @@ static void REGAL_CALL emu_glMultiTexImage3DEXT(GLenum texunit, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -46938,12 +46914,11 @@ static void REGAL_CALL emu_glMultiTexImage3DEXT(GLenum texunit, GLenum target, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexImage3D)( target, level, internalformat, width, height, depth, border, format, type, pixels );
         return;
@@ -46977,7 +46952,6 @@ static void REGAL_CALL emu_glMultiTexParameterIivEXT(GLenum texunit, GLenum targ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -46995,12 +46969,11 @@ static void REGAL_CALL emu_glMultiTexParameterIivEXT(GLenum texunit, GLenum targ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexParameterIiv)( target, pname, params );
         return;
@@ -47034,7 +47007,6 @@ static void REGAL_CALL emu_glMultiTexParameterIuivEXT(GLenum texunit, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47052,12 +47024,11 @@ static void REGAL_CALL emu_glMultiTexParameterIuivEXT(GLenum texunit, GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexParameterIuiv)( target, pname, params );
         return;
@@ -47091,7 +47062,6 @@ static void REGAL_CALL emu_glMultiTexParameterfEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47109,12 +47079,11 @@ static void REGAL_CALL emu_glMultiTexParameterfEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexParameterf)( target, pname, param );
         return;
@@ -47148,7 +47117,6 @@ static void REGAL_CALL emu_glMultiTexParameterfvEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47166,12 +47134,11 @@ static void REGAL_CALL emu_glMultiTexParameterfvEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexParameterfv)( target, pname, param );
         return;
@@ -47205,7 +47172,6 @@ static void REGAL_CALL emu_glMultiTexParameteriEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47223,12 +47189,11 @@ static void REGAL_CALL emu_glMultiTexParameteriEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexParameteri)( target, pname, param );
         return;
@@ -47262,7 +47227,6 @@ static void REGAL_CALL emu_glMultiTexParameterivEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47280,12 +47244,11 @@ static void REGAL_CALL emu_glMultiTexParameterivEXT(GLenum texunit, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexParameteriv)( target, pname, param );
         return;
@@ -47319,7 +47282,6 @@ static void REGAL_CALL emu_glMultiTexRenderbufferEXT(GLenum texunit, GLenum targ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47337,12 +47299,11 @@ static void REGAL_CALL emu_glMultiTexRenderbufferEXT(GLenum texunit, GLenum targ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexRenderbufferNV)( target, renderbuffer );
         return;
@@ -47376,7 +47337,6 @@ static void REGAL_CALL emu_glMultiTexSubImage1DEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47394,12 +47354,11 @@ static void REGAL_CALL emu_glMultiTexSubImage1DEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexSubImage1D)( target, level, xoffset, width, format, type, pixels );
         return;
@@ -47433,7 +47392,6 @@ static void REGAL_CALL emu_glMultiTexSubImage2DEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47451,12 +47409,11 @@ static void REGAL_CALL emu_glMultiTexSubImage2DEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexSubImage2D)( target, level, xoffset, yoffset, width, height, format, type, pixels );
         return;
@@ -47490,7 +47447,6 @@ static void REGAL_CALL emu_glMultiTexSubImage3DEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47508,12 +47464,11 @@ static void REGAL_CALL emu_glMultiTexSubImage3DEXT(GLenum texunit, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, texunit );
         _dispatch.call(&_dispatch.glTexSubImage3D)( target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels );
         return;
@@ -47547,7 +47502,6 @@ static void REGAL_CALL emu_glNamedBufferDataEXT(GLuint buffer, GLsizeiptr size, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47565,12 +47519,11 @@ static void REGAL_CALL emu_glNamedBufferDataEXT(GLuint buffer, GLsizeiptr size, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         _dispatch.call(&_dispatch.glBufferData)( GL_ARRAY_BUFFER, size, data, usage );
         return;
@@ -47604,7 +47557,6 @@ static void REGAL_CALL emu_glNamedBufferSubDataEXT(GLuint buffer, GLintptr offse
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47622,12 +47574,11 @@ static void REGAL_CALL emu_glNamedBufferSubDataEXT(GLuint buffer, GLintptr offse
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         _dispatch.call(&_dispatch.glBufferSubData)( GL_ARRAY_BUFFER, offset, size, data );
         return;
@@ -47661,7 +47612,6 @@ static void REGAL_CALL emu_glNamedCopyBufferSubDataEXT(GLuint readBuffer, GLuint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47679,12 +47629,11 @@ static void REGAL_CALL emu_glNamedCopyBufferSubDataEXT(GLuint readBuffer, GLuint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, readBuffer);
         _dispatch.call(&_dispatch.glCopyBufferSubData)( GL_ARRAY_BUFFER, writeBuffer, readOffset, writeOffset, size );
         return;
@@ -47718,7 +47667,6 @@ static void REGAL_CALL emu_glNamedFramebufferRenderbufferEXT(GLuint framebuffer,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47736,12 +47684,11 @@ static void REGAL_CALL emu_glNamedFramebufferRenderbufferEXT(GLuint framebuffer,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferRenderbuffer)( GL_FRAMEBUFFER, attachment, renderbuffertarget, renderbuffer );
         return;
@@ -47775,7 +47722,6 @@ static void REGAL_CALL emu_glNamedFramebufferTexture1DEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47793,12 +47739,11 @@ static void REGAL_CALL emu_glNamedFramebufferTexture1DEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferTexture1D)( GL_FRAMEBUFFER, attachment, textarget, texture, level );
         return;
@@ -47832,7 +47777,6 @@ static void REGAL_CALL emu_glNamedFramebufferTexture2DEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47850,12 +47794,11 @@ static void REGAL_CALL emu_glNamedFramebufferTexture2DEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferTexture2D)( GL_FRAMEBUFFER, attachment, textarget, texture, level );
         return;
@@ -47889,7 +47832,6 @@ static void REGAL_CALL emu_glNamedFramebufferTexture3DEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47907,12 +47849,11 @@ static void REGAL_CALL emu_glNamedFramebufferTexture3DEXT(GLuint framebuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferTexture3D)( GL_FRAMEBUFFER, attachment, textarget, texture, level, zoffset );
         return;
@@ -47946,7 +47887,6 @@ static void REGAL_CALL emu_glNamedFramebufferTextureEXT(GLuint framebuffer, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -47964,12 +47904,11 @@ static void REGAL_CALL emu_glNamedFramebufferTextureEXT(GLuint framebuffer, GLen
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferTexture)( GL_FRAMEBUFFER, attachment, texture, level );
         return;
@@ -48003,7 +47942,6 @@ static void REGAL_CALL emu_glNamedFramebufferTextureFaceEXT(GLuint framebuffer, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48021,12 +47959,11 @@ static void REGAL_CALL emu_glNamedFramebufferTextureFaceEXT(GLuint framebuffer, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferTextureFaceARB)( GL_FRAMEBUFFER, attachment, texture, level, face );
         return;
@@ -48060,7 +47997,6 @@ static void REGAL_CALL emu_glNamedFramebufferTextureLayerEXT(GLuint framebuffer,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48078,12 +48014,11 @@ static void REGAL_CALL emu_glNamedFramebufferTextureLayerEXT(GLuint framebuffer,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaFramebuffer( _context, GL_FRAMEBUFFER, framebuffer);
         _dispatch.call(&_dispatch.glFramebufferTextureLayer)( GL_FRAMEBUFFER, attachment, texture, level, layer );
         return;
@@ -48117,7 +48052,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4dEXT(GLuint program, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48135,12 +48069,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4dEXT(GLuint program, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameter4dARB)( target, index, x, y, z, w );
         return;
@@ -48174,7 +48107,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4dvEXT(GLuint program, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48192,12 +48124,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4dvEXT(GLuint program, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameter4dvARB)( target, index, params );
         return;
@@ -48231,7 +48162,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4fEXT(GLuint program, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48249,12 +48179,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4fEXT(GLuint program, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameter4fARB)( target, index, x, y, z, w );
         return;
@@ -48288,7 +48217,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4fvEXT(GLuint program, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48306,12 +48234,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameter4fvEXT(GLuint program, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameter4fvARB)( target, index, params );
         return;
@@ -48345,7 +48272,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4iEXT(GLuint program, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48363,12 +48289,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4iEXT(GLuint program, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameterI4iNV)( target, index, x, y, z, w );
         return;
@@ -48402,7 +48327,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4ivEXT(GLuint program, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48420,12 +48344,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4ivEXT(GLuint program, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameterI4ivNV)( target, index, params );
         return;
@@ -48459,7 +48382,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4uiEXT(GLuint program, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48477,12 +48399,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4uiEXT(GLuint program, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameterI4uiNV)( target, index, x, y, z, w );
         return;
@@ -48516,7 +48437,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4uivEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48534,12 +48454,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameterI4uivEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameterI4uivNV)( target, index, params );
         return;
@@ -48573,7 +48492,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParameters4fvEXT(GLuint program, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48591,12 +48509,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParameters4fvEXT(GLuint program, G
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParameters4fvEXT)( target, index, count, params );
         return;
@@ -48630,7 +48547,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParametersI4ivEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48648,12 +48564,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParametersI4ivEXT(GLuint program, 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParametersI4ivNV)( target, index, count, params );
         return;
@@ -48687,7 +48602,6 @@ static void REGAL_CALL emu_glNamedProgramLocalParametersI4uivEXT(GLuint program,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48705,12 +48619,11 @@ static void REGAL_CALL emu_glNamedProgramLocalParametersI4uivEXT(GLuint program,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramLocalParametersI4uivNV)( target, index, count, params );
         return;
@@ -48744,7 +48657,6 @@ static void REGAL_CALL emu_glNamedProgramStringEXT(GLuint program, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48762,12 +48674,11 @@ static void REGAL_CALL emu_glNamedProgramStringEXT(GLuint program, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaAsmProgram( _context, target, program);
         _dispatch.call(&_dispatch.glProgramStringARB)( target, format, len, string );
         return;
@@ -48801,7 +48712,6 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageEXT(GLuint renderbuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48819,12 +48729,11 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageEXT(GLuint renderbuffer, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
         _dispatch.call(&_dispatch.glRenderbufferStorage)( GL_RENDERBUFFER, internalformat, width, height );
         return;
@@ -48858,7 +48767,6 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageMultisampleCoverageEXT(GLui
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48876,12 +48784,11 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageMultisampleCoverageEXT(GLui
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
         _dispatch.call(&_dispatch.glRenderbufferStorageMultisampleCoverageNV)( GL_RENDERBUFFER, coverageSamples, colorSamples, internalformat, width, height );
         return;
@@ -48915,7 +48822,6 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageMultisampleEXT(GLuint rende
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48933,12 +48839,11 @@ static void REGAL_CALL emu_glNamedRenderbufferStorageMultisampleEXT(GLuint rende
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaRenderbuffer( _context, GL_RENDERBUFFER, renderbuffer);
         _dispatch.call(&_dispatch.glRenderbufferStorageMultisample)( GL_RENDERBUFFER, samples, internalformat, width, height );
         return;
@@ -48972,7 +48877,6 @@ static void REGAL_CALL emu_glProgramUniform1dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -48990,12 +48894,11 @@ static void REGAL_CALL emu_glProgramUniform1dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1d)( location, x );
         return;
@@ -49029,7 +48932,6 @@ static void REGAL_CALL emu_glProgramUniform1dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49047,12 +48949,11 @@ static void REGAL_CALL emu_glProgramUniform1dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1dv)( location, count, value );
         return;
@@ -49086,7 +48987,6 @@ static void REGAL_CALL emu_glProgramUniform1fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49104,12 +49004,11 @@ static void REGAL_CALL emu_glProgramUniform1fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1f)( location, v0 );
         return;
@@ -49143,7 +49042,6 @@ static void REGAL_CALL emu_glProgramUniform1fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49161,12 +49059,11 @@ static void REGAL_CALL emu_glProgramUniform1fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1fv)( location, count, value );
         return;
@@ -49200,7 +49097,6 @@ static void REGAL_CALL emu_glProgramUniform1iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49218,12 +49114,11 @@ static void REGAL_CALL emu_glProgramUniform1iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1i)( location, v0 );
         return;
@@ -49257,7 +49152,6 @@ static void REGAL_CALL emu_glProgramUniform1ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49275,12 +49169,11 @@ static void REGAL_CALL emu_glProgramUniform1ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1iv)( location, count, value );
         return;
@@ -49314,7 +49207,6 @@ static void REGAL_CALL emu_glProgramUniform1uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49332,12 +49224,11 @@ static void REGAL_CALL emu_glProgramUniform1uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1ui)( location, v0 );
         return;
@@ -49371,7 +49262,6 @@ static void REGAL_CALL emu_glProgramUniform1uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49389,12 +49279,11 @@ static void REGAL_CALL emu_glProgramUniform1uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform1uiv)( location, count, value );
         return;
@@ -49428,7 +49317,6 @@ static void REGAL_CALL emu_glProgramUniform2dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49446,12 +49334,11 @@ static void REGAL_CALL emu_glProgramUniform2dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2d)( location, x, y );
         return;
@@ -49485,7 +49372,6 @@ static void REGAL_CALL emu_glProgramUniform2dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49503,12 +49389,11 @@ static void REGAL_CALL emu_glProgramUniform2dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2dv)( location, count, value );
         return;
@@ -49542,7 +49427,6 @@ static void REGAL_CALL emu_glProgramUniform2fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49560,12 +49444,11 @@ static void REGAL_CALL emu_glProgramUniform2fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2f)( location, v0, v1 );
         return;
@@ -49599,7 +49482,6 @@ static void REGAL_CALL emu_glProgramUniform2fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49617,12 +49499,11 @@ static void REGAL_CALL emu_glProgramUniform2fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2fv)( location, count, value );
         return;
@@ -49656,7 +49537,6 @@ static void REGAL_CALL emu_glProgramUniform2iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49674,12 +49554,11 @@ static void REGAL_CALL emu_glProgramUniform2iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2i)( location, v0, v1 );
         return;
@@ -49713,7 +49592,6 @@ static void REGAL_CALL emu_glProgramUniform2ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49731,12 +49609,11 @@ static void REGAL_CALL emu_glProgramUniform2ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2iv)( location, count, value );
         return;
@@ -49770,7 +49647,6 @@ static void REGAL_CALL emu_glProgramUniform2uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49788,12 +49664,11 @@ static void REGAL_CALL emu_glProgramUniform2uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2ui)( location, v0, v1 );
         return;
@@ -49827,7 +49702,6 @@ static void REGAL_CALL emu_glProgramUniform2uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49845,12 +49719,11 @@ static void REGAL_CALL emu_glProgramUniform2uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform2uiv)( location, count, value );
         return;
@@ -49884,7 +49757,6 @@ static void REGAL_CALL emu_glProgramUniform3dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49902,12 +49774,11 @@ static void REGAL_CALL emu_glProgramUniform3dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3d)( location, x, y, z );
         return;
@@ -49941,7 +49812,6 @@ static void REGAL_CALL emu_glProgramUniform3dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -49959,12 +49829,11 @@ static void REGAL_CALL emu_glProgramUniform3dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3dv)( location, count, value );
         return;
@@ -49998,7 +49867,6 @@ static void REGAL_CALL emu_glProgramUniform3fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50016,12 +49884,11 @@ static void REGAL_CALL emu_glProgramUniform3fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3f)( location, v0, v1, v2 );
         return;
@@ -50055,7 +49922,6 @@ static void REGAL_CALL emu_glProgramUniform3fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50073,12 +49939,11 @@ static void REGAL_CALL emu_glProgramUniform3fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3fv)( location, count, value );
         return;
@@ -50112,7 +49977,6 @@ static void REGAL_CALL emu_glProgramUniform3iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50130,12 +49994,11 @@ static void REGAL_CALL emu_glProgramUniform3iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3i)( location, v0, v1, v2 );
         return;
@@ -50169,7 +50032,6 @@ static void REGAL_CALL emu_glProgramUniform3ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50187,12 +50049,11 @@ static void REGAL_CALL emu_glProgramUniform3ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3iv)( location, count, value );
         return;
@@ -50226,7 +50087,6 @@ static void REGAL_CALL emu_glProgramUniform3uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50244,12 +50104,11 @@ static void REGAL_CALL emu_glProgramUniform3uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3ui)( location, v0, v1, v2 );
         return;
@@ -50283,7 +50142,6 @@ static void REGAL_CALL emu_glProgramUniform3uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50301,12 +50159,11 @@ static void REGAL_CALL emu_glProgramUniform3uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform3uiv)( location, count, value );
         return;
@@ -50340,7 +50197,6 @@ static void REGAL_CALL emu_glProgramUniform4dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50358,12 +50214,11 @@ static void REGAL_CALL emu_glProgramUniform4dEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4d)( location, x, y, z, w );
         return;
@@ -50397,7 +50252,6 @@ static void REGAL_CALL emu_glProgramUniform4dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50415,12 +50269,11 @@ static void REGAL_CALL emu_glProgramUniform4dvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4dv)( location, count, value );
         return;
@@ -50454,7 +50307,6 @@ static void REGAL_CALL emu_glProgramUniform4fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50472,12 +50324,11 @@ static void REGAL_CALL emu_glProgramUniform4fEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4f)( location, v0, v1, v2, v3 );
         return;
@@ -50511,7 +50362,6 @@ static void REGAL_CALL emu_glProgramUniform4fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50529,12 +50379,11 @@ static void REGAL_CALL emu_glProgramUniform4fvEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4fv)( location, count, value );
         return;
@@ -50568,7 +50417,6 @@ static void REGAL_CALL emu_glProgramUniform4iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50586,12 +50434,11 @@ static void REGAL_CALL emu_glProgramUniform4iEXT(GLuint program, GLint location,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4i)( location, v0, v1, v2, v3 );
         return;
@@ -50625,7 +50472,6 @@ static void REGAL_CALL emu_glProgramUniform4ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50643,12 +50489,11 @@ static void REGAL_CALL emu_glProgramUniform4ivEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4iv)( location, count, value );
         return;
@@ -50682,7 +50527,6 @@ static void REGAL_CALL emu_glProgramUniform4uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50700,12 +50544,11 @@ static void REGAL_CALL emu_glProgramUniform4uiEXT(GLuint program, GLint location
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4ui)( location, v0, v1, v2, v3 );
         return;
@@ -50739,7 +50582,6 @@ static void REGAL_CALL emu_glProgramUniform4uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50757,12 +50599,11 @@ static void REGAL_CALL emu_glProgramUniform4uivEXT(GLuint program, GLint locatio
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniform4uiv)( location, count, value );
         return;
@@ -50796,7 +50637,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix2dvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50814,12 +50654,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix2dvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix2dv)( location, count, transpose, value );
         return;
@@ -50853,7 +50692,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix2fvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50871,12 +50709,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix2fvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix2fv)( location, count, transpose, value );
         return;
@@ -50910,7 +50747,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x3dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50928,12 +50764,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x3dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix2x3dv)( location, count, transpose, value );
         return;
@@ -50967,7 +50802,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x3fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -50985,12 +50819,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x3fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix2x3fv)( location, count, transpose, value );
         return;
@@ -51024,7 +50857,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x4dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51042,12 +50874,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x4dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix2x4dv)( location, count, transpose, value );
         return;
@@ -51081,7 +50912,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x4fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51099,12 +50929,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix2x4fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix2x4fv)( location, count, transpose, value );
         return;
@@ -51138,7 +50967,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix3dvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51156,12 +50984,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix3dvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix3dv)( location, count, transpose, value );
         return;
@@ -51195,7 +51022,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix3fvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51213,12 +51039,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix3fvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix3fv)( location, count, transpose, value );
         return;
@@ -51252,7 +51077,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x2dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51270,12 +51094,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x2dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix3x2dv)( location, count, transpose, value );
         return;
@@ -51309,7 +51132,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x2fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51327,12 +51149,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x2fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix3x2fv)( location, count, transpose, value );
         return;
@@ -51366,7 +51187,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x4dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51384,12 +51204,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x4dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix3x4dv)( location, count, transpose, value );
         return;
@@ -51423,7 +51242,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x4fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51441,12 +51259,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix3x4fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix3x4fv)( location, count, transpose, value );
         return;
@@ -51480,7 +51297,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix4dvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51498,12 +51314,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix4dvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix4dv)( location, count, transpose, value );
         return;
@@ -51537,7 +51352,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix4fvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51555,12 +51369,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix4fvEXT(GLuint program, GLint lo
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix4fv)( location, count, transpose, value );
         return;
@@ -51594,7 +51407,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x2dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51612,12 +51424,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x2dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix4x2dv)( location, count, transpose, value );
         return;
@@ -51651,7 +51462,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x2fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51669,12 +51479,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x2fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix4x2fv)( location, count, transpose, value );
         return;
@@ -51708,7 +51517,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x3dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51726,12 +51534,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x3dvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix4x3dv)( location, count, transpose, value );
         return;
@@ -51765,7 +51572,6 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x3fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51783,12 +51589,11 @@ static void REGAL_CALL emu_glProgramUniformMatrix4x3fvEXT(GLuint program, GLint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaGlslProgram( _context, program);
         _dispatch.call(&_dispatch.glUniformMatrix4x3fv)( location, count, transpose, value );
         return;
@@ -51825,7 +51630,6 @@ static void REGAL_CALL emu_glPushClientAttribDefaultEXT(GLbitfield mask)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51852,12 +51656,11 @@ static void REGAL_CALL emu_glPushClientAttribDefaultEXT(GLbitfield mask)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         DispatchTable &tbl = _context->dispatcher.emulation;
         tbl.call(&tbl.glPushClientAttrib)(mask);
         _context->dsa->ClientAttribDefault(_context, mask);
@@ -51892,7 +51695,6 @@ static void REGAL_CALL emu_glTextureBufferEXT(GLuint texture, GLenum target, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -51910,12 +51712,11 @@ static void REGAL_CALL emu_glTextureBufferEXT(GLuint texture, GLenum target, GLe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexBuffer)( target, internalformat, buffer );
         return;
@@ -51949,10 +51750,10 @@ static void REGAL_CALL emu_glTextureImage1DEXT(GLuint texture, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -51976,12 +51777,11 @@ static void REGAL_CALL emu_glTextureImage1DEXT(GLuint texture, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexImage1D)( target, level, internalformat, width, border, format, type, pixels );
         return;
@@ -52015,10 +51815,10 @@ static void REGAL_CALL emu_glTextureImage2DEXT(GLuint texture, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -52042,12 +51842,11 @@ static void REGAL_CALL emu_glTextureImage2DEXT(GLuint texture, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexImage2D)( target, level, internalformat, width, height, border, format, type, pixels );
         return;
@@ -52081,10 +51880,10 @@ static void REGAL_CALL emu_glTextureImage3DEXT(GLuint texture, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -52108,12 +51907,11 @@ static void REGAL_CALL emu_glTextureImage3DEXT(GLuint texture, GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexImage3D)( target, level, internalformat, width, height, depth, border, format, type, pixels );
         return;
@@ -52147,7 +51945,6 @@ static void REGAL_CALL emu_glTextureParameterIivEXT(GLuint texture, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52165,12 +51962,11 @@ static void REGAL_CALL emu_glTextureParameterIivEXT(GLuint texture, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexParameterIiv)( target, pname, params );
         return;
@@ -52204,7 +52000,6 @@ static void REGAL_CALL emu_glTextureParameterIuivEXT(GLuint texture, GLenum targ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52222,12 +52017,11 @@ static void REGAL_CALL emu_glTextureParameterIuivEXT(GLuint texture, GLenum targ
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexParameterIuiv)( target, pname, params );
         return;
@@ -52261,7 +52055,6 @@ static void REGAL_CALL emu_glTextureParameterfEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52279,12 +52072,11 @@ static void REGAL_CALL emu_glTextureParameterfEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexParameterf)( target, pname, param );
         return;
@@ -52318,7 +52110,6 @@ static void REGAL_CALL emu_glTextureParameterfvEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52336,12 +52127,11 @@ static void REGAL_CALL emu_glTextureParameterfvEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexParameterfv)( target, pname, param );
         return;
@@ -52375,7 +52165,6 @@ static void REGAL_CALL emu_glTextureParameteriEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52393,12 +52182,11 @@ static void REGAL_CALL emu_glTextureParameteriEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexParameteri)( target, pname, param );
         return;
@@ -52432,7 +52220,6 @@ static void REGAL_CALL emu_glTextureParameterivEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52450,12 +52237,11 @@ static void REGAL_CALL emu_glTextureParameterivEXT(GLuint texture, GLenum target
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexParameteriv)( target, pname, param );
         return;
@@ -52489,7 +52275,6 @@ static void REGAL_CALL emu_glTextureRenderbufferEXT(GLuint texture, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52507,12 +52292,11 @@ static void REGAL_CALL emu_glTextureRenderbufferEXT(GLuint texture, GLenum targe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexRenderbufferNV)( target, renderbuffer );
         return;
@@ -52546,7 +52330,6 @@ static void REGAL_CALL emu_glTextureSubImage1DEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52564,12 +52347,11 @@ static void REGAL_CALL emu_glTextureSubImage1DEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexSubImage1D)( target, level, xoffset, width, format, type, pixels );
         return;
@@ -52603,7 +52385,6 @@ static void REGAL_CALL emu_glTextureSubImage2DEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52621,12 +52402,11 @@ static void REGAL_CALL emu_glTextureSubImage2DEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexSubImage2D)( target, level, xoffset, yoffset, width, height, format, type, pixels );
         return;
@@ -52660,7 +52440,6 @@ static void REGAL_CALL emu_glTextureSubImage3DEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52678,12 +52457,11 @@ static void REGAL_CALL emu_glTextureSubImage3DEXT(GLuint texture, GLenum target,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaTexture( _context, target, texture );
         _dispatch.call(&_dispatch.glTexSubImage3D)( target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels );
         return;
@@ -52717,7 +52495,6 @@ static GLboolean REGAL_CALL emu_glUnmapNamedBufferEXT(GLuint buffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -52735,12 +52512,11 @@ static GLboolean REGAL_CALL emu_glUnmapNamedBufferEXT(GLuint buffer)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaBuffer( _context, buffer);
         return _dispatch.call(&_dispatch.glUnmapBuffer)( GL_ARRAY_BUFFER );
       }
@@ -53177,10 +52953,10 @@ static void REGAL_CALL emu_glDisableIndexedEXT(GLenum target, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -53205,17 +52981,17 @@ static void REGAL_CALL emu_glDisableIndexedEXT(GLenum target, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, index + GL_TEXTURE0 );
         _dispatch.call(&_dispatch.glDisable)( target );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -53273,10 +53049,10 @@ static void REGAL_CALL emu_glEnableIndexedEXT(GLenum target, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff) break;
@@ -53301,17 +53077,17 @@ static void REGAL_CALL emu_glEnableIndexedEXT(GLenum target, GLuint index)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DsaActiveTexture( _context, index + GL_TEXTURE0 );
         _dispatch.call(&_dispatch.glEnable)( target );
         return;
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -53511,10 +53287,10 @@ static GLboolean REGAL_CALL emu_glIsEnabledIndexedEXT(GLenum target, GLuint inde
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -53536,17 +53312,17 @@ static GLboolean REGAL_CALL emu_glIsEnabledIndexedEXT(GLenum target, GLuint inde
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         GLboolean ret;
         ret = _context->dsa->IsEnabledIndexed( _context, target, index );
         return ret;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -53596,15 +53372,15 @@ static void REGAL_CALL emu_glDrawArraysInstancedEXT(GLenum mode, GLint start, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -53658,15 +53434,15 @@ static void REGAL_CALL emu_glDrawElementsInstancedEXT(GLenum mode, GLsizei count
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -53919,12 +53695,11 @@ static void REGAL_CALL emu_glRenderbufferStorageMultisampleEXT(GLenum target, GL
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -53955,10 +53730,10 @@ static void REGAL_CALL emu_glBindFramebufferEXT(GLenum target, GLuint framebuffe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -53980,18 +53755,18 @@ static void REGAL_CALL emu_glBindFramebufferEXT(GLenum target, GLuint framebuffe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowFramebuffer( target, framebuffer ) ) {
             _dispatch.call(&_dispatch.glBindFramebuffer)( target, framebuffer );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -54036,7 +53811,6 @@ static void REGAL_CALL emu_glBindRenderbufferEXT(GLenum target, GLuint renderbuf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
@@ -54054,12 +53828,11 @@ static void REGAL_CALL emu_glBindRenderbufferEXT(GLenum target, GLuint renderbuf
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowRenderbuffer( target, renderbuffer ) ) {
             _dispatch.call(&_dispatch.glBindRenderbuffer)( target, renderbuffer );
         }
@@ -54094,12 +53867,11 @@ static void REGAL_CALL emu_glDeleteFramebuffersEXT(GLsizei n, const GLuint *fram
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteFramebuffers( _context, n, framebuffers );
       }
       #endif
@@ -54128,12 +53900,11 @@ static void REGAL_CALL emu_glDeleteRenderbuffersEXT(GLsizei n, const GLuint *ren
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteRenderbuffers( _context, n, renderbuffers );
       }
       #endif
@@ -54162,12 +53933,11 @@ static void REGAL_CALL emu_glFramebufferRenderbufferEXT(GLenum target, GLenum at
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -54196,12 +53966,11 @@ static void REGAL_CALL emu_glFramebufferTexture1DEXT(GLenum target, GLenum attac
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -54230,12 +53999,11 @@ static void REGAL_CALL emu_glFramebufferTexture2DEXT(GLenum target, GLenum attac
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -54264,12 +54032,11 @@ static void REGAL_CALL emu_glFramebufferTexture3DEXT(GLenum target, GLenum attac
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -54298,16 +54065,16 @@ static void REGAL_CALL emu_glGenerateMipmapEXT(GLenum target)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -54372,12 +54139,11 @@ static void REGAL_CALL emu_glGetRenderbufferParameterivEXT(GLenum target, GLenum
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -54406,12 +54172,11 @@ static void REGAL_CALL emu_glRenderbufferStorageEXT(GLenum target, GLenum intern
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -54442,12 +54207,11 @@ static void REGAL_CALL emu_glFramebufferTextureEXT(GLenum target, GLenum attachm
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -54476,12 +54240,11 @@ static void REGAL_CALL emu_glFramebufferTextureFaceEXT(GLenum target, GLenum att
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -54524,12 +54287,11 @@ static void REGAL_CALL emu_glFlushMappedBufferRangeEXT(GLenum target, GLintptr o
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -54558,12 +54320,11 @@ static GLvoid *REGAL_CALL emu_glMapBufferRangeEXT(GLenum target, GLintptr offset
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreBuffer( _context );
       }
       #endif
@@ -54594,15 +54355,15 @@ static void REGAL_CALL emu_glMultiDrawArraysEXT(GLenum mode, const GLint *first,
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -54656,15 +54417,15 @@ static void REGAL_CALL emu_glMultiDrawElementsEXT(GLenum mode, const GLsizei *co
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -55753,7 +55514,6 @@ static void REGAL_CALL emu_glTexSubImage2DEXT(GLenum target, GLint level, GLint 
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer) break;
       #endif
@@ -55770,12 +55530,11 @@ static void REGAL_CALL emu_glTexSubImage2DEXT(GLenum target, GLint level, GLint 
     case 10 :
     case 9 :
     case 8 :
-    case 7 :
       #if REGAL_EMU_XFER
       if (_context->xfer)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 6;
+        _context->emuLevel = 7;
         _context->xfer->TexSubImage2D( _context, target, level, xoffset, yoffset, width, height, format, type, pixels );
         return;
       }
@@ -55847,12 +55606,11 @@ static void REGAL_CALL emu_glFramebufferTextureLayerEXT(GLenum target, GLenum at
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreFramebuffer( _context );
       }
       #endif
@@ -56013,10 +55771,10 @@ static void REGAL_CALL emu_glBindTextureEXT(GLenum target, GLuint texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa) break;
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -56046,18 +55804,18 @@ static void REGAL_CALL emu_glBindTextureEXT(GLenum target, GLuint texture)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         if (!_context->dsa->ShadowTexture( target, texture )) {
             _dispatch.call(&_dispatch.glBindTexture)( target, texture );
         }
         return;
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -56100,15 +55858,15 @@ static void REGAL_CALL emu_glDeleteTexturesEXT(GLsizei n, const GLuint *textures
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteTextures( _context, n, textures );
       }
       #endif
+    case 6 :
     case 5 :
     case 4 :
     case 3 :
@@ -56227,6 +55985,174 @@ static void REGAL_CALL emu_glGenTexturesEXT(GLsizei n, GLuint *textures)
 
 // GL_EXT_texture_storage
 
+static void REGAL_CALL emu_glTexStorage1DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->texsto->TextureStorage( _context, target, levels, internalformat, width );
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glTexStorage1DEXT)(target, levels, internalformat, width);
+      break;
+    }
+
+  }
+
+}
+
+static void REGAL_CALL emu_glTexStorage2DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->texsto->TextureStorage( _context, target, levels, internalformat, width, height );
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glTexStorage2DEXT)(target, levels, internalformat, width, height);
+      break;
+    }
+
+  }
+
+}
+
+static void REGAL_CALL emu_glTexStorage3DEXT(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+  RegalContext *_context = REGAL_GET_CONTEXT();
+  RegalAssert(_context);
+  DispatchTable &_dispatch = _context->dispatcher.emulation;
+
+  // prefix
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto) break;
+      #endif
+    case 1 :
+    default:
+      break;
+  }
+
+  // impl
+  switch( _context->emuLevel )
+  {
+    case 12 :
+    case 11 :
+    case 10 :
+    case 9 :
+    case 8 :
+    case 7 :
+    case 6 :
+      #if REGAL_EMU_TEXSTO
+      if (_context->texsto)
+      {
+        Push<int> pushLevel(_context->emuLevel);
+        _context->emuLevel = 5;
+        _context->texsto->TextureStorage( _context, target, levels, internalformat, width, height, depth );
+        return;
+      }
+      #endif
+    case 1 :
+    default:
+    {
+      DispatchTable *_next = _dispatch._next;
+      RegalAssert(_next);
+      _next->call(&_next->glTexStorage3DEXT)(target, levels, internalformat, width, height, depth);
+      break;
+    }
+
+  }
+
+}
+
 // GL_EXT_timer_query
 
 // GL_EXT_transform_feedback
@@ -56322,15 +56248,15 @@ static void REGAL_CALL emu_glDrawArraysEXT(GLenum mode, GLint first, GLsizei cou
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->Restore( _context );
       }
       #endif
+    case 6 :
     case 5 :
       #if REGAL_EMU_IFF
       if (_context->iff)
@@ -56716,12 +56642,11 @@ static void REGAL_CALL emu_glTexRenderbufferNV(GLenum target, GLuint renderbuffe
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreTexture( _context );
         _context->dsa->RestoreActiveTexture( _context );
       }
@@ -56759,12 +56684,11 @@ static void REGAL_CALL emu_glRenderbufferStorageMultisampleCoverageNV(GLenum tar
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreRenderbuffer( _context );
       }
       #endif
@@ -56797,12 +56721,11 @@ static void REGAL_CALL emu_glGetProgramEnvParameterIivNV(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -56831,12 +56754,11 @@ static void REGAL_CALL emu_glGetProgramEnvParameterIuivNV(GLenum target, GLuint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -56865,12 +56787,11 @@ static void REGAL_CALL emu_glGetProgramLocalParameterIivNV(GLenum target, GLuint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -56899,12 +56820,11 @@ static void REGAL_CALL emu_glGetProgramLocalParameterIuivNV(GLenum target, GLuin
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -56933,12 +56853,11 @@ static void REGAL_CALL emu_glProgramEnvParameterI4iNV(GLenum target, GLuint inde
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -56967,12 +56886,11 @@ static void REGAL_CALL emu_glProgramEnvParameterI4ivNV(GLenum target, GLuint ind
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57001,12 +56919,11 @@ static void REGAL_CALL emu_glProgramEnvParameterI4uiNV(GLenum target, GLuint ind
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57035,12 +56952,11 @@ static void REGAL_CALL emu_glProgramEnvParameterI4uivNV(GLenum target, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57069,12 +56985,11 @@ static void REGAL_CALL emu_glProgramEnvParametersI4ivNV(GLenum target, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57103,12 +57018,11 @@ static void REGAL_CALL emu_glProgramEnvParametersI4uivNV(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57137,12 +57051,11 @@ static void REGAL_CALL emu_glProgramLocalParameterI4iNV(GLenum target, GLuint in
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57171,12 +57084,11 @@ static void REGAL_CALL emu_glProgramLocalParameterI4ivNV(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57205,12 +57117,11 @@ static void REGAL_CALL emu_glProgramLocalParameterI4uiNV(GLenum target, GLuint i
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57239,12 +57150,11 @@ static void REGAL_CALL emu_glProgramLocalParameterI4uivNV(GLenum target, GLuint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57273,12 +57183,11 @@ static void REGAL_CALL emu_glProgramLocalParametersI4ivNV(GLenum target, GLuint 
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57307,12 +57216,11 @@ static void REGAL_CALL emu_glProgramLocalParametersI4uivNV(GLenum target, GLuint
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->RestoreAsmProgram( _context, target );
       }
       #endif
@@ -57455,12 +57363,11 @@ static void REGAL_CALL emu_glDeleteProgramsNV(GLsizei n, const GLuint *programs)
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteAsmPrograms( _context, n, programs );
       }
       #endif
@@ -57566,12 +57473,11 @@ static void REGAL_CALL emu_glDeleteFramebuffersOES(GLsizei n, const GLuint *fram
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteFramebuffers( _context, n, framebuffers );
       }
       #endif
@@ -57600,12 +57506,11 @@ static void REGAL_CALL emu_glDeleteRenderbuffersOES(GLsizei n, const GLuint *ren
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteRenderbuffers( _context, n, renderbuffers );
       }
       #endif
@@ -57683,12 +57588,11 @@ static void REGAL_CALL emu_glDeleteVertexArraysOES(GLsizei n, const GLuint *arra
     case 9 :
     case 8 :
     case 7 :
-    case 6 :
       #if REGAL_EMU_DSA
       if (_context->dsa)
       {
         Push<int> pushLevel(_context->emuLevel);
-        _context->emuLevel = 5;
+        _context->emuLevel = 6;
         _context->dsa->DeleteVaos( _context, n, arrays );
       }
       #endif
@@ -58719,6 +58623,9 @@ void InitDispatchTableEmu(DispatchTable &tbl)
 
 // GL_ARB_texture_storage
 
+   tbl.glTexStorage1D = emu_glTexStorage1D;
+   tbl.glTexStorage2D = emu_glTexStorage2D;
+   tbl.glTexStorage3D = emu_glTexStorage3D;
    tbl.glTextureStorage1DEXT = emu_glTextureStorage1DEXT;
    tbl.glTextureStorage2DEXT = emu_glTextureStorage2DEXT;
    tbl.glTextureStorage3DEXT = emu_glTextureStorage3DEXT;
@@ -59168,6 +59075,12 @@ void InitDispatchTableEmu(DispatchTable &tbl)
    tbl.glBindTextureEXT = emu_glBindTextureEXT;
    tbl.glDeleteTexturesEXT = emu_glDeleteTexturesEXT;
    tbl.glGenTexturesEXT = emu_glGenTexturesEXT;
+
+// GL_EXT_texture_storage
+
+   tbl.glTexStorage1DEXT = emu_glTexStorage1DEXT;
+   tbl.glTexStorage2DEXT = emu_glTexStorage2DEXT;
+   tbl.glTexStorage3DEXT = emu_glTexStorage3DEXT;
 
 // GL_EXT_vertex_array
 

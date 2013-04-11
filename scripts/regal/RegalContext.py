@@ -69,9 +69,9 @@ emu = [
     { 'type' : 'Emu::Ppa',    'include' : 'RegalPpa.h',    'member' : 'ppa',    'conditional' : 'Config::enableEmuPpa               || Config::forceEmuPpa    || REGAL_FORCE_EMU_PPA',    'ifdef' : 'REGAL_EMU_PPA',    'formulae' : ppaFormulae    },
     { 'type' : 'Emu::Ppca',   'include' : 'RegalPpca.h',   'member' : 'ppca',   'conditional' : 'Config::enableEmuPpca              || Config::forceEmuPpca   || REGAL_FORCE_EMU_PPCA',   'ifdef' : 'REGAL_EMU_PPCA',   'formulae' : ppcaFormulae   },
     { 'type' : 'Emu::Bin',    'include' : 'RegalBin.h',    'member' : 'bin',    'conditional' : 'Config::enableEmuBin               || Config::forceEmuBin    || REGAL_FORCE_EMU_BIN',    'ifdef' : 'REGAL_EMU_BIN',    'formulae' : binFormulae    },
-    { 'type' : 'Emu::TexSto', 'include' : 'RegalTexSto.h', 'member' : 'texsto', 'conditional' : 'Config::enableEmuTexSto            || Config::forceEmuTexSto || REGAL_FORCE_EMU_TEXSTO', 'ifdef' : 'REGAL_EMU_TEXSTO', 'formulae' : texstoFormulae },
     { 'type' : 'Emu::Xfer',   'include' : 'RegalXfer.h',   'member' : 'xfer',   'conditional' : '(isES2() && Config::enableEmuXfer) || Config::forceEmuXfer   || REGAL_FORCE_EMU_XFER',   'ifdef' : 'REGAL_EMU_XFER',   'formulae' : xferFormulae   },
     { 'type' : 'Emu::Dsa',    'include' : 'RegalDsa.h',    'member' : 'dsa',    'conditional' : 'Config::enableEmuDsa               || Config::forceEmuDsa    || REGAL_FORCE_EMU_DSA',    'ifdef' : 'REGAL_EMU_DSA',    'formulae' : dsaFormulae    },
+    { 'type' : 'Emu::TexSto', 'include' : 'RegalTexSto.h', 'member' : 'texsto', 'conditional' : 'Config::enableEmuTexSto            || Config::forceEmuTexSto || REGAL_FORCE_EMU_TEXSTO', 'ifdef' : 'REGAL_EMU_TEXSTO', 'formulae' : texstoFormulae },
     { 'type' : 'Emu::Iff',    'include' : 'RegalIff.h',    'member' : 'iff',    'conditional' : 'Config::enableEmuIff               || Config::forceEmuIff    || REGAL_FORCE_EMU_IFF',    'ifdef' : 'REGAL_EMU_IFF',    'formulae' : iffFormulae    },
     { 'type' : 'Emu::So',     'include' : 'RegalSo.h',     'member' : 'so',     'conditional' : '(Config::enableEmuSo && !info->gl_arb_sampler_objects) || Config::forceEmuSo || REGAL_FORCE_EMU_SO',                                                           'ifdef' : 'REGAL_EMU_SO',     'formulae' : soFormulae     },
     { 'type' : 'Emu::Vao',    'include' : 'RegalVao.h',    'member' : 'vao',    'conditional' : '(Config::enableEmuVao              || Config::enableEmuVao   || REGAL_FORCE_EMU_VAO) && (Config::enableEmuIff || Config::forceEmuIff || REGAL_FORCE_EMU_IFF)', 'ifdef' : 'REGAL_EMU_VAO', 'formulae' : vaoFormulae },
@@ -466,10 +466,13 @@ def generateContextSource(apis, args):
             if emu[revi]['member']=='dsa':
               init += 'Internal("RegalContext::Init ","GL_EXT_direct_state_access");\n'
               init += 'info->regal_ext_direct_state_access = true;\n'
-#              init += '#ifndef REGAL_GL_EXTENSIONS\n'
               init += 'info->regalExtensionsSet.insert("GL_EXT_direct_state_access");\n'
               init += 'info->regalExtensions = ::boost::print::detail::join(info->regalExtensionsSet,std::string(" "));\n'
-#              init += '#endif\n'
+            if emu[revi]['member']=='texsto':
+              init += 'Internal("RegalContext::Init ","GL_ARB_texture_storage");\n'
+              init += 'info->regal_arb_texture_storage = true;\n'
+              init += 'info->regalExtensionsSet.insert("GL_ARB_texture_storage");\n'
+              init += 'info->regalExtensions = ::boost::print::detail::join(info->regalExtensionsSet,std::string(" "));\n'
 
             init += '%s = new %s;\n' % ( emu[revi]['member'], emu[revi]['type'] )
             init += 'emuLevel = %d;\n' % ( int(emu[revi]['level']) - 1)

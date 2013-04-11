@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -311,6 +311,7 @@
     <ClInclude Include="..\..\..\..\src\regal\RegalSystem.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalTexC.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalTexC.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalTexSto.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalThread.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalTimer.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalToken.cpp" />
@@ -330,7 +331,6 @@
   <ItemGroup>
     <None Include="..\..\..\..\src\regal\Regal.def" />
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

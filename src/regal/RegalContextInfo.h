@@ -83,6 +83,7 @@ struct ContextInfo
   std::string regalExtensions;
 
   bool        regal_ext_direct_state_access;
+  bool        regal_arb_texture_storage;
 
   std::set<std::string> regalExtensionsSet;
 
