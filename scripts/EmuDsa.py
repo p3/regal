@@ -191,6 +191,7 @@ dsaFormulae = {
             'gl(Copy|Compressed|)Texture(Image|SubImage)(1D|2D|3D)EXT',
             'gl()Texture(Buffer|Renderbuffer)()EXT',
             'gl(Generate)Texture(Mipmap)()EXT',
+            'gl()Texture(Storage)(1D|2D|3D)EXT',
         ],
         'subst' : {
             'nondsa' : {

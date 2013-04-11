@@ -117,6 +117,10 @@ EXPORTS
 	glutSolidSierpinskiSponge
 	glutWireTeapot
 	glutSolidTeapot
+	glutWireTeacup
+	glutSolidTeacup
+	glutWireTeaspoon
+	glutSolidTeaspoon
 	glutWireCylinder
 	glutSolidCylinder
 	glutGameModeString
@@ -140,6 +144,7 @@ EXPORTS
 	glutExit
 	glutFullScreenToggle
 	glutLeaveFullScreen
+    glutSetMenuFont
 	glutGetModeValues
 	glutInitContextFlags
 	glutInitContextVersion
@@ -153,6 +158,8 @@ EXPORTS
 	glutMultiEntryFunc
 	glutMultiMotionFunc
 	glutMultiPassiveFunc
-        glutInitContextFunc
-        glutPauseFunc
-        glutResumeFunc
+    glutInitContextFunc
+    glutAppStatusFunc
+    glutSetVertexAttribCoord3
+    glutSetVertexAttribNormal
+    glutSetVertexAttribTexCoord2

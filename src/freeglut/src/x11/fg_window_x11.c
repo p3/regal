@@ -42,20 +42,23 @@
 static int fghResizeFullscrToggle(void)
 {
     XWindowAttributes attributes;
+    SFG_Window *win = fgStructure.CurrentWindow;
 
     if(glutGet(GLUT_FULL_SCREEN)) {
         /* restore original window size */
-        SFG_Window *win = fgStructure.CurrentWindow;
-        fgStructure.CurrentWindow->State.NeedToResize = GL_TRUE;
-        fgStructure.CurrentWindow->State.Width  = win->State.pWState.OldWidth;
-        fgStructure.CurrentWindow->State.Height = win->State.pWState.OldHeight;
+        fgStructure.CurrentWindow->State.WorkMask = GLUT_SIZE_WORK;
+        fgStructure.CurrentWindow->State.DesiredWidth  = win->State.pWState.OldWidth;
+        fgStructure.CurrentWindow->State.DesiredHeight = win->State.pWState.OldHeight;
 
     } else {
+        fgStructure.CurrentWindow->State.pWState.OldWidth  = win->State.Width;
+        fgStructure.CurrentWindow->State.pWState.OldHeight = win->State.Height;
+
         /* resize the window to cover the entire screen */
         XGetWindowAttributes(fgDisplay.pDisplay.Display,
                 fgStructure.CurrentWindow->Window.Handle,
                 &attributes);
-
+        
         /*
          * The "x" and "y" members of "attributes" are the window's coordinates
          * relative to its parent, i.e. to the decoration window.
@@ -297,12 +300,6 @@ void fgPlatformOpenWindow( SFG_Window* window, const char* title,
     }
 #endif
 
-    /*
-     * XXX Assume the new window is visible by default
-     * XXX Is this a  safe assumption?
-     */
-    window->State.Visible = GL_TRUE;
-
     sizeHints.flags = 0;
     if ( positionUse )
         sizeHints.flags |= USPosition;
@@ -363,13 +360,29 @@ void fgPlatformOpenWindow( SFG_Window* window, const char* title,
        fgRegisterDevices( fgDisplay.pDisplay.Display, &(window->Window.Handle) );
     #endif
 
-    XMapWindow( fgDisplay.pDisplay.Display, window->Window.Handle );
+    if (!window->IsMenu)    /* Don't show window after creation if its a menu */
+    {
+        XMapWindow( fgDisplay.pDisplay.Display, window->Window.Handle );
+        window->State.Visible = GL_TRUE;
+    }
 
     XFree(visualInfo);
 
-    if( !isSubWindow)
+    /* wait till window visible */
+    if( !isSubWindow && !window->IsMenu)
         XPeekIfEvent( fgDisplay.pDisplay.Display, &eventReturnBuffer, &fghWindowIsVisible, (XPointer)(window->Window.Handle) );
 #undef WINDOW_CONFIG
+}
+
+
+/*
+ * Request a window resize
+ */
+void fgPlatformReshapeWindow ( SFG_Window *window, int width, int height )
+{
+    XResizeWindow( fgDisplay.pDisplay.Display, window->Window.Handle,
+                   width, height );
+    XFlush( fgDisplay.pDisplay.Display ); /* XXX Shouldn't need this */
 }
 
 
@@ -394,37 +407,39 @@ void fgPlatformCloseWindow( SFG_Window* window )
 
 
 /*
- * This function makes the current window visible
+ * This function makes the specified window visible
  */
-void fgPlatformGlutShowWindow( void )
+void fgPlatformShowWindow( SFG_Window *window )
 {
-    XMapWindow( fgDisplay.pDisplay.Display, fgStructure.CurrentWindow->Window.Handle );
+    XMapWindow( fgDisplay.pDisplay.Display, window->Window.Handle );
     XFlush( fgDisplay.pDisplay.Display ); /* XXX Shouldn't need this */
 }
 
 /*
- * This function hides the current window
+ * This function hides the specified window
  */
-void fgPlatformGlutHideWindow( void )
+void fgPlatformHideWindow( SFG_Window *window )
 {
-    if( fgStructure.CurrentWindow->Parent == NULL )
+    if( window->Parent == NULL )
         XWithdrawWindow( fgDisplay.pDisplay.Display,
-                         fgStructure.CurrentWindow->Window.Handle,
+                         window->Window.Handle,
                          fgDisplay.pDisplay.Screen );
     else
         XUnmapWindow( fgDisplay.pDisplay.Display,
-                      fgStructure.CurrentWindow->Window.Handle );
+                      window->Window.Handle );
     XFlush( fgDisplay.pDisplay.Display ); /* XXX Shouldn't need this */
 }
 
 /*
- * Iconify the current window (top-level windows only)
+ * Iconify the specified window (top-level windows only)
  */
-void fgPlatformGlutIconifyWindow( void )
+void fgPlatformIconifyWindow( SFG_Window *window )
 {
-    XIconifyWindow( fgDisplay.pDisplay.Display, fgStructure.CurrentWindow->Window.Handle,
+    XIconifyWindow( fgDisplay.pDisplay.Display, window->Window.Handle,
                     fgDisplay.pDisplay.Screen );
     XFlush( fgDisplay.pDisplay.Display ); /* XXX Shouldn't need this */
+
+    fgStructure.CurrentWindow->State.Visible   = GL_FALSE;
 }
 
 /*
@@ -470,59 +485,35 @@ void fgPlatformGlutSetIconTitle( const char* title )
 }
 
 /*
- * Change the current window's position
+ * Change the specified window's position
  */
-void fgPlatformGlutPositionWindow( int x, int y )
+void fgPlatformPositionWindow( SFG_Window *window, int x, int y )
 {
-    XMoveWindow( fgDisplay.pDisplay.Display, fgStructure.CurrentWindow->Window.Handle,
+    XMoveWindow( fgDisplay.pDisplay.Display, window->Window.Handle,
                  x, y );
     XFlush( fgDisplay.pDisplay.Display ); /* XXX Shouldn't need this */
 }
 
 /*
- * Lowers the current window (by Z order change)
+ * Lowers the specified window (by Z order change)
  */
-void fgPlatformGlutPushWindow( void )
+void fgPlatformPushWindow( SFG_Window *window )
 {
-    XLowerWindow( fgDisplay.pDisplay.Display, fgStructure.CurrentWindow->Window.Handle );
+    XLowerWindow( fgDisplay.pDisplay.Display, window->Window.Handle );
 }
 
 /*
- * Raises the current window (by Z order change)
+ * Raises the specified window (by Z order change)
  */
-void fgPlatformGlutPopWindow( void )
+void fgPlatformPopWindow( SFG_Window *window )
 {
-    XRaiseWindow( fgDisplay.pDisplay.Display, fgStructure.CurrentWindow->Window.Handle );
-}
-
-/*
- * Resize the current window so that it fits the whole screen
- */
-void fgPlatformGlutFullScreen( SFG_Window *win )
-{
-    if(!glutGet(GLUT_FULL_SCREEN)) {
-        if(fghToggleFullscreen() != -1) {
-            win->State.IsFullscreen = GL_TRUE;
-        }
-    }
-}
-
-/*
- * If we are fullscreen, resize the current window back to its original size
- */
-void fgPlatformGlutLeaveFullScreen( SFG_Window *win )
-{
-    if(glutGet(GLUT_FULL_SCREEN)) {
-        if(fghToggleFullscreen() != -1) {
-            win->State.IsFullscreen = GL_FALSE;
-        }
-    }
+    XRaiseWindow( fgDisplay.pDisplay.Display, window->Window.Handle );
 }
 
 /*
  * Toggle the window's full screen state.
  */
-void fgPlatformGlutFullScreenToggle( SFG_Window *win )
+void fgPlatformFullScreenToggle( SFG_Window *win )
 {
     if(fghToggleFullscreen() != -1) {
         win->State.IsFullscreen = !win->State.IsFullscreen;

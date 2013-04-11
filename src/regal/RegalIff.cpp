@@ -1540,7 +1540,7 @@ void Iff::Cleanup()
     tbl.call(&tbl.glDeleteBuffers)(1, &immVbo);
     tbl.call(&tbl.glDeleteBuffers)(1, &immQuadsVbo);
     tbl.call(&tbl.glDeleteVertexArrays)(1, &immVao);
-  
+
     for (int i = 0; i < (1 << REGAL_FIXED_FUNCTION_PROGRAM_CACHE_SIZE_BITS); ++i)
     {
       const Program &pgm = ffprogs[i];
@@ -1554,7 +1554,8 @@ void Iff::Cleanup()
 
     tbl.glBindBuffer(GL_ARRAY_BUFFER, 0);
     tbl.glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    for (int i = 0; i < ctx->info->maxVertexAttribs; i++) {
+    for (GLuint i=0; i<ctx->info->maxVertexAttribs; ++i)
+    {
         tbl.glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, NULL);
         tbl.glDisableVertexAttribArray(i);
     }

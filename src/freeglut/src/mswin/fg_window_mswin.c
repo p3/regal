@@ -405,7 +405,6 @@ void fghGetStyleFromWindow( const SFG_Window *window, DWORD *windowStyle, DWORD 
     }
 }
 
-
 /* Computes position of corners of window Rect (outer position including
  * decorations) based on the provided client rect and based on the style
  * of the window in question.
@@ -454,49 +453,40 @@ void fghComputeWindowRectFromClientArea_QueryWindow( RECT *clientRect, const SFG
     fghComputeWindowRectFromClientArea_UseStyle(clientRect, windowStyle, windowExStyle, posIsOutside);
 }
 
-
 /* Gets the rect describing the client area (drawable area) of the
  * specified window. Output is position of corners of client area (drawable area) on the screen.
- * Returns an empty rect if window pointer or window handle is NULL.
- * If wantPosOutside is set to true, the output client Rect
- * will follow freeGLUT's window specification convention in which the
- * top-left corner is at the outside of the window, while the size
- * (rect.right-rect.left,rect.bottom-rect.top) is the size of the drawable
- * area.
+ * Does not touch clientRect if window pointer or window handle is NULL.
+ * (rect.right-rect.left,rect.bottom-rect.top) is the size of the drawable area.
+ * if posIsOutside is true, the output client Rect will follow freeGLUT's window
+ * specification convention in which the top-left corner is at the outside of
+ * the window, while the size (rect.right-rect.left,rect.bottom-rect.top) remains to be the
+ * size of the drawable area.
  */
-void fghGetClientArea( RECT *clientRect, const SFG_Window *window, BOOL wantPosOutside )
+void fghGetClientArea( RECT *clientRect, const SFG_Window *window, BOOL posIsOutside )
 {
     POINT topLeftClient = {0,0};
-    POINT topLeftWindow = {0,0};
 
     freeglut_return_if_fail((window && window->Window.Handle));
     
-    /*
-     * call GetWindowRect()
-     * (this returns the pixel coordinates of the outside of the window)
-     * cannot use GetClientRect as it returns a rect relative to
-     * the top-left point of the client area (.top and .left are thus always 0)
-     * and is thus only useful for querying the size of the client area, not
-     * its position.
-     */
-    GetWindowRect( window->Window.Handle, clientRect );
-    topLeftWindow.x = clientRect->top;
-    topLeftWindow.y = clientRect->left;
-    
     /* Get size of client rect */
     GetClientRect(window->Window.Handle, clientRect);
-    /* Get position of top-left of client area on the screen */
-    ClientToScreen(window->Window.Handle,&topLeftClient);
-    /* Add top-left offset */
-    OffsetRect(clientRect,topLeftClient.x,topLeftClient.y);
-
-    /* replace top and left with top and left of window, if wanted */
-    if (wantPosOutside)
+    if (posIsOutside)
     {
-        clientRect->left = topLeftWindow.x;
-        clientRect->top  = topLeftWindow.y;
+        RECT windowRect;
+        /* Get position of outside of window, including decorations */
+        GetWindowRect(window->Window.Handle,&windowRect);
+        /* Add top-left offset */
+        OffsetRect(clientRect,windowRect.left,windowRect.top);
+    }
+    else
+    {
+        /* Get position of top-left of client area on the screen */
+        ClientToScreen(window->Window.Handle,&topLeftClient);
+        /* Add top-left offset */
+        OffsetRect(clientRect,topLeftClient.x,topLeftClient.y);
     }
 }
+
 
 #if(WINVER >= 0x500)
 typedef struct
@@ -646,20 +636,11 @@ void fgPlatformOpenWindow( SFG_Window* window, const char* title,
     }
     if( !sizeUse )
     {
-        if( ! window->IsMenu )
-        {
-            w = CW_USEDEFAULT;
-            h = CW_USEDEFAULT;
-        }
-        else /* fail safe - Windows can make a window of size (0, 0) */
-            w = h = 300; /* default window size */
+        w = CW_USEDEFAULT;
+        h = CW_USEDEFAULT;
     }
-    /* store requested client area width and height */
-    window->State.Width = w;
-    window->State.Height = h;
-
-#if !defined(_WIN32_WCE)    /* no decorations for windows CE */
-    if( sizeUse )
+#if !defined(_WIN32_WCE)    /* no decorations for windows CE, so nothing to do */
+    else
     {
         RECT windowRect;
         /*
@@ -721,8 +702,13 @@ void fgPlatformOpenWindow( SFG_Window* window, const char* title,
     );
 #endif /* defined(_WIN32_WCE) */
 
+    /* WM_CREATE message got sent and was handled by window proc */
+
     if( !( window->Window.Handle ) )
         fgError( "Failed to create a window (%s)!", title );
+
+    /* Store title */
+    window->State.pWState.WindowTitle = strdup(title);
 
 #if !defined(_WIN32_WCE)
     /* Need to set requested style again, apparently Windows doesn't listen when requesting windows without title bar or borders */
@@ -750,12 +736,15 @@ void fgPlatformOpenWindow( SFG_Window* window, const char* title,
 #if defined(_WIN32_WCE)
     ShowWindow( window->Window.Handle, SW_SHOW );
 #else
-    ShowWindow( window->Window.Handle,
-                fgState.ForceIconic ? SW_SHOWMINIMIZED : SW_SHOW );
+    if (!window->IsMenu)    /* Don't show window after creation if its a menu */
+    {
+        BOOL iconic = fgState.ForceIconic && !gameMode && !isSubWindow;
+        ShowWindow( window->Window.Handle,
+                    iconic ? SW_SHOWMINIMIZED : SW_SHOWNORMAL );
+    }
 #endif /* defined(_WIN32_WCE) */
 
-    UpdateWindow( window->Window.Handle );
-    ShowCursor( TRUE );  /* XXX Old comments say "hide cursor"! */
+    ShowCursor( TRUE );
 }
 
 
@@ -790,33 +779,23 @@ void fgPlatformCloseWindow( SFG_Window* window )
     }
 
     DestroyWindow( window->Window.Handle );
-}
 
-
-
-/*
- * This function makes the current window visible
- */
-void fgPlatformGlutShowWindow( void )
-{
-    ShowWindow( fgStructure.CurrentWindow->Window.Handle, SW_SHOW );
+    /* clean up copied title text(s) */
+    if (window->State.pWState.WindowTitle)
+        free(window->State.pWState.WindowTitle);
+    if (window->State.pWState.IconTitle)
+        free(window->State.pWState.IconTitle);
 }
 
 /*
- * This function hides the current window
+ * Hide's specified window. For windows, currently only used
+ * to immediately hide menu windows...
  */
-void fgPlatformGlutHideWindow( void )
+void fgPlatformHideWindow( SFG_Window* window )
 {
-    ShowWindow( fgStructure.CurrentWindow->Window.Handle, SW_HIDE );
+    ShowWindow(window->Window.Handle, SW_HIDE);
 }
 
-/*
- * Iconify the current window (top-level windows only)
- */
-void fgPlatformGlutIconifyWindow( void )
-{
-    ShowWindow( fgStructure.CurrentWindow->Window.Handle, SW_MINIMIZE );
-}
 
 /*
  * Set the current window's title
@@ -830,196 +809,30 @@ void fgPlatformGlutSetWindowTitle( const char* title )
         free(wstr);
     }
 #else
-    SetWindowText( fgStructure.CurrentWindow->Window.Handle, title );
+    if (!IsIconic(fgStructure.CurrentWindow->Window.Handle))
+        SetWindowText( fgStructure.CurrentWindow->Window.Handle, title );
 #endif
+
+    /* Make copy of string to refer to later */
+    if (fgStructure.CurrentWindow->State.pWState.WindowTitle)
+        free(fgStructure.CurrentWindow->State.pWState.WindowTitle);
+    fgStructure.CurrentWindow->State.pWState.WindowTitle = strdup(title);
 }
 
 /*
  * Set the current window's iconified title
- * There really isn't a way to set the icon name separate from the
- * windows name in Win32, so, just set the windows name.
  */
 void fgPlatformGlutSetIconTitle( const char* title )
 {
-#ifdef _WIN32_WCE
-    {
-        wchar_t* wstr = fghWstrFromStr(title);
-        SetWindowText( fgStructure.CurrentWindow->Window.Handle, wstr );
-        free(wstr);
-    }
-#else
-    SetWindowText( fgStructure.CurrentWindow->Window.Handle, title );
+#ifndef _WIN32_WCE
+    if (IsIconic(fgStructure.CurrentWindow->Window.Handle))
+        SetWindowText( fgStructure.CurrentWindow->Window.Handle, title );
 #endif
-}
 
-/*
- * Change the current window's position
- */
-void fgPlatformGlutPositionWindow( int x, int y )
-{
-    RECT winRect;
-
-    /* "GetWindowRect" returns the pixel coordinates of the outside of the window */
-    GetWindowRect( fgStructure.CurrentWindow->Window.Handle, &winRect );
-    MoveWindow(
-        fgStructure.CurrentWindow->Window.Handle,
-        x,
-        y,
-        winRect.right - winRect.left,
-        winRect.bottom - winRect.top,
-        TRUE
-    );
-}
-
-/*
- * Lowers the current window (by Z order change)
- */
-void fgPlatformGlutPushWindow( void )
-{
-    SetWindowPos(
-        fgStructure.CurrentWindow->Window.Handle,
-        HWND_BOTTOM,
-        0, 0, 0, 0,
-        SWP_NOSIZE | SWP_NOMOVE
-    );
-}
-
-/*
- * Raises the current window (by Z order change)
- */
-void fgPlatformGlutPopWindow( void )
-{
-    SetWindowPos(
-        fgStructure.CurrentWindow->Window.Handle,
-        HWND_TOP,
-        0, 0, 0, 0,
-        SWP_NOSIZE | SWP_NOMOVE
-    );
-}
-
-/*
- * Resize the current window so that it fits the whole screen
- */
-void fgPlatformGlutFullScreen( SFG_Window *win )
-{
-#if !defined(_WIN32_WCE) /* FIXME: what about WinCE */
-
-    if (glutGet(GLUT_FULL_SCREEN))
-    {
-        /*  Leave full screen state before entering fullscreen again (resizing?) */
-        glutLeaveFullScreen();
-    }
-
-    {
-#if(WINVER >= 0x0500) /* Windows 2000 or later */
-        DWORD s;
-        RECT rect;
-        HMONITOR hMonitor;
-        MONITORINFO mi;
-
-        /* For fullscreen mode, first remove all window decoration
-         * and set style to popup so it will overlap the taskbar
-         * then force to maximize on the screen on which it has the most
-         * overlap.
-         */
-
-        
-        /* store current window rect */
-        GetWindowRect( win->Window.Handle, &win->State.pWState.OldRect );
-
-        /* store current window style */
-        win->State.pWState.OldStyle = s = GetWindowLong(win->Window.Handle, GWL_STYLE);
-
-        /* remove decorations from style and add popup style*/
-        s &= ~WS_OVERLAPPEDWINDOW;
-        s |= WS_POPUP;
-        SetWindowLong(win->Window.Handle, GWL_STYLE, s);
-
-        /* For fullscreen mode, find the monitor that is covered the most
-         * by the window and get its rect as the resize target.
-	     */
-        hMonitor= MonitorFromRect(&win->State.pWState.OldRect, MONITOR_DEFAULTTONEAREST);
-        mi.cbSize = sizeof(mi);
-        GetMonitorInfo(hMonitor, &mi);
-        rect = mi.rcMonitor;
-#else   /* if (WINVER >= 0x0500) */
-        RECT rect;
-
-        /* For fullscreen mode, force the top-left corner to 0,0
-         * and adjust the window rectangle so that the client area
-         * covers the whole screen.
-         */
-
-        rect.left   = 0;
-        rect.top    = 0;
-        rect.right  = fgDisplay.ScreenWidth;
-        rect.bottom = fgDisplay.ScreenHeight;
-
-        AdjustWindowRect ( &rect, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS |
-                                  WS_CLIPCHILDREN, FALSE );
-#endif  /* (WINVER >= 0x0500) */
-
-        /*
-         * then resize window
-         * SWP_NOACTIVATE     Do not activate the window
-         * SWP_NOOWNERZORDER  Do not change position in z-order
-         * SWP_NOSENDCHANGING Suppress WM_WINDOWPOSCHANGING message
-         * SWP_NOZORDER       Retains the current Z order (ignore 2nd param)
-         */
-        SetWindowPos( fgStructure.CurrentWindow->Window.Handle,
-                      HWND_TOP,
-                      rect.left,
-                      rect.top,
-                      rect.right  - rect.left,
-                      rect.bottom - rect.top,
-                      SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOSENDCHANGING |
-                      SWP_NOZORDER
-                    );
-
-        win->State.IsFullscreen = GL_TRUE;
-    }
-#endif
-}
-
-/*
- * If we are fullscreen, resize the current window back to its original size
- */
-void fgPlatformGlutLeaveFullScreen( SFG_Window *win )
-{
-#if !defined(_WIN32_WCE) /* FIXME: what about WinCE */
-    if (!glutGet(GLUT_FULL_SCREEN))
-    {
-        /* nothing to do */
-        return;
-    }
-
-    /* restore style of window before making it fullscreen */
-    SetWindowLong(win->Window.Handle, GWL_STYLE, win->State.pWState.OldStyle);
-
-    /* Then resize */
-    SetWindowPos(win->Window.Handle,
-        HWND_TOP,
-        win->State.pWState.OldRect.left,
-        win->State.pWState.OldRect.top,
-        win->State.pWState.OldRect.right  - win->State.pWState.OldRect.left,
-        win->State.pWState.OldRect.bottom - win->State.pWState.OldRect.top,
-        SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOSENDCHANGING |
-        SWP_NOZORDER
-        );
-
-    win->State.IsFullscreen = GL_FALSE;
-#endif
-}
-
-/*
- * Toggle the window's full screen state.
- */
-void fgPlatformGlutFullScreenToggle( SFG_Window *win )
-{
-    if (!win->State.IsFullscreen)
-        glutFullScreen();
-    else
-        glutLeaveFullScreen();
+    /* Make copy of string to refer to later */
+    if (fgStructure.CurrentWindow->State.pWState.IconTitle)
+        free(fgStructure.CurrentWindow->State.pWState.IconTitle);
+    fgStructure.CurrentWindow->State.pWState.IconTitle = strdup(title);
 }
 
 

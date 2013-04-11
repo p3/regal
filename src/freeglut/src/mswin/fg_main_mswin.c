@@ -28,8 +28,12 @@
 #include <GL/freeglut.h>
 #include "../fg_internal.h"
 
-
 extern void fghRedrawWindow ( SFG_Window *window );
+extern void fghRedrawWindowAndChildren ( SFG_Window *window );
+extern void fghOnReshapeNotify(SFG_Window *window, int width, int height, GLboolean forceNotify);
+extern void fghOnPositionNotify(SFG_Window *window, int x, int y, GLboolean forceNotify);
+extern void fghComputeWindowRectFromClientArea_QueryWindow( RECT *clientRect, const SFG_Window *window, BOOL posIsOutside );
+extern void fghGetClientArea( RECT *clientRect, const SFG_Window *window, BOOL posIsOutside );
 
 extern void fgNewWGLCreateContext( SFG_Window* window );
 extern GLboolean fgSetupPixelFormat( SFG_Window* window, GLboolean checkOnly,
@@ -58,98 +62,39 @@ GXOPENINPUT GXOpenInput_ = NULL;
 struct GXKeyList gxKeyList;
 #endif /* _WIN32_WCE */
 
-/* 
- * Helper functions for getting client area from the window rect
- * and the window rect from the client area given the style of the window
- * (or a valid window pointer from which the style can be queried).
- */
-extern void fghComputeWindowRectFromClientArea_QueryWindow( RECT *clientRect, const SFG_Window *window, BOOL posIsOutside );
-extern void fghGetClientArea                              ( RECT *clientRect, const SFG_Window *window, BOOL wantPosOutside );
 
-
-void fgPlatformReshapeWindow ( SFG_Window *window, int width, int height )
-{
-    RECT windowRect;
-
-    /*
-     * For windowed mode, get the current position of the
-     * window and resize taking the size of the frame
-     * decorations into account.
-     *
-     * Note on maximizing behavior of Windows: the resize borders are off
-     * the screen such that the client area extends all the way from the
-     * leftmost corner to the rightmost corner to maximize screen real
-     * estate. A caption is still shown however to allow interaction with
-     * the window controls. This is default behavior of Windows that
-     * FreeGLUT sticks with. To alter, one would have to check if
-     * WS_MAXIMIZE style is set when a resize event is triggered, and
-     * then manually correct the windowRect to put the borders back on
-     * screen.
-     */
-
-    /* "GetWindowRect" returns the pixel coordinates of the outside of the window */
-    GetWindowRect( window->Window.Handle, &windowRect );
-
-    /* Create rect in FreeGLUT format, (X,Y) topleft outside window, WxH of client area */
-    windowRect.right    = windowRect.left+width;
-    windowRect.bottom   = windowRect.top+height;
-
-    if (window->Parent == NULL)
-        /* get the window rect from this to feed to SetWindowPos, correct for window decorations */
-        fghComputeWindowRectFromClientArea_QueryWindow(&windowRect,window,TRUE);
-    else
-    {
-        /* correct rect for position client area of parent window
-         * (SetWindowPos input for child windows is in coordinates
-         * relative to the parent's client area).
-         * Child windows don't have decoration, so no need to correct
-         * for them.
-         */
-        RECT parentRect;
-        fghGetClientArea( &parentRect, window->Parent, FALSE );
-        OffsetRect(&windowRect,-parentRect.left,-parentRect.top);
-    }
-    
-    /* Do the actual resizing */
-    SetWindowPos( window->Window.Handle,
-                  HWND_TOP,
-                  windowRect.left, windowRect.top,
-                  windowRect.right - windowRect.left,
-                  windowRect.bottom- windowRect.top,
-                  SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOSENDCHANGING |
-                  SWP_NOZORDER
-    );
-
-    /* Set new width and height so we can test for that in WM_SIZE message handler and don't do anything if not needed */
-    window->State.Width  = width;
-    window->State.Height = height;
-}
-
-
-void fgPlatformDisplayWindow ( SFG_Window *window )
-{
-    RedrawWindow(
-        window->Window.Handle, NULL, NULL,
-        RDW_NOERASE | RDW_INTERNALPAINT | RDW_INVALIDATE | RDW_UPDATENOW
-    );
-}
-
-
-fg_time_t fgPlatformSystemTime ( void )
+/* Get system time, taking special precautions against 32bit timer wrap.
+   We use timeGetTime and not GetTickCount because of its better stability,
+   and because we can increase its granularity (to 1 ms in
+   fgPlatformInitialize). For that reason we can't use GetTickCount64 which
+   wouldn't have the wrap issue.
+   Credit: this is based on code in glibc (https://mail.gnome.org/archives/commits-list/2011-November/msg04588.html)
+   */
+static fg_time_t lastTime32 = 0;
+static fg_time_t timeEpoch = 0;
+void fgPlatformInitSystemTime()
 {
 #if defined(_WIN32_WCE)
-    return GetTickCount();
+    lastTime32 = GetTickCount();
 #else
-    /* TODO: do this with QueryPerformanceCounter as timeGetTime has
-     * insufficient resolution (only about 5 ms on system under low load).
-     * See:
-     * http://msdn.microsoft.com/en-us/library/windows/desktop/dd757629(v=vs.85).aspx
-     * Or maybe QueryPerformanceCounter is not a good idea either, see
-     * http://old.nabble.com/Re%3A-glutTimerFunc-does-not-detect-if-system-time-moved-backward-p33479674.html
-     * for some other ideas (at bottom)...
-     */
-    return timeGetTime();
+    lastTime32 = timeGetTime();
 #endif
+}
+fg_time_t fgPlatformSystemTime ( void )
+{
+    fg_time_t currTime32;
+#if defined(_WIN32_WCE)
+    currTime32 = GetTickCount();
+#else
+    currTime32 = timeGetTime();
+#endif
+    /* Check if we just wrapped */
+    if (currTime32 < lastTime32)
+        timeEpoch++;
+    
+    lastTime32 = currTime32;
+
+    return currTime32 | timeEpoch << 32;
 }
 
 
@@ -187,31 +132,52 @@ void fgPlatformProcessSingleEvent ( void )
 
 
 
-void fgPlatformMainLoopPreliminaryWork ( void )
+static void fghPlatformOnWindowStatusNotify(SFG_Window *window, GLboolean visState, GLboolean forceNotify)
 {
-    SFG_Window *window = (SFG_Window *)fgStructure.Windows.First ;
+    GLboolean notify = GL_FALSE;
+    SFG_Window* child;
 
-    /*
-     * Processing before the main loop:  If there is a window which is open and
-     * which has a visibility callback, call it.  I know this is an ugly hack,
-     * but I'm not sure what else to do about it.  Ideally we should leave
-     * something uninitialized in the create window code and initialize it in
-     * the main loop, and have that initialization create a "WM_ACTIVATE"
-     * message.  Then we would put the visibility callback code in the
-     * "case WM_ACTIVATE" block below.         - John Fay -- 10/24/02
-     */
-    while( window )
+    if (window->State.Visible != visState)
     {
-        if ( FETCH_WCB( *window, Visibility ) )
-        {
-            SFG_Window *current_window = fgStructure.CurrentWindow ;
+        window->State.Visible = visState;
 
-            INVOKE_WCB( *window, Visibility, ( window->State.Visible ) );
-            fgSetWindow( current_window );
+        /* If top level window (not a subwindow/child), and icon title text available, switch titles based on visibility state */
+        if (!window->Parent && window->State.pWState.IconTitle)
+        {
+            if (visState)
+                /* visible, set window title */
+                SetWindowText( window->Window.Handle, window->State.pWState.WindowTitle );
+            else
+                /* not visible, set icon title */
+                SetWindowText( window->Window.Handle, window->State.pWState.IconTitle );
         }
 
-        window = (SFG_Window *)window->Node.Next ;
+        notify = GL_TRUE;
     }
+
+    if (notify || forceNotify)
+    {
+        SFG_Window *saved_window = fgStructure.CurrentWindow;
+
+        /* On win32 we only have two states, window displayed and window not displayed (iconified) 
+         * We map these to GLUT_FULLY_RETAINED and GLUT_HIDDEN respectively.
+         */
+        INVOKE_WCB( *window, WindowStatus, ( visState ? GLUT_FULLY_RETAINED:GLUT_HIDDEN ) );
+        fgSetWindow( saved_window );
+    }
+
+    /* Also set windowStatus/visibility state for children */
+    for( child = ( SFG_Window * )window->Children.First;
+         child;
+         child = ( SFG_Window * )child->Node.Next )
+    {
+        fghPlatformOnWindowStatusNotify(child, visState, GL_FALSE); /* No need to propagate forceNotify. Childs get this from their own INIT_WORK */
+    }
+}
+
+void fgPlatformMainLoopPreliminaryWork ( void )
+{
+    /* no-op */
 }
 
 
@@ -229,18 +195,198 @@ static int fgPlatformGetModifiers (void)
             ( GetKeyState( VK_RMENU    ) < 0 )) ? GLUT_ACTIVE_ALT   : 0 );
 }
 
+static LRESULT fghWindowProcKeyPress(SFG_Window *window, UINT uMsg, GLboolean keydown, WPARAM wParam, LPARAM lParam)
+{
+    static unsigned char lControl = 0, lShift = 0, lAlt = 0,
+                         rControl = 0, rShift = 0, rAlt = 0;
+
+    int keypress = -1;
+    
+    /* if keydown, check for repeat */
+    /* If repeat is globally switched off, it cannot be switched back on per window.
+     * But if it is globally switched on, it can be switched off per window. This matches
+     * GLUT's behavior on X11, but not Nate Robbins' win32 GLUT, as he didn't implement the
+     * global state switch.
+     */
+    if( keydown && ( fgState.KeyRepeat==GLUT_KEY_REPEAT_OFF || window->State.IgnoreKeyRepeat==GL_TRUE ) && (HIWORD(lParam) & KF_REPEAT) )
+        return 1;
+    
+    /* Remember the current modifiers state so user can query it from their callback */
+    fgState.Modifiers = fgPlatformGetModifiers( );
+
+    /* Convert the Win32 keystroke codes to GLUTtish way */
+#   define KEY(a,b) case a: keypress = b; break;
+
+    switch( wParam )
+    {
+        KEY( VK_F1,     GLUT_KEY_F1        );
+        KEY( VK_F2,     GLUT_KEY_F2        );
+        KEY( VK_F3,     GLUT_KEY_F3        );
+        KEY( VK_F4,     GLUT_KEY_F4        );
+        KEY( VK_F5,     GLUT_KEY_F5        );
+        KEY( VK_F6,     GLUT_KEY_F6        );
+        KEY( VK_F7,     GLUT_KEY_F7        );
+        KEY( VK_F8,     GLUT_KEY_F8        );
+        KEY( VK_F9,     GLUT_KEY_F9        );
+        KEY( VK_F10,    GLUT_KEY_F10       );
+        KEY( VK_F11,    GLUT_KEY_F11       );
+        KEY( VK_F12,    GLUT_KEY_F12       );
+        KEY( VK_PRIOR,  GLUT_KEY_PAGE_UP   );
+        KEY( VK_NEXT,   GLUT_KEY_PAGE_DOWN );
+        KEY( VK_HOME,   GLUT_KEY_HOME      );
+        KEY( VK_END,    GLUT_KEY_END       );
+        KEY( VK_LEFT,   GLUT_KEY_LEFT      );
+        KEY( VK_UP,     GLUT_KEY_UP        );
+        KEY( VK_RIGHT,  GLUT_KEY_RIGHT     );
+        KEY( VK_DOWN,   GLUT_KEY_DOWN      );
+        KEY( VK_INSERT, GLUT_KEY_INSERT    );
+
+    /* handle control, alt and shift. For GLUT, we want to distinguish between left and right presses.
+     * The VK_L* & VK_R* left and right Alt, Ctrl and Shift virtual keys are however only used as parameters to GetAsyncKeyState() and GetKeyState()
+     * so when we get an alt, shift or control keypress here, we manually check whether it was the left or the right
+     */
+#define ASYNC_KEY_EVENT(winKey,glutKey,keyStateVar)\
+    if (!keyStateVar && GetAsyncKeyState ( winKey ))\
+    {\
+        keypress   = glutKey;\
+        keyStateVar = 1;\
+    }\
+    else if (keyStateVar && !GetAsyncKeyState ( winKey ))\
+    {\
+        keypress   = glutKey;\
+        keyStateVar = 0;\
+    }
+    case VK_CONTROL:
+        ASYNC_KEY_EVENT(VK_LCONTROL,GLUT_KEY_CTRL_L,lControl);
+        ASYNC_KEY_EVENT(VK_RCONTROL,GLUT_KEY_CTRL_R,rControl);
+        break;
+    case VK_SHIFT:
+        ASYNC_KEY_EVENT(VK_LSHIFT,GLUT_KEY_SHIFT_L,lShift);
+        ASYNC_KEY_EVENT(VK_RSHIFT,GLUT_KEY_SHIFT_R,rShift);
+        break;
+    case VK_MENU:
+        ASYNC_KEY_EVENT(VK_LMENU,GLUT_KEY_ALT_L,lAlt);
+        ASYNC_KEY_EVENT(VK_RMENU,GLUT_KEY_ALT_R,rAlt);
+        break;
+#undef ASYNC_KEY_EVENT
+
+    case VK_DELETE:
+        /* The delete key should be treated as an ASCII keypress: */
+        if (keydown)
+            INVOKE_WCB( *window, Keyboard,
+                        ( 127, window->State.MouseX, window->State.MouseY )
+            );
+        else
+            INVOKE_WCB( *window, KeyboardUp,
+                        ( 127, window->State.MouseX, window->State.MouseY )
+            );
+        break;
+
+#if !defined(_WIN32_WCE)
+    default:
+        /* keydown displayable characters are handled with WM_CHAR message, but no corresponding up is generated. So get that here. */
+        if (!keydown)
+        {
+            BYTE state[ 256 ];
+            WORD code[ 2 ];
+
+            GetKeyboardState( state );
+
+            if( ToAscii( (UINT)wParam, 0, state, code, 0 ) == 1 )
+                wParam=code[ 0 ];
+
+            INVOKE_WCB( *window, KeyboardUp,
+                   ( (char)(wParam & 0xFF), /* and with 0xFF to indicate to runtime that we want to strip out higher bits - otherwise we get a runtime error when "Smaller Type Checks" is enabled */
+                        window->State.MouseX, window->State.MouseY )
+            );
+        }
+#endif
+    }
+
+#if defined(_WIN32_WCE)
+    if(keydown && !(lParam & 0x40000000)) /* Prevent auto-repeat */
+    {
+        if(wParam==(unsigned)gxKeyList.vkRight)
+            keypress = GLUT_KEY_RIGHT;
+        else if(wParam==(unsigned)gxKeyList.vkLeft)
+            keypress = GLUT_KEY_LEFT;
+        else if(wParam==(unsigned)gxKeyList.vkUp)
+            keypress = GLUT_KEY_UP;
+        else if(wParam==(unsigned)gxKeyList.vkDown)
+            keypress = GLUT_KEY_DOWN;
+        else if(wParam==(unsigned)gxKeyList.vkA)
+            keypress = GLUT_KEY_F1;
+        else if(wParam==(unsigned)gxKeyList.vkB)
+            keypress = GLUT_KEY_F2;
+        else if(wParam==(unsigned)gxKeyList.vkC)
+            keypress = GLUT_KEY_F3;
+        else if(wParam==(unsigned)gxKeyList.vkStart)
+            keypress = GLUT_KEY_F4;
+    }
+#endif
+    
+    if( keypress != -1 )
+        if (keydown)
+            INVOKE_WCB( *window, Special,
+                        ( keypress,
+                            window->State.MouseX, window->State.MouseY )
+            );
+        else
+            INVOKE_WCB( *window, SpecialUp,
+                        ( keypress,
+                            window->State.MouseX, window->State.MouseY )
+            );
+
+    fgState.Modifiers = INVALID_MODIFIERS;
+
+    /* SYSKEY events should be sent to default window proc for system to handle them */
+    if (uMsg==WM_SYSKEYDOWN || uMsg==WM_SYSKEYUP)
+        return DefWindowProc( window->Window.Handle, uMsg, wParam, lParam );
+    else
+        return 1;
+}
+
+SFG_Window* fghWindowUnderCursor(SFG_Window *window)
+{
+    /* Check if the current window that the mouse is over is a child window
+     * of the window the message was sent to. Some events only sent to main window,
+     * and when handling some messages, we need to make sure that we process
+     * callbacks on the child window instead. This mirrors how GLUT does things.
+     * returns either the original window or the found child.
+     */
+    if (window && window->Children.First)   /* This window has childs */
+    {
+        HWND hwnd;
+        SFG_Window* child_window;
+
+        /* Get mouse position at time of message */
+        DWORD mouse_pos_dw = GetMessagePos();
+        POINT mouse_pos = {GET_X_LPARAM(mouse_pos_dw), GET_Y_LPARAM(mouse_pos_dw)};
+        ScreenToClient( window->Window.Handle, &mouse_pos );
+        
+        hwnd = ChildWindowFromPoint(window->Window.Handle, mouse_pos);
+        if (hwnd && hwnd!=window->Window.Handle)   /* can be NULL if mouse outside parent by the time we get here, or can be same as parent if we didn't find a child */
+        {
+            child_window = fgWindowByHandle(hwnd);
+            if (child_window)    /* Verify we got a FreeGLUT window */
+            {
+                /* ChildWindowFromPoint only searches immediate children, so search again to see if actually in grandchild or further descendant */
+                window = fghWindowUnderCursor(child_window);
+            }
+        }
+    }
+
+    return window;
+}
+
 /*
  * The window procedure for handling Win32 events
  */
-LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
-                                       LPARAM lParam )
+LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-    static unsigned char lControl = 0, rControl = 0, lShift = 0,
-                         rShift = 0, lAlt = 0, rAlt = 0;
-
-    SFG_Window *window, *child_window = NULL;
-    PAINTSTRUCT ps;
+    SFG_Window *window;
     LRESULT lRet = 1;
+    static int setCaptureActive = 0;
 
     FREEGLUT_INTERNAL_ERROR_EXIT_IF_NOT_INITIALISED ( "Event Handler" ) ;
 
@@ -251,73 +397,6 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
 
     /* printf ( "Window %3d message <%04x> %12d %12d\n", window?window->ID:0,
              uMsg, wParam, lParam ); */
-
-    /* Some events only sent to main window. Check if the current window that
-     * the mouse is over is a child window. Below when handling some messages,
-     * we make sure that we process callbacks on the child window instead.
-     * This mirrors how GLUT does things.
-     */
-    if (window && window->Children.First)
-    {
-        POINT mouse_pos;
-        SFG_WindowHandleType hwnd;
-        SFG_Window* temp_window;
-
-        GetCursorPos( &mouse_pos );
-        ScreenToClient( window->Window.Handle, &mouse_pos );
-        hwnd = ChildWindowFromPoint(window->Window.Handle, mouse_pos);
-        if (hwnd)   /* can be NULL if mouse outside parent by the time we get here */
-        {
-            temp_window = fgWindowByHandle(hwnd);
-            if (temp_window && temp_window->Parent)    /* Verify we got a child window */
-                child_window = temp_window;
-        }
-    }
-
-    if ( window )
-    {
-      SFG_Window* temp_window = child_window?child_window:window;
-
-      fgState.Modifiers = fgPlatformGetModifiers( );
-
-      /* Checking for CTRL, ALT, and SHIFT key positions:  Key Down! */
-#define SPECIAL_KEY_DOWN(winKey,glutKey,winProcVar)\
-      if ( !winProcVar && GetAsyncKeyState ( winKey ) )\
-      {\
-          INVOKE_WCB  ( *temp_window, Special,\
-              ( glutKey, temp_window->State.MouseX, temp_window->State.MouseY )\
-              );\
-          winProcVar = 1;\
-      }
-
-      SPECIAL_KEY_DOWN(VK_LCONTROL,GLUT_KEY_CTRL_L ,lControl);
-      SPECIAL_KEY_DOWN(VK_RCONTROL,GLUT_KEY_CTRL_R ,rControl);
-      SPECIAL_KEY_DOWN(VK_LSHIFT  ,GLUT_KEY_SHIFT_L,lShift);
-      SPECIAL_KEY_DOWN(VK_RSHIFT  ,GLUT_KEY_SHIFT_R,rShift);
-      SPECIAL_KEY_DOWN(VK_LMENU   ,GLUT_KEY_ALT_L  ,lAlt);
-      SPECIAL_KEY_DOWN(VK_RMENU   ,GLUT_KEY_ALT_R  ,rAlt);
-#undef SPECIAL_KEY_DOWN
-
-      /* Checking for CTRL, ALT, and SHIFT key positions:  Key Up! */
-#define SPECIAL_KEY_UP(winKey,glutKey,winProcVar)\
-      if ( winProcVar && !GetAsyncKeyState ( winKey ) )\
-      {\
-          INVOKE_WCB  ( *temp_window, SpecialUp,\
-              ( glutKey, temp_window->State.MouseX, temp_window->State.MouseY )\
-              );\
-          winProcVar = 0;\
-      }
-
-      SPECIAL_KEY_UP(VK_LCONTROL,GLUT_KEY_CTRL_L ,lControl);
-      SPECIAL_KEY_UP(VK_RCONTROL,GLUT_KEY_CTRL_R ,rControl);
-      SPECIAL_KEY_UP(VK_LSHIFT  ,GLUT_KEY_SHIFT_L,lShift);
-      SPECIAL_KEY_UP(VK_RSHIFT  ,GLUT_KEY_SHIFT_R,rShift);
-      SPECIAL_KEY_UP(VK_LMENU   ,GLUT_KEY_ALT_L  ,lAlt);
-      SPECIAL_KEY_UP(VK_RMENU   ,GLUT_KEY_ALT_R  ,rAlt);
-#undef SPECIAL_KEY_UP
-
-      fgState.Modifiers = INVALID_MODIFIERS;
-    }
 
     switch( uMsg )
     {
@@ -375,21 +454,6 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
 #endif
         }
 
-        window->State.NeedToResize = GL_TRUE;
-        /* if we used CW_USEDEFAULT (thats a negative value) for the size
-         * of the window, query the window now for the size at which it
-         * was created.
-         */
-        if( ( window->State.Width < 0 ) || ( window->State.Height < 0 ) )
-        {
-            SFG_Window *current_window = fgStructure.CurrentWindow;
-
-            fgSetWindow( window );
-            window->State.Width = glutGet( GLUT_WINDOW_WIDTH );
-            window->State.Height = glutGet( GLUT_WINDOW_HEIGHT );
-            fgSetWindow( current_window );
-        }
-
         ReleaseDC( window->Window.Handle, window->Window.pContext.Device );
 
 #if defined(_WIN32_WCE)
@@ -412,91 +476,122 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
         break;
 
     case WM_SIZE:
-        /*
-         * If the window is visible, then it is the user manually resizing it.
-         * If it is not, then it is the system sending us a dummy resize with
-         * zero dimensions on a "glutIconifyWindow" call.
-         */
+        /* printf("WM_SIZE (ID: %i): wParam: %i, new size: %ix%i \n",window->ID,wParam,LOWORD(lParam),HIWORD(lParam)); */
+
+        /* Update visibility state of the window */
+        if (wParam==SIZE_MINIMIZED)
+            fghPlatformOnWindowStatusNotify(window,GL_FALSE,GL_FALSE);
+        else if (wParam==SIZE_RESTORED && !window->State.Visible)
+            fghPlatformOnWindowStatusNotify(window,GL_TRUE,GL_FALSE);
+
+        /* Check window visible, we don't want do anything when we get a WM_SIZE because the user or glutIconifyWindow minimized the window */
         if( window->State.Visible )
         {
-            /* get old values first to compare to below */
-            int width = window->State.Width, height=window->State.Height;
+            int width, height;
 #if defined(_WIN32_WCE)
-            window->State.Width  = HIWORD(lParam);
-            window->State.Height = LOWORD(lParam);
+            width  = HIWORD(lParam);
+            height = LOWORD(lParam);
 #else
-            window->State.Width  = LOWORD(lParam);
-            window->State.Height = HIWORD(lParam);
+            width  = LOWORD(lParam);
+            height = HIWORD(lParam);
 #endif /* defined(_WIN32_WCE) */
             
-            if (width!=window->State.Width || height!=window->State.Height)
-                /* Something changed, need to resize */
-                window->State.NeedToResize = GL_TRUE;
+            /* Update state and call callback, if there was a change */
+            fghOnReshapeNotify(window, width, height, GL_FALSE);
         }
 
+        /* according to docs, should return 0 */
+        lRet = 0;
+        break;
+
+    case WM_SIZING:
+        {
+            /* User resize-dragging the window, call reshape callback and
+             * force redisplay so display keeps running during dragging.
+             * Screen still wont update when not moving the cursor though...
+             */
+            /* PRECT prect = (PRECT) lParam; */
+            RECT rect;
+            /* printf("WM_SIZING: nc-area: %i,%i\n",prect->right-prect->left,prect->bottom-prect->top); */
+            /* Get client area, the rect in lParam is including non-client area. */
+            fghGetClientArea(&rect,window,FALSE);
+
+            /* We'll get a WM_SIZE as well, but as state has
+             * already been updated here, the fghOnReshapeNotify
+             * in the handler for that message doesn't do anything.
+             */
+            fghOnReshapeNotify(window, rect.right-rect.left, rect.bottom-rect.top, GL_FALSE);
+
+            /* Now directly call the drawing function to update
+             * window and window's childs.
+             * This mimics the WM_PAINT messages that are received during
+             * resizing. Note that we don't have a WM_MOVING handler
+             * as move-dragging doesn't generate WM_MOVE or WM_PAINT
+             * messages until the mouse is released.
+             */
+            fghRedrawWindowAndChildren(window);
+        }
+
+        /* according to docs, should return TRUE */
+        lRet = TRUE;
         break;
 
     case WM_MOVE:
         {
-            SFG_Window* saved_window = fgStructure.CurrentWindow;
-            RECT windowRect;
-            GetWindowRect( window->Window.Handle, &windowRect );
-            
-            if (window->Parent)
+            /* Check window is minimized, we don't want to call the position callback when the user or glutIconifyWindow minimized the window */
+            if (!IsIconic(window->Window.Handle))
             {
-                /* For child window, we should return relative to upper-left
-                * of parent's client area.
-                */
-                POINT topleft = {windowRect.left,windowRect.top};
+                RECT windowRect;
+                
+                /* lParam contains coordinates of top-left of client area.
+                 * Get top-left of non-client area of window, matching coordinates of
+                 * glutInitPosition and glutPositionWindow, but not those of 
+                 * glutGet(GLUT_WINDOW_X) and glutGet(GLUT_WINDOW_Y), which return
+                 * top-left of client area.
+                 */
+                GetWindowRect( window->Window.Handle, &windowRect );
+            
+                if (window->Parent)
+                {
+                    /* For child window, we should return relative to upper-left
+                     * of parent's client area.
+                     */
+                    POINT topleft = {windowRect.left,windowRect.top};
 
-                ScreenToClient(window->Parent->Window.Handle,&topleft);
-                windowRect.left = topleft.x;
-                windowRect.top  = topleft.y;
+                    ScreenToClient(window->Parent->Window.Handle,&topleft);
+                    windowRect.left = topleft.x;
+                    windowRect.top  = topleft.y;
+                }
+
+                /* Update state and call callback, if there was a change */
+                fghOnPositionNotify(window, windowRect.left, windowRect.top, GL_FALSE);
             }
-
-            INVOKE_WCB( *window, Position, ( windowRect.left, windowRect.top ) );
-            fgSetWindow(saved_window);
         }
+
+        /* according to docs, should return 0 */
+        lRet = 0;
         break;
 
     case WM_SETFOCUS:
-/*        printf("WM_SETFOCUS: %p\n", window ); */
-
+        /*printf("WM_SETFOCUS: %p\n", window );*/
         lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
 
-        if (child_window)
-        {
-            /* If we're dealing with a child window, make sure it has input focus instead, set it here. */
-            SetFocus(child_window->Window.Handle);
-            SetActiveWindow( child_window->Window.Handle );
-            INVOKE_WCB( *child_window, Entry, ( GLUT_ENTERED ) );
-            UpdateWindow ( child_window->Window.Handle );
-        }
-        else
-        {
-            SetActiveWindow( window->Window.Handle );
-            INVOKE_WCB( *window, Entry, ( GLUT_ENTERED ) );
-        }
-        /* Always request update on main window to be safe */
+        SetActiveWindow( window->Window.Handle );
         UpdateWindow ( hWnd );
 
         break;
 
     case WM_KILLFOCUS:
-        {
-            SFG_Window* saved_window = fgStructure.CurrentWindow;
-/*            printf("WM_KILLFOCUS: %p\n", window ); */
-            lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
-            INVOKE_WCB( *window, Entry, ( GLUT_LEFT ) );
-            fgSetWindow(saved_window);
+        /*printf("WM_KILLFOCUS: %p\n", window ); */
+        lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
 
-            /* Check if there are any open menus that need to be closed */
-            fgPlatformCheckMenuDeactivate();
-        }
+        /* Check if there are any open menus that need to be closed */
+        fgPlatformCheckMenuDeactivate();
         break;
 
 #if 0
     case WM_ACTIVATE:
+        //printf("WM_ACTIVATE: %x (ID: %i) %d %d\n",lParam, window->ID, HIWORD(wParam), LOWORD(wParam));
         if (LOWORD(wParam) != WA_INACTIVE)
         {
 /*            printf("WM_ACTIVATE: fgSetCursor( %p, %d)\n", window,
@@ -511,24 +606,89 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
     case WM_SETCURSOR:
 /*      printf ( "Cursor event %x %x %x %x\n", window, window->State.Cursor, lParam, wParam ) ; */
         if( LOWORD( lParam ) == HTCLIENT )
-            fgSetCursor ( window, window->State.Cursor ) ;
+        {
+            if (!window->State.pWState.MouseTracking)
+            {
+                TRACKMOUSEEVENT tme;
+
+                /* Cursor just entered window, set cursor look */ 
+                fgSetCursor ( window, window->State.Cursor ) ;
+
+                /* If an EntryFunc callback is specified by the user, also
+                 * invoke that callback and start mouse tracking so that
+                 * we get a WM_MOUSELEAVE message
+                 */
+                if (FETCH_WCB( *window, Entry ))
+                {
+                    SFG_Window* saved_window = fgStructure.CurrentWindow;
+                    INVOKE_WCB( *window, Entry, ( GLUT_ENTERED ) );
+                    fgSetWindow(saved_window);
+
+                    tme.cbSize = sizeof(TRACKMOUSEEVENT);
+                    tme.dwFlags = TME_LEAVE;
+                    tme.hwndTrack = window->Window.Handle;
+                    TrackMouseEvent(&tme);
+
+                    window->State.pWState.MouseTracking = GL_TRUE;
+                }
+            }
+        }
         else
+            /* Only pass non-client WM_SETCURSOR to DefWindowProc, or we get WM_SETCURSOR on parents of children as well */
             lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
         break;
 
+    case WM_MOUSELEAVE:
+        {
+            /* NB: This message is only received when a EntryFunc callback
+             * is specified by the user, as that is the only condition under
+             * which mouse tracking is setup in WM_SETCURSOR handler above
+             */
+            SFG_Window* saved_window = fgStructure.CurrentWindow;
+            INVOKE_WCB( *window, Entry, ( GLUT_LEFT ) );
+            fgSetWindow(saved_window);
+
+            window->State.pWState.MouseTracking = GL_FALSE;
+            lRet = 0;   /* As per docs, must return zero */
+        }
+        break;
+
     case WM_SHOWWINDOW:
-        window->State.Visible = GL_TRUE;
-        window->State.Redisplay = GL_TRUE;
+        /* printf("WM_SHOWWINDOW, shown? %i, source: %i\n",wParam,lParam); */
+        if (wParam)
+        {
+            fghPlatformOnWindowStatusNotify(window, GL_TRUE, GL_FALSE);
+            window->State.Redisplay = GL_TRUE;
+        }
+        else
+        {
+            fghPlatformOnWindowStatusNotify(window, GL_FALSE, GL_FALSE);
+            window->State.Redisplay = GL_FALSE;
+        }
         break;
 
     case WM_PAINT:
-        /* Turn on the visibility in case it was turned off somehow */
-        window->State.Visible = GL_TRUE;
-        InvalidateRect( hWnd, NULL, GL_FALSE ); /* Make sure whole window is repainted. Bit of a hack, but a safe one from what google turns up... */
-        BeginPaint( hWnd, &ps );
-        fghRedrawWindow( window );
-        EndPaint( hWnd, &ps );
-        break;
+    {
+        RECT rect;
+        
+        /* As per docs, upon receiving WM_PAINT, first check if the update region is not empty before you call BeginPaint */
+        if (GetUpdateRect(hWnd,&rect,FALSE))
+        {
+            /* Dummy begin/end paint to validate rect that needs
+             * redrawing, then signal that a redisplay is needed.
+             * This allows us full control about when we do any
+             * redrawing, and is the same as what original GLUT
+             * does.
+             */
+            PAINTSTRUCT ps;
+            BeginPaint( hWnd, &ps );
+            EndPaint( hWnd, &ps );
+
+            window->State.Redisplay = GL_TRUE;
+        }
+        lRet = 0;   /* As per docs, should return 0 */
+    }
+    break;
 
     case WM_CLOSE:
         fgDestroyWindow ( window );
@@ -544,12 +704,13 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
 
     case WM_MOUSEMOVE:
     {
+        /* Per docs, use LOWORD/HIWORD for WinCE and GET_X_LPARAM/GET_Y_LPARAM for desktop windows */
 #if defined(_WIN32_WCE)
-        window->State.MouseX = 320-HIWORD( lParam );
+        window->State.MouseX = 320-HIWORD( lParam );    /* XXX: Docs say x should be loword and y hiword? */
         window->State.MouseY = LOWORD( lParam );
 #else
-        window->State.MouseX = LOWORD( lParam );
-        window->State.MouseY = HIWORD( lParam );
+        window->State.MouseX = GET_X_LPARAM( lParam );
+        window->State.MouseY = GET_Y_LPARAM( lParam );
 #endif /* defined(_WIN32_WCE) */
         /* Restrict to [-32768, 32767] to match X11 behaviour       */
         /* See comment in "freeglut_developer" mailing list 10/4/04 */
@@ -587,12 +748,13 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
         GLboolean pressed = GL_TRUE;
         int button;
 
+        /* Per docs, use LOWORD/HIWORD for WinCE and GET_X_LPARAM/GET_Y_LPARAM for desktop windows */
 #if defined(_WIN32_WCE)
-        window->State.MouseX = 320-HIWORD( lParam );
+        window->State.MouseX = 320-HIWORD( lParam );    /* XXX: Docs say x should be loword and y hiword? */
         window->State.MouseY = LOWORD( lParam );
 #else
-        window->State.MouseX = LOWORD( lParam );
-        window->State.MouseY = HIWORD( lParam );
+        window->State.MouseX = GET_X_LPARAM( lParam );
+        window->State.MouseY = GET_Y_LPARAM( lParam );
 #endif /* defined(_WIN32_WCE) */
 
         /* Restrict to [-32768, 32767] to match X11 behaviour       */
@@ -655,17 +817,20 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
                                window->State.MouseX, window->State.MouseY ) )
             break;
 
-        /* Set capture so that the window captures all the mouse messages */
-        /*
-         * XXX - Multiple button support:  Under X11, the mouse is not released
-         * XXX - from the window until all buttons have been released, even if the
-         * XXX - user presses a button in another window.  This will take more
-         * XXX - code changes than I am up to at the moment (10/5/04).  The present
-         * XXX - is a 90 percent solution.
+        /* Set capture so that the window captures all the mouse messages
+         *
+         * The mouse is not released from the window until all buttons have
+         * been released, even if the user presses a button in another window.
+         * This is consistent with the behavior on X11.
          */
         if ( pressed == GL_TRUE )
-          SetCapture ( window->Window.Handle ) ;
-        else
+        {
+            if (!setCaptureActive)
+                SetCapture ( window->Window.Handle ) ;
+            setCaptureActive = 1; /* Set to false in WM_CAPTURECHANGED handler */
+        }
+        else if (!GetAsyncKeyState(VK_LBUTTON) && !GetAsyncKeyState(VK_MBUTTON) && !GetAsyncKeyState(VK_RBUTTON))
+          /* Make sure all mouse buttons are released before releasing capture */
           ReleaseCapture () ;
 
         if( ! FETCH_WCB( *window, Mouse ) )
@@ -684,15 +849,34 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
         );
 
         fgState.Modifiers = INVALID_MODIFIERS;
+
+        /* As per docs, should return zero */
+        lRet = 0;
     }
     break;
 
     case WM_MOUSEWHEEL:
     {
-        int wheel_number = LOWORD( wParam );
-        short ticks = ( short )HIWORD( wParam );
-		fgState.MouseWheelTicks += ticks;
+        int wheel_number = 0;   /* Only one scroll wheel on windows */
+#if defined(_WIN32_WCE)
+        int modkeys = LOWORD(wParam); 
+        short ticks = (short)HIWORD(wParam);
+        /* commented out as should not be needed here, mouse motion is processed in WM_MOUSEMOVE first:
+        xPos = LOWORD(lParam);  -- straight from docs, not consistent with mouse nutton and mouse motion above (which i think is wrong)
+        yPos = HIWORD(lParam);
+        */
+#else
+        /* int modkeys = GET_KEYSTATE_WPARAM( wParam ); */
+        short ticks = GET_WHEEL_DELTA_WPARAM( wParam );
+        /* commented out as should not be needed here, mouse motion is processed in WM_MOUSEMOVE first:
+        window->State.MouseX = GET_X_LPARAM( lParam );
+        window->State.MouseY = GET_Y_LPARAM( lParam );
+        */
+#endif /* defined(_WIN32_WCE) */
 
+        window = fghWindowUnderCursor(window);
+
+		fgState.MouseWheelTicks += ticks;
         if ( abs ( fgState.MouseWheelTicks ) >= WHEEL_DELTA )
 		{
 			int direction = ( fgState.MouseWheelTicks > 0 ) ? 1 : -1;
@@ -741,202 +925,31 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
 
             fgState.Modifiers = INVALID_MODIFIERS;
 		}
+        /* Per docs, should return zero */
+        lRet = 0;
     }
     break ;
 
     case WM_SYSKEYDOWN:
     case WM_KEYDOWN:
     {
-        int keypress = -1;
-        POINT mouse_pos ;
-
-        if (child_window)
-            window = child_window;
-
-        if( ( fgState.KeyRepeat==GLUT_KEY_REPEAT_OFF || window->State.IgnoreKeyRepeat==GL_TRUE ) && (HIWORD(lParam) & KF_REPEAT) )
-            break;
-
-        /*
-         * Remember the current modifiers state. This is done here in order
-         * to make sure the VK_DELETE keyboard callback is executed properly.
-         */
-        fgState.Modifiers = fgPlatformGetModifiers( );
-
-        GetCursorPos( &mouse_pos );
-        ScreenToClient( window->Window.Handle, &mouse_pos );
-
-        window->State.MouseX = mouse_pos.x;
-        window->State.MouseY = mouse_pos.y;
-
-        /* Convert the Win32 keystroke codes to GLUTtish way */
-#       define KEY(a,b) case a: keypress = b; break;
-
-        switch( wParam )
-        {
-            KEY( VK_F1,     GLUT_KEY_F1        );
-            KEY( VK_F2,     GLUT_KEY_F2        );
-            KEY( VK_F3,     GLUT_KEY_F3        );
-            KEY( VK_F4,     GLUT_KEY_F4        );
-            KEY( VK_F5,     GLUT_KEY_F5        );
-            KEY( VK_F6,     GLUT_KEY_F6        );
-            KEY( VK_F7,     GLUT_KEY_F7        );
-            KEY( VK_F8,     GLUT_KEY_F8        );
-            KEY( VK_F9,     GLUT_KEY_F9        );
-            KEY( VK_F10,    GLUT_KEY_F10       );
-            KEY( VK_F11,    GLUT_KEY_F11       );
-            KEY( VK_F12,    GLUT_KEY_F12       );
-            KEY( VK_PRIOR,  GLUT_KEY_PAGE_UP   );
-            KEY( VK_NEXT,   GLUT_KEY_PAGE_DOWN );
-            KEY( VK_HOME,   GLUT_KEY_HOME      );
-            KEY( VK_END,    GLUT_KEY_END       );
-            KEY( VK_LEFT,   GLUT_KEY_LEFT      );
-            KEY( VK_UP,     GLUT_KEY_UP        );
-            KEY( VK_RIGHT,  GLUT_KEY_RIGHT     );
-            KEY( VK_DOWN,   GLUT_KEY_DOWN      );
-            KEY( VK_INSERT, GLUT_KEY_INSERT    );
-
-        case VK_LCONTROL:  case VK_RCONTROL:  case VK_CONTROL:
-        case VK_LSHIFT:    case VK_RSHIFT:    case VK_SHIFT:
-        case VK_LMENU:     case VK_RMENU:     case VK_MENU:
-            /* These keypresses and releases are handled earlier in the function */
-            break;
-
-        case VK_DELETE:
-            /* The delete key should be treated as an ASCII keypress: */
-            INVOKE_WCB( *window, Keyboard,
-                        ( 127, window->State.MouseX, window->State.MouseY )
-            );
-        }
-
-#if defined(_WIN32_WCE)
-        if(!(lParam & 0x40000000)) /* Prevent auto-repeat */
-        {
-            if(wParam==(unsigned)gxKeyList.vkRight)
-                keypress = GLUT_KEY_RIGHT;
-            else if(wParam==(unsigned)gxKeyList.vkLeft)
-                keypress = GLUT_KEY_LEFT;
-            else if(wParam==(unsigned)gxKeyList.vkUp)
-                keypress = GLUT_KEY_UP;
-            else if(wParam==(unsigned)gxKeyList.vkDown)
-                keypress = GLUT_KEY_DOWN;
-            else if(wParam==(unsigned)gxKeyList.vkA)
-                keypress = GLUT_KEY_F1;
-            else if(wParam==(unsigned)gxKeyList.vkB)
-                keypress = GLUT_KEY_F2;
-            else if(wParam==(unsigned)gxKeyList.vkC)
-                keypress = GLUT_KEY_F3;
-            else if(wParam==(unsigned)gxKeyList.vkStart)
-                keypress = GLUT_KEY_F4;
-        }
-#endif
-
-        if( keypress != -1 )
-            INVOKE_WCB( *window, Special,
-                        ( keypress,
-                          window->State.MouseX, window->State.MouseY )
-            );
-
-        fgState.Modifiers = INVALID_MODIFIERS;
+        window = fghWindowUnderCursor(window);
+        lRet = fghWindowProcKeyPress(window,uMsg,GL_TRUE,wParam,lParam);
     }
     break;
 
     case WM_SYSKEYUP:
     case WM_KEYUP:
     {
-        int keypress = -1;
-        POINT mouse_pos;
-
-        if (child_window)
-            window = child_window;
-
-        /*
-         * Remember the current modifiers state. This is done here in order
-         * to make sure the VK_DELETE keyboard callback is executed properly.
-         */
-        fgState.Modifiers = fgPlatformGetModifiers( );
-
-        GetCursorPos( &mouse_pos );
-        ScreenToClient( window->Window.Handle, &mouse_pos );
-
-        window->State.MouseX = mouse_pos.x;
-        window->State.MouseY = mouse_pos.y;
-
-        /*
-         * Convert the Win32 keystroke codes to GLUTtish way.
-         * "KEY(a,b)" was defined under "WM_KEYDOWN"
-         */
-
-        switch( wParam )
-        {
-            KEY( VK_F1,     GLUT_KEY_F1        );
-            KEY( VK_F2,     GLUT_KEY_F2        );
-            KEY( VK_F3,     GLUT_KEY_F3        );
-            KEY( VK_F4,     GLUT_KEY_F4        );
-            KEY( VK_F5,     GLUT_KEY_F5        );
-            KEY( VK_F6,     GLUT_KEY_F6        );
-            KEY( VK_F7,     GLUT_KEY_F7        );
-            KEY( VK_F8,     GLUT_KEY_F8        );
-            KEY( VK_F9,     GLUT_KEY_F9        );
-            KEY( VK_F10,    GLUT_KEY_F10       );
-            KEY( VK_F11,    GLUT_KEY_F11       );
-            KEY( VK_F12,    GLUT_KEY_F12       );
-            KEY( VK_PRIOR,  GLUT_KEY_PAGE_UP   );
-            KEY( VK_NEXT,   GLUT_KEY_PAGE_DOWN );
-            KEY( VK_HOME,   GLUT_KEY_HOME      );
-            KEY( VK_END,    GLUT_KEY_END       );
-            KEY( VK_LEFT,   GLUT_KEY_LEFT      );
-            KEY( VK_UP,     GLUT_KEY_UP        );
-            KEY( VK_RIGHT,  GLUT_KEY_RIGHT     );
-            KEY( VK_DOWN,   GLUT_KEY_DOWN      );
-            KEY( VK_INSERT, GLUT_KEY_INSERT    );
-
-          case VK_LCONTROL:  case VK_RCONTROL:  case VK_CONTROL:
-          case VK_LSHIFT:    case VK_RSHIFT:    case VK_SHIFT:
-          case VK_LMENU:     case VK_RMENU:     case VK_MENU:
-              /* These keypresses and releases are handled earlier in the function */
-              break;
-
-          case VK_DELETE:
-              /* The delete key should be treated as an ASCII keypress: */
-              INVOKE_WCB( *window, KeyboardUp,
-                          ( 127, window->State.MouseX, window->State.MouseY )
-              );
-              break;
-
-        default:
-        {
-#if !defined(_WIN32_WCE)
-            BYTE state[ 256 ];
-            WORD code[ 2 ];
-
-            GetKeyboardState( state );
-
-            if( ToAscii( (UINT)wParam, 0, state, code, 0 ) == 1 )
-                wParam=code[ 0 ];
-
-            INVOKE_WCB( *window, KeyboardUp,
-                        ( (char)wParam,
-                          window->State.MouseX, window->State.MouseY )
-            );
-#endif /* !defined(_WIN32_WCE) */
-        }
-        }
-
-        if( keypress != -1 )
-            INVOKE_WCB( *window, SpecialUp,
-                        ( keypress,
-                          window->State.MouseX, window->State.MouseY )
-            );
-
-        fgState.Modifiers = INVALID_MODIFIERS;
+        window = fghWindowUnderCursor(window);
+        lRet = fghWindowProcKeyPress(window,uMsg,GL_FALSE,wParam,lParam);
     }
     break;
 
     case WM_SYSCHAR:
     case WM_CHAR:
     {
-      if (child_window)
-        window = child_window;
+      window = fghWindowUnderCursor(window);
 
       if( (fgState.KeyRepeat==GLUT_KEY_REPEAT_OFF || window->State.IgnoreKeyRepeat==GL_TRUE) && (HIWORD(lParam) & KF_REPEAT) )
             break;
@@ -951,34 +964,13 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
     break;
 
     case WM_CAPTURECHANGED:
-        /* User has finished resizing the window, force a redraw */
-        INVOKE_WCB( *window, Display, ( ) );
-
-        /*lRet = DefWindowProc( hWnd, uMsg, wParam, lParam ); */
-        break;
-
-        /* Other messages that I have seen and which are not handled already */
-    case WM_SETTEXT:  /* 0x000c */
-        lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
-        /* Pass it on to "DefWindowProc" to set the window text */
-        break;
-
-    case WM_GETTEXT:  /* 0x000d */
-        /* Ideally we would copy the title of the window into "lParam" */
-        /* strncpy ( (char *)lParam, "Window Title", wParam );
-           lRet = ( wParam > 12 ) ? 12 : wParam;  */
-        /* the number of characters copied */
-        lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
-        break;
-
-    case WM_GETTEXTLENGTH:  /* 0x000e */
-        /* Ideally we would get the length of the title of the window */
-        lRet = 12;
-        /* the number of characters in "Window Title\0" (see above) */
-        break;
-
-    case WM_ERASEBKGND:  /* 0x0014 */
-        lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
+        if (!lParam || !fgWindowByHandle((HWND)lParam))
+            /* Capture released or capture taken by non-FreeGLUT window */
+            setCaptureActive = 0;
+        /* Docs advise a redraw */
+        InvalidateRect( hWnd, NULL, GL_FALSE );
+        UpdateWindow(hWnd);
+        lRet = 0;   /* Per docs, should return zero */
         break;
 
 #if !defined(_WIN32_WCE)
@@ -989,10 +981,10 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
         /* Help screen says this message must be passed to "DefWindowProc" */
         break;
 
-    case WM_NCPAINT:  /* 0x0085 */
-      /* Need to update the border of this window */
-        lRet = DefWindowProc( hWnd, uMsg, wParam, lParam );
-        /* Pass it on to "DefWindowProc" to repaint a standard border */
+    case WM_DISPLAYCHANGE: /* 0x007E */
+        /* The system display resolution/depth has changed */
+        fgDisplay.ScreenWidth = LOWORD(lParam);
+        fgDisplay.ScreenHeight = HIWORD(lParam);
         break;
 
     case WM_SYSCOMMAND :  /* 0x0112 */
@@ -1017,8 +1009,7 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
 
             case SC_MINIMIZE   :
                 /* User has clicked on the "-" to minimize the window */
-                /* Turn off the visibility */
-                window->State.Visible = GL_FALSE ;
+                /* Turning off the visibility is handled in WM_SIZE handler */
 
                 break ;
 
@@ -1139,4 +1130,242 @@ LRESULT CALLBACK fgPlatformWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
     }
 
     return lRet;
+}
+
+
+/* Step through the work list */
+void fgPlatformProcessWork(SFG_Window *window)
+{
+    unsigned int workMask = window->State.WorkMask;
+    /* Now clear it so that any callback generated by the actions below can set work again */
+    window->State.WorkMask = 0;
+
+    /* This is before the first display callback: call a few callbacks to inform user of window size, position, etc
+     * we know this is before the first display callback of a window as for all windows GLUT_INIT_WORK is set when
+     * they are opened, and work is done before displaying in the mainloop.
+     */
+    if (workMask & GLUT_INIT_WORK)
+    {
+        RECT windowRect;
+
+        /* Notify windowStatus/visibility */
+        fghPlatformOnWindowStatusNotify(window, window->State.Visible, GL_TRUE);
+
+        /* get and notify window's position */
+        GetWindowRect(window->Window.Handle,&windowRect);
+        fghOnPositionNotify(window, windowRect.left, windowRect.top, GL_TRUE);
+
+        /* get and notify window's size */
+        GetClientRect(window->Window.Handle,&windowRect);
+        fghOnReshapeNotify(window, windowRect.right-windowRect.left, windowRect.bottom-windowRect.top, GL_TRUE);
+
+        /* Call init context callback */
+        INVOKE_WCB( *window, InitContext, ());
+
+        /* Lastly, check if we have a display callback, error out if not
+         * This is the right place to do it, as the redisplay will be
+         * next right after we exit this function, so there is no more
+         * opportunity for the user to register a callback for this window.
+         */
+        if (!FETCH_WCB(*window, Display))
+            fgError ( "ERROR:  No display callback registered for window %d\n", window->ID );
+    }
+
+    /* On windows we can position, resize and change z order at the same time */
+    if (workMask & (GLUT_POSITION_WORK|GLUT_SIZE_WORK|GLUT_ZORDER_WORK|GLUT_FULL_SCREEN_WORK))
+    {
+        UINT flags = SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOSENDCHANGING | SWP_NOSIZE | SWP_NOZORDER;
+        HWND insertAfter = HWND_TOP;
+        RECT clientRect;
+
+#if !defined(_WIN32_WCE) /* FIXME: what about WinCE */
+        if (workMask & GLUT_FULL_SCREEN_WORK)
+        {
+            /* This asks us to toggle fullscreen mode */
+            flags |= SWP_FRAMECHANGED;
+
+            if (window->State.IsFullscreen)
+            {
+                /* If we are fullscreen, resize the current window back to its original size */
+                /* printf("OldRect %i,%i to %i,%i\n",window->State.pWState.OldRect.left,window->State.pWState.OldRect.top,window->State.pWState.OldRect.right,window->State.pWState.OldRect.bottom); */
+
+                /* restore style of window before making it fullscreen */
+                SetWindowLong(window->Window.Handle, GWL_STYLE, window->State.pWState.OldStyle);
+                SetWindowLong(window->Window.Handle, GWL_EXSTYLE, window->State.pWState.OldStyleEx);
+
+                /* Then set up resize/reposition, unless user already queued up reshape/position work */
+                if (!(workMask & GLUT_POSITION_WORK))
+                {
+                    workMask |= GLUT_POSITION_WORK;
+                    window->State.DesiredXpos   = window->State.pWState.OldRect.left;
+                    window->State.DesiredYpos   = window->State.pWState.OldRect.top;
+                }
+                if (!(workMask & GLUT_SIZE_WORK))
+                {
+                    workMask |= GLUT_SIZE_WORK;
+                    window->State.DesiredWidth  = window->State.pWState.OldRect.right  - window->State.pWState.OldRect.left;
+                    window->State.DesiredHeight = window->State.pWState.OldRect.bottom - window->State.pWState.OldRect.top;
+                }
+                
+                /* We'll finish off the fullscreen operation below after the other GLUT_POSITION_WORK|GLUT_SIZE_WORK|GLUT_ZORDER_WORK */
+            }
+            else
+            {
+                /* we are currently not fullscreen, go to fullscreen:
+                 * remove window decoration and then maximize
+                 */
+                RECT rect;
+                HMONITOR hMonitor;
+                MONITORINFO mi;
+        
+                /* save current window rect, style, exstyle and maximized state */
+                window->State.pWState.OldMaximized = !!IsZoomed(window->Window.Handle);
+                if (window->State.pWState.OldMaximized)
+                    /* We force the window into restored mode before going
+                     * fullscreen because Windows doesn't seem to hide the
+                     * taskbar if the window is in the maximized state.
+                     */
+                    SendMessage(window->Window.Handle, WM_SYSCOMMAND, SC_RESTORE, 0);
+
+                fghGetClientArea( &window->State.pWState.OldRect, window, GL_TRUE );
+                window->State.pWState.OldStyle   = GetWindowLong(window->Window.Handle, GWL_STYLE);
+                window->State.pWState.OldStyleEx = GetWindowLong(window->Window.Handle, GWL_EXSTYLE);
+
+                /* remove decorations from style */
+                SetWindowLong(window->Window.Handle, GWL_STYLE,
+                              window->State.pWState.OldStyle & ~(WS_CAPTION | WS_THICKFRAME));
+                SetWindowLong(window->Window.Handle, GWL_EXSTYLE,
+                              window->State.pWState.OldStyleEx & ~(WS_EX_DLGMODALFRAME |
+                              WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE));
+
+                /* For fullscreen mode, find the monitor that is covered the most
+                 * by the window and get its rect as the resize target.
+	             */
+                GetWindowRect(window->Window.Handle, &rect);
+                hMonitor= MonitorFromRect(&rect, MONITOR_DEFAULTTONEAREST);
+                mi.cbSize = sizeof(mi);
+                GetMonitorInfo(hMonitor, &mi);
+                rect = mi.rcMonitor;
+
+                /* then setup window resize, overwriting other work queued on the window */
+                window->State.WorkMask |= GLUT_POSITION_WORK | GLUT_SIZE_WORK;
+                window->State.WorkMask &= ~GLUT_ZORDER_WORK;
+                window->State.DesiredXpos   = rect.left;
+                window->State.DesiredYpos   = rect.top;
+                window->State.DesiredWidth  = rect.right  - rect.left;
+                window->State.DesiredHeight = rect.bottom - rect.top;
+            }
+        }
+#endif /*!defined(_WIN32_WCE) */
+
+        /* Now deal with normal position, reshape and z order requests (some might have been set when handling GLUT_FULLSCREEN_WORK above */
+        {
+            /* get rect describing window's current position and size, 
+             * in screen coordinates and in FreeGLUT format
+             * (size (right-left, bottom-top) is client area size, top and left
+             * are outside of window including decorations).
+             */
+            fghGetClientArea( &clientRect, window, TRUE );
+
+            if (workMask & GLUT_POSITION_WORK)
+            {
+                flags &= ~SWP_NOMOVE;
+                
+                /* Move rect so that top-left is at requested position */
+                /* This also automatically makes sure that child window requested coordinates are relative
+                 * to top-left of parent's client area (needed input for SetWindowPos on child windows),
+                 * so no need to further correct rect for child windows below (childs don't have decorations either).
+                 */
+                OffsetRect(&clientRect,window->State.DesiredXpos-clientRect.left,window->State.DesiredYpos-clientRect.top);
+            }
+            if (workMask & GLUT_SIZE_WORK)
+            {
+                flags &= ~SWP_NOSIZE;
+                
+                /* Note on maximizing behavior of Windows: the resize borders are off
+                 * the screen such that the client area extends all the way from the
+                 * leftmost corner to the rightmost corner to maximize screen real
+                 * estate. A caption is still shown however to allow interaction with
+                 * the window controls. This is default behavior of Windows that
+                 * FreeGLUT sticks with. To alter, one would have to check if
+                 * WS_MAXIMIZE style is set when a resize event is triggered, and
+                 * then manually correct the windowRect to put the borders back on
+                 * screen.
+                 */
+
+                /* Set new size of window, WxH specify client area */
+                clientRect.right    = clientRect.left + window->State.DesiredWidth;
+                clientRect.bottom   = clientRect.top  + window->State.DesiredHeight;
+            }
+            if (workMask & GLUT_ZORDER_WORK)
+            {
+                flags &= ~SWP_NOZORDER;
+
+                /* Could change this to push it down or up one window at a time with some
+                 * more code using GetWindow with GW_HWNDPREV and GW_HWNDNEXT.
+                 * What would be consistent with X11? Win32 GLUT does what we do here...
+                 */
+                if (window->State.DesiredZOrder < 0)
+                    insertAfter = HWND_BOTTOM;
+            }
+        }
+
+        /* Adjust for window decorations
+         * Child windows don't have decoration, so no need to correct
+         */
+        if (!window->Parent)
+            /* get the window rect from this to feed to SetWindowPos, correct for window decorations */
+            fghComputeWindowRectFromClientArea_QueryWindow(&clientRect,window,TRUE);
+    
+        /* Do the requested positioning, moving, and z order push/pop. */
+        SetWindowPos( window->Window.Handle,
+                      insertAfter,
+                      clientRect.left, clientRect.top,
+                      clientRect.right - clientRect.left,
+                      clientRect.bottom- clientRect.top,
+                      flags
+        );
+
+        /* Finish off the fullscreen operation we were doing, if any */
+        if (workMask & GLUT_FULL_SCREEN_WORK)
+        {
+            if (window->State.IsFullscreen)
+            {
+                /* leaving fullscreen, restore maximized state, if any */
+                if (window->State.pWState.OldMaximized)
+                    SendMessage(window->Window.Handle, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+
+                window->State.IsFullscreen = GL_FALSE;
+            }
+            else
+                window->State.IsFullscreen = GL_TRUE;
+        }
+    }
+
+    if (workMask & GLUT_VISIBILITY_WORK)
+    {
+        /* Visibility status of window gets updated in the WM_SHOWWINDOW and WM_SIZE handlers */
+        int cmdShow = 0;
+        SFG_Window *win = window;
+        switch (window->State.DesiredVisibility)
+        {
+        case DesireHiddenState:
+            cmdShow = SW_HIDE;
+            break;
+        case DesireIconicState:
+            cmdShow = SW_MINIMIZE;
+            /* Call on top-level window */
+            while (win->Parent)
+                win = win->Parent;
+            break;
+        case DesireNormalState:
+            if (win->IsMenu)
+                cmdShow = SW_SHOWNOACTIVATE;    /* Just show, don't activate if its a menu */
+            else
+                cmdShow = SW_SHOW;
+            break;
+        }
+
+        ShowWindow( win->Window.Handle, cmdShow );
+    }
 }

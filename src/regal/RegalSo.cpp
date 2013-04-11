@@ -330,7 +330,7 @@ So::SendStateToDriver(RegalContext &ctx, GLuint unit, GLenum target, SamplingSta
   {
     if (activeTextureUnit != unit)
       ActiveTexture(ctx, GL_TEXTURE0 + unit );
-    tbl.glTexParameteriv( target, GL_TEXTURE_BORDER_COLOR, newState.BorderColor);
+    tbl.glTexParameterfv( target, GL_TEXTURE_BORDER_COLOR, newState.BorderColor);
     drv.BorderColor[0] = newState.BorderColor[0];
     drv.BorderColor[1] = newState.BorderColor[1];
     drv.BorderColor[2] = newState.BorderColor[2];

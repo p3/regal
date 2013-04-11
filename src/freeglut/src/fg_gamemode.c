@@ -28,15 +28,6 @@
 #include <GL/freeglut.h>
 #include "fg_internal.h"
 
-/*
- * TODO BEFORE THE STABLE RELEASE:
- *
- *  glutGameModeString()    -- missing
- *  glutEnterGameMode()     -- X11 version
- *  glutLeaveGameMode()     -- is that correct?
- *  glutGameModeGet()       -- is that correct?
- */
-
 
 /* -- PRIVATE FUNCTIONS ---------------------------------------------------- */
 extern void fgPlatformRememberState( void );
@@ -112,9 +103,7 @@ int FGAPIENTRY glutEnterGameMode( void )
         GL_TRUE, GL_FALSE
     );
 
-    fgStructure.GameModeWindow->State.Width  = fgState.GameModeSize.X;
-    fgStructure.GameModeWindow->State.Height = fgState.GameModeSize.Y;
-    fgStructure.GameModeWindow->State.NeedToResize = GL_TRUE;
+    glutFullScreen();
 
     fgPlatformEnterGameMode();
 

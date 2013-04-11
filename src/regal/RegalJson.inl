@@ -8,6 +8,7 @@
 #define set_json_regal_config_cache_texturewrite(value)                  Config::cacheTextureWrite = value
 #define set_json_regal_config_configfile(value)                          Config::configFile = value
 #define set_json_regal_config_dispatch_emulation_enable_bin(value)       Config::enableEmuBin = value
+#define set_json_regal_config_dispatch_emulation_enable_texsto(value)    Config::enableEmuTexSto = value
 #define set_json_regal_config_dispatch_emulation_enable_dsa(value)       Config::enableEmuDsa = value
 #define set_json_regal_config_dispatch_emulation_enable_filter(value)    Config::enableEmuFilter = value
 #define set_json_regal_config_dispatch_emulation_enable_iff(value)       Config::enableEmuIff = value
@@ -19,6 +20,7 @@
 #define set_json_regal_config_dispatch_emulation_enable_vao(value)       Config::enableEmuVao = value
 #define set_json_regal_config_dispatch_emulation_enable_xfer(value)      Config::enableEmuXfer = value
 #define set_json_regal_config_dispatch_emulation_force_bin(value)        Config::forceEmuBin = value
+#define set_json_regal_config_dispatch_emulation_force_texsto(value)     Config::forceEmuTexSto = value
 #define set_json_regal_config_dispatch_emulation_force_dsa(value)        Config::forceEmuDsa = value
 #define set_json_regal_config_dispatch_emulation_force_filter(value)     Config::forceEmuFilter = value
 #define set_json_regal_config_dispatch_emulation_force_iff(value)        Config::forceEmuIff = value

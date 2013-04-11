@@ -1,9 +1,9 @@
 /*
-  Copyright (c) 2011-2012 NVIDIA Corporation
-  Copyright (c) 2011-2012 Cass Everitt
-  Copyright (c) 2012 Scott Nations
-  Copyright (c) 2012 Mathias Schott
-  Copyright (c) 2012 Nigel Stewart
+  Copyright (c) 2011-2013 NVIDIA Corporation
+  Copyright (c) 2011-2013 Cass Everitt
+  Copyright (c) 2013 Scott Nations
+  Copyright (c) 2013 Mathias Schott
+  Copyright (c) 2013 Nigel Stewart
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
@@ -55,7 +55,6 @@ REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
-#define REGAL_EMU_MAX_TEXTURE_UNITS 16
 #define REGAL_NUM_TEXTURE_TARGETS 16
 
 namespace Emu {
@@ -89,9 +88,9 @@ struct So : public RegalEmu
 
     static GLenum TT_Index2Enum(GLuint index)
     {
-      if( index > 9 ) {
+      if( index > REGAL_NUM_TEXTURE_TARGETS ) {
         Warning( "Unhandled texture target index: index = ", index);
-        index = 10;
+        index = REGAL_NUM_TEXTURE_TARGETS;
       }
       return index2Enum[index];
     }
@@ -100,22 +99,22 @@ struct So : public RegalEmu
     {
         switch (texture)
         {
-            case GL_TEXTURE_1D: return 0;
-            case GL_TEXTURE_2D: return 1;
-            case GL_TEXTURE_3D: return 2;
-            case GL_TEXTURE_1D_ARRAY: return 3;
-            case GL_TEXTURE_2D_ARRAY: return 4;
-            case GL_TEXTURE_RECTANGLE: return 5;
-            case GL_TEXTURE_CUBE_MAP: return 6;
-            case GL_TEXTURE_CUBE_MAP_ARRAY: return 7;
-            case GL_TEXTURE_2D_MULTISAMPLE: return 8;
+            case GL_TEXTURE_1D:                   return 0;
+            case GL_TEXTURE_2D:                   return 1;
+            case GL_TEXTURE_3D:                   return 2;
+            case GL_TEXTURE_1D_ARRAY:             return 3;
+            case GL_TEXTURE_2D_ARRAY:             return 4;
+            case GL_TEXTURE_RECTANGLE:            return 5;
+            case GL_TEXTURE_CUBE_MAP:             return 6;
+            case GL_TEXTURE_CUBE_MAP_ARRAY:       return 7;
+            case GL_TEXTURE_2D_MULTISAMPLE:       return 8;
             case GL_TEXTURE_2D_MULTISAMPLE_ARRAY: return 9;
-            case GL_TEXTURE_CUBE_MAP_POSITIVE_X: return 10;
-            case GL_TEXTURE_CUBE_MAP_NEGATIVE_X: return 11;
-            case GL_TEXTURE_CUBE_MAP_POSITIVE_Y: return 12;
-            case GL_TEXTURE_CUBE_MAP_NEGATIVE_Y: return 13;
-            case GL_TEXTURE_CUBE_MAP_POSITIVE_Z: return 14;
-            case GL_TEXTURE_CUBE_MAP_NEGATIVE_Z: return 15;
+            case GL_TEXTURE_CUBE_MAP_POSITIVE_X:  return 10;
+            case GL_TEXTURE_CUBE_MAP_NEGATIVE_X:  return 11;
+            case GL_TEXTURE_CUBE_MAP_POSITIVE_Y:  return 12;
+            case GL_TEXTURE_CUBE_MAP_NEGATIVE_Y:  return 13;
+            case GL_TEXTURE_CUBE_MAP_POSITIVE_Z:  return 14;
+            case GL_TEXTURE_CUBE_MAP_NEGATIVE_Z:  return 15;
             default:
                 Warning( "Unhandled texture target enum: texture = ", Token::GLenumToString(texture));
                 break;
@@ -151,7 +150,7 @@ struct So : public RegalEmu
         GLuint64 ver;
         GLuint name;
 
-        GLint BorderColor[4];     //  Border color
+        GLfloat BorderColor[4];   //  Border color
         GLenum MinFilter;         //  Minification function
         GLenum MagFilter;         //  Magnification function
         GLenum WrapS;             //  Texcoord s wrap mode
@@ -237,10 +236,10 @@ struct So : public RegalEmu
         switch (pname)
         {
             case GL_TEXTURE_BORDER_COLOR:
-                ss->BorderColor[0] = static_cast<GLint>(params[0]);
-                ss->BorderColor[1] = static_cast<GLint>(params[1]);
-                ss->BorderColor[2] = static_cast<GLint>(params[2]);
-                ss->BorderColor[3] = static_cast<GLint>(params[3]);
+                ss->BorderColor[0] = static_cast<GLfloat>(params[0]);
+                ss->BorderColor[1] = static_cast<GLfloat>(params[1]);
+                ss->BorderColor[2] = static_cast<GLfloat>(params[2]);
+                ss->BorderColor[3] = static_cast<GLfloat>(params[3]);
                 break;
 
             case GL_TEXTURE_COMPARE_FUNC:
@@ -422,50 +421,50 @@ struct So : public RegalEmu
         switch (pname)
         {
             case GL_TEXTURE_BORDER_COLOR:
-                as->BorderColor[0] = (GLint)(params[0]);
-                as->BorderColor[1] = (GLint)(params[1]);
-                as->BorderColor[2] = (GLint)(params[2]);
-                as->BorderColor[3] = (GLint)(params[3]);
+                as->BorderColor[0] = static_cast<GLfloat>(params[0]);
+                as->BorderColor[1] = static_cast<GLfloat>(params[1]);
+                as->BorderColor[2] = static_cast<GLfloat>(params[2]);
+                as->BorderColor[3] = static_cast<GLfloat>(params[3]);
                 break;
 
             case GL_TEXTURE_MIN_FILTER:
-                as->MinFilter = (GLint)(params[0]);
+                as->MinFilter = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_MAG_FILTER:
-                as->MagFilter = (GLint)(params[0]);
+                as->MagFilter = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_WRAP_S:
-                as->WrapS = (GLint)(params[0]);
+                as->WrapS = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_WRAP_T:
-                as->WrapT = (GLint)(params[0]);
+                as->WrapT = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_WRAP_R:
-                as->WrapR = (GLint)(params[0]);
+                as->WrapR = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_COMPARE_MODE:
-                as->CompareMode = (GLint)(params[0]);
+                as->CompareMode = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_COMPARE_FUNC:
-                as->CompareFunc = (GLint)(params[0]);
+                as->CompareFunc = static_cast<GLint>(params[0]);
                 break;
 
             case GL_TEXTURE_MIN_LOD:
-                as->MinLod = (GLfloat)(params[0]);
+                as->MinLod = static_cast<GLfloat>(params[0]);
                 break;
 
             case GL_TEXTURE_MAX_LOD:
-                as->MaxLod = (GLfloat)(params[0]);
+                as->MaxLod = static_cast<GLfloat>(params[0]);
                 break;
 
             case GL_TEXTURE_LOD_BIAS:
-                as->LodBias = (GLfloat)(params[0]);
+                as->LodBias = static_cast<GLfloat>(params[0]);
                 break;
 
             case GL_TEXTURE_MAX_ANISOTROPY_EXT:
@@ -474,7 +473,7 @@ struct So : public RegalEmu
                     Warning("Unsupported sampler parameter ",Token::GLenumToString(pname)," (GL_EXT_texture_filter_anisotropic extension not available), skipping.");
                     return true;
                 }
-                as->MaxAnisotropyExt = (GLfloat)(params[0]);
+                as->MaxAnisotropyExt = static_cast<GLfloat>(params[0]);
                 break;
 
             case GL_TEXTURE_SRGB_DECODE_EXT:
@@ -483,7 +482,7 @@ struct So : public RegalEmu
                     Warning("Unsupported sampler parameter ",Token::GLenumToString(pname)," (sRGB extension not available), skipping.");
                     return true;
                 }
-                as->SrgbDecodeExt = (GLenum)(params[0]);
+                as->SrgbDecodeExt = static_cast<GLenum>(params[0]);
                 break;
 
             default:

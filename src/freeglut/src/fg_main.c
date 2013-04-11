@@ -54,8 +54,7 @@
 #    define MIN(a,b) (((a)<(b)) ? (a) : (b))
 #endif
 
-extern void fgPlatformReshapeWindow ( SFG_Window *window, int width, int height );
-extern void fgPlatformDisplayWindow ( SFG_Window *window );
+extern void fgPlatformProcessWork   ( SFG_Window *window );
 extern fg_time_t fgPlatformSystemTime ( void );
 extern void fgPlatformSleepForEvents( fg_time_t msec );
 extern void fgPlatformProcessSingleEvent ( void );
@@ -66,77 +65,118 @@ extern void fgPlatformMainLoopPreliminaryWork ( void );
 
 /* -- PRIVATE FUNCTIONS ---------------------------------------------------- */
 
-static void fghReshapeWindow ( SFG_Window *window, int width, int height )
+void fghOnReshapeNotify(SFG_Window *window, int width, int height, GLboolean forceNotify)
 {
-    SFG_Window *current_window = fgStructure.CurrentWindow;
+    GLboolean notify = GL_FALSE;
 
-    freeglut_return_if_fail( window != NULL );
-
-	fgPlatformReshapeWindow ( window, width, height );
-
-    if( FETCH_WCB( *window, Reshape ) )
-        INVOKE_WCB( *window, Reshape, ( width, height ) );
-    else
+    if( width  != window->State.Width ||
+        height != window->State.Height )
     {
-        fgSetWindow( window );
-        glViewport( 0, 0, width, height );
+        window->State.Width = width;
+        window->State.Height = height;
+
+        notify = GL_TRUE;
     }
 
-    /*
-     * Force a window redraw.  In Windows at least this is only a partial
-     * solution:  if the window is increasing in size in either dimension,
-     * the already-drawn part does not get drawn again and things look funny.
-     * But without this we get this bad behaviour whenever we resize the
-     * window.
-     * DN: Hmm.. the above sounds like a concern only in single buffered mode...
-     */
-    window->State.Redisplay = GL_TRUE;
+    if (notify || forceNotify)
+    {
+        SFG_Window *saved_window = fgStructure.CurrentWindow;
 
-    if( window->IsMenu )
-        fgSetWindow( current_window );
+        INVOKE_WCB( *window, Reshape, ( width, height ) );
+
+        /*
+         * Force a window redraw.  In Windows at least this is only a partial
+         * solution:  if the window is increasing in size in either dimension,
+         * the already-drawn part does not get drawn again and things look funny.
+         * But without this we get this bad behaviour whenever we resize the
+         * window.
+         * DN: Hmm.. the above sounds like a concern only in single buffered mode...
+         */
+        glutPostRedisplay( );
+        if( window->IsMenu )
+            fgSetWindow( saved_window );
+    }
+}
+
+void fghOnPositionNotify(SFG_Window *window, int x, int y, GLboolean forceNotify)
+{
+    GLboolean notify = GL_FALSE;
+
+    if( x  != window->State.Xpos ||
+        y != window->State.Ypos )
+    {
+        window->State.Xpos = x;
+        window->State.Ypos = y;
+
+        notify = GL_TRUE;
+    }
+
+    if (notify || forceNotify)
+    {
+        SFG_Window *saved_window = fgStructure.CurrentWindow;
+        INVOKE_WCB( *window, Position, ( x, y ) );
+        fgSetWindow( saved_window );
+    }
 }
 
 /*
  * Calls a window's redraw method. This is used when
- * a redraw is forced by the incoming window messages.
+ * a redraw is forced by the incoming window messages,
+ * or if a redisplay is otherwise pending.
+ * this is lean and mean without checks as it is
+ * currently only called from fghcbDisplayWindow which
+ * only calls this if the window is visible and needs
+ * a redisplay.
+ * Note that the fgSetWindow call on Windows makes the
+ * right device context current on windows, allowing
+ * direct drawing without BeginPaint/EndPaint in the
+ * WM_PAINT handler.
  */
 void fghRedrawWindow ( SFG_Window *window )
 {
     SFG_Window *current_window = fgStructure.CurrentWindow;
 
-    freeglut_return_if_fail( window );
-
-    if( window->State.NeedToInitContext ) {
-        INVOKE_WCB( *window, InitContext, ());
-        window->State.NeedToInitContext = GL_FALSE;
-    }
-
-    freeglut_return_if_fail( FETCH_WCB ( *window, Display ) );
-
-    window->State.Redisplay = GL_FALSE;
-
-    freeglut_return_if_fail( window->State.Visible );
-
     fgSetWindow( window );
-
-    if( window->State.NeedToResize )
-    {
-        /* Set need to resize to false before calling fghReshapeWindow, otherwise
-           in the case the user's reshape callback calls glutReshapeWindow,
-           his request would get canceled after fghReshapeWindow gets called.
-         */
-        window->State.NeedToResize = GL_FALSE;
-
-        fghReshapeWindow(
-            window,
-            window->State.Width,
-            window->State.Height
-        );
-    }
-
     INVOKE_WCB( *window, Display, ( ) );
 
     fgSetWindow( current_window );
+}
+
+void fghRedrawWindowAndChildren ( SFG_Window *window )
+{
+    SFG_Window* child;
+
+    fghRedrawWindow(window);
+
+    for( child = ( SFG_Window * )window->Children.First;
+         child;
+         child = ( SFG_Window * )child->Node.Next )
+    {
+        fghRedrawWindowAndChildren(child);
+    }
+}
+
+
+static void fghcbProcessWork( SFG_Window *window,
+                              SFG_Enumerator *enumerator )
+{
+    if( window->State.WorkMask )
+		fgPlatformProcessWork ( window );
+
+    fgEnumSubWindows( window, fghcbProcessWork, enumerator );
+}
+
+/*
+ * Make all windows process their work list
+ */
+static void fghProcessWork( void )
+{
+    SFG_Enumerator enumerator;
+
+    enumerator.found = GL_FALSE;
+    enumerator.data  =  NULL;
+
+    fgEnumWindows( fghcbProcessWork, &enumerator );
 }
 
 
@@ -147,7 +187,7 @@ static void fghcbDisplayWindow( SFG_Window *window,
         window->State.Visible )
     {
         window->State.Redisplay = GL_FALSE;
-		fgPlatformDisplayWindow ( window );
+		fghRedrawWindow ( window );
     }
 
     fgEnumSubWindows( window, fghcbDisplayWindow, enumerator );
@@ -172,15 +212,21 @@ static void fghDisplayAll( void )
 static void fghcbCheckJoystickPolls( SFG_Window *window,
                                      SFG_Enumerator *enumerator )
 {
-    fg_time_t checkTime = fgElapsedTime( );
-
-    if( window->State.JoystickLastPoll + window->State.JoystickPollRate <=
-        checkTime )
+    fg_time_t checkTime;
+    
+    if (window->State.JoystickPollRate > 0 && FETCH_WCB( *window, Joystick ))
     {
+        /* This window has a joystick to be polled (if pollrate <= 0, user needs to poll manually with glutForceJoystickFunc */
+        checkTime= fgElapsedTime( );
+
+        if( window->State.JoystickLastPoll + window->State.JoystickPollRate <=
+            checkTime )
+        {
 #if !defined(_WIN32_WCE)
-        fgJoystickPollWindow( window );
+            fgJoystickPollWindow( window );
 #endif /* !defined(_WIN32_WCE) */
-        window->State.JoystickLastPoll = checkTime;
+            window->State.JoystickLastPoll = checkTime;
+        }
     }
 
     fgEnumSubWindows( window, fghcbCheckJoystickPolls, enumerator );
@@ -188,6 +234,10 @@ static void fghcbCheckJoystickPolls( SFG_Window *window,
 
 /*
  * Check all windows for joystick polling
+ * 
+ * The real way to do this is to make use of the glutTimer() API
+ * to more cleanly re-implement the joystick API.  Then, this code
+ * and all other "joystick timer" code can be yanked.
  */
 static void fghCheckJoystickPolls( void )
 {
@@ -211,6 +261,7 @@ static void fghCheckTimers( void )
         SFG_Timer *timer = fgState.Timers.First;
 
         if( timer->TriggerTime > checkTime )
+            /* XXX: are timers always sorted by triggerTime? If not, this and fghNextTimer are wrong */
             break;
 
         fgListRemove( &fgState.Timers, &timer->Node );
@@ -220,22 +271,18 @@ static void fghCheckTimers( void )
     }
 }
 
-
+ 
 /* Platform-dependent time in milliseconds, as an unsigned 64-bit integer.
  * This doesn't overflow in any reasonable time, so no need to worry about
  * that. The GLUT API return value will however overflow after 49.7 days,
- * and on Windows we (currently) do not have access to a 64-bit timestamp,
- * which means internal time will still get in trouble when running the
+ * which means you will still get in trouble when running the
  * application for more than 49.7 days.
- * This value wraps every 49.7 days, but integer overflows cancel
- * when subtracting an initial start time, unless the total time exceeds
- * 32-bit, where the GLUT API return value is also overflowed.
- */
+ */  
 fg_time_t fgSystemTime(void)
 {
 	return fgPlatformSystemTime();
 }
-
+  
 /*
  * Elapsed Time
  */
@@ -261,7 +308,7 @@ void fgError( const char *fmt, ... )
         va_end( ap );
 
     } else {
-#if FREEGLUT_ERRORS
+#ifdef FREEGLUT_PRINT_ERRORS
         va_start( ap, fmt );
 
         fprintf( stderr, "freeglut ");
@@ -294,7 +341,7 @@ void fgWarning( const char *fmt, ... )
         va_end( ap );
 
     } else {
-#if FREEGLUT_WARNINGS
+#ifdef FREEGLUT_PRINT_WARNINGS
         va_start( ap, fmt );
 
         fprintf( stderr, "freeglut ");
@@ -310,41 +357,19 @@ void fgWarning( const char *fmt, ... )
 
 
 /*
- * Indicates whether Joystick events are being used by ANY window.
+ * Indicates whether a redisplay is pending for ANY window.
  *
  * The current mechanism is to walk all of the windows and ask if
- * there is a joystick callback.  We have a short-circuit early
- * return if we find any joystick handler registered.
- *
- * The real way to do this is to make use of the glutTimer() API
- * to more cleanly re-implement the joystick API.  Then, this code
- * and all other "joystick timer" code can be yanked.
- *
+ * a redisplay is pending. We have a short-circuit early
+ * return if we find any.
  */
-static void fghCheckJoystickCallback( SFG_Window* w, SFG_Enumerator* e)
-{
-    if( FETCH_WCB( *w, Joystick ) )
-    {
-        e->found = GL_TRUE;
-        e->data = w;
-    }
-    fgEnumSubWindows( w, fghCheckJoystickCallback, e );
-}
-static int fghHaveJoystick( void )
-{
-    SFG_Enumerator enumerator;
-
-    enumerator.found = GL_FALSE;
-    enumerator.data = NULL;
-    fgEnumWindows( fghCheckJoystickCallback, &enumerator );
-    return !!enumerator.data;
-}
 static void fghHavePendingRedisplaysCallback( SFG_Window* w, SFG_Enumerator* e)
 {
     if( w->State.Redisplay && w->State.Visible )
     {
         e->found = GL_TRUE;
         e->data = w;
+        return;
     }
     fgEnumSubWindows( w, fghHavePendingRedisplaysCallback, e );
 }
@@ -357,6 +382,7 @@ static int fghHavePendingRedisplays (void)
     fgEnumWindows( fghHavePendingRedisplaysCallback, &enumerator );
     return !!enumerator.data;
 }
+
 /*
  * Returns the number of GLUT ticks (milliseconds) till the next timer event.
  */
@@ -378,13 +404,13 @@ static void fghSleepForEvents( void )
 {
     fg_time_t msec;
 
-    if( fgState.IdleCallback || fghHavePendingRedisplays( ) )
+    if( fghHavePendingRedisplays( ) )
         return;
 
     msec = fghNextTimer( );
-    /* XXX Use GLUT timers for joysticks... */
+    /* XXX Should use GLUT timers for joysticks... */
     /* XXX Dumb; forces granularity to .01sec */
-    if( fghHaveJoystick( ) && ( msec > 10 ) )
+    if( fgState.NumActiveJoysticks>0 && ( msec > 10 ) )     
         msec = 10;
 
 	fgPlatformSleepForEvents ( msec );
@@ -398,11 +424,18 @@ static void fghSleepForEvents( void )
  */
 void FGAPIENTRY glutMainLoopEvent( void )
 {
+    /* Process input */
 	fgPlatformProcessSingleEvent ();
 
     if( fgState.Timers.First )
         fghCheckTimers( );
-    fghCheckJoystickPolls( );
+    if (fgState.NumActiveJoysticks>0)   /* If zero, don't poll joysticks */
+        fghCheckJoystickPolls( );
+
+    /* Perform work on the window (position, reshape, etc) */
+    fghProcessWork( );
+
+    /* Display */
     fghDisplayAll( );
 
     fgCloseWindows( );
@@ -417,6 +450,9 @@ void FGAPIENTRY glutMainLoop( void )
     int action;
 
     FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutMainLoop" );
+
+    if (!fgStructure.Windows.First)
+        fgError(" ERROR:  glutMainLoop called with no windows created.");
 
 	fgPlatformMainLoopPreliminaryWork ();
 
@@ -448,8 +484,8 @@ void FGAPIENTRY glutMainLoop( void )
                     fgSetWindow( window );
                 fgState.IdleCallback( );
             }
-
-            fghSleepForEvents( );
+            else
+                fghSleepForEvents( );
         }
     }
 

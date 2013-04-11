@@ -49,6 +49,7 @@ SFG_Structure fgStructure = { { NULL, NULL },  /* The list of windows       */
 /* -- PRIVATE FUNCTIONS ---------------------------------------------------- */
 
 extern void fgPlatformCreateWindow ( SFG_Window *window );
+extern void fghDefaultReshape(int width, int height);
 
 static void fghClearCallBacks( SFG_Window *window )
 {
@@ -72,11 +73,12 @@ SFG_Window* fgCreateWindow( SFG_Window* parent, const char* title,
                             GLboolean gameMode, GLboolean isMenu )
 {
     /* Have the window object created */
-    SFG_Window *window = (SFG_Window *)calloc( sizeof(SFG_Window), 1 );
+    SFG_Window *window = (SFG_Window *)calloc( 1, sizeof(SFG_Window) );
 
 	fgPlatformCreateWindow ( window );
 
     fghClearCallBacks( window );
+    SET_WCB( *window, Reshape, fghDefaultReshape);
 
     /* Initialize the object properties */
     window->ID = ++fgStructure.WindowID;
@@ -90,15 +92,11 @@ SFG_Window* fgCreateWindow( SFG_Window* parent, const char* title,
     else
         fgListAppend( &fgStructure.Windows, &window->Node );
 
-    /* Set the default mouse cursor and reset the modifiers value */
+    /* Set the default mouse cursor */
     window->State.Cursor    = GLUT_CURSOR_INHERIT;
 
-    window->IsMenu = isMenu;
-
-    window->State.IgnoreKeyRepeat = GL_FALSE;
-    window->State.KeyRepeating    = GL_FALSE;
-    window->State.IsFullscreen    = GL_FALSE;
-    window->State.VisualizeNormals= GL_FALSE;
+    /* Mark window as menu if a menu is to be created */
+    window->IsMenu          = isMenu;
 
     /*
      * Open the window now. The fgOpenWindow() function is system
@@ -115,7 +113,6 @@ SFG_Window* fgCreateWindow( SFG_Window* parent, const char* title,
  */
 SFG_Menu* fgCreateMenu( FGCBMenu menuCallback )
 {
-    int x = 100, y = 100, w = 1, h = 1;
     SFG_Window *current_window = fgStructure.CurrentWindow;
 
     /* Have the menu object created */
@@ -124,19 +121,18 @@ SFG_Menu* fgCreateMenu( FGCBMenu menuCallback )
     menu->ParentWindow = NULL;
 
     /* Create a window for the menu to reside in. */
-
-    fgCreateWindow( NULL, "freeglut menu", GL_TRUE, x, y, GL_TRUE, w, h,
+    fgCreateWindow( NULL, "freeglut menu", GL_FALSE, 0, 0, GL_FALSE, 0, 0,
                     GL_FALSE, GL_TRUE );
     menu->Window = fgStructure.CurrentWindow;
     glutDisplayFunc( fgDisplayMenu );
 
-    glutHideWindow( );  /* Hide the window for now */
     fgSetWindow( current_window );
 
     /* Initialize the object properties: */
     menu->ID       = ++fgStructure.MenuID;
     menu->Callback = menuCallback;
     menu->ActiveEntry = NULL;
+    menu->Font     = fgState.MenuFont;
 
     fgListInit( &menu->Entries );
     fgListAppend( &fgStructure.Menus, &menu->Node );
@@ -535,7 +531,7 @@ static void fghcbMenuByID( SFG_Menu *menu,
         return;
 
     /* Check the menu's ID. */
-    if( menu->ID == (int)(enumerator->data) )
+    if( menu->ID == *( int *)(enumerator->data) )
     {
         enumerator->found = GL_TRUE;
         enumerator->data = menu;
@@ -554,7 +550,7 @@ SFG_Menu* fgMenuByID( int menuID )
 
     /* This is easy and makes use of the menus enumeration defined above */
     enumerator.found = GL_FALSE;
-    enumerator.data = (void *)menuID;
+    enumerator.data = (void *)&menuID;
     fgEnumMenus( fghcbMenuByID, &enumerator );
 
     if( enumerator.found )

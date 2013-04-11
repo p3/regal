@@ -63,6 +63,7 @@ namespace Config {
   bool sysEGL           = REGAL_SYS_EGL && !REGAL_SYS_GLX;
   bool forceEmulation   = REGAL_FORCE_EMULATION;
   bool enableEmulation  = REGAL_EMULATION;
+  bool enableTrace      = false;
   bool enableDebug      = false;
   bool enableError      = false;
   bool enableCode       = false;
@@ -73,6 +74,7 @@ namespace Config {
   bool enableEmuPpca    = REGAL_EMU_PPCA;
   bool enableEmuObj     = REGAL_EMU_OBJ;
   bool enableEmuBin     = REGAL_EMU_BIN;
+  bool enableEmuTexSto  = REGAL_EMU_TEXSTO;
   bool enableEmuXfer    = REGAL_EMU_XFER;
   bool enableEmuDsa     = REGAL_EMU_DSA;
   bool enableEmuIff     = REGAL_EMU_IFF;
@@ -85,6 +87,7 @@ namespace Config {
   bool forceEmuPpca     = REGAL_FORCE_EMU_PPCA;
   bool forceEmuObj      = REGAL_FORCE_EMU_OBJ;
   bool forceEmuBin      = REGAL_FORCE_EMU_BIN;
+  bool forceEmuTexSto   = REGAL_FORCE_EMU_TEXSTO;
   bool forceEmuXfer     = REGAL_FORCE_EMU_XFER;
   bool forceEmuDsa      = REGAL_FORCE_EMU_DSA;
   bool forceEmuIff      = REGAL_FORCE_EMU_IFF;
@@ -201,6 +204,11 @@ namespace Config {
     if (tmp) enableDebug = atoi(tmp)!=0;
 #endif
 
+#if REGAL_TRACE
+    tmp = GetEnv( "REGAL_TRACE" );
+    if (tmp) enableTrace = atoi(tmp)!=0;
+#endif
+
 #if REGAL_ERROR
     tmp = GetEnv( "REGAL_ERROR" );
     if (tmp) enableError = atoi(tmp)!=0;
@@ -239,6 +247,11 @@ namespace Config {
 #if REGAL_EMU_BIN
     tmp = GetEnv( "REGAL_EMU_BIN" );
     if (tmp) enableEmuBin = atoi(tmp)!=0;
+#endif
+
+#if REGAL_EMU_TEXSTO
+    tmp = GetEnv( "REGAL_EMU_TEXSTO" );
+    if (tmp) enableEmuTexSto = atoi(tmp)!=0;
 #endif
 
 #if REGAL_EMU_XFER
@@ -296,6 +309,11 @@ namespace Config {
 #if REGAL_EMU_BIN
     tmp = GetEnv( "REGAL_FORCE_EMU_BIN" );
     if (tmp) forceEmuBin = atoi(tmp)!=0;
+#endif
+
+#if REGAL_EMU_TEXSTO
+    tmp = GetEnv( "REGAL_FORCE_EMU_TEXSTO" );
+    if (tmp) forceEmuTexSto = atoi(tmp)!=0;
 #endif
 
 #if REGAL_EMU_XFER
@@ -467,6 +485,7 @@ namespace Config {
 #endif
 
     Info("REGAL_FORCE_EMULATION     ", forceEmulation   ? "enabled" : "disabled");
+    Info("REGAL_TRACE               ", enableTrace      ? "enabled" : "disabled");
     Info("REGAL_DEBUG               ", enableDebug      ? "enabled" : "disabled");
     Info("REGAL_ERROR               ", enableError      ? "enabled" : "disabled");
 #if REGAL_CODE
@@ -480,6 +499,7 @@ namespace Config {
     Info("REGAL_EMU_PPCA            ", enableEmuPpca    ? "enabled" : "disabled");
     Info("REGAL_EMU_OBJ             ", enableEmuObj     ? "enabled" : "disabled");
     Info("REGAL_EMU_BIN             ", enableEmuBin     ? "enabled" : "disabled");
+    Info("REGAL_EMU_TEXSTO          ", enableEmuTexSto  ? "enabled" : "disabled");
     Info("REGAL_EMU_XFER            ", enableEmuXfer    ? "enabled" : "disabled");
     Info("REGAL_EMU_DSA             ", enableEmuDsa     ? "enabled" : "disabled");
     Info("REGAL_EMU_IFF             ", enableEmuIff     ? "enabled" : "disabled");
@@ -492,6 +512,7 @@ namespace Config {
     Info("REGAL_FORCE_EMU_PPCA      ", forceEmuPpca     ? "enabled" : "disabled");
     Info("REGAL_FORCE_EMU_OBJ       ", forceEmuObj      ? "enabled" : "disabled");
     Info("REGAL_FORCE_EMU_BIN       ", forceEmuBin      ? "enabled" : "disabled");
+    Info("REGAL_FORCE_EMU_TEXSTO    ", forceEmuTexSto   ? "enabled" : "disabled");
     Info("REGAL_FORCE_EMU_XFER      ", forceEmuXfer     ? "enabled" : "disabled");
     Info("REGAL_FORCE_EMU_DSA       ", forceEmuDsa      ? "enabled" : "disabled");
     Info("REGAL_FORCE_EMU_IFF       ", forceEmuIff      ? "enabled" : "disabled");
@@ -568,6 +589,7 @@ namespace Config {
             jo.member("ppca",   enableEmuPpca);
             jo.member("obj",    enableEmuObj);
             jo.member("bin",    enableEmuBin);
+            jo.member("texsto", enableEmuTexSto);
             jo.member("xfer",   enableEmuXfer);
             jo.member("dsa",    enableEmuDsa);
             jo.member("iff",    enableEmuIff);
@@ -582,6 +604,7 @@ namespace Config {
             jo.member("ppca",   forceEmuPpca);
             jo.member("obj",    forceEmuObj);
             jo.member("bin",    forceEmuBin);
+            jo.member("texsto", forceEmuTexSto);
             jo.member("xfer",   forceEmuXfer);
             jo.member("dsa",    forceEmuDsa);
             jo.member("iff",    forceEmuIff);

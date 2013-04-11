@@ -54,6 +54,7 @@ struct ContextInfo
   std::string regalExtensions;
 
   bool        regal_ext_direct_state_access;
+  bool        regal_arb_texture_storage;
 
   std::set<std::string> regalExtensionsSet;
 
@@ -102,6 +103,7 @@ using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
 
 ContextInfo::ContextInfo()
 : regal_ext_direct_state_access(false),
+  regal_arb_texture_storage(false),
 ${VERSION_INIT}
   maxVertexAttribs(0),
   maxVaryings(0)
@@ -535,6 +537,8 @@ def getExtensionCode(apis, args):
         code += '  if (!strcmp(ext,"%s")) return true;\n' % (c)
       elif c=='GL_EXT_direct_state_access':
         code += '  if (!strcmp(ext,"%s")) return regal_ext_direct_state_access || %s;\n' % (c,c.lower())
+      elif c=='GL_ARB_texture_storage':
+        code += '  if (!strcmp(ext,"%s")) return regal_arb_texture_storage || %s;\n' % (c,c.lower())
       else:
         code += '  if (!strcmp(ext,"%s")) return %s;\n' % (c,c.lower())
     if name in cond:

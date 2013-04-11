@@ -118,7 +118,7 @@
 #endif
 
 // Export Regal entry points by default, might want to disable
-// this for statically linking Regal: -DREGAL_DECL_EXPORT=0 
+// this for statically linking Regal: -DREGAL_DECL_EXPORT=0
 
 #ifndef REGAL_DECL_EXPORT
 #define REGAL_DECL_EXPORT 1
@@ -165,6 +165,12 @@
 # endif
 #endif
 
+// Trace dispatch unsupported
+
+#ifndef REGAL_TRACE
+#define REGAL_TRACE 0
+#endif
+
 // Emulation dispatch supported by default
 
 #ifndef REGAL_EMULATION
@@ -197,6 +203,10 @@
 
 #ifndef REGAL_EMU_BIN
 #define REGAL_EMU_BIN 1
+#endif
+
+#ifndef REGAL_EMU_TEXSTO
+#define REGAL_EMU_TEXSTO 1
 #endif
 
 #ifndef REGAL_EMU_XFER
@@ -247,6 +257,10 @@
 
 #ifndef REGAL_FORCE_EMU_BIN
 #define REGAL_FORCE_EMU_BIN 0
+#endif
+
+#ifndef REGAL_FORCE_EMU_TEXSTO
+#define REGAL_FORCE_EMU_TEXSTO 0
 #endif
 
 #ifndef REGAL_FORCE_EMU_XFER

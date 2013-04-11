@@ -49,6 +49,11 @@ Dispatcher::Dispatcher()
 : _front(NULL),
   _size(0)
 {
+  #if REGAL_TRACE
+  InitDispatchTableTrace(trace);
+  push_back(trace,Config::enableTrace);
+  #endif
+
   #if REGAL_DEBUG
   InitDispatchTableDebug(debug);
   push_back(debug,Config::enableDebug);

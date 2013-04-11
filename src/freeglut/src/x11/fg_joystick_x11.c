@@ -42,7 +42,7 @@
 #include <fcntl.h>
 
 /*this should be defined in a header file */
-#define MAX_NUM_JOYSTICKS  2
+#define MAX_NUM_JOYSTICKS  2   
 extern SFG_Joystick *fgJoystick [ MAX_NUM_JOYSTICKS ];
 
 void fgPlatformJoystickRawRead( SFG_Joystick* joy, int* buttons, float* axes )

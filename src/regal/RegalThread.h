@@ -1,6 +1,6 @@
 /*
-  Copyright (c) 2011-2012 NVIDIA Corporation
-  Copyright (c) 2011-2012 Cass Everitt
+  Copyright (c) 2011-2013 NVIDIA Corporation
+  Copyright (c) 2011-2013 Cass Everitt
   Copyright (c) 2012 Scott Nations
   Copyright (c) 2012 Mathias Schott
   Copyright (c) 2012 Nigel Stewart
@@ -172,7 +172,7 @@ inline std::size_t threadId()
 
 }
 
-#define REGAL_GET_CONTEXT() ((RegalContext *) Thread::CurrentContext())
+#define REGAL_GET_CONTEXT() ((::REGAL_NAMESPACE_INTERNAL::RegalContext *) ::REGAL_NAMESPACE_INTERNAL::Thread::CurrentContext())
 
 REGAL_NAMESPACE_END
 

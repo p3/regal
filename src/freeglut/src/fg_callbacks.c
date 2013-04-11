@@ -121,7 +121,6 @@ void FGAPIENTRY glut##a##Func( FGCB##b callback )               \
 #define IMPLEMENT_CALLBACK_FUNC(a) IMPLEMENT_CALLBACK_FUNC_2NAME(a,a)
 
 /* Implement all these callback setter functions... */
-IMPLEMENT_CALLBACK_FUNC(Reshape);
 IMPLEMENT_CALLBACK_FUNC(Position);
 IMPLEMENT_CALLBACK_FUNC(Keyboard);
 IMPLEMENT_CALLBACK_FUNC(KeyboardUp);
@@ -146,8 +145,7 @@ IMPLEMENT_CALLBACK_FUNC(MultiButton);
 IMPLEMENT_CALLBACK_FUNC(MultiMotion);
 IMPLEMENT_CALLBACK_FUNC(MultiPassive);
 IMPLEMENT_CALLBACK_FUNC(InitContext);
-IMPLEMENT_CALLBACK_FUNC(Pause);
-IMPLEMENT_CALLBACK_FUNC(Resume);
+IMPLEMENT_CALLBACK_FUNC(AppStatus);
 
 
 
@@ -163,19 +161,50 @@ void FGAPIENTRY glutDisplayFunc( FGCBDisplay callback )
     SET_CALLBACK( Display );
 }
 
+void fghDefaultReshape(int width, int height)
+{
+    glViewport( 0, 0, width, height );
+}
+
+void FGAPIENTRY glutReshapeFunc( FGCBReshape callback )
+{
+    FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutReshapeFunc" );
+    
+    if( !callback )
+        callback = fghDefaultReshape;
+
+    SET_CALLBACK( Reshape );
+}
+
 /*
  * Sets the Visibility callback for the current window.
+ * NB: the Visibility func is deprecated in favor of the WindowStatus func,
+ * which provides more detail. The visibility func callback is implemented
+ * as a translation step from the windowStatus func. When the user sets the
+ * windowStatus func, any visibility func is overwritten.
+ * DEVELOPER NOTE: in the library, only invoke the window status func, this
+ * gets automatically translated to the visibility func if thats what the
+ * user has set.
+ * window status is kind of anemic on win32 as there are no window messages
+ * to notify us that the window is covered by other windows or not.
+ * Should one want to query this, see
+ * http://stackoverflow.com/questions/5445889/get-which-process-window-is-actually-visible-in-c-sharp
+ * for an implementation outline (but it would be polling based, not push based).
  */
 static void fghVisibility( int status )
 {
-    int glut_status = GLUT_VISIBLE;
+    int vis_status;
 
     FREEGLUT_INTERNAL_ERROR_EXIT_IF_NOT_INITIALISED ( "Visibility Callback" );
     freeglut_return_if_fail( fgStructure.CurrentWindow );
 
+    /* Translate window status func states to visibility states */
     if( ( GLUT_HIDDEN == status )  || ( GLUT_FULLY_COVERED == status ) )
-        glut_status = GLUT_NOT_VISIBLE;
-    INVOKE_WCB( *( fgStructure.CurrentWindow ), Visibility, ( glut_status ) );
+        vis_status = GLUT_NOT_VISIBLE;
+    else    /* GLUT_FULLY_RETAINED, GLUT_PARTIALLY_RETAINED */
+        vis_status = GLUT_VISIBLE;
+
+    INVOKE_WCB( *( fgStructure.CurrentWindow ), Visibility, ( vis_status ) );
 }
 
 void FGAPIENTRY glutVisibilityFunc( FGCBVisibility callback )
@@ -197,13 +226,21 @@ void FGAPIENTRY glutJoystickFunc( FGCBJoystick callback, int pollInterval )
     FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutJoystickFunc" );
     fgInitialiseJoysticks ();
 
-    if ( ( ( fgStructure.CurrentWindow->State.JoystickPollRate < 0 ) ||
-           !FETCH_WCB(*fgStructure.CurrentWindow,Joystick) ) &&  /* Joystick callback was disabled */
-         ( callback && ( pollInterval >= 0 ) ) )               /* but is now enabled */
+    if ( (
+           fgStructure.CurrentWindow->State.JoystickPollRate <= 0 ||        /* Joystick callback was disabled */
+           !FETCH_WCB(*fgStructure.CurrentWindow,Joystick)
+         ) &&
+         ( 
+           callback && ( pollInterval > 0 )                                 /* but is now enabled */
+         ) )
         ++fgState.NumActiveJoysticks;
-    else if ( ( ( fgStructure.CurrentWindow->State.JoystickPollRate >= 0 ) &&
-                FETCH_WCB(*fgStructure.CurrentWindow,Joystick) ) &&  /* Joystick callback was enabled */
-              ( !callback || ( pollInterval < 0 ) ) )              /* but is now disabled */
+    else if ( ( 
+                fgStructure.CurrentWindow->State.JoystickPollRate > 0 &&    /* Joystick callback was enabled */
+                FETCH_WCB(*fgStructure.CurrentWindow,Joystick)
+              ) &&  
+              ( 
+                !callback || ( pollInterval <= 0 )                          /* but is now disabled */
+              ) )
         --fgState.NumActiveJoysticks;
 
     SET_CALLBACK( Joystick );

@@ -70,6 +70,10 @@ public:
    DispatchTable logging;
 #endif
 
+#if REGAL_TRACE
+   DispatchTable trace;
+#endif
+
    DispatchTable driver;      // Underlying OpenGL/ES implementation
 
    DispatchTable missing;     // Must have this last
@@ -140,6 +144,7 @@ extern void InitDispatchTablePpapi    (DispatchTable &tbl);
 extern void InitDispatchTableStaticES2(DispatchTable &tbl);
 extern void InitDispatchTableMissing  (DispatchTable &tbl);
 extern void InitDispatchTableCache    (DispatchTable &tbl);
+extern void InitDispatchTableTrace    (DispatchTable &tbl);
 
 REGAL_NAMESPACE_END
 

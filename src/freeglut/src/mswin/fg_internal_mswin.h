@@ -91,8 +91,20 @@ struct tagSFG_PlatformContext
 typedef struct tagSFG_PlatformWindowState SFG_PlatformWindowState;
 struct tagSFG_PlatformWindowState
 {
-    RECT            OldRect;            /* window rect  - stored before the window is made fullscreen */
-    DWORD           OldStyle;           /* window style - stored before the window is made fullscreen */
+    RECT            OldRect;            /* window rect     - stored before the window is made fullscreen */
+    DWORD           OldStyle;           /* window style    - stored before the window is made fullscreen */
+    DWORD           OldStyleEx;         /* window Ex style - stored before the window is made fullscreen */
+    BOOL            OldMaximized;       /* window maximized state - stored before the window is made fullscreen */
+
+    GLboolean       MouseTracking;      /* Needed for generating GLUT_ENTERED and GLUT_LEFT entry func callbacks on windows */
+
+    /* Need to store window titles to emulate
+     * glutSetIconTitle/glutSetWindowTitle as Windows has only
+     * one title associated with a window and we need to swap
+     * them out based on the window's iconic state
+     */
+    char*           WindowTitle;
+    char*           IconTitle;
 };
 
 

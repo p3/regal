@@ -44,6 +44,7 @@
 extern int fgPlatformGlutGet ( GLenum eWhat );
 extern int fgPlatformGlutDeviceGet ( GLenum eWhat );
 extern int *fgPlatformGlutGetModeValues(GLenum eWhat, int *size);
+extern SFG_Font* fghFontByID( void* font );
 
 
 /* -- LOCAL DEFINITIONS ---------------------------------------------------- */
@@ -60,9 +61,6 @@ void FGAPIENTRY glutSetOption( GLenum eWhat, int value )
 {
     FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutSetOption" );
 
-    /*
-     * XXX In chronological code add order.  (WHY in that order?)
-     */
     switch( eWhat )
     {
     case GLUT_INIT_WINDOW_X:
@@ -136,13 +134,18 @@ int FGAPIENTRY glutGet( GLenum eWhat )
     case GLUT_INIT_STATE:
         return fgState.Initialised;
 
+    /* Although internally the time store is 64bits wide, the return value
+     * here still wraps every 49.7 days. Integer overflows cancel however
+     * when subtracting an initial start time, unless the total time exceeds
+     * 32-bit, so you can still work with this.
+     * XXX: a glutGet64 to return the time might be an idea...
+     */
     case GLUT_ELAPSED_TIME:
         return (int) fgElapsedTime();
     }
 
     FREEGLUT_EXIT_IF_NOT_INITIALISED ( "glutGet" );
 
-    /* XXX In chronological code add order.  (WHY in that order?) */
     switch( eWhat )
     {
     /* Following values are stored in fgState and fgDisplay global structures */

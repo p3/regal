@@ -3,12 +3,12 @@
 */
 
 /*
-  Copyright (c) 2011 NVIDIA Corporation
-  Copyright (c) 2011-2012 Cass Everitt
-  Copyright (c) 2012 Scott Nations
+  Copyright (c) 2011-2013 NVIDIA Corporation
+  Copyright (c) 2011-2013 Cass Everitt
+  Copyright (c) 2012-2013 Scott Nations
   Copyright (c) 2012 Mathias Schott
-  Copyright (c) 2012 Nigel Stewart
-  Copyright (c) 2012 Google Inc.
+  Copyright (c) 2012-2013 Nigel Stewart
+  Copyright (c) 2012-2013 Google Inc.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
@@ -56,9 +56,9 @@ REGAL_GLOBAL_BEGIN
 #include "RegalPpa.h"
 #include "RegalPpca.h"
 #include "RegalBin.h"
-#include "RegalTexSto.h"
 #include "RegalXfer.h"
 #include "RegalDsa.h"
+#include "RegalTexSto.h"
 #include "RegalIff.h"
 #include "RegalSo.h"
 #include "RegalVao.h"
@@ -85,9 +85,9 @@ RegalContext::RegalContext()
   ppa(NULL),
   ppca(NULL),
   bin(NULL),
-  texsto(NULL),
   xfer(NULL),
   dsa(NULL),
+  texsto(NULL),
   iff(NULL),
   so(NULL),
   vao(NULL),
@@ -190,7 +190,7 @@ RegalContext::Init()
     }
     #endif /* REGAL_EMU_VAO */
     #if REGAL_EMU_SO
-    if (Config::enableEmuSo || Config::forceEmuSo || REGAL_FORCE_EMU_SO)
+    if ((Config::enableEmuSo && !info->gl_arb_sampler_objects) || Config::forceEmuSo || REGAL_FORCE_EMU_SO)
     {
       so = new Emu::So;
       emuLevel = 3;
@@ -205,6 +205,18 @@ RegalContext::Init()
       iff->Init(*this);
     }
     #endif /* REGAL_EMU_IFF */
+    #if REGAL_EMU_TEXSTO
+    if (Config::enableEmuTexSto || Config::forceEmuTexSto || REGAL_FORCE_EMU_TEXSTO)
+    {
+      Internal("RegalContext::Init ","GL_ARB_texture_storage");
+      info->regal_arb_texture_storage = true;
+      info->regalExtensionsSet.insert("GL_ARB_texture_storage");
+      info->regalExtensions = ::boost::print::detail::join(info->regalExtensionsSet,std::string(" "));
+      texsto = new Emu::TexSto;
+      emuLevel = 5;
+      texsto->Init(*this);
+    }
+    #endif /* REGAL_EMU_TEXSTO */
     #if REGAL_EMU_DSA
     if (Config::enableEmuDsa || Config::forceEmuDsa || REGAL_FORCE_EMU_DSA)
     {
@@ -213,7 +225,7 @@ RegalContext::Init()
       info->regalExtensionsSet.insert("GL_EXT_direct_state_access");
       info->regalExtensions = ::boost::print::detail::join(info->regalExtensionsSet,std::string(" "));
       dsa = new Emu::Dsa;
-      emuLevel = 5;
+      emuLevel = 6;
       dsa->Init(*this);
     }
     #endif /* REGAL_EMU_DSA */
@@ -221,18 +233,10 @@ RegalContext::Init()
     if ((isES2() && Config::enableEmuXfer) || Config::forceEmuXfer || REGAL_FORCE_EMU_XFER)
     {
       xfer = new Emu::Xfer;
-      emuLevel = 6;
+      emuLevel = 7;
       xfer->Init(*this);
     }
     #endif /* REGAL_EMU_XFER */
-    #if REGAL_EMU_TEXSTO
-    if (Config::enableEmuTexSto || Config::forceEmuTexSto || REGAL_FORCE_EMU_TEXSTO)
-    {
-      texsto = new Emu::TexSto;
-      emuLevel = 7;
-      texsto->Init(*this);
-    }
-    #endif /* REGAL_EMU_TEXSTO */
     #if REGAL_EMU_BIN
     if (Config::enableEmuBin || Config::forceEmuBin || REGAL_FORCE_EMU_BIN)
     {
@@ -320,15 +324,15 @@ RegalContext::~RegalContext()
   #if REGAL_EMU_BIN
   delete bin;
   #endif /* REGAL_EMU_BIN */
-  #if REGAL_EMU_TEXSTO
-  delete texsto;
-  #endif /* REGAL_EMU_TEXSTO */
   #if REGAL_EMU_XFER
   delete xfer;
   #endif /* REGAL_EMU_XFER */
   #if REGAL_EMU_DSA
   delete dsa;
   #endif /* REGAL_EMU_DSA */
+  #if REGAL_EMU_TEXSTO
+  delete texsto;
+  #endif /* REGAL_EMU_TEXSTO */
   #if REGAL_EMU_IFF
   delete iff;
   #endif /* REGAL_EMU_IFF */

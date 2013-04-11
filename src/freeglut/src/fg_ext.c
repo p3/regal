@@ -135,10 +135,12 @@ static GLUTproc fghGetGLUTProcAddress( const char* procName )
     CHECK_NAME(glutSolidTorus);
     CHECK_NAME(glutWireCylinder);
     CHECK_NAME(glutSolidCylinder);
-#ifndef EGL_VERSION_1_0
     CHECK_NAME(glutWireTeapot);
     CHECK_NAME(glutSolidTeapot);
-#endif
+    CHECK_NAME(glutWireTeacup);
+    CHECK_NAME(glutSolidTeacup);
+    CHECK_NAME(glutWireTeaspoon);
+    CHECK_NAME(glutSolidTeaspoon);
     CHECK_NAME(glutWireCube);
     CHECK_NAME(glutSolidCube);
     CHECK_NAME(glutWireDodecahedron);
@@ -170,6 +172,7 @@ static GLUTproc fghGetGLUTProcAddress( const char* procName )
     CHECK_NAME(glutMenuDestroyFunc);
     CHECK_NAME(glutFullScreenToggle);
     CHECK_NAME(glutLeaveFullScreen);
+    CHECK_NAME(glutSetMenuFont);
     CHECK_NAME(glutSetOption);
     CHECK_NAME(glutGetModeValues);
     CHECK_NAME(glutSetWindowData);
@@ -200,9 +203,11 @@ static GLUTproc fghGetGLUTProcAddress( const char* procName )
     CHECK_NAME(glutInitContextProfile);
     CHECK_NAME(glutInitErrorFunc);
     CHECK_NAME(glutInitWarningFunc);
-    CHECK_NAME(glutInitContextFunc)
-    CHECK_NAME(glutPauseFunc)
-    CHECK_NAME(glutResumeFunc)
+    CHECK_NAME(glutInitContextFunc);
+    CHECK_NAME(glutAppStatusFunc);
+    CHECK_NAME(glutSetVertexAttribCoord3);
+    CHECK_NAME(glutSetVertexAttribNormal);
+    CHECK_NAME(glutSetVertexAttribTexCoord2);
 #undef CHECK_NAME
 
     return NULL;

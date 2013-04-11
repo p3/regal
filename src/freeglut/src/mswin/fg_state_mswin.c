@@ -37,7 +37,7 @@ extern GLboolean fgSetupPixelFormat( SFG_Window* window, GLboolean checkOnly,
  * and the window rect from the client area given the style of the window
  * (or a valid window pointer from which the style can be queried).
  */
-extern void fghGetClientArea( RECT *clientRect, const SFG_Window *window, BOOL wantPosOutside );
+extern void fghGetClientArea( RECT *clientRect, const SFG_Window *window, BOOL posIsOutside );
 extern void fghGetStyleFromWindow( const SFG_Window *window, DWORD *windowStyle, DWORD *windowExStyle );
 extern void fghComputeWindowRectFromClientArea_UseStyle( RECT *clientRect, const DWORD windowStyle, const DWORD windowExStyle, BOOL posIsOutside );
 
@@ -141,27 +141,27 @@ int fgPlatformGlutGet ( GLenum eWhat )
       return returnValue;
 
     case GLUT_WINDOW_BUFFER_SIZE:
-      returnValue = 1 ;                                      /* TODO????? */
-      return returnValue;
+    {
+        PIXELFORMATDESCRIPTOR  pfd;
+        HDC hdc = fgStructure.CurrentWindow->Window.pContext.Device;
+        int iPixelFormat = GetPixelFormat( hdc );
+        DescribePixelFormat(hdc, iPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+        
+        returnValue = pfd.cColorBits;
+        if (pfd.iPixelType==PFD_TYPE_RGBA)
+            returnValue += pfd.cAlphaBits;
+
+        return returnValue;
+    }
     case GLUT_WINDOW_STENCIL_SIZE:
-      returnValue = 0 ;                                      /* TODO????? */
+      glGetIntegerv ( GL_STENCIL_BITS, &returnValue );
       return returnValue;
 
     case GLUT_WINDOW_X:
     case GLUT_WINDOW_Y:
     {
         /*
-         *  There is considerable confusion about the "right thing to
-         *  do" concerning window  size and position.  GLUT itself is
-         *  not consistent between Windows and UNIX/X11; since
-         *  platform independence is a virtue for "freeglut", we
-         *  decided to break with GLUT's behaviour.
-         *
-         *  Under UNIX/X11, it is apparently not possible to get the
-         *  window border sizes in order to subtract them off the
-         *  window's initial position until some time after the window
-         *  has been created.  Therefore we decided on the following
-         *  behaviour, both under Windows and under UNIX/X11:
+         *  NB:
          *  - When you create a window with position (x,y) and size
          *    (w,h), the upper left hand corner of the outside of the
          *    window is at (x,y) and the size of the drawable area is
@@ -203,11 +203,20 @@ int fgPlatformGlutGet ( GLenum eWhat )
     break;
 
     case GLUT_WINDOW_WIDTH:
-        freeglut_return_val_if_fail( fgStructure.CurrentWindow != NULL, 0 );
-        return fgStructure.CurrentWindow->State.Width;
     case GLUT_WINDOW_HEIGHT:
+    {
+        RECT winRect;
         freeglut_return_val_if_fail( fgStructure.CurrentWindow != NULL, 0 );
-        return fgStructure.CurrentWindow->State.Height;
+
+        GetClientRect( fgStructure.CurrentWindow->Window.Handle, &winRect);
+
+        switch( eWhat )
+        {
+        case GLUT_WINDOW_WIDTH:      return winRect.right-winRect.left;
+        case GLUT_WINDOW_HEIGHT:     return winRect.bottom-winRect.top;
+        }
+    }
+    break;
 
     case GLUT_WINDOW_BORDER_WIDTH :
     case GLUT_WINDOW_BORDER_HEIGHT :
@@ -226,15 +235,19 @@ int fgPlatformGlutGet ( GLenum eWhat )
 
             /* Get style of window, or default style */
             fghGetStyleFromWindow( fgStructure.CurrentWindow, &windowStyle, &windowExStyle );
-            /* Get client area if any window */
+            /* Get client area if we have a current window, else use dummy rect */
+            /* Also get window rect (including non-client area) */
             if (fgStructure.CurrentWindow && fgStructure.CurrentWindow->Window.Handle)
-                fghGetClientArea(&clientRect,fgStructure.CurrentWindow,FALSE);
+            {
+                fghGetClientArea(&clientRect,fgStructure.CurrentWindow, FALSE);
+                GetWindowRect(fgStructure.CurrentWindow->Window.Handle,&winRect);
+            }
             else
+            {
                 SetRect(&clientRect,0,0,200,200);
-
-            /* Compute window rect (including non-client area) */
-            CopyRect(&winRect,&clientRect);
-            fghComputeWindowRectFromClientArea_UseStyle(&winRect,windowStyle,windowExStyle,FALSE);
+                CopyRect(&winRect,&clientRect);
+                fghComputeWindowRectFromClientArea_UseStyle(&winRect,windowStyle,windowExStyle,FALSE);
+            }
 
             /* Calculate border width by taking width of whole window minus width of client area and divide by two
              * NB: we assume horizontal and vertical borders have the same size, which should always be the case

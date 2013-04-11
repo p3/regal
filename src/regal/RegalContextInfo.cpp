@@ -3,12 +3,12 @@
 */
 
 /*
-  Copyright (c) 2011 NVIDIA Corporation
-  Copyright (c) 2011-2012 Cass Everitt
-  Copyright (c) 2012 Scott Nations
+  Copyright (c) 2011-2013 NVIDIA Corporation
+  Copyright (c) 2011-2013 Cass Everitt
+  Copyright (c) 2012-2013 Scott Nations
   Copyright (c) 2012 Mathias Schott
-  Copyright (c) 2012 Nigel Stewart
-  Copyright (c) 2012 Google Inc.
+  Copyright (c) 2012-2013 Nigel Stewart
+  Copyright (c) 2012-2013 Google Inc.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
@@ -67,6 +67,7 @@ using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
 
 ContextInfo::ContextInfo()
 : regal_ext_direct_state_access(false),
+  regal_arb_texture_storage(false),
   compat(false),
   core(false),
   es1(false),
@@ -1770,7 +1771,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_ARB_texture_rectangle")) return gl_arb_texture_rectangle;
   if (!strcmp(ext,"GL_ARB_texture_rg")) return gl_arb_texture_rg;
   if (!strcmp(ext,"GL_ARB_texture_rgb10_a2ui")) return gl_arb_texture_rgb10_a2ui;
-  if (!strcmp(ext,"GL_ARB_texture_storage")) return gl_arb_texture_storage;
+  if (!strcmp(ext,"GL_ARB_texture_storage")) return regal_arb_texture_storage || gl_arb_texture_storage;
   if (!strcmp(ext,"GL_ARB_texture_storage_multisample")) return gl_arb_texture_storage_multisample;
   if (!strcmp(ext,"GL_ARB_texture_swizzle")) return gl_arb_texture_swizzle;
   if (!strcmp(ext,"GL_ARB_texture_view")) return gl_arb_texture_view;

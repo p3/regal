@@ -69,6 +69,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\Regaltest\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\Regaltest\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">regaltest</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">regaltest</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">regaltest</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">regaltest</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -92,7 +96,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>gtestlib.lib;regallib.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;advapi32.lib;gdi32.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\Win32\regaltest.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile></ModuleDefinitionFile>
@@ -133,7 +136,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>gtestlib.lib;regallib.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;advapi32.lib;gdi32.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\x64\regaltest.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile></ModuleDefinitionFile>
@@ -171,7 +173,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>gtestlib.lib;regallib.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;advapi32.lib;gdi32.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\Win32\regaltest.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile></ModuleDefinitionFile>
@@ -211,7 +212,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>gtestlib.lib;regallib.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;jsonsllib.lib;advapi32.lib;gdi32.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\x64\regaltest.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>Debug\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile></ModuleDefinitionFile>
