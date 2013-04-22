@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|PPAPI32">
+    <ProjectConfiguration Include="Debug|PPAPI">
       <Configuration>Debug</Configuration>
-      <Platform>PPAPI32</Platform>
+      <Platform>PPAPI</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|PPAPI64">
+    <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
-      <Platform>PPAPI64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|PPAPI32">
+    <ProjectConfiguration Include="Release|PPAPI">
       <Configuration>Release</Configuration>
-      <Platform>PPAPI32</Platform>
+      <Platform>PPAPI</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|PPAPI64">
+    <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
-      <Platform>PPAPI64</Platform>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -23,22 +23,22 @@
     <ProjectGuid>{B2F73D1B-8FA3-518D-0F85-9AAD20EF1E1C}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
@@ -46,60 +46,50 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">Release\PPAPI32\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">Release\PPAPI64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">Release\PPAPI32\jsonsllib\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">Release\PPAPI64\jsonsllib\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">Debug\PPAPI32\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">Debug\PPAPI64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">Debug\PPAPI32\jsonsllib\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">Debug\PPAPI64\jsonsllib\</IntDir>
-
-    <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">1</NaClAddInVersion>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">$(VCInstallDir)bin;$(WindowsSdkDir)bin\NETFX 4.0 Tools;$(WindowsSdkDir)bin;$(VSInstallDir)Common7\Toolsin;$(VSInstallDir)Common7	ools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(FrameworkSDKDir)in;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">1</NaClAddInVersion>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">$(VCInstallDir)bin;$(WindowsSdkDir)bin\NETFX 4.0 Tools;$(WindowsSdkDir)bin;$(VSInstallDir)Common7\Toolsin;$(VSInstallDir)Common7	ools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(FrameworkSDKDir)in;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">1</NaClAddInVersion>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">$(VCInstallDir)bin;$(WindowsSdkDir)bin\NETFX 4.0 Tools;$(WindowsSdkDir)bin;$(VSInstallDir)Common7\Toolsin;$(VSInstallDir)Common7	ools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(FrameworkSDKDir)in;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">1</NaClAddInVersion>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">$(VCInstallDir)bin;$(WindowsSdkDir)bin\NETFX 4.0 Tools;$(WindowsSdkDir)bin;$(VSInstallDir)Common7\Toolsin;$(VSInstallDir)Common7	ools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(FrameworkSDKDir)in;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI32'">
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(ProjectDir)..\..\..\..\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\jsonsllib\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">win\$(Configuration)\jsonsllib\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(ProjectDir)..\..\..\..\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\jsonsllib\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">win\$(Configuration)\jsonsllib\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">jsonsllib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">jsonsllib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(ProjectName)</TargetName>
+    <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">1</NaClAddInVersion>
+    <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">1</NaClAddInVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../../../src/jsonsl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PPAPI;JSONSL_STATE_GENERIC=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Release\PPAPI32\jsonsllib\</AssemblerListingLocation>
-      <ObjectFileName>Release\PPAPI32\jsonsllib\</ObjectFileName>
-      <ProgramDataBaseFileName>Release\PPAPI32\jsonsllib.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Release\Win32\jsonsllib\</AssemblerListingLocation>
+      <ObjectFileName>Release\Win32\jsonsllib\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\Win32\jsonsllib.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
@@ -107,15 +97,15 @@
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\PPAPI32\jsonsllib.lib</OutputFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>Release\PPAPI32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile></ModuleDefinitionFile>
-      <ProgramDatabaseFile>Release\PPAPI32\jsonsllib.pdb</ProgramDatabaseFile>
+      <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\Win32\jsonsllib.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImportLibrary>Release\PPAPI32\jsonsllib.lib</ImportLibrary>
+      <ImportLibrary>Release\Win32\jsonsllib.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -126,36 +116,35 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../../../src/jsonsl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PPAPI;JSONSL_STATE_GENERIC=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPAPI;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Release\PPAPI64\jsonsllib\</AssemblerListingLocation>
-      <ObjectFileName>Release\PPAPI64\jsonsllib\</ObjectFileName>
-      <ProgramDataBaseFileName>Release\PPAPI64\jsonsllib.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Release\Win32\jsonsllib\</AssemblerListingLocation>
+      <ObjectFileName>Release\Win32\jsonsllib\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\Win32\jsonsllib.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release\PPAPI64\jsonsllib.lib</OutputFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>Release\PPAPI64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile></ModuleDefinitionFile>
-      <ProgramDatabaseFile>Release\PPAPI64\jsonsllib.pdb</ProgramDatabaseFile>
+      <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\Win32\jsonsllib.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <ImportLibrary>Release\PPAPI64\jsonsllib.lib</ImportLibrary>
+      <ImportLibrary>Release\Win32\jsonsllib.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -166,18 +155,18 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../../../src/jsonsl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PPAPI;JSONSL_STATE_GENERIC=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Debug\PPAPI32\jsonsllib\</AssemblerListingLocation>
-      <ObjectFileName>Debug\PPAPI32\jsonsllib\</ObjectFileName>
-      <ProgramDataBaseFileName>Debug\PPAPI32\jsonsllib.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Debug\Win32\jsonsllib\</AssemblerListingLocation>
+      <ObjectFileName>Debug\Win32\jsonsllib\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\Win32\jsonsllib.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -186,16 +175,16 @@
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\PPAPI32\jsonsllib.lib</OutputFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>Debug\PPAPI32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile></ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>Debug\PPAPI32\jsonsllib.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>Debug\Win32\jsonsllib.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImportLibrary>Debug\PPAPI32\jsonsllib.lib</ImportLibrary>
+      <ImportLibrary>Debug\Win32\jsonsllib.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -206,35 +195,35 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../../../src/jsonsl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PPAPI;JSONSL_STATE_GENERIC=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPAPI;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AssemblerListingLocation>Debug\PPAPI64\jsonsllib\</AssemblerListingLocation>
-      <ObjectFileName>Debug\PPAPI64\jsonsllib\</ObjectFileName>
-      <ProgramDataBaseFileName>Debug\PPAPI64\jsonsllib.pdb</ProgramDataBaseFileName>
+      <AssemblerListingLocation>Debug\Win32\jsonsllib\</AssemblerListingLocation>
+      <ObjectFileName>Debug\Win32\jsonsllib\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\Win32\jsonsllib.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Debug\PPAPI64\jsonsllib.lib</OutputFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>Debug\PPAPI64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile></ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>Debug\PPAPI64\jsonsllib.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>Debug\Win32\jsonsllib.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <ImportLibrary>Debug\PPAPI64\jsonsllib.lib</ImportLibrary>
+      <ImportLibrary>Debug\Win32\jsonsllib.lib</ImportLibrary>
     </Link>
     <Midl>
       <HeaderFileName>
@@ -251,7 +240,6 @@
   <ItemGroup>
     <None Include="..\..\..\..\src\jsonsl\jsonsl.h" />
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

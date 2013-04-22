@@ -56,15 +56,17 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\Regal\</IntDir>
     <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">1</NaClAddInVersion>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
     <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(VCInstallDir)bin;$(WindowsSdkDir)bin\NETFX 4.0 Tools;$(WindowsSdkDir)bin;$(VSInstallDir)Common7\Tools\bin;$(VSInstallDir)Common7\tools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(FrameworkSDKDir)\bin;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
     <NaClAddInVersion Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">1</NaClAddInVersion>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
     <ExecutablePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(VCInstallDir)bin;$(WindowsSdkDir)bin\NETFX 4.0 Tools;$(WindowsSdkDir)bin;$(VSInstallDir)Common7\Tools\bin;$(VSInstallDir)Common7\tools;$(VSInstallDir)Common7\ide;$(ProgramFiles)\HTML Help Workshop;$(FrameworkSDKDir)\bin;$(MSBuildToolsPath32);$(VSInstallDir);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">win\$(Configuration)\Regal\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">win\$(Configuration)\Regal\</IntDir>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(VSNaClSDKRoot)include;$(VSNaClSDKRoot)include\win;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(VSNaClSDKRoot)lib\win_x86_32_host\$(Configuration);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">$(ProjectDir)..\..\..\..\lib\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">$(ProjectDir)..\..\..\..\lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -146,41 +148,51 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PPAPI'">
     <Link>
-      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;jsonsllib.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;kernel32.lib;winspool.lib;comdlg32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>../../../../src/regal/RegalPPAPI.def</ModuleDefinitionFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>win\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../src/jsonsl;../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>PPAPI;REGAL_NO_TLS;REGAL_WIN_TLS=0;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PPAPI'">
     <Link>
-      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ppapi_cpp.lib;ppapi.lib;jsonsllib.lib;mongooselib.lib;md5lib.lib;pnglib.lib;zlib.lib;advapi32.lib;gdi32.lib;user32.lib;ws2_32.lib;kernel32.lib;winspool.lib;comdlg32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>../../../../src/regal/RegalPPAPI.def</ModuleDefinitionFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>win\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../src/jsonsl;../../../../src/boost;../../../../include;../../../../src/mongoose;../../../../src/lookup3;../../../../src/md5/include;../../../../src/libpng/include;../../../../src/zlib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>PPAPI;REGAL_NO_TLS;REGAL_WIN_TLS=0;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPAPI;REGAL_NO_TLS=1;REGAL_WIN_TLS=0;REGAL_DECL_EXPORT;REGAL_SYS_WGL_DECLARE_WGL;JSONSL_STATE_GENERIC=1;DNDEBUG;REGAL_DECL_EXPORT=1;REGAL_LOG=0;REGAL_LOG_ALL=0;REGAL_LOG_ONCE=0;REGAL_LOG_JSON=0;REGAL_NO_HTTP=1;REGAL_NO_ASSERT=1;REGAL_NO_PNG=1;REGAL_ERROR=0;REGAL_DEBUG=0;REGAL_CACHE=0;REGAL_EMULATION=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\regal\RegalBreak.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalCacheShader.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalCacheTexture.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchCache.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalDispatchPpapi.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalFilt.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalJson.cpp" />
     <ClCompile Include="..\..\..\..\src\Regal\RegalMac.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\Regal.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalXfer.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalBin.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalConfig.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalBreak.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalCacheShader.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalCacheTexture.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalConfig.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalContext.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalContext.h" />
@@ -207,6 +219,7 @@
     <ClCompile Include="..\..\..\..\src\regal\RegalFavicon.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalFavicon.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalFrame.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalFilt.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalFrame.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalHelper.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalHelper.h" />
@@ -217,28 +230,34 @@
     <ClCompile Include="..\..\..\..\src\regal\RegalInit.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalInit.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalLog.cpp" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalJson.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalLog.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalLookup.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalLookup.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalMarker.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalMarker.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalMutex.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalObj.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPixelConversions.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalPpa.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalPpc.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalPpca.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalPrecompile.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalPrivate.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalPush.h" />
-    <ClInclude Include="..\..\..\..\src\regal\RegalShaderCache.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalSharedList.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalSharedMap.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalSharedPtr.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalSo.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalState.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalSystem.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalTexC.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalThread.h" />
     <ClInclude Include="..\..\..\..\src\regal\RegalTimer.h" />
-    <ClCompile Include="..\..\..\..\src\regal\RegalShaderCache.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalPixelConversions.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalPpca.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalSo.cpp" />
+    <ClCompile Include="..\..\..\..\src\regal\RegalTexC.cpp" />
     <ClCompile Include="..\..\..\..\src\regal\RegalToken.cpp" />
     <ClInclude Include="..\..\..\..\src\regal\RegalToken.h" />
     <ClCompile Include="..\..\..\..\src\regal\RegalUtil.cpp" />
@@ -246,10 +265,12 @@
     <ClInclude Include="..\..\..\..\src\regal\RegalVao.h" />
     <ClInclude Include="..\..\..\..\src\regal\linear.h" />
     <ClInclude Include="..\..\..\..\src\regal\pch.h" />
+    <ClInclude Include="..\..\..\..\src\regal\RegalXfer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\include\GL\Regal.h" />
     <None Include="..\..\..\..\src\lookup3\lookup3.h" />
+    <None Include="..\..\..\..\src\regal\RegalPixelConversions.inl" />
     <None Include="..\..\..\..\src\regal\RegalPPAPI.def" />
   </ItemGroup>
   <ItemGroup>

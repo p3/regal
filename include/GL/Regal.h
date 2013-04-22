@@ -136,6 +136,8 @@
 #define GLAPIENTRY REGAL_CALL
 #endif
 
+
+
 #ifdef _WIN32
 #  if REGAL_DECL_EXPORT
 #    define REGAL_DECL
@@ -164,7 +166,6 @@
 #define __REGAL_H__
 
 /* Skip OpenGL API if another header was included first. */
-
 #if !defined(__gl_h_) && !defined(__GL_H__) && !defined(__X_GL_H) && !defined(__gl2_h_) && !defined(__glext_h_) && !defined(__GLEXT_H_) && !defined(__gl_ATI_h_) && !defined(_OPENGL_H)
 
 #define __gl_h_
@@ -35973,7 +35974,7 @@ REGAL_DECL void RegalShareContext(RegalSystemContext ctx, RegalSystemContext oth
  */
 
 #if REGAL_SYS_PPAPI
-REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx, struct PPB_OpenGLES2 *interface );
+REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx, struct PPB_OpenGLES2 *ppb_interface );
 #else
 REGAL_DECL void RegalMakeCurrent( RegalSystemContext ctx );
 #endif

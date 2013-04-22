@@ -418,7 +418,7 @@ Init::shareContext(RegalSystemContext a, RegalSystemContext b)
 
 void
 #if REGAL_SYS_PPAPI
-Init::makeCurrent(RegalSystemContext sysCtx, PPB_OpenGLES2 *interface)
+Init::makeCurrent(RegalSystemContext sysCtx, PPB_OpenGLES2 *ppb_interface)
 #else
 Init::makeCurrent(RegalSystemContext sysCtx)
 #endif
@@ -443,7 +443,7 @@ Init::makeCurrent(RegalSystemContext sysCtx)
 
 #if REGAL_SYS_PPAPI
       context->ppapiResource = sysCtx;
-      context->ppapiES2      = interface;
+      context->ppapiES2      = ppb_interface;
 #endif
 
       // RegalContextInfo init makes GL calls, need an
@@ -562,13 +562,13 @@ REGAL_DECL void RegalShareContext(RegalSystemContext a, RegalSystemContext b)
 }
 
 #if REGAL_SYS_PPAPI
-REGAL_DECL void RegalMakeCurrent(RegalSystemContext sysCtx, PPB_OpenGLES2 *interface)
+REGAL_DECL void RegalMakeCurrent(RegalSystemContext sysCtx, PPB_OpenGLES2 *ppb_interface)
 #else
 REGAL_DECL void RegalMakeCurrent(RegalSystemContext sysCtx)
 #endif
 {
 #if REGAL_SYS_PPAPI
-  ::REGAL_NAMESPACE_INTERNAL::Init::makeCurrent(sysCtx,interface);
+  ::REGAL_NAMESPACE_INTERNAL::Init::makeCurrent(sysCtx,ppb_interface);
 #else
   ::REGAL_NAMESPACE_INTERNAL::Init::makeCurrent(sysCtx);
 #endif
