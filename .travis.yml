@@ -1,0 +1,28 @@
+language: cpp
+script:
+ - export NACL_SDK_ROOT=$PWD/nacl_sdk/pepper_canary
+ - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_x86_newlib/bin
+ - export PATH=$PATH:$NACL_SDK_ROOT/toolchain/linux_arm_newlib/bin
+ - make -j4
+ # Tests don't currently run under nacl on the travis VMs
+ # Some kind of OOM issue.  TODO(sbc): find out why and fix.
+ - "if [ \"$SYSTEM\" = linux ]; then make test; fi"
+install:
+ - "if [ \"$SYSTEM\" != linux ]; then sudo apt-get update; fi"
+ # install i686 base libraries so the the NaCl compiler (which is 32-bit) can run
+ - "if [ \"$SYSTEM\" != linux ]; then sudo apt-get install libc6:i386 libstdc++6:i386; fi"
+ # install NaCl SDK
+ - "if [ \"$SYSTEM\" != linux ]; then wget http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip; fi"
+ - "if [ \"$SYSTEM\" != linux ]; then unzip nacl_sdk.zip; fi"
+ - "if [ \"$SYSTEM\" != linux ]; then nacl_sdk/naclsdk update --force pepper_canary; fi"
+ # Install regal linux build deps
+ - "if [ \"$SYSTEM\" = linux ]; then sudo apt-get install libxmu-dev libxi-dev; fi"
+env:
+ - SYSTEM=linux
+ - SYSTEM=nacl-i686
+ - SYSTEM=nacl-x86_64
+ - SYSTEM=nacl-arm
+ - MODE=debug SYSTEM=linux
+ - MODE=debug SYSTEM=nacl-i686
+ - MODE=debug SYSTEM=nacl-x86_64
+ - MODE=debug SYSTEM=nacl-arm
