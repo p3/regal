@@ -65,7 +65,7 @@ TEST( RegalJson, Parser )
 {
   const string state0 = json();
 
-  EXPECT_GT(state0.length(),0);
+  EXPECT_GT(state0.length(),0u);
   EXPECT_NE(string::npos,state0.find("\"regal\""));
   EXPECT_NE(string::npos,state0.find("\"config\""));
   EXPECT_NE(string::npos,state0.find("\"logging\""));

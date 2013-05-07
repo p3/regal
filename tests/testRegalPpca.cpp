@@ -918,7 +918,7 @@ TEST ( RegalPpca, ClientVertexArrayStateGenericShadowing ) {
   EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
   EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
   EXPECT_EQ   ( 8888u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( 654u, state.buffer[ 3 ].offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 654 ), state.buffer[ 3 ].offset );
   EXPECT_EQ   ( 456, state.buffer[ 3 ].stride );
 
   state.Reset();
@@ -936,7 +936,7 @@ TEST ( RegalPpca, ClientVertexArrayStateGenericShadowing ) {
   EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
   EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
   EXPECT_EQ   ( 8888u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( 987u, state.buffer[ 3 ].offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 987 ) , state.buffer[ 3 ].offset );
   EXPECT_EQ   ( 789, state.buffer[ 3 ].stride );
 
   state.Reset();
@@ -982,7 +982,7 @@ TEST ( RegalPpca, ClientVertexArrayStateGenericShadowing ) {
   EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
   EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
   EXPECT_EQ   ( 987u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( 321u, state.buffer[ 3 ].offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 321 ), state.buffer[ 3 ].offset );
   EXPECT_EQ   ( 123, state.buffer[ 3 ].stride );
 
   state.Reset();
@@ -1001,7 +1001,7 @@ TEST ( RegalPpca, ClientVertexArrayStateGenericShadowing ) {
   EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
   EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
   EXPECT_EQ   ( 987u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( 654u, state.buffer[ 3 ].offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 654 ), state.buffer[ 3 ].offset );
   EXPECT_EQ   ( 456, state.buffer[ 3 ].stride );
 
   state.Reset();
@@ -1344,22 +1344,22 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ( 4,   state.attrib[ vertexAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ vertexAttribIndex ].source.type );
   EXPECT_EQ( 60,  state.attrib[ vertexAttribIndex ].source.stride );
-  EXPECT_EQ( 44u, state.attrib[ vertexAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 44 ), state.attrib[ vertexAttribIndex ].source.offset );
 
   EXPECT_EQ( 3,   state.attrib[ normalAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ normalAttribIndex ].source.type );
   EXPECT_EQ( 60,  state.attrib[ normalAttribIndex ].source.stride );
-  EXPECT_EQ( 32u, state.attrib[ normalAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 32 ), state.attrib[ normalAttribIndex ].source.offset );
 
   EXPECT_EQ( 4,   state.attrib[ colorAttribIndex ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex ].source.type );
   EXPECT_EQ( 60,  state.attrib[ colorAttribIndex ].source.stride );
-  EXPECT_EQ( 16u, state.attrib[ colorAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 16 ), state.attrib[ colorAttribIndex ].source.offset );
 
   EXPECT_EQ( 4,   state.attrib[ texture0AttribIndex + 5 ].source.size );
   EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 5 ].source.type );
   EXPECT_EQ( 60,  state.attrib[ texture0AttribIndex + 5 ].source.stride );
-  EXPECT_EQ( 0u,  state.attrib[ texture0AttribIndex + 5 ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex + 5 ].source.offset );
 
   // The other non-texture coordinate arrays should be disabled
 
@@ -1373,22 +1373,22 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ( 987,  state.attrib[ edgeFlagAttribIndex ].source.size );
   EXPECT_EQ( 987u, state.attrib[ edgeFlagAttribIndex ].source.type );
   EXPECT_EQ( 987,  state.attrib[ edgeFlagAttribIndex ].source.stride );
-  EXPECT_EQ( 987u, state.attrib[ edgeFlagAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ edgeFlagAttribIndex ].source.offset );
 
   EXPECT_EQ( 987,  state.attrib[ fogCoordAttribIndex ].source.size );
   EXPECT_EQ( 987u, state.attrib[ fogCoordAttribIndex ].source.type );
   EXPECT_EQ( 987,  state.attrib[ fogCoordAttribIndex ].source.stride );
-  EXPECT_EQ( 987u, state.attrib[ fogCoordAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ fogCoordAttribIndex ].source.offset );
 
   EXPECT_EQ( 987,  state.attrib[ indexAttribIndex ].source.size );
   EXPECT_EQ( 987u, state.attrib[ indexAttribIndex ].source.type );
   EXPECT_EQ( 987,  state.attrib[ indexAttribIndex ].source.stride );
-  EXPECT_EQ( 987u, state.attrib[ indexAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ indexAttribIndex ].source.offset );
 
   EXPECT_EQ( 987,  state.attrib[ secondaryColorAttribIndex ].source.size );
   EXPECT_EQ( 987u, state.attrib[ secondaryColorAttribIndex ].source.type );
   EXPECT_EQ( 987,  state.attrib[ secondaryColorAttribIndex ].source.stride );
-  EXPECT_EQ( 987u, state.attrib[ secondaryColorAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ secondaryColorAttribIndex ].source.offset );
 
   // Verify other texture coordinate settings unaffected.
 
@@ -1403,7 +1403,7 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
     EXPECT_EQ( 987,  attrib.source.size ) << "Index " << i;
     EXPECT_EQ( 987u, attrib.source.type ) << "Index " << i;
     EXPECT_EQ( 987,  attrib.source.stride ) << "Index " << i;
-    EXPECT_EQ( 987u, attrib.source.offset ) << "Index " << i;
+    EXPECT_EQ( static_cast<GLintptr>( 987 ), attrib.source.offset ) << "Index " << i;
   }
 
   // Ensure if stride is nonzero, it is used as is, and ensure the pointer passed in is used as a base address.
@@ -1411,13 +1411,13 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   ppca.ShadowInterleavedArrays( GL_T4F_C4F_N3F_V4F, 321, reinterpret_cast<GLvoid *>( 5000 ) );
 
   EXPECT_EQ( 321,   state.attrib[ vertexAttribIndex ].source.stride );
-  EXPECT_EQ( 5044u, state.attrib[ vertexAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 5044 ), state.attrib[ vertexAttribIndex ].source.offset );
   EXPECT_EQ( 321,   state.attrib[ normalAttribIndex ].source.stride );
-  EXPECT_EQ( 5032u, state.attrib[ normalAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 5032 ), state.attrib[ normalAttribIndex ].source.offset );
   EXPECT_EQ( 321,   state.attrib[ colorAttribIndex ].source.stride );
-  EXPECT_EQ( 5016u, state.attrib[ colorAttribIndex ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 5016 ), state.attrib[ colorAttribIndex ].source.offset );
   EXPECT_EQ( 321,   state.attrib[ texture0AttribIndex + 5 ].source.stride );
-  EXPECT_EQ( 5000u, state.attrib[ texture0AttribIndex + 5 ].source.offset );
+  EXPECT_EQ( static_cast<GLintptr>( 5000 ), state.attrib[ texture0AttribIndex + 5 ].source.offset );
 
   // Do a quick run through the remaining formats, and do some quick verifications.
   ppca.Reset();
@@ -1434,10 +1434,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 8,   state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 0u,  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_V3F, 0, NULL );
@@ -1451,10 +1451,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 12,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 0u,  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_C4UB_V2F, 0, NULL );
@@ -1468,10 +1468,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_UNSIGNED_BYTE ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 12,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 4u,  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 4 ),  state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_C4UB_V3F, 0, NULL );
@@ -1485,10 +1485,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_UNSIGNED_BYTE ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 16,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 4u,  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 4 ),  state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_C3F_V3F, 0, NULL );
@@ -1502,10 +1502,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 24,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 12u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 12 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_N3F_V3F, 0, NULL );
@@ -1519,10 +1519,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 24,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 12u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 12 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_C4F_N3F_V3F, 0, NULL );
@@ -1536,10 +1536,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 40,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 28u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 16u, state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 28 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 16 ), state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_T2F_V3F, 0, NULL );
@@ -1553,10 +1553,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 20,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 8u,  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_T4F_V4F, 0, NULL );
@@ -1570,10 +1570,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 32,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 16u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 16 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_T2F_C4UB_V3F, 0, NULL );
@@ -1587,10 +1587,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_UNSIGNED_BYTE ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 24,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 12u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 8u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 12 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_T2F_C3F_V3F, 0, NULL );
@@ -1604,10 +1604,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 32,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 20u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 8u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 20 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_T2F_N3F_V3F, 0, NULL );
@@ -1621,10 +1621,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 32,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 20u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 8u,  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 20 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   state.Reset();
   ppca.ShadowInterleavedArrays( GL_T2F_C4F_N3F_V3F, 0, NULL );
@@ -1638,10 +1638,10 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
   EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
   EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
   EXPECT_EQ   ( 48,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( 36u, state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 24u, state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( 8u,  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( 0u,  state.attrib[ texture0AttribIndex ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 36 ), state.attrib[ vertexAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 24 ), state.attrib[ normalAttribIndex   ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ colorAttribIndex    ].source.offset );
+  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
 
   // Pass in an unsupported "format", which should do nothing.
 
@@ -1667,7 +1667,7 @@ TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
     EXPECT_EQ( 987,  attrib.source.size ) << "Index " << i;
     EXPECT_EQ( 987u, attrib.source.type ) << "Index " << i;
     EXPECT_EQ( 987,  attrib.source.stride ) << "Index " << i;
-    EXPECT_EQ( 987u, attrib.source.offset ) << "Index " << i;
+    EXPECT_EQ( static_cast<GLintptr>( 987 ), attrib.source.offset ) << "Index " << i;
   }
 }
 

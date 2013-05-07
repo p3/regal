@@ -71,8 +71,8 @@ TEST( RegalPixelConversions, Component ) {
   // Verify the properties computed from the mask for a demonstrative 5-bit
   // component.
   EXPECT_EQ( 0x1f0, Component<0x1f0>::COMPONENT_MASK );
-  EXPECT_EQ( 4u,    Component<0x1f0>::LEADING_BIT_COUNT );
-  EXPECT_EQ( 5u,    Component<0x1f0>::COMPONENT_BIT_COUNT );
+  EXPECT_EQ( 4,     Component<0x1f0>::LEADING_BIT_COUNT );
+  EXPECT_EQ( 5,     Component<0x1f0>::COMPONENT_BIT_COUNT );
 
   // A zero bit component should only ever pack/unpack to zero.
   EXPECT_EQ( 0x00u, Component<0>::u8(  0 ) );
