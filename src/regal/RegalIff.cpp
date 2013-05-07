@@ -1482,7 +1482,9 @@ void Program::UserShaderModeAttribs( RegalContext * ctx )
   tbl.call(&tbl.glBindAttribLocation)( pg, ctx->iff->ffAttrMap[ RFF2A_Vertex ], "rglVertex" );
   tbl.call(&tbl.glBindAttribLocation)( pg, ctx->iff->ffAttrMap[ RFF2A_Normal ], "rglNormal" );
   tbl.call(&tbl.glBindAttribLocation)( pg, ctx->iff->ffAttrMap[ RFF2A_Color ], "rglColor" );
-  tbl.call(&tbl.glBindAttribLocation)( pg, ctx->iff->ffAttrMap[ RFF2A_SecondaryColor ], "rglSecondaryColor" );
+  if ( ctx->iff->ffAttrMap[ RFF2A_SecondaryColor ] != RFF2A_Invalid ) {
+    tbl.call(&tbl.glBindAttribLocation)( pg, ctx->iff->ffAttrMap[ RFF2A_SecondaryColor ], "rglSecondaryColor" );
+  }
   tbl.call(&tbl.glBindAttribLocation)( pg, ctx->iff->ffAttrMap[ RFF2A_FogCoord ], "rglFogCoord" );
   GLuint units = std::min( /*(GLuint)ctx->iff->ffAttrNumTex*/(GLuint)16, (GLuint)REGAL_EMU_IFF_TEXTURE_UNITS );
   for( GLuint i = 0; i < units; i++ ) {
@@ -1550,11 +1552,18 @@ void Iff::Cleanup( RegalContext &ctx )
     }
   }
 
+  bool isPepperGLES = (ctx.info->vendor != "Chromium");
+
   tbl.glBindBuffer(GL_ARRAY_BUFFER, 0);
   tbl.glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   for (GLuint i=0; i<ctx.info->maxVertexAttribs; ++i)
   {
-    tbl.glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+    // Chromium/PepperAPI GLES generates an error (visible through glGetError)
+    // and logs a message if a call is made to glVertexAttribPointer and no
+    // GL_ARRAY_BUFFER is bound.
+    if (!isPepperGLES) {
+      tbl.glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+    }
     tbl.glDisableVertexAttribArray(i);
   }
 }

@@ -62,6 +62,24 @@ REGAL_NAMESPACE_BEGIN
 struct DispatchTable;
 
 // ====================================
+// ClientState::Capabilities
+// ====================================
+
+namespace ClientState {
+
+  struct Capabilities {
+    GLuint maxVertexAttribRelativeOffset;
+    GLuint maxVertexTextureImageUnits;
+    GLuint maxVertexAttribs;
+    GLuint maxVertexAttribBindings;
+    GLuint maxClientAttribStackDepth;
+
+    bool driverAllowsVertexAttributeArraysWithoutBoundBuffer;
+  };
+
+} // namespace ClientState
+
+// ====================================
 // ClientState::PixelStore
 // ====================================
 
@@ -88,7 +106,7 @@ void swap( State& lhs, State& rhs );
 
 size_t PNameToIndex( GLenum pname );
 
-void Transition( const DispatchTable& dt, const State& current, const State& target );
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target );
 
 } // namespace PixelStore
 } // namespace ClientState
@@ -138,7 +156,7 @@ void swap( State& lhs, State& rhs );
 size_t ArrayNameToAttribIndex( GLenum array, GLenum texunit=GL_TEXTURE0 );
 size_t IndexedArrayNameToAttribIndex( GLenum array, GLuint index );
 
-void Transition( const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding );
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding );
 
 } // namespace Fixed
 } // namespace VertexArray
@@ -193,7 +211,7 @@ struct State
 
 void swap( State& lhs, State& rhs );
 
-void Transition( const DispatchTable& dt, const State& current, const State& target );
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target );
 
 } // namespace Generic
 } // namespace VertexArray
@@ -225,7 +243,7 @@ struct State {
   GLuint vertexArrayBinding;
   bool primitiveRestartEnabled;
   // NB: primitiveRestartFixedIndexEnabled is not included in the OpenGL 4.3
-  // Compatability Profile Table 23.8 (20120806), but indicated by the textual
+  // Compatibility Profile Table 23.8 (20120806), but indicated by the textual
   // description in section 10.7
   bool primitiveRestartFixedIndexEnabled;
   GLuint primitiveRestartIndex;
@@ -233,7 +251,7 @@ struct State {
 
 void swap( State& lhs, State& rhs );
 
-void Transition( const DispatchTable& dt, const State& current, const State& target );
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target );
 
 } // namespace VertexArray
 } // namespace ClientState
@@ -258,6 +276,7 @@ struct Ppca {
   }
 
   void Reset();
+  void DetectVertexAttributeArrayWithoutBoundBufferSupport( RegalContext& ctx );
 
   // Pixel Storage State
 
@@ -282,7 +301,7 @@ struct Ppca {
   void ShadowEnableVertexAttribArray( GLuint index );
   void ShadowDisableVertexAttribArray( GLuint index );
 
-  // Fixed-Function AZttributes
+  // Fixed-Function Attributes
 
   void ShadowVertexPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
   void ShadowNormalPointer( GLenum type, GLsizei stride, const GLvoid* pointer );
@@ -369,11 +388,7 @@ struct Ppca {
   bool Get( RegalContext* ctx, GLenum pname, GLdouble* params );
   bool Get( RegalContext* ctx, GLenum pname, GLboolean* params );
 
-  GLuint maxVertexAttribRelativeOffset;
-  GLuint maxVertexTextureImageUnits;
-  GLuint maxVertexAttribs;
-  GLuint maxVertexAttribBindings;
-  GLuint maxClientAttribStackDepth;
+  ClientState::Capabilities capabilities;
 
   ClientState::PixelStore::State pss;
   ClientState::VertexArray::State vas;

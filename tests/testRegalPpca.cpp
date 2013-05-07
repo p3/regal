@@ -159,11 +159,14 @@ TEST( RegalClientStatePixelStore, BasicOperations ) {
 }
 
 TEST( RegalClientStatePixelStore, Transition ) {
+  using ClientState::Capabilities;
   using ClientState::PixelStore::State;
   using ClientState::PixelStore::PNameToIndex;
   using ClientState::PixelStore::Transition;
 
   RegalGMockInterface mock;
+
+  Capabilities cap;
 
   DispatchTable dt;
   ::memset(&dt,0,sizeof(DispatchTable));
@@ -189,7 +192,7 @@ TEST( RegalClientStatePixelStore, Transition ) {
   EXPECT_CALL( mock, glBindBuffer ( GL_PIXEL_UNPACK_BUFFER_BINDING, 654 ) );
 
   // Perform the state transition
-  Transition( dt, current, target );
+  Transition( cap, dt, current, target );
   Mock::VerifyAndClear( &mock );
 
   // A transition with no differences should make no calls.
@@ -208,7 +211,7 @@ TEST( RegalClientStatePixelStore, Transition ) {
   current.pixelUnpackBufferBinding = 654;
 
   // Perform the state transition
-  Transition( dt, current, target );
+  Transition( cap, dt, current, target );
   Mock::VerifyAndClear( &mock );
 }
 
@@ -328,12 +331,16 @@ TEST( RegalClientStateVertexArrayFixedState, BasicOperations ) {
 }
 
 TEST( RegalClientStateVertexArrayFixedState, Transition ) {
+  using ClientState::Capabilities;
   using ClientState::VertexArray::Fixed::State;
   using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
   using ClientState::VertexArray::Fixed::IndexedArrayNameToAttribIndex;
   using ClientState::VertexArray::Fixed::Transition;
 
   RegalGMockInterface mock;
+
+  Capabilities cap;
+  cap.driverAllowsVertexAttributeArraysWithoutBoundBuffer = true;
 
   DispatchTable dt;
   ::memset(&dt,0,sizeof(DispatchTable));
@@ -420,7 +427,7 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
   // Perform the requested transition
   GLenum clientActiveTexture = GL_TEXTURE0;
   GLuint arrayBufferBinding = 0;
-  Transition( dt, current, target, clientActiveTexture, arrayBufferBinding );
+  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
   // Verify that we've updated the shadowed selected texture unit as expected.
   EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE5 ), clientActiveTexture );
   EXPECT_EQ( static_cast<GLuint>( 90 ), arrayBufferBinding );
@@ -451,7 +458,7 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
   // Perform the requested transition
   clientActiveTexture = GL_TEXTURE0;
   arrayBufferBinding = 0;
-  Transition( dt, current, target, clientActiveTexture, arrayBufferBinding );
+  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
   // Verify that we've updated the shadowed selected texture unit as expected.
   EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE1 ), clientActiveTexture );
   EXPECT_EQ( static_cast<GLuint>( 0 ), arrayBufferBinding );
@@ -468,10 +475,34 @@ TEST( RegalClientStateVertexArrayFixedState, Transition ) {
 
   clientActiveTexture = GL_TEXTURE4;
   arrayBufferBinding = 123;
-  Transition( dt, current, target, clientActiveTexture, arrayBufferBinding );
+  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
   // Verify that the shadowed selected texture unit is not updated.
   EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE4 ), clientActiveTexture );
   EXPECT_EQ( static_cast<GLuint>( 123 ), arrayBufferBinding );
+  // Verify the call expectations, and reset for another test.
+  Mock::VerifyAndClear( &mock );
+  target.Reset();
+  current.Reset();
+
+  // If the driver does not support vertex buffer arrays without a bound array
+  // buffer, then our code should not make the call to set the vertex attribute
+  // array if the target state use a buffer of zero for that attribute.
+  cap.driverAllowsVertexAttributeArraysWithoutBoundBuffer = false;
+  target.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 0, 12, 13, 14, 15 );
+  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), 21, 22, 23, 24, 25 );
+  EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE1 ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 21 ) );
+  EXPECT_CALL( mock, glTexCoordPointer    ( 22, 23, 24, reinterpret_cast<const void*>( 25 ) ) );
+
+  // Perform the requested transition
+  clientActiveTexture = GL_TEXTURE0;
+  arrayBufferBinding = 0;
+  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
+
+  // Verify the call expectations, and reset for another test.
+  Mock::VerifyAndClear( &mock );
+  target.Reset();
+  current.Reset();
 }
 
 // ====================================
@@ -597,10 +628,13 @@ TEST( RegalClientStateVertexArrayGenericState, BasicOperations ) {
 }
 
 TEST( RegalClientStateVertexArrayGenericState, Transition ) {
+  using ClientState::Capabilities;
   using ClientState::VertexArray::Generic::State;
   using ClientState::VertexArray::Generic::Transition;
 
   RegalGMockInterface mock;
+
+  Capabilities cap;
 
   DispatchTable dt;
   ::memset(&dt,0,sizeof(DispatchTable));
@@ -649,7 +683,7 @@ TEST( RegalClientStateVertexArrayGenericState, Transition ) {
   EXPECT_CALL( mock, glVertexAttribBinding( 8, 8 ) );
 
   // Perform the requested state transition.
-  Transition( dt, current, target );
+  Transition( cap, dt, current, target );
   // Verify the call expectations, and reset for another test.
   Mock::VerifyAndClear( &mock );
   target.Reset();
@@ -668,7 +702,7 @@ TEST( RegalClientStateVertexArrayGenericState, Transition ) {
   target.SetAttribBinding ( 0, 1 );
 
   // Perform the requested state transition.
-  Transition( dt, current, target );
+  Transition( cap, dt, current, target );
 }
 
 // ====================================
@@ -730,10 +764,13 @@ TEST( RegalClientStateVertexArrayState, GetVertexArrayObject ) {
 }
 
 TEST( RegalClientStateVertexArrayState, Transition ) {
+  using ClientState::Capabilities;
   using ClientState::VertexArray::State;
   using ClientState::VertexArray::Transition;
 
   RegalGMockInterface mock;
+
+  Capabilities cap;
 
   DispatchTable dt;
   ::memset(&dt,0,sizeof(DispatchTable));
@@ -767,7 +804,7 @@ TEST( RegalClientStateVertexArrayState, Transition ) {
   EXPECT_CALL( mock, glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 6 ) );
 
   // Perform the requested state transition.
-  Transition( dt, current, target );
+  Transition( cap, dt, current, target );
   // Verify the call expectations, and reset for another test.
   Mock::VerifyAndClear( &mock );
 
@@ -785,7 +822,7 @@ TEST( RegalClientStateVertexArrayState, Transition ) {
   EXPECT_CALL( mock, glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 ) );
 
   // Perform the requested state transition.
-  Transition( dt, current, target );
+  Transition( cap, dt, current, target );
   // Verify the call expectations, and reset for another test.
   Mock::VerifyAndClear( &mock );
 }

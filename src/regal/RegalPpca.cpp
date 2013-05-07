@@ -147,7 +147,7 @@ size_t PNameToIndex( GLenum pname ) {
   }
 }
 
-void Transition( const DispatchTable& dt, const State& current, const State& target ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target ) {
   RegalAssert( dt.glPixelStorei );
 
   for ( size_t i = 0; i < STATE_COUNT; ++i ) {
@@ -198,21 +198,23 @@ void ApplyClientStateEnable( const DispatchTable& dt, GLenum array, bool enable 
 }
 
 template <typename T>
-void Transition( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum array, T dispatchAttribPointer, GLuint& inoutArrayBufferBinding ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum array, T dispatchAttribPointer, GLuint& inoutArrayBufferBinding ) {
   if ( target.enabled != current.enabled ) {
     ApplyClientStateEnable( dt, array, target.enabled );
   }
 
   if ( target.source != current.source ) {
-    if ( target.source.buffer != inoutArrayBufferBinding ) {
-      dt.glBindBuffer( GL_ARRAY_BUFFER, target.source.buffer );
-      inoutArrayBufferBinding = target.source.buffer;
+    if ( ( target.source.buffer != 0 ) || cap.driverAllowsVertexAttributeArraysWithoutBoundBuffer ) {
+      if ( target.source.buffer != inoutArrayBufferBinding ) {
+        dt.glBindBuffer( GL_ARRAY_BUFFER, target.source.buffer );
+        inoutArrayBufferBinding = target.source.buffer;
+      }
+      ApplyAttribPointer( target.source, dispatchAttribPointer );
     }
-    ApplyAttribPointer( target.source, dispatchAttribPointer );
   }
 }
 
-void TransitionTextureCoords( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum texture, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding ) {
+void TransitionTextureCoords( const Capabilities& cap, const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLenum texture, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding ) {
   bool sourceDelta = target.source != current.source;
 
   if ( ( current.enabled != target.enabled ) || sourceDelta ) {
@@ -227,11 +229,13 @@ void TransitionTextureCoords( const DispatchTable& dt, const State::Attrib& curr
   }
 
   if ( sourceDelta ) {
-    if ( target.source.buffer != inoutArrayBufferBinding ) {
-      dt.glBindBuffer( GL_ARRAY_BUFFER, target.source.buffer );
-      inoutArrayBufferBinding = target.source.buffer;
+    if ( ( target.source.buffer != 0 ) || cap.driverAllowsVertexAttributeArraysWithoutBoundBuffer ) {
+      if ( target.source.buffer != inoutArrayBufferBinding ) {
+        dt.glBindBuffer( GL_ARRAY_BUFFER, target.source.buffer );
+        inoutArrayBufferBinding = target.source.buffer;
+      }
+      ApplyAttribPointer( target.source, dt.glTexCoordPointer );
     }
-    ApplyAttribPointer( target.source, dt.glTexCoordPointer );
   }
 }
 
@@ -340,7 +344,7 @@ size_t IndexedArrayNameToAttribIndex( GLenum array, GLuint index ) {
   }
 }
 
-void Transition( const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding ) {
   RegalAssert( dt.glEnableClientState );
   RegalAssert( dt.glDisableClientState );
 
@@ -355,16 +359,16 @@ void Transition( const DispatchTable& dt, const State& current, const State& tar
   RegalAssert( dt.glClientActiveTexture );
   RegalAssert( dt.glTexCoordPointer );
 
-  Transition( dt, current.attrib[ 0 ], target.attrib [ 0 ], GL_VERTEX_ARRAY,          dt.glVertexPointer, inoutArrayBufferBinding );
-  Transition( dt, current.attrib[ 1 ], target.attrib [ 1 ], GL_NORMAL_ARRAY,          dt.glNormalPointer, inoutArrayBufferBinding );
-  Transition( dt, current.attrib[ 2 ], target.attrib [ 2 ], GL_COLOR_ARRAY,           dt.glColorPointer, inoutArrayBufferBinding );
-  Transition( dt, current.attrib[ 3 ], target.attrib [ 3 ], GL_SECONDARY_COLOR_ARRAY, dt.glSecondaryColorPointer, inoutArrayBufferBinding );
-  Transition( dt, current.attrib[ 4 ], target.attrib [ 4 ], GL_INDEX_ARRAY,           dt.glIndexPointer, inoutArrayBufferBinding );
-  Transition( dt, current.attrib[ 5 ], target.attrib [ 5 ], GL_EDGE_FLAG_ARRAY,       dt.glEdgeFlagPointer, inoutArrayBufferBinding );
-  Transition( dt, current.attrib[ 6 ], target.attrib [ 6 ], GL_FOG_COORD_ARRAY,       dt.glFogCoordPointer, inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 0 ], target.attrib [ 0 ], GL_VERTEX_ARRAY,          dt.glVertexPointer,         inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 1 ], target.attrib [ 1 ], GL_NORMAL_ARRAY,          dt.glNormalPointer,         inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 2 ], target.attrib [ 2 ], GL_COLOR_ARRAY,           dt.glColorPointer,          inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 3 ], target.attrib [ 3 ], GL_SECONDARY_COLOR_ARRAY, dt.glSecondaryColorPointer, inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 4 ], target.attrib [ 4 ], GL_INDEX_ARRAY,           dt.glIndexPointer,          inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 5 ], target.attrib [ 5 ], GL_EDGE_FLAG_ARRAY,       dt.glEdgeFlagPointer,       inoutArrayBufferBinding );
+  Transition( cap, dt, current.attrib[ 6 ], target.attrib [ 6 ], GL_FOG_COORD_ARRAY,       dt.glFogCoordPointer,       inoutArrayBufferBinding );
 
   for ( size_t i = 0; i < COUNT_TEXTURE_COORD_ATTRIBS; ++i ) {
-    TransitionTextureCoords( dt, current.attrib[ 7 + i ], target.attrib[ 7 + i ], static_cast<GLenum>(GL_TEXTURE0 + i), inoutClientActiveTexture, inoutArrayBufferBinding );
+    TransitionTextureCoords( cap, dt, current.attrib[ 7 + i ], target.attrib[ 7 + i ], static_cast<GLenum>(GL_TEXTURE0 + i), inoutClientActiveTexture, inoutArrayBufferBinding );
   }
 }
 
@@ -413,7 +417,7 @@ void ApplyVertexAttribArrayEnable( const DispatchTable& dt, GLuint index, bool e
   ( enable ? dt.glEnableVertexAttribArray : dt.glDisableVertexAttribArray )( index );
 }
 
-void Transition( const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLuint index ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State::Attrib& current, const State::Attrib& target, GLuint index ) {
   if ( target.enabled != current.enabled ) {
     ApplyVertexAttribArrayEnable( dt, index, target.enabled );
   }
@@ -431,7 +435,7 @@ void Transition( const DispatchTable& dt, const State::Attrib& current, const St
   }
 }
 
-void Transition( const DispatchTable& dt, const State::Buffer& current, const State::Buffer& target, GLuint index ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State::Buffer& current, const State::Buffer& target, GLuint index ) {
   if ( ( target.buffer != current.buffer ) || ( target.offset != current.offset ) || ( target.stride != current.stride ) ) {
     dt.glBindVertexBuffer( index, target.buffer, target.offset, target.stride );
   }
@@ -519,12 +523,12 @@ void swap( State& lhs, State& rhs ) {
   swap_array( lhs.buffer, rhs.buffer );
 }
 
-void Transition( const DispatchTable& dt, const State& current, const State& target ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target ) {
   for ( GLuint i = 0; i < COUNT_ATTRIBS; ++i ) {
-    Transition( dt, current.attrib[ i ], target.attrib[ i ], i );
+    Transition( cap, dt, current.attrib[ i ], target.attrib[ i ], i );
   }
   for ( GLuint i = 0; i < COUNT_BUFFERS; ++i ) {
-    Transition( dt, current.buffer[ i ], target.buffer[ i ], i );
+    Transition( cap, dt, current.buffer[ i ], target.buffer[ i ], i );
   }
 }
 
@@ -601,7 +605,7 @@ void swap( State& lhs, State& rhs ) {
   swap( lhs.primitiveRestartIndex, rhs.primitiveRestartIndex );
 }
 
-void Transition( const DispatchTable& dt, const State& current, const State& target ) {
+void Transition( const Capabilities& cap, const DispatchTable& dt, const State& current, const State& target ) {
   RegalAssert( dt.glBindVertexArray );
   RegalAssert( dt.glClientActiveTexture );
   RegalAssert( dt.glBindBuffer );
@@ -618,8 +622,8 @@ void Transition( const DispatchTable& dt, const State& current, const State& tar
   GLenum clientActiveTexture = current.clientActiveTexture;
   GLuint arrayBufferBinding = current.arrayBufferBinding;
 
-  Transition( dt, current.vertexArrayObjectZero.fixed, target.vertexArrayObjectZero.fixed, clientActiveTexture, arrayBufferBinding );
-  Transition( dt, current.vertexArrayObjectZero.generic, target.vertexArrayObjectZero.generic );
+  Transition( cap, dt, current.vertexArrayObjectZero.fixed, target.vertexArrayObjectZero.fixed, clientActiveTexture, arrayBufferBinding );
+  Transition( cap, dt, current.vertexArrayObjectZero.generic, target.vertexArrayObjectZero.generic );
 
   if ( target.vertexArrayObjectZero.elementArrayBufferBinding != current.vertexArrayObjectZero.elementArrayBufferBinding ) {
     dt.glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, target.vertexArrayObjectZero.elementArrayBufferBinding );
@@ -729,34 +733,37 @@ void Ppca::Init( RegalContext& ctx )
   RegalAssert( ctx.dispatcher.driver.glGetIntegerv );
 
   if ( !ctx.info->es2 ) {
-    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET, reinterpret_cast<GLint *>( &maxVertexAttribRelativeOffset ) );
+    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET, reinterpret_cast<GLint *>( &capabilities.maxVertexAttribRelativeOffset ) );
   }
   if ( !ctx.info->es2 && !ctx.info->core ) {
-    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, reinterpret_cast<GLint *>( &maxVertexTextureImageUnits ) );
+    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, reinterpret_cast<GLint *>( &capabilities.maxVertexTextureImageUnits ) );
   }
-  maxVertexAttribs = 0;
-  ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_ATTRIBS, reinterpret_cast<GLint *>( &maxVertexAttribs ) );
+  capabilities.maxVertexAttribs = 0;
+  ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_ATTRIBS, reinterpret_cast<GLint *>( &capabilities.maxVertexAttribs ) );
   if ( !ctx.info->es2 ) {
-    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_ATTRIB_BINDINGS, reinterpret_cast<GLint *>( &maxVertexAttribBindings ) );
+    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_VERTEX_ATTRIB_BINDINGS, reinterpret_cast<GLint *>( &capabilities.maxVertexAttribBindings ) );
   }
   if ( !ctx.info->es2 && !ctx.info->core ) {
-    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, reinterpret_cast<GLint *>( &maxClientAttribStackDepth ) );
+    ctx.dispatcher.driver.glGetIntegerv( GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, reinterpret_cast<GLint *>( &capabilities.maxClientAttribStackDepth ) );
   }
 
-  maxVertexTextureImageUnits = std::min ( maxVertexTextureImageUnits, static_cast<GLuint>( ClientState::VertexArray::Fixed::COUNT_TEXTURE_COORD_ATTRIBS ) );
-  maxVertexAttribs           = std::min ( maxVertexAttribs,           static_cast<GLuint>( ClientState::VertexArray::Generic::COUNT_ATTRIBS ) );
-  maxVertexAttribBindings    = std::min ( maxVertexAttribBindings,    static_cast<GLuint>( ClientState::VertexArray::Generic::COUNT_BUFFERS ) );
-  maxClientAttribStackDepth  = std::min ( maxClientAttribStackDepth,  static_cast<GLuint>( REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH ) );
+  capabilities.maxVertexTextureImageUnits = std::min ( capabilities.maxVertexTextureImageUnits, static_cast<GLuint>( ClientState::VertexArray::Fixed::COUNT_TEXTURE_COORD_ATTRIBS ) );
+  capabilities.maxVertexAttribs           = std::min ( capabilities.maxVertexAttribs,           static_cast<GLuint>( ClientState::VertexArray::Generic::COUNT_ATTRIBS ) );
+  capabilities.maxVertexAttribBindings    = std::min ( capabilities.maxVertexAttribBindings,    static_cast<GLuint>( ClientState::VertexArray::Generic::COUNT_BUFFERS ) );
+  capabilities.maxClientAttribStackDepth  = std::min ( capabilities.maxClientAttribStackDepth,  static_cast<GLuint>( REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH ) );
 
-  maxVertexAttribBindings    = std::min ( maxVertexAttribBindings,    maxVertexAttribs );
+  capabilities.maxVertexAttribBindings    = std::min ( capabilities.maxVertexAttribBindings,    capabilities.maxVertexAttribs );
+
+  DetectVertexAttributeArrayWithoutBoundBufferSupport( ctx );
 }
 
 void Ppca::Reset() {
-  maxVertexAttribRelativeOffset = ~0u;
-  maxVertexTextureImageUnits    = ClientState::VertexArray::Fixed::COUNT_TEXTURE_COORD_ATTRIBS;
-  maxVertexAttribs              = ClientState::VertexArray::Generic::COUNT_ATTRIBS;
-  maxVertexAttribBindings       = ClientState::VertexArray::Generic::COUNT_BUFFERS;
-  maxClientAttribStackDepth     = REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH;
+  capabilities.maxVertexAttribRelativeOffset = ~0u;
+  capabilities.maxVertexTextureImageUnits    = ClientState::VertexArray::Fixed::COUNT_TEXTURE_COORD_ATTRIBS;
+  capabilities.maxVertexAttribs              = ClientState::VertexArray::Generic::COUNT_ATTRIBS;
+  capabilities.maxVertexAttribBindings       = ClientState::VertexArray::Generic::COUNT_BUFFERS;
+  capabilities.maxClientAttribStackDepth     = REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH;
+  capabilities.driverAllowsVertexAttributeArraysWithoutBoundBuffer = true;
 
   pss.Reset();
   vas.Reset();
@@ -767,6 +774,19 @@ void Ppca::Reset() {
   pixelStoreStateStack_.swap( tmp2 );
   VertexArrayStateStack tmp3;
   vertexArrayStateStack_.swap( tmp3 );
+}
+
+void Ppca::DetectVertexAttributeArrayWithoutBoundBufferSupport( RegalContext& ctx ) {
+  if ( !ctx.info->es2 ) {
+    return;
+  }
+
+  // Chromium/PepperAPI GLES generates an error (visible through glGetError) and
+  // logs a message if a call is made to glVertexAttribPointer and no
+  // GL_ARRAY_BUFFER is bound.
+  if ( ctx.info->vendor == "Chromium" ) {
+    capabilities.driverAllowsVertexAttributeArraysWithoutBoundBuffer = false;
+  }
 }
 
 void Ppca::ShadowPixelStore( GLenum pname, GLint pvalue ) {
@@ -826,10 +846,10 @@ void Ppca::ShadowVertexAttribFormat( GLuint attribindex, GLint size, GLenum type
       break;
   }
 
-  if ( attribindex >= maxVertexAttribs ) {
+  if ( attribindex >= capabilities.maxVertexAttribs ) {
     return;
   }
-  if ( relativeoffset > maxVertexAttribRelativeOffset ) {
+  if ( relativeoffset > capabilities.maxVertexAttribRelativeOffset ) {
     return;
   }
 
@@ -866,10 +886,10 @@ void Ppca::ShadowVertexAttribIFormat( GLuint attribindex, GLint size, GLenum typ
       break;
   }
 
-  if ( attribindex >= maxVertexAttribs ) {
+  if ( attribindex >= capabilities.maxVertexAttribs ) {
     return;
   }
-  if ( relativeoffset > maxVertexAttribRelativeOffset ) {
+  if ( relativeoffset > capabilities.maxVertexAttribRelativeOffset ) {
     return;
   }
 
@@ -901,10 +921,10 @@ void Ppca::ShadowVertexAttribLFormat( GLuint attribindex, GLint size, GLenum typ
       break;
   }
 
-  if ( attribindex >= maxVertexAttribs ) {
+  if ( attribindex >= capabilities.maxVertexAttribs ) {
     return;
   }
-  if ( relativeoffset > maxVertexAttribRelativeOffset ) {
+  if ( relativeoffset > capabilities.maxVertexAttribRelativeOffset ) {
     return;
   }
 
@@ -922,7 +942,7 @@ void Ppca::ShadowBindVertexBuffer( GLuint bindingindex, GLuint buffer, GLintptr 
   if ( ( offset < 0 ) || ( stride < 0 ) ) {
     return;
   }
-  if ( bindingindex >= maxVertexAttribBindings ) {
+  if ( bindingindex >= capabilities.maxVertexAttribBindings ) {
     return;
   }
 
@@ -937,10 +957,10 @@ void Ppca::ShadowVertexAttribBinding( GLuint attribindex, GLuint bindingindex ) 
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( attribindex >= maxVertexAttribs ) {
+  if ( attribindex >= capabilities.maxVertexAttribs ) {
     return;
   }
-  if ( bindingindex >= maxVertexAttribBindings ) {
+  if ( bindingindex >= capabilities.maxVertexAttribBindings ) {
     return;
   }
 
@@ -995,7 +1015,7 @@ void Ppca::ShadowVertexAttribPointer( GLuint index, GLint size, GLenum type, GLb
       break;
   }
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
   if ( stride < 0 ) {
@@ -1037,7 +1057,7 @@ void Ppca::ShadowVertexIAttribPointer( GLuint index, GLint size, GLenum type, GL
       break;
   }
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
   if ( stride < 0 ) {
@@ -1074,7 +1094,7 @@ void Ppca::ShadowVertexLAttribPointer( GLuint index, GLint size, GLenum type, GL
       break;
   }
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
   if ( stride < 0 ) {
@@ -1094,7 +1114,7 @@ void Ppca::ShadowEnableVertexAttribArray( GLuint index ) {
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
 
@@ -1109,7 +1129,7 @@ void Ppca::ShadowDisableVertexAttribArray( GLuint index ) {
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
 
@@ -1413,7 +1433,7 @@ void Ppca::ShadowDisableClientState( GLenum cap ) {
 void Ppca::ShadowClientActiveTexture( GLenum texture ) {
   // Validate the arguments. Return silently if invalid.
 
-  if ( ( texture < GL_TEXTURE0 ) || ( texture >= GL_TEXTURE0 + maxVertexTextureImageUnits ) ) {
+  if ( ( texture < GL_TEXTURE0 ) || ( texture >= GL_TEXTURE0 + capabilities.maxVertexTextureImageUnits ) ) {
     return;
   }
 
@@ -1430,7 +1450,7 @@ void Ppca::ShadowVertexBindingDivisor( GLuint bindingindex, GLuint divisor ) {
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( bindingindex >= maxVertexAttribBindings ) {
+  if ( bindingindex >= capabilities.maxVertexAttribBindings ) {
     return;
   }
 
@@ -1445,7 +1465,7 @@ void Ppca::ShadowVertexAttribDivisor( GLuint index, GLuint divisor ) {
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
 
@@ -1662,7 +1682,7 @@ void Ppca::ClientAttribDefaultDSA( RegalContext* ctx, GLbitfield mask ) {
   if ( mask & GL_CLIENT_PIXEL_STORE_BIT ) {
     ClientState::PixelStore::State tmp;
     tmp.Reset();
-    Transition( ctx->dispatcher.emulation, pss, tmp );
+    Transition( capabilities, ctx->dispatcher.emulation, pss, tmp );
     swap( pss, tmp );
     mask &= ~GL_CLIENT_PIXEL_STORE_BIT;
   }
@@ -1670,7 +1690,7 @@ void Ppca::ClientAttribDefaultDSA( RegalContext* ctx, GLbitfield mask ) {
   if ( mask & GL_CLIENT_VERTEX_ARRAY_BIT ) {
     ClientState::VertexArray::State tmp;
     tmp.Reset();
-    Transition( ctx->dispatcher.emulation, vas, tmp );
+    Transition( capabilities, ctx->dispatcher.emulation, vas, tmp );
     swap( vas, tmp );
     mask &= ~GL_CLIENT_VERTEX_ARRAY_BIT;
   }
@@ -1695,7 +1715,7 @@ void Ppca::ShadowMultiTexCoordPointerDSA( GLenum texunit, GLint size, GLenum typ
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( ( texunit < GL_TEXTURE0 ) || ( texunit >= GL_TEXTURE0 + maxVertexTextureImageUnits ) ) {
+  if ( ( texunit < GL_TEXTURE0 ) || ( texunit >= GL_TEXTURE0 + capabilities.maxVertexTextureImageUnits ) ) {
     return;
   }
 
@@ -1961,7 +1981,7 @@ void Ppca::ShadowVertexArrayMultiTexCoordOffsetDSA( GLuint vaobj, GLuint buffer,
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( ( texunit < GL_TEXTURE0 ) || ( texunit >= GL_TEXTURE0 + maxVertexTextureImageUnits ) ) {
+  if ( ( texunit < GL_TEXTURE0 ) || ( texunit >= GL_TEXTURE0 + capabilities.maxVertexTextureImageUnits ) ) {
     return;
   }
 
@@ -2119,7 +2139,7 @@ void Ppca::ShadowVertexArrayVertexAttribOffsetDSA( GLuint vaobj, GLuint buffer, 
       break;
   }
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
   if ( stride < 0 ) {
@@ -2161,7 +2181,7 @@ void Ppca::ShadowVertexArrayVertexAttribIOffsetDSA( GLuint vaobj, GLuint buffer,
       break;
   }
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
   if ( stride < 0 ) {
@@ -2197,7 +2217,7 @@ void Ppca::ShadowEnableVertexArrayAttribDSA( GLuint vaobj, GLuint index ) {
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
 
@@ -2212,7 +2232,7 @@ void Ppca::ShadowDisableVertexArrayAttribDSA( GLuint vaobj, GLuint index ) {
 
   // Validate the arguments. Return silently if invalid.
 
-  if ( index >= maxVertexAttribs ) {
+  if ( index >= capabilities.maxVertexAttribs ) {
     return;
   }
 
@@ -2301,14 +2321,14 @@ void Ppca::PopClientAttrib( RegalContext* ctx ) {
   }
 
   if ( mask & GL_CLIENT_PIXEL_STORE_BIT ) {
-    Transition( ctx->dispatcher.emulation, pss, pixelStoreStateStack_.back() );
+    Transition( capabilities, ctx->dispatcher.emulation, pss, pixelStoreStateStack_.back() );
     swap( pss, pixelStoreStateStack_.back() );
     pixelStoreStateStack_.pop_back();
     mask &= ~GL_CLIENT_PIXEL_STORE_BIT;
   }
 
   if ( mask & GL_CLIENT_VERTEX_ARRAY_BIT ) {
-    Transition( ctx->dispatcher.emulation, vas, vertexArrayStateStack_.back() );
+    Transition( capabilities, ctx->dispatcher.emulation, vas, vertexArrayStateStack_.back() );
     swap( vas, vertexArrayStateStack_.back() );
     vertexArrayStateStack_.pop_back();
     mask &= ~GL_CLIENT_VERTEX_ARRAY_BIT;
@@ -2333,19 +2353,19 @@ bool GetImpl( const Ppca& ppca, RegalContext* ctx, GLenum pname, T *params ) {
     {
       case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
         if ( params )
-          params[ 0 ] = static_cast<T>(ppca.maxClientAttribStackDepth);
+          params[ 0 ] = static_cast<T>(ppca.capabilities.maxClientAttribStackDepth);
         return true;
       case GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS:
         if ( params )
-          params[ 0 ] = static_cast<T>(ppca.maxVertexTextureImageUnits);
+          params[ 0 ] = static_cast<T>(ppca.capabilities.maxVertexTextureImageUnits);
         return true;
       case GL_MAX_VERTEX_ATTRIBS:
         if ( params )
-          params[ 0 ] = static_cast<T>(ppca.maxVertexAttribs);
+          params[ 0 ] = static_cast<T>(ppca.capabilities.maxVertexAttribs);
         return true;
       case GL_MAX_VERTEX_ATTRIB_BINDINGS:
         if ( params )
-          params[ 0 ] = static_cast<T>(ppca.maxVertexAttribBindings);
+          params[ 0 ] = static_cast<T>(ppca.capabilities.maxVertexAttribBindings);
         return true;
       default:
         return false;
