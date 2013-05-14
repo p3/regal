@@ -1552,7 +1552,7 @@ void Iff::Cleanup( RegalContext &ctx )
     }
   }
 
-  bool isPepperGLES = (ctx.info->vendor != "Chromium");
+  bool isPepperGLES = (ctx.info->vendor == "Chromium");
 
   tbl.glBindBuffer(GL_ARRAY_BUFFER, 0);
   tbl.glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
