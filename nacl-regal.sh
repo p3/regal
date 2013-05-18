@@ -21,5 +21,8 @@ make -f Makefile SYSTEM=nacl-x86_64 $*
 echo "Building i686"
 make -f Makefile SYSTEM=nacl-i686 $*
 
-echo "Building ARM"
-make -f Makefile SYSTEM=nacl-arm $*
+if [ "$NACL_LIBC" != "glibc" ]; then
+    # No glibc support as yet on ARM
+    echo "Building ARM"
+    make -f Makefile SYSTEM=nacl-arm $*
+fi

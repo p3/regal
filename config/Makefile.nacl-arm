@@ -8,6 +8,7 @@ CC     := $(NACL_TOOLCHAIN)/bin/arm-nacl-gcc
 CXX    := $(NACL_TOOLCHAIN)/bin/arm-nacl-g++
 LD     := $(NACL_TOOLCHAIN)/bin/arm-nacl-g++
 AR     := $(NACL_TOOLCHAIN)/bin/arm-nacl-ar
+OBJDUMP:= $(NACL_TOOLCHAIN)/bin/arm-nacl-objdump
 RANLIB :=
 STRIP  ?=
 

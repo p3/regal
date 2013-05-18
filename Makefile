@@ -285,6 +285,10 @@ regal.lib: lib/$(SYSTEM)/$(LIB.STATIC)
 
 ifeq ($(filter nacl%,$(SYSTEM)),)
 regal.lib: lib/$(SYSTEM)/$(LIB.SHARED)
+else
+ifeq ($(NACL_LIBC),glibc)
+regal.lib: lib/$(SYSTEM)/$(LIB.SHARED)
+endif
 endif
 
 lib/$(SYSTEM)/$(LIB.STATIC): lib/$(SYSTEM)/$(LIBPNG.STATIC) lib/$(SYSTEM)/$(ZLIB.STATIC) $(LIB.OBJS)
@@ -588,7 +592,7 @@ ifneq ($(STRIP),)
 endif
 
 examples/nacl/nacl.nmf: bin/$(SYSTEM)/nacl$(BIN_EXTENSION)
-	$(NACL_SDK_ROOT)/tools/create_nmf.py -o $@ bin/$(SYSTEM)/nacl*.nexe -s examples/nacl
+	$(NACL_SDK_ROOT)/tools/create_nmf.py -Llib/$(SYSTEM) $(NMF_FLAGS) -o $@ bin/$(SYSTEM)/nacl*.nexe -s examples/nacl
 
 
 #

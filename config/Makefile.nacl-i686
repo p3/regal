@@ -10,11 +10,15 @@ CC     := $(NACL_TOOLCHAIN)/bin/i686-nacl-gcc
 CXX    := $(NACL_TOOLCHAIN)/bin/i686-nacl-g++
 LD     := $(NACL_TOOLCHAIN)/bin/i686-nacl-g++
 AR     := $(NACL_TOOLCHAIN)/bin/i686-nacl-ar
+OBJDUMP:= $(NACL_TOOLCHAIN)/bin/i686-nacl-objdump
 RANLIB :=
 STRIP  ?=
 
+NMF_FLAGS += -D$(OBJDUMP)
+NMF_FLAGS += -L$(NACL_TOOLCHAIN)/x86_64-nacl/lib64
+NMF_FLAGS += -L$(NACL_TOOLCHAIN)/x86_64-nacl/lib32
+
 WARN += -Wno-uninitialized -Wno-conversion-null
-PICFLAG = -fPIC
 BIN_EXTENSION = _32.nexe
 EXT.DYNAMIC = so
 LIBDIR =

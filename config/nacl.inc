@@ -12,6 +12,10 @@ endif
 
 NACL_LIBC ?= newlib
 
+ifeq ($(NACL_LIBC),glibc)
+PICFLAG = -fPIC
+endif
+
 #
 # Detect the OS - linux, mac or win
 #
@@ -54,6 +58,9 @@ else
 LDFLAGS.EXTRA += -L$(NACL_SDK_ROOT)/ports/lib/$(NACL_LIBTYPE)/Release
 LDFLAGS.EXTRA += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBTYPE)/Release
 endif
+
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/ports/lib/$(NACL_LIBTYPE)/Release
+NMF_FLAGS += -L$(NACL_SDK_ROOT)/lib/$(NACL_LIBTYPE)/Release
 
 CFLAGS.EXTRA += -I$(NACL_SDK_ROOT)/include -MMD
 WARN = -Wall -Wno-unused-parameter -Wno-char-subscripts -Wno-strict-aliasing

@@ -100,9 +100,11 @@ RegalContext::RegalContext()
 #endif
 #if REGAL_SYS_PPAPI
   ppapiES2(NULL),
-  ppapiResource(NULL),
-#endif
+  ppapiResource(0),
+  sysCtx(0),
+#else
   sysCtx(NULL),
+#endif
   thread(0),
 #if REGAL_SYS_X11
   x11Display(NULL),
