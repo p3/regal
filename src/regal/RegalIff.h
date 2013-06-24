@@ -898,7 +898,7 @@ struct Iff
     a.y = N > 1 ? ToFloat<Norm>( v[1] ) : 0.0f;
     a.z = N > 2 ? ToFloat<Norm>( v[2] ) : 0.0f;
     a.w = N > 3 ? ToFloat<Norm>( v[3] ) : 1.0f;
-    ffstate.uniform.vabVer = ver.Update();
+    ffstate.uniform.ver = ffstate.uniform.vabVer = ver.Update();
     if( idx == immProvoking ) {
       Provoke( ctx );
     }
