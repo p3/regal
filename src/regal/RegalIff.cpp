@@ -1934,7 +1934,8 @@ void Iff::State::Process( Iff * ffn )
     pt.unit = rt.unit;
     pt.useMatrix = pt.enables != 0 && ffn->texture[i].Top() != identity;
     if( pt.unit.env.mode != TEM_Combine ) {
-      pt.unit.env.rgb = pt.unit.env.a = TexenvCombineState();
+      pt.unit.env.rgb = TexenvCombineState(true);
+      pt.unit.env.a = TexenvCombineState(false);
     }
   }
   if( p.lighting == false ) {

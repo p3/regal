@@ -311,15 +311,15 @@ Linux
 
 * Set **LD_LIBRARY_PATH**
 
- ``$ export LD_LIBRARY_PATH=`pwd`/lib``
+ ``$ export LD_LIBRARY_PATH=`pwd`/lib/linux``
 
 * Run the dreamtorus example
 
- ``$ REGAL_FORCE_EMULATION=1; bin/dreamtorus``
+ ``$ REGAL_FORCE_EMULATION=1; bin/linux/dreamtorus``
 
- ``$ REGAL_FORCE_EMULATION=0; bin/dreamtorus``
+ ``$ REGAL_FORCE_EMULATION=0; bin/linux/dreamtorus``
 
- ``$ REGAL_LOG_DRIVER=1; bin/dreamtorus``
+ ``$ REGAL_LOG_DRIVER=1; bin/linux/dreamtorus``
 
 OS X
 ----

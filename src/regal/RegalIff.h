@@ -1035,12 +1035,17 @@ struct Iff
 
   struct TexenvCombineState
   {
-    TexenvCombineState()
+    TexenvCombineState(bool isRgb)
     {
       memset( this, 0, sizeof(TexenvCombineState) );
       mode = TEC_Invalid;
       src0 = src1 = src2 = TCS_Invalid;
       op0 = op1 = op2 = TCO_Invalid;
+      mode = TEC_Modulate;
+      src0 = TCS_Texture;
+      src1 = TCS_Previous;
+      src2 = TCS_Constant;
+      op0 = op1 = op2 = (isRgb ? TCO_Color : TCO_Alpha);
     }
 
     TexenvCombineState( const TexenvCombineState &other )
@@ -1067,7 +1072,7 @@ struct Iff
   struct TextureEnv
   {
     TextureEnv()
-    : mode(TEM_Modulate)
+    : mode(TEM_Modulate), rgb(true), a(false)
     {
     }
 
