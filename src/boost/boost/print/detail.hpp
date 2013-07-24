@@ -365,6 +365,11 @@ inline size_t unsigned_length(const unsigned long val) { return unsigned_length(
 inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
 #endif
 
+#if defined(EMSCRIPTEN)
+inline size_t unsigned_length(const unsigned long val) {return unsigned_length(static_cast<boost::uint32_t>(val)); }
+#endif
+
+
 // Determine the number of digits of a signed integer
 
 template<typename U, typename S>

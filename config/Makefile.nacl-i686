@@ -19,7 +19,7 @@ NMF_FLAGS += -L$(NACL_TOOLCHAIN)/x86_64-nacl/lib64
 NMF_FLAGS += -L$(NACL_TOOLCHAIN)/x86_64-nacl/lib32
 
 WARN += -Wno-uninitialized -Wno-conversion-null
-BIN_EXTENSION = _32.nexe
+BIN.SUFFIX = _32.nexe
 EXT.DYNAMIC = so
 LIBDIR =
 LDFLAGS.GL =
@@ -27,7 +27,6 @@ LDFLAGS.GLU = -lRegalGLU
 LDFLAGS.GLUT = -lRegalGLUT
 LDFLAGS.STATIC =
 LDFLAGS.DYNAMIC = -shared
-BIN.SUFFIX =
 LIB.SONAME = lib$(NAME).so.$(SO_MAJOR)
 LIB.DEVLNK = lib$(NAME).so
 LIB.SHARED = lib$(NAME).so.$(SO_VERSION)

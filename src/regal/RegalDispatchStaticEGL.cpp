@@ -193,35 +193,6 @@ REGAL_NAMESPACE_BEGIN
 void InitDispatchTableStaticEGL(DispatchTableGlobal &tbl)
 {
   // EGL global dispatch
-  tbl.reglQuerySurfacePointerANGLE = ::eglQuerySurfacePointerANGLE;
-  tbl.reglClientWaitSyncKHR = ::eglClientWaitSyncKHR;
-  tbl.reglCreateSyncKHR = ::eglCreateSyncKHR;
-  tbl.reglDestroySyncKHR = ::eglDestroySyncKHR;
-  tbl.reglGetSyncAttribKHR = ::eglGetSyncAttribKHR;
-  tbl.reglCreateImageKHR = ::eglCreateImageKHR;
-  tbl.reglDestroyImageKHR = ::eglDestroyImageKHR;
-  tbl.reglLockSurfaceKHR = ::eglLockSurfaceKHR;
-  tbl.reglUnlockSurfaceKHR = ::eglUnlockSurfaceKHR;
-  tbl.reglStreamConsumerAcquireKHR = ::eglStreamConsumerAcquireKHR;
-  tbl.reglStreamConsumerGLTextureExternalKHR = ::eglStreamConsumerGLTextureExternalKHR;
-  tbl.reglStreamConsumerReleaseKHR = ::eglStreamConsumerReleaseKHR;
-  tbl.reglCreateStreamFromFileDescriptorKHR = ::eglCreateStreamFromFileDescriptorKHR;
-  tbl.reglGetStreamFileDescriptorKHR = ::eglGetStreamFileDescriptorKHR;
-  tbl.reglCreateStreamProducerSurfaceKHR = ::eglCreateStreamProducerSurfaceKHR;
-  tbl.reglWaitSyncKHR = ::eglWaitSyncKHR;
-  tbl.reglCreateDRMImageMESA = ::eglCreateDRMImageMESA;
-  tbl.reglExportDRMImageMESA = ::eglExportDRMImageMESA;
-  tbl.reglCoverageMaskNV = ::eglCoverageMaskNV;
-  tbl.reglCoverageOperationNV = ::eglCoverageOperationNV;
-  tbl.reglPostSubBufferNV = ::eglPostSubBufferNV;
-  tbl.reglClientWaitSyncNV = ::eglClientWaitSyncNV;
-  tbl.reglCreateFenceSyncNV = ::eglCreateFenceSyncNV;
-  tbl.reglDestroySyncNV = ::eglDestroySyncNV;
-  tbl.reglFenceNV = ::eglFenceNV;
-  tbl.reglGetSyncAttribNV = ::eglGetSyncAttribNV;
-  tbl.reglSignalSyncNV = ::eglSignalSyncNV;
-  tbl.reglGetSystemTimeFrequencyNV = ::eglGetSystemTimeFrequencyNV;
-  tbl.reglGetSystemTimeNV = ::eglGetSystemTimeNV;
   tbl.reglChooseConfig = ::eglChooseConfig;
   tbl.reglCopyBuffers = ::eglCopyBuffers;
   tbl.reglCreateContext = ::eglCreateContext;
@@ -256,6 +227,37 @@ void InitDispatchTableStaticEGL(DispatchTableGlobal &tbl)
   tbl.reglSurfaceAttrib = ::eglSurfaceAttrib;
   tbl.reglSwapInterval = ::eglSwapInterval;
   tbl.reglWaitClient = ::eglWaitClient;
+#if REGAL_SYS_EMSCRIPTEN == 0
+  tbl.reglQuerySurfacePointerANGLE = ::eglQuerySurfacePointerANGLE;
+  tbl.reglClientWaitSyncKHR = ::eglClientWaitSyncKHR;
+  tbl.reglCreateSyncKHR = ::eglCreateSyncKHR;
+  tbl.reglDestroySyncKHR = ::eglDestroySyncKHR;
+  tbl.reglGetSyncAttribKHR = ::eglGetSyncAttribKHR;
+  tbl.reglCreateImageKHR = ::eglCreateImageKHR;
+  tbl.reglDestroyImageKHR = ::eglDestroyImageKHR;
+  tbl.reglLockSurfaceKHR = ::eglLockSurfaceKHR;
+  tbl.reglUnlockSurfaceKHR = ::eglUnlockSurfaceKHR;
+  tbl.reglStreamConsumerAcquireKHR = ::eglStreamConsumerAcquireKHR;
+  tbl.reglStreamConsumerGLTextureExternalKHR = ::eglStreamConsumerGLTextureExternalKHR;
+  tbl.reglStreamConsumerReleaseKHR = ::eglStreamConsumerReleaseKHR;
+  tbl.reglCreateStreamFromFileDescriptorKHR = ::eglCreateStreamFromFileDescriptorKHR;
+  tbl.reglGetStreamFileDescriptorKHR = ::eglGetStreamFileDescriptorKHR;
+  tbl.reglCreateStreamProducerSurfaceKHR = ::eglCreateStreamProducerSurfaceKHR;
+  tbl.reglWaitSyncKHR = ::eglWaitSyncKHR;
+  tbl.reglCreateDRMImageMESA = ::eglCreateDRMImageMESA;
+  tbl.reglExportDRMImageMESA = ::eglExportDRMImageMESA;
+  tbl.reglCoverageMaskNV = ::eglCoverageMaskNV;
+  tbl.reglCoverageOperationNV = ::eglCoverageOperationNV;
+  tbl.reglPostSubBufferNV = ::eglPostSubBufferNV;
+  tbl.reglClientWaitSyncNV = ::eglClientWaitSyncNV;
+  tbl.reglCreateFenceSyncNV = ::eglCreateFenceSyncNV;
+  tbl.reglDestroySyncNV = ::eglDestroySyncNV;
+  tbl.reglFenceNV = ::eglFenceNV;
+  tbl.reglGetSyncAttribNV = ::eglGetSyncAttribNV;
+  tbl.reglSignalSyncNV = ::eglSignalSyncNV;
+  tbl.reglGetSystemTimeFrequencyNV = ::eglGetSystemTimeFrequencyNV;
+  tbl.reglGetSystemTimeNV = ::eglGetSystemTimeNV;
+#endif // REGAL_SYS_EMSCRIPTEN == 0
 
 }
 

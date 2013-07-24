@@ -96,7 +96,10 @@ Statistics::reset()
 void
 Statistics::log() const
 {
+// this large function exposes a bug in emscripten that causes a huge compilation time
+#if REGAL_SYS_EMSCRIPTEN == 0
 ${LOG}
+#endif
 }
 
 void

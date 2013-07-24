@@ -39,6 +39,25 @@ regalSys = '''#if defined(_WIN32)
 # ifndef REGAL_SYS_EGL
 #  define REGAL_SYS_EGL 1
 # endif
+#elif defined(EMSCRIPTEN)
+# ifndef REGAL_SYS_EMSCRIPTEN
+#  define REGAL_SYS_EMSCRIPTEN 1
+# endif
+# ifndef REGAL_SYS_EGL
+#  define REGAL_SYS_EGL 1
+# endif
+# ifndef REGAL_SYS_ES2
+#  define REGAL_SYS_ES2 1
+# endif
+# ifndef REGAL_SYS_EMSCRIPTEN_STATIC
+#  define REGAL_SYS_EMSCRIPTEN_STATIC 0
+# endif
+# if REGAL_SYS_EMSCRIPTEN_STATIC
+#  define REGAL_DRIVER 1
+#  define REGAL_NAMESPACE 1
+#  define REGAL_STATIC_ES2 1
+#  define REGAL_STATIC_EGL 1
+# endif
 #elif !defined(REGAL_SYS_PPAPI) || !REGAL_SYS_PPAPI
 # ifndef REGAL_SYS_X11
 #  define REGAL_SYS_X11 1
@@ -84,16 +103,20 @@ regalSys = '''#if defined(_WIN32)
 # define REGAL_SYS_WIN32 0
 #endif
 
+#ifndef REGAL_SYS_EMSCRIPTEN
+#define REGAL_SYS_EMSCRIPTEN 0
+#endif
+
 #ifndef REGAL_SYS_ES1
 #define REGAL_SYS_ES1 0
 #endif
 
 #ifndef REGAL_SYS_ES2
-#define REGAL_SYS_ES2 (REGAL_SYS_PPAPI || REGAL_SYS_IOS || REGAL_SYS_ANDROID || REGAL_SYS_EGL)
+#define REGAL_SYS_ES2 (REGAL_SYS_PPAPI || REGAL_SYS_IOS || REGAL_SYS_ANDROID || REGAL_SYS_EMSCRIPTEN || REGAL_SYS_EGL)
 #endif
 
 #ifndef REGAL_SYS_GL
-#define REGAL_SYS_GL (REGAL_SYS_WGL || (!REGAL_SYS_PPAPI && !REGAL_SYS_IOS && !REGAL_SYS_ANDROID))
+#define REGAL_SYS_GL (REGAL_SYS_WGL || (!REGAL_SYS_PPAPI && !REGAL_SYS_IOS && !REGAL_SYS_ANDROID && !REGAL_SYS_EMSCRIPTEN))
 #endif
 '''
 

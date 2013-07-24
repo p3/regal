@@ -790,10 +790,10 @@ void Ppca::DetectVertexAttributeArrayWithoutBoundBufferSupport( RegalContext& ct
     return;
   }
 
-  // Chromium/PepperAPI GLES generates an error (visible through glGetError) and
+  // Chromium/PepperAPI/WebGL GLES generates an error (visible through glGetError) and
   // logs a message if a call is made to glVertexAttribPointer and no
   // GL_ARRAY_BUFFER is bound.
-  if ( ctx.info->vendor == "Chromium" ) {
+  if ( ctx.info->vendor == "Chromium" || ctx.info->version.find("WebGL") == 0 ) {
     capabilities.driverAllowsVertexAttributeArraysWithoutBoundBuffer = false;
   }
 }

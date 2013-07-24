@@ -1,0 +1,37 @@
+NAME = $(REGAL_NAME)
+
+EMSCRIPTEN := $(EMSCRIPTEN)
+CC   := $(EMSCRIPTEN)/emcc
+CXX  := $(EMSCRIPTEN)/em++
+LD   := $(EMSCRIPTEN)/emcc
+AR   := $(EMSCRIPTEN)/emar
+OBJDUMP := /bin/false
+RANLIB :=
+STRIP :=
+LN :=
+
+LIB.CFLAGS  += -DREGAL_SYS_EMSCRIPTEN=1 -DREGAL_SYS_EGL=1 -DREGAL_SYS_ES2=1
+LIB.CFLAGS  += -DREGAL_NO_HTTP=1
+LIB.CFLAGS  += -Wno-constant-logical-operand
+
+REGAL_LOG    = 0
+REGAL_NO_TLS = 1
+
+# Enabling this requires the library to be built with it, as well as all code
+# that uses it.  Defining this means that Regal will link statically to GL
+# and EGL, and code will have to #include <GL/Regal.h> before any GL
+# includes to pull in a bunch of #defines (e.g. #define glGetError rglGetError)
+#LIB.CFLAGS  += -REGAL_SYS_EMSCRIPTEN_STATIC=1
+
+BIN.SUFFIX = .html
+EXT.DYNAMIC = js
+
+CFLAGS.DEBUG   = -O2
+CFLAGS.RELEASE = -O2
+
+#LIB.SHARED = lib$(NAME).js
+LIB.STATIC = lib$(NAME).a
+
+LDFLAGS.DEBUG  += -g
+LDFLAGS.EXTRA  += -s DISABLE_GL_EMULATION=1 -O2
+LDFLAGS.SO     += -s SIDE_MODULE=1

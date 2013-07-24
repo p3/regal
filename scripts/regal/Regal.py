@@ -378,7 +378,7 @@ def apiTypedefCode( apis, args ):
         code += printTypedef( typedef.name, typedef.type ) + '\n'
       else:
         type = {}
-        mapping = { 'osx' : 'REGAL_SYS_OSX', 'ios' : 'REGAL_SYS_IOS', 'win32' : 'REGAL_SYS_WIN32', 'x11' : 'REGAL_SYS_X11', 'android' : 'REGAL_SYS_ANDROID', '' : '' }
+        mapping = { 'osx' : 'REGAL_SYS_OSX', 'ios' : 'REGAL_SYS_IOS', 'win32' : 'REGAL_SYS_WIN32', 'x11' : 'REGAL_SYS_X11', 'android' : 'REGAL_SYS_ANDROID', 'emscripten' : 'REGAL_SYS_EMSCRIPTEN', '' : '' }
         for i in typedef.type:
           if i in mapping:
             type[mapping[i]] = printTypedef( typedef.name, typedef.type[i] )

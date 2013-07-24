@@ -82,6 +82,8 @@ Statistics::reset()
 void
 Statistics::log() const
 {
+// this large function exposes a bug in emscripten that causes a huge compilation time
+#if REGAL_SYS_EMSCRIPTEN == 0
   log("GL_VERSION_1_0",gl_version_1_0);
   log("GL_VERSION_1_1",gl_version_1_1);
   log("GL_VERSION_1_2",gl_version_1_2);
@@ -5042,6 +5044,7 @@ Statistics::log() const
   log("glDisable(GL_TEXTURE_2D)",disable_GL_TEXTURE_2D);
   log("glDisable(GL_TEXTURE_CUBE_MAP_SEAMLESS)",disable_GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
+#endif
 }
 
 void

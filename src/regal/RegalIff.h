@@ -751,6 +751,11 @@ struct Iff
     tbl.glGenBuffers( 1, & immVbo );
     tbl.glGenBuffers( 1, & immQuadsVbo );
     tbl.glBindBuffer( GL_ARRAY_BUFFER, immVbo );
+#if REGAL_SYS_EMSCRIPTEN
+    // We need this to be an allocated buffer for WebGL, because a dangling VertexAttribPointer
+    // doesn't work.  XXX -- this might be a Firefox bug, check?
+    tbl.glBufferData( GL_ARRAY_BUFFER, sizeof( immArray ), NULL, GL_STATIC_DRAW );
+#endif
     for( GLuint i = 0; i < maxVertexAttribs; i++ ) {
       EnableArray( &ctx, i ); // to keep ffn current
       tbl.glEnableVertexAttribArray( i );
@@ -2158,6 +2163,9 @@ struct Iff
 
   template <typename T> bool Get( RegalContext * ctx, GLenum pname, T * params )
   {
+    State::Store & r = ffstate.raw;
+    State::StoreUniform & u = ffstate.uniform;
+
     // FIXME: implement all FF gets!
     if( VaGet( ctx, pname, params ) )
       return true;
@@ -2223,6 +2231,27 @@ struct Iff
       }
       case GL_MAX_CLIP_PLANES: {
         *params = static_cast<T>(REGAL_FIXED_FUNCTION_MAX_CLIP_PLANES);
+        break;
+      }
+      case GL_FOG_MODE: {
+        *params = static_cast<T>(r.fog.mode);
+        break;
+      }
+      case GL_FOG_DENSITY: {
+        *params = static_cast<T>(u.fog.params[0].x);
+        break;
+      }
+      case GL_FOG_START: {
+        *params = static_cast<T>(u.fog.params[0].y);
+        break;
+      }
+      case GL_FOG_END: {
+        *params = static_cast<T>(u.fog.params[0].z);
+        break;
+      }
+      case GL_FOG_COLOR: {
+        const GLfloat * p = &u.fog.params[1].x;
+        for( int i = 0; i < 4; i++ ) params[i] = static_cast<T>(p[i]);
         break;
       }
       default:

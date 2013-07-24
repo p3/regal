@@ -91,6 +91,8 @@ struct ContextInfo
   GLboolean es1    : 1;
   GLboolean es2    : 1;
 
+  GLboolean webgl  : 1;
+
   GLint     gl_version_major;
   GLint     gl_version_minor;
 

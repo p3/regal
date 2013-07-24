@@ -54,8 +54,18 @@ def apiStaticEGLFuncInitCode(apis, args):
   for api in apis:
     if api.name=='egl':
       for function in api.functions:
-        name   = function.name
-        code += '  tbl.r%s = ::%s;\n' % ( name, name )
+        if not ("KHR" in function.name or "NV" in function.name or "MESA" in function.name or "ANGLE" in function.name):
+          name   = function.name
+          code += '  tbl.r%s = ::%s;\n' % ( name, name )
+
+      code += "#if REGAL_SYS_EMSCRIPTEN == 0\n"
+
+      for function in api.functions:
+        if "KHR" in function.name or "NV" in function.name or "MESA" in function.name or "ANGLE" in function.name:
+          name   = function.name
+          code += '  tbl.r%s = ::%s;\n' % ( name, name )
+
+      code += "#endif // REGAL_SYS_EMSCRIPTEN == 0\n"
 
   return code
 
@@ -79,9 +89,9 @@ def generateStaticEGLSource(apis, args):
       code += '{\n'
 
       for function in api.functions:
-        params = paramsDefaultCode(function.parameters, True)
-        rType  = typeCode(function.ret.type)
-        code += '  extern %s REGAL_CALL %s(%s);\n' % (rType, function.name, params)
+          params = paramsDefaultCode(function.parameters, True)
+          rType  = typeCode(function.ret.type)
+          code += '  extern %s REGAL_CALL %s(%s);\n' % (rType, function.name, params)
 
       code += '}\n'
 

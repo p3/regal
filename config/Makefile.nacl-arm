@@ -13,14 +13,13 @@ RANLIB :=
 STRIP  ?=
 
 #WARN += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
-BIN_EXTENSION = _arm.nexe
+BIN.SUFFIX = _arm.nexe
 EXT.DYNAMIC = so
 LIBDIR =
 LDFLAGS.GL =
 LDFLAGS.GLU = -lRegalGLU
 LDFLAGS.GLUT = -lRegalGLUT
 LDFLAGS.STATIC =
-BIN.SUFFIX =
 LIB.SONAME = lib$(NAME).so.$(SO_MAJOR)
 LIB.DEVLNK = lib$(NAME).so
 LIB.SHARED = lib$(NAME).so.$(SO_VERSION)
