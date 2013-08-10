@@ -19,6 +19,7 @@
 #endif
 
 #include <cstring>  // strlen
+#include <algorithm>
 #include <string>
 
 #include <boost/print/detail.hpp>

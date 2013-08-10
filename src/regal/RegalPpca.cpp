@@ -38,6 +38,7 @@
 REGAL_GLOBAL_BEGIN
 
 #include <math.h>
+#include <algorithm>
 
 #include "RegalPpca.h"
 #include "RegalContext.h"

@@ -35,7 +35,9 @@
 namespace boost { namespace print {
 
 #ifdef WIN32
+#if defined(_MSC_VER) && _MSC_VER < 1800
 inline void va_copy(std::va_list &d, std::va_list &s) { d = s; }
+#endif
 #endif
 
 // Generic printf
