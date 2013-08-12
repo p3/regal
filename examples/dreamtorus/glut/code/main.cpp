@@ -133,6 +133,12 @@ int main(int argc, const char *argv[])
   RegalMakeCurrent(CGLGetCurrentContext());
   #endif
 
+  // Regal workaround for Emscripten GLUT emulation
+
+  #ifdef EMSCRIPTEN
+  RegalMakeCurrent((RegalSystemContext)1);
+  #endif
+
   RegalSetErrorCallback(myError);
 
   // Exercise REGAL_extension_query extension

@@ -108,16 +108,8 @@ REGAL.CFLAGS  += -DREGAL_STATISTICS=0
 REGAL.CFLAGS  += -Wno-constant-logical-operand
 REGAL.CFLAGS  += -DREGAL_PLUGIN=0
 REGAL.CFLAGS  += -DREGAL_TRACE=0
-REGAL.CFLAGS  += -DREGAL_NAMESPACE=1 -DREGAL_STATIC_ES2 -DREGAL_STATIC_EGL
 REGAL_LOG    = 0
 REGAL_NO_TLS = 1
-
-# Enabling this requires the library to be built with it, as well as all code
-# that uses it.  Defining this means that Regal will link statically to GL
-# and EGL, and code will have to #include <GL/Regal.h> before any GL
-# includes to pull in a bunch of #defines (e.g. #define glGetError rglGetError)
-#LIB.CFLAGS  += -DREGAL_SYS_EMSCRIPTEN_STATIC=1
-
 endif
 
 #
