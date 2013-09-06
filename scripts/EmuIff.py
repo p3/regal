@@ -62,7 +62,7 @@ iffFormulae = {
     },
     'ImmAttr' : {
         'entries' : [ 'glVertexAttrib(1|2|3|4)(N|)(b|d|f|i|s|ub|us)(v|)(ARB|)' ],
-        'impl' : [ '_context->iff->Attr${m2}<${m1}>( _context, ${arg0plus} );', ],
+        'prefix' : [ '_context->iff->Attr${m2}<${m1}>( _context, ${arg0plus} );', ],
     },
     'ImmFixedAttrf' : {
         'entries' : [ 'gl(SecondaryColor|Color|Normal|FogCoord)(2|3|4)(d|f)(v|)(EXT|)?' ],

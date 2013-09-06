@@ -734,13 +734,14 @@ struct Iff
     immProvoking = 0;
     immCurrent = 0;
     immPrim = GL_POINTS;
+
+    memset(&immVab, 0, sizeof(immVab));
     for( GLuint i = 0; i < maxVertexAttribs; i++ ) {
       Float4 & a = immVab.attr[i];
       a.x = a.y = a.z = 0.0f; a.w = 1.0f;
     }
 
     memset(immArray,0,sizeof(immArray));
-    memset(&immVab, 0, sizeof(immVab));
 
     immShadowVao = 0;
 
