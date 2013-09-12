@@ -53,8 +53,6 @@ REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
-#define REGAL_VAO_NUM_ARRAYS 16
-
 namespace Emu
 {
 
@@ -90,7 +88,7 @@ struct Vao
     Object() : vertexBuffer( 0 ), indexBuffer( 0 ) {}
     GLuint vertexBuffer;
     GLuint indexBuffer;
-    Array a[ REGAL_VAO_NUM_ARRAYS ];
+    Array a[ REGAL_EMU_MAX_VERTEX_ATTRIBS ];
   };
 
   shared_map<GLuint, Object> objects;
@@ -105,34 +103,36 @@ struct Vao
   GLuint maxName;
 
   // to alias vertex arrays to generic attribs
-  GLuint ffAttrMap[ REGAL_VAO_NUM_ARRAYS ];
-  GLuint ffAttrInvMap[ REGAL_VAO_NUM_ARRAYS ];
+  GLuint ffAttrMap[ REGAL_EMU_MAX_VERTEX_ATTRIBS ];
+  GLuint ffAttrInvMap[ REGAL_EMU_MAX_VERTEX_ATTRIBS ];
   GLuint ffAttrTexBegin;
   GLuint ffAttrTexEnd;
   GLuint ffAttrNumTex;
-  GLuint maxVertexAttribs;
+  GLuint max_vertex_attribs;
 
   void Init( RegalContext &ctx )
   {
     maxName = 0;
     clientActiveTexture = GL_TEXTURE0;
 
-    maxVertexAttribs = ctx.info->maxVertexAttribs;
-    RegalAssert( maxVertexAttribs <= REGAL_VAO_NUM_ARRAYS );
+    max_vertex_attribs = ctx.info->gl_max_vertex_attribs;
+    RegalAssert( max_vertex_attribs <= REGAL_EMU_MAX_VERTEX_ATTRIBS );
+    if (max_vertex_attribs > REGAL_EMU_MAX_VERTEX_ATTRIBS)
+      max_vertex_attribs = REGAL_EMU_MAX_VERTEX_ATTRIBS;
 
     RegalContext *sharingWith = ctx.groupInitializedContext();
     if (sharingWith)
       objects = sharingWith->vao->objects;
 
     // we have RFF2A maps for sets of 8 and 16 attributes. if
-    // REGAL_VAO_NUM_ARRAYS > 16 a new map needs to be added
+    // REGAL_EMU_MAX_VERTEX_ATTRIBS > 16 a new map needs to be added
 
-    RegalAssert( REGAL_VAO_NUM_ARRAYS <= 16 );
+    RegalAssert( REGAL_EMU_MAX_VERTEX_ATTRIBS <= 16 );
 
-    if ( maxVertexAttribs >= 16 )
+    if ( max_vertex_attribs >= 16 )
     {
-      RegalAssert( REGAL_VAO_NUM_ARRAYS == 16);
-      //RegalOutput( "Setting up for %d Vertex Attribs\n", maxVertexAttribs );
+      RegalAssert( REGAL_EMU_MAX_VERTEX_ATTRIBS == 16);
+      //RegalOutput( "Setting up for %d Vertex Attribs\n", max_vertex_attribs );
       for( int i = 0; i < 16; i++ )
       {
         ffAttrMap[i] = RFF2AMap16[i];
@@ -140,23 +140,27 @@ struct Vao
       }
       ffAttrTexBegin = RFF2ATexBegin16;
       ffAttrTexEnd = RFF2ATexEnd16;
+      if (max_vertex_attribs > 16)
+        max_vertex_attribs = 16;
     }
     else
     {
-      RegalAssert( maxVertexAttribs >= 8 );
+      RegalAssert( max_vertex_attribs >= 8 );
       //RegalOutput( "Setting up for 8 Vertex Attribs" );
       for( int i = 0; i < 8; i++ )
       {
         ffAttrMap[i] = RFF2AMap8[i];
         ffAttrInvMap[i] = RFF2AInvMap8[i];
       }
-      for( int i = 8; i < REGAL_VAO_NUM_ARRAYS; i++ )
+      for( int i = 8; i < REGAL_EMU_MAX_VERTEX_ATTRIBS; i++ )
       {
         ffAttrMap[i] = GLuint(-1);
         ffAttrInvMap[i] = GLuint(-1);
       }
       ffAttrTexBegin = RFF2ATexBegin8;
       ffAttrTexEnd = RFF2ATexEnd8;
+      if (max_vertex_attribs > 8)
+        max_vertex_attribs = 8;
     }
     ffAttrNumTex = ffAttrTexEnd - ffAttrTexBegin;
 
@@ -212,15 +216,13 @@ struct Vao
     tbl.glBindBuffer( GL_ARRAY_BUFFER, vao.vertexBuffer );
     tbl.glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, vao.indexBuffer );
     GLuint lastBuffer = vao.vertexBuffer;
-    for( GLuint i = 0; i < maxVertexAttribs; i++ )
+    RegalAssert( max_vertex_attribs <= REGAL_EMU_MAX_VERTEX_ATTRIBS );
+    for( GLuint i = 0; i < max_vertex_attribs; i++ )
     {
       Array &a = vao.a[ i ];
       if( a.buffer != lastBuffer )
       {
-        //GLint e = tbl.glGetError();
         tbl.glBindBuffer( GL_ARRAY_BUFFER, a.buffer );
-        //e = tbl.glGetError();
-        //RegalOutput( "Binding ARRAY_BUFFER %d - %d\n", a.buffer, e );
         lastBuffer = a.buffer;
       }
 
@@ -281,7 +283,11 @@ struct Vao
 
   void EnableDisableVertexAttribArray( RegalContext *ctx, GLboolean enable, GLuint index )
   {
-    RegalAssert( index < maxVertexAttribs );
+    RegalAssert( index < REGAL_EMU_MAX_VERTEX_ATTRIBS );
+    RegalAssert( index < max_vertex_attribs );
+    if (index >= max_vertex_attribs || index >= REGAL_EMU_MAX_VERTEX_ATTRIBS)
+      return;
+
     DispatchTableGL &tbl = ctx->dispatcher.emulation;
     Array &a = objects[current].a[index];
     a.enabled = enable;
@@ -314,7 +320,9 @@ struct Vao
     if ( ctx->depthBeginEnd )
       return;
 
-    if (index >= maxVertexAttribs)
+    RegalAssert( index < REGAL_EMU_MAX_VERTEX_ATTRIBS );
+    RegalAssert( index < max_vertex_attribs );
+    if (index >= max_vertex_attribs || index >= REGAL_EMU_MAX_VERTEX_ATTRIBS )
       return;
 
     switch (size)
@@ -377,17 +385,11 @@ struct Vao
     //<> return;
     //<> }
 
-    if( index == GLuint(~0) )
-    {
-      return;
-    }
-    if( index >= maxVertexAttribs )
-    {
-      return;
-    }
-    RegalAssert( index < maxVertexAttribs );
-    RegalAssert( currObject != NULL );
+    RegalAssert( index < max_vertex_attribs );
+    RegalAssert( index < REGAL_EMU_MAX_VERTEX_ATTRIBS );
     Array &a = objects[current].a[index];
+
+    RegalAssert( currObject != NULL );
     a.buffer = currObject->vertexBuffer;
     a.size = size;
     a.type = type;
@@ -404,7 +406,8 @@ struct Vao
   {
     UNUSED_PARAMETER(ctx);
     RegalAssert( currObject != NULL );
-    for( GLuint i = 0; i < maxVertexAttribs; i++ )
+    RegalAssert( max_vertex_attribs <= REGAL_EMU_MAX_VERTEX_ATTRIBS );
+    for( GLuint i = 0; i < max_vertex_attribs; i++ )
     {
 #if !REGAL_NO_ASSERT
       const Array &a = currObject->a[ i ];
@@ -415,6 +418,9 @@ struct Vao
 
   template <typename T> void GetAttrib( GLint index, GLenum pname, T *params )
   {
+    if (index >= REGAL_EMU_MAX_VERTEX_ATTRIBS)
+      return;
+
     Array &a = objects[current].a[index];
     switch( pname )
     {
@@ -425,7 +431,6 @@ struct Vao
         *params = static_cast<T>(a.buffer);
         break;
       case GL_VERTEX_ATTRIB_ARRAY_SIZE:
-        //if( index == 3 ) RegalOutput( "Returning %d for index 3 from VAO GetAttrib for SIZE\n", a.size );
         *params = static_cast<T>(a.size);
         break;
       case GL_VERTEX_ATTRIB_ARRAY_TYPE:
@@ -443,8 +448,12 @@ struct Vao
         break;
     }
   }
+
   template <typename T> void GetAttrib( GLint index, GLenum pname, T **params )
   {
+    if (index >= REGAL_EMU_MAX_VERTEX_ATTRIBS)
+      return;
+
     Array &a = objects[current].a[index];
     switch( pname )
     {
@@ -481,6 +490,9 @@ struct Vao
 
   bool GetVertexAttribPointerv( GLuint index, GLenum pname, GLvoid **pointer)
   {
+    if (index >= REGAL_EMU_MAX_VERTEX_ATTRIBS)
+      return false;
+
     if ( pname != GL_VERTEX_ATTRIB_ARRAY_POINTER )
       return false;
 
@@ -513,7 +525,7 @@ struct Vao
       case GL_TEXTURE_COORD_ARRAY:
       {
         GLuint index = clientActiveTexture - GL_TEXTURE0;
-        RegalAssert(index < REGAL_VAO_NUM_ARRAYS);
+        RegalAssert(index < REGAL_EMU_MAX_VERTEX_ATTRIBS);
         if ( index >= ffAttrNumTex )
         {
           Warning("Texture unit out of range: ", index, " >= ", ffAttrNumTex, ". Clamping to supported maximum.");
@@ -721,7 +733,7 @@ struct Vao
 
     GLint index = _texture - GL_TEXTURE0;
 
-    if (index >= 0 && index < REGAL_VAO_NUM_ARRAYS)
+    if (index >= 0 && index < REGAL_EMU_MAX_VERTEX_ATTRIBS)
       clientActiveTexture = _texture;
   }
 

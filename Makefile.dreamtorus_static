@@ -5,7 +5,7 @@ MAKEFILE_DREAMTORUS_STATIC_INCLUDED := 1
 
 include build/common.inc
 
-DREAMTORUS_STATIC.EXE := dreamtorus
+DREAMTORUS_STATIC.EXE := dreamtorus_static
 
 ifneq ($(filter emscripten%,$(SYSTEM)),)
 DREAMTORUS_STATIC.EXE := dreamtorus_static.html

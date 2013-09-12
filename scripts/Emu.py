@@ -53,7 +53,14 @@ def substitute(entry, formula, section, subs):
     return
 
   entry[section] = []
-  for i in formula[section]:
+
+  # Turn a string into a list, if necessary
+
+  tmp = formula[section]
+  if isinstance(tmp,str) or isinstance(tmp,unicode):
+    tmp = [ tmp ]
+
+  for i in tmp:
     j = Template(i)
     entry[section].append(j.substitute(subs))
 

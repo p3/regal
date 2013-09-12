@@ -73,6 +73,7 @@ struct Hint
   void Init(RegalContext &ctx)
   {
     UNUSED_PARAMETER(ctx);
+
     lineSmooth               = GL_DONT_CARE;
     polygonSmooth            = GL_DONT_CARE;
     textureCompression       = GL_DONT_CARE;
@@ -191,4 +192,4 @@ REGAL_NAMESPACE_END
 
 #endif // REGAL_EMULATION
 
-#endif // ! __REGAL_BASEVERTEX_H__
+#endif // ! __REGAL_HINT_H__

@@ -84,10 +84,7 @@ REGAL_NAMESPACE_BEGIN
 //    http://graphics.stanford.edu/papers/cr/
 //
 
-namespace Client
-{
-
-namespace State
+namespace ClientState
 {
 
   using   ::boost::print::hex;
@@ -157,16 +154,21 @@ namespace State
     GLuint     buffer;   // GL_x_ARRAY_BUFFER_BINDING
     GLint      size;     // GL_x_ARRAY_SIZE
     GLenum     type;     // GL_x_ARRAY_TYPE
-    GLint      stride;   // GL_x_ARRAY_STRIDE
+    GLsizei    stride;   // GL_x_ARRAY_STRIDE
 
     inline NamedVertexArray()
-    : enabled(GL_FALSE)
-    , pointer(NULL)
-    , buffer(0)
-    , size(4)
-    , type(GL_FLOAT)
-    , stride(0)
     {
+      Reset();
+    }
+
+    inline void Reset()
+    {
+      enabled = GL_FALSE;
+      pointer = NULL;
+      buffer = 0;
+      size = 4;
+      type = GL_FLOAT;
+      stride = 0;
     }
 
     inline NamedVertexArray &swap(NamedVertexArray &other)
@@ -184,7 +186,7 @@ namespace State
     {
       GLint vaInt = static_cast<GLint>(va);
       RegalAssert(vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays));
-      if (vaInt >= 0)
+      if (vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays))
       {
         if (vaInt < 7)
         {
@@ -211,52 +213,141 @@ namespace State
       return *this;
     }
 
-    const NamedVertexArray &set(DispatchTableGL &dt, vaName va) const
+    const NamedVertexArray &set(DispatchTableGL &dt, vaName va, bool driverAllowsVertexAttributeArraysWithoutBoundBuffer) const
     {
       GLint vaInt = static_cast<GLint>(va);
       RegalAssert(vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays));
-      if (vaInt >= 0)
+      if (buffer || driverAllowsVertexAttributeArraysWithoutBoundBuffer)
       {
-        if (vaInt < 7)
+        if (vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays))
         {
-          enable(dt,vaEnum[vaInt][0],enabled);
-          dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,buffer);
-          switch (vaInt)
+          if (vaInt < 7)
           {
-            case VERTEX:
-              dt.call(&dt.glVertexPointer)(size,type,stride,pointer);
-              break;
-            case NORMAL:
-              dt.call(&dt.glNormalPointer)(type,stride,pointer);
-              break;
-            case FOG_COORD:
-              dt.call(&dt.glFogCoordPointer)(type,stride,pointer);
-              break;
-            case COLOR:
-              dt.call(&dt.glColorPointer)(size,type,stride,pointer);
-              break;
-            case SECONDARY_COLOR:
-              dt.call(&dt.glSecondaryColorPointer)(size,type,stride,pointer);
-              break;
-            case INDEX:
-              dt.call(&dt.glIndexPointer)(type,stride,pointer);
-              break;
-            case EDGE_FLAG:
-              dt.call(&dt.glEdgeFlagPointer)(stride,pointer);
-              break;
-            default:
-              break;
+            enable(dt,vaEnum[vaInt][0],enabled);
+            dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,buffer);
+            switch (vaInt)
+            {
+              case VERTEX:
+                dt.call(&dt.glVertexPointer)(size,type,stride,pointer);
+                break;
+              case NORMAL:
+                dt.call(&dt.glNormalPointer)(type,stride,pointer);
+                break;
+              case FOG_COORD:
+                dt.call(&dt.glFogCoordPointer)(type,stride,pointer);
+                break;
+              case COLOR:
+                dt.call(&dt.glColorPointer)(size,type,stride,pointer);
+                break;
+              case SECONDARY_COLOR:
+                dt.call(&dt.glSecondaryColorPointer)(size,type,stride,pointer);
+                break;
+              case INDEX:
+                dt.call(&dt.glIndexPointer)(type,stride,pointer);
+                break;
+              case EDGE_FLAG:
+                dt.call(&dt.glEdgeFlagPointer)(stride,pointer);
+                break;
+              default:
+                break;
+            }
           }
-        }
-        else
-        {
-          GLuint index = static_cast<GLuint>(vaInt - 7);
-          enablei(dt,vaEnum[7][0],index,enabled);
-          dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,buffer);
-          dt.call(&dt.glMultiTexCoordPointerEXT)(GL_TEXTURE0+index,size,type,stride,pointer);
+          else
+          {
+            GLuint index = static_cast<GLuint>(vaInt - 7);
+            enablei(dt,vaEnum[7][0],index,enabled);
+            dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,buffer);
+            dt.call(&dt.glMultiTexCoordPointerEXT)(GL_TEXTURE0+index,size,type,stride,pointer);
+          }
         }
       }
       return *this;
+    }
+
+    void transition(DispatchTableGL &dt, NamedVertexArray &to, vaName va, bool driverAllowsVertexAttributeArraysWithoutBoundBuffer)
+    {
+      GLint vaInt = static_cast<GLint>(va);
+      RegalAssert(vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays));
+      if (buffer || driverAllowsVertexAttributeArraysWithoutBoundBuffer)
+      {
+        if (vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays))
+        {
+          if (vaInt < 7)
+          {
+            if (enabled != to.enabled)
+            {
+              enabled = to.enabled;
+              enable(dt,vaEnum[vaInt][0],enabled);
+            }
+            if (buffer != to.buffer)
+            {
+              buffer = to.buffer;
+              dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,buffer);
+            }
+            if (size != to.size ||
+                type != to.type ||
+                stride != to.stride ||
+                pointer != to.pointer)
+            {
+              size = to.size;
+              type = to.type;
+              stride = to.stride;
+              pointer = to.pointer;
+              switch (vaInt)
+              {
+                case VERTEX:
+                  dt.call(&dt.glVertexPointer)(size,type,stride,pointer);
+                  break;
+                case NORMAL:
+                  dt.call(&dt.glNormalPointer)(type,stride,pointer);
+                  break;
+                case FOG_COORD:
+                  dt.call(&dt.glFogCoordPointer)(type,stride,pointer);
+                  break;
+                case COLOR:
+                  dt.call(&dt.glColorPointer)(size,type,stride,pointer);
+                  break;
+                case SECONDARY_COLOR:
+                  dt.call(&dt.glSecondaryColorPointer)(size,type,stride,pointer);
+                  break;
+                case INDEX:
+                  dt.call(&dt.glIndexPointer)(type,stride,pointer);
+                  break;
+                case EDGE_FLAG:
+                  dt.call(&dt.glEdgeFlagPointer)(stride,pointer);
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+          else
+          {
+            GLuint index = static_cast<GLuint>(vaInt - 7);
+            if (enabled != to.enabled)
+            {
+              enabled = to.enabled;
+              enablei(dt,vaEnum[7][0], index, enabled);
+            }
+            if (buffer != to.buffer)
+            {
+              buffer = to.buffer;
+              dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,buffer);
+            }
+            if (size != to.size ||
+                type != to.type ||
+                stride != to.stride ||
+                pointer != to.pointer)
+            {
+              size = to.size;
+              type = to.type;
+              stride = to.stride;
+              pointer = to.pointer;
+              dt.call(&dt.glMultiTexCoordPointerEXT)(GL_TEXTURE0+index,size,type,stride,pointer);
+            }
+          }
+        }
+      }
     }
 
     std::string toString(vaName va, const char *delim = "\n") const
@@ -265,7 +356,7 @@ namespace State
 
       GLint vaInt = static_cast<GLint>(va);
       RegalAssert(vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays));
-      if (vaInt >= 0)
+      if (vaInt >= 0 && vaInt < static_cast<GLint>(nNamedArrays))
       {
         if (vaInt < 7)
         {
@@ -318,11 +409,16 @@ namespace State
     GLuint    divisor;  // GL_VERTEX_ATTRIB_ARRAY_DIVISOR
 
     inline VertexBufferBindPoint()
-    : buffer(0)
-    , offset(0)
-    , stride(0)
-    , divisor(0)
     {
+      Reset();
+    }
+
+    inline void Reset()
+    {
+      buffer = 0;
+      offset = 0;
+      stride = 16;
+      divisor = 0;
     }
 
     inline VertexBufferBindPoint &swap(VertexBufferBindPoint &other)
@@ -358,6 +454,28 @@ namespace State
       return *this;
     }
 
+    void transition(DispatchTableGL &dt, VertexBufferBindPoint &to, GLuint index)
+    {
+      RegalAssert(index < REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS);
+      if (index < REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS)
+      {
+        if (buffer != to.buffer ||
+            offset != to.offset ||
+            stride != to.stride)
+        {
+          buffer = to.buffer;
+          offset = to.offset;
+          stride = to.stride;
+          dt.call(&dt.glBindVertexBuffer)(index,buffer,offset,stride);
+        }
+        if (divisor != to.divisor)
+        {
+          divisor = to.divisor;
+          dt.call(&dt.glVertexBindingDivisor)(index,divisor);
+        }
+      }
+    }
+
     std::string toString(GLuint index, const char *delim = "\n") const
     {
       string_list tmp;
@@ -374,7 +492,7 @@ namespace State
   struct GenericVertexArray
   {
     GLboolean  enabled;         // GL_VERTEX_ATTRIB_ARRAY_ENABLED
-    GLint      size;            // GL_VERTEX_ATTRIB_ARRAY_SIZE
+    GLuint     size;            // GL_VERTEX_ATTRIB_ARRAY_SIZE
     GLenum     type;            // GL_VERTEX_ATTRIB_ARRAY_TYPE
     GLuint     relativeOffset;  // GL_VERTEX_ATTRIB_RELATIVE_OFFSET
     GLboolean  normalized;      // GL_VERTEX_ATTRIB_ARRAY_NORMALIZED
@@ -383,15 +501,20 @@ namespace State
     GLuint     bindingIndex;    // GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING
 
     inline GenericVertexArray()
-    : enabled(GL_FALSE)
-    , size(4)
-    , type(GL_FLOAT)
-    , relativeOffset(0)
-    , normalized(GL_FALSE)
-    , isInteger(GL_FALSE)
-    , isLong(GL_FALSE)
-    , bindingIndex(0)
     {
+      Reset(0);
+    }
+
+    inline void Reset(GLuint index)
+    {
+      enabled = GL_FALSE;
+      size = 4;
+      type = GL_FLOAT;
+      relativeOffset = 0;
+      normalized = GL_FALSE;
+      isInteger = GL_FALSE;
+      isLong = GL_FALSE;
+      bindingIndex = index;
     }
 
     inline GenericVertexArray &swap(GenericVertexArray &other)
@@ -416,7 +539,7 @@ namespace State
 
         dt.call(&dt.glGetVertexAttribiv)(index,GL_VERTEX_ATTRIB_ARRAY_ENABLED,&val);
         enabled = static_cast<GLboolean>(val);
-        dt.call(&dt.glGetVertexAttribiv)(index,GL_VERTEX_ATTRIB_ARRAY_SIZE,&size);
+        dt.call(&dt.glGetVertexAttribiv)(index,GL_VERTEX_ATTRIB_ARRAY_SIZE,reinterpret_cast<GLint*>(&size));
         dt.call(&dt.glGetVertexAttribiv)(index,GL_VERTEX_ATTRIB_ARRAY_TYPE,reinterpret_cast<GLint*>(&type));
         dt.call(&dt.glGetVertexAttribiv)(index,GL_VERTEX_ATTRIB_RELATIVE_OFFSET,reinterpret_cast<GLint*>(&relativeOffset));
         dt.call(&dt.glGetVertexAttribiv)(index,GL_VERTEX_ATTRIB_ARRAY_NORMALIZED,&val);
@@ -448,6 +571,48 @@ namespace State
         dt.call(&dt.glVertexAttribBinding)(index,bindingIndex);
       }
       return *this;
+    }
+
+    void transition(DispatchTableGL &dt, GenericVertexArray &to, GLuint index)
+    {
+      RegalAssert(index < REGAL_EMU_MAX_VERTEX_ATTRIBS);
+      if (index < REGAL_EMU_MAX_VERTEX_ATTRIBS)
+      {
+        if (enabled != to.enabled)
+        {
+          enabled = to.enabled;
+          if (enabled)
+            dt.call(&dt.glEnableVertexAttribArray)(index);
+          else
+            dt.call(&dt.glDisableVertexAttribArray)(index);
+        }
+        if (isInteger != to.isInteger ||
+            isLong != to.isLong ||
+            normalized != to.normalized ||
+            size != to.size ||
+            type != to.type ||
+            relativeOffset != to.relativeOffset)
+        {
+          isInteger = to.isInteger;
+          isLong = to.isLong;
+          normalized = to.normalized;
+          size = to.size;
+          type = to.type;
+          relativeOffset = to.relativeOffset;
+
+          if (isInteger)
+            dt.call(&dt.glVertexAttribIFormat)(index,size,type,relativeOffset);
+          else if (isLong)
+            dt.call(&dt.glVertexAttribLFormat)(index,size,type,relativeOffset);
+          else
+            dt.call(&dt.glVertexAttribFormat)(index,size,type,normalized,relativeOffset);
+        }
+        if (bindingIndex != to.bindingIndex)
+        {
+          bindingIndex = to.bindingIndex;
+          dt.call(&dt.glVertexAttribBinding)(index,bindingIndex);
+        }
+      }
     }
 
     std::string toString(GLuint index, const char *delim = "\n") const
@@ -493,16 +658,29 @@ namespace State
     GLuint     vertexArrayBinding;               // GL_VERTEX_ARRAY_BINDING
 
     inline VertexArray()
-    : elementArrayBufferBinding(0)
-    , clientActiveTexture(GL_TEXTURE0)
-    , primitiveRestartFixedIndex(GL_FALSE)
-    , primitiveRestart(GL_FALSE)
-    , primitiveRestartIndex(0)
-    , arrayBufferBinding(0)
-    , vertexArrayBinding(0)
     {
-      for (GLuint ii=0; ii<nNamedArrays; ii++)
-        named[ii]= NamedVertexArray();
+      Reset();
+    }
+
+    void Reset()
+    {
+      elementArrayBufferBinding = 0;
+      clientActiveTexture = GL_TEXTURE0;
+      primitiveRestartFixedIndex = GL_FALSE;
+      primitiveRestart = GL_FALSE;
+      primitiveRestartIndex = 0;
+      arrayBufferBinding = 0;
+      vertexArrayBinding = 0;
+
+      size_t n = array_size( named );
+      for (size_t ii=0; ii<n; ii++)
+        named[ii].Reset();
+
+      RegalAssertArrayIndex( named, NORMAL );
+      RegalAssertArrayIndex( named, FOG_COORD );
+      RegalAssertArrayIndex( named, SECONDARY_COLOR );
+      RegalAssertArrayIndex( named, INDEX );
+      RegalAssertArrayIndex( named, EDGE_FLAG );
 
       named[NORMAL].size = 3;
       named[FOG_COORD].size = 1;
@@ -511,20 +689,25 @@ namespace State
       named[EDGE_FLAG].size = 1;
       named[EDGE_FLAG].type = GL_BOOL;
 
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
-        bindings[ii] = VertexBufferBindPoint();
+      n = array_size( bindings );
+      for (size_t ii=0; ii<n; ii++)
+        bindings[ii].Reset();
 
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
-        generic[ii] = GenericVertexArray();
+      n = array_size( generic );
+      for (GLuint ii=0; ii<n; ii++)
+        generic[ii].Reset(ii);
     }
 
-    inline VertexArray &swap(VertexArray &other)
+    VertexArray &swap(VertexArray &other)
     {
-      for (GLuint ii=0; ii<nNamedArrays; ii++)
+      size_t n = array_size( named );
+      for (size_t ii=0; ii<n; ii++)
         named[ii].swap(other.named[ii]);
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+      n = array_size( bindings );
+      for (size_t ii=0; ii<n; ii++)
         bindings[ii].swap(other.bindings[ii]);
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+      n = array_size( generic );
+      for (size_t ii=0; ii<n; ii++)
         generic[ii].swap(other.generic[ii]);
       std::swap(elementArrayBufferBinding,other.elementArrayBufferBinding);
       std::swap(clientActiveTexture,other.clientActiveTexture);
@@ -536,17 +719,20 @@ namespace State
       return *this;
     }
 
-    inline VertexArray &get(DispatchTableGL &dt)
+    VertexArray &get(DispatchTableGL &dt)
     {
       dt.call(&dt.glGetIntegerv)(GL_VERTEX_ARRAY_BINDING,reinterpret_cast<GLint*>(&vertexArrayBinding));
       if (vertexArrayBinding)
         dt.call(&dt.glBindVertexArray)(0);
-      for (GLuint ii=0; ii<nNamedArrays; ii++)
+      size_t n = array_size( named );
+      for (size_t ii=0; ii<n; ii++)
         named[ii].get(dt,static_cast<vaName>(ii));
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
-        bindings[ii].get(dt,ii);
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
-        generic[ii].get(dt,ii);
+      n = array_size( bindings );
+      for (size_t ii=0; ii<n; ii++)
+        bindings[ii].get(dt,static_cast<GLuint>(ii));
+      n = array_size( generic );
+      for (size_t ii=0; ii<n; ii++)
+        generic[ii].get(dt,static_cast<GLuint>(ii));
       dt.call(&dt.glGetIntegerv)(GL_ELEMENT_ARRAY_BUFFER_BINDING,reinterpret_cast<GLint*>(&elementArrayBufferBinding));
       dt.call(&dt.glGetIntegerv)(GL_CLIENT_ACTIVE_TEXTURE,reinterpret_cast<GLint*>(&clientActiveTexture));
       primitiveRestartFixedIndex = dt.call(&dt.glIsEnabled)(GL_PRIMITIVE_RESTART_FIXED_INDEX);
@@ -558,39 +744,110 @@ namespace State
       return *this;
     }
 
-    inline const VertexArray &set(DispatchTableGL &dt) const
+    const VertexArray &set(DispatchTableGL &dt, bool driverAllowsVertexAttributeArraysWithoutBoundBuffer) const
     {
       dt.call(&dt.glBindVertexArray)(0);
-      for (GLuint ii=0; ii<nNamedArrays; ii++)
-        named[ii].set(dt,static_cast<vaName>(ii));
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
-        bindings[ii].set(dt,ii);
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
-        generic[ii].set(dt,ii);
+      size_t n = array_size( named );
+      for (size_t ii=0; ii<n; ii++)
+        named[n-ii-1].set(dt,static_cast<vaName>(n-ii-1),driverAllowsVertexAttributeArraysWithoutBoundBuffer);
+      n = array_size( bindings );
+      for (size_t ii=0; ii<n; ii++)
+        bindings[ii].set(dt,static_cast<GLuint>(ii));
+      n = array_size( generic );
+      for (size_t ii=0; ii<n; ii++)
+        generic[n-ii-1].set(dt,static_cast<GLuint>(n-ii-1));
       dt.call(&dt.glBindBuffer)(GL_ELEMENT_ARRAY_BUFFER,elementArrayBufferBinding);
       dt.call(&dt.glClientActiveTexture)(clientActiveTexture);
-      enable(dt,GL_PRIMITIVE_RESTART_FIXED_INDEX,primitiveRestartFixedIndex);
-      enable(dt,GL_PRIMITIVE_RESTART,primitiveRestart);
+      if (primitiveRestartFixedIndex)
+        dt.call(&dt.glEnable)(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+      else
+        dt.call(&dt.glDisable)(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+      if (primitiveRestart)
+        dt.call(&dt.glEnable)(GL_PRIMITIVE_RESTART);
+      else
+        dt.call(&dt.glDisable)(GL_PRIMITIVE_RESTART);
       dt.call(&dt.glPrimitiveRestartIndex)(primitiveRestartIndex);
       dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,arrayBufferBinding);
       dt.call(&dt.glBindVertexArray)(vertexArrayBinding);
       return *this;
     }
 
-    inline std::string toString(const char *delim = "\n") const
+    void transition(DispatchTableGL &dt, VertexArray &to, bool driverAllowsVertexAttributeArraysWithoutBoundBuffer)
+    {
+      GLuint tmpVertexArrayBinding = to.vertexArrayBinding;
+      if (vertexArrayBinding) {
+        vertexArrayBinding = 0;
+        dt.call(&dt.glBindVertexArray)(vertexArrayBinding);
+      }
+      size_t n = array_size( named );
+      for (size_t ii=0; ii<n; ii++)
+        named[n-ii-1].transition(dt,to.named[n-ii-1],static_cast<vaName>(n-ii-1),driverAllowsVertexAttributeArraysWithoutBoundBuffer);
+      n = array_size( bindings );
+      for (size_t ii=0; ii<n; ii++)
+        bindings[ii].transition(dt,to.bindings[ii],static_cast<GLuint>(ii));
+      n = array_size( generic );
+      for (size_t ii=0; ii<n; ii++)
+        generic[n-ii-1].transition(dt,to.generic[n-ii-1],static_cast<GLuint>(n-ii-1));
+      if (elementArrayBufferBinding != to.elementArrayBufferBinding) {
+        elementArrayBufferBinding = to.elementArrayBufferBinding;
+        dt.call(&dt.glBindBuffer)(GL_ELEMENT_ARRAY_BUFFER,elementArrayBufferBinding);
+      }
+      if (clientActiveTexture != to.clientActiveTexture) {
+        clientActiveTexture = to.clientActiveTexture;
+        dt.call(&dt.glClientActiveTexture)(clientActiveTexture);
+      }
+      if (primitiveRestartFixedIndex != to.primitiveRestartFixedIndex) {
+        primitiveRestartFixedIndex = to.primitiveRestartFixedIndex;
+        if (primitiveRestartFixedIndex)
+          dt.call(&dt.glEnable)(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+        else
+          dt.call(&dt.glDisable)(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+      }
+      if (primitiveRestart != to.primitiveRestart) {
+        primitiveRestart = to.primitiveRestart;
+        if (primitiveRestart)
+          dt.call(&dt.glEnable)(GL_PRIMITIVE_RESTART);
+        else
+          dt.call(&dt.glDisable)(GL_PRIMITIVE_RESTART);
+      }
+      if (primitiveRestartIndex != to.primitiveRestartIndex) {
+        primitiveRestartIndex = to.primitiveRestartIndex;
+        dt.call(&dt.glPrimitiveRestartIndex)(primitiveRestartIndex);
+      }
+      if (arrayBufferBinding != to.arrayBufferBinding) {
+        arrayBufferBinding = to.arrayBufferBinding;
+        dt.call(&dt.glBindBuffer)(GL_ARRAY_BUFFER,arrayBufferBinding);
+      }
+      if (vertexArrayBinding != tmpVertexArrayBinding) {
+        vertexArrayBinding = tmpVertexArrayBinding;
+        dt.call(&dt.glBindVertexArray)(vertexArrayBinding);
+      }
+    }
+
+    std::string toString(const char *delim = "\n") const
     {
       string_list tmp;
-      for (GLuint ii=0; ii<nNamedArrays; ii++)
+      size_t n = array_size( named );
+      for (size_t ii=0; ii<n; ii++)
         named[ii].toString(static_cast<vaName>(ii),delim);
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
-        bindings[ii].toString(ii,delim);
-      for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
-        generic[ii].toString(ii,delim);
+      n = array_size( bindings );
+      for (size_t ii=0; ii<n; ii++)
+        bindings[ii].toString(static_cast<GLuint>(ii),delim);
+      n = array_size( generic );
+      for (size_t ii=0; ii<n; ii++)
+        generic[ii].toString(static_cast<GLuint>(ii),delim);
 
       tmp << print_string("glBindBuffer(GL_ELEMENT_ARRAY_BUFFER",elementArrayBufferBinding,");",delim);
-      tmp << print_string("glClientActiveTexture(",clientActiveTexture,");",delim);
-      enableToString(tmp,primitiveRestartFixedIndex,"GL_PRIMITIVE_RESTART_FIXED_INDEX",delim);
-      enableToString(tmp,primitiveRestart,"GL_PRIMITIVE_RESTART",delim);
+      tmp << print_string("glClientActiveTexture(",Token::GLtextureToString(clientActiveTexture),");",delim);
+
+      if (primitiveRestartFixedIndex)
+        tmp << print_string("glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);",delim);
+      else
+        tmp << print_string("glDisable(GL_PRIMITIVE_RESTART_FIXED_INDEX);",delim);
+      if (primitiveRestart)
+        tmp << print_string("glEnable(GL_PRIMITIVE_RESTART);",delim);
+      else
+        tmp << print_string("glDisable(GL_PRIMITIVE_RESTART);",delim);
       tmp << print_string("glPrimitiveRestartIndex(",primitiveRestartIndex,");",delim);
       tmp << print_string("glBindBuffer(GL_ARRAY_BUFFER,",arrayBufferBinding,");",delim);
       tmp << print_string("glBindVertexArray(",vertexArrayBinding,");",delim);
@@ -653,28 +910,39 @@ namespace State
       switch (cap)
       {
         case GL_VERTEX_ARRAY:
+          RegalAssertArrayIndex( named, VERTEX );
           named[VERTEX].enabled = enabled;
           break;
         case GL_NORMAL_ARRAY:
+          RegalAssertArrayIndex( named, NORMAL );
           named[NORMAL].enabled = enabled;
           break;
         case GL_FOG_COORD_ARRAY:
+          RegalAssertArrayIndex( named, FOG_COORD );
           named[FOG_COORD].enabled = enabled;
           break;
         case GL_COLOR_ARRAY:
+          RegalAssertArrayIndex( named, COLOR );
           named[COLOR].enabled = enabled;
           break;
         case GL_SECONDARY_COLOR_ARRAY:
+          RegalAssertArrayIndex( named, SECONDARY_COLOR );
           named[SECONDARY_COLOR].enabled = enabled;
           break;
         case GL_INDEX_ARRAY:
+          RegalAssertArrayIndex( named, INDEX );
           named[INDEX].enabled = enabled;
           break;
         case GL_EDGE_FLAG_ARRAY:
+          RegalAssertArrayIndex( named, EDGE_FLAG );
           named[EDGE_FLAG].enabled = enabled;
           break;
         case GL_TEXTURE_COORD_ARRAY:
-          named[index+7].enabled = enabled;
+          if ( (index+7) < array_size( named ) )
+          {
+            RegalAssertArrayIndex( named, index+7 );
+            named[index+7].enabled = enabled;
+          }
           break;
         default:
           break;
@@ -683,12 +951,18 @@ namespace State
 
     inline void glEnableClientState(GLenum cap)
     {
-      SetEnableClientStatei(vertexArrayBinding, cap, 0, GL_TRUE);
+      if (cap == GL_TEXTURE_COORD_ARRAY)
+        SetEnableClientStatei(vertexArrayBinding, cap, clientActiveTexture - GL_TEXTURE0, GL_TRUE);
+      else
+        SetEnableClientStatei(vertexArrayBinding, cap, 0, GL_TRUE);
     }
 
     inline void glDisableClientState(GLenum cap)
     {
-      SetEnableClientStatei(vertexArrayBinding, cap, 0, GL_FALSE);
+      if (cap == GL_TEXTURE_COORD_ARRAY)
+        SetEnableClientStatei(vertexArrayBinding, cap, clientActiveTexture - GL_TEXTURE0, GL_FALSE);
+      else
+        SetEnableClientStatei(vertexArrayBinding, cap, 0, GL_FALSE);
     }
 
     inline void glEnableClientStateiEXT(GLenum cap, GLuint index)
@@ -724,6 +998,24 @@ namespace State
           break;
         default:
           break;
+      }
+    }
+
+    void glDeleteBuffers( GLsizei n, const GLuint *buffers )
+    {
+      for (GLsizei ii=0; ii<n; ii++)
+      {
+        if (buffers[ii] == arrayBufferBinding)
+          arrayBufferBinding = 0;
+        if (buffers[ii] == elementArrayBufferBinding)
+          elementArrayBufferBinding = 0;
+        size_t nBindings = array_size( bindings );
+        for (size_t jj=0; jj<nBindings; jj++)
+        {
+          RegalAssertArrayIndex( bindings, jj );
+          if (buffers[ii] == bindings[jj].buffer)
+            bindings[jj].buffer = 0;
+        }
       }
     }
 
@@ -824,19 +1116,25 @@ namespace State
 
     inline void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding &&
+          index < array_size( generic ) &&
+          index < array_size( bindings ))
         glVertexArrayVertexAttribOffsetEXT(vertexArrayBinding, arrayBufferBinding, index, size, type, normalized, stride, ((char *)pointer - (char *)NULL));
     }
 
     inline void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding &&
+          index < array_size( generic ) &&
+          index < array_size( bindings ))
         glVertexArrayVertexAttribIOffsetEXT(vertexArrayBinding, arrayBufferBinding, index, size, type, stride, ((char *)pointer - (char *)NULL));
     }
 
     void glVertexAttribLPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding &&
+          index < array_size( generic ) &&
+          index < array_size( bindings ))
       {
         glVertexAttribLFormat(index, size, type, 0);
         glVertexAttribBinding(index, index);
@@ -845,20 +1143,44 @@ namespace State
       }
     }
 
+    void glBindVertexBuffers( GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides )
+    {
+      if (!vertexArrayBinding && ((first + count) >= first) && (first + count) <= array_size( bindings ))
+      {
+        if (buffers)
+          for (GLsizei ii = 0; ii < count; ii++)
+          {
+            RegalAssertArrayIndex( bindings, first );
+            bindings[first].buffer = buffers[ii];
+            bindings[first].offset = offsets[ii];
+            bindings[first].stride = strides[ii];
+            first++;
+          }
+        else
+          for (GLsizei ii = 0; ii < count; ii++)
+          {
+            RegalAssertArrayIndex( bindings, first );
+            bindings[first].buffer = 0;
+            bindings[first].offset = 0;
+            bindings[first].stride = 16;
+            first++;
+          }
+      }
+    }
+
     void glBindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
     {
-      if (!vertexArrayBinding)
-      {
-        bindings[bindingindex].buffer = buffer;
-        bindings[bindingindex].offset = offset;
-        bindings[bindingindex].stride = stride;
-      }
+      glBindVertexBuffers( bindingindex, 1, &buffer, &offset, &stride );
     }
 
     inline void glVertexAttribDivisor(GLuint index, GLuint divisor)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding &&
+          index < array_size( generic ) &&
+          index < array_size( bindings ) )
       {
+        RegalAssertArrayIndex( generic, index );
+        RegalAssertArrayIndex( bindings, index );
         generic[index].bindingIndex = index;
         bindings[index].divisor = divisor;
       }
@@ -866,32 +1188,45 @@ namespace State
 
     inline void glVertexBindingDivisor(GLuint bindingindex, GLuint divisor)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && bindingindex < array_size( bindings ))
+      {
+        RegalAssertArrayIndex( bindings, bindingindex );
         bindings[bindingindex].divisor = divisor;
+      }
     }
 
     inline void glEnableVertexAttribArray(GLuint index)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && index < array_size( generic ))
+      {
+        RegalAssertArrayIndex( generic, index );
         generic[index].enabled = GL_TRUE;
+      }
     }
 
     inline void glDisableVertexAttribArray(GLuint index)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && index < array_size( generic ))
+      {
+        RegalAssertArrayIndex( generic, index );
         generic[index].enabled = GL_FALSE;
+      }
     }
 
     inline void glVertexAttribBinding(GLuint attribindex, GLuint bindingindex)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && attribindex < array_size( generic ))
+      {
+        RegalAssertArrayIndex( generic, attribindex );
         generic[attribindex].bindingIndex = bindingindex;
+      }
     }
 
     inline void glVertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && attribindex < array_size( generic ))
       {
+        RegalAssertArrayIndex( generic, attribindex );
         generic[attribindex].size = size;
         generic[attribindex].type = type;
         generic[attribindex].relativeOffset = relativeoffset;
@@ -903,8 +1238,9 @@ namespace State
 
     inline void glVertexAttribLFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && attribindex < array_size( generic ))
       {
+        RegalAssertArrayIndex( generic, attribindex );
         generic[attribindex].size = size;
         generic[attribindex].type = type;
         generic[attribindex].relativeOffset = relativeoffset;
@@ -916,8 +1252,9 @@ namespace State
 
     inline void glVertexAttribFormat(GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
     {
-      if (!vertexArrayBinding)
+      if (!vertexArrayBinding && attribindex < array_size( generic ))
       {
+        RegalAssertArrayIndex( generic, attribindex );
         generic[attribindex].size = size;
         generic[attribindex].type = type;
         generic[attribindex].relativeOffset = relativeoffset;
@@ -929,7 +1266,11 @@ namespace State
 
     inline void glClientActiveTexture(GLenum texture)
     {
-      clientActiveTexture = texture;
+      GLuint index = texture - GL_TEXTURE0;
+      if ( texture >= GL_TEXTURE0 && index < array_size( generic ))
+        clientActiveTexture = texture;
+      else
+        Warning( "Client active texture out of range: ", Token::GLtextureToString(texture), " > ", Token::GLtextureToString(static_cast<GLenum>(GL_TEXTURE0 + array_size( generic ) - 1)));
     }
 
     inline void glPrimitiveRestartIndex(GLuint index)
@@ -942,27 +1283,44 @@ namespace State
       vertexArrayBinding = array;
     }
 
+    inline void glDeleteVertexArrays( GLsizei n, const GLuint *arrays )
+    {
+      for (GLsizei ii=0; ii<n; ii++)
+        if (arrays[ii] == vertexArrayBinding)
+          vertexArrayBinding = 0;
+    }
+
     inline void glEnableVertexArrayEXT(GLuint vaobj, GLenum array)
     {
       if (!vaobj)
-        SetEnableClientStatei(vaobj, array, 0, GL_TRUE);
+      {
+        if (array == GL_TEXTURE_COORD_ARRAY)
+          SetEnableClientStatei(vaobj, array, clientActiveTexture - GL_TEXTURE0, GL_TRUE);
+        else
+          SetEnableClientStatei(vaobj, array, 0, GL_TRUE);
+      }
     }
 
     inline void glDisableVertexArrayEXT(GLuint vaobj, GLenum array)
     {
       if (!vaobj)
-        SetEnableClientStatei(vaobj, array, 0, GL_FALSE);
+      {
+        if (array == GL_TEXTURE_COORD_ARRAY)
+          SetEnableClientStatei(vaobj, array, clientActiveTexture - GL_TEXTURE0, GL_FALSE);
+        else
+          SetEnableClientStatei(vaobj, array, 0, GL_FALSE);
+      }
     }
 
     inline void glEnableVertexArrayAttribEXT(GLuint vaobj, GLuint index)
     {
-      if (!vaobj)
+      if (!vaobj && index < array_size( generic ))
         generic[index].enabled = GL_TRUE;
     }
 
     inline void glDisableVertexArrayAttribEXT(GLuint vaobj, GLuint index)
     {
-      if (!vaobj)
+      if (!vaobj && index < array_size( generic ))
         generic[index].enabled = GL_FALSE;
     }
 
@@ -970,6 +1328,7 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, VERTEX );
         named[VERTEX].buffer = buffer;
         named[VERTEX].size = size;
         named[VERTEX].type = type;
@@ -982,7 +1341,9 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, NORMAL );
         named[NORMAL].buffer = buffer;
+        named[NORMAL].size = 3;
         named[NORMAL].type = type;
         named[NORMAL].stride = stride;
         named[NORMAL].pointer = reinterpret_cast<const GLvoid *>(offset);
@@ -993,6 +1354,7 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, COLOR );
         named[COLOR].buffer = buffer;
         named[COLOR].size = size;
         named[COLOR].type = type;
@@ -1005,6 +1367,7 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, SECONDARY_COLOR );
         named[SECONDARY_COLOR].buffer = buffer;
         named[SECONDARY_COLOR].size = size;
         named[SECONDARY_COLOR].type = type;
@@ -1017,7 +1380,9 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, INDEX );
         named[INDEX].buffer = buffer;
+        named[INDEX].size = 1;
         named[INDEX].type = type;
         named[INDEX].stride = stride;
         named[INDEX].pointer = reinterpret_cast<const GLvoid *>(offset);
@@ -1028,7 +1393,10 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, EDGE_FLAG );
         named[EDGE_FLAG].buffer = buffer;
+        named[EDGE_FLAG].size = 1;
+        named[EDGE_FLAG].type = GL_BOOL;
         named[EDGE_FLAG].stride = stride;
         named[EDGE_FLAG].pointer = reinterpret_cast<const GLvoid *>(offset);
       }
@@ -1038,23 +1406,30 @@ namespace State
     {
       if (!vaobj)
       {
+        RegalAssertArrayIndex( named, FOG_COORD );
         named[FOG_COORD].buffer = buffer;
+        named[FOG_COORD].size = 1;
         named[FOG_COORD].type = type;
         named[FOG_COORD].stride = stride;
         named[FOG_COORD].pointer = reinterpret_cast<const GLvoid *>(offset);
       }
     }
 
-    void glVertexArrayMultiTexCoordOffsetEXT(GLuint vaobj, GLuint buffer, GLenum index, GLint size, GLenum type, GLsizei stride, GLintptr offset)
+    void glVertexArrayMultiTexCoordOffsetEXT(GLuint vaobj, GLuint buffer, GLenum texture, GLint size, GLenum type, GLsizei stride, GLintptr offset)
     {
-      if (!vaobj)
+      if (!vaobj && texture >= GL_TEXTURE0)
       {
-        GLuint ii = 7 + (index - GL_TEXTURE0);
-        named[ii].buffer = buffer;
-        named[ii].size = size;
-        named[ii].type = type;
-        named[ii].stride = stride;
-        named[ii].pointer = reinterpret_cast<const GLvoid *>(offset);
+        GLuint index = texture - GL_TEXTURE0;
+        if ( (index+7) < array_size( named ) )
+        {
+          GLuint ii = 7 + index;
+          RegalAssertArrayIndex( named, ii );
+          named[ii].buffer = buffer;
+          named[ii].size = size;
+          named[ii].type = type;
+          named[ii].stride = stride;
+          named[ii].pointer = reinterpret_cast<const GLvoid *>(offset);
+        }
       }
     }
 
@@ -1067,10 +1442,13 @@ namespace State
     {
       if (!vaobj)
       {
+        GLuint originalVABinding = vertexArrayBinding;
+        vertexArrayBinding = 0;
         glVertexAttribFormat(index, size, type, normalized, 0);
         glVertexAttribBinding(index, index);
         GLsizei effectiveStride = computeEffectiveStride(stride, size, type);
-        glBindVertexBuffer(index, buffer, offset, effectiveStride);
+        glBindVertexBuffers(index, 1, &buffer, &offset, &effectiveStride);
+        vertexArrayBinding = originalVABinding;
       }
     }
 
@@ -1078,10 +1456,13 @@ namespace State
     {
       if (!vaobj)
       {
+        GLuint originalVABinding = vertexArrayBinding;
+        vertexArrayBinding = 0;
         glVertexAttribIFormat(index, size, type, 0);
         glVertexAttribBinding(index, index);
         GLsizei effectiveStride = computeEffectiveStride(stride, size, type);
-        glBindVertexBuffer(index, buffer, offset, effectiveStride);
+        glBindVertexBuffers(index, 1, &buffer, &offset, &effectiveStride);
+        vertexArrayBinding = originalVABinding;
       }
     }
 
@@ -1102,8 +1483,8 @@ namespace State
       GLsizei   pc, pn, pv;
       GLsizei   s;
 
-      const int f = sizeof(GL_FLOAT);
-      const int c = 4 * sizeof(GL_UNSIGNED_BYTE);
+      const int f = sizeof(GLfloat);
+      const int c = int( float( 4 * sizeof(GLubyte) ) / float(f) + float(0.5) ) * f;
 
       switch(format)
       {
@@ -1352,29 +1733,34 @@ namespace State
     GLint      packSkipRows;              // GL_PACK_SKIP_ROWS
     GLint      packSkipPixels;            // GL_PACK_SKIP_PIXELS
     GLint      packAlignment;             // GL_PACK_ALIGNMENT
-    GLint      pixelUnpackBufferBinding;  // GL_PIXEL_UNPACK_BUFFER_BINDING
-    GLint      pixelPackBufferBinding;    // GL_PIXEL_PACK_BUFFER_BINDING
+    GLuint     pixelUnpackBufferBinding;  // GL_PIXEL_UNPACK_BUFFER_BINDING
+    GLuint     pixelPackBufferBinding;    // GL_PIXEL_PACK_BUFFER_BINDING
 
     inline PixelStore()
-      : unpackSwapBytes(GL_FALSE)
-      , unpackLsbFirst(GL_FALSE)
-      , unpackImageHeight(0)
-      , unpackSkipImages(0)
-      , unpackRowLength(0)
-      , unpackSkipRows(0)
-      , unpackSkipPixels(0)
-      , unpackAlignment(4)
-      , packSwapBytes(GL_FALSE)
-      , packLsbFirst(GL_FALSE)
-      , packImageHeight(0)
-      , packSkipImages(0)
-      , packRowLength(0)
-      , packSkipRows(0)
-      , packSkipPixels(0)
-      , packAlignment(4)
-      , pixelUnpackBufferBinding(0)
-      , pixelPackBufferBinding(0)
     {
+      Reset();
+    }
+
+    inline void Reset()
+    {
+      unpackSwapBytes = GL_FALSE;
+      unpackLsbFirst = GL_FALSE;
+      unpackImageHeight = 0;
+      unpackSkipImages = 0;
+      unpackRowLength = 0;
+      unpackSkipRows = 0;
+      unpackSkipPixels = 0;
+      unpackAlignment = 4;
+      packSwapBytes = GL_FALSE;
+      packLsbFirst = GL_FALSE;
+      packImageHeight = 0;
+      packSkipImages = 0;
+      packRowLength = 0;
+      packSkipRows = 0;
+      packSkipPixels = 0;
+      packAlignment = 4;
+      pixelUnpackBufferBinding = 0;
+      pixelPackBufferBinding = 0;
     }
 
     inline PixelStore &swap(PixelStore &other)
@@ -1400,7 +1786,7 @@ namespace State
       return *this;
     }
 
-    inline PixelStore &get(DispatchTableGL &dt)
+    PixelStore &get(DispatchTableGL &dt)
     {
       dt.call(&dt.glGetBooleanv)(GL_UNPACK_SWAP_BYTES,&unpackSwapBytes);
       dt.call(&dt.glGetBooleanv)(GL_UNPACK_LSB_FIRST,&unpackLsbFirst);
@@ -1418,12 +1804,12 @@ namespace State
       dt.call(&dt.glGetIntegerv)(GL_PACK_SKIP_ROWS,&packSkipRows);
       dt.call(&dt.glGetIntegerv)(GL_PACK_SKIP_PIXELS,&packSkipPixels);
       dt.call(&dt.glGetIntegerv)(GL_PACK_ALIGNMENT,&packAlignment);
-      dt.call(&dt.glGetIntegerv)(GL_PIXEL_UNPACK_BUFFER_BINDING,&pixelUnpackBufferBinding);
-      dt.call(&dt.glGetIntegerv)(GL_PIXEL_PACK_BUFFER_BINDING,&pixelPackBufferBinding);
+      dt.call(&dt.glGetIntegerv)(GL_PIXEL_UNPACK_BUFFER_BINDING,reinterpret_cast<GLint*>(&pixelUnpackBufferBinding));
+      dt.call(&dt.glGetIntegerv)(GL_PIXEL_PACK_BUFFER_BINDING,reinterpret_cast<GLint*>(&pixelPackBufferBinding));
       return *this;
     }
 
-    inline const PixelStore &set(DispatchTableGL &dt) const
+    const PixelStore &set(DispatchTableGL &dt) const
     {
       dt.call(&dt.glPixelStorei)(GL_UNPACK_SWAP_BYTES,unpackSwapBytes);
       dt.call(&dt.glPixelStorei)(GL_UNPACK_LSB_FIRST,unpackLsbFirst);
@@ -1441,12 +1827,88 @@ namespace State
       dt.call(&dt.glPixelStorei)(GL_PACK_SKIP_ROWS,packSkipRows);
       dt.call(&dt.glPixelStorei)(GL_PACK_SKIP_PIXELS,packSkipPixels);
       dt.call(&dt.glPixelStorei)(GL_PACK_ALIGNMENT,packAlignment);
-      dt.call(&dt.glBindBuffer)(GL_PIXEL_UNPACK_BUFFER_BINDING,pixelUnpackBufferBinding);
-      dt.call(&dt.glBindBuffer)(GL_PIXEL_PACK_BUFFER_BINDING,pixelPackBufferBinding);
+      dt.call(&dt.glBindBuffer)(GL_PIXEL_UNPACK_BUFFER,pixelUnpackBufferBinding);
+      dt.call(&dt.glBindBuffer)(GL_PIXEL_PACK_BUFFER,pixelPackBufferBinding);
       return *this;
     }
 
-    inline std::string toString(const char *delim = "\n") const
+    void transition(DispatchTableGL &dt, PixelStore &to)
+    {
+      if (unpackSwapBytes != to.unpackSwapBytes) {
+        unpackSwapBytes = to.unpackSwapBytes;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_SWAP_BYTES,unpackSwapBytes);
+      }
+      if (unpackLsbFirst != to.unpackLsbFirst) {
+        unpackLsbFirst = to.unpackLsbFirst;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_LSB_FIRST,unpackLsbFirst);
+      }
+      if (unpackImageHeight != to.unpackImageHeight) {
+        unpackImageHeight = to.unpackImageHeight;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_IMAGE_HEIGHT,unpackImageHeight);
+      }
+      if (unpackSkipImages != to.unpackSkipImages) {
+        unpackSkipImages = to.unpackSkipImages;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_SKIP_IMAGES,unpackSkipImages);
+      }
+      if (unpackRowLength != to.unpackRowLength) {
+        unpackRowLength = to.unpackRowLength;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_ROW_LENGTH,unpackRowLength);
+      }
+      if (unpackSkipRows != to.unpackSkipRows) {
+        unpackSkipRows = to.unpackSkipRows;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_SKIP_ROWS,unpackSkipRows);
+      }
+      if (unpackSkipPixels != to.unpackSkipPixels) {
+        unpackSkipPixels = to.unpackSkipPixels;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_SKIP_PIXELS,unpackSkipPixels);
+      }
+      if (unpackAlignment != to.unpackAlignment) {
+        unpackAlignment = to.unpackAlignment;
+        dt.call(&dt.glPixelStorei)(GL_UNPACK_ALIGNMENT,unpackAlignment);
+      }
+      if (packSwapBytes != to.packSwapBytes) {
+        packSwapBytes = to.packSwapBytes;
+        dt.call(&dt.glPixelStorei)(GL_PACK_SWAP_BYTES,packSwapBytes);
+      }
+      if (packLsbFirst != to.packLsbFirst) {
+        packLsbFirst = to.packLsbFirst;
+        dt.call(&dt.glPixelStorei)(GL_PACK_LSB_FIRST,packLsbFirst);
+      }
+      if (packImageHeight != to.packImageHeight) {
+        packImageHeight = to.packImageHeight;
+        dt.call(&dt.glPixelStorei)(GL_PACK_IMAGE_HEIGHT,packImageHeight);
+      }
+      if (packSkipImages != to.packSkipImages) {
+        packSkipImages = to.packSkipImages;
+        dt.call(&dt.glPixelStorei)(GL_PACK_SKIP_IMAGES,packSkipImages);
+      }
+      if (packRowLength != to.packRowLength) {
+        packRowLength = to.packRowLength;
+        dt.call(&dt.glPixelStorei)(GL_PACK_ROW_LENGTH,packRowLength);
+      }
+      if (packSkipRows != to.packSkipRows) {
+        packSkipRows = to.packSkipRows;
+        dt.call(&dt.glPixelStorei)(GL_PACK_SKIP_ROWS,packSkipRows);
+      }
+      if (packSkipPixels != to.packSkipPixels) {
+        packSkipPixels = to.packSkipPixels;
+        dt.call(&dt.glPixelStorei)(GL_PACK_SKIP_PIXELS,packSkipPixels);
+      }
+      if (packAlignment != to.packAlignment) {
+        packAlignment = to.packAlignment;
+        dt.call(&dt.glPixelStorei)(GL_PACK_ALIGNMENT,packAlignment);
+      }
+      if (pixelUnpackBufferBinding != to.pixelUnpackBufferBinding) {
+        pixelUnpackBufferBinding = to.pixelUnpackBufferBinding;
+        dt.call(&dt.glBindBuffer)(GL_PIXEL_UNPACK_BUFFER,pixelUnpackBufferBinding);
+      }
+      if (pixelPackBufferBinding != to.pixelPackBufferBinding) {
+        pixelPackBufferBinding = to.pixelPackBufferBinding;
+        dt.call(&dt.glBindBuffer)(GL_PIXEL_PACK_BUFFER,pixelPackBufferBinding);
+      }
+    }
+
+    std::string toString(const char *delim = "\n") const
     {
       string_list tmp;
       tmp << print_string("glPixelStorei(GL_UNPACK_SWAP_BYTES,",unpackSwapBytes,");",delim);
@@ -1465,8 +1927,8 @@ namespace State
       tmp << print_string("glPixelStorei(GL_PACK_SKIP_ROWS,",packSkipRows,");",delim);
       tmp << print_string("glPixelStorei(GL_PACK_SKIP_PIXELS,",packSkipPixels,");",delim);
       tmp << print_string("glPixelStorei(GL_PACK_ALIGNMENT,",packAlignment,");",delim);
-      tmp << print_string("glBindBuffer(GL_PIXEL_UNPACK_BUFFER_BINDING,",pixelUnpackBufferBinding,");",delim);
-      tmp << print_string("glBindBuffer(GL_PIXEL_PACK_BUFFER_BINDING,",pixelPackBufferBinding,");",delim);
+      tmp << print_string("glBindBuffer(GL_PIXEL_UNPACK_BUFFER,",pixelUnpackBufferBinding,");",delim);
+      tmp << print_string("glBindBuffer(GL_PIXEL_PACK_BUFFER,",pixelPackBufferBinding,");",delim);
       return tmp;
     }
 
@@ -1474,22 +1936,22 @@ namespace State
     {
       switch (pname)
       {
-        case GL_UNPACK_SWAP_BYTES:   unpackSwapBytes   = param; break;
-        case GL_UNPACK_LSB_FIRST:    unpackLsbFirst    = param; break;
-        case GL_UNPACK_IMAGE_HEIGHT: unpackImageHeight = param; break;
-        case GL_UNPACK_SKIP_IMAGES:  unpackSkipImages  = param; break;
-        case GL_UNPACK_ROW_LENGTH:   unpackRowLength   = param; break;
-        case GL_UNPACK_SKIP_ROWS:    unpackSkipRows    = param; break;
-        case GL_UNPACK_SKIP_PIXELS:  unpackSkipPixels  = param; break;
-        case GL_UNPACK_ALIGNMENT:    unpackAlignment   = param; break;
-        case GL_PACK_SWAP_BYTES:     packSwapBytes     = param; break;
-        case GL_PACK_LSB_FIRST:      packLsbFirst      = param; break;
-        case GL_PACK_IMAGE_HEIGHT:   packImageHeight   = param; break;
-        case GL_PACK_SKIP_IMAGES:    packSkipImages    = param; break;
-        case GL_PACK_ROW_LENGTH:     packRowLength     = param; break;
-        case GL_PACK_SKIP_ROWS:      packSkipRows      = param; break;
-        case GL_PACK_SKIP_PIXELS:    packSkipPixels    = param; break;
-        case GL_PACK_ALIGNMENT:      packAlignment     = param; break;
+        case GL_UNPACK_SWAP_BYTES:   unpackSwapBytes   = static_cast<GLboolean>(param != T(0)); break;
+        case GL_UNPACK_LSB_FIRST:    unpackLsbFirst    = static_cast<GLboolean>(param != T(0)); break;
+        case GL_UNPACK_IMAGE_HEIGHT: unpackImageHeight = static_cast<GLint>(param);             break;
+        case GL_UNPACK_SKIP_IMAGES:  unpackSkipImages  = static_cast<GLint>(param);             break;
+        case GL_UNPACK_ROW_LENGTH:   unpackRowLength   = static_cast<GLint>(param);             break;
+        case GL_UNPACK_SKIP_ROWS:    unpackSkipRows    = static_cast<GLint>(param);             break;
+        case GL_UNPACK_SKIP_PIXELS:  unpackSkipPixels  = static_cast<GLint>(param);             break;
+        case GL_UNPACK_ALIGNMENT:    unpackAlignment   = static_cast<GLint>(param);             break;
+        case GL_PACK_SWAP_BYTES:     packSwapBytes     = static_cast<GLboolean>(param != T(0)); break;
+        case GL_PACK_LSB_FIRST:      packLsbFirst      = static_cast<GLboolean>(param != T(0)); break;
+        case GL_PACK_IMAGE_HEIGHT:   packImageHeight   = static_cast<GLint>(param);             break;
+        case GL_PACK_SKIP_IMAGES:    packSkipImages    = static_cast<GLint>(param);             break;
+        case GL_PACK_ROW_LENGTH:     packRowLength     = static_cast<GLint>(param);             break;
+        case GL_PACK_SKIP_ROWS:      packSkipRows      = static_cast<GLint>(param);             break;
+        case GL_PACK_SKIP_PIXELS:    packSkipPixels    = static_cast<GLint>(param);             break;
+        case GL_PACK_ALIGNMENT:      packAlignment     = static_cast<GLint>(param);             break;
         default:
           break;
       }
@@ -1499,19 +1961,28 @@ namespace State
     {
       switch (target)
       {
-        case GL_PIXEL_UNPACK_BUFFER_BINDING:
+        case GL_PIXEL_UNPACK_BUFFER:
           pixelUnpackBufferBinding = buffer;
           break;
-        case GL_PIXEL_PACK_BUFFER_BINDING:
+        case GL_PIXEL_PACK_BUFFER:
           pixelPackBufferBinding = buffer;
           break;
         default:
           break;
       }
     }
-  };
 
-}
+    void glDeleteBuffers( GLsizei n, const GLuint *buffers )
+    {
+      for (GLsizei ii=0; ii<n; ii++)
+      {
+        if (buffers[ii] == pixelUnpackBufferBinding)
+          pixelUnpackBufferBinding = 0;
+        if (buffers[ii] == pixelPackBufferBinding)
+          pixelPackBufferBinding = 0;
+      }
+    }
+  };
 
 }
 

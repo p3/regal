@@ -114,4 +114,7 @@ exclude = [
   'GL_ARB_indirect_parameters',
   'GL_ARB_sparse_texture',  
   'GL_INTEL_map_texture',
+
+  'GL_NV_blend_equation_advanced',
+  'GL_NV_blend_equation_advanced_coherent',
 ]

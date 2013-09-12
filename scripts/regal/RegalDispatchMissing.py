@@ -95,8 +95,8 @@ def generateMissingSource(apis, args):
   substitute['API_DISPATCH_FUNC_DEFINE'] = apiMissingFuncDefineCode( apis, args )
   substitute['API_DISPATCH_FUNC_INIT']   = apiDispatchFuncInitCode( apis, args, 'missing' )
   substitute['API_DISPATCH_GLOBAL_FUNC_INIT']   = apiDispatchGlobalFuncInitCode( apis, args, 'missing' )
-  substitute['IFDEF'] = ''
-  substitute['ENDIF'] = ''
+  substitute['IFDEF'] = '#if REGAL_MISSING\n\n'
+  substitute['ENDIF'] = '#endif\n'
 
   outputCode( '%s/RegalDispatchMissing.cpp' % args.srcdir, dispatchSourceTemplate.substitute(substitute))
 

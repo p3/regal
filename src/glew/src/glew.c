@@ -2739,6 +2739,7 @@ GLboolean __GLEW_AMD_pinned_memory = GL_FALSE;
 GLboolean __GLEW_AMD_query_buffer_object = GL_FALSE;
 GLboolean __GLEW_AMD_sample_positions = GL_FALSE;
 GLboolean __GLEW_AMD_seamless_cubemap_per_texture = GL_FALSE;
+GLboolean __GLEW_AMD_shader_atomic_counter_ops = GL_FALSE;
 GLboolean __GLEW_AMD_shader_stencil_export = GL_FALSE;
 GLboolean __GLEW_AMD_shader_trinary_minmax = GL_FALSE;
 GLboolean __GLEW_AMD_sparse_texture = GL_FALSE;
@@ -3813,6 +3814,10 @@ static GLboolean _glewInit_GL_AMD_sample_positions (GLEW_CONTEXT_ARG_DEF_INIT)
 #ifdef GL_AMD_seamless_cubemap_per_texture
 
 #endif /* GL_AMD_seamless_cubemap_per_texture */
+
+#ifdef GL_AMD_shader_atomic_counter_ops
+
+#endif /* GL_AMD_shader_atomic_counter_ops */
 
 #ifdef GL_AMD_shader_stencil_export
 
@@ -9637,6 +9642,9 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_AMD_seamless_cubemap_per_texture
   CONST_CAST(GLEW_AMD_seamless_cubemap_per_texture) = _glewSearchExtension("GL_AMD_seamless_cubemap_per_texture", extStart, extEnd);
 #endif /* GL_AMD_seamless_cubemap_per_texture */
+#ifdef GL_AMD_shader_atomic_counter_ops
+  CONST_CAST(GLEW_AMD_shader_atomic_counter_ops) = _glewSearchExtension("GL_AMD_shader_atomic_counter_ops", extStart, extEnd);
+#endif /* GL_AMD_shader_atomic_counter_ops */
 #ifdef GL_AMD_shader_stencil_export
   CONST_CAST(GLEW_AMD_shader_stencil_export) = _glewSearchExtension("GL_AMD_shader_stencil_export", extStart, extEnd);
 #endif /* GL_AMD_shader_stencil_export */
@@ -13733,6 +13741,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"seamless_cubemap_per_texture", 28))
         {
           ret = GLEW_AMD_seamless_cubemap_per_texture;
+          continue;
+        }
+#endif
+#ifdef GL_AMD_shader_atomic_counter_ops
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_atomic_counter_ops", 25))
+        {
+          ret = GLEW_AMD_shader_atomic_counter_ops;
           continue;
         }
 #endif

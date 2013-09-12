@@ -47,6 +47,7 @@ REGAL_GLOBAL_BEGIN
 #include "RegalEmu.h"
 #include "RegalPrivate.h"
 #include "RegalContext.h"
+#include "RegalToken.h"
 #include "RegalContextInfo.h"
 
 #include <map>
@@ -62,6 +63,7 @@ struct Xfer
   void Init( RegalContext &ctx )
   {
     UNUSED_PARAMETER(ctx);
+
     activeTextureIndex = 0;
     for( int i  = 0; i < REGAL_EMU_MAX_TEXTURE_UNITS; i++ ) {
       textureBinding2D[ i ] = 0;
@@ -77,20 +79,20 @@ struct Xfer
   }
 
   void PixelStore( RegalContext * ctx, GLenum pname, GLint param );
-  void PixelStore( RegalContext * ctx, GLenum pname, GLfloat param ) {
+
+  void PixelStore( RegalContext * ctx, GLenum pname, GLfloat param )
+  {
     PixelStore( ctx, pname, GLint( param ) );
   }
 
-  void ShadowActiveTexture( GLenum tex ) {
-    int r = tex - GL_TEXTURE0;
-    if( r < 0 || r > REGAL_EMU_MAX_TEXTURE_UNITS ) {
-      Warning("Regal can't share initialized context groups.");
-      return;
-    }
-    activeTextureIndex = tex - GL_TEXTURE0;
+  void ShadowActiveTexture( GLenum texture )
+  {
+    if (validTextureEnum(texture))
+      activeTextureIndex = texture - GL_TEXTURE0;
   }
 
-  void ShadowBindTexture( GLenum target, GLuint name ) {
+  void ShadowBindTexture( GLenum target, GLuint name )
+  {
     UNUSED_PARAMETER(target);
     textureBinding2D[ activeTextureIndex ] = name;
   }
@@ -108,7 +110,7 @@ struct Xfer
   GLint unpackSkipPixels;
 
   int activeTextureIndex;
-  GLuint textureBinding2D[REGAL_EMU_MAX_TEXTURE_UNITS];
+  GLuint textureBinding2D[REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS];
   std::map< GLuint, GLuint > name2ifmt;
 };
 

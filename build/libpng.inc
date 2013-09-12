@@ -5,6 +5,7 @@
 
 # Sources
 
+LIBPNG.C :=
 LIBPNG.C += src/libpng/src/png.c
 LIBPNG.C += src/libpng/src/pngerror.c
 LIBPNG.C += src/libpng/src/pngget.c

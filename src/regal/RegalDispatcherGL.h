@@ -80,7 +80,9 @@ public:
 
    DispatchTableGL driver;      // Underlying OpenGL/ES implementation
 
+#if REGAL_MISSING
    DispatchTableGL missing;     // Must have this last
+#endif
 
 public:
   DispatcherGL();
@@ -89,7 +91,10 @@ public:
   inline void push_back(DispatchTableGL &table, bool enable)
   {
     // Disabling the missing table would be bad!
+    #if REGAL_MISSING
     RegalAssert(&table!=&missing || enable==true);
+    #endif
+
     Dispatcher::push_back(table,enable);
   }
 

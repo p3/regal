@@ -99,11 +99,7 @@ iffFormulae = {
 
     'FfnShadowARB' : {
         'entries' : [ 'glActiveTexture(ARB|)' ],
-        'impl' : [
-            'if( ! _context->iff->ShadowActiveTexture( ${arg0plus} ) ) {',
-            '    _context->dispatcher.emulation.glActiveTexture${m1}( ${arg0plus} );',
-            '}',
-            ],
+        'prefix' : [ '_context->iff->ShadowActiveTexture( ${arg0} ); ', ],
     },
     'FfnShadeModel' : {
         'entries' : [ 'glShadeModel' ],
@@ -169,7 +165,11 @@ iffFormulae = {
     },
     'FfnTexGen' : {
         'entries' : [ 'glTexGen(i|f|d)(v|)' ],
-        'impl' : [ '_context->iff->TexGen( ${arg0plus} );', ],
+        'impl' : [
+            'if ( ! _context->iff->TexGen( ${arg0plus} ) ) {',
+            '    _context->dispatcher.emulation.glTexGen${m1}${m2}( ${arg0plus} );',
+            '}',
+        ],
     },
     'FfnAlphaFunc' : {
         'entries' : [ 'glAlphaFunc' ],

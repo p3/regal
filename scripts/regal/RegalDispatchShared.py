@@ -5,7 +5,7 @@ from string import Template, upper, replace
 from ApiCodeGen import paramsDefaultCode
 from ApiCodeGen import paramsNameCode, typeCode
 
-from RegalContextInfo import cond
+from RegalContextInfo import cond as condDefault
 
 ############################################################################
 
@@ -52,7 +52,11 @@ REGAL_NAMESPACE_END
 
 ${ENDIF}''')
 
-def apiDispatchFuncInitCode(apis, args, dispatchName, exclude=[], filter = lambda x : True):
+def apiDispatchFuncInitCode(apis, args, dispatchName, exclude=[], filter = lambda x : True, cond = None):
+
+  if not cond:
+    cond = condDefault
+
   categoryPrev = None
   code = ''
 
@@ -111,7 +115,11 @@ def apiDispatchFuncInitCode(apis, args, dispatchName, exclude=[], filter = lambd
 
   return code
 
-def apiDispatchGlobalFuncInitCode(apis, args, dispatchName, exclude=[], filter = lambda x : True):
+def apiDispatchGlobalFuncInitCode(apis, args, dispatchName, exclude=[], filter = lambda x : True, cond = None):
+
+  if not cond:
+    cond = condDefault
+
   categoryPrev = None
   code = '''
 void InitDispatchTableGlobal%s%s(DispatchTableGlobal &tbl)

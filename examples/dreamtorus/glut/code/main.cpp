@@ -120,8 +120,10 @@ static void myError(GLenum error)
 
 int main(int argc, const char *argv[])
 {
+  #ifndef EMSCRIPTEN
   glutInitDisplayString("rgba>=8 depth double");
   glutInitWindowSize(500, 500);
+  #endif
   glutInit( &argc, (char **) argv);
   glutCreateWindow("dreamtorus");
 

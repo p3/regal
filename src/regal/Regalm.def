@@ -104,6 +104,7 @@ EXPORTS
   rglBinormal3svEXT
   rglBinormalPointerEXT
   rglBitmap
+  rglBlendBarrierNV
   rglBlendColor
   rglBlendColorEXT
   rglBlendEquation
@@ -129,6 +130,7 @@ EXPORTS
   rglBlendFuncSeparateiARB
   rglBlendFunci
   rglBlendFunciARB
+  rglBlendParameteriNV
   rglBlitFramebuffer
   rglBlitFramebufferANGLE
   rglBlitFramebufferEXT

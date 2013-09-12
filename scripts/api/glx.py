@@ -8,57 +8,34 @@ from Api import StateType, State
 
 glx = Api()
 
-GLXVideoCaptureDeviceNV = Typedef('GLXVideoCaptureDeviceNV','XID')
-GLXVideoCaptureDeviceNV.category = 'GLX_NV_video_capture'
-GLXVideoCaptureDeviceNV.default = '0'
-
 XID = Typedef('XID','unsigned long')
 XID.default = '0'
-
-Pixmap = Typedef('Pixmap','XID')
-Pixmap.default = '0'
-
-Font = Typedef('Font','XID')
-Font.default = '0'
 
 Display = Typedef('Display','struct _XDisplay')
 Display.default = '0'
 
-GLXDrawble = Typedef('GLXDrawble','XID')
-GLXDrawble.category = 'GLX_VERSION_1_0'
-GLXDrawble.default = '0'
-
-GLXPixmap = Typedef('GLXPixmap','XID')
-GLXPixmap.category = 'GLX_VERSION_1_0'
-GLXPixmap.default = '0'
+Font = Typedef('Font','XID')
+Font.default = '0'
 
 GLXContext = Typedef('GLXContext','struct __GLXcontextRec *')
 GLXContext.category = 'GLX_VERSION_1_0'
 GLXContext.default = '0'
 
-GLXVideoDeviceNV = Typedef('GLXVideoDeviceNV','unsigned int')
-GLXVideoDeviceNV.category = 'GLX_VERSION_1_0'
-GLXVideoDeviceNV.default = '0'
+GLXContextID = Typedef('GLXContextID','XID')
+GLXContextID.category = 'GLX_EXT_import_context'
+GLXContextID.default = '0'
 
-GLXWindow = Typedef('GLXWindow','XID')
-GLXWindow.category = 'GLX_VERSION_1_3'
-GLXWindow.default = '0'
-
-GLXPbuffer = Typedef('GLXPbuffer','XID')
-GLXPbuffer.category = 'GLX_VERSION_1_3'
-GLXPbuffer.default = '0'
-
-GLXFBConfigID = Typedef('GLXFBConfigID','XID')
-GLXFBConfigID.category = 'GLX_VERSION_1_3'
-GLXFBConfigID.default = '0'
+GLXDrawable = Typedef('GLXDrawable','XID')
+GLXDrawable.category = 'GLX_VERSION_1_0'
+GLXDrawable.default = '0'
 
 GLXFBConfig = Typedef('GLXFBConfig','struct __GLXFBConfigRec *')
 GLXFBConfig.category = 'GLX_VERSION_1_3'
 GLXFBConfig.default = '0'
 
-GLXContextID = Typedef('GLXContextID','XID')
-GLXContextID.category = 'GLX_EXT_import_context'
-GLXContextID.default = '0'
+GLXFBConfigID = Typedef('GLXFBConfigID','XID')
+GLXFBConfigID.category = 'GLX_VERSION_1_3'
+GLXFBConfigID.default = '0'
 
 GLXFBConfigIDSGIX = Typedef('GLXFBConfigIDSGIX','XID')
 GLXFBConfigIDSGIX.category = 'GLX_SGIX_fbconfig'
@@ -68,26 +45,49 @@ GLXFBConfigSGIX = Typedef('GLXFBConfigSGIX','struct __GLXFBConfigRec *')
 GLXFBConfigSGIX.category = 'GLX_SGIX_fbconfig'
 GLXFBConfigSGIX.default = '0'
 
+GLXPbuffer = Typedef('GLXPbuffer','XID')
+GLXPbuffer.category = 'GLX_VERSION_1_3'
+GLXPbuffer.default = '0'
+
 GLXPbufferSGIX = Typedef('GLXPbufferSGIX','XID')
 GLXPbufferSGIX.default = '0'
 
-glx.add(GLXVideoCaptureDeviceNV)
+GLXPixmap = Typedef('GLXPixmap','XID')
+GLXPixmap.category = 'GLX_VERSION_1_0'
+GLXPixmap.default = '0'
+
+GLXVideoCaptureDeviceNV = Typedef('GLXVideoCaptureDeviceNV','XID')
+GLXVideoCaptureDeviceNV.category = 'GLX_NV_video_capture'
+GLXVideoCaptureDeviceNV.default = '0'
+
+GLXVideoDeviceNV = Typedef('GLXVideoDeviceNV','unsigned int')
+GLXVideoDeviceNV.category = 'GLX_VERSION_1_0'
+GLXVideoDeviceNV.default = '0'
+
+GLXWindow = Typedef('GLXWindow','XID')
+GLXWindow.category = 'GLX_VERSION_1_3'
+GLXWindow.default = '0'
+
+Pixmap = Typedef('Pixmap','XID')
+Pixmap.default = '0'
+
 glx.add(XID)
-glx.add(Pixmap)
-glx.add(Font)
 glx.add(Display)
-glx.add(GLXDrawble)
-glx.add(GLXPixmap)
+glx.add(Font)
 glx.add(GLXContext)
-glx.add(GLXVideoDeviceNV)
-glx.add(GLXWindow)
-glx.add(GLXPbuffer)
-glx.add(GLXFBConfigID)
-glx.add(GLXFBConfig)
 glx.add(GLXContextID)
+glx.add(GLXDrawable)
+glx.add(GLXFBConfig)
+glx.add(GLXFBConfigID)
 glx.add(GLXFBConfigIDSGIX)
 glx.add(GLXFBConfigSGIX)
+glx.add(GLXPbuffer)
 glx.add(GLXPbufferSGIX)
+glx.add(GLXPixmap)
+glx.add(GLXVideoCaptureDeviceNV)
+glx.add(GLXVideoDeviceNV)
+glx.add(GLXWindow)
+glx.add(Pixmap)
 
 
 defines = Enum('defines')

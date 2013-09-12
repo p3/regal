@@ -107,8 +107,10 @@ DispatcherGL::DispatcherGL()
   push_back(driver,Config::enableDriver);
   #endif
 
+  #if REGAL_MISSING
   InitDispatchTableMissing(missing);
-  push_back(missing,true);
+  push_back(missing,Config::enableMissing);
+  #endif
 
   // Optionally move the error checking dispatch to downstream of emulation.
   // This can be helpful for debugging Regal emulation

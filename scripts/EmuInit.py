@@ -12,11 +12,11 @@
 
 formulae = {
   'EmuInit' : {
-    'entries' : [ 
-      'CGLChoosePixelFormat', 'CGLGetCurrentContext', 
-      'eglGetDisplay', 
+    'entries' : [
+      'CGLChoosePixelFormat', 'CGLGetCurrentContext',
+      'eglGetDisplay', 'eglGetCurrentContext',
       'glXGetProcAddress', 'glXQueryExtension', 'glXGetProcAddressARB'
- #     'glX.*' 
+ #     'glX.*'
     ],
     'prefix'  : [ 'Init::init();' ]
   }
@@ -65,8 +65,11 @@ formulaeGlobal = {
 
     'eglMakeCurrent' : {
         'entries' : [ 'eglMakeCurrent' ],
-        'init' : [ 'if (ret)',
-                   '    Init::makeCurrent(ctx);' ]
+        'init' : '''
+#if !REGAL_SYS_PPAPI
+if (ret)
+  Init::makeCurrent(ctx);
+#endif'''
     },
 
     'eglDestroyContext' : {

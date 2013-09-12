@@ -135,4 +135,4 @@ REGAL_NAMESPACE_END
 
 #endif // REGAL_EMULATION
 
-#endif // ! __REGAL_BASEVERTEX_H__
+#endif // ! __REGAL_RECT_H__

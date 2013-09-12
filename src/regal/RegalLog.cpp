@@ -616,7 +616,6 @@ REGAL_GLOBAL_BEGIN
 
 // Direct apitrace logging messages to Regal info log
 
-#if REGAL_TRACE
 namespace os {
 
   void log(const char *format, ...);
@@ -633,6 +632,5 @@ namespace os {
   }
 
 }
-#endif
 
 REGAL_GLOBAL_END

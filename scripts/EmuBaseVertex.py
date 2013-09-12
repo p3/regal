@@ -30,7 +30,7 @@ baseVertexFormulae = {
     'prefix'  : [ '_context->bv->glMultiTexCoordPointerEXT( ${arg0plus} );', ],
   },
   'ClientActiveTexture' : {
-    'entries' : [ 'glClientActiveTexture' ],
+    'entries' : [ 'glClientActiveTexture(ARB|)' ],
     'prefix'  : [ '_context->bv->glClientActiveTexture( ${arg0plus} );', ],
   },
   'PrimitiveRestartIndex' : {

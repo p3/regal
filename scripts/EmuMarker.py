@@ -11,25 +11,30 @@ formulaeGlobal = {
     'Insert' : {
         'entries' : [ 'glInsertEventMarkerEXT' ],
         'cond'    : '_context->info->gl_ext_debug_marker',
-        'prefix'  : [ 'std::string _message = Marker::toStringEXT(length, marker);' ],
-        'impl'    : [ 'if (_context->marker)',
-                      '  _context->marker->InsertEventMarker(*_context, _message);',
-                      'RegalAssert(_context->info);' ]
+        'prefix'  : 'std::string _message = Marker::toStringEXT(length, marker);',
+        'impl'    : '''
+if (_context->marker)
+  _context->marker->InsertEventMarker(*_context, _message);
+RegalAssert(_context->info);'''
     },
+
     'Push' : {
         'entries' : [ 'glPushGroupMarkerEXT' ],
         'cond'    : '_context->info->gl_ext_debug_marker',
         'prefix'  : [ 'std::string _message = Marker::toStringEXT(length, marker);' ],
-        'impl'    : [ 'RegalAssert(_context->info);' ],
-        'suffix'  : [ 'if (_context->marker)',
-                      '  _context->marker->PushGroupMarker(*_context, _message);' ]
+        'impl'    : 'RegalAssert(_context->info);',
+        'suffix'  : '''
+if (_context->marker)
+  _context->marker->PushGroupMarker(*_context, _message);'''
     },
+
     'Pop' : {
         'entries' : [ 'glPopGroupMarkerEXT' ],
         'cond'    : '_context->info->gl_ext_debug_marker',
-        'prefix'  : [ 'if (_context->marker)',
-                      '  _context->marker->PopGroupMarker(*_context);' ],
-        'impl'    : [ 'RegalAssert(_context->info);' ]
+        'prefix'  : '''
+if (_context && _context->marker)
+  _context->marker->PopGroupMarker(*_context);''',
+        'impl'    : 'RegalAssert(_context->info);'
     },
 
     # GL_KHR_debug

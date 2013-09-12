@@ -727,6 +727,15 @@ static void _glewInfo_GL_AMD_seamless_cubemap_per_texture (void)
 
 #endif /* GL_AMD_seamless_cubemap_per_texture */
 
+#ifdef GL_AMD_shader_atomic_counter_ops
+
+static void _glewInfo_GL_AMD_shader_atomic_counter_ops (void)
+{
+  glewPrintExt("GL_AMD_shader_atomic_counter_ops", GLEW_AMD_shader_atomic_counter_ops, glewIsSupported("GL_AMD_shader_atomic_counter_ops"), glewGetExtension("GL_AMD_shader_atomic_counter_ops"));
+}
+
+#endif /* GL_AMD_shader_atomic_counter_ops */
+
 #ifdef GL_AMD_shader_stencil_export
 
 static void _glewInfo_GL_AMD_shader_stencil_export (void)
@@ -8591,6 +8600,9 @@ static void glewInfo (void)
 #ifdef GL_AMD_seamless_cubemap_per_texture
   _glewInfo_GL_AMD_seamless_cubemap_per_texture();
 #endif /* GL_AMD_seamless_cubemap_per_texture */
+#ifdef GL_AMD_shader_atomic_counter_ops
+  _glewInfo_GL_AMD_shader_atomic_counter_ops();
+#endif /* GL_AMD_shader_atomic_counter_ops */
 #ifdef GL_AMD_shader_stencil_export
   _glewInfo_GL_AMD_shader_stencil_export();
 #endif /* GL_AMD_shader_stencil_export */

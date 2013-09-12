@@ -5,6 +5,7 @@
 
 # apitrace sources
 
+APITRACE.CXX :=
 APITRACE.CXX += src/apitrace/common/os_posix.cpp
 APITRACE.CXX += src/apitrace/common/os_win32.cpp
 APITRACE.CXX += src/apitrace/common/trace_callset.cpp

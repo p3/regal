@@ -45,6 +45,7 @@
 #define set_json_regal_config_dispatch_enable_emulation(value)           Config::enableEmulation = value
 #define set_json_regal_config_dispatch_enable_error(value)               Config::enableError = value
 #define set_json_regal_config_dispatch_enable_log(value)                 Config::enableLog = value
+#define set_json_regal_config_dispatch_enable_missing(value)             Config::enableMissing = value
 #define set_json_regal_config_dispatch_enable_statistics(value)          Config::enableStatistics = value
 #define set_json_regal_config_dispatch_enable_trace(value)               Config::enableTrace = value
 #define set_json_regal_config_dispatch_force_emulation(value)            Config::forceEmulation = value

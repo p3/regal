@@ -2731,6 +2731,15 @@ typedef void (GLAPIENTRY * PFNGLSETMULTISAMPLEFVAMDPROC) (GLenum pname, GLuint i
 
 #endif /* GL_AMD_seamless_cubemap_per_texture */
 
+/* -------------------- GL_AMD_shader_atomic_counter_ops ------------------- */
+
+#ifndef GL_AMD_shader_atomic_counter_ops
+#define GL_AMD_shader_atomic_counter_ops 1
+
+#define GLEW_AMD_shader_atomic_counter_ops GLEW_GET_VAR(__GLEW_AMD_shader_atomic_counter_ops)
+
+#endif /* GL_AMD_shader_atomic_counter_ops */
+
 /* ---------------------- GL_AMD_shader_stencil_export --------------------- */
 
 #ifndef GL_AMD_shader_stencil_export
@@ -17499,6 +17508,7 @@ GLEW_VAR_EXPORT GLboolean __GLEW_AMD_pinned_memory;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_query_buffer_object;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_sample_positions;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_seamless_cubemap_per_texture;
+GLEW_VAR_EXPORT GLboolean __GLEW_AMD_shader_atomic_counter_ops;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_shader_stencil_export;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_shader_trinary_minmax;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_sparse_texture;

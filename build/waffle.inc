@@ -53,8 +53,8 @@ WAFFLE.C.X11 += src/waffle/src/x11/x11_display.c
 WAFFLE.C.LINUX += src/waffle/src/linux/linux_platform.c
 WAFFLE.C.LINUX += src/waffle/src/linux/linux_dl.c
 
-# 
+#
 
 WAFFLE.H :=
 
-WAFFLE.H.OTHER := 
+WAFFLE.H.OTHER :=

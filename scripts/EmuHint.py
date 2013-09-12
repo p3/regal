@@ -6,7 +6,7 @@ hintFormulae = {
     'impl'    : [
       'if( ! _context->hint->glHint( *_context, ${arg0plus} ) ) {',
       '  _context->dispatcher.emulation.glHint( ${arg0plus} );',
-      '}', 
+      '}',
     ],
   },
   'Get'       : {

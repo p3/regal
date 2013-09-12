@@ -14,6 +14,16 @@
 
 #include <RegalSystem.h>
 
+// Workaround for GLX emulation no supported for apitrace, yet
+
+#if REGAL_SYS_OSX || REGAL_SYS_ANDROID
+# if REGAL_SYS_GLX
+# undef REGAL_SYS_GLX
+# define REGAL_SYS_GLX 0
+# endif
+#endif
+
+
 #ifdef _WIN32
 #  include <malloc.h> // alloca
 #  ifndef alloca

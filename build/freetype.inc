@@ -6,6 +6,7 @@
 
 # freetype sources
 
+FREETYPE.C :=
 FREETYPE.C += src/freetype/src/raster/rastpic.c
 FREETYPE.C += src/freetype/src/raster/ftrend1.c
 FREETYPE.C += src/freetype/src/raster/ftraster.c
@@ -199,4 +200,4 @@ FREETYPE.C += src/freetype/src/autofit/autofit.c
 
 FREETYPE.H :=
 
-FREETYPE.H.OTHER := 
+FREETYPE.H.OTHER :=

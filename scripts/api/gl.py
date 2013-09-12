@@ -8957,6 +8957,102 @@ GL_BGR_NV = Enumerant('GL_BGR_NV', 0x80e0, 'GL_NV_bgr')
 
 defines.add(GL_BGR_NV)
 
+# GL_NV_blend_equation_advanced
+
+GL_BLEND_ADVANCED_COHERENT_NV = Enumerant('GL_BLEND_ADVANCED_COHERENT_NV', 0x9285, 'GL_NV_blend_equation_advanced')
+GL_BLEND_OVERLAP_NV = Enumerant('GL_BLEND_OVERLAP_NV', 0x9281, 'GL_NV_blend_equation_advanced')
+GL_BLEND_PREMULTIPLIED_SRC_NV = Enumerant('GL_BLEND_PREMULTIPLIED_SRC_NV', 0x9280, 'GL_NV_blend_equation_advanced')
+GL_COLORBURN_NV = Enumerant('GL_COLORBURN_NV', 0x929a, 'GL_NV_blend_equation_advanced')
+GL_COLORDODGE_NV = Enumerant('GL_COLORDODGE_NV', 0x9299, 'GL_NV_blend_equation_advanced')
+GL_CONJOINT_NV = Enumerant('GL_CONJOINT_NV', 0x9284, 'GL_NV_blend_equation_advanced')
+GL_CONTRAST_NV = Enumerant('GL_CONTRAST_NV', 0x92a1, 'GL_NV_blend_equation_advanced')
+GL_DARKEN_NV = Enumerant('GL_DARKEN_NV', 0x9297, 'GL_NV_blend_equation_advanced')
+GL_DIFFERENCE_NV = Enumerant('GL_DIFFERENCE_NV', 0x929e, 'GL_NV_blend_equation_advanced')
+GL_DISJOINT_NV = Enumerant('GL_DISJOINT_NV', 0x9283, 'GL_NV_blend_equation_advanced')
+GL_DST_ATOP_NV = Enumerant('GL_DST_ATOP_NV', 0x928f, 'GL_NV_blend_equation_advanced')
+GL_DST_IN_NV = Enumerant('GL_DST_IN_NV', 0x928b, 'GL_NV_blend_equation_advanced')
+GL_DST_NV = Enumerant('GL_DST_NV', 0x9287, 'GL_NV_blend_equation_advanced')
+GL_DST_OUT_NV = Enumerant('GL_DST_OUT_NV', 0x928d, 'GL_NV_blend_equation_advanced')
+GL_DST_OVER_NV = Enumerant('GL_DST_OVER_NV', 0x9289, 'GL_NV_blend_equation_advanced')
+GL_EXCLUSION_NV = Enumerant('GL_EXCLUSION_NV', 0x92a0, 'GL_NV_blend_equation_advanced')
+GL_HARDLIGHT_NV = Enumerant('GL_HARDLIGHT_NV', 0x929b, 'GL_NV_blend_equation_advanced')
+GL_HARDMIX_NV = Enumerant('GL_HARDMIX_NV', 0x92a9, 'GL_NV_blend_equation_advanced')
+GL_HSL_COLOR_NV = Enumerant('GL_HSL_COLOR_NV', 0x92af, 'GL_NV_blend_equation_advanced')
+GL_HSL_HUE_NV = Enumerant('GL_HSL_HUE_NV', 0x92ad, 'GL_NV_blend_equation_advanced')
+GL_HSL_LUMINOSITY_NV = Enumerant('GL_HSL_LUMINOSITY_NV', 0x92b0, 'GL_NV_blend_equation_advanced')
+GL_HSL_SATURATION_NV = Enumerant('GL_HSL_SATURATION_NV', 0x92ae, 'GL_NV_blend_equation_advanced')
+GL_INVERT_OVG_NV = Enumerant('GL_INVERT_OVG_NV', 0x92b4, 'GL_NV_blend_equation_advanced')
+GL_INVERT_RGB_NV = Enumerant('GL_INVERT_RGB_NV', 0x92a3, 'GL_NV_blend_equation_advanced')
+GL_LIGHTEN_NV = Enumerant('GL_LIGHTEN_NV', 0x9298, 'GL_NV_blend_equation_advanced')
+GL_LINEARBURN_NV = Enumerant('GL_LINEARBURN_NV', 0x92a5, 'GL_NV_blend_equation_advanced')
+GL_LINEARDODGE_NV = Enumerant('GL_LINEARDODGE_NV', 0x92a4, 'GL_NV_blend_equation_advanced')
+GL_LINEARLIGHT_NV = Enumerant('GL_LINEARLIGHT_NV', 0x92a7, 'GL_NV_blend_equation_advanced')
+GL_MINUS_CLAMPED_NV = Enumerant('GL_MINUS_CLAMPED_NV', 0x92b3, 'GL_NV_blend_equation_advanced')
+GL_MINUS_NV = Enumerant('GL_MINUS_NV', 0x929f, 'GL_NV_blend_equation_advanced')
+GL_MULTIPLY_NV = Enumerant('GL_MULTIPLY_NV', 0x9294, 'GL_NV_blend_equation_advanced')
+GL_OVERLAY_NV = Enumerant('GL_OVERLAY_NV', 0x9296, 'GL_NV_blend_equation_advanced')
+GL_PINLIGHT_NV = Enumerant('GL_PINLIGHT_NV', 0x92a8, 'GL_NV_blend_equation_advanced')
+GL_PLUS_CLAMPED_ALPHA_NV = Enumerant('GL_PLUS_CLAMPED_ALPHA_NV', 0x92b2, 'GL_NV_blend_equation_advanced')
+GL_PLUS_CLAMPED_NV = Enumerant('GL_PLUS_CLAMPED_NV', 0x92b1, 'GL_NV_blend_equation_advanced')
+GL_PLUS_DARKER_NV = Enumerant('GL_PLUS_DARKER_NV', 0x9292, 'GL_NV_blend_equation_advanced')
+GL_PLUS_NV = Enumerant('GL_PLUS_NV', 0x9291, 'GL_NV_blend_equation_advanced')
+GL_SCREEN_NV = Enumerant('GL_SCREEN_NV', 0x9295, 'GL_NV_blend_equation_advanced')
+GL_SOFTLIGHT_NV = Enumerant('GL_SOFTLIGHT_NV', 0x929c, 'GL_NV_blend_equation_advanced')
+GL_SRC_ATOP_NV = Enumerant('GL_SRC_ATOP_NV', 0x928e, 'GL_NV_blend_equation_advanced')
+GL_SRC_IN_NV = Enumerant('GL_SRC_IN_NV', 0x928a, 'GL_NV_blend_equation_advanced')
+GL_SRC_NV = Enumerant('GL_SRC_NV', 0x9286, 'GL_NV_blend_equation_advanced')
+GL_SRC_OUT_NV = Enumerant('GL_SRC_OUT_NV', 0x928c, 'GL_NV_blend_equation_advanced')
+GL_SRC_OVER_NV = Enumerant('GL_SRC_OVER_NV', 0x9288, 'GL_NV_blend_equation_advanced')
+GL_UNCORRELATED_NV = Enumerant('GL_UNCORRELATED_NV', 0x9282, 'GL_NV_blend_equation_advanced')
+GL_VIVIDLIGHT_NV = Enumerant('GL_VIVIDLIGHT_NV', 0x92a6, 'GL_NV_blend_equation_advanced')
+
+defines.add(GL_BLEND_ADVANCED_COHERENT_NV)
+defines.add(GL_BLEND_OVERLAP_NV)
+defines.add(GL_BLEND_PREMULTIPLIED_SRC_NV)
+defines.add(GL_COLORBURN_NV)
+defines.add(GL_COLORDODGE_NV)
+defines.add(GL_CONJOINT_NV)
+defines.add(GL_CONTRAST_NV)
+defines.add(GL_DARKEN_NV)
+defines.add(GL_DIFFERENCE_NV)
+defines.add(GL_DISJOINT_NV)
+defines.add(GL_DST_ATOP_NV)
+defines.add(GL_DST_IN_NV)
+defines.add(GL_DST_NV)
+defines.add(GL_DST_OUT_NV)
+defines.add(GL_DST_OVER_NV)
+defines.add(GL_EXCLUSION_NV)
+defines.add(GL_HARDLIGHT_NV)
+defines.add(GL_HARDMIX_NV)
+defines.add(GL_HSL_COLOR_NV)
+defines.add(GL_HSL_HUE_NV)
+defines.add(GL_HSL_LUMINOSITY_NV)
+defines.add(GL_HSL_SATURATION_NV)
+defines.add(GL_INVERT_OVG_NV)
+defines.add(GL_INVERT_RGB_NV)
+defines.add(GL_LIGHTEN_NV)
+defines.add(GL_LINEARBURN_NV)
+defines.add(GL_LINEARDODGE_NV)
+defines.add(GL_LINEARLIGHT_NV)
+defines.add(GL_MINUS_CLAMPED_NV)
+defines.add(GL_MINUS_NV)
+defines.add(GL_MULTIPLY_NV)
+defines.add(GL_OVERLAY_NV)
+defines.add(GL_PINLIGHT_NV)
+defines.add(GL_PLUS_CLAMPED_ALPHA_NV)
+defines.add(GL_PLUS_CLAMPED_NV)
+defines.add(GL_PLUS_DARKER_NV)
+defines.add(GL_PLUS_NV)
+defines.add(GL_SCREEN_NV)
+defines.add(GL_SOFTLIGHT_NV)
+defines.add(GL_SRC_ATOP_NV)
+defines.add(GL_SRC_IN_NV)
+defines.add(GL_SRC_NV)
+defines.add(GL_SRC_OUT_NV)
+defines.add(GL_SRC_OVER_NV)
+defines.add(GL_UNCORRELATED_NV)
+defines.add(GL_VIVIDLIGHT_NV)
+
 # GL_NV_compute_program5
 
 GL_COMPUTE_PROGRAM_NV = Enumerant('GL_COMPUTE_PROGRAM_NV', 0x90fb, 'GL_NV_compute_program5')
@@ -35405,6 +35501,26 @@ glUniformHandleui64vNV.trace = True
 glUniformHandleui64vNV.play = True
 gl.add(glUniformHandleui64vNV)
 
+# GL_NV_blend_equation_advanced
+
+glBlendBarrierNV = Function('glBlendBarrierNV')
+glBlendBarrierNV.ret = Return('void')
+glBlendBarrierNV.version = ''
+glBlendBarrierNV.category = 'GL_NV_blend_equation_advanced'
+glBlendBarrierNV.trace = True
+glBlendBarrierNV.play = True
+gl.add(glBlendBarrierNV)
+
+glBlendParameteriNV = Function('glBlendParameteriNV')
+glBlendParameteriNV.ret = Return('void')
+glBlendParameteriNV.add( Input( 'pname','GLenum' ))
+glBlendParameteriNV.add( Input( 'value','GLint' ))
+glBlendParameteriNV.version = ''
+glBlendParameteriNV.category = 'GL_NV_blend_equation_advanced'
+glBlendParameteriNV.trace = True
+glBlendParameteriNV.play = True
+gl.add(glBlendParameteriNV)
+
 # GL_NV_conditional_render
 
 glBeginConditionalRenderNV = Function('glBeginConditionalRenderNV')
@@ -44578,6 +44694,16 @@ GL_NV_bindless_texture.url = 'http://www.opengl.org/registry/specs/NV/bindless_t
 GL_NV_bindless_texture.functions = ['glIsImageHandleResidentNV','glIsTextureHandleResidentNV','glGetImageHandleNV','glGetTextureHandleNV','glGetTextureSamplerHandleNV','glMakeImageHandleNonResidentNV','glMakeImageHandleResidentNV','glMakeTextureHandleNonResidentNV','glMakeTextureHandleResidentNV','glProgramUniformHandleui64NV','glProgramUniformHandleui64vNV','glUniformHandleui64NV','glUniformHandleui64vNV']
 gl.add(GL_NV_bindless_texture)
 
+GL_NV_blend_equation_advanced = Extension('GL_NV_blend_equation_advanced')
+GL_NV_blend_equation_advanced.url = 'http://www.opengl.org/registry/specs/gl/NV/blend_equation_advanced.txt'
+GL_NV_blend_equation_advanced.enumerants = ['GL_BLEND_ADVANCED_COHERENT_NV','GL_BLEND_OVERLAP_NV','GL_BLEND_PREMULTIPLIED_SRC_NV','GL_COLORBURN_NV','GL_COLORDODGE_NV','GL_CONJOINT_NV','GL_CONTRAST_NV','GL_DARKEN_NV','GL_DIFFERENCE_NV','GL_DISJOINT_NV','GL_DST_ATOP_NV','GL_DST_IN_NV','GL_DST_NV','GL_DST_OUT_NV','GL_DST_OVER_NV','GL_EXCLUSION_NV','GL_HARDLIGHT_NV','GL_HARDMIX_NV','GL_HSL_COLOR_NV','GL_HSL_HUE_NV','GL_HSL_LUMINOSITY_NV','GL_HSL_SATURATION_NV','GL_INVERT_OVG_NV','GL_INVERT_RGB_NV','GL_LIGHTEN_NV','GL_LINEARBURN_NV','GL_LINEARDODGE_NV','GL_LINEARLIGHT_NV','GL_MINUS_CLAMPED_NV','GL_MINUS_NV','GL_MULTIPLY_NV','GL_OVERLAY_NV','GL_PINLIGHT_NV','GL_PLUS_CLAMPED_ALPHA_NV','GL_PLUS_CLAMPED_NV','GL_PLUS_DARKER_NV','GL_PLUS_NV','GL_SCREEN_NV','GL_SOFTLIGHT_NV','GL_SRC_ATOP_NV','GL_SRC_IN_NV','GL_SRC_NV','GL_SRC_OUT_NV','GL_SRC_OVER_NV','GL_UNCORRELATED_NV','GL_VIVIDLIGHT_NV']
+GL_NV_blend_equation_advanced.functions = ['glBlendBarrierNV','glBlendParameteriNV']
+gl.add(GL_NV_blend_equation_advanced)
+
+GL_NV_blend_equation_advanced_coherent = Extension('GL_NV_blend_equation_advanced_coherent')
+GL_NV_blend_equation_advanced_coherent.url = 'http://www.opengl.org/registry/specs/gl/NV/blend_equation_advanced.txt'
+gl.add(GL_NV_blend_equation_advanced_coherent)
+
 GL_NV_blend_square = Extension('GL_NV_blend_square')
 GL_NV_blend_square.url = 'http://www.opengl.org/registry/specs/NV/blend_square.txt'
 GL_NV_blend_square.category = 'GL_NV_blend_square'
@@ -45408,3 +45534,25 @@ gl.add(A)
 gl.add(Y)
 gl.add(nbytype)
 gl.add(nstarbytype)
+
+# states
+
+MAX_ATTRIB_STACK_DEPTH = State('MAX_ATTRIB_STACK_DEPTH', 'Zplus', 'glGetIntegerv', '16', 'Max depth of the server attribute stack', '21.6', '-')
+MAX_CLIENT_ATTRIB_STACK_DEPTH = State('MAX_CLIENT_ATTRIB_STACK_DEPTH', 'Zplus', 'glGetIntegerv', '16', 'Max depth of the client attribute stack', '21.6', '-')
+MAX_VERTEX_ATTRIB_BINDINGS = State('MAX_VERTEX_ATTRIB_BINDINGS', 'Zkstar', 'glGetIntegerv', '16', 'Max no. of vertex buffers', '10.3', '-')
+MAX_VERTEX_ATTRIBS = State('MAX_VERTEX_ATTRIBS', 'Zplus', 'glGetIntegerv', '16', 'Max no. of active vertex attributes', '10.2', '-')
+MAX_TEXTURE_UNITS = State('MAX_TEXTURE_UNITS', 'Zplus', 'glGetIntegerv', '2', 'No. of fixed-function texture units', '10', '-')
+MAX_TEXTURE_COORDS = State('MAX_TEXTURE_COORDS', 'Zplus', 'glGetIntegerv', '8', 'No. of texture coordinate sets', '10.2.2', '-')
+MAX_COMBINED_TEXTURE_IMAGE_UNITS = State('MAX_COMBINED_TEXTURE_IMAGE_UNITS', 'Zplus', 'glGetIntegerv', '96', 'Total no. of texture units accessible by the GL', '11.1.3.5', '-')
+MAX_DRAW_BUFFERS = State('MAX_DRAW_BUFFERS', 'Zplus', 'glGetIntegerv', '8', 'Max no. of active draw buffers', '17.4.1', '-')
+MAX_VIEWPORTS = State('MAX_VIEWPORTS', 'Zplus', 'glGetIntegerv', '16', 'Max no. of active viewports', '13.6.1', '-')
+
+gl.add(MAX_ATTRIB_STACK_DEPTH)
+gl.add(MAX_CLIENT_ATTRIB_STACK_DEPTH)
+gl.add(MAX_VERTEX_ATTRIB_BINDINGS)
+gl.add(MAX_VERTEX_ATTRIBS)
+gl.add(MAX_TEXTURE_UNITS)
+gl.add(MAX_TEXTURE_COORDS)
+gl.add(MAX_COMBINED_TEXTURE_IMAGE_UNITS)
+gl.add(MAX_DRAW_BUFFERS)
+gl.add(MAX_VIEWPORTS)

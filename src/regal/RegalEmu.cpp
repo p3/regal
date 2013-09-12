@@ -30,19 +30,23 @@
 
 /*
 
- Regal Emulation layer constants
- Cass Everitt, Scott Nations
+ Regal Emulation layer helpers
+ Scott Nations
 
  */
 
-#ifndef __REGAL_EMU_H__
-#define __REGAL_EMU_H__
-
 #include "RegalUtil.h"
+
+#if REGAL_EMULATION
+
+#include "RegalEmu.h"
+#include "RegalToken.h"
 
 REGAL_GLOBAL_BEGIN
 
 #include <GL/Regal.h>
+
+#include <cassert>
 
 REGAL_GLOBAL_END
 
@@ -51,71 +55,41 @@ REGAL_NAMESPACE_BEGIN
 namespace Emu
 {
 
-// In ES2 mode, 16 texture units only?
+// From the GL spec for ERRORS associated with glActiveTexture
 
-// No. of fixed function texture units. 2 minimum.
+// An INVALID_ENUM error is generated if an invalid texture is specified.
+// texture is a symbolic constant of the form TEXTUREi, indicating that texture
+// unit i is to be modified. The constants obey TEXTUREi = TEXTURE0 +i where
+// i is in the range 0 to k - 1, and k is the larger of the values of
+// MAX_TEXTURE_COORDS and MAX_COMBINED_TEXTURE_IMAGE_UNITS).
 
-#ifndef REGAL_EMU_MAX_TEXTURE_UNITS
-#define REGAL_EMU_MAX_TEXTURE_UNITS 4
-#endif
+// For backwards compatibility, the implementation-dependent constant
+// MAX_TEXTURE_UNITS specifies the number of conventional texture units
+// supported by the implementation. Its value must be no larger than the
+// minimum of MAX_TEXTURE_COORDS and MAX_COMBINED_TEXTURE_IMAGE_UNITS.
 
-// No. of texture coordinate sets. 8 minimum.
+bool validTextureEnum(GLenum texture)
+{
+  GLint unit = texture - GL_TEXTURE0;
+  return validTextureUnit( static_cast<GLuint>(unit) );
+}
 
-#ifndef REGAL_EMU_MAX_TEXTURE_COORDS
-#define REGAL_EMU_MAX_TEXTURE_COORDS 16
-#endif
-
-// No. of active vertex attributes.  16 minimum.
-
-#ifndef REGAL_EMU_MAX_VERTEX_ATTRIBS
-#define REGAL_EMU_MAX_VERTEX_ATTRIBS 16
-#endif
-
-// Max no. of vertex buffers. 16 minimum
-
-#ifndef REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS
-#define REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS 16
-#endif
-
-// Total no. of texture units accessible by the GL.  96 minimum
-
-#ifndef REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS
-#define REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS 96
-#endif
-
-// Max depth of the server attribute stack.  16 minimum.
-
-#ifndef REGAL_EMU_MAX_ATTRIB_STACK_DEPTH
-#define REGAL_EMU_MAX_ATTRIB_STACK_DEPTH 16
-#endif
-
-// Max depth of the client attribute stack.  16 minimum.
-
-#ifndef REGAL_EMU_MAX_CLIENT_ATTRIB_STACK_DEPTH
-#define REGAL_EMU_MAX_CLIENT_ATTRIB_STACK_DEPTH 16
-#endif
-
-// Max no. of active draw buffers. 8 minimum
-
-#ifndef REGAL_EMU_MAX_DRAW_BUFFERS
-#define REGAL_EMU_MAX_DRAW_BUFFERS 8
-#endif
-
-// Max no. of active viewports. 16 minimum
-
-#ifndef REGAL_EMU_MAX_VIEWPORTS
-#define REGAL_EMU_MAX_VIEWPORTS 16
-#endif
-
-#if REGAL_EMULATION
-
-extern bool validTextureEnum(GLenum texture);
-extern bool validTextureUnit(GLuint unit);
-
-#endif // REGAL_EMULATION
+bool validTextureUnit(GLuint unit)
+{
+  RegalAssert(REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS >= REGAL_EMU_MAX_TEXTURE_COORDS);
+  if (unit >= REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS)
+  {
+    Warning( "Active texture out of range: ",
+             Token::GLtextureToString(static_cast<GLenum>(GL_TEXTURE0 + unit)),
+             " > ",
+             Token::GLtextureToString(static_cast<GLenum>(GL_TEXTURE0 + REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1)));
+    return false;
+  }
+  return true;
+}
 
 };
 
 REGAL_NAMESPACE_END
 
-#endif // ! __REGAL_EMU_H__
+#endif // REGAL_EMULATION

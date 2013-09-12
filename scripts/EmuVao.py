@@ -87,7 +87,7 @@ vaoFormulae = {
         'impl' : [ '_context->vao->${m1}Pointer( _context, ${arg0}, ${arg1}, ${arg2} );' ],
     },
     'ClientActiveTexture' : {
-        'entries' : [ 'glClientActiveTexture' ],
+        'entries' : [ 'glClientActiveTexture(ARB|)' ],
         'prefix' : [ '_context->vao->ClientActiveTexture( _context, ${arg0} );' ],
     },
 }

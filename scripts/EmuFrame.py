@@ -38,7 +38,9 @@ formulaeGlobal = {
                    'RegalContext *_context = REGAL_GET_CONTEXT();',
                    'if (_context)',
                    '{',
+                   '    #if REGAL_SYS_X11',
                    '    _context->x11Display  = dpy;',
+                   '    #endif',
                    '    _context->x11Drawable = drawable;',
                    '}',
                    '// Notify Regal::Frame about the swap buffers event.',
@@ -55,7 +57,9 @@ formulaeGlobal = {
                    'RegalContext *_context = REGAL_GET_CONTEXT();',
                    'if (_context)',
                    '{',
+                   '    #if REGAL_SYS_X11',
                    '    _context->x11Display  = dpy;',
+                   '    #endif',
                    '    _context->x11Drawable = drawable;',
                    '}'
                  ]

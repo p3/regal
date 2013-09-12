@@ -39,7 +39,7 @@ soFormulae = {
         ]
     },
     'ActiveTexture' : {
-        'entries' : [ 'glActiveTexture' ],
+        'entries' : [ 'glActiveTexture(ARB|)' ],
         'impl' : [
             'RegalAssert(_context);',
             'if ( !_context->so->ActiveTexture( *_context, ${arg0plus} ) ) {',

@@ -79,7 +79,7 @@ dsaFormulae = {
     },
 
     'ClientActiveTexture' : {
-        'entries' : [ 'glClientActiveTexture' ],
+        'entries' : [ 'glClientActiveTexture(ARB|)' ],
         'impl' : [
             'if (!_context->dsa->ShadowClientActiveTexture( ${arg0} )) {',
             '  _dispatch.call(&_dispatch.glClientActiveTexture)( ${arg0} );',
@@ -118,7 +118,7 @@ dsaFormulae = {
         ],
     },
     'ActiveTexture' : {
-        'entries' : [ 'glActiveTexture' ],
+        'entries' : [ 'glActiveTexture(ARB|)' ],
         'impl' : [
             'if( false == _context->dsa->ShadowActiveTexture( ${arg0} ) ) {',
             '    _dispatch.call(&_dispatch.glActiveTexture)( ${arg0} );',

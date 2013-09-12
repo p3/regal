@@ -104,6 +104,7 @@ EXPORTS
   glBinormal3svEXT
   glBinormalPointerEXT
   glBitmap
+  glBlendBarrierNV
   glBlendColor
   glBlendColorEXT
   glBlendEquation
@@ -129,6 +130,7 @@ EXPORTS
   glBlendFuncSeparateiARB
   glBlendFunci
   glBlendFunciARB
+  glBlendParameteriNV
   glBlitFramebuffer
   glBlitFramebufferANGLE
   glBlitFramebufferEXT

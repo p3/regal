@@ -6,7 +6,7 @@ xferFormulae = {
         'prefix' : [ '_context->xfer->PixelStore( _context, ${arg0plus} );', ],
     },
    'ActiveTexture' : {
-        'entries' : [ 'glActiveTexture' ],
+        'entries' : [ 'glActiveTexture(ARB|)' ],
         'prefix' : [ '_context->xfer->ShadowActiveTexture( ${arg0} );', ],
     },
     'TexImage2D' : {

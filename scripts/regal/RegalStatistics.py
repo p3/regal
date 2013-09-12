@@ -21,6 +21,8 @@ ${LICENSE}
 
 #include "RegalUtil.h"
 
+#if REGAL_STATISTICS
+
 REGAL_GLOBAL_BEGIN
 
 #include <GL/Regal.h>
@@ -46,6 +48,7 @@ ${DECLARATIONS}
 
 REGAL_NAMESPACE_END
 
+#endif // REGAL_STATISTICS
 #endif // __${HEADER_NAME}_H__
 ''')
 
@@ -55,6 +58,8 @@ ${LICENSE}
 #include "pch.h" /* For MS precompiled header support */
 
 #include "RegalUtil.h"
+
+#if REGAL_STATISTICS
 
 REGAL_GLOBAL_BEGIN
 
@@ -107,6 +112,9 @@ Statistics::log(const char *name, const GLuint count)
 }
 
 REGAL_NAMESPACE_END
+
+#endif // REGAL_STATISTICS
+
 ''')
 
 def versionDeclareCode(apis, args):

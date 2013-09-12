@@ -29,6 +29,7 @@
 //
 // Authors: keith.ray@gmail.com (Keith Ray)
 
+#include "gtest/gtest-message.h"
 #include "gtest/internal/gtest-filepath.h"
 #include "gtest/internal/gtest-port.h"
 
@@ -182,7 +183,7 @@ FilePath FilePath::MakeFileName(const FilePath& directory,
   if (number == 0) {
     file = base_name.string() + "." + extension;
   } else {
-    file = base_name.string() + "_" + String::Format("%d", number).c_str()
+    file = base_name.string() + "_" + StreamableToString(number)
         + "." + extension;
   }
   return ConcatPaths(directory, FilePath(file));

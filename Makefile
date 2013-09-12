@@ -34,6 +34,7 @@ include Makefile.glewinfo
 
 include Makefile.dreamtorus
 include Makefile.dreamtorus_static
+include Makefile.tiger
 
 # Testing
 

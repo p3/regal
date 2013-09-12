@@ -580,13 +580,13 @@ TEST ( RegalTexC, GetBoundTexture ) {
 
   // Setup
   texc.textureUnitArrayState[ 0 ].Bind( GL_TEXTURE_CUBE_MAP, &boundToCubemapUnit0 );
-  texc.textureUnitArrayState[ REGAL_EMU_MAX_TEXTURE_UNITS - 1 ].Bind( GL_TEXTURE_CUBE_MAP, &boundToCubemapUnitMax );
+  texc.textureUnitArrayState[ REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1 ].Bind( GL_TEXTURE_CUBE_MAP, &boundToCubemapUnitMax );
 
   // Test expectations.
   EXPECT_EQ( &texc.textureZero, texc.GetBoundTexture_( GL_TEXTURE0, GL_TEXTURE_2D ) );
   EXPECT_EQ( &boundToCubemapUnit0, texc.GetBoundTexture_( GL_TEXTURE0, GL_TEXTURE_CUBE_MAP ) );
-  EXPECT_EQ( &boundToCubemapUnitMax, texc.GetBoundTexture_( GL_TEXTURE0 + REGAL_EMU_MAX_TEXTURE_UNITS - 1, GL_TEXTURE_CUBE_MAP ) );
-  EXPECT_EQ( NULL, texc.GetBoundTexture_( GL_TEXTURE0 + REGAL_EMU_MAX_TEXTURE_UNITS, GL_TEXTURE_2D ) );
+  EXPECT_EQ( &boundToCubemapUnitMax, texc.GetBoundTexture_( GL_TEXTURE0 + REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1, GL_TEXTURE_CUBE_MAP ) );
+  EXPECT_EQ( NULL, texc.GetBoundTexture_( GL_TEXTURE0 + REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS, GL_TEXTURE_2D ) );
   EXPECT_EQ( NULL, texc.GetBoundTexture_( GL_TEXTURE0 - 1, GL_TEXTURE_2D ) );
 }
 
@@ -671,7 +671,7 @@ TEST ( RegalTexC, ShadowTexImage2D ) {
   GLenum type;
 
   // Set the current texture unit away from default.
-  texc.currentTextureUnit = GL_TEXTURE1;
+  texc.currentTextureUnit = 1;
 
   // Test the first overload, affecting textureZero.
   // Setting the format/type and then getting it should match.
@@ -691,7 +691,7 @@ TEST ( RegalTexC, ShadowTexImage2D ) {
   EXPECT_EQ( 31u, type );
 
   // If the texture unit is out of range, the call silently is ignored.
-  texc.currentTextureUnit = GL_TEXTURE0 - 1;
+  texc.currentTextureUnit = -1;
   texc.ShadowTexImage2D( GL_TEXTURE_2D, 15, 0, 0 );
 }
 
@@ -779,15 +779,21 @@ TEST ( RegalTexC, ShadowActiveTexture ) {
   TexC texc;
 
   // Verify initial state
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE0 ), texc.currentTextureUnit );
+  EXPECT_EQ( static_cast<GLenum>( 0 ), texc.currentTextureUnit );
 
   // Each call should just simply change currentTextureUnit.
   texc.ShadowActiveTexture( GL_TEXTURE1 );
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE1 ), texc.currentTextureUnit );
+  EXPECT_EQ( static_cast<GLenum>( 1 ), texc.currentTextureUnit );
 
-  // No range checking is done.
+  // invalid enums should be ignored
   texc.ShadowActiveTexture( GL_TEXTURE0 - 1 );
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE0 - 1 ), texc.currentTextureUnit );
+  EXPECT_EQ( static_cast<GLenum>( 1 ), texc.currentTextureUnit );
+
+  texc.ShadowActiveTexture( GL_TEXTURE0 + REGAL_EMU_MAX_COMBINED_TEXTURE_IMAGE_UNITS );
+  EXPECT_EQ( static_cast<GLenum>( 1 ), texc.currentTextureUnit );
+
+  texc.ShadowActiveTexture( GLenum(~0) );
+  EXPECT_EQ( static_cast<GLenum>( 1 ), texc.currentTextureUnit );
 }
 
 TEST ( RegalTexC, ShadowBindTexture ) {
@@ -800,7 +806,7 @@ TEST ( RegalTexC, ShadowBindTexture ) {
   EXPECT_EQ( NULL, texc.textureUnitArrayState[ 1 ].GetBinding( GL_TEXTURE_2D ) );
 
   // Set the current texture unit to non-default
-  texc.currentTextureUnit = GL_TEXTURE1;
+  texc.currentTextureUnit = 1;
 
   // Binding texture 123 ...
   texc.ShadowBindTexture( GL_TEXTURE_2D, 123 );
@@ -819,7 +825,7 @@ TEST ( RegalTexC, ShadowBindTexture ) {
   EXPECT_EQ( NULL, texc.textureUnitArrayState[ 1 ].GetBinding( GL_TEXTURE_2D ) );
 
   // If the texture unit is out of the valid range ...
-  texc.currentTextureUnit = GL_TEXTURE0 - 1;
+  texc.currentTextureUnit = -1;
 
   // The call should silently do nothing.
   texc.ShadowBindTexture( GL_TEXTURE_2D, 123 );
@@ -838,7 +844,7 @@ TEST ( RegalTexC, ShadowGenerateMipmap ) {
   texc.textureUnitArrayState[ 1 ].Bind( GL_TEXTURE_2D, &boundToUnit1 );
 
   // Invoke the function under test to emulate mipmap generation.
-  texc.currentTextureUnit = GL_TEXTURE1;
+  texc.currentTextureUnit = 1;
   texc.ShadowGenerateMipmap( GL_TEXTURE_2D );
 
   // We expect the texture state to indicate a single default format.

@@ -5,6 +5,13 @@
    and is provided without guarantee or warrantee expressed or
    implied. This program is -not- in the public domain. */
 
+/* Workaround an Ubuntu/Fedora libc.so incompatibility - optional */
+
+#ifdef _FORTIFY_SOURCE
+#undef _FORTIFY_SOURCE
+#define _FORTIFY_SOURCE 0
+#endif
+
 #ifdef __VMS
 #include <GL/vms_x_fix.h>
 #endif

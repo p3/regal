@@ -13,7 +13,7 @@ ifndef REGAL_FORCE_REBUILD
   endif
 endif
 
-regal_cflags := -DANDROID=1 -DREGAL_NO_PNG=1 -Werror
+regal_cflags := -DANDROID=1 -DREGAL_NO_PNG=1 -DREGAL_CONFIG_FILE=/data/.regal -Werror
 
 regal_path   := $(LOCAL_PATH)/../../../..
 
@@ -118,7 +118,8 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := apitrace
 LOCAL_SRC_FILES := $(apitrace_src_files)
-LOCAL_CFLAGS := $(regal_cflags) -DAPITRACE_TLS=0 -DTRACE_OS_LOG=0 -DTRACE_BACKTRACE=0
+LOCAL_CFLAGS := $(regal_cflags) -DAPITRACE_TLS=0 -DTRACE_OS_LOG=0 -DTRACE_BACKTRACE=0 -DTRACE_ENABLED_CHECK=0
+
 LOCAL_C_INCLUDES := $(apitrace_c_includes)
 LOCAL_EXPORT_C_INCLUDES := $(apitrace_export_c_includes)
 LOCAL_EXPORT_LDLIBS :=

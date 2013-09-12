@@ -5,15 +5,24 @@ MAKEFILE_TIGER_INCLUDED := 1
 
 include build/common.inc
 
+# Not supported for NaCL or emscripten - Revisit
+
+ifeq ($(filter nacl% emscripten%,$(SYSTEM)),)
+
 #
 # tiger
 #
 
 include Makefile.regal
+include Makefile.glut
 include Makefile.glew
 
-ifndef REGAL.STATIC
+ifndef REGAL.SHARED
 $(error tiger needs Regal.)
+endif
+
+ifndef GLEW.SHARED
+$(error tiger needs GLEW.)
 endif
 
 all:: tiger.bin
@@ -26,15 +35,16 @@ tiger.clean:
 	$(RM) -r tmp/$(SYSTEM)/tiger/static
 	$(RM) -r bin/$(SYSTEM)/tiger
 
-TIGER.SRCS       += examples/tiger/nvpr_tiger.c
+TIGER.SRCS       += examples/tiger/nvpr_tiger.c	
 TIGER.SRCS       += examples/tiger/tiger.c
 TIGER.SRCS       += examples/tiger/xform.c
 TIGER.SRCS.NAMES := $(notdir $(TIGER.SRCS))
 TIGER.OBJS       := $(addprefix tmp/$(SYSTEM)/tiger/static/,$(TIGER.SRCS.NAMES))
 TIGER.OBJS       := $(TIGER.OBJS:.c=.o)
 TIGER.DEPS       := $(TIGER.DEPS:.o=.d)
-TIGER.CFLAGS     := -Iinclude -DGLEW_NO_GLU
-TIGER.LIBS       += -Llib/$(SYSTEM) -lRegalGLEW $(LDFLAGS.GLUT) $(LDFLAGS.GLU) -lRegal $(LDFLAGS.X11)
+TIGER.CFLAGS     := -Iinclude -Iexamples/tiger -DGLEW_NO_GLU=1
+TIGER.LIBS       += -Llib/$(SYSTEM) $(LDFLAGS.GLUT) $(LDFLAGS.GLU) $(LDFLAGS.X11)
+TIGER.LIBS       += -lRegalGLEW
 TIGER.LIBS       += -lm -pthread
 
 -include $(TIGER.DEPS)
@@ -43,11 +53,23 @@ tmp/$(SYSTEM)/tiger/static/%.o: examples/tiger/%.c
 	@mkdir -p $(dir $@)
 	$(LOG_CC)$(CCACHE) $(CC) $(TIGER.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/$(SYSTEM)/tiger: $(TIGER.OBJS) lib/$(SYSTEM)/$(GLEW.SHARED) lib/$(SYSTEM)/$(REGAL.SHARED)
+TIGER.DEPEND :=  
+TIGER.DEPEND += lib/$(SYSTEM)/$(REGAL.SHARED) 
+
+ifdef GLUT.SHARED
+bin/$(SYSTEM)/tiger: lib/$(SYSTEM)/$(GLUT.SHARED) lib/$(SYSTEM)/$(GLU.SHARED)
+endif
+
+ifdef GLEW.SHARED
+bin/$(SYSTEM)/tiger: lib/$(SYSTEM)/$(GLEW.SHARED)
+endif
+
+bin/$(SYSTEM)/tiger: $(TIGER.OBJS) lib/$(SYSTEM)/$(REGAL.SHARED)
 	@mkdir -p $(dir $@)
-	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(TIGER.OBJS) $(TIGER.LIBS)
+	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(TIGER.OBJS) lib/$(SYSTEM)/$(REGAL.SHARED) $(TIGER.LIBS) $(REGAL.LDFLAGS)
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
 
+endif
 endif

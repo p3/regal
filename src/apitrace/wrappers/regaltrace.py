@@ -149,6 +149,16 @@ if __name__ == '__main__':
 #include "glsize.hpp"
 
 #include <RegalSystem.h>
+
+// Workaround for GLX emulation no supported for apitrace, yet
+
+#if REGAL_SYS_OSX || REGAL_SYS_ANDROID
+# if REGAL_SYS_GLX
+# undef REGAL_SYS_GLX
+# define REGAL_SYS_GLX 0
+# endif
+#endif
+
 '''
 
     cglmodule = Module('cgl')

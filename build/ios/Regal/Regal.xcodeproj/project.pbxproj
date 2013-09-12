@@ -52,7 +52,6 @@
 		43FC5F9915C4619B00D0177C /* RegalMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F6C15C4619B00D0177C /* RegalMarker.h */; };
 		43FC5F9A15C4619B00D0177C /* RegalObj.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F6D15C4619B00D0177C /* RegalObj.h */; };
 		43FC5F9B15C4619B00D0177C /* RegalPpa.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F6E15C4619B00D0177C /* RegalPpa.h */; };
-		43FC5F9C15C4619B00D0177C /* RegalPpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F6F15C4619B00D0177C /* RegalPpc.h */; };
 		43FC5F9D15C4619B00D0177C /* RegalPrecompile.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F7015C4619B00D0177C /* RegalPrecompile.h */; };
 		43FC5F9E15C4619B00D0177C /* RegalPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F7115C4619B00D0177C /* RegalPrivate.h */; };
 		43FC5F9F15C4619B00D0177C /* RegalState.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F7215C4619B00D0177C /* RegalState.h */; };
@@ -62,6 +61,7 @@
 		43FC5FA315C4619B00D0177C /* RegalUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F7615C4619B00D0177C /* RegalUtil.h */; };
 		43FC5FA415C4619B00D0177C /* RegalVao.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FC5F7715C4619B00D0177C /* RegalVao.h */; };
 		43FC5FA715C461AC00D0177C /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = 43FC5FA615C461AC00D0177C /* mongoose.c */; };
+		754D3C9517CFFD7200E4C0E0 /* RegalEmu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 754D3C9417CFFD7200E4C0E0 /* RegalEmu.cpp */; };
 		BC020947160D1919003FAB99 /* RegalMarker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC020946160D1919003FAB99 /* RegalMarker.cpp */; };
 		BC020958160D1C73003FAB99 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = BC020957160D1C73003FAB99 /* md5.c */; };
 		BC3209D416F3A0E600D1A9E0 /* RegalCacheShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC3209D016F3A0E600D1A9E0 /* RegalCacheShader.cpp */; };
@@ -70,7 +70,6 @@
 		BC3209D716F3A0E600D1A9E0 /* RegalCacheTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3209D316F3A0E600D1A9E0 /* RegalCacheTexture.h */; };
 		BC59F9DB174809EE004BC2AC /* RegalBaseVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59F9CA174809EE004BC2AC /* RegalBaseVertex.h */; };
 		BC59F9DC174809EE004BC2AC /* RegalMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59F9CB174809EE004BC2AC /* RegalMutex.h */; };
-		BC59F9DD174809EE004BC2AC /* RegalPpca.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC59F9CC174809EE004BC2AC /* RegalPpca.cpp */; };
 		BC59F9DE174809EE004BC2AC /* RegalPpca.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59F9CD174809EE004BC2AC /* RegalPpca.h */; };
 		BC59F9DF174809EE004BC2AC /* RegalRect.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59F9CE174809EE004BC2AC /* RegalRect.h */; };
 		BC59F9E0174809EE004BC2AC /* RegalTexC.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59F9CF174809EE004BC2AC /* RegalTexC.h */; };
@@ -219,7 +218,6 @@
 		43FC5F6C15C4619B00D0177C /* RegalMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalMarker.h; path = ../../../src/regal/RegalMarker.h; sourceTree = "<group>"; };
 		43FC5F6D15C4619B00D0177C /* RegalObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalObj.h; path = ../../../src/regal/RegalObj.h; sourceTree = "<group>"; };
 		43FC5F6E15C4619B00D0177C /* RegalPpa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalPpa.h; path = ../../../src/regal/RegalPpa.h; sourceTree = "<group>"; };
-		43FC5F6F15C4619B00D0177C /* RegalPpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalPpc.h; path = ../../../src/regal/RegalPpc.h; sourceTree = "<group>"; };
 		43FC5F7015C4619B00D0177C /* RegalPrecompile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalPrecompile.h; path = ../../../src/regal/RegalPrecompile.h; sourceTree = "<group>"; };
 		43FC5F7115C4619B00D0177C /* RegalPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalPrivate.h; path = ../../../src/regal/RegalPrivate.h; sourceTree = "<group>"; };
 		43FC5F7215C4619B00D0177C /* RegalState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalState.h; path = ../../../src/regal/RegalState.h; sourceTree = "<group>"; };
@@ -229,6 +227,7 @@
 		43FC5F7615C4619B00D0177C /* RegalUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalUtil.h; path = ../../../src/regal/RegalUtil.h; sourceTree = "<group>"; };
 		43FC5F7715C4619B00D0177C /* RegalVao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalVao.h; path = ../../../src/regal/RegalVao.h; sourceTree = "<group>"; };
 		43FC5FA615C461AC00D0177C /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mongoose.c; path = ../../../src/mongoose/mongoose.c; sourceTree = "<group>"; };
+		754D3C9417CFFD7200E4C0E0 /* RegalEmu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegalEmu.cpp; path = ../../../src/regal/RegalEmu.cpp; sourceTree = "<group>"; };
 		BC020946160D1919003FAB99 /* RegalMarker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegalMarker.cpp; path = ../../../src/regal/RegalMarker.cpp; sourceTree = "<group>"; };
 		BC020957160D1C73003FAB99 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = ../../../src/md5/src/md5.c; sourceTree = "<group>"; };
 		BC3209D016F3A0E600D1A9E0 /* RegalCacheShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegalCacheShader.cpp; path = ../../../src/regal/RegalCacheShader.cpp; sourceTree = "<group>"; };
@@ -237,7 +236,6 @@
 		BC3209D316F3A0E600D1A9E0 /* RegalCacheTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalCacheTexture.h; path = ../../../src/regal/RegalCacheTexture.h; sourceTree = "<group>"; };
 		BC59F9CA174809EE004BC2AC /* RegalBaseVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalBaseVertex.h; path = ../../../src/regal/RegalBaseVertex.h; sourceTree = "<group>"; };
 		BC59F9CB174809EE004BC2AC /* RegalMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalMutex.h; path = ../../../src/regal/RegalMutex.h; sourceTree = "<group>"; };
-		BC59F9CC174809EE004BC2AC /* RegalPpca.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RegalPpca.cpp; path = ../../../src/regal/RegalPpca.cpp; sourceTree = "<group>"; };
 		BC59F9CD174809EE004BC2AC /* RegalPpca.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalPpca.h; path = ../../../src/regal/RegalPpca.h; sourceTree = "<group>"; };
 		BC59F9CE174809EE004BC2AC /* RegalRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalRect.h; path = ../../../src/regal/RegalRect.h; sourceTree = "<group>"; };
 		BC59F9CF174809EE004BC2AC /* RegalTexC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegalTexC.h; path = ../../../src/regal/RegalTexC.h; sourceTree = "<group>"; };
@@ -428,6 +426,7 @@
 				BCBF1846175EBB3000CB653A /* RegalDispatchTrace.cpp */,
 				43FC5F5D15C4619B00D0177C /* RegalDllMain.cpp */,
 				43FC5F5E15C4619B00D0177C /* RegalDsa.h */,
+				754D3C9417CFFD7200E4C0E0 /* RegalEmu.cpp */,
 				43FC5F5F15C4619B00D0177C /* RegalEmu.h */,
 				4366EEEA15C9B54E00211205 /* RegalEnum.h */,
 				4366EEEB15C9B54E00211205 /* RegalFavicon.cpp */,
@@ -462,8 +461,6 @@
 				BC59F9D4174809EE004BC2AC /* RegalPixelConversions.h */,
 				BCBF1847175EBB3000CB653A /* RegalPlugin.cpp */,
 				43FC5F6E15C4619B00D0177C /* RegalPpa.h */,
-				43FC5F6F15C4619B00D0177C /* RegalPpc.h */,
-				BC59F9CC174809EE004BC2AC /* RegalPpca.cpp */,
 				BC59F9CD174809EE004BC2AC /* RegalPpca.h */,
 				43FC5F7015C4619B00D0177C /* RegalPrecompile.h */,
 				43FC5F7115C4619B00D0177C /* RegalPrivate.h */,
@@ -617,7 +614,6 @@
 				43FC5F9915C4619B00D0177C /* RegalMarker.h in Headers */,
 				43FC5F9A15C4619B00D0177C /* RegalObj.h in Headers */,
 				43FC5F9B15C4619B00D0177C /* RegalPpa.h in Headers */,
-				43FC5F9C15C4619B00D0177C /* RegalPpc.h in Headers */,
 				43FC5F9D15C4619B00D0177C /* RegalPrecompile.h in Headers */,
 				43FC5F9E15C4619B00D0177C /* RegalPrivate.h in Headers */,
 				43FC5F9F15C4619B00D0177C /* RegalState.h in Headers */,
@@ -776,7 +772,6 @@
 				BC94B99316DFDDA000116D55 /* RegalFilt.cpp in Sources */,
 				BC3209D416F3A0E600D1A9E0 /* RegalCacheShader.cpp in Sources */,
 				BC3209D616F3A0E600D1A9E0 /* RegalCacheTexture.cpp in Sources */,
-				BC59F9DD174809EE004BC2AC /* RegalPpca.cpp in Sources */,
 				BC59F9E9174809EE004BC2AC /* RegalPixelConversions.cpp in Sources */,
 				BC59F9EA174809EE004BC2AC /* RegalTexC.cpp in Sources */,
 				BC59F9EB174809EE004BC2AC /* RegalXfer.cpp in Sources */,
@@ -814,6 +809,7 @@
 				BCDF670D178F179800EE9569 /* gltrace_state.cpp in Sources */,
 				BCDF670F178F179800EE9569 /* regaltrace.cpp in Sources */,
 				BCDF6710178F179800EE9569 /* trace.cpp in Sources */,
+				754D3C9517CFFD7200E4C0E0 /* RegalEmu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

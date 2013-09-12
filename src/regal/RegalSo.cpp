@@ -49,7 +49,7 @@ namespace Emu {
 using namespace ::REGAL_NAMESPACE_INTERNAL::Logging;
 using namespace ::REGAL_NAMESPACE_INTERNAL::Token;
 
-const GLenum So::index2Enum[17] = { GL_TEXTURE_1D, GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, REGAL_NUM_TEXTURE_TARGETS };
+const GLenum So::index2Enum[REGAL_NUM_TEXTURE_TARGETS] = { GL_TEXTURE_1D, GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
 
 
 void
@@ -75,10 +75,12 @@ So::DeleteSamplers(GLsizei count, const GLuint * samplers)
         if (s && samplerObjects.count(s) > 0)
         {
             SamplingState* p = samplerObjects[s];
-            for (GLsizei unit=0; unit < REGAL_EMU_MAX_TEXTURE_UNITS; unit++)
+            size_t n = array_size( textureUnits );
+            for (size_t unit=0; unit < n; unit++)
             {
+                RegalAssertArrayIndex( textureUnits, unit );
                 if (textureUnits[unit].boundSamplerObject == p)
-                    BindSampler(unit, 0);
+                    BindSampler(static_cast<GLuint>(unit), 0);
             }
             samplerObjects.erase(s);
             delete p;
@@ -95,9 +97,9 @@ So::IsSampler(GLuint sampler)
 void
 So::BindSampler(GLuint unit, GLuint so)
 {
-    if (unit >= REGAL_EMU_MAX_TEXTURE_UNITS)
+    if (unit >= array_size( textureUnits ))
     {
-        Warning("Texture unit out of range: ", unit, " >= ", REGAL_EMU_MAX_TEXTURE_UNITS);
+        Warning("Texture unit out of range: ", unit, " >= ", REGAL_EMU_MAX_TEXTURE_COORDS);
         return;
     }
 
@@ -112,6 +114,7 @@ So::BindSampler(GLuint unit, GLuint so)
 
     SamplingState *pso = so != 0 ? samplerObjects[so] : NULL;
 
+    RegalAssertArrayIndex( textureUnits, unit );
     textureUnits[unit].boundSamplerObject = pso;
 }
 
@@ -141,18 +144,22 @@ So::DeleteTextures(RegalContext &ctx, GLsizei count, const GLuint * textures)
         {
             TextureState* p = textureObjects[t];
 
-            for (GLuint unit=0; unit < REGAL_EMU_MAX_TEXTURE_UNITS; unit++)
+            size_t n = array_size( textureUnits );
+            for (size_t unit=0; unit < n; unit++)
             {
+                RegalAssertArrayIndex( textureUnits, unit );
                 TextureUnit &tu = textureUnits[unit];
 
-                for (GLuint jj=0; jj < REGAL_NUM_TEXTURE_TARGETS; jj++)
+                size_t num = array_size( tu.boundTextureObjects );
+                for (size_t jj=0; jj<num; jj++)
                 {
+                    RegalAssertArrayIndex( tu.boundTextureObjects, jj );
                     if (p == tu.boundTextureObjects[jj])
                     {
                         if (activeTextureUnit != unit)
-                            ActiveTexture(ctx, GL_TEXTURE0 + unit );
+                            ActiveTexture(ctx, static_cast<GLenum>(GL_TEXTURE0 + unit));
 
-                        BindTexture(ctx, unit, TT_Index2Enum(jj), 0);
+                        BindTexture(ctx, static_cast<GLuint>(unit), TT_Index2Enum(jj), 0);
                     }
                 }
             }
@@ -177,9 +184,9 @@ So::BindTexture(RegalContext &ctx, GLuint unit, GLenum target, GLuint to)
 {
     Internal("Regal::So::BindTexture",&ctx," unit=",unit," target=",target," to=",to);
 
-    if (unit >= REGAL_EMU_MAX_TEXTURE_UNITS)
+    if (unit >= array_size( textureUnits ))
     {
-        Warning("Texture unit out of range: ", unit, " >= ", REGAL_EMU_MAX_TEXTURE_UNITS);
+        Warning("Texture unit out of range: ", unit, " >= ", REGAL_EMU_MAX_TEXTURE_COORDS);
         return false;
     }
 
@@ -220,24 +227,21 @@ So::BindTexture(RegalContext &ctx, GLuint unit, GLenum target, GLuint to)
     if (activeTextureUnit != originallyActiveUnit)
         ActiveTexture(ctx, GL_TEXTURE0 + originallyActiveUnit );
 
+    RegalAssertArrayIndex( textureUnits, unit );
     textureUnits[unit].boundTextureObjects[tti] = ts;
 
     return true;
 }
 
 bool
-So::ActiveTexture( RegalContext &ctx, GLenum tex )
+So::ActiveTexture( RegalContext &ctx, GLenum texture )
 {
-    GLuint unit = tex - GL_TEXTURE0;
-    if (unit >= REGAL_EMU_MAX_TEXTURE_UNITS)
-    {
-        Warning( "Active texture out of range: ", tex, " >= ",
-            Token::GLenumToString(GL_TEXTURE0 + REGAL_EMU_MAX_TEXTURE_UNITS));
-        return false;
-    }
-    activeTextureUnit = unit;
-    ctx.dispatcher.emulation.glActiveTexture( tex );
-    return true;
+  if (!validTextureEnum(texture))
+    return false;
+
+  activeTextureUnit = texture - GL_TEXTURE0;
+  ctx.dispatcher.emulation.glActiveTexture( texture );
+  return true;
 }
 
 void
@@ -251,13 +255,17 @@ So::PreDraw( RegalContext &ctx )
   GLuint originallyActiveUnit = activeTextureUnit;
 
   // ignoring sampler objects on the last unit... FIXME - cass
-  for (int unit=REGAL_EMU_MAX_TEXTURE_UNITS-1; unit >= 0; unit--)
+  const int n = static_cast<GLuint>(array_size( textureUnits ));
+  for (int unit=n-1; unit >= 0; unit--)
   {
+    RegalAssertArrayIndex( textureUnits, unit );
     TextureUnit &tu = textureUnits[unit];
     SamplingState *pSS = tu.boundSamplerObject;
 
-    for (GLuint tt=0; tt < REGAL_NUM_TEXTURE_TARGETS; tt++)
+    size_t num = array_size( tu.boundTextureObjects );
+    for (size_t tt=0; tt < num; tt++)
     {
+      RegalAssertArrayIndex( tu.boundTextureObjects, tt );
       TextureState* ts = tu.boundTextureObjects[tt];
       GLenum target = TT_Index2Enum( tt );
       if( target != GL_TEXTURE_2D )
@@ -285,7 +293,7 @@ So::PreDraw( RegalContext &ctx )
       SamplingState *newState = pSS ? pSS : &ts->app;
 
       //Internal( "RegalSo", "about to send update samplerVer=", ts->samplerVer, " newState->ver=", newState->ver );
-      if (SendStateToDriver(ctx, unit, ts->target, *newState, ts->drv)) {
+      if (SendStateToDriver(ctx, static_cast<GLuint>(unit), ts->target, *newState, ts->drv)) {
         //Internal( "RegalSo", "updated unit ", unit, " texture ", ts ? ts->name : 0, " for sampler ", pSS ? pSS->name : 0 );
       } else {
         //Internal( "RegalSo", "no update occurred" );

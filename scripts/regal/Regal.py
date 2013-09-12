@@ -79,22 +79,14 @@ ${REGAL_SYS}
 #define __gl_ATI_h_
 #define _OPENGL_H
 
-#if REGAL_SYS_GLX
+#if (REGAL_SYS_GLX || REGAL_SYS_EGL) && REGAL_SYS_X11
+#include <X11/Xlib.h>
 #include <X11/Xdefs.h>
 #include <X11/Xutil.h>
-typedef XID GLXDrawable;
-#endif
-
-#if REGAL_SYS_EGL && REGAL_SYS_X11
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#endif
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 #include <stddef.h>
+
 #if defined(_WIN32)
   typedef __int64 int64_t;
   typedef unsigned __int64 uint64_t;
@@ -109,6 +101,138 @@ extern "C" {
 #endif
 
 ${API_TYPEDEF}
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* For GLX emulation on non-X11 systems: REGAL_SYS_GLX=1, REGAL_SYS_X11=0 */
+
+#if REGAL_SYS_GLX && !REGAL_SYS_X11
+
+/* X.h */
+
+#define None                 0L
+#define ParentRelative       1L
+#define CopyFromParent       0L
+#define PointerWindow        0L
+#define InputFocus           1L
+#define PointerRoot          1L
+#define AnyPropertyType      0L
+#define AnyKey               0L
+#define AnyButton            0L
+#define AllTemporary         0L
+#define CurrentTime          0L
+#define NoSymbol             0L
+
+#define AllocNone            0 
+#define AllocAll             1
+
+#define InputOutput          1
+#define InputOnly            2
+
+#define CWBackPixmap            (1L<<0)
+#define CWBackPixel             (1L<<1)
+#define CWBorderPixmap          (1L<<2)
+#define CWBorderPixel           (1L<<3)
+#define CWBitGravity            (1L<<4)
+#define CWWinGravity            (1L<<5)
+#define CWBackingStore          (1L<<6)
+#define CWBackingPlanes         (1L<<7)
+#define CWBackingPixel          (1L<<8)
+#define CWOverrideRedirect      (1L<<9)
+#define CWSaveUnder             (1L<<10)
+#define CWEventMask             (1L<<11)
+#define CWDontPropagate         (1L<<12)
+#define CWColormap              (1L<<13)
+#define CWCursor                (1L<<14)
+
+#define NoEventMask                     0L
+#define KeyPressMask                    (1L<<0)  
+#define KeyReleaseMask                  (1L<<1)  
+#define ButtonPressMask                 (1L<<2)  
+#define ButtonReleaseMask               (1L<<3)  
+#define EnterWindowMask                 (1L<<4)  
+#define LeaveWindowMask                 (1L<<5)  
+#define PointerMotionMask               (1L<<6)  
+#define PointerMotionHintMask           (1L<<7)  
+#define Button1MotionMask               (1L<<8)  
+#define Button2MotionMask               (1L<<9)  
+#define Button3MotionMask               (1L<<10) 
+#define Button4MotionMask               (1L<<11) 
+#define Button5MotionMask               (1L<<12) 
+#define ButtonMotionMask                (1L<<13) 
+#define KeymapStateMask                 (1L<<14)
+#define ExposureMask                    (1L<<15) 
+#define VisibilityChangeMask            (1L<<16) 
+#define StructureNotifyMask             (1L<<17) 
+#define ResizeRedirectMask              (1L<<18) 
+#define SubstructureNotifyMask          (1L<<19) 
+#define SubstructureRedirectMask        (1L<<20) 
+#define FocusChangeMask                 (1L<<21) 
+#define PropertyChangeMask              (1L<<22) 
+#define ColormapChangeMask              (1L<<23) 
+#define OwnerGrabButtonMask             (1L<<24)
+
+typedef XID              Window;
+typedef XID              Atom;
+typedef XID              Status;
+typedef XID              Drawable;
+typedef int              Bool;
+typedef XID              Colormap;
+typedef XID              Cursor;
+typedef void *           Screen;
+typedef unsigned long    VisualID;
+
+/* Xlib.h */
+
+typedef struct {
+  VisualID visualid;
+} Visual;
+
+typedef struct {
+    Pixmap background_pixmap;
+    unsigned long background_pixel;
+    Pixmap border_pixmap;
+    unsigned long border_pixel;
+    int bit_gravity; 
+    int win_gravity; 
+    int backing_store; 
+    unsigned long backing_planes;
+    unsigned long backing_pixel;
+    Bool save_under;
+    long event_mask; 
+    long do_not_propagate_mask;
+    Bool override_redirect;
+    Colormap colormap; 
+    Cursor cursor;
+} XSetWindowAttributes;
+
+/* Xutil.h */
+
+typedef struct
+{
+   Visual       *visual;
+   int           screen;
+   int           depth;
+   unsigned long red_mask;
+   unsigned long green_mask;
+   unsigned long blue_mask;
+   int           colormap_size;
+   int           bits_per_rgb;
+} XVisualInfo;
+
+REGAL_DECL Display *XOpenDisplay(char *display_name);
+REGAL_DECL int      XCloseDisplay(Display *display);
+REGAL_DECL int      DefaultScreen(Display *display);
+REGAL_DECL Window   RootWindow(Display *display, int screen_number);
+REGAL_DECL int      XMapWindow(Display *display, Window w);
+REGAL_DECL Window   XCreateWindow(Display *display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, int depth, unsigned int clss, Visual *visual, unsigned long valuemask, XSetWindowAttributes *attributes);
+REGAL_DECL Colormap XCreateColormap(Display *display, Window w, Visual *visual, int alloc);
+REGAL_DECL Pixmap   XCreatePixmap(Display *display, Drawable d, unsigned int width, unsigned int height, unsigned int depth);
+REGAL_DECL int      XFreePixmap(Display *display, Pixmap pixmap);
+
+#endif
 
 /* TODO: make this automatic? */
 

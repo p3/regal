@@ -33,7 +33,7 @@
 /*
 
  Regal Emulation of glPushClientAttrib/glPopClientAttrib
- Lloyd Pique
+ Lloyd Pique, Nigel Stewart, Scott Nations
 
  */
 
@@ -41,8 +41,6 @@
 #define __REGAL_PPCA_H__
 
 #include "RegalUtil.h"
-
-#define REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH 16
 
 #if REGAL_EMULATION
 
@@ -52,353 +50,270 @@ REGAL_GLOBAL_BEGIN
 
 #include <GL/Regal.h>
 
+#include "RegalClientState.h"
 #include "RegalEmu.h"
+#include "RegalLog.h"
+#include "RegalToken.h"
 #include "RegalContext.h"
+#include "RegalContextInfo.h"
 
 REGAL_GLOBAL_END
 
 REGAL_NAMESPACE_BEGIN
 
-struct DispatchTableGL;
-
-// ====================================
-// ClientState::Capabilities
-// ====================================
-
-namespace ClientState {
-
-  struct Capabilities {
-    GLuint maxVertexAttribRelativeOffset;
-    GLuint maxVertexTextureImageUnits;
-    GLuint maxVertexAttribs;
-    GLuint maxVertexAttribBindings;
-    GLuint maxClientAttribStackDepth;
-
-    bool driverAllowsVertexAttributeArraysWithoutBoundBuffer;
-  };
-
-} // namespace ClientState
-
-// ====================================
-// ClientState::PixelStore
-// ====================================
-
-namespace ClientState {
-namespace PixelStore {
-
-const size_t STATE_COUNT   = 16;
-const size_t INVALID_INDEX = ~0u;
-
-struct State
+namespace Emu
 {
-  static const GLenum indexToPName[ STATE_COUNT ];
 
-  void Reset();
-  void Set( GLenum pname, GLint pvalue );
-  GLint Get( GLenum pname ) const;
-
-  GLint data[ STATE_COUNT ];
-  GLuint pixelPackBufferBinding;
-  GLuint pixelUnpackBufferBinding;
-};
-
-void swap( State& lhs, State& rhs );
-
-size_t PNameToIndex( GLenum pname );
-
-void Transition( const Capabilities& cap, const DispatchTableGL& dt, const State& current, const State& target );
-
-} // namespace PixelStore
-} // namespace ClientState
-
-// ====================================
-// ClientState::VertexArray::Fixed
-// ====================================
-
-namespace ClientState {
-namespace VertexArray {
-namespace Fixed {
-
-const size_t COUNT_NAMED_ATTRIBS = 7;
-const size_t COUNT_TEXTURE_COORD_ATTRIBS = 16;
-const size_t COUNT_ATTRIBS = COUNT_NAMED_ATTRIBS + COUNT_TEXTURE_COORD_ATTRIBS;
-
-const size_t BASE_NAMED_ATTRIBS = 0;
-const size_t BASE_TEXTURE_COORD_ATTRIBS = BASE_NAMED_ATTRIBS + COUNT_NAMED_ATTRIBS;
-
-const size_t INVALID_ATTRIB_INDEX = ~0u;
-
-struct State
+struct Ppca : public ClientState::VertexArray, ClientState::PixelStore
 {
-  struct Source {
-    GLuint buffer;
-    GLint size;
-    GLenum type;
-    GLsizei stride;
-    GLintptr offset;
-  };
+  Ppca()
+  : driverAllowsVertexAttributeArraysWithoutBoundBuffer(true)
+  {
+  }
 
-  struct Attrib {
-    bool enabled;
-    Source source;
-  };
+  void Init(RegalContext &ctx)
+  {
+    Reset(ctx);
+  }
 
-  void Reset();
+  void Reset(RegalContext &ctx)
+  {
+    ClientState::VertexArray::Reset();
+    ClientState::PixelStore::Reset();
 
-  void SetEnable ( size_t attribIndex, bool enabled );
-  void SetData   ( size_t attribIndex, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset );
+    maskStack.clear();
+    vertexArrayStack.clear();
+    pixelStoreStack.clear();
 
-  Attrib attrib[ COUNT_ATTRIBS ];
-};
+    // Chromium/PepperAPI GLES generates an error (visible through glGetError) and
+    // logs a message if a call is made to glVertexAttribPointer and no
+    // GL_ARRAY_BUFFER is bound.
 
-void swap( State& lhs, State& rhs );
+    driverAllowsVertexAttributeArraysWithoutBoundBuffer = ( !ctx.isES2() || ctx.info->vendor != "Chromium" );
+  }
 
-size_t ArrayNameToAttribIndex( GLenum array, GLenum texunit=GL_TEXTURE0 );
-size_t IndexedArrayNameToAttribIndex( GLenum array, GLuint index );
-
-void Transition( const Capabilities& cap, const DispatchTableGL& dt, const State& current, const State& target, GLenum& inoutClientActiveTexture, GLuint& inoutArrayBufferBinding );
-
-} // namespace Fixed
-} // namespace VertexArray
-} // namespace ClientState
-
-// ====================================
-// ClientState::VertexArray::Generic
-// ====================================
-
-namespace ClientState {
-namespace VertexArray {
-namespace Generic {
-
-const size_t COUNT_ATTRIBS = 16;
-const size_t COUNT_BUFFERS = 16;
-const size_t INVALID_INDEX = ~0u;
-
-struct State
-{
-  struct Source {
-    GLint size;
-    GLenum type;
-    bool normalized;
-    bool pureInteger;
-    GLuint relativeOffset;
-  };
-
-  struct Attrib {
-    bool enabled;
-    GLuint bindingIndex;
-    Source source;
-  };
-
-  struct Buffer {
-    GLuint buffer;
-    GLintptr offset;
-    GLsizei stride;
-    GLuint divisor;
-  };
-
-  void Reset();
-
-  void SetAttribSource( GLuint attribIndex, GLint size, GLenum type, bool normalized, bool pureInteger, GLuint relativeOffset );
-  void SetBuffer( GLuint bindingIndex, GLuint buffer, GLintptr offset, GLsizei stride );
-  void SetBufferDivisor( GLuint bindingIndex, GLuint divisor );
-  void SetAttribBinding( GLuint attribIndex, GLuint bindingIndex );
-  void SetEnable( GLuint attribIndex, bool enabled );
-
-  Attrib attrib[ COUNT_ATTRIBS ];
-  Buffer buffer[ COUNT_BUFFERS ];
-};
-
-void swap( State& lhs, State& rhs );
-
-void Transition( const Capabilities& cap, const DispatchTableGL& dt, const State& current, const State& target );
-
-} // namespace Generic
-} // namespace VertexArray
-} // namespace ClientState
-
-// ====================================
-// Regal::ClientState::VertexArray
-// ====================================
-
-namespace ClientState {
-namespace VertexArray {
-
-struct VertexArrayObjectState {
-  Fixed::State fixed;
-  Generic::State generic;
-  GLuint elementArrayBufferBinding;
-};
-
-struct State {
-  void Reset();
-  VertexArrayObjectState* GetVertexArrayObject( GLuint vao );
-  VertexArrayObjectState* GetVertexArrayObject();
-
-  VertexArrayObjectState vertexArrayObjectZero;
-
-  GLenum clientActiveTexture;
-  GLuint arrayBufferBinding;
-  GLuint drawIndirectBufferBinding;
-  GLuint vertexArrayBinding;
-  bool primitiveRestartEnabled;
-  // NB: primitiveRestartFixedIndexEnabled is not included in the OpenGL 4.3
-  // Compatibility Profile Table 23.8 (20120806), but indicated by the textual
-  // description in section 10.7
-  bool primitiveRestartFixedIndexEnabled;
-  GLuint primitiveRestartIndex;
-};
-
-void swap( State& lhs, State& rhs );
-
-void Transition( const Capabilities& cap, const DispatchTableGL& dt, const State& current, const State& target );
-
-} // namespace VertexArray
-} // namespace ClientState
-
-// ====================================
-// Ppca
-// ====================================
-
-namespace Emu {
-
-struct Ppca {
-  typedef std::vector<GLbitfield> ClientAttribMaskStack;
-  typedef std::vector<ClientState::PixelStore::State> PixelStoreStateStack;
-  typedef std::vector<ClientState::VertexArray::State> VertexArrayStateStack;
-
-  Ppca();
-
-  void Init( RegalContext &ctx );
-  void Cleanup( RegalContext &ctx )
+  void Cleanup(RegalContext &ctx)
   {
     UNUSED_PARAMETER(ctx);
   }
 
-  void Reset();
-  void DetectVertexAttributeArrayWithoutBoundBufferSupport( RegalContext& ctx );
+  void glPushClientAttrib(RegalContext &ctx, GLbitfield mask)
+  {
+    // from glspec43.compatibility.20130214.withchanges.pdf Sec. 21.6, p. 622
+    //
+    // A STACK_OVERFLOW error is generated if PushClientAttrib is called
+    // and the client attribute stack depth is equal to the value of
+    // MAX_CLIENT_ATTRIB_STACK_DEPTH.
+    //
+    // TODO: set correct GL error here
 
-  // Pixel Storage State
+    if (maskStack.size() >= ctx.info->max_client_attrib_stack_depth)
+      return;
 
-  void ShadowPixelStore( GLenum pname, GLint pvalue );
-  void ShadowPixelStore( GLenum pname, GLfloat pvalue );
+    maskStack.push_back(mask);
 
-  // Generic Vertex Attributes
+    if (mask&GL_CLIENT_VERTEX_ARRAY_BIT)
+    {
+      Internal("Regal::Ppca::PushClientAttrib GL_CLIENT_VERTEX_ARRAY_BIT ",ClientState::VertexArray::toString());
+      vertexArrayStack.push_back(ClientState::VertexArray());
+      vertexArrayStack.back() = *this;
+      mask &= ~GL_CLIENT_VERTEX_ARRAY_BIT;
+    }
 
-  void ShadowVertexAttribFormat( GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset );
-  void ShadowVertexAttribIFormat( GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset );
-  void ShadowVertexAttribLFormat( GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset );
+    if (mask&GL_CLIENT_PIXEL_STORE_BIT)
+    {
+      Internal("Regal::Ppca::PushClientAttrib GL_CLIENT_PIXEL_STORE_BIT ",ClientState::PixelStore::toString());
+      pixelStoreStack.push_back(ClientState::PixelStore());
+      pixelStoreStack.back() = *this;
+      mask &= ~GL_CLIENT_PIXEL_STORE_BIT;
+    }
 
-  void ShadowBindVertexBuffer( GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride );
+    // Pass the rest through, for now
 
+    if (ctx.isCore() || ctx.isES1() || ctx.isES2())
+      return;
 
-  void ShadowVertexAttribBinding( GLuint attribindex, GLuint bindingindex );
+    if (mask)
+      ctx.dispatcher.emulation.glPushClientAttrib(mask);
+  }
 
-  void ShadowVertexAttribPointer( GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* pointer );
-  void ShadowVertexIAttribPointer( GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowVertexLAttribPointer( GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
+  void glPopClientAttrib(RegalContext &ctx)
+  {
+    // from glspec43.compatibility.20130214.withchanges.pdf Sec. 21.6, p. 622
+    //
+    // A STACK_UNDERFLOW error is generated if PopClientAttrib is called
+    // and the client attribute stack depth is zero.
+    //
+    // TODO: set correct GL error here
 
-  void ShadowEnableVertexAttribArray( GLuint index );
-  void ShadowDisableVertexAttribArray( GLuint index );
+    if (!maskStack.size())
+      return;
 
-  // Fixed-Function Attributes
+    GLbitfield mask = maskStack.back();
+    maskStack.pop_back();
 
-  void ShadowVertexPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowNormalPointer( GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowColorPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowSecondaryColorPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowIndexPointer( GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowEdgeFlagPointer( GLsizei stride, const GLvoid* pointer );
-  void ShadowFogCoordPointer( GLenum type, GLsizei stride, const GLvoid* pointer );
-  void ShadowTexCoordPointer( GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
+    if (mask&GL_CLIENT_VERTEX_ARRAY_BIT)
+    {
+      RegalAssert(vertexArrayStack.size());
+      ClientState::VertexArray::transition(ctx.dispatcher.emulation, vertexArrayStack.back(), driverAllowsVertexAttributeArraysWithoutBoundBuffer);
+      vertexArrayStack.pop_back();
 
-  void ShadowEnableClientState( GLenum cap );
-  void ShadowDisableClientState( GLenum cap );
+      Internal("Regal::Ppca::PopClientAttrib GL_CLIENT_VERTEX_ARRAY_BIT ",ClientState::VertexArray::toString());
 
-  void ShadowClientActiveTexture( GLenum texture );
+      mask &= ~GL_CLIENT_VERTEX_ARRAY_BIT;
+    }
 
-  // Vertex Attribute Divisors
+    if (mask&GL_CLIENT_PIXEL_STORE_BIT)
+    {
+      RegalAssert(pixelStoreStack.size());
+      ClientState::PixelStore::transition(ctx.dispatcher.emulation, pixelStoreStack.back());
+      pixelStoreStack.pop_back();
 
-  void ShadowVertexBindingDivisor( GLuint bindingindex, GLuint divisor );
-  void ShadowVertexAttribDivisor( GLuint index, GLuint divisor );
+      Internal("Regal::Ppca::PopClientAttrib GL_CLIENT_PIXEL_STORE_BIT ",ClientState::PixelStore::toString());
 
-  // Primitive Restart
+      mask &= ~GL_CLIENT_PIXEL_STORE_BIT;
+    }
 
-  void ShadowEnableDisable_( GLenum target, bool enable );
-  void ShadowEnable( GLenum target );
-  void ShadowDisable( GLenum target );
+    // Pass the rest through, for now
 
-  void ShadowPrimitiveRestartIndex( GLuint index );
+    if (ctx.isCore() || ctx.isES1() || ctx.isES2())
+      return;
 
-  // Vertex Arrays in Buffer Objects
+    if (mask)
+      ctx.dispatcher.emulation.glPopClientAttrib();
+  }
 
-  void ShadowBindBuffer( GLenum target, GLuint buffer );
+  void glClientAttribDefaultEXT(RegalContext &ctx, GLbitfield mask)
+  {
+    if (mask&GL_CLIENT_VERTEX_ARRAY_BIT)
+    {
+      ClientState::VertexArray::Reset();
 
-  // Vertex Array Objects
+      Internal("Regal::Ppca::glClientAttribDefaultEXT GL_CLIENT_VERTEX_ARRAY_BIT ",ClientState::VertexArray::toString());
 
-  void ShadowBindVertexArray( GLuint array );
+      // Ideally we'd only set the state that has changed - revisit
 
-  // Interleaved Arrays
+      ClientState::VertexArray::set(ctx.dispatcher.emulation,driverAllowsVertexAttributeArraysWithoutBoundBuffer);
 
-  void ShadowInterleavedArrays( GLenum format, GLsizei stride, const GLvoid* pointer );
+      mask &= ~GL_CLIENT_VERTEX_ARRAY_BIT;
+    }
 
-  // Direct State Access
+    if (mask&GL_CLIENT_PIXEL_STORE_BIT)
+    {
+      ClientState::PixelStore::Reset();
 
-  void ClientAttribDefaultDSA( RegalContext* ctx, GLbitfield mask );
-  void PushClientAttribDefaultDSA( RegalContext* ctx, GLbitfield mask );
+      Internal("Regal::Ppca::PopClientAttrib GL_CLIENT_PIXEL_STORE_BIT ",ClientState::PixelStore::toString());
 
-  void ShadowMultiTexCoordPointerDSA( GLenum texunit, GLint size, GLenum type, GLsizei stride, const GLvoid* pointer );
+      // Ideally we'd only set the state that has changed - revisit
 
-  void ShadowEnableClientStateIndexedDSA( GLenum cap, GLuint index );
-  void ShadowDisableClientStateIndexedDSA( GLenum cap, GLuint index );
+      ClientState::PixelStore::set(ctx.dispatcher.emulation);
 
-  void ShadowVertexArrayVertexOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayColorOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayEdgeFlagOffsetDSA( GLuint vaobj, GLuint buffer, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayIndexOffsetDSA( GLuint vaobj, GLuint buffer, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayNormalOffsetDSA( GLuint vaobj, GLuint buffer, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayTexCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayMultiTexCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLenum texunit, GLint size, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayFogCoordOffsetDSA( GLuint vaobj, GLuint buffer, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArraySecondaryColorOffsetDSA( GLuint vaobj, GLuint buffer, GLint size, GLenum type, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayVertexAttribOffsetDSA( GLuint vaobj, GLuint buffer, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLintptr offset );
-  void ShadowVertexArrayVertexAttribIOffsetDSA( GLuint vaobj, GLuint buffer, GLuint index, GLint size, GLenum type, GLsizei stride, GLintptr offset );
+      mask &= ~GL_CLIENT_PIXEL_STORE_BIT;
+    }
 
-  void ShadowEnableVertexArrayDSA( GLuint vaobj, GLenum array );
-  void ShadowDisableVertexArrayDSA( GLuint vaobj, GLenum array );
+    // Pass the rest through, for now
 
-  void ShadowEnableVertexArrayAttribDSA( GLuint vaobj, GLuint index );
-  void ShadowDisableVertexArrayAttribDSA( GLuint vaobj, GLuint index );
+    if (ctx.isCore() || ctx.isES1() || ctx.isES2())
+      return;
 
-  void ShadowDeleteBuffer_( GLuint buffer );
-  void ShadowDeleteVertexArray_( GLuint array );
-  void ShadowDeleteBuffers( GLsizei n, const GLuint* buffers );
-  void ShadowDeleteVertexArrays( GLsizei n, const GLuint* arrays );
+    if (mask)
+      ctx.dispatcher.emulation.glClientAttribDefaultEXT(mask);
+  }
 
-  // Push/Pop Client attribute state
+  void glPushClientAttribDefaultEXT(RegalContext &ctx, GLbitfield mask)
+  {
+    GLbitfield tmpMask = mask;
+    glPushClientAttrib(ctx, tmpMask);
+    glClientAttribDefaultEXT(ctx, mask);
+  }
 
-  void PushClientAttrib( RegalContext* ctx, GLbitfield mask );
-  void PopClientAttrib( RegalContext* ctx );
+  void glBindBuffer( GLenum target, GLuint buffer )
+  {
+    ClientState::VertexArray::glBindBuffer(target,buffer);
+    ClientState::PixelStore::glBindBuffer(target,buffer);
+  }
 
-  // Get
+  void glDeleteBuffers( GLsizei n, const GLuint *buffers )
+  {
+    ClientState::VertexArray::glDeleteBuffers(n,buffers);
+    ClientState::PixelStore::glDeleteBuffers(n,buffers);
+  }
 
-  bool Get( RegalContext* ctx, GLenum pname, GLint* params );
-  bool Get( RegalContext* ctx, GLenum pname, GLint64* params );
-  bool Get( RegalContext* ctx, GLenum pname, GLfloat* params );
-  bool Get( RegalContext* ctx, GLenum pname, GLdouble* params );
-  bool Get( RegalContext* ctx, GLenum pname, GLboolean* params );
+  bool glGetv(RegalContext &ctx, GLenum pname, GLboolean *params)
+  {
+    switch (pname)
+    {
+      case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
+        params[0] = GL_TRUE;
+        break;
+      case GL_CLIENT_ATTRIB_STACK_DEPTH:
+        params[0] = (maskStack.size() != 0);
+        break;
+     case GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS:
+        params[0] = ctx.info->max_combined_texture_image_units != 0;
+        break;
+     case GL_MAX_TEXTURE_COORDS:
+        params[0] = ctx.info->max_texture_coords != 0;
+        break;
+     case GL_MAX_TEXTURE_UNITS:
+        params[0] = ctx.info->max_texture_units != 0;
+        break;
 
-  ClientState::Capabilities capabilities;
+      default:
+        return false;
+    }
+    return true;
+  }
 
-  ClientState::PixelStore::State pss;
-  ClientState::VertexArray::State vas;
+  template <typename T> bool glGetv(RegalContext &ctx, GLenum pname, T *params)
+  {
+    switch (pname)
+    {
+      case GL_MAX_CLIENT_ATTRIB_STACK_DEPTH:
+        params[0] = static_cast<T>(ctx.info->max_client_attrib_stack_depth);
+        break;
+      case GL_CLIENT_ATTRIB_STACK_DEPTH:
+        params[0] = static_cast<T>(maskStack.size());
+        break;
+      case GL_MAX_VERTEX_ATTRIBS:
+        params[0] = static_cast<T>(ctx.info->max_vertex_attribs);
+        break;
+      case GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS:
+        params[0] = static_cast<T>(ctx.info->max_combined_texture_image_units);
+        break;
+      case GL_MAX_TEXTURE_COORDS:
+        params[0] = static_cast<T>(ctx.info->max_texture_coords);
+        break;
+      case GL_MAX_TEXTURE_UNITS:
+        params[0] = static_cast<T>(ctx.info->max_texture_units);
+        break;
 
-  ClientAttribMaskStack clientAttribMaskStack_;
-  PixelStoreStateStack pixelStoreStateStack_;
-  VertexArrayStateStack vertexArrayStateStack_;
+      default:
+        return false;
+    }
+    return true;
+  }
+
+  Ppca &swap(Ppca &other)
+  {
+    std::swap(driverAllowsVertexAttributeArraysWithoutBoundBuffer,other.driverAllowsVertexAttributeArraysWithoutBoundBuffer);
+    std::swap(maskStack,other.maskStack);
+    std::swap(vertexArrayStack,other.vertexArrayStack);
+    std::swap(pixelStoreStack,other.pixelStoreStack);
+
+    VertexArray::swap(other);
+    PixelStore::swap(other);
+
+    return *this;
+  }
+
+  bool driverAllowsVertexAttributeArraysWithoutBoundBuffer;
+  std::vector<GLbitfield>                maskStack;
+  std::vector<ClientState::VertexArray>  vertexArrayStack;
+  std::vector<ClientState::PixelStore>   pixelStoreStack;
 };
 
-} // namespace Emu
+}
 
 REGAL_NAMESPACE_END
 

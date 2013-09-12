@@ -154,6 +154,7 @@ struct Dsa
         if( NotMatrixMode( mode ) ) {
             dsa.matrixMode = mode;
             switch( mode ) {
+                //<>  dsn: wtf?  Why are these accepted?  And why only up to GL_TEXTURE3?
                 case GL_TEXTURE0: case GL_TEXTURE1: case GL_TEXTURE2: case GL_TEXTURE3:
                     DsaActiveTexture( ctx, mode );
                     dsa.matrixMode = GL_TEXTURE;
@@ -175,11 +176,15 @@ struct Dsa
         return tex != ( dsa.activeTexture != REGAL_DSA_INVALID ? dsa.activeTexture : drv.activeTexture );
     }
     bool ShadowActiveTexture( GLenum realActiveTexture ) {
+        if ( !validTextureEnum(realActiveTexture) )
+            return false;
         drv.activeTexture = realActiveTexture;
         bool usingDsa = dsa.activeTexture != REGAL_DSA_INVALID;
         return usingDsa;
     }
     void DsaActiveTexture( RegalContext * ctx, GLenum tex) {
+        if ( !validTextureEnum(tex) )
+            return;
         if( NotActiveTexture( tex ) ) {
             dsa.activeTexture = tex;
             ctx->dispatcher.emulation.glActiveTexture( dsa.activeTexture );
@@ -545,7 +550,6 @@ struct Dsa
             for( int i = maxTextureUnit; i >= 0; i-- ) {
                 tbl.call(&tbl.glClientActiveTexture)( GL_TEXTURE0 + i );
                 tbl.call(&tbl.glDisableClientState) ( GL_TEXTURE_COORD_ARRAY );
-
             }
             for( int i = 0; i < 16; i++ ) {
                 tbl.call(&tbl.glDisableVertexAttribArray)( i );

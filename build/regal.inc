@@ -5,12 +5,14 @@
 
 # Regal Sources
 
+REGAL.CXX :=
 REGAL.CXX += src/regal/RegalIff.cpp
 REGAL.CXX += src/regal/Regal.cpp
 REGAL.CXX += src/regal/RegalLog.cpp
 REGAL.CXX += src/regal/RegalInit.cpp
 REGAL.CXX += src/regal/RegalBreak.cpp
 REGAL.CXX += src/regal/RegalUtil.cpp
+REGAL.CXX += src/regal/RegalEmu.cpp
 REGAL.CXX += src/regal/RegalFrame.cpp
 REGAL.CXX += src/regal/RegalHelper.cpp
 REGAL.CXX += src/regal/RegalMarker.cpp
@@ -29,6 +31,7 @@ REGAL.CXX += src/regal/RegalDispatcher.cpp
 REGAL.CXX += src/regal/RegalDispatcherGL.cpp
 REGAL.CXX += src/regal/RegalDispatcherGlobal.cpp
 REGAL.CXX += src/regal/RegalDispatchEmu.cpp
+REGAL.CXX += src/regal/RegalDispatchGLX.cpp
 REGAL.CXX += src/regal/RegalDispatchLog.cpp
 REGAL.CXX += src/regal/RegalDispatchCode.cpp
 REGAL.CXX += src/regal/RegalDispatchCache.cpp
@@ -47,13 +50,14 @@ REGAL.CXX += src/regal/RegalJson.cpp
 REGAL.CXX += src/regal/RegalFavicon.cpp
 REGAL.CXX += src/regal/RegalMac.cpp
 REGAL.CXX += src/regal/RegalSo.cpp
-REGAL.CXX += src/regal/RegalPpca.cpp
 REGAL.CXX += src/regal/RegalFilt.cpp
 REGAL.CXX += src/regal/RegalXfer.cpp
+REGAL.CXX += src/regal/RegalX11.cpp
 REGAL.CXX += src/regal/RegalDllMain.cpp
 
 # Regal Internal Headers
 
+REGAL.H :=
 REGAL.H += src/regal/RegalBin.h
 REGAL.H += src/regal/RegalBreak.h
 REGAL.H += src/regal/RegalCacheShader.h
@@ -90,7 +94,6 @@ REGAL.H += src/regal/RegalTexSto.h
 REGAL.H += src/regal/RegalMac.h
 REGAL.H += src/regal/RegalObj.h
 REGAL.H += src/regal/RegalPpa.h
-REGAL.H += src/regal/RegalPpc.h
 REGAL.H += src/regal/RegalPpca.h
 REGAL.H += src/regal/RegalPrecompile.h
 REGAL.H += src/regal/RegalPrivate.h
@@ -114,12 +117,14 @@ REGAL.H += src/regal/pch.h
 
 # Other Regal Headers
 
+REGAL.H.OTHER :=
 REGAL.H.OTHER += include/GL/Regal.h
 REGAL.H.OTHER += src/lookup3/lookup3.h
 
 #
 
-REGAL.INCLUDE   := -Isrc/regal
+REGAL.INCLUDE   :=
+REGAL.INCLUDE   += -Isrc/regal
 REGAL.INCLUDE   += -Isrc/zlib/include
 REGAL.INCLUDE   += -Isrc/libpng/include
 REGAL.INCLUDE   += -Isrc/mongoose

@@ -78,7 +78,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../src/lookup3;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GTEST_HAS_RTTI=0;REGAL_SYS_WGL_DECLARE_WGL;_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -118,7 +118,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../src/lookup3;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GTEST_HAS_RTTI=0;REGAL_SYS_WGL_DECLARE_WGL;_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -157,7 +157,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../src/lookup3;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GTEST_HAS_RTTI=0;REGAL_SYS_WGL_DECLARE_WGL;_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -197,7 +197,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../src/googletest/include;../../../../src/googlemock/include;../../../../src/googlemock;../../../../src/boost;../../../../src/regal;../../../../src/lookup3;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GTEST_HAS_RTTI=0;REGAL_SYS_WGL_DECLARE_WGL;_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>

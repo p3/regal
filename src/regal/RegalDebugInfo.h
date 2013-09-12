@@ -99,7 +99,7 @@ struct DebugInfo {
 
     void Init( RegalContext * ctx ) {
         UNUSED_PARAMETER(ctx);
-        matrixMode = RGL_MODELVIEW;
+        matrixMode = GL_MODELVIEW;
     }
 
     void MatrixMode( RegalContext * ctx, GLenum mode ) {

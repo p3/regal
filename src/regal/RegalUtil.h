@@ -73,6 +73,38 @@
 #define REGAL_DECL_EXPORT 1
 #endif
 
+// Defaults for Emscripten static mode
+
+#if REGAL_SYS_EMSCRIPTEN_STATIC
+# ifndef REGAL_DRIVER
+#  define REGAL_DRIVER 1
+# endif
+# ifndef REGAL_NAMESPACE
+#  define REGAL_NAMESPACE 1
+# endif
+# ifndef REGAL_LOADER
+#  define REGAL_LOADER 0
+# endif
+# ifndef REGAL_MISSING
+#  define REGAL_MISSING 0
+# endif
+# ifndef REGAL_PLUGIN
+#  define REGAL_PLUGIN 0
+# endif
+# ifndef REGAL_TRACE
+#  define REGAL_TRACE 0
+# endif
+# ifndef REGAL_STATIC_ES2
+#  define REGAL_STATIC_ES2 1
+# endif
+# ifndef REGAL_STATIC_EGL
+#  define REGAL_STATIC_EGL 1
+# endif
+# ifndef REGAL_NO_GETENV
+#  define REGAL_NO_GETENV 1
+# endif
+#endif
+
 // Support for "plugin" dispatch or emulation layers by default.
 // Some features require this, otherwise: -DREGAL_PLUGIN=0
 
@@ -152,6 +184,18 @@
 
 #ifndef REGAL_DRIVER
 #define REGAL_DRIVER 1
+#endif
+
+// Lazy loading of driver dispatch supported by default
+
+#ifndef REGAL_LOADER
+#define REGAL_LOADER 1
+#endif
+
+// Avoid crashing for missing driver functions by default
+
+#ifndef REGAL_MISSING
+#define REGAL_MISSING 1
 #endif
 
 #ifndef REGAL_LOG
@@ -509,6 +553,15 @@ inline bool getEnv(const char * const varname, std::string &var, const bool enab
 }
 
 //
+// Array size - the number of elements of a C array
+//
+// http://stackoverflow.com/questions/437150/can-someone-explain-this-template-code-that-gives-me-the-size-of-an-array
+//
+
+template <typename T, size_t N>
+inline size_t array_size(const T (&)[N]) { return N; }
+
+//
 // RegalCheckGLError
 //
 
@@ -526,6 +579,16 @@ inline bool getEnv(const char * const varname, std::string &var, const bool enab
 #  define RegalAssert( foo )
 #else
 #  define RegalAssert( foo ) if (!(foo)) ::REGAL_NAMESPACE_INTERNAL::AssertFunction( __FILE__ , __LINE__ , #foo);
+#endif
+
+//
+// RegalAssertArrayIndex
+//
+
+#if REGAL_NO_ASSERT
+#  define RegalAssertArrayIndex( array, index )
+#else
+#  define RegalAssertArrayIndex( array, index ) RegalAssert( static_cast<size_t>(index) < array_size(array) )
 #endif
 
 #if !REGAL_NO_ASSERT

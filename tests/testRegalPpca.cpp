@@ -43,1989 +43,2785 @@ using namespace Regal;
 using namespace Regal::Emu;
 
 using ::testing::Mock;
+using ::testing::_;
+using ::testing::AnyNumber;
+
 
 template <typename T, size_t N> size_t arraysize( const T( & )[ N ] ) {
   return N;
 }
 
-// ====================================
-// ClientState::PixelStore::State
-// ====================================
+void checkNamedVertexArrayDefaults(ClientState::NamedVertexArray& nva, GLuint n)
+{
+  EXPECT_EQ( GLboolean(GL_FALSE),   nva.enabled );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>(NULL), nva.pointer );
+  EXPECT_EQ( GLuint(0),             nva.buffer );
+  EXPECT_EQ( GLsizei(0),            nva.stride );
 
-TEST( RegalClientStatePixelStore, SizesAndMappings ) {
-  using namespace ClientState::PixelStore;
-  using ClientState::PixelStore::State;
-  using ClientState::PixelStore::PNameToIndex;
+  if (n == ClientState::FOG_COORD ||
+      n == ClientState::INDEX ||
+      n == ClientState::EDGE_FLAG)
+    EXPECT_EQ( GLint(1), nva.size );
+  else if (n == ClientState::NORMAL ||
+           n == ClientState::SECONDARY_COLOR)
+    EXPECT_EQ( GLint(3), nva.size );
+  else
+    EXPECT_EQ( GLint(4), nva.size );
 
-  // The arrays for the state data and mapping must match the number of
-  // named attributes the state supports.
-  ASSERT_EQ( STATE_COUNT, arraysize( static_cast<const State *>( NULL )->data ) );
-  ASSERT_EQ( STATE_COUNT, arraysize( State::indexToPName ) );
-
-  // Test the round trip mapping from index to name and back)
-  for ( size_t i = 0; i < STATE_COUNT; ++i ) {
-    EXPECT_EQ( i, PNameToIndex( State::indexToPName[ i ] ) );
-  }
-
-  // Unexpected names should return an invalid index.
-  EXPECT_EQ( INVALID_INDEX, PNameToIndex( GL_PACK_SWAP_BYTES - 1 ) );
+  if (n == ClientState::EDGE_FLAG)
+    EXPECT_EQ( GLenum(GL_BOOL),  nva.type );
+  else
+    EXPECT_EQ( GLenum(GL_FLOAT), nva.type );
 }
 
-TEST( RegalClientStatePixelStore, BasicOperations ) {
-  using ClientState::PixelStore::State;
-  using ClientState::PixelStore::PNameToIndex;
-
-  State state;
-  state.Reset();
-
-  State other;
-  other.Reset();
-
-  // It should be possible to set each attribute in a state to a unique
-  // value.
-  other.Set( GL_PACK_SWAP_BYTES     , 11 );
-  other.Set( GL_PACK_LSB_FIRST      , 12 );
-  other.Set( GL_PACK_ROW_LENGTH     , 13 );
-  other.Set( GL_PACK_IMAGE_HEIGHT   , 14 );
-  other.Set( GL_PACK_SKIP_ROWS      , 15 );
-  other.Set( GL_PACK_SKIP_PIXELS    , 16 );
-  other.Set( GL_PACK_SKIP_IMAGES    , 17 );
-  other.Set( GL_PACK_ALIGNMENT      , 18 );
-  other.Set( GL_UNPACK_SWAP_BYTES   , 21 );
-  other.Set( GL_UNPACK_LSB_FIRST    , 22 );
-  other.Set( GL_UNPACK_ROW_LENGTH   , 23 );
-  other.Set( GL_UNPACK_IMAGE_HEIGHT , 24 );
-  other.Set( GL_UNPACK_SKIP_ROWS    , 25 );
-  other.Set( GL_UNPACK_SKIP_PIXELS  , 26 );
-  other.Set( GL_UNPACK_SKIP_IMAGES  , 27 );
-  other.Set( GL_UNPACK_ALIGNMENT    , 28 );
-  other.pixelPackBufferBinding   = 100;
-  other.pixelUnpackBufferBinding = 101;
-
-  // Setting with an invalid name should silenty do nothing
-  // This is done here so if we affect the explicitly set state it will be
-  // detected soon.
-  other.Set( GL_TEXTURE0, 0xdead );
-
-  // Getting with an invalid name should just return zero
-  EXPECT_EQ( 0, state.Get( GL_TEXTURE0 ) );
-
-  // Peform a swap, so that it is effectively tested too
-  swap( state, other );
-
-  // It should be possible to get the unique value set previously in the
-  // swapped state.
-  EXPECT_EQ( 11, state.Get( GL_PACK_SWAP_BYTES     ) );
-  EXPECT_EQ( 12, state.Get( GL_PACK_LSB_FIRST      ) );
-  EXPECT_EQ( 13, state.Get( GL_PACK_ROW_LENGTH     ) );
-  EXPECT_EQ( 14, state.Get( GL_PACK_IMAGE_HEIGHT   ) );
-  EXPECT_EQ( 15, state.Get( GL_PACK_SKIP_ROWS      ) );
-  EXPECT_EQ( 16, state.Get( GL_PACK_SKIP_PIXELS    ) );
-  EXPECT_EQ( 17, state.Get( GL_PACK_SKIP_IMAGES    ) );
-  EXPECT_EQ( 18, state.Get( GL_PACK_ALIGNMENT      ) );
-  EXPECT_EQ( 21, state.Get( GL_UNPACK_SWAP_BYTES   ) );
-  EXPECT_EQ( 22, state.Get( GL_UNPACK_LSB_FIRST    ) );
-  EXPECT_EQ( 23, state.Get( GL_UNPACK_ROW_LENGTH   ) );
-  EXPECT_EQ( 24, state.Get( GL_UNPACK_IMAGE_HEIGHT ) );
-  EXPECT_EQ( 25, state.Get( GL_UNPACK_SKIP_ROWS    ) );
-  EXPECT_EQ( 26, state.Get( GL_UNPACK_SKIP_PIXELS  ) );
-  EXPECT_EQ( 27, state.Get( GL_UNPACK_SKIP_IMAGES  ) );
-  EXPECT_EQ( 28, state.Get( GL_UNPACK_ALIGNMENT    ) );
-
-  EXPECT_EQ( 100u, state.pixelPackBufferBinding );
-  EXPECT_EQ( 101u, state.pixelUnpackBufferBinding );
-
-  // Verify the expected default state set previously ended up in the swapped
-  // state.
-  EXPECT_EQ( 0, other.Get( GL_PACK_SWAP_BYTES     ) );
-  EXPECT_EQ( 0, other.Get( GL_PACK_LSB_FIRST      ) );
-  EXPECT_EQ( 0, other.Get( GL_PACK_ROW_LENGTH     ) );
-  EXPECT_EQ( 0, other.Get( GL_PACK_IMAGE_HEIGHT   ) );
-  EXPECT_EQ( 0, other.Get( GL_PACK_SKIP_ROWS      ) );
-  EXPECT_EQ( 0, other.Get( GL_PACK_SKIP_PIXELS    ) );
-  EXPECT_EQ( 0, other.Get( GL_PACK_SKIP_IMAGES    ) );
-  EXPECT_EQ( 4, other.Get( GL_PACK_ALIGNMENT      ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_SWAP_BYTES   ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_LSB_FIRST    ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_ROW_LENGTH   ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_IMAGE_HEIGHT ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_SKIP_ROWS    ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_SKIP_PIXELS  ) );
-  EXPECT_EQ( 0, other.Get( GL_UNPACK_SKIP_IMAGES  ) );
-  EXPECT_EQ( 4, other.Get( GL_UNPACK_ALIGNMENT    ) );
-
-  EXPECT_EQ( 0u, other.pixelPackBufferBinding );
-  EXPECT_EQ( 0u, other.pixelUnpackBufferBinding );
+void checkVertexBufferBindPointDefaults(ClientState::VertexBufferBindPoint& vbbp)
+{
+  EXPECT_EQ( GLuint(0),   vbbp.buffer );
+  EXPECT_EQ( GLintptr(0), vbbp.offset );
+  EXPECT_EQ( GLsizei(16), vbbp.stride );
+  EXPECT_EQ( GLuint(0),   vbbp.divisor );
 }
 
-TEST( RegalClientStatePixelStore, Transition ) {
-  using ClientState::Capabilities;
-  using ClientState::PixelStore::State;
-  using ClientState::PixelStore::PNameToIndex;
-  using ClientState::PixelStore::Transition;
+void checkGenericVertexArrayDefaults(ClientState::GenericVertexArray& gva, GLuint index)
+{
+  EXPECT_EQ( GLboolean(GL_FALSE), gva.enabled );
+  EXPECT_EQ( GLuint(4),           gva.size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    gva.type );
+  EXPECT_EQ( GLuint(0),           gva.relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), gva.normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), gva.isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), gva.isLong );
+  EXPECT_EQ( index,               gva.bindingIndex );
+}
 
+void checkVertexArrayDefaults(ClientState::VertexArray& va)
+{
+  EXPECT_EQ( GLuint(0),           va.elementArrayBufferBinding );
+  EXPECT_EQ( GLenum(GL_TEXTURE0), va.clientActiveTexture );
+  EXPECT_EQ( GLboolean(GL_FALSE), va.primitiveRestartFixedIndex );
+  EXPECT_EQ( GLboolean(GL_FALSE), va.primitiveRestart );
+  EXPECT_EQ( GLuint(0),           va.primitiveRestartIndex );
+  EXPECT_EQ( GLuint(0),           va.arrayBufferBinding );
+  EXPECT_EQ( GLuint(0),           va.vertexArrayBinding );
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+    checkNamedVertexArrayDefaults( va.named[ii], ii );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+    checkVertexBufferBindPointDefaults( va.bindings[ii] );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+    checkGenericVertexArrayDefaults( va.generic[ii], ii );
+}
+
+void checkPixelStoreDefaults(ClientState::PixelStore& ps)
+{
+  EXPECT_EQ( GLboolean(GL_FALSE), ps.unpackSwapBytes );
+  EXPECT_EQ( GLboolean(GL_FALSE), ps.unpackLsbFirst );
+  EXPECT_EQ( GLint(0),            ps.unpackImageHeight );
+  EXPECT_EQ( GLint(0),            ps.unpackSkipImages );
+  EXPECT_EQ( GLint(0),            ps.unpackRowLength );
+  EXPECT_EQ( GLint(0),            ps.unpackSkipRows );
+  EXPECT_EQ( GLint(0),            ps.unpackSkipPixels );
+  EXPECT_EQ( GLint(4),            ps.unpackAlignment );
+  EXPECT_EQ( GLboolean(GL_FALSE), ps.packSwapBytes );
+  EXPECT_EQ( GLboolean(GL_FALSE), ps.packLsbFirst );
+  EXPECT_EQ( GLint(0),            ps.packImageHeight );
+  EXPECT_EQ( GLint(0),            ps.packSkipImages );
+  EXPECT_EQ( GLint(0),            ps.packRowLength );
+  EXPECT_EQ( GLint(0),            ps.packSkipRows );
+  EXPECT_EQ( GLint(0),            ps.packSkipPixels );
+  EXPECT_EQ( GLint(4),            ps.packAlignment );
+  EXPECT_EQ( GLuint(0),           ps.pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint(0),           ps.pixelPackBufferBinding );
+}
+
+void checkPpcaDefaults(RegalContext& ctx, Ppca& ppca)
+{
+  GLint clientAttribStackDepth = 666;
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(0) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(0),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  checkVertexArrayDefaults(ppca);
+  checkPixelStoreDefaults(ppca);
+}
+
+TEST ( RegalPpca, Ppca_Defaults )
+{
   RegalGMockInterface mock;
-
-  Capabilities cap;
-
-  DispatchTableGL dt;
-  ::memset(&dt,0,sizeof(DispatchTableGL));
-  dt._enabled = true;
-  InitDispatchTableGMock( dt );
-
-  State current;
-  current.Reset();
-
-  State target;
-  target.Reset();
-
-  // Set some of the named attributes, and expect that calls will be made
-  // appropriately to the backend to transition to those value.
-  target.Set( GL_UNPACK_SKIP_PIXELS, 123 );
-  target.Set( GL_UNPACK_ALIGNMENT  , 456 );
-  target.pixelPackBufferBinding   = 321;
-  target.pixelUnpackBufferBinding = 654;
-
-  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_SKIP_PIXELS         , 123 ) );
-  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_ALIGNMENT           , 456 ) );
-  EXPECT_CALL( mock, glBindBuffer ( GL_PIXEL_PACK_BUFFER_BINDING  , 321 ) );
-  EXPECT_CALL( mock, glBindBuffer ( GL_PIXEL_UNPACK_BUFFER_BINDING, 654 ) );
-
-  // Perform the state transition
-  Transition( cap, dt, current, target );
-  Mock::VerifyAndClear( &mock );
-
-  // A transition with no differences should make no calls.
-
-  current.Reset();
-  target.Reset();
-
-  target.Set( GL_UNPACK_SKIP_PIXELS, 123 );
-  target.Set( GL_UNPACK_ALIGNMENT  , 456 );
-  target.pixelPackBufferBinding   = 321;
-  target.pixelUnpackBufferBinding = 654;
-
-  current.Set( GL_UNPACK_SKIP_PIXELS, 123 );
-  current.Set( GL_UNPACK_ALIGNMENT  , 456 );
-  current.pixelPackBufferBinding   = 321;
-  current.pixelUnpackBufferBinding = 654;
-
-  // Perform the state transition
-  Transition( cap, dt, current, target );
-  Mock::VerifyAndClear( &mock );
-}
-
-// ====================================
-// ClientState::VertexArray::Fixed::State
-// ====================================
-
-TEST( RegalClientStateVertexArrayFixedState, SizesAndMappings ) {
-  using namespace ClientState::VertexArray::Fixed;
-  using ClientState::VertexArray::Fixed::State;
-  using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
-  using ClientState::VertexArray::Fixed::IndexedArrayNameToAttribIndex;
-
-  ASSERT_EQ( COUNT_ATTRIBS, arraysize( static_cast<State *>( NULL )->attrib ) );
-
-  // An expected attribute name returns the expected index
-  // (note: the full range of names effectively tested elsewhere)
-  EXPECT_EQ( BASE_NAMED_ATTRIBS, ArrayNameToAttribIndex( GL_VERTEX_ARRAY ) );
-  // For most attributes that do not use it, passing in non-default texture unit makes no difference.
-  EXPECT_EQ( BASE_NAMED_ATTRIBS, ArrayNameToAttribIndex( GL_VERTEX_ARRAY, GL_TEXTURE5 ) );
-  // An unexpected name should give an invalid index
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, ArrayNameToAttribIndex( GL_PACK_SWAP_BYTES ) );
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, ArrayNameToAttribIndex( GL_PACK_SWAP_BYTES, GL_TEXTURE5 ) );
-  // Texture coordinate attributes do use the texture unit.
-  EXPECT_EQ( BASE_TEXTURE_COORD_ATTRIBS + 5u, ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE5 ) );
-  // Passing in a bad texture unit gives an invalid index
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 - 1 ) );
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 + COUNT_TEXTURE_COORD_ATTRIBS ) );
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, 0 ) );
-
-  // Most attribute names are not indexed, and should return an invalid index.
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, IndexedArrayNameToAttribIndex( GL_VERTEX_ARRAY, 0 ) );
-  // Unexpected names should also give an invalid index.
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, IndexedArrayNameToAttribIndex( GL_PACK_SWAP_BYTES, 0 ) );
-  // Texture coordinates are indexed, and should return valid output indices for valid input indices.
-  EXPECT_EQ( BASE_TEXTURE_COORD_ATTRIBS, IndexedArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, 0 ) );
-  EXPECT_EQ( BASE_TEXTURE_COORD_ATTRIBS + COUNT_TEXTURE_COORD_ATTRIBS - 1, IndexedArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, COUNT_TEXTURE_COORD_ATTRIBS - 1 ) );
-  // But even for texture coordinates, input indices outside the valid range return an invalid index.
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, IndexedArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, -1 ) );
-  EXPECT_EQ( INVALID_ATTRIB_INDEX, IndexedArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, COUNT_TEXTURE_COORD_ATTRIBS ) );
-}
-
-TEST( RegalClientStateVertexArrayFixedState, BasicOperations ) {
-  using namespace ClientState::VertexArray::Fixed;
-  using ClientState::VertexArray::Fixed::State;
-  using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
-
-  const size_t normalAttribIndex         = ArrayNameToAttribIndex ( GL_NORMAL_ARRAY );
-  const size_t secondaryColorAttribIndex = ArrayNameToAttribIndex ( GL_SECONDARY_COLOR_ARRAY );
-  const size_t indexAttribIndex          = ArrayNameToAttribIndex ( GL_INDEX_ARRAY );
-  const size_t fogCoordAttribIndex       = ArrayNameToAttribIndex ( GL_FOG_COORD_ARRAY );
-  const size_t edgeFlagAttribIndex       = ArrayNameToAttribIndex ( GL_EDGE_FLAG_ARRAY );
-
-  State state;
-  state.Reset();
-
-  State other;
-  other.Reset();
-
-  // Enable a specific attribute array.
-  state.SetEnable( 4, true );
-
-  // Set unique data for the array source for all attributes.
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    state.SetData( i, i * 10 + 1, i * 10 + 2, i * 10 + 3, i * 10 + 4, i * 10 + 5 );
-  }
-
-  // Calls with out-of-bound values should silently return as a no-op.
-  // This is done here so if we affect the explicitly set state it will be
-  // detected soon.
-  state.SetEnable( INVALID_ATTRIB_INDEX, true );
-  state.SetEnable( COUNT_ATTRIBS, true );
-  state.SetData( INVALID_ATTRIB_INDEX, 0xdead, 0xdead, 0xdead, 0xdead, 0xdead );
-  state.SetData( COUNT_ATTRIBS, 0xdead, 0xdead, 0xdead, 0xdead, 0xdead );
-
-  // Peform a swap, so that it is effectively tested too
-  swap( state, other );
-
-  // Verify the unique data that was set is in the swapped state.
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    const State::Attrib& attrib = other.attrib[ i ];
-
-    if ( i == 4 ) {
-      EXPECT_TRUE( attrib.enabled );
-    } else {
-      EXPECT_FALSE( attrib.enabled );
-    }
-
-    EXPECT_EQ( static_cast<GLuint>( i * 10 + 1 ), attrib.source.buffer );
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 2 ), attrib.source.size   );
-    EXPECT_EQ( static_cast<GLenum>( i * 10 + 3 ), attrib.source.type   );
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 4 ), attrib.source.stride );
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 5 ), attrib.source.offset );
-  }
-
-  // Verify the expected default state set previously ended up in the swapped
-  // state.
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    const State::Attrib& attrib = state.attrib[ i ];
-    EXPECT_FALSE( attrib.enabled ) << "index " << i;
-    EXPECT_EQ( 0u, attrib.source.buffer ) << "index " << i;
-    if ( ( i == indexAttribIndex ) || ( i == fogCoordAttribIndex ) || ( i == edgeFlagAttribIndex ) ) {
-      EXPECT_EQ( 1, attrib.source.size ) << "index " << i;
-    } else if ( ( i == secondaryColorAttribIndex ) || ( i == normalAttribIndex ) ) {
-      EXPECT_EQ( 3, attrib.source.size ) << "index " << i;
-    } else {
-      EXPECT_EQ( 4, attrib.source.size ) << "index " << i;
-    }
-    if ( i == edgeFlagAttribIndex ) {
-      EXPECT_EQ( static_cast<GLenum>( GL_BOOL ), attrib.source.type ) << "index " << i;
-    } else {
-      EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), attrib.source.type ) << "index " << i;
-    }
-    EXPECT_EQ( 0, attrib.source.stride ) << "index " << i;
-    EXPECT_EQ( 0, attrib.source.offset ) << "index " << i;
-  }
-}
-
-TEST( RegalClientStateVertexArrayFixedState, Transition ) {
-  using ClientState::Capabilities;
-  using ClientState::VertexArray::Fixed::State;
-  using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
-  using ClientState::VertexArray::Fixed::IndexedArrayNameToAttribIndex;
-  using ClientState::VertexArray::Fixed::Transition;
-
-  RegalGMockInterface mock;
-
-  Capabilities cap;
-  cap.driverAllowsVertexAttributeArraysWithoutBoundBuffer = true;
-
-  DispatchTableGL dt;
-  ::memset(&dt,0,sizeof(DispatchTableGL));
-  dt._enabled = true;
-  InitDispatchTableGMock( dt );
-
-  State current;
-  current.Reset();
-
-  State target;
-  target.Reset();
-
-  // The mapping between named fixed vertex attributes and the function to set
-  // their attributes is messy. We explicitly test every one to ensure the
-  // correct behavior.
-
-  // The vertex position attribute array uses all the array state we have.
-  target.SetEnable ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  target.SetData   ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 10, 11, 12, 13, 14 );
-  EXPECT_CALL( mock, glEnableClientState( GL_VERTEX_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 10 ) );
-  EXPECT_CALL( mock, glVertexPointer    ( 11, 12, 13, reinterpret_cast<const GLvoid*>( 14 ) ) );
-
-  // The vertex normal attribute array does not need the first size argument.
-  target.SetEnable( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), 20, 21, 22, 23, 24 );
-  EXPECT_CALL( mock, glEnableClientState( GL_NORMAL_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 20 ) );
-  EXPECT_CALL( mock, glNormalPointer    ( 22, 23, reinterpret_cast<const GLvoid*>( 24 ) ) );
-
-  // The color attribute array uses all the array state we have.
-  target.SetEnable( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), 30, 31, 32, 33, 34 );
-  EXPECT_CALL( mock, glEnableClientState( GL_COLOR_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 30 ) );
-  EXPECT_CALL( mock, glColorPointer     ( 31, 32, 33, reinterpret_cast<const GLvoid*>( 34 ) ) );
-
-  // The secondary color attribute array uses all the array state we have.
-  target.SetEnable( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_SECONDARY_COLOR_ARRAY ), 40, 41, 42, 43, 44 );
-  EXPECT_CALL( mock, glEnableClientState    ( GL_SECONDARY_COLOR_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 40 ) );
-  EXPECT_CALL( mock, glSecondaryColorPointer( 41, 42, 43, reinterpret_cast<const GLvoid*>( 44 ) ) );
-
-  // The index attribute array does not need the first size argument.
-  target.SetEnable( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_INDEX_ARRAY ), 50, 51, 52, 53, 54 );
-  EXPECT_CALL( mock, glEnableClientState( GL_INDEX_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 50 ) );
-  EXPECT_CALL( mock, glIndexPointer     ( 52, 53, reinterpret_cast<const GLvoid*>( 54 ) ) );
-
-  // The edge flag attribute array does not need the size or the type
-  // arguments.
-  target.SetEnable( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_EDGE_FLAG_ARRAY ), 60, 61, 62, 63, 64 );
-  EXPECT_CALL( mock, glEnableClientState( GL_EDGE_FLAG_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 60 ) );
-  EXPECT_CALL( mock, glEdgeFlagPointer  ( 63, reinterpret_cast<const GLvoid*>( 64 ) ) );
-
-  // The fog coordiante attribute array does not need the size argument.
-  target.SetEnable( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_FOG_COORD_ARRAY ), 70, 71, 72, 73, 74 );
-  EXPECT_CALL( mock, glEnableClientState( GL_FOG_COORD_ARRAY ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 70 ) );
-  EXPECT_CALL( mock, glFogCoordPointer  ( 72, 73, reinterpret_cast<const GLvoid*>( 74 ) ) );
-
-  // There are multiple texture coordinate arrays, one for each texture unit.
-  // They use all the array state we have.
-  // They need a call to glClientActiveTexture to select the texture unit, if
-  // not already seleced.
-  // Note below we indicate that GL_TEXTURE0 is already selected, so there
-  // should be no call to select it again.
-  target.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 ), 80, 81, 82, 83, 84 );
-  target.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE5 ), true );
-  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE5 ), 90, 91, 92, 93, 94 );
-  EXPECT_CALL( mock, glEnableClientState  ( GL_TEXTURE_COORD_ARRAY ) ).Times( 2 );
-  EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE5 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 80 ) );
-  EXPECT_CALL( mock, glTexCoordPointer    ( 81, 82, 83, reinterpret_cast<const GLvoid*>( 84 ) ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 90 ) );
-  EXPECT_CALL( mock, glTexCoordPointer    ( 91, 92, 93, reinterpret_cast<const GLvoid*>( 94 ) ) );
-
-  // Perform the requested transition
-  GLenum clientActiveTexture = GL_TEXTURE0;
-  GLuint arrayBufferBinding = 0;
-  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
-  // Verify that we've updated the shadowed selected texture unit as expected.
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE5 ), clientActiveTexture );
-  EXPECT_EQ( static_cast<GLuint>( 90 ), arrayBufferBinding );
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-  target.Reset();
-  current.Reset();
-
-  // Verify state gets disabled/reset to default from non-default.
-  current.SetEnable( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  current.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4, 5 );
-  current.SetEnable( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), true );
-  current.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), 80, 81, 82, 83, 84 );
-  EXPECT_CALL( mock, glDisableClientState ( GL_VERTEX_ARRAY ) );
-  EXPECT_CALL( mock, glVertexPointer      ( 4, GL_FLOAT, 0, NULL ) );
-  EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE1 ) );
-  EXPECT_CALL( mock, glDisableClientState ( GL_TEXTURE_COORD_ARRAY ) );
-  EXPECT_CALL( mock, glTexCoordPointer    ( 4, GL_FLOAT, 0, NULL ) );
-
-  // Enabling/Disabling an array is a distinct operation.
-  current.SetEnable( ArrayNameToAttribIndex( GL_NORMAL_ARRAY ), true );
-  EXPECT_CALL( mock, glDisableClientState( GL_NORMAL_ARRAY ) );
-
-  // Setting array data is a distinct operation
-  current.SetData  ( ArrayNameToAttribIndex( GL_COLOR_ARRAY ), 30, 31, 32, 33, 34 );
-  EXPECT_CALL( mock, glColorPointer     ( 4, GL_FLOAT, 0, NULL ) );
-
-  // Perform the requested transition
-  clientActiveTexture = GL_TEXTURE0;
-  arrayBufferBinding = 0;
-  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
-  // Verify that we've updated the shadowed selected texture unit as expected.
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE1 ), clientActiveTexture );
-  EXPECT_EQ( static_cast<GLuint>( 0 ), arrayBufferBinding );
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-  target.Reset();
-  current.Reset();
-
-  // Identical state is a no-op in terms of calls.
-  current.SetEnable( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  current.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4, 5 );
-  target.SetEnable ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), true );
-  target.SetData   ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 1, 2, 3, 4, 5 );
-
-  clientActiveTexture = GL_TEXTURE4;
-  arrayBufferBinding = 123;
-  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
-  // Verify that the shadowed selected texture unit is not updated.
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE4 ), clientActiveTexture );
-  EXPECT_EQ( static_cast<GLuint>( 123 ), arrayBufferBinding );
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-  target.Reset();
-  current.Reset();
-
-  // If the driver does not support vertex buffer arrays without a bound array
-  // buffer, then our code should not make the call to set the vertex attribute
-  // array if the target state use a buffer of zero for that attribute.
-  cap.driverAllowsVertexAttributeArraysWithoutBoundBuffer = false;
-  target.SetData  ( ArrayNameToAttribIndex( GL_VERTEX_ARRAY ), 0, 12, 13, 14, 15 );
-  target.SetData  ( ArrayNameToAttribIndex( GL_TEXTURE_COORD_ARRAY, GL_TEXTURE1 ), 21, 22, 23, 24, 25 );
-  EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE1 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 21 ) );
-  EXPECT_CALL( mock, glTexCoordPointer    ( 22, 23, 24, reinterpret_cast<const void*>( 25 ) ) );
-
-  // Perform the requested transition
-  clientActiveTexture = GL_TEXTURE0;
-  arrayBufferBinding = 0;
-  Transition( cap, dt, current, target, clientActiveTexture, arrayBufferBinding );
-
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-  target.Reset();
-  current.Reset();
-}
-
-// ====================================
-// ClientState::VertexArray::Generic::State
-// ====================================
-
-TEST( RegalClientStateVertexArrayGenericState, Sizes ) {
-  using namespace ClientState::VertexArray::Generic;
-  using ClientState::VertexArray::Generic::State;
-
-  ASSERT_EQ( COUNT_ATTRIBS, arraysize( static_cast<State *>( NULL )->attrib ) );
-  ASSERT_EQ( COUNT_BUFFERS, arraysize( static_cast<State *>( NULL )->buffer ) );
-}
-
-TEST( RegalClientStateVertexArrayGenericState, BasicOperations ) {
-  using namespace ClientState::VertexArray::Generic;
-  using ClientState::VertexArray::Generic::State;
-
-  State state;
-  state.Reset();
-
-  State other;
-  other.Reset();
-
-  // Enable a specific attribute array.
-  state.SetEnable( 4, true );
-
-  // Set unique data for the array source and binding for all attributes.
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    state.SetAttribSource( i, i * 10 + 1, i * 10 + 2, i == 1, i == 2, i * 10 + 3 );
-    state.SetAttribBinding( i, ( i + 1 ) % COUNT_BUFFERS );
-  }
-
-  // Set unique data for the array buffers.
-  for ( size_t i = 0; i < COUNT_BUFFERS; ++i ) {
-    state.SetBuffer( i, 1000 + i * 10 + 1, 1000 + i * 10 + 2, 1000 + i * 10 + 3 );
-    state.SetBufferDivisor( i, 1000 + i * 10 + 4 );
-  }
-
-  // Calls with out-of-bound values should silently return as a no-op.
-  // This is done here so if we affect the explicitly set state it will be
-  // detected soon.
-  state.SetEnable( INVALID_INDEX, true );
-  state.SetEnable( COUNT_ATTRIBS, true );
-
-  state.SetAttribSource( INVALID_INDEX, 0xdead, 0xdead, false, false, 0xdead );
-  state.SetAttribSource( COUNT_ATTRIBS, 0xdead, 0xdead, false, false, 0xdead );
-
-  state.SetAttribBinding( INVALID_INDEX, 5 );
-  state.SetAttribBinding( COUNT_ATTRIBS, 5 );
-  state.SetAttribBinding( 0, INVALID_INDEX );
-  state.SetAttribBinding( 0, COUNT_BUFFERS );
-
-  state.SetBuffer( INVALID_INDEX, 0xdead, 0xdead, 0xdead );
-  state.SetBuffer( COUNT_BUFFERS, 0xdead, 0xdead, 0xdead );
-
-  state.SetBufferDivisor( INVALID_INDEX, 0xdead );
-  state.SetBufferDivisor( COUNT_BUFFERS, 0xdead );
-
-  // Peform a swap, so that it is effectively tested too.
-  swap( state, other );
-
-  // Verify the unique data that was set is in the swapped state.
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    const State::Attrib& attrib = other.attrib[ i ];
-
-    if ( i == 4 ) {
-      EXPECT_TRUE( attrib.enabled );
-    } else {
-      EXPECT_FALSE( attrib.enabled );
-    }
-
-    EXPECT_EQ( static_cast<GLint> ( i * 10 + 1 ),  attrib.source.size );
-    EXPECT_EQ( static_cast<GLenum>( i * 10 + 2 ), attrib.source.type );
-    EXPECT_EQ( i * 10 + 3,  attrib.source.relativeOffset );
-
-    if ( i == 1 ) {
-      EXPECT_TRUE( attrib.source.normalized );
-    } else {
-      EXPECT_FALSE( attrib.source.normalized );
-    }
-
-    if ( i == 2 ) {
-      EXPECT_TRUE( attrib.source.pureInteger );
-    } else {
-      EXPECT_FALSE( attrib.source.pureInteger );
-    }
-
-    EXPECT_EQ( ( i + 1 ) % COUNT_BUFFERS, attrib.bindingIndex );
-  }
-
-  for ( size_t i = 0; i < COUNT_BUFFERS; ++i ) {
-    const State::Buffer& buffer = other.buffer[ i ];
-    EXPECT_EQ( 1000 + i * 10 + 1, buffer.buffer );
-    EXPECT_EQ( static_cast<GLint> ( 1000 + i * 10 + 2 ), buffer.offset );
-    EXPECT_EQ( static_cast<GLint> ( 1000 + i * 10 + 3 ), buffer.stride );
-    EXPECT_EQ( 1000 + i * 10 + 4, buffer.divisor );
-  }
-
-  // Verify the expected default state set previously ended up in the swapped
-  // state.
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    const State::Attrib& attrib = state.attrib[ i ];
-
-    EXPECT_FALSE( attrib.enabled ) << "index " << i;
-
-    EXPECT_EQ( 4, attrib.source.size ) << "index " << i;
-    EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), attrib.source.type ) << "index " << i;
-    EXPECT_EQ( 0u, attrib.source.relativeOffset ) << "index " << i;
-    EXPECT_FALSE( attrib.source.normalized ) << "index " << i;
-    EXPECT_FALSE( attrib.source.pureInteger ) << "index " << i;
-
-    EXPECT_EQ( i, attrib.bindingIndex ) << "index " << i;
-  }
-
-  for ( size_t i = 0; i < COUNT_BUFFERS; ++i ) {
-    const State::Buffer& buffer = state.buffer[ i ];
-    EXPECT_EQ( 0u, buffer.buffer );
-    EXPECT_EQ( 0, buffer.offset );
-    EXPECT_EQ( 16, buffer.stride );
-    EXPECT_EQ( 0u, buffer.divisor );
-  }
-}
-
-TEST( RegalClientStateVertexArrayGenericState, Transition ) {
-  using ClientState::Capabilities;
-  using ClientState::VertexArray::Generic::State;
-  using ClientState::VertexArray::Generic::Transition;
-
-  RegalGMockInterface mock;
-
-  Capabilities cap;
-
-  DispatchTableGL dt;
-  ::memset(&dt,0,sizeof(DispatchTableGL));
-  dt._enabled = true;
-  InitDispatchTableGMock( dt );
-
-  State current;
-  current.Reset();
-
-  State target;
-  target.Reset();
-
-  // An attribute array can be enabled.
-  target.SetEnable ( 0, true );
-  EXPECT_CALL( mock, glEnableVertexAttribArray( 0 ) );
-
-  // An attribute array can be configured.
-  target.SetAttribSource( 1, 11, 12, false, false, 13 );
-  target.SetAttribSource( 2, 21, 22, true, false, 23 );
-  target.SetAttribSource( 3, 31, 32, false, true, 33 );
-  EXPECT_CALL( mock, glVertexAttribFormat ( 1, 11, 12, GL_FALSE, 13 ) );
-  EXPECT_CALL( mock, glVertexAttribFormat ( 2, 21, 22, GL_TRUE, 23 ) );
-  EXPECT_CALL( mock, glVertexAttribIFormat( 3, 31, 32, 33 ) );
-
-  // An attribute buffer can be configured.
-  target.SetBuffer( 4, 41, 42, 43 );
-  EXPECT_CALL( mock, glBindVertexBuffer( 4, 41, 42, 43 ) );
-
-  // An attribute buffer divisor can be configured.
-  target.SetBufferDivisor( 5, 51 );
-  EXPECT_CALL( mock, glVertexBindingDivisor( 5, 51 ) );
-
-  target.SetAttribBinding( 6, 7 );
-  EXPECT_CALL( mock, glVertexAttribBinding( 6, 7 ) );
-
-  // An attribute can be disabled and all data reset to default.
-  current.SetEnable       ( 8, true );
-  current.SetAttribSource ( 8, 61, 62, false, false, 63 );
-  current.SetBuffer       ( 8, 64, 65, 66 );
-  current.SetBufferDivisor( 8, 67 );
-  current.SetAttribBinding( 8, 9 );
-  EXPECT_CALL( mock, glDisableVertexAttribArray ( 8 ) );
-  EXPECT_CALL( mock, glVertexAttribFormat ( 8, 4, GL_FLOAT, GL_FALSE, 0 ) );
-  EXPECT_CALL( mock, glBindVertexBuffer( 8, 0, 0, 16 ) );
-  EXPECT_CALL( mock, glVertexBindingDivisor( 8, 0 ) );
-  EXPECT_CALL( mock, glVertexAttribBinding( 8, 8 ) );
-
-  // Perform the requested state transition.
-  Transition( cap, dt, current, target );
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-  target.Reset();
-  current.Reset();
-
-  // Identical state is a no-op in terms of calls.
-  current.SetEnable       ( 0, true );
-  current.SetAttribSource ( 0, 11, 12, false, false, 13 );
-  current.SetBuffer       ( 0, 14, 15, 16 );
-  current.SetBufferDivisor( 0, 17 );
-  current.SetAttribBinding( 0, 1 );
-  target.SetEnable        ( 0, true );
-  target.SetAttribSource  ( 0, 11, 12, false, false, 13 );
-  target.SetBuffer        ( 0, 14, 15, 16 );
-  target.SetBufferDivisor ( 0, 17 );
-  target.SetAttribBinding ( 0, 1 );
-
-  // Perform the requested state transition.
-  Transition( cap, dt, current, target );
-}
-
-// ====================================
-// Regal::ClientState::VertexArray::State
-// ====================================
-
-TEST( RegalClientStateVertexArrayState, ResetAndSwap ) {
-  using ClientState::VertexArray::State;
-
-  State state;
-  state.Reset();
-
-  State other;
-  other.Reset();
-
-  state.clientActiveTexture = 1;
-  state.arrayBufferBinding = 2;
-  state.drawIndirectBufferBinding = 3;
-  state.vertexArrayBinding = 4;
-  state.primitiveRestartEnabled = true;
-  state.primitiveRestartFixedIndexEnabled = true;
-  state.primitiveRestartIndex = 5;
-  state.vertexArrayObjectZero.elementArrayBufferBinding = 6;
-
-  swap( state, other );
-
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE0 ), state.clientActiveTexture );
-  EXPECT_EQ( 0u, state.arrayBufferBinding );
-  EXPECT_EQ( 0u, state.drawIndirectBufferBinding );
-  EXPECT_EQ( 0u, state.vertexArrayBinding );
-  EXPECT_FALSE( state.primitiveRestartEnabled );
-  EXPECT_FALSE( state.primitiveRestartFixedIndexEnabled );
-  EXPECT_EQ( 0u, state.primitiveRestartIndex );
-  EXPECT_EQ( 0u, state.vertexArrayObjectZero.elementArrayBufferBinding );
-
-  EXPECT_EQ( 1u, other.clientActiveTexture );
-  EXPECT_EQ( 2u, other.arrayBufferBinding );
-  EXPECT_EQ( 3u, other.drawIndirectBufferBinding );
-  EXPECT_EQ( 4u, other.vertexArrayBinding );
-  EXPECT_TRUE( other.primitiveRestartEnabled );
-  EXPECT_TRUE( other.primitiveRestartFixedIndexEnabled );
-  EXPECT_EQ( 5u, other.primitiveRestartIndex );
-  EXPECT_EQ( 6u, other.vertexArrayObjectZero.elementArrayBufferBinding );
-}
-
-TEST( RegalClientStateVertexArrayState, GetVertexArrayObject ) {
-  using ClientState::VertexArray::State;
-
-  State state;
-  state.Reset();
-
-  EXPECT_EQ( &state.vertexArrayObjectZero, state.GetVertexArrayObject( 0 ) );
-  EXPECT_EQ( NULL, state.GetVertexArrayObject( 1 ) );
-
-  state.vertexArrayBinding = 0;
-  EXPECT_EQ( &state.vertexArrayObjectZero, state.GetVertexArrayObject() );
-  state.vertexArrayBinding = 1;
-  EXPECT_EQ( NULL, state.GetVertexArrayObject() );
-}
-
-TEST( RegalClientStateVertexArrayState, Transition ) {
-  using ClientState::Capabilities;
-  using ClientState::VertexArray::State;
-  using ClientState::VertexArray::Transition;
-
-  RegalGMockInterface mock;
-
-  Capabilities cap;
-
-  DispatchTableGL dt;
-  ::memset(&dt,0,sizeof(DispatchTableGL));
-  dt._enabled = true;
-  InitDispatchTableGMock( dt );
-
-  State current;
-  current.Reset();
-
-  State target;
-  target.Reset();
-
-  // Set up a simple non-default state, focusing on state unique this structure.
-  target.clientActiveTexture = 1;
-  target.arrayBufferBinding = 2;
-  target.drawIndirectBufferBinding = 3;
-  target.vertexArrayBinding = 4;
-  target.primitiveRestartEnabled = true;
-  target.primitiveRestartFixedIndexEnabled = true;
-  target.primitiveRestartIndex = 5;
-  target.vertexArrayObjectZero.elementArrayBufferBinding = 6;
-
-  // Set up expectations.
-  EXPECT_CALL( mock, glClientActiveTexture( 1 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 2 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_DRAW_INDIRECT_BUFFER, 3 ) );
-  EXPECT_CALL( mock, glBindVertexArray( 4 ) );
-  EXPECT_CALL( mock, glEnable( GL_PRIMITIVE_RESTART ) );
-  EXPECT_CALL( mock, glEnable( GL_PRIMITIVE_RESTART_FIXED_INDEX ) );
-  EXPECT_CALL( mock, glPrimitiveRestartIndex( 5 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 6 ) );
-
-  // Perform the requested state transition.
-  Transition( cap, dt, current, target );
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-
-  // Reverse the transition.
-  swap( current, target );
-
-  // Set up expectations.
-  EXPECT_CALL( mock, glClientActiveTexture( GL_TEXTURE0 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 0 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_DRAW_INDIRECT_BUFFER, 0 ) );
-  EXPECT_CALL( mock, glBindVertexArray( 0 ) );
-  EXPECT_CALL( mock, glDisable( GL_PRIMITIVE_RESTART ) );
-  EXPECT_CALL( mock, glDisable( GL_PRIMITIVE_RESTART_FIXED_INDEX ) );
-  EXPECT_CALL( mock, glPrimitiveRestartIndex( 0 ) );
-  EXPECT_CALL( mock, glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 ) );
-
-  // Perform the requested state transition.
-  Transition( cap, dt, current, target );
-  // Verify the call expectations, and reset for another test.
-  Mock::VerifyAndClear( &mock );
-}
-
-// ====================================
-// Regal::Ppca
-// ====================================
-
-TEST ( RegalPpca, ClientPixelStoreStateShadowing ) {
-  using ClientState::PixelStore::PNameToIndex;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  // The value stored should be rounded to the nearest integer.
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, 123 );
-  EXPECT_EQ( 123, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, 123 );
-  EXPECT_EQ( 123, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, 123.1f );
-  EXPECT_EQ( 123, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, 123.5f );
-  EXPECT_EQ( 124, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, 123.9f );
-  EXPECT_EQ( 124, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, -123.1f );
-  EXPECT_EQ( -123, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, -123.5f );
-  EXPECT_EQ( -123, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-
-  ppca.ShadowPixelStore( GL_UNPACK_SKIP_PIXELS, -123.9f );
-  EXPECT_EQ( -124, ppca.pss.Get( GL_UNPACK_SKIP_PIXELS ) );
-}
-
-TEST ( RegalPpca, ClientVertexArrayStateGenericShadowing ) {
-  using ClientState::VertexArray::Generic::State;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  State& state = ppca.vas.vertexArrayObjectZero.generic;
-
-  // VertexAttribFormat
-
-  state.Reset();
-  ppca.ShadowVertexAttribFormat ( 3, 4, GL_FLOAT, GL_TRUE, 123 );
-
-  EXPECT_EQ   ( 4, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ 3 ].source.type );
-  EXPECT_TRUE ( state.attrib[ 3 ].source.normalized );
-  EXPECT_FALSE( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 123u, state.attrib[ 3 ].source.relativeOffset );
-
-  state.Reset();
-  ppca.ShadowVertexAttribFormat ( 3, 4, GL_FLOAT, GL_FALSE, 123 );
-
-  EXPECT_FALSE ( state.attrib[ 3 ].source.normalized );
-
-  state.Reset();
-  ppca.ShadowVertexAttribIFormat( 3, 1, GL_INT, 456 );
-
-  EXPECT_EQ   ( 1, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_INT ), state.attrib[ 3 ].source.type );
-  EXPECT_FALSE( state.attrib[ 3 ].source.normalized );
-  EXPECT_TRUE ( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 456u, state.attrib[ 3 ].source.relativeOffset );
-
-  state.Reset();
-  ppca.ShadowVertexAttribLFormat( 3, 2, GL_DOUBLE, 789 );
-
-  EXPECT_EQ   ( 2, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_DOUBLE ), state.attrib[ 3 ].source.type );
-  EXPECT_FALSE( state.attrib[ 3 ].source.normalized );
-  EXPECT_FALSE( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 789u, state.attrib[ 3 ].source.relativeOffset );
-
-  // BindVertexBuffer
-
-  state.Reset();
-  ppca.ShadowBindVertexBuffer( 4, 5, 6, 7 );
-
-  EXPECT_EQ   ( 5u, state.buffer[ 4 ].buffer );
-  EXPECT_EQ   ( static_cast<GLintptr>( 6 ), state.buffer[ 4 ].offset );
-  EXPECT_EQ   ( 7, state.buffer[ 4 ].stride );
-  EXPECT_EQ   ( 0u, state.buffer[ 4 ].divisor );
-
-  // VertexAttribBinding
-
-  state.Reset();
-  ppca.ShadowVertexAttribBinding( 3, 4 );
-
-  EXPECT_EQ   ( 4u, state.attrib[ 3 ].bindingIndex );
-
-  // VertexAttribPointer
-
-  state.Reset();
-  ppca.vas.arrayBufferBinding = 8888;
-  ppca.ShadowVertexAttribPointer ( 3, 1, GL_FLOAT,  GL_TRUE, 123, reinterpret_cast<GLvoid *>( 321 ) );
-
-  EXPECT_EQ   ( 1, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ 3 ].source.type );
-  EXPECT_TRUE ( state.attrib[ 3 ].source.normalized );
-  EXPECT_FALSE( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
-  EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ   ( 8888u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( static_cast<GLintptr>( 321 ), state.buffer[ 3 ].offset );
-  EXPECT_EQ   ( 123, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexAttribPointer ( 3, 1, GL_FLOAT,  GL_FALSE, 0, reinterpret_cast<GLvoid *>( 321 ) );
-
-  EXPECT_FALSE( state.attrib[ 3 ].source.normalized );
-  EXPECT_EQ   ( 4, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexIAttribPointer( 3, 2, GL_INT,    456, reinterpret_cast<GLvoid *>( 654 ) );
-
-  EXPECT_EQ   ( 2, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_INT ), state.attrib[ 3 ].source.type );
-  EXPECT_FALSE( state.attrib[ 3 ].source.normalized );
-  EXPECT_TRUE ( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
-  EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ   ( 8888u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( static_cast<GLintptr>( 654 ), state.buffer[ 3 ].offset );
-  EXPECT_EQ   ( 456, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexIAttribPointer( 3, 2, GL_INT, 0, reinterpret_cast<GLvoid *>( 654 ) );
-
-  EXPECT_EQ   ( 8, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexLAttribPointer( 3, 3, GL_DOUBLE, 789, reinterpret_cast<GLvoid *>( 987 ) );
-
-  EXPECT_EQ   ( 3, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_DOUBLE ), state.attrib[ 3 ].source.type );
-  EXPECT_FALSE( state.attrib[ 3 ].source.normalized );
-  EXPECT_FALSE( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
-  EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ   ( 8888u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( static_cast<GLintptr>( 987 ) , state.buffer[ 3 ].offset );
-  EXPECT_EQ   ( 789, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexLAttribPointer( 3, 3, GL_DOUBLE, 0, reinterpret_cast<GLvoid *>( 987 ) );
-
-  EXPECT_EQ   ( 24, state.buffer[ 3 ].stride );
-
-  // Enable/DisableVertexAttribArray
-
-  state.Reset();
-  ppca.ShadowEnableVertexAttribArray( 3 );
-
-  EXPECT_TRUE( state.attrib [ 3 ].enabled );
-
-  ppca.ShadowDisableVertexAttribArray( 3 );
-
-  EXPECT_FALSE( state.attrib [ 3 ].enabled );
-
-  // VertexBindingDivisor
-
-  state.Reset();
-  ppca.ShadowVertexBindingDivisor( 4, 123 );
-
-  EXPECT_EQ( 123u, state.buffer[ 4 ].divisor );
-
-  // VertexAttribDivisor
-
-  state.Reset();
-  ppca.ShadowVertexAttribDivisor( 3, 456 );
-
-  EXPECT_EQ( 3u, state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ( 456u, state.buffer[ 3 ].divisor );
-
-  // ShadowVertexArrayVertexAttribOffsetDSA
-
-  state.Reset();
-  ppca.ShadowVertexArrayVertexAttribOffsetDSA( 0, 987, 3, 1, GL_FLOAT, GL_TRUE, 123, 321 );
-
-  EXPECT_EQ   ( 1, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ 3 ].source.type );
-  EXPECT_TRUE ( state.attrib[ 3 ].source.normalized );
-  EXPECT_FALSE( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
-  EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ   ( 987u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( static_cast<GLintptr>( 321 ), state.buffer[ 3 ].offset );
-  EXPECT_EQ   ( 123, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexArrayVertexAttribOffsetDSA( 0, 987, 3, 1, GL_FLOAT, GL_FALSE, 0, 321 );
-
-  EXPECT_FALSE ( state.attrib[ 3 ].source.normalized );
-  EXPECT_EQ   ( 4, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexArrayVertexAttribIOffsetDSA( 0, 987, 3, 2, GL_INT, 456, 654 );
-
-  EXPECT_EQ   ( 2, state.attrib[ 3 ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_INT ), state.attrib[ 3 ].source.type );
-  EXPECT_FALSE( state.attrib[ 3 ].source.normalized );
-  EXPECT_TRUE ( state.attrib[ 3 ].source.pureInteger );
-  EXPECT_EQ   ( 0u, state.attrib[ 3 ].source.relativeOffset );
-  EXPECT_EQ   ( 3u, state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ   ( 987u, state.buffer[ 3 ].buffer );
-  EXPECT_EQ   ( static_cast<GLintptr>( 654 ), state.buffer[ 3 ].offset );
-  EXPECT_EQ   ( 456, state.buffer[ 3 ].stride );
-
-  state.Reset();
-  ppca.ShadowVertexArrayVertexAttribIOffsetDSA( 0, 987, 3, 2, GL_INT, 0, 654 );
-
-  EXPECT_EQ   ( 8, state.buffer[ 3 ].stride );
-
-  // EnableDisableVertexArrayAttribDSA
-
-  state.Reset();
-  ppca.ShadowEnableVertexArrayAttribDSA( 0, 3 );
-
-  EXPECT_TRUE( state.attrib [ 3 ].enabled );
-
-  ppca.ShadowDisableVertexArrayAttribDSA( 0, 3 );
-
-  EXPECT_FALSE( state.attrib [ 3 ].enabled );
-
-
-
-  // If the vertex array binding is nonzero, none of these calls should do
-  // anything (since we do not actually track internal state for vertex array
-  // objects.
-  state.Reset();
-  state.attrib[ 3 ].source.relativeOffset = 123;
-  state.attrib[ 3 ].bindingIndex = 4;
-  state.buffer[ 4 ].buffer = 456;
-  state.buffer[ 4 ].divisor = 789;
-
-  ppca.vas.vertexArrayBinding = 1;
-
-  ppca.ShadowVertexAttribFormat ( 3, 3, GL_FLOAT, GL_TRUE, 0 );
-  ppca.ShadowVertexAttribIFormat( 3, 3, GL_INT, 0 );
-  ppca.ShadowVertexAttribLFormat( 3, 3, GL_DOUBLE, 0 );
-
-  ppca.ShadowBindVertexBuffer( 4, 0, 0, 0 );
-
-  ppca.ShadowVertexAttribBinding( 3, 0 );
-
-  ppca.ShadowVertexAttribPointer ( 3, 1, GL_FLOAT,  GL_TRUE, 0, NULL );
-  ppca.ShadowVertexIAttribPointer( 3, 2, GL_INT,    0, NULL );
-  ppca.ShadowVertexLAttribPointer( 3, 3, GL_DOUBLE, 0, NULL );
-
-  ppca.ShadowVertexBindingDivisor( 4, 0 );
-
-  ppca.ShadowVertexArrayVertexAttribOffsetDSA ( 1, 0, 3, 1, GL_FLOAT, GL_TRUE, 0, 0 );
-  ppca.ShadowVertexArrayVertexAttribIOffsetDSA( 1, 0, 3, 2, GL_INT, 0, 0 );
-
-  EXPECT_EQ   ( 123u, state.attrib[ 3 ].source.relativeOffset );
-  EXPECT_EQ   ( 4u,   state.attrib[ 3 ].bindingIndex );
-  EXPECT_EQ   ( 456u, state.buffer[ 4 ].buffer );
-  EXPECT_EQ   ( 789u, state.buffer[ 4 ].divisor );
-
-
-
-  state.attrib [ 3 ].enabled = false;
-  ppca.ShadowEnableVertexAttribArray( 3 );
-  ppca.ShadowEnableVertexArrayAttribDSA( 1, 3 );
-  EXPECT_FALSE( state.attrib [ 3 ].enabled );
-
-  state.attrib [ 3 ].enabled = true;
-  ppca.ShadowDisableVertexAttribArray( 3 );
-  ppca.ShadowDisableVertexArrayAttribDSA( 1, 3 );
-  EXPECT_TRUE( state.attrib [ 3 ].enabled );
-}
-
-TEST ( RegalPpca, ClientVertexArrayStateFFShadowing ) {
-  using namespace ClientState::VertexArray::Fixed;
-  using ClientState::VertexArray::Fixed::State;
-  using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  const size_t colorAttribIndex          = ArrayNameToAttribIndex ( GL_COLOR_ARRAY );
-  const size_t edgeFlagAttribIndex       = ArrayNameToAttribIndex ( GL_EDGE_FLAG_ARRAY );
-  const size_t fogCoordAttribIndex       = ArrayNameToAttribIndex ( GL_FOG_COORD_ARRAY );
-  const size_t indexAttribIndex          = ArrayNameToAttribIndex ( GL_INDEX_ARRAY );
-  const size_t normalAttribIndex         = ArrayNameToAttribIndex ( GL_NORMAL_ARRAY );
-  const size_t secondaryColorAttribIndex = ArrayNameToAttribIndex ( GL_SECONDARY_COLOR_ARRAY );
-  const size_t vertexAttribIndex         = ArrayNameToAttribIndex ( GL_VERTEX_ARRAY );
-  const size_t texture0AttribIndex       = ArrayNameToAttribIndex ( GL_TEXTURE_COORD_ARRAY );
-
-  State& state = ppca.vas.vertexArrayObjectZero.fixed;
-
-  ppca.ShadowEnableClientState( GL_COLOR_ARRAY );
-  EXPECT_TRUE( state.attrib[ colorAttribIndex ].enabled );
-
-  ppca.ShadowDisableClientState( GL_COLOR_ARRAY );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex ].enabled );
-
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE0 ), ppca.vas.clientActiveTexture );
-  ppca.ShadowClientActiveTexture( GL_TEXTURE2 );
-  EXPECT_EQ( static_cast<GLenum>( GL_TEXTURE2 ), ppca.vas.clientActiveTexture );
-
-  ppca.ShadowEnableClientState( GL_TEXTURE_COORD_ARRAY );
-  EXPECT_TRUE( state.attrib[ texture0AttribIndex + 2 ].enabled );
-
-  ppca.ShadowDisableClientState( GL_TEXTURE_COORD_ARRAY );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex + 2 ].enabled );
-
-  ppca.ShadowEnableVertexArrayDSA( 0, GL_TEXTURE_COORD_ARRAY );
-  EXPECT_TRUE( state.attrib[ texture0AttribIndex + 2 ].enabled );
-
-  ppca.ShadowDisableVertexArrayDSA( 0, GL_TEXTURE_COORD_ARRAY );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex + 2 ].enabled );
-
-  ppca.ShadowEnableVertexArrayDSA( 1, GL_TEXTURE_COORD_ARRAY );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex + 2 ].enabled );
-
-  ppca.ShadowDisableVertexArrayDSA( 1, GL_TEXTURE_COORD_ARRAY );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex + 2 ].enabled );
-
-  ppca.ShadowEnableClientStateIndexedDSA( GL_TEXTURE_COORD_ARRAY, 5 );
-  EXPECT_TRUE( state.attrib[ texture0AttribIndex + 5 ].enabled );
-
-  ppca.ShadowDisableClientStateIndexedDSA( GL_TEXTURE_COORD_ARRAY, 5 );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex + 5 ].enabled );
-
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    state.attrib[ i ].source.buffer = 0;
-    state.attrib[ i ].source.size = 0;
-    state.attrib[ i ].source.type = 0;
-    state.attrib[ i ].source.stride = 0;
-  }
-
-  ppca.vas.arrayBufferBinding = 123;
-
-  ppca.ShadowVertexPointer( 4, GL_FLOAT, 1001, NULL );
-  EXPECT_EQ( 123u, state.attrib[ vertexAttribIndex ].source.buffer );
-  EXPECT_EQ( 4, state.attrib[ vertexAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ vertexAttribIndex ].source.type );
-  EXPECT_EQ( 1001, state.attrib[ vertexAttribIndex ].source.stride );
-
-  ppca.ShadowNormalPointer( GL_FLOAT, 1002, NULL );
-  EXPECT_EQ( 123u, state.attrib[ normalAttribIndex ].source.buffer );
-  EXPECT_EQ( 3, state.attrib[ normalAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ normalAttribIndex ].source.type );
-  EXPECT_EQ( 1002, state.attrib[ normalAttribIndex ].source.stride );
-
-  ppca.ShadowColorPointer( 4, GL_FLOAT, 1003, NULL );
-  EXPECT_EQ( 123u, state.attrib[ colorAttribIndex ].source.buffer );
-  EXPECT_EQ( 4, state.attrib[ colorAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex ].source.type );
-  EXPECT_EQ( 1003, state.attrib[ colorAttribIndex ].source.stride );
-
-  ppca.ShadowSecondaryColorPointer( 3, GL_FLOAT, 1004, NULL );
-  EXPECT_EQ( 123u, state.attrib[ secondaryColorAttribIndex ].source.buffer );
-  EXPECT_EQ( 3, state.attrib[ secondaryColorAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ secondaryColorAttribIndex ].source.type );
-  EXPECT_EQ( 1004, state.attrib[ secondaryColorAttribIndex ].source.stride );
-
-  ppca.ShadowIndexPointer( GL_INT, 1005, NULL );
-  EXPECT_EQ( 123u, state.attrib[ indexAttribIndex ].source.buffer );
-  EXPECT_EQ( 1, state.attrib[ indexAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_INT ), state.attrib[ indexAttribIndex ].source.type );
-  EXPECT_EQ( 1005, state.attrib[ indexAttribIndex ].source.stride );
-
-  ppca.ShadowEdgeFlagPointer( 1006, NULL );
-  EXPECT_EQ( 123u, state.attrib[ edgeFlagAttribIndex ].source.buffer );
-  EXPECT_EQ( 1, state.attrib[ edgeFlagAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_BOOL ), state.attrib[ edgeFlagAttribIndex ].source.type );
-  EXPECT_EQ( 1006, state.attrib[ edgeFlagAttribIndex ].source.stride );
-
-  ppca.ShadowFogCoordPointer( GL_FLOAT, 1007, NULL );
-  EXPECT_EQ( 123u, state.attrib[ fogCoordAttribIndex ].source.buffer );
-  EXPECT_EQ( 1, state.attrib[ fogCoordAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ fogCoordAttribIndex ].source.type );
-  EXPECT_EQ( 1007, state.attrib[ fogCoordAttribIndex ].source.stride );
-
-  ppca.ShadowTexCoordPointer( 2, GL_FLOAT, 1008, NULL );
-  EXPECT_EQ( 123u, state.attrib[ texture0AttribIndex + 2 ].source.buffer );
-  EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 2 ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 2 ].source.type );
-  EXPECT_EQ( 1008, state.attrib[ texture0AttribIndex + 2 ].source.stride );
-
-
-
-  ppca.ShadowMultiTexCoordPointerDSA( GL_TEXTURE5, 2, GL_FLOAT, 2005, NULL );
-  EXPECT_EQ( 123u, state.attrib[ texture0AttribIndex + 5 ].source.buffer );
-  EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 5 ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 5 ].source.type );
-  EXPECT_EQ( 2005, state.attrib[ texture0AttribIndex + 5 ].source.stride );
-
-
-
-  ppca.ShadowVertexArrayVertexOffsetDSA( 0, 3001, 3, GL_FLOAT, 3002, 0 );
-  EXPECT_EQ( 3001u, state.attrib[ vertexAttribIndex ].source.buffer );
-  EXPECT_EQ( 3, state.attrib[ vertexAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ vertexAttribIndex ].source.type );
-  EXPECT_EQ( 3002, state.attrib[ vertexAttribIndex ].source.stride );
-
-  ppca.ShadowVertexArrayColorOffsetDSA ( 0, 3003, 4, GL_FLOAT, 3004, 0 );
-  EXPECT_EQ( 3003u, state.attrib[ colorAttribIndex ].source.buffer );
-  EXPECT_EQ( 4, state.attrib[ colorAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex ].source.type );
-  EXPECT_EQ( 3004, state.attrib[ colorAttribIndex ].source.stride );
-
-  ppca.ShadowVertexArrayEdgeFlagOffsetDSA ( 0, 3005, 3006, 0 );
-  EXPECT_EQ( 3005u, state.attrib[ edgeFlagAttribIndex ].source.buffer );
-  EXPECT_EQ( 1, state.attrib[ edgeFlagAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_BOOL ), state.attrib[ edgeFlagAttribIndex ].source.type );
-  EXPECT_EQ( 3006, state.attrib[ edgeFlagAttribIndex ].source.stride );
-
-  ppca.ShadowVertexArrayIndexOffsetDSA ( 0, 3007, GL_INT, 3008, 0 );
-  EXPECT_EQ( 3007u, state.attrib[ indexAttribIndex ].source.buffer );
-  EXPECT_EQ( 1, state.attrib[ indexAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_INT ), state.attrib[ indexAttribIndex ].source.type );
-  EXPECT_EQ( 3008, state.attrib[ indexAttribIndex ].source.stride );
-
-  ppca.ShadowVertexArrayNormalOffsetDSA ( 0, 3009, GL_FLOAT, 3010, 0 );
-  EXPECT_EQ( 3009u, state.attrib[ normalAttribIndex ].source.buffer );
-  EXPECT_EQ( 3, state.attrib[ normalAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ normalAttribIndex ].source.type );
-  EXPECT_EQ( 3010, state.attrib[ normalAttribIndex ].source.stride );
-
-  ppca.ShadowVertexArrayTexCoordOffsetDSA( 0, 3011, 2, GL_FLOAT, 3012, 0 );
-  EXPECT_EQ( 3011u, state.attrib[ texture0AttribIndex + 2 ].source.buffer );
-  EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 2 ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 2 ].source.type );
-  EXPECT_EQ( 3012, state.attrib[ texture0AttribIndex + 2 ].source.stride );
-
-  ppca.ShadowVertexArrayMultiTexCoordOffsetDSA( 0, 3013, GL_TEXTURE5, 2, GL_FLOAT, 3014, 0 );
-  EXPECT_EQ( 3013u, state.attrib[ texture0AttribIndex + 5 ].source.buffer );
-  EXPECT_EQ( 2, state.attrib[ texture0AttribIndex + 5 ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 5 ].source.type );
-  EXPECT_EQ( 3014, state.attrib[ texture0AttribIndex + 5 ].source.stride );
-
-  ppca.ShadowVertexArrayFogCoordOffsetDSA ( 0, 3015, GL_FLOAT, 3016, 0 );
-  EXPECT_EQ( 3015u, state.attrib[ fogCoordAttribIndex ].source.buffer );
-  EXPECT_EQ( 1, state.attrib[ fogCoordAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ fogCoordAttribIndex ].source.type );
-  EXPECT_EQ( 3016, state.attrib[ fogCoordAttribIndex ].source.stride );
-
-  ppca.ShadowVertexArraySecondaryColorOffsetDSA ( 0, 3017, 3, GL_FLOAT, 3018, 0 );
-  EXPECT_EQ( 3017u, state.attrib[ secondaryColorAttribIndex ].source.buffer );
-  EXPECT_EQ( 3, state.attrib[ secondaryColorAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ secondaryColorAttribIndex ].source.type );
-  EXPECT_EQ( 3018, state.attrib[ secondaryColorAttribIndex ].source.stride );
-}
-
-TEST ( RegalPpca, ClientVertexArrayStatePrimitiveRestart ) {
-  Ppca ppca;
-  ppca.Reset();
-
-  EXPECT_FALSE( ppca.vas.primitiveRestartEnabled );
-  EXPECT_FALSE( ppca.vas.primitiveRestartFixedIndexEnabled );
-  EXPECT_EQ( 0u, ppca.vas.primitiveRestartIndex );
-
-  ppca.ShadowEnable( GL_PRIMITIVE_RESTART );
-  EXPECT_TRUE( ppca.vas.primitiveRestartEnabled );
-  ppca.ShadowDisable( GL_PRIMITIVE_RESTART );
-  EXPECT_FALSE( ppca.vas.primitiveRestartEnabled );
-
-  ppca.ShadowEnable( GL_PRIMITIVE_RESTART_FIXED_INDEX );
-  EXPECT_TRUE( ppca.vas.primitiveRestartFixedIndexEnabled );
-  ppca.ShadowDisable( GL_PRIMITIVE_RESTART_FIXED_INDEX );
-  EXPECT_FALSE( ppca.vas.primitiveRestartFixedIndexEnabled );
-
-  ppca.ShadowEnable( GL_TEXTURE_GEN_S );
-  EXPECT_FALSE( ppca.vas.primitiveRestartEnabled );
-  EXPECT_FALSE( ppca.vas.primitiveRestartFixedIndexEnabled );
-  ppca.ShadowDisable( GL_TEXTURE_GEN_S );
-
-  ppca.ShadowPrimitiveRestartIndex( ~0u );
-  EXPECT_EQ( ~0u, ppca.vas.primitiveRestartIndex );
-}
-
-TEST ( RegalPpca, ClientVertexArrayStateBindBuffer ) {
-  using ClientState::VertexArray::Generic::State;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  ppca.ShadowBindBuffer( GL_ARRAY_BUFFER, 123 );
-  ppca.ShadowBindBuffer( GL_DRAW_INDIRECT_BUFFER, 456 );
-  ppca.ShadowBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 789 );
-  ppca.ShadowBindBuffer( GL_PIXEL_PACK_BUFFER_BINDING, 321 );
-  ppca.ShadowBindBuffer( GL_PIXEL_UNPACK_BUFFER_BINDING, 654 );
-
-  EXPECT_EQ( 123u, ppca.vas.arrayBufferBinding );
-  EXPECT_EQ( 456u, ppca.vas.drawIndirectBufferBinding );
-  EXPECT_EQ( 789u, ppca.vas.vertexArrayObjectZero.elementArrayBufferBinding );
-  EXPECT_EQ( 321u, ppca.pss.pixelPackBufferBinding );
-  EXPECT_EQ( 654u, ppca.pss.pixelUnpackBufferBinding );
-
-  ppca.Reset();
-  ppca.vas.vertexArrayBinding = 1;
-  ppca.ShadowBindBuffer( GL_ARRAY_BUFFER, 123 );
-  ppca.ShadowBindBuffer( GL_DRAW_INDIRECT_BUFFER, 456 );
-  ppca.ShadowBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 789 );
-  ppca.ShadowBindBuffer( GL_PIXEL_PACK_BUFFER_BINDING, 321 );
-  ppca.ShadowBindBuffer( GL_PIXEL_UNPACK_BUFFER_BINDING, 654 );
-
-  EXPECT_EQ( 123u, ppca.vas.arrayBufferBinding );
-  EXPECT_EQ( 456u, ppca.vas.drawIndirectBufferBinding );
-  EXPECT_EQ( 0u,   ppca.vas.vertexArrayObjectZero.elementArrayBufferBinding );
-  EXPECT_EQ( 321u, ppca.pss.pixelPackBufferBinding );
-  EXPECT_EQ( 654u, ppca.pss.pixelUnpackBufferBinding );
-}
-
-TEST ( RegalPpca, ClientVertexArrayStateInterleavedArrays ) {
-  using namespace ClientState::VertexArray::Fixed;
-  using ClientState::VertexArray::Fixed::State;
-  using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  State& state = ppca.vas.vertexArrayObjectZero.fixed;
-
-  const size_t vertexAttribIndex         = ArrayNameToAttribIndex ( GL_VERTEX_ARRAY );
-  const size_t normalAttribIndex         = ArrayNameToAttribIndex ( GL_NORMAL_ARRAY );
-  const size_t colorAttribIndex          = ArrayNameToAttribIndex ( GL_COLOR_ARRAY );
-  const size_t texture0AttribIndex       = ArrayNameToAttribIndex ( GL_TEXTURE_COORD_ARRAY );
-
-  const size_t edgeFlagAttribIndex       = ArrayNameToAttribIndex ( GL_EDGE_FLAG_ARRAY );
-  const size_t fogCoordAttribIndex       = ArrayNameToAttribIndex ( GL_FOG_COORD_ARRAY );
-  const size_t indexAttribIndex          = ArrayNameToAttribIndex ( GL_INDEX_ARRAY );
-  const size_t secondaryColorAttribIndex = ArrayNameToAttribIndex ( GL_SECONDARY_COLOR_ARRAY );
-
-  // Do a comprehensive test on all settings for GL_T4F_C4F_N3F_V4F
-
-  state.Reset();
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    state.attrib[ i ].enabled       = ( i & 1 ) == 0;
-    state.attrib[ i ].source.size   = 987;
-    state.attrib[ i ].source.type   = 987;
-    state.attrib[ i ].source.stride = 987;
-    state.attrib[ i ].source.offset = 987;
-  }
-
-  ppca.ShadowClientActiveTexture( GL_TEXTURE5 );
-  ppca.ShadowInterleavedArrays( GL_T4F_C4F_N3F_V4F, 0, NULL );
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE ( state.attrib[ texture0AttribIndex + 5 ].enabled );
-
-  EXPECT_EQ( 4,   state.attrib[ vertexAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ vertexAttribIndex ].source.type );
-  EXPECT_EQ( 60,  state.attrib[ vertexAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 44 ), state.attrib[ vertexAttribIndex ].source.offset );
-
-  EXPECT_EQ( 3,   state.attrib[ normalAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ normalAttribIndex ].source.type );
-  EXPECT_EQ( 60,  state.attrib[ normalAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 32 ), state.attrib[ normalAttribIndex ].source.offset );
-
-  EXPECT_EQ( 4,   state.attrib[ colorAttribIndex ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex ].source.type );
-  EXPECT_EQ( 60,  state.attrib[ colorAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 16 ), state.attrib[ colorAttribIndex ].source.offset );
-
-  EXPECT_EQ( 4,   state.attrib[ texture0AttribIndex + 5 ].source.size );
-  EXPECT_EQ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ texture0AttribIndex + 5 ].source.type );
-  EXPECT_EQ( 60,  state.attrib[ texture0AttribIndex + 5 ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex + 5 ].source.offset );
-
-  // The other non-texture coordinate arrays should be disabled
-
-  EXPECT_FALSE( state.attrib[ edgeFlagAttribIndex ].enabled );
-  EXPECT_FALSE( state.attrib[ fogCoordAttribIndex ].enabled );
-  EXPECT_FALSE( state.attrib[ indexAttribIndex ].enabled );
-  EXPECT_FALSE( state.attrib[ secondaryColorAttribIndex ].enabled );
-
-  // The other non-texture coordinate arrays should not otherwise be touched.
-
-  EXPECT_EQ( 987,  state.attrib[ edgeFlagAttribIndex ].source.size );
-  EXPECT_EQ( 987u, state.attrib[ edgeFlagAttribIndex ].source.type );
-  EXPECT_EQ( 987,  state.attrib[ edgeFlagAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ edgeFlagAttribIndex ].source.offset );
-
-  EXPECT_EQ( 987,  state.attrib[ fogCoordAttribIndex ].source.size );
-  EXPECT_EQ( 987u, state.attrib[ fogCoordAttribIndex ].source.type );
-  EXPECT_EQ( 987,  state.attrib[ fogCoordAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ fogCoordAttribIndex ].source.offset );
-
-  EXPECT_EQ( 987,  state.attrib[ indexAttribIndex ].source.size );
-  EXPECT_EQ( 987u, state.attrib[ indexAttribIndex ].source.type );
-  EXPECT_EQ( 987,  state.attrib[ indexAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ indexAttribIndex ].source.offset );
-
-  EXPECT_EQ( 987,  state.attrib[ secondaryColorAttribIndex ].source.size );
-  EXPECT_EQ( 987u, state.attrib[ secondaryColorAttribIndex ].source.type );
-  EXPECT_EQ( 987,  state.attrib[ secondaryColorAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 987 ), state.attrib[ secondaryColorAttribIndex ].source.offset );
-
-  // Verify other texture coordinate settings unaffected.
-
-  for ( size_t i = 0; i < COUNT_TEXTURE_COORD_ATTRIBS; ++i ) {
-    if ( i == 5 ) continue;
-    State::Attrib& attrib = state.attrib[ BASE_TEXTURE_COORD_ATTRIBS + i ];
-    if ( ( ( BASE_TEXTURE_COORD_ATTRIBS + i ) & 1 ) == 0 ) {
-      EXPECT_TRUE( attrib.enabled ) << "Index " << i;
-    } else {
-      EXPECT_FALSE( attrib.enabled ) << "Index " << i;
-    }
-    EXPECT_EQ( 987,  attrib.source.size ) << "Index " << i;
-    EXPECT_EQ( 987u, attrib.source.type ) << "Index " << i;
-    EXPECT_EQ( 987,  attrib.source.stride ) << "Index " << i;
-    EXPECT_EQ( static_cast<GLintptr>( 987 ), attrib.source.offset ) << "Index " << i;
-  }
-
-  // Ensure if stride is nonzero, it is used as is, and ensure the pointer passed in is used as a base address.
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T4F_C4F_N3F_V4F, 321, reinterpret_cast<GLvoid *>( 5000 ) );
-
-  EXPECT_EQ( 321,   state.attrib[ vertexAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 5044 ), state.attrib[ vertexAttribIndex ].source.offset );
-  EXPECT_EQ( 321,   state.attrib[ normalAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 5032 ), state.attrib[ normalAttribIndex ].source.offset );
-  EXPECT_EQ( 321,   state.attrib[ colorAttribIndex ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 5016 ), state.attrib[ colorAttribIndex ].source.offset );
-  EXPECT_EQ( 321,   state.attrib[ texture0AttribIndex + 5 ].source.stride );
-  EXPECT_EQ( static_cast<GLintptr>( 5000 ), state.attrib[ texture0AttribIndex + 5 ].source.offset );
-
-  // Do a quick run through the remaining formats, and do some quick verifications.
-  ppca.Reset();
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_V2F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 2,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 8,   state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 12,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_C4UB_V2F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 2,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_UNSIGNED_BYTE ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 12,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 4 ),  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_C4UB_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_UNSIGNED_BYTE ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 16,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 4 ),  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_C3F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 3,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 24,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 12 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_N3F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 24,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 12 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_C4F_N3F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_FALSE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 40,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 28 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 16 ), state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T2F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 20,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T4F_V4F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE ( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 4,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 32,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 16 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T2F_C4UB_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE ( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_UNSIGNED_BYTE ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 24,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 12 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T2F_C3F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE ( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 3,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 32,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 20 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T2F_N3F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_FALSE( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 32,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 20 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  state.Reset();
-  ppca.ShadowInterleavedArrays( GL_T2F_C4F_N3F_V3F, 0, NULL );
-
-  EXPECT_TRUE ( state.attrib[ vertexAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ normalAttribIndex   ].enabled );
-  EXPECT_TRUE ( state.attrib[ colorAttribIndex    ].enabled );
-  EXPECT_TRUE ( state.attrib[ texture0AttribIndex ].enabled );
-  EXPECT_EQ   ( 3,   state.attrib[ vertexAttribIndex   ].source.size );
-  EXPECT_EQ   ( 4,   state.attrib[ colorAttribIndex    ].source.size );
-  EXPECT_EQ   ( 2,   state.attrib[ texture0AttribIndex ].source.size );
-  EXPECT_EQ   ( static_cast<GLenum>( GL_FLOAT ), state.attrib[ colorAttribIndex    ].source.type );
-  EXPECT_EQ   ( 48,  state.attrib[ vertexAttribIndex   ].source.stride );
-  EXPECT_EQ   ( static_cast<GLintptr>( 36 ), state.attrib[ vertexAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 24 ), state.attrib[ normalAttribIndex   ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 8 ),  state.attrib[ colorAttribIndex    ].source.offset );
-  EXPECT_EQ   ( static_cast<GLintptr>( 0 ),  state.attrib[ texture0AttribIndex ].source.offset );
-
-  // Pass in an unsupported "format", which should do nothing.
-
-  state.Reset();
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    state.attrib[ i ].enabled       = ( i & 1 ) == 0;
-    state.attrib[ i ].source.size   = 987;
-    state.attrib[ i ].source.type   = 987;
-    state.attrib[ i ].source.stride = 987;
-    state.attrib[ i ].source.offset = 987;
-  }
-
-  ppca.ShadowInterleavedArrays( GL_RGBA, 0, NULL );
-
-  for ( size_t i = 0; i < COUNT_ATTRIBS; ++i ) {
-    if ( i == 5 ) continue;
-    State::Attrib& attrib = state.attrib[ i ];
-    if ( ( i & 1 ) == 0 ) {
-      EXPECT_TRUE( attrib.enabled ) << "Index " << i;
-    } else {
-      EXPECT_FALSE( attrib.enabled ) << "Index " << i;
-    }
-    EXPECT_EQ( 987,  attrib.source.size ) << "Index " << i;
-    EXPECT_EQ( 987u, attrib.source.type ) << "Index " << i;
-    EXPECT_EQ( 987,  attrib.source.stride ) << "Index " << i;
-    EXPECT_EQ( static_cast<GLintptr>( 987 ), attrib.source.offset ) << "Index " << i;
-  }
-}
-
-
-
-TEST ( RegalPpca, ShadowDeleteBuffers ) {
-  Ppca ppca;
-  ppca.Reset();
-
-  GLuint buffers[ 2 ] = { 0, 123 };
-
-  for ( size_t i = 0; i < ClientState::VertexArray::Generic::COUNT_BUFFERS; ++i ) {
-    ppca.vas.vertexArrayObjectZero.generic.buffer[ i ].buffer = 123;
-  }
-  ppca.vas.vertexArrayObjectZero.elementArrayBufferBinding = 123;
-  ppca.vas.arrayBufferBinding = 123;
-  ppca.vas.drawIndirectBufferBinding = 123;
-  ppca.pss.pixelPackBufferBinding = 123;
-  ppca.pss.pixelUnpackBufferBinding = 123;
-
-  ppca.ShadowDeleteBuffers( 2, buffers );
-
-  for ( size_t i = 0; i < ClientState::VertexArray::Generic::COUNT_BUFFERS; ++i ) {
-    EXPECT_EQ( 0u, ppca.vas.vertexArrayObjectZero.generic.buffer[ i ].buffer ) << "Index " << i;
-  }
-  EXPECT_EQ( 0u, ppca.vas.vertexArrayObjectZero.elementArrayBufferBinding );
-  EXPECT_EQ( 0u, ppca.vas.arrayBufferBinding );
-  EXPECT_EQ( 0u, ppca.vas.drawIndirectBufferBinding );
-  EXPECT_EQ( 0u, ppca.pss.pixelPackBufferBinding );
-  EXPECT_EQ( 0u, ppca.pss.pixelUnpackBufferBinding );
-
-  for ( size_t i = 0; i < ClientState::VertexArray::Generic::COUNT_BUFFERS; ++i ) {
-    ppca.vas.vertexArrayObjectZero.generic.buffer[ i ].buffer = 456;
-  }
-  ppca.vas.vertexArrayObjectZero.elementArrayBufferBinding = 456;
-  ppca.vas.arrayBufferBinding = 456;
-  ppca.vas.drawIndirectBufferBinding = 456;
-  ppca.pss.pixelPackBufferBinding = 456;
-  ppca.pss.pixelUnpackBufferBinding = 456;
-
-  ppca.ShadowDeleteBuffers( 2, buffers );
-
-  for ( size_t i = 0; i < ClientState::VertexArray::Generic::COUNT_BUFFERS; ++i ) {
-    EXPECT_EQ( 456u, ppca.vas.vertexArrayObjectZero.generic.buffer[ i ].buffer ) << "Index " << i;
-  }
-  EXPECT_EQ( 456u, ppca.vas.vertexArrayObjectZero.elementArrayBufferBinding );
-  EXPECT_EQ( 456u, ppca.vas.arrayBufferBinding );
-  EXPECT_EQ( 456u, ppca.vas.drawIndirectBufferBinding );
-  EXPECT_EQ( 456u, ppca.pss.pixelPackBufferBinding );
-  EXPECT_EQ( 456u, ppca.pss.pixelUnpackBufferBinding );
-}
-
-TEST ( RegalPpca, ShadowDeleteVertexArrays ) {
-  Ppca ppca;
-  ppca.Reset();
-
-  GLuint buffers[ 2 ] = { 0, 123 };
-
-  ppca.vas.vertexArrayBinding = 123;
-
-  ppca.ShadowDeleteVertexArrays( 2, buffers );
-
-  EXPECT_EQ( 0u, ppca.vas.vertexArrayBinding );
-
-  ppca.vas.vertexArrayBinding = 456;
-
-  ppca.ShadowDeleteVertexArrays( 2, buffers );
-
-  EXPECT_EQ( 456u, ppca.vas.vertexArrayBinding );
-}
-
-
-
-TEST ( RegalPpca, ClientAttribStackPixelState ) {
-  using ClientState::PixelStore::PNameToIndex;
-
-  RegalGMockInterface mock;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  RegalContext ctx;
-  ctx.info = new ContextInfo();
-  InitDispatchTableGMock( ctx.dispatcher.emulation );
-
-  EXPECT_EQ( 4, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-
-  ppca.ShadowPixelStore( GL_UNPACK_ALIGNMENT, 100 );
-  ppca.PushClientAttrib( &ctx, 0 );
-
-  EXPECT_EQ( 100, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-
-  ppca.ShadowPixelStore( GL_UNPACK_ALIGNMENT, 101 );
-  ppca.PushClientAttrib( &ctx, GL_CLIENT_PIXEL_STORE_BIT );
-
-  EXPECT_EQ( 101, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-
-  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_ALIGNMENT, 4 ) );
-  ppca.ClientAttribDefaultDSA( &ctx, GL_CLIENT_PIXEL_STORE_BIT );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 4, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-
-  ppca.ShadowPixelStore( GL_UNPACK_ALIGNMENT, 102 );
-
-  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_ALIGNMENT, 4 ) );
-
-  ppca.PushClientAttribDefaultDSA( &ctx, GL_CLIENT_PIXEL_STORE_BIT );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 4, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 2u, ppca.pixelStoreStateStack_.size() );
-
-  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_ALIGNMENT, 102 ) );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 102, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-
-  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_ALIGNMENT, 101 ) );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 101, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 101, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 101, ppca.pss.Get( GL_UNPACK_ALIGNMENT ) );
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-}
-
-TEST ( RegalPpca, ClientAttribStackVertexState ) {
-  using ClientState::VertexArray::Fixed::ArrayNameToAttribIndex;
-
-  RegalGMockInterface mock;
-
-  Ppca ppca;
-  ppca.Reset();
-
-  RegalContext ctx;
-  ctx.info = new ContextInfo();
-  InitDispatchTableGMock( ctx.dispatcher.emulation );
-
-  GLint& stride = ppca.vas.vertexArrayObjectZero.fixed.attrib [ ArrayNameToAttribIndex( GL_COLOR_ARRAY ) ].source.stride;
-
-  EXPECT_EQ( 0, stride );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.ShadowColorPointer ( 4, GL_FLOAT, 100, NULL );
-  ppca.PushClientAttrib( &ctx, 0 );
-
-  EXPECT_EQ( 100, stride );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.ShadowColorPointer ( 4, GL_FLOAT, 101, NULL );
-  ppca.PushClientAttrib( &ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
-
-  EXPECT_EQ( 101, stride );
-  EXPECT_EQ( 1u, ppca.vertexArrayStateStack_.size() );
-
-  EXPECT_CALL( mock, glColorPointer( 4, GL_FLOAT, 0, NULL ) );
-  ppca.ClientAttribDefaultDSA( &ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 0, stride );
-  EXPECT_EQ( 1u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.ShadowColorPointer ( 4, GL_FLOAT, 102, NULL );
-
-  EXPECT_CALL( mock, glColorPointer( 4, GL_FLOAT, 0, NULL ) );
-
-  ppca.PushClientAttribDefaultDSA( &ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 0, stride );
-  EXPECT_EQ( 2u, ppca.vertexArrayStateStack_.size() );
-
-  EXPECT_CALL( mock, glColorPointer( 4, GL_FLOAT, 102, NULL ) );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 102, stride );
-  EXPECT_EQ( 1u, ppca.vertexArrayStateStack_.size() );
-
-  EXPECT_CALL( mock, glColorPointer( 4, GL_FLOAT, 101, NULL ) );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 101, stride );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 101, stride );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 101, stride );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-}
-
-TEST ( RegalPpca, ClientAttribStackGeneral ) {
-  RegalGMockInterface mock;
-
-  Ppca ppca;
-  ppca.Reset();
 
   RegalContext ctx;
   ctx.info = new ContextInfo();
   ctx.info->core = false;
+  ctx.info->es1 = false;
   ctx.info->es2 = false;
+  ctx.info->max_client_attrib_stack_depth = 16;
   InitDispatchTableGMock( ctx.dispatcher.emulation );
 
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  GLint maxClientAttribStackDepth = 0;
+  EXPECT_EQ( true, ppca.glGetv( ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, &maxClientAttribStackDepth ) );
+  EXPECT_GE( maxClientAttribStackDepth, GLint(16) );
+
   const GLbitfield remainder = ~( GL_CLIENT_PIXEL_STORE_BIT | GL_CLIENT_VERTEX_ARRAY_BIT );
-
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PushClientAttrib( &ctx, GL_CLIENT_PIXEL_STORE_BIT );
-
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PushClientAttrib( &ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
-
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 1u, ppca.vertexArrayStateStack_.size() );
-
   EXPECT_CALL( mock, glPushClientAttrib( remainder ) );
 
-  ppca.PushClientAttrib( &ctx, GL_CLIENT_ALL_ATTRIB_BITS );
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_ALL_ATTRIB_BITS );
   Mock::VerifyAndClear( &mock );
 
-  EXPECT_EQ( 2u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 2u, ppca.vertexArrayStateStack_.size() );
+  GLint clientAttribStackDepth = 666;
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( GLint(1), clientAttribStackDepth );
 
-  EXPECT_CALL( mock, glClientAttribDefaultEXT( remainder ) );
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(1),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
 
-  ppca.ClientAttribDefaultDSA( &ctx, GL_CLIENT_ALL_ATTRIB_BITS );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 2u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 2u, ppca.vertexArrayStateStack_.size() );
-
-  EXPECT_CALL( mock, glClientAttribDefaultEXT( remainder ) );
-  EXPECT_CALL( mock, glPushClientAttrib( remainder ) );
-
-  ppca.PushClientAttribDefaultDSA( &ctx, GL_CLIENT_ALL_ATTRIB_BITS );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 3u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 3u, ppca.vertexArrayStateStack_.size() );
-
-  ctx.info->es2 = true;
-  ppca.PushClientAttrib( &ctx, GL_CLIENT_ALL_ATTRIB_BITS );
-  ppca.PopClientAttrib( &ctx );
-  ctx.info->es2 = false;
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_CALL( mock, glPopClientAttrib() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 2u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 2u, ppca.vertexArrayStateStack_.size() );
-
-  EXPECT_CALL( mock, glPopClientAttrib() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 1u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 1u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
-
-  ppca.PopClientAttrib( &ctx );
-  Mock::VerifyAndClear( &mock );
-
-  EXPECT_EQ( 0u, ppca.pixelStoreStateStack_.size() );
-  EXPECT_EQ( 0u, ppca.vertexArrayStateStack_.size() );
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
 }
 
-TEST ( RegalPpca, Get ) {
+TEST ( RegalPpca, VertexArray_Defaults )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
   Ppca ppca;
-  ppca.Reset();
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::elementArrayBufferBinding = GLuint(6);
+  ppca.VertexArray::clientActiveTexture = GLenum(6);
+  ppca.VertexArray::primitiveRestartFixedIndex = GLboolean(GL_TRUE);
+  ppca.VertexArray::primitiveRestart = GLboolean(GL_TRUE);
+  ppca.VertexArray::primitiveRestartIndex = GLuint(6);
+  ppca.VertexArray::arrayBufferBinding = GLuint(6);
+  ppca.VertexArray::vertexArrayBinding = GLuint(6);
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.VertexArray::named[ii].enabled = GLboolean(GL_TRUE);
+    ppca.VertexArray::named[ii].pointer = reinterpret_cast<const GLvoid*>(77);
+    ppca.VertexArray::named[ii].buffer  = GLuint(77);
+    ppca.VertexArray::named[ii].size    = GLint(77);
+    ppca.VertexArray::named[ii].type    = GLenum(77);
+    ppca.VertexArray::named[ii].stride  = GLsizei(77);
+  }
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer  = GLuint(888);
+    ppca.VertexArray::bindings[ii].offset  = GLintptr(888);
+    ppca.VertexArray::bindings[ii].stride  = GLsizei(888);
+    ppca.VertexArray::bindings[ii].divisor = GLuint(888);
+  }
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.VertexArray::generic[ii].enabled        = GLboolean(9999);
+    ppca.VertexArray::generic[ii].size           = GLuint(9999);
+    ppca.VertexArray::generic[ii].type           = GLenum(9999);
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(9999);
+    ppca.VertexArray::generic[ii].normalized     = GLboolean(9999);
+    ppca.VertexArray::generic[ii].isInteger      = GLboolean(9999);
+    ppca.VertexArray::generic[ii].isLong         = GLboolean(9999);
+    ppca.VertexArray::generic[ii].bindingIndex   = GLuint(9999);
+  }
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+}
+
+TEST ( RegalPpca, PixelStore_Defaults )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.PixelStore::unpackSwapBytes = GL_TRUE;
+  ppca.PixelStore::unpackLsbFirst = GL_TRUE;
+  ppca.PixelStore::unpackImageHeight = 1;
+  ppca.PixelStore::unpackSkipImages = 2;
+  ppca.PixelStore::unpackRowLength = 3;
+  ppca.PixelStore::unpackSkipRows = 4;
+  ppca.PixelStore::unpackSkipPixels = 5;
+  ppca.PixelStore::unpackAlignment = 6;
+  ppca.PixelStore::packSwapBytes = GL_TRUE;
+  ppca.PixelStore::packLsbFirst = GL_TRUE;
+  ppca.PixelStore::packImageHeight = 7;
+  ppca.PixelStore::packSkipImages = 8;
+  ppca.PixelStore::packRowLength = 9;
+  ppca.PixelStore::packSkipRows = 10;
+  ppca.PixelStore::packSkipPixels = 11;
+  ppca.PixelStore::packAlignment = 12;
+  ppca.PixelStore::pixelUnpackBufferBinding = 13;
+  ppca.PixelStore::pixelPackBufferBinding = 14;
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+}
+
+TEST ( RegalPpca, VertexArray_Swap )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca state;
+  checkPpcaDefaults(ctx, state);
+
+  state.VertexArray::elementArrayBufferBinding = GLuint(1);
+  state.VertexArray::clientActiveTexture = GLenum(2);
+  state.VertexArray::primitiveRestartFixedIndex = GLboolean(GL_TRUE);
+  state.VertexArray::primitiveRestart = GLboolean(GL_TRUE);
+  state.VertexArray::primitiveRestartIndex = GLuint(3);
+  state.VertexArray::arrayBufferBinding = GLuint(4);
+  state.VertexArray::vertexArrayBinding = GLuint(5);
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    state.VertexArray::named[ii].enabled = GLboolean(GL_TRUE);
+    state.VertexArray::named[ii].pointer = reinterpret_cast<const GLvoid*>(77);
+    state.VertexArray::named[ii].buffer  = GLuint(77);
+    state.VertexArray::named[ii].size    = GLint(77);
+    state.VertexArray::named[ii].type    = GLenum(77);
+    state.VertexArray::named[ii].stride  = GLsizei(77);
+  }
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    state.VertexArray::bindings[ii].buffer  = GLuint(888);
+    state.VertexArray::bindings[ii].offset  = GLintptr(888);
+    state.VertexArray::bindings[ii].stride  = GLsizei(888);
+    state.VertexArray::bindings[ii].divisor = GLuint(888);
+  }
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    state.VertexArray::generic[ii].enabled        = GLboolean(9999);
+    state.VertexArray::generic[ii].size           = GLuint(9999);
+    state.VertexArray::generic[ii].type           = GLenum(9999);
+    state.VertexArray::generic[ii].relativeOffset = GLuint(9999);
+    state.VertexArray::generic[ii].normalized     = GLboolean(9999);
+    state.VertexArray::generic[ii].isInteger      = GLboolean(9999);
+    state.VertexArray::generic[ii].isLong         = GLboolean(9999);
+    state.VertexArray::generic[ii].bindingIndex   = GLuint(9999);
+  }
+
+  Ppca other;
+  checkPpcaDefaults(ctx, other);
+
+  other.VertexArray::swap( state );
+
+  checkPpcaDefaults(ctx, state);
+
+  EXPECT_EQ( GLuint( 1 ),        other.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLenum( 2 ),        other.VertexArray::clientActiveTexture );
+  EXPECT_EQ( GLboolean(GL_TRUE), other.VertexArray::primitiveRestartFixedIndex );
+  EXPECT_EQ( GLboolean(GL_TRUE), other.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLuint(3),          other.VertexArray::primitiveRestartIndex );
+  EXPECT_EQ( GLuint(4),          other.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint(5),          other.VertexArray::vertexArrayBinding );
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    EXPECT_EQ( GLboolean(GL_TRUE), other.VertexArray::named[ii].enabled );
+    EXPECT_EQ( reinterpret_cast<const GLvoid*>(77), other.VertexArray::named[ii].pointer );
+    EXPECT_EQ( GLuint(77),         other.VertexArray::named[ii].buffer );
+    EXPECT_EQ( GLint(77),          other.VertexArray::named[ii].size );
+    EXPECT_EQ( GLenum(77),         other.VertexArray::named[ii].type );
+    EXPECT_EQ( GLsizei(77),        other.VertexArray::named[ii].stride );
+  }
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(888),   other.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(888), other.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(888),  other.VertexArray::bindings[ii].stride );
+    EXPECT_EQ( GLuint(888),   other.VertexArray::bindings[ii].divisor );
+  }
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    EXPECT_EQ( GLboolean(9999), other.VertexArray::generic[ii].enabled );
+    EXPECT_EQ( GLuint(9999),    other.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(9999),    other.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(9999),    other.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(9999), other.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(9999), other.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(9999), other.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( GLuint(9999),    other.VertexArray::generic[ii].bindingIndex );
+  }
+}
+
+TEST ( RegalPpca, PixelStore_Swap )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca state;
+  checkPpcaDefaults(ctx, state);
+
+  Ppca other;
+  checkPpcaDefaults(ctx, other);
+
+  // Set each attribute in other to a unique value
+
+  other.PixelStore::unpackSwapBytes = GL_TRUE;
+  other.PixelStore::unpackLsbFirst = GL_TRUE;
+  other.PixelStore::unpackImageHeight = 11;
+  other.PixelStore::unpackSkipImages = 12;
+  other.PixelStore::unpackRowLength = 13;
+  other.PixelStore::unpackSkipRows = 14;
+  other.PixelStore::unpackSkipPixels = 15;
+  other.PixelStore::unpackAlignment = 16;
+  other.PixelStore::packSwapBytes = GL_TRUE;
+  other.PixelStore::packLsbFirst = GL_TRUE;
+  other.PixelStore::packImageHeight = 27;
+  other.PixelStore::packSkipImages = 28;
+  other.PixelStore::packRowLength = 29;
+  other.PixelStore::packSkipRows = 30;
+  other.PixelStore::packSkipPixels = 31;
+  other.PixelStore::packAlignment = 32;
+  other.PixelStore::pixelUnpackBufferBinding = 123;
+  other.PixelStore::pixelPackBufferBinding = 456;
+
+  // Peform a swap then check these values are now in state
+
+  other.PixelStore::swap( state );
+
+  EXPECT_EQ( GLboolean(GL_TRUE), state.PixelStore::unpackSwapBytes );
+  EXPECT_EQ( GLboolean(GL_TRUE), state.PixelStore::unpackLsbFirst );
+  EXPECT_EQ( GLint(11),          state.PixelStore::unpackImageHeight );
+  EXPECT_EQ( GLint(12),          state.PixelStore::unpackSkipImages );
+  EXPECT_EQ( GLint(13),          state.PixelStore::unpackRowLength );
+  EXPECT_EQ( GLint(14),          state.PixelStore::unpackSkipRows );
+  EXPECT_EQ( GLint(15),          state.PixelStore::unpackSkipPixels );
+  EXPECT_EQ( GLint(16),          state.PixelStore::unpackAlignment );
+  EXPECT_EQ( GLboolean(GL_TRUE), state.PixelStore::packSwapBytes );
+  EXPECT_EQ( GLboolean(GL_TRUE), state.PixelStore::packLsbFirst );
+  EXPECT_EQ( GLint(27),          state.PixelStore::packImageHeight );
+  EXPECT_EQ( GLint(28),          state.PixelStore::packSkipImages );
+  EXPECT_EQ( GLint(29),          state.PixelStore::packRowLength );
+  EXPECT_EQ( GLint(30),          state.PixelStore::packSkipRows );
+  EXPECT_EQ( GLint(31),          state.PixelStore::packSkipPixels );
+  EXPECT_EQ( GLint(32),          state.PixelStore::packAlignment );
+  EXPECT_EQ( GLuint(123),        state.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint(456),        state.PixelStore::pixelPackBufferBinding );
+
+  // Verify other contains all default values from state
+
+  checkPixelStoreDefaults(other);
+}
+
+TEST ( RegalPpca, PixelStore_PushPop )
+{
+  RegalGMockInterface mock;
 
   RegalContext ctx;
   ctx.info = new ContextInfo();
+  ctx.info->max_client_attrib_stack_depth = 16;
+  InitDispatchTableGMock( ctx.dispatcher.emulation );
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  EXPECT_EQ( GLint(4), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  ppca.glPixelStore( GL_UNPACK_ALIGNMENT, 100 );
+  ppca.glPushClientAttrib( ctx, 0 );
+
+  EXPECT_EQ( GLint(100), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  ppca.glPixelStore( GL_UNPACK_ALIGNMENT, 101 );
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_PIXEL_STORE_BIT );
+
+  EXPECT_EQ( GLint(101), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glClientAttribDefaultEXT( ctx, GL_CLIENT_PIXEL_STORE_BIT );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLint(4), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1), ppca.pixelStoreStack.size() );
+
+  ppca.glPixelStore( GL_UNPACK_ALIGNMENT, 102 );
+
+  EXPECT_EQ( GLint(102), ppca.PixelStore::unpackAlignment );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPushClientAttribDefaultEXT( ctx, GL_CLIENT_PIXEL_STORE_BIT );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLint(4), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(2),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLint(102), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLint(101), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLint(101), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLint(101), ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+}
+
+TEST ( RegalPpca, VertexArray_PushPop )
+{
+  RegalGMockInterface mock;
+
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+  ctx.info->max_client_attrib_stack_depth = 16;
+  InitDispatchTableGMock( ctx.dispatcher.emulation );
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  EXPECT_EQ( GLsizei( 0 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+
+  ppca.glColorPointer ( 4, GL_FLOAT, 100, NULL );
+  ppca.glPushClientAttrib( ctx, 0 );
+
+  EXPECT_EQ( GLsizei( 100 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+
+  ppca.glColorPointer ( 4, GL_FLOAT, 101, NULL );
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
+
+  EXPECT_EQ( GLsizei( 101 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glClientAttribDefaultEXT( ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLsizei( 0 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+
+  ppca.glColorPointer ( 4, GL_FLOAT, 102, NULL );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPushClientAttribDefaultEXT( ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLsizei( 0 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(2), ppca.vertexArrayStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLsizei( 102 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLsizei( 101 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLsizei( 101 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+
+  ppca.glPopClientAttrib( ctx );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( GLsizei( 101 ), ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+}
+
+TEST ( RegalPpca, ClientAttrib_PushPop )
+{
+  RegalGMockInterface mock;
+
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+  ctx.info->core = false;
+  ctx.info->es1 = false;
+  ctx.info->es2 = false;
+  ctx.info->max_client_attrib_stack_depth = 16;
+  InitDispatchTableGMock( ctx.dispatcher.emulation );
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  const GLbitfield remainder = ~( GL_CLIENT_PIXEL_STORE_BIT | GL_CLIENT_VERTEX_ARRAY_BIT );
+
+  GLint clientAttribStackDepth = 666;
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(0) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(0),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_PIXEL_STORE_BIT );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(1) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(1),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_VERTEX_ARRAY_BIT );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(2) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(2),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glPushClientAttrib( remainder ) );
+
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_ALL_ATTRIB_BITS );
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(3) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(3),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(2), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(2),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPushClientAttrib(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPopClientAttrib() ).Times(AnyNumber());
+
   ctx.info->es2 = true;
+  ppca.glPushClientAttrib( ctx, GL_CLIENT_ALL_ATTRIB_BITS );
+  ppca.glPopClientAttrib( ctx );
+  ctx.info->es2 = false;
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(3) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(3),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(2), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(2),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  EXPECT_CALL( mock, glPopClientAttrib() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(2) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(2),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(1) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(1),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPopClientAttrib( ctx );
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( true, ppca.glGetv(ctx, GL_CLIENT_ATTRIB_STACK_DEPTH, &clientAttribStackDepth));
+  EXPECT_EQ( clientAttribStackDepth, GLint(0) );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(0),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glClientAttribDefaultEXT( remainder ) );
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glClientAttribDefaultEXT( ctx, GL_CLIENT_ALL_ATTRIB_BITS );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(0),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(0), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(0),  ppca.pixelStoreStack.size() );
+
+  EXPECT_CALL( mock, glClientAttribDefaultEXT( remainder ) );
+  EXPECT_CALL( mock, glPushClientAttrib( remainder ) );
+  EXPECT_CALL( mock, glBindBuffer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glBindVertexBuffer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glClientActiveTexture(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableClientStateiEXT(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glDisableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEdgeFlagPointer(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnable(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableClientState(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glEnableVertexAttribArray(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glFogCoordPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glIndexPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glMultiTexCoordPointerEXT(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glNormalPointer(_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPixelStorei(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glPrimitiveRestartIndex(_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glSecondaryColorPointer(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribBinding(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribFormat(_,_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribIFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexAttribLFormat(_,_,_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexBindingDivisor(_,_) ).Times(AnyNumber());
+  EXPECT_CALL( mock, glVertexPointer(_,_,_,_) ).Times(AnyNumber());
+
+  ppca.glPushClientAttribDefaultEXT( ctx, GL_CLIENT_ALL_ATTRIB_BITS );
+
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_EQ( std::vector<GLbitfield>::size_type(1),               ppca.maskStack.size() );
+  EXPECT_EQ( std::vector<ClientState::VertexArray>::size_type(1), ppca.vertexArrayStack.size() );
+  EXPECT_EQ( std::vector<ClientState::PixelStore>::size_type(1),  ppca.pixelStoreStack.size() );
+}
+
+TEST ( RegalPpca, VertexArray_Named_BasicOperations )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca state;
+  checkPpcaDefaults(ctx, state);
+
+  // Set unique data for the array source for all attributes.
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    if ( ii == 4 ) {
+      state.VertexArray::named[ii].enabled = GLboolean(GL_TRUE);
+    } else {
+      state.VertexArray::named[ii].enabled = GLboolean(GL_FALSE);
+    }
+    state.VertexArray::named[ii].pointer = reinterpret_cast<const GLvoid*>(ii * 10 + 5);
+    state.VertexArray::named[ii].buffer  = GLuint(ii * 10 + 1);
+    state.VertexArray::named[ii].size    = GLint( ii * 10 + 2);
+    state.VertexArray::named[ii].type    = GLenum(ii * 10 + 3);
+    state.VertexArray::named[ii].stride  = GLsizei(ii * 10 + 4);
+  }
+
+  // Calls with out-of-bound values should silently return as a no-op.
+  // This is done here so if we affect the explicitly set state it will be
+  // detected soon.
+
+  state.glEnableClientState( GLenum(~0) );
+  state.glEnableClientStateiEXT( GL_TEXTURE_COORD_ARRAY, GLuint(~0) );
+
+  state.glDisableClientState( GLenum(~0) );
+  state.glDisableClientStateiEXT( GL_TEXTURE_COORD_ARRAY, GLuint(~0) );
+
+  state.glEnable( GLenum(~0) );
+  state.glEnable( GLenum(ClientState::nNamedArrays) );
+
+  state.glDisable( GLenum(~0) );
+  state.glDisable( GLenum(ClientState::nNamedArrays) );
+
+  // Peform a swap, so that it is effectively tested too
+
+  Ppca other;
+  checkPpcaDefaults(ctx, other);
+
+  state.VertexArray::swap( other );
+
+  // Verify the expected default state ended up in the original
+
+  checkPpcaDefaults(ctx, state);
+
+  // Verify the modified data ended up in the other state
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    if ( ii == 4 ) {
+      EXPECT_EQ( GLboolean(GL_TRUE),  other.VertexArray::named[ii].enabled );
+    } else {
+      EXPECT_EQ( GLboolean(GL_FALSE), other.VertexArray::named[ii].enabled );
+    }
+    EXPECT_EQ( reinterpret_cast<const GLvoid*>(ii * 10 + 5), other.VertexArray::named[ ii ].pointer );
+    EXPECT_EQ( GLuint(ii * 10 + 1), other.VertexArray::named[ ii ].buffer );
+    EXPECT_EQ( GLint( ii * 10 + 2), other.VertexArray::named[ ii ].size );
+    EXPECT_EQ( GLenum(ii * 10 + 3), other.VertexArray::named[ ii ].type );
+    EXPECT_EQ( GLsizei(ii * 10 + 4), other.VertexArray::named[ ii ].stride );
+  }
+}
+
+TEST ( RegalPpca, VertexArray_Generic_BasicOperations )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca state;
+  checkPpcaDefaults(ctx, state);
+
+  // Set unique data for the arrays
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    if ( ii == 4 ) {
+      state.VertexArray::generic[ii].enabled = GLboolean(GL_TRUE);
+    } else {
+      state.VertexArray::generic[ii].enabled = GLboolean(GL_FALSE);
+    }
+    state.VertexArray::generic[ii].size           = GLuint(ii * 100 + 1);
+    state.VertexArray::generic[ii].type           = GLenum(ii * 100 + 2);
+    state.VertexArray::generic[ii].relativeOffset = GLuint(ii * 100 + 3);
+    state.VertexArray::generic[ii].normalized     = GLboolean(ii * 100 + 4);
+    state.VertexArray::generic[ii].isInteger      = GLboolean(ii * 100 + 5);
+    state.VertexArray::generic[ii].isLong         = GLboolean(ii * 100 + 6);
+    state.VertexArray::generic[ii].bindingIndex   = GLuint(ii * 100 + 7);
+  }
+
+  // Set unique data for the bindings
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    state.VertexArray::bindings[ii].buffer  = GLuint(ii * 1000 + 1);
+    state.VertexArray::bindings[ii].offset  = GLintptr(ii * 1000 + 2);
+    state.VertexArray::bindings[ii].stride  = GLsizei(ii * 1000 + 3);
+    state.VertexArray::bindings[ii].divisor = GLuint(ii * 1000 + 4);
+  }
+
+  // Calls with out-of-bound values should silently return as a no-op.
+  // This is done here so if we affect the explicitly set state it will be
+  // detected soon.
+
+  state.glEnableVertexArrayAttribEXT( 0, GLuint(~0) );
+  state.glDisableVertexArrayAttribEXT( 0, GLuint(~0) );
+  state.glVertexAttribFormat( GLuint(~0), 0, 0, GL_TRUE, 0 );
+  state.glVertexAttribFormat( GLuint(~0), 0, 0, GL_FALSE, 0 );
+  state.glVertexAttribLFormat( GLuint(~0), 0, 0, 0 );
+  state.glVertexAttribIFormat( GLuint(~0), 0, 0, 0 );
+  state.glVertexAttribBinding( GLuint(~0), 0 );
+  state.glEnableVertexAttribArray( GLuint(~0) );
+  state.glDisableVertexAttribArray( GLuint(~0) );
+
+  state.glEnableVertexArrayAttribEXT( 0, REGAL_EMU_MAX_VERTEX_ATTRIBS );
+  state.glDisableVertexArrayAttribEXT( 0, REGAL_EMU_MAX_VERTEX_ATTRIBS );
+  state.glVertexAttribFormat( REGAL_EMU_MAX_VERTEX_ATTRIBS, 0, 0, GL_TRUE, 0 );
+  state.glVertexAttribFormat( REGAL_EMU_MAX_VERTEX_ATTRIBS, 0, 0, GL_FALSE, 0 );
+  state.glVertexAttribLFormat( REGAL_EMU_MAX_VERTEX_ATTRIBS, 0, 0, 0 );
+  state.glVertexAttribIFormat( REGAL_EMU_MAX_VERTEX_ATTRIBS, 0, 0, 0 );
+  state.glVertexAttribBinding( REGAL_EMU_MAX_VERTEX_ATTRIBS, 0 );
+  state.glEnableVertexAttribArray( REGAL_EMU_MAX_VERTEX_ATTRIBS );
+  state.glDisableVertexAttribArray( REGAL_EMU_MAX_VERTEX_ATTRIBS );
+
+  state.glVertexAttribDivisor( GLuint(~0), 0 );
+  state.glVertexBindingDivisor( GLuint(~0), 0 );
+  state.glBindVertexBuffers( GLuint(~0), 0, 0, 0, 0);
+  state.glBindVertexBuffers( GLuint(~0), 0, (const GLuint*)(0xdead), 0, 0);
+  state.glBindVertexBuffers( 0, GLuint(~0), 0, 0, 0);
+  state.glBindVertexBuffers( 0, GLuint(~0), (const GLuint*)(0xdead), 0, 0);
+
+  state.glBindVertexBuffer( GLuint(GLuint(~0) - 1), 0, 0, 0);
+  state.glBindVertexBuffer( GLuint(~0), 0, 0, 0);
+
+  state.glVertexArrayMultiTexCoordOffsetEXT(0, 0, GLenum(~0), 0, GLenum(0), 0, GLintptr(0) );
+
+  state.glVertexAttribDivisor( REGAL_EMU_MAX_VERTEX_ATTRIBS, 0 );
+  state.glVertexAttribDivisor( REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, 0 );
+  state.glVertexBindingDivisor( REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, 0 );
+  state.glBindVertexBuffers( REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, 0, 0, 0, 0);
+  state.glBindVertexBuffers( REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, 0, (const GLuint*)(0xdead), 0, 0);
+
+  // don't change this 1 to a 0. if you do, among other things glBindVertexBuffer will try to access
+  // the bogus pointers being passed in here and you get what you deserve.
+
+  state.glBindVertexBuffers( 1, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, 0, 0, 0);
+  state.glBindVertexBuffers( 1, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, (const GLuint*)(0xdead), 0, 0);
+
+  state.glBindVertexBuffer( REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, 0, 0, 0);
+
+  // Peform a swap, so that it is effectively tested too
+
+  Ppca other;
+  checkPpcaDefaults(ctx, other);
+
+  state.VertexArray::swap( other );
+
+  // Verify the expected default state ended up in the original
+
+  checkPpcaDefaults(ctx, state);
+
+  // Verify the modified array data ended up in the other state
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    if ( ii == 4 ) {
+      EXPECT_EQ( GLboolean(GL_TRUE),  other.VertexArray::generic[ ii ].enabled );
+    } else {
+      EXPECT_EQ( GLboolean(GL_FALSE), other.VertexArray::generic[ ii ].enabled );
+    }
+    EXPECT_EQ( GLuint(ii * 100 + 1),  other.VertexArray::generic[ ii ].size );
+    EXPECT_EQ( GLenum(ii * 100 + 2),  other.VertexArray::generic[ ii ].type );
+    EXPECT_EQ( GLuint(ii * 100 + 3),  other.VertexArray::generic[ ii ].relativeOffset );
+    EXPECT_EQ( GLboolean(ii * 100 + 4),  other.VertexArray::generic[ ii ].normalized );
+    EXPECT_EQ( GLboolean(ii * 100 + 5),  other.VertexArray::generic[ ii ].isInteger );
+    EXPECT_EQ( GLboolean(ii * 100 + 6),  other.VertexArray::generic[ ii ].isLong );
+    EXPECT_EQ( GLuint(ii * 100 + 7),  other.VertexArray::generic[ ii ].bindingIndex );
+  }
+
+  // Verify the modified bindings data ended up in the other state
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(ii * 1000 + 1),    other.VertexArray::bindings[ ii ].buffer );
+    EXPECT_EQ( GLintptr( ii * 1000 + 2), other.VertexArray::bindings[ ii ].offset );
+    EXPECT_EQ( GLsizei(ii * 1000 + 3),   other.VertexArray::bindings[ ii ].stride );
+    EXPECT_EQ( GLuint(ii * 1000 + 4),    other.VertexArray::bindings[ ii ].divisor );
+  }
+}
+
+TEST ( RegalPpca, VertexArrayGenericState_Transition )
+{
+  RegalGMockInterface mock;
+
+  DispatchTableGL dt;
+  ::memset(&dt,0,sizeof(DispatchTableGL));
+  dt._enabled = true;
+  InitDispatchTableGMock( dt );
+
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca current;
+  checkPpcaDefaults(ctx, current);
+
+  Ppca target;
+  checkPpcaDefaults(ctx, target);
+
+  // An attribute array can be enabled.
+
+  target.glEnableVertexAttribArray( 0 );
+
+  EXPECT_CALL( mock, glEnableVertexAttribArray( 0 ) );
+
+  // An attribute array can be configured.
+
+  target.glVertexAttribFormat ( 1, 11, GLenum(12), GL_FALSE, 13 );
+  target.glVertexAttribFormat ( 2, 21, GLenum(22), GL_TRUE,  23 );
+  target.glVertexAttribIFormat( 3, 31, GLenum(32), 33 );
+
+  EXPECT_CALL( mock, glVertexAttribFormat ( 1, 11, 12, GL_FALSE, 13 ) );
+  EXPECT_CALL( mock, glVertexAttribFormat ( 2, 21, 22, GL_TRUE,  23 ) );
+  EXPECT_CALL( mock, glVertexAttribIFormat( 3, 31, 32, 33 ) );
+
+  // An attribute buffer can be configured.
+
+  target.glBindVertexBuffer( 4, 41, 42, 43 );
+
+  EXPECT_CALL( mock, glBindVertexBuffer( 4, 41, 42, 43 ) );
+
+  // An attribute buffer divisor can be configured.
+
+  target.glVertexBindingDivisor( 5, 51 );
+  EXPECT_CALL( mock, glVertexBindingDivisor( 5, 51 ) );
+
+  target.glVertexAttribBinding( 6, 7 );
+  EXPECT_CALL( mock, glVertexAttribBinding( 6, 7 ) );
+
+  target.glEnableVertexAttribArray( 8 );
+
+  EXPECT_CALL( mock, glEnableVertexAttribArray ( 8 ) );
+
+  // transition, verify, and reset
+
+  current.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+
+  // An attribute can be disabled and all data reset to default.
+
+  target.glDisableVertexAttribArray( 8 );
+  target.glVertexAttribFormat( 8, 61, 62, GL_FALSE, 63 );
+  target.glBindVertexBuffer( 8, 64, 65, 66 );
+  target.glVertexBindingDivisor( 8, 67 );
+  target.glVertexAttribBinding( 8, 9 );
+
+  EXPECT_CALL( mock, glDisableVertexAttribArray ( 8 ) );
+  EXPECT_CALL( mock, glVertexAttribFormat ( 8, 61, 62, GL_FALSE, 63 ) );
+  EXPECT_CALL( mock, glBindVertexBuffer( 8, 64, 65, 66 ) );
+  EXPECT_CALL( mock, glVertexBindingDivisor( 8, 67 ) );
+  EXPECT_CALL( mock, glVertexAttribBinding( 8, 9 ) );
+
+  // transition, verify, and reset
+
+  current.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+
+  // Identical state is a no-op in terms of calls.
+
+  current.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+
+  current.VertexArray::transition( dt, current, true );
+  Mock::VerifyAndClear( &mock );
+
+  target.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+
+  target.Reset(ctx);
+  current.Reset(ctx);
+
+  target.glEnableVertexAttribArray( 0 );
+  target.glVertexAttribFormat ( 0, 11, GLenum(12), GL_FALSE, 13 );
+  target.glBindVertexBuffer( 0, 14, 15, 16 );
+  target.glVertexBindingDivisor( 0, 17 );
+  target.glVertexAttribBinding( 0, 1 );
+
+  current.glEnableVertexAttribArray( 0 );
+  current.glVertexAttribFormat ( 0, 11, GLenum(12), GL_FALSE, 13 );
+  current.glBindVertexBuffer( 0, 14, 15, 16 );
+  current.glVertexBindingDivisor( 0, 17 );
+  current.glVertexAttribBinding( 0, 1 );
+
+  current.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+}
+
+TEST ( RegalPpca, VertexArray_Transition )
+{
+  RegalGMockInterface mock;
+
+  DispatchTableGL dt;
+  ::memset(&dt,0,sizeof(DispatchTableGL));
+  dt._enabled = true;
+  InitDispatchTableGMock( dt );
+
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca current;
+  checkPpcaDefaults(ctx, current);
+
+  Ppca target;
+  checkPpcaDefaults(ctx, target);
+
+  // Set up a simple non-default state, focusing on state unique this structure.
+
+  target.elementArrayBufferBinding = GLuint(1);
+  target.clientActiveTexture = GLenum(2);
+  target.primitiveRestartFixedIndex = GLboolean(GL_TRUE);
+  target.primitiveRestart = GLboolean(GL_TRUE);
+  target.primitiveRestartIndex = GLuint(3);
+  target.arrayBufferBinding = GLuint(4);
+  target.vertexArrayBinding = GLuint(5);
+
+  // Set up expectations.
+
+  EXPECT_CALL( mock, glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 1 ) );
+  EXPECT_CALL( mock, glClientActiveTexture( 2 ) );
+  EXPECT_CALL( mock, glEnable( GL_PRIMITIVE_RESTART_FIXED_INDEX ) );
+  EXPECT_CALL( mock, glEnable( GL_PRIMITIVE_RESTART ) );
+  EXPECT_CALL( mock, glPrimitiveRestartIndex( 3 ) );
+  EXPECT_CALL( mock, glBindBuffer( GL_ARRAY_BUFFER, 4 ) );
+  EXPECT_CALL( mock, glBindVertexArray( 5 ) );
+
+  // Perform the requested state transition.
+
+  current.VertexArray::transition( dt, target, true );
+
+  // Verify the call expectations, and reset for another test.
+
+  Mock::VerifyAndClear( &mock );
+
+  // unfortunately even though this call to transition() won't actually
+  // do anything, the current implementation will clear the bound vertex
+  // array, do the changes (which turns out to be none), then bind back
+  // to the original vertex array
+
+  EXPECT_CALL( mock, glBindVertexArray( 0 ) );
+  EXPECT_CALL( mock, glBindVertexArray( 5 ) );
+
+  // Perform the requested state transition.
+
+  current.VertexArray::transition( dt, target, true );
+
+  // Verify the call expectations, and reset for another test.
+
+  Mock::VerifyAndClear( &mock );
+
+  // A transition with no differences should make no calls, but...
+  // see above comment.
+
+  EXPECT_CALL( mock, glBindVertexArray( 0 ) );
+  EXPECT_CALL( mock, glBindVertexArray( 5 ) );
+
+  current.VertexArray::transition( dt, current, true );
+  Mock::VerifyAndClear( &mock );
+
+  EXPECT_CALL( mock, glBindVertexArray( 0 ) );
+  EXPECT_CALL( mock, glBindVertexArray( 5 ) );
+
+  target.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+
+  current.Reset(ctx);
+  target.Reset(ctx);
+
+  // Now there really won't be any calls since both the
+  // current and target vertex array to bind is 0
+
+  current.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+
+  // set some state other than the vertex array binding
+
+  target.elementArrayBufferBinding = GLuint(1);
+  target.clientActiveTexture = GLenum(2);
+  target.primitiveRestartFixedIndex = GLboolean(GL_TRUE);
+  target.primitiveRestart = GLboolean(GL_TRUE);
+  target.primitiveRestartIndex = GLuint(3);
+  target.arrayBufferBinding = GLuint(4);
+
+  current.elementArrayBufferBinding = GLuint(1);
+  current.clientActiveTexture = GLenum(2);
+  current.primitiveRestartFixedIndex = GLboolean(GL_TRUE);
+  current.primitiveRestart = GLboolean(GL_TRUE);
+  current.primitiveRestartIndex = GLuint(3);
+  current.arrayBufferBinding = GLuint(4);
+
+  // and again no calls.
+
+  current.VertexArray::transition( dt, target, true );
+  Mock::VerifyAndClear( &mock );
+}
+
+TEST ( RegalPpca, PixelStore_Transition )
+{
+  RegalGMockInterface mock;
+
+  DispatchTableGL dt;
+  ::memset(&dt,0,sizeof(DispatchTableGL));
+  dt._enabled = true;
+  InitDispatchTableGMock( dt );
+
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca current;
+  checkPpcaDefaults(ctx, current);
+
+  Ppca target;
+  checkPpcaDefaults(ctx, target);
+
+  // Set some of the named attributes, and expect that calls will be made
+  // appropriately to the backend to transition to those value.
+
+  current.PixelStore::unpackSkipPixels        = GLuint(123);
+  current.PixelStore::unpackAlignment         = GLuint(456);
+
+  target.PixelStore::pixelPackBufferBinding   = GLuint(321);
+  target.PixelStore::pixelUnpackBufferBinding = GLuint(654);
+
+  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_SKIP_PIXELS ,   0 ) );
+  EXPECT_CALL( mock, glPixelStorei( GL_UNPACK_ALIGNMENT   ,   4 ) );
+  EXPECT_CALL( mock, glBindBuffer ( GL_PIXEL_PACK_BUFFER  , 321 ) );
+  EXPECT_CALL( mock, glBindBuffer ( GL_PIXEL_UNPACK_BUFFER, 654 ) );
+
+  // Perform the state transition and verify expectations
+
+  current.PixelStore::transition( dt, target );
+  Mock::VerifyAndClear( &mock );
+
+  // A transition with no differences should make no calls.
+
+  current.PixelStore::transition( dt, current );
+  Mock::VerifyAndClear( &mock );
+
+  target.PixelStore::transition( dt, target );
+  Mock::VerifyAndClear( &mock );
+
+  current.Reset(ctx);
+  target.Reset(ctx);
+
+  current.PixelStore::transition( dt, target );
+  Mock::VerifyAndClear( &mock );
+
+  target.PixelStore::unpackSkipPixels          = GLuint(123);
+  target.PixelStore::unpackAlignment           = GLuint(456);
+  target.PixelStore::pixelPackBufferBinding    = GLuint(321);
+  target.PixelStore::pixelUnpackBufferBinding  = GLuint(654);
+
+  current.PixelStore::unpackSkipPixels         = GLuint(123);
+  current.PixelStore::unpackAlignment          = GLuint(456);
+  current.PixelStore::pixelPackBufferBinding   = GLuint(321);
+  current.PixelStore::pixelUnpackBufferBinding = GLuint(654);
+
+  current.PixelStore::transition( dt, target );
+  Mock::VerifyAndClear( &mock );
+}
+
+TEST ( RegalPpca, VertexArray_Generic )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // VertexAttribFormat
+
+  ppca.glVertexAttribFormat ( 3, 4, GL_FLOAT, GL_TRUE, 123 );
+
+  EXPECT_EQ( GLuint(4),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(123),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+
+  ppca.Reset(ctx);
+  ppca.glVertexAttribFormat ( 3, 4, GL_FLOAT, GL_FALSE, 123 );
+
+  EXPECT_EQ( GLuint(4),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(123),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+
+  ppca.Reset(ctx);
+  ppca.glVertexAttribIFormat( 3, 1, GL_INT, 456 );
+
+  EXPECT_EQ( GLuint(1),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_INT),      ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(456),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+
+  ppca.Reset(ctx);
+  ppca.glVertexAttribLFormat( 3, 2, GL_DOUBLE, 789 );
+
+  EXPECT_EQ( GLuint(2),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_DOUBLE),   ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(789),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isLong );
+
+  // BindVertexBuffer
+
+  ppca.Reset(ctx);
+  ppca.glBindVertexBuffer( 4, 5, 6, 7 );
+
+  EXPECT_EQ( GLuint(5),   ppca.VertexArray::bindings[4].buffer );
+  EXPECT_EQ( GLintptr(6), ppca.VertexArray::bindings[4].offset );
+  EXPECT_EQ( GLsizei(7),  ppca.VertexArray::bindings[4].stride );
+  EXPECT_EQ( GLuint(0),   ppca.VertexArray::bindings[4].divisor );
+
+  // VertexAttribBinding
+
+  ppca.Reset(ctx);
+  ppca.glVertexAttribBinding( 3, 4 );
+
+  EXPECT_EQ( GLuint(4), ppca.VertexArray::generic[3].bindingIndex );
+
+  // VertexAttribPointer
+
+  ppca.Reset(ctx);
+  ppca.VertexArray::arrayBufferBinding = 8888;
+  ppca.glVertexAttribPointer ( 3, 1, GL_FLOAT, GL_TRUE, 123, reinterpret_cast<const GLvoid *>( 321 ) );
+
+  EXPECT_EQ( GLuint(1),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(8888),  ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(321), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(123),  ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.VertexArray::arrayBufferBinding = 8888;
+  ppca.glVertexAttribPointer ( 3, 1, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<GLvoid *>( 321 ) );
+
+  EXPECT_EQ( GLuint(1),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(8888),  ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(321), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(4),    ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.VertexArray::arrayBufferBinding = 8888;
+  ppca.glVertexAttribIPointer ( 3, 2, GL_INT, 456, reinterpret_cast<GLvoid *>( 654 ) );
+
+  EXPECT_EQ( GLuint(2),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_INT),      ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(8888),  ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(654), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(456),  ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.VertexArray::arrayBufferBinding = 8888;
+  ppca.glVertexAttribIPointer( 3, 2, GL_INT, 0, reinterpret_cast<GLvoid *>( 654 ) );
+
+  EXPECT_EQ( GLuint(2),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_INT),      ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(8888),  ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(654), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(8),    ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.VertexArray::arrayBufferBinding = 8888;
+  ppca.glVertexAttribLPointer( 3, 3, GL_DOUBLE, 789, reinterpret_cast<GLvoid *>( 987 ) );
+
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_DOUBLE),   ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(8888),  ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(987), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(789),  ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.VertexArray::arrayBufferBinding = 8888;
+  ppca.glVertexAttribLPointer( 3, 3, GL_DOUBLE, 0, reinterpret_cast<GLvoid *>( 987 ) );
+
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_DOUBLE),   ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(8888),  ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(987), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(24),   ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  // Enable/DisableVertexAttribArray
+
+  ppca.Reset(ctx);
+  ppca.glEnableVertexAttribArray( 3 );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ), ppca.VertexArray::generic[ 3 ].enabled );
+
+  ppca.glDisableVertexAttribArray( 3 );
+
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::generic[ 3 ].enabled );
+
+  // VertexBindingDivisor
+
+  ppca.Reset(ctx);
+  ppca.glVertexBindingDivisor( 4, 123 );
+
+  EXPECT_EQ( GLuint(123), ppca.VertexArray::bindings[4].divisor );
+
+  // VertexAttribDivisor
+
+  ppca.Reset(ctx);
+  ppca.glVertexAttribDivisor( 3, 456 );
+
+  EXPECT_EQ( GLuint(3),   ppca.VertexArray::generic[3].bindingIndex );
+  EXPECT_EQ( GLuint(456), ppca.VertexArray::bindings[3].divisor );
+
+  // ShadowVertexArrayVertexAttribOffsetEXT
+
+  ppca.Reset(ctx);
+  ppca.glVertexArrayVertexAttribOffsetEXT( 0, 987, 3, 1, GL_FLOAT, GL_TRUE, 123, 321 );
+
+  EXPECT_EQ( GLuint(1),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint( 0 ),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(987),   ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(321), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(123),  ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.glVertexArrayVertexAttribOffsetEXT( 0, 987, 3, 1, GL_FLOAT, GL_FALSE, 0, 321 );
+
+  EXPECT_EQ( GLuint(1),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_FLOAT),    ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint( 0 ),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(987),   ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(321), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(4),    ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.glVertexArrayVertexAttribIOffsetEXT( 0, 987, 3, 2, GL_INT, 456, 654 );
+
+  EXPECT_EQ( GLuint(2),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_INT),      ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint( 0 ),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(987),   ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(654), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(456),  ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  ppca.Reset(ctx);
+  ppca.glVertexArrayVertexAttribIOffsetEXT( 0, 987, 3, 2, GL_INT, 0, 654 );
+
+  EXPECT_EQ( GLuint(2),           ppca.VertexArray::generic[3].size );
+  EXPECT_EQ( GLenum(GL_INT),      ppca.VertexArray::generic[3].type );
+  EXPECT_EQ( GLuint( 0 ),         ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].normalized );
+  EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[3].isInteger );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[3].isLong );
+  EXPECT_EQ( GLuint(3),           ppca.VertexArray::generic[3].bindingIndex );
+
+  EXPECT_EQ( GLuint(987),   ppca.VertexArray::bindings[3].buffer );
+  EXPECT_EQ( GLintptr(654), ppca.VertexArray::bindings[3].offset );
+  EXPECT_EQ( GLsizei(8),    ppca.VertexArray::bindings[3].stride );
+  EXPECT_EQ( GLuint(0),     ppca.VertexArray::bindings[3].divisor );
+
+  // EnableDisableVertexArrayAttribEXT
+
+  ppca.Reset(ctx);
+  ppca.glEnableVertexArrayAttribEXT( 0, 3 );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ), ppca.VertexArray::generic [ 3 ].enabled );
+
+  ppca.glDisableVertexArrayAttribEXT( 0, 3 );
+
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::generic [ 3 ].enabled );
+
+  // If the vertex array binding is nonzero, none of these calls should do
+  // anything (since we do not actually track internal state for vertex array
+  // objects.
+
+  ppca.Reset(ctx);
+  ppca.VertexArray::generic[ 3 ].relativeOffset = GLuint(123);
+  ppca.VertexArray::generic[ 3 ].bindingIndex = 4;
+  ppca.VertexArray::bindings[ 4 ].buffer = 456;
+  ppca.VertexArray::bindings[ 4 ].divisor = 789;
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+
+  ppca.glVertexAttribFormat ( 3, 3, GL_FLOAT, GL_TRUE, 0 );
+  ppca.glVertexAttribIFormat( 3, 3, GL_INT, 0 );
+  ppca.glVertexAttribLFormat( 3, 3, GL_DOUBLE, 0 );
+  ppca.glBindVertexBuffer( 4, 0, 0, 0 );
+  ppca.glVertexAttribBinding( 3, 0 );
+  ppca.glVertexAttribPointer ( 3, 1, GL_FLOAT,  GL_TRUE, 0, NULL );
+  ppca.glVertexAttribIPointer( 3, 2, GL_INT,    0, NULL );
+  ppca.glVertexAttribLPointer( 3, 3, GL_DOUBLE, 0, NULL );
+  ppca.glVertexBindingDivisor( 4, 0 );
+  ppca.glVertexArrayVertexAttribOffsetEXT ( 1, 0, 3, 1, GL_FLOAT, GL_TRUE, 0, 0 );
+  ppca.glVertexArrayVertexAttribIOffsetEXT( 1, 0, 3, 2, GL_INT, 0, 0 );
+
+  EXPECT_EQ( GLuint(123), ppca.VertexArray::generic[3].relativeOffset );
+  EXPECT_EQ( GLuint(4),   ppca.VertexArray::generic[3].bindingIndex );
+  EXPECT_EQ( GLuint(456), ppca.VertexArray::bindings[4].buffer );
+  EXPECT_EQ( GLuint(789), ppca.VertexArray::bindings[4].divisor );
+
+  ppca.VertexArray::generic [ 3 ].enabled = GL_FALSE;
+  ppca.glEnableVertexAttribArray( 3 );
+  ppca.glEnableVertexArrayAttribEXT( 1, 3 );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::generic [ 3 ].enabled );
+
+  ppca.VertexArray::generic [ 3 ].enabled = GL_TRUE;
+  ppca.glDisableVertexAttribArray( 3 );
+  ppca.glDisableVertexArrayAttribEXT( 1, 3 );
+  EXPECT_EQ( GLboolean( GL_TRUE ), ppca.VertexArray::generic [ 3 ].enabled );
+}
+
+TEST ( RegalPpca, VertexArray_Named )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glEnableClientState( GL_COLOR_ARRAY );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+
+  ppca.glDisableClientState( GL_COLOR_ARRAY );
+  EXPECT_EQ( GLboolean( GL_FALSE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+
+  EXPECT_EQ( GLenum( GL_TEXTURE0 ), ppca.VertexArray::clientActiveTexture );
+
+  ppca.glClientActiveTexture( GL_TEXTURE2 );
+  EXPECT_EQ( GLenum( GL_TEXTURE2 ), ppca.VertexArray::clientActiveTexture );
+
+  ppca.glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+  EXPECT_EQ( GLboolean( GL_TRUE ),   ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].enabled );
+
+  ppca.glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+  EXPECT_EQ( GLboolean( GL_FALSE ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].enabled );
+
+  ppca.glEnableVertexArrayEXT( 0, GL_TEXTURE_COORD_ARRAY );
+  EXPECT_EQ( GLboolean( GL_TRUE ),   ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].enabled );
+
+  ppca.glDisableVertexArrayEXT( 0, GL_TEXTURE_COORD_ARRAY );
+  EXPECT_EQ( GLboolean( GL_FALSE ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].enabled );
+
+  ppca.glEnableVertexArrayEXT( 1, GL_TEXTURE_COORD_ARRAY );
+  EXPECT_EQ( GLboolean( GL_FALSE ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].enabled );
+
+  ppca.glDisableVertexArrayEXT( 1, GL_TEXTURE_COORD_ARRAY );
+  EXPECT_EQ( GLboolean( GL_FALSE ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].enabled );
+
+  ppca.glEnableClientStateIndexedEXT( GL_TEXTURE_COORD_ARRAY, 5 );
+  EXPECT_EQ( GLboolean( GL_TRUE ),   ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].enabled );
+
+  ppca.glDisableClientStateIndexedEXT( GL_TEXTURE_COORD_ARRAY, 5 );
+  EXPECT_EQ( GLboolean( GL_FALSE ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].enabled );
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.VertexArray::named[ii].enabled = GLboolean(GL_FALSE);
+    ppca.VertexArray::named[ii].pointer = reinterpret_cast<const GLvoid*>(ii);
+    ppca.VertexArray::named[ii].buffer  = GLuint(ii);
+    ppca.VertexArray::named[ii].size    = GLint(ii);
+    ppca.VertexArray::named[ii].type    = GLenum(ii);
+    ppca.VertexArray::named[ii].stride  = GLsizei(ii);
+  }
+
+  ppca.VertexArray::arrayBufferBinding = 123;
+
+  ppca.glVertexPointer( 4, GL_FLOAT, 1001, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::VERTEX ].buffer );
+  EXPECT_EQ( GLint(4),           ppca.VertexArray::named[ ClientState::VERTEX ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::VERTEX ].type );
+  EXPECT_EQ( GLsizei(1001),      ppca.VertexArray::named[ ClientState::VERTEX ].stride );
+
+  ppca.glNormalPointer( GL_FLOAT, 1002, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::NORMAL ].buffer );
+  EXPECT_EQ( GLint(3),           ppca.VertexArray::named[ ClientState::NORMAL ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::NORMAL ].type );
+  EXPECT_EQ( GLsizei(1002),      ppca.VertexArray::named[ ClientState::NORMAL ].stride );
+
+  ppca.glColorPointer( 4, GL_FLOAT, 1003, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::COLOR ].buffer );
+  EXPECT_EQ( GLint(4),           ppca.VertexArray::named[ ClientState::COLOR ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::COLOR ].type );
+  EXPECT_EQ( GLsizei(1003),      ppca.VertexArray::named[ ClientState::COLOR ].stride );
+
+  ppca.glSecondaryColorPointer( 3, GL_FLOAT, 1004, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].buffer );
+  EXPECT_EQ( GLint(3),           ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].type );
+  EXPECT_EQ( GLsizei(1004),      ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].stride );
+
+  ppca.glIndexPointer( GL_INT, 1005, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::INDEX ].buffer );
+  EXPECT_EQ( GLint(1),           ppca.VertexArray::named[ ClientState::INDEX ].size );
+  EXPECT_EQ( GLenum( GL_INT ),   ppca.VertexArray::named[ ClientState::INDEX ].type );
+  EXPECT_EQ( GLsizei(1005),      ppca.VertexArray::named[ ClientState::INDEX ].stride );
+
+  ppca.glEdgeFlagPointer( 1006, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::EDGE_FLAG ].buffer );
+  EXPECT_EQ( GLint(1),           ppca.VertexArray::named[ ClientState::EDGE_FLAG ].size );
+  EXPECT_EQ( GLenum( GL_BOOL ),  ppca.VertexArray::named[ ClientState::EDGE_FLAG ].type );
+  EXPECT_EQ( GLsizei(1006),      ppca.VertexArray::named[ ClientState::EDGE_FLAG ].stride );
+
+  ppca.glFogCoordPointer( GL_FLOAT, 1007, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::FOG_COORD ].buffer );
+  EXPECT_EQ( GLint(1),           ppca.VertexArray::named[ ClientState::FOG_COORD ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::FOG_COORD ].type );
+  EXPECT_EQ( GLsizei(1007),      ppca.VertexArray::named[ ClientState::FOG_COORD ].stride );
+
+  ppca.glTexCoordPointer( 2, GL_FLOAT, 1008, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::TEX_COORD + 2].buffer );
+  EXPECT_EQ( GLint(2),           ppca.VertexArray::named[ ClientState::TEX_COORD + 2].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::TEX_COORD + 2].type );
+  EXPECT_EQ( GLsizei(1008),      ppca.VertexArray::named[ ClientState::TEX_COORD + 2].stride );
+
+  ppca.glMultiTexCoordPointerEXT( GL_TEXTURE5, 2, GL_FLOAT, 2005, NULL );
+  EXPECT_EQ( GLuint(123),        ppca.VertexArray::named[ ClientState::TEX_COORD + 5].buffer );
+  EXPECT_EQ( GLint(2),           ppca.VertexArray::named[ ClientState::TEX_COORD + 5].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::TEX_COORD + 5].type );
+  EXPECT_EQ( GLsizei(2005),      ppca.VertexArray::named[ ClientState::TEX_COORD + 5].stride );
+
+  ppca.glVertexArrayVertexOffsetEXT( 0, 3001, 3, GL_FLOAT, 3002, 0 );
+  EXPECT_EQ( GLuint(3001),       ppca.VertexArray::named[ ClientState::VERTEX ].buffer );
+  EXPECT_EQ( GLint(3),           ppca.VertexArray::named[ ClientState::VERTEX ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::VERTEX ].type );
+  EXPECT_EQ( GLsizei(3002),      ppca.VertexArray::named[ ClientState::VERTEX ].stride );
+
+  ppca.glVertexArrayColorOffsetEXT ( 0, 3003, 4, GL_FLOAT, 3004, 0 );
+  EXPECT_EQ( GLuint(3003),       ppca.VertexArray::named[ ClientState::COLOR ].buffer );
+  EXPECT_EQ( GLint(4),           ppca.VertexArray::named[ ClientState::COLOR ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::COLOR ].type );
+  EXPECT_EQ( GLsizei(3004),      ppca.VertexArray::named[ ClientState::COLOR ].stride );
+
+  ppca.glVertexArrayEdgeFlagOffsetEXT ( 0, 3005, 3006, 0 );
+  EXPECT_EQ( GLuint(3005),       ppca.VertexArray::named[ ClientState::EDGE_FLAG ].buffer );
+  EXPECT_EQ( GLint(1),           ppca.VertexArray::named[ ClientState::EDGE_FLAG ].size );
+  EXPECT_EQ( GLenum( GL_BOOL ),  ppca.VertexArray::named[ ClientState::EDGE_FLAG ].type );
+  EXPECT_EQ( GLsizei(3006),      ppca.VertexArray::named[ ClientState::EDGE_FLAG ].stride );
+
+  ppca.glVertexArrayIndexOffsetEXT ( 0, 3007, GL_INT, 3008, 0 );
+  EXPECT_EQ( GLuint(3007),       ppca.VertexArray::named[ ClientState::INDEX ].buffer );
+  EXPECT_EQ( GLint(1),           ppca.VertexArray::named[ ClientState::INDEX ].size );
+  EXPECT_EQ( GLenum( GL_INT ),   ppca.VertexArray::named[ ClientState::INDEX ].type );
+  EXPECT_EQ( GLsizei(3008),      ppca.VertexArray::named[ ClientState::INDEX ].stride );
+
+  ppca.glVertexArrayNormalOffsetEXT ( 0, 3009, GL_FLOAT, 3010, 0 );
+  EXPECT_EQ( GLuint(3009),       ppca.VertexArray::named[ ClientState::NORMAL ].buffer );
+  EXPECT_EQ( GLint(3),           ppca.VertexArray::named[ ClientState::NORMAL ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::NORMAL ].type );
+  EXPECT_EQ( GLsizei(3010),      ppca.VertexArray::named[ ClientState::NORMAL ].stride );
+
+  ppca.glVertexArrayTexCoordOffsetEXT( 0, 3011, 2, GL_FLOAT, 3012, 0 );
+  EXPECT_EQ( GLuint(3011),       ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].buffer );
+  EXPECT_EQ( GLint(2),           ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].type );
+  EXPECT_EQ( GLsizei(3012),      ppca.VertexArray::named[ ClientState::TEX_COORD + 2 ].stride );
+
+  ppca.glVertexArrayMultiTexCoordOffsetEXT( 0, 3013, GL_TEXTURE5, 2, GL_FLOAT, 3014, 0 );
+  EXPECT_EQ( GLuint(3013),       ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].buffer );
+  EXPECT_EQ( GLint(2),           ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].type );
+  EXPECT_EQ( GLsizei(3014),      ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].stride );
+
+  ppca.glVertexArrayFogCoordOffsetEXT ( 0, 3015, GL_FLOAT, 3016, 0 );
+  EXPECT_EQ( GLuint(3015),       ppca.VertexArray::named[ ClientState::FOG_COORD ].buffer );
+  EXPECT_EQ( GLint(1),           ppca.VertexArray::named[ ClientState::FOG_COORD ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::FOG_COORD ].type );
+  EXPECT_EQ( GLsizei(3016),      ppca.VertexArray::named[ ClientState::FOG_COORD ].stride );
+
+  ppca.glVertexArraySecondaryColorOffsetEXT ( 0, 3017, 3, GL_FLOAT, 3018, 0 );
+  EXPECT_EQ( GLuint(3017),       ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].buffer );
+  EXPECT_EQ( GLint(3),           ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ), ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].type );
+  EXPECT_EQ( GLsizei(3018),      ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].stride );
+}
+
+TEST ( RegalPpca, glDeleteBuffers_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  GLuint buffers[ 2 ] = { 0, 123 };
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer  = GLuint(123);
+  }
+  ppca.VertexArray::elementArrayBufferBinding = GLuint(123);
+  ppca.VertexArray::arrayBufferBinding = GLuint(123);
+  ppca.PixelStore::pixelPackBufferBinding = GLuint(123);
+  ppca.PixelStore::pixelUnpackBufferBinding = GLuint(123);
+
+  ppca.glDeleteBuffers( 2, buffers );
+
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer  = GLuint(456);
+  }
+  ppca.VertexArray::elementArrayBufferBinding = GLuint(456);
+  ppca.VertexArray::arrayBufferBinding = GLuint(456);
+  ppca.PixelStore::pixelPackBufferBinding = GLuint(456);
+  ppca.PixelStore::pixelUnpackBufferBinding = GLuint(456);
+
+  ppca.glDeleteBuffers( 2, buffers );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(456), ppca.VertexArray::bindings[ii].buffer );
+  }
+  EXPECT_EQ( GLuint(456), ppca.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLuint(456), ppca.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint(456), ppca.PixelStore::pixelPackBufferBinding );
+  EXPECT_EQ( GLuint(456), ppca.PixelStore::pixelUnpackBufferBinding );
+}
+
+TEST ( RegalPpca, glDeleteVertexArrays_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  GLuint buffers[ 2 ] = { 0, 123 };
+
+  ppca.VertexArray::vertexArrayBinding = 123;
+
+  ppca.glDeleteVertexArrays( 2, buffers );
+
+  EXPECT_EQ( GLuint(0), ppca.VertexArray::vertexArrayBinding );
+
+  ppca.VertexArray::vertexArrayBinding = 456;
+
+  ppca.glDeleteVertexArrays( 2, buffers );
+
+  EXPECT_EQ( GLuint(456), ppca.VertexArray::vertexArrayBinding );
+}
+
+TEST ( RegalPpca, glPrimitiveRestart_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.primitiveRestartFixedIndex );
+  EXPECT_EQ( GLuint(0),           ppca.VertexArray::primitiveRestartIndex );
+
+  // test glEnable & glDisable
+
+  ppca.glEnable( GL_PRIMITIVE_RESTART );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisable( GL_PRIMITIVE_RESTART );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glEnable( GL_PRIMITIVE_RESTART_FIXED_INDEX );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisable( GL_PRIMITIVE_RESTART_FIXED_INDEX );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+
+  ppca.glEnable( GL_TEXTURE_GEN_S );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisable( GL_TEXTURE_GEN_S );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.VertexArray::primitiveRestart = GL_TRUE;
+  ppca.VertexArray::primitiveRestartFixedIndex = GL_TRUE;
+  ppca.glEnable( GL_TEXTURE_GEN_S );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisable( GL_TEXTURE_GEN_S );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+
+  // test glEnablei & glDisablei
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glEnablei( GL_PRIMITIVE_RESTART, 0 );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisablei( GL_PRIMITIVE_RESTART, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glEnablei( GL_PRIMITIVE_RESTART_FIXED_INDEX, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisablei( GL_PRIMITIVE_RESTART_FIXED_INDEX, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+
+  ppca.glEnablei( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisablei( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.VertexArray::primitiveRestart = GL_TRUE;
+  ppca.VertexArray::primitiveRestartFixedIndex = GL_TRUE;
+  ppca.glEnablei( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisablei( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+
+  // test glEnableIndexedEXT & glDisableIndexedEXT
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glEnableIndexedEXT( GL_PRIMITIVE_RESTART, 0 );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisableIndexedEXT( GL_PRIMITIVE_RESTART, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glEnableIndexedEXT( GL_PRIMITIVE_RESTART_FIXED_INDEX, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisableIndexedEXT( GL_PRIMITIVE_RESTART_FIXED_INDEX, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+
+  ppca.glEnableIndexedEXT( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisableIndexedEXT( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.VertexArray::primitiveRestart = GL_TRUE;
+  ppca.VertexArray::primitiveRestartFixedIndex = GL_TRUE;
+  ppca.glEnableIndexedEXT( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+  ppca.glDisableIndexedEXT( GL_TEXTURE_GEN_S, 0 );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestart );
+  EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::primitiveRestartFixedIndex );
+
+  // test glPrimitiveRestartIndex
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<13; ii++)
+  {
+    ppca.glPrimitiveRestartIndex( ii );
+    EXPECT_EQ( GLuint(ii), ppca.VertexArray::primitiveRestartIndex );
+  }
+
+  ppca.glPrimitiveRestartIndex( GLuint(~0) );
+  EXPECT_EQ( GLuint(~0), ppca.VertexArray::primitiveRestartIndex );
+}
+
+TEST ( RegalPpca, glInterleavedArrays_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // Do a comprehensive test on all settings for GL_T4F_C4F_N3F_V4F
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.VertexArray::named[ ii ].enabled = GLboolean( ( ii & 1 ) == 0 );
+    ppca.VertexArray::named[ ii ].size    = GLint( 987 );
+    ppca.VertexArray::named[ ii ].type    = GLenum( 987 );
+    ppca.VertexArray::named[ ii ].stride  = GLsizei( 987 );
+    ppca.VertexArray::named[ ii ].pointer = reinterpret_cast<const GLvoid*>( 987 );
+  }
+
+  ppca.glClientActiveTexture( GL_TEXTURE5 );
+  ppca.glInterleavedArrays( GL_T4F_C4F_N3F_V4F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX ].enabled );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::VERTEX ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX ].type );
+  EXPECT_EQ( GLsizei( 60 ),         ppca.VertexArray::named[ ClientState::VERTEX ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 44 ), ppca.VertexArray::named[ ClientState::VERTEX ].pointer );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::NORMAL ].enabled );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL ].type );
+  EXPECT_EQ( GLsizei( 60 ),         ppca.VertexArray::named[ ClientState::NORMAL ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 32 ), ppca.VertexArray::named[ ClientState::NORMAL ].pointer );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR ].enabled );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR ].type );
+  EXPECT_EQ( GLsizei( 60 ),         ppca.VertexArray::named[ ClientState::COLOR ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 16 ), ppca.VertexArray::named[ ClientState::COLOR ].pointer );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].enabled );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].size );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].type );
+  EXPECT_EQ( GLsizei( 60 ),         ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].pointer );
+
+  // The other non-texture coordinate arrays should be disabled
+
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::EDGE_FLAG       ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::FOG_COORD       ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::INDEX           ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].enabled );
+
+  // The other non-texture coordinate arrays should not otherwise be touched.
+
+  EXPECT_EQ( GLint( 987 ),           ppca.VertexArray::named[ ClientState::EDGE_FLAG       ].size );
+  EXPECT_EQ( GLenum( 987 ),          ppca.VertexArray::named[ ClientState::EDGE_FLAG       ].type );
+  EXPECT_EQ( GLsizei( 987 ),         ppca.VertexArray::named[ ClientState::EDGE_FLAG       ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 987 ), ppca.VertexArray::named[ ClientState::EDGE_FLAG       ].pointer );
+
+  EXPECT_EQ( GLint( 987 ),           ppca.VertexArray::named[ ClientState::FOG_COORD       ].size );
+  EXPECT_EQ( GLenum( 987 ),          ppca.VertexArray::named[ ClientState::FOG_COORD       ].type );
+  EXPECT_EQ( GLsizei( 987 ),         ppca.VertexArray::named[ ClientState::FOG_COORD       ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 987 ), ppca.VertexArray::named[ ClientState::FOG_COORD       ].pointer );
+
+  EXPECT_EQ( GLint( 987 ),           ppca.VertexArray::named[ ClientState::INDEX           ].size );
+  EXPECT_EQ( GLenum( 987 ),          ppca.VertexArray::named[ ClientState::INDEX           ].type );
+  EXPECT_EQ( GLsizei( 987 ),         ppca.VertexArray::named[ ClientState::INDEX           ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 987 ), ppca.VertexArray::named[ ClientState::INDEX           ].pointer );
+
+  EXPECT_EQ( GLint( 987 ),           ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].size );
+  EXPECT_EQ( GLenum( 987 ),          ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].type );
+  EXPECT_EQ( GLsizei( 987 ),         ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 987 ), ppca.VertexArray::named[ ClientState::SECONDARY_COLOR ].pointer );
+
+  // Verify other texture coordinate settings unaffected.
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_TEXTURE_COORDS; ii++)
+  {
+    if ( ii == 5 )
+      continue;
+
+    GLboolean b = ( ( ( ClientState::TEX_COORD + ii ) & 1 ) == 0 ) ? GL_TRUE : GL_FALSE;
+
+    EXPECT_EQ( GLboolean( b ),         ppca.VertexArray::named[ ClientState::TEX_COORD + ii ].enabled );
+    EXPECT_EQ( GLint( 987 ),           ppca.VertexArray::named[ ClientState::TEX_COORD + ii ].size );
+    EXPECT_EQ( GLenum( 987 ),          ppca.VertexArray::named[ ClientState::TEX_COORD + ii ].type );
+    EXPECT_EQ( GLsizei( 987 ),         ppca.VertexArray::named[ ClientState::TEX_COORD + ii ].stride );
+    EXPECT_EQ( reinterpret_cast<const GLvoid*>( 987 ), ppca.VertexArray::named[ ClientState::TEX_COORD + ii ].pointer );
+  }
+
+  // Ensure if stride is nonzero, it is used as is, and ensure the pointer passed in is used as a base address.
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glClientActiveTexture( GL_TEXTURE5 );
+  ppca.glInterleavedArrays( GL_T4F_C4F_N3F_V4F, 321, reinterpret_cast<GLvoid *>( 5000 ) );
+
+  EXPECT_EQ( GLsizei( 321 ),          ppca.VertexArray::named[ ClientState::VERTEX        ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 5044 ), ppca.VertexArray::named[ ClientState::VERTEX        ].pointer );
+  EXPECT_EQ( GLsizei( 321 ),          ppca.VertexArray::named[ ClientState::NORMAL        ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 5032 ), ppca.VertexArray::named[ ClientState::NORMAL        ].pointer );
+  EXPECT_EQ( GLsizei( 321 ),          ppca.VertexArray::named[ ClientState::COLOR         ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 5016 ), ppca.VertexArray::named[ ClientState::COLOR         ].pointer );
+  EXPECT_EQ( GLsizei( 321 ),          ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].stride );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 5000 ), ppca.VertexArray::named[ ClientState::TEX_COORD + 5 ].pointer );
+
+  // Do a quick run through the remaining formats, and do some quick verifications.
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_V2F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 8 ),          ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 12 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_C4UB_V2F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_UNSIGNED_BYTE ), ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 12 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 12 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 4 ),  ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_C4UB_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_UNSIGNED_BYTE ), ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 16 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 16 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 4 ),  ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_C3F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 12 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_N3F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 12 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_C4F_N3F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 40 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 40 ),         ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 40 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 28 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 16 ), ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_T2F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 20 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 20 ),         ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 8 ),  ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_T4F_V4F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 16 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_T2F_C4UB_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_UNSIGNED_BYTE ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 24 ),         ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 12 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 8 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_T2F_C3F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 20 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 8 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_T2F_N3F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_FALSE ), ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 0 ),          ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 32 ),         ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 20 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 8 ),  ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glInterleavedArrays( GL_T2F_C4F_N3F_V3F, 0, NULL );
+
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::VERTEX    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::NORMAL    ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::COLOR     ].enabled );
+  EXPECT_EQ( GLboolean( GL_TRUE ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].enabled );
+
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::VERTEX    ].size );
+  EXPECT_EQ( GLint( 3 ),            ppca.VertexArray::named[ ClientState::NORMAL    ].size );
+  EXPECT_EQ( GLint( 4 ),            ppca.VertexArray::named[ ClientState::COLOR     ].size );
+  EXPECT_EQ( GLint( 2 ),            ppca.VertexArray::named[ ClientState::TEX_COORD ].size );
+
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::VERTEX    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::NORMAL    ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::COLOR     ].type );
+  EXPECT_EQ( GLenum( GL_FLOAT ),    ppca.VertexArray::named[ ClientState::TEX_COORD ].type );
+
+  EXPECT_EQ( GLsizei( 48 ),         ppca.VertexArray::named[ ClientState::VERTEX    ].stride );
+  EXPECT_EQ( GLsizei( 48 ),         ppca.VertexArray::named[ ClientState::NORMAL    ].stride );
+  EXPECT_EQ( GLsizei( 48 ),         ppca.VertexArray::named[ ClientState::COLOR     ].stride );
+  EXPECT_EQ( GLsizei( 48 ),         ppca.VertexArray::named[ ClientState::TEX_COORD ].stride );
+
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 36 ), ppca.VertexArray::named[ ClientState::VERTEX    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 24 ), ppca.VertexArray::named[ ClientState::NORMAL    ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 8 ),  ppca.VertexArray::named[ ClientState::COLOR     ].pointer );
+  EXPECT_EQ( reinterpret_cast<const GLvoid*>( 0 ),  ppca.VertexArray::named[ ClientState::TEX_COORD ].pointer );
+
+  // Pass in an unsupported "format", which should do nothing.
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.VertexArray::named[ ii ].enabled = GLboolean( ( ii & 1 ) == 0 );
+    ppca.VertexArray::named[ ii ].size    = GLint( 987 );
+    ppca.VertexArray::named[ ii ].type    = GLenum( 987 );
+    ppca.VertexArray::named[ ii ].stride  = GLsizei( 987 );
+    ppca.VertexArray::named[ ii ].pointer = reinterpret_cast<const GLvoid*>( 987 );
+  }
+
+  ppca.glInterleavedArrays( GL_RGBA, 0, NULL );
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    GLboolean b = ( ( ( ii ) & 1 ) == 0 ) ? GL_TRUE : GL_FALSE;
+
+    EXPECT_EQ( GLboolean( b ),         ppca.VertexArray::named[ ii ].enabled );
+    EXPECT_EQ( GLint( 987 ),           ppca.VertexArray::named[ ii ].size );
+    EXPECT_EQ( GLenum( 987 ),          ppca.VertexArray::named[ ii ].type );
+    EXPECT_EQ( GLsizei( 987 ),         ppca.VertexArray::named[ ii ].stride );
+    EXPECT_EQ( reinterpret_cast<const GLvoid*>( 987 ), ppca.VertexArray::named[ ii ].pointer );
+  }
+}
+
+TEST ( RegalPpca, glGet_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+  ctx.info->max_client_attrib_stack_depth = 16;
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
 
   GLint resulti[ 1 ] = { 123 };
   GLint64 resulti64[ 1 ] = { 123 };
@@ -2035,43 +2831,2142 @@ TEST ( RegalPpca, Get ) {
 
   // First ensure getting an unimplemented value works (does nothing).
 
-  EXPECT_FALSE( ppca.Get( &ctx, GL_FLOAT, resulti ) );
+  EXPECT_EQ( false, ppca.glGetv( ctx, GL_FLOAT, resulti ) );
   EXPECT_EQ( 123, resulti[ 0 ] );
 
-  EXPECT_FALSE( ppca.Get( &ctx, GL_FLOAT, resulti64 ) );
+  EXPECT_EQ( false, ppca.glGetv( ctx, GL_FLOAT, resulti64 ) );
   EXPECT_EQ( 123, resulti64[ 0 ] );
 
-  EXPECT_FALSE( ppca.Get( &ctx, GL_FLOAT, resultf ) );
+  EXPECT_EQ( false, ppca.glGetv( ctx, GL_FLOAT, resultf ) );
   EXPECT_EQ( 123, resultf[ 0 ] );
 
-  EXPECT_FALSE( ppca.Get( &ctx, GL_FLOAT, resultd ) );
+  EXPECT_EQ( false, ppca.glGetv( ctx, GL_FLOAT, resultd ) );
   EXPECT_EQ( 123, resultd[ 0 ] );
 
-  EXPECT_FALSE( ppca.Get( &ctx, GL_FLOAT, resultb ) );
-  EXPECT_EQ( GL_FALSE, resultb[ 0 ] );
+  EXPECT_EQ( false, ppca.glGetv( ctx, GL_FLOAT, resultb ) );
+  EXPECT_EQ( GLboolean(GL_FALSE), resultb[ 0 ] );
 
   // Next verify that getting an implemented value gets the value.
 
-  EXPECT_TRUE( ppca.Get( &ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti ) );
-  EXPECT_EQ( REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti[ 0 ] );
+  EXPECT_EQ( true, ppca.glGetv( ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti ) );
+  EXPECT_EQ( REGAL_EMU_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti[ 0 ] );
 
-  EXPECT_TRUE( ppca.Get( &ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti64 ) );
-  EXPECT_EQ( REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti64[ 0 ] );
+  EXPECT_EQ( true, ppca.glGetv( ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti64 ) );
+  EXPECT_EQ( REGAL_EMU_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti64[ 0 ] );
 
-  EXPECT_TRUE( ppca.Get( &ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultf ) );
-  EXPECT_EQ( REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultf[ 0 ] );
+  EXPECT_EQ( true, ppca.glGetv( ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultf ) );
+  EXPECT_EQ( REGAL_EMU_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultf[ 0 ] );
 
-  EXPECT_TRUE( ppca.Get( &ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultd ) );
-  EXPECT_EQ( REGAL_PPCA_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultd[ 0 ] );
+  EXPECT_EQ( true, ppca.glGetv( ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultd ) );
+  EXPECT_EQ( REGAL_EMU_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultd[ 0 ] );
 
-  EXPECT_TRUE( ppca.Get( &ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultb ) );
-  EXPECT_EQ( GL_TRUE, resultb[ 0 ] );
+  EXPECT_EQ( true, ppca.glGetv( ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resultb ) );
+  EXPECT_EQ( GLboolean(GL_TRUE), resultb[ 0 ] );
+}
 
-  // If the backend appears to be compatible with the request, the emulation
-  // should just defer to the backend.
+TEST ( RegalPpca, glPixelStore_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
 
-  ctx.info->es2 = ctx.info->core = false;
-  EXPECT_FALSE( ppca.Get( &ctx, GL_MAX_CLIENT_ATTRIB_STACK_DEPTH, resulti ) );
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // first test glPixelStorei
+
+  ppca.glPixelStore( GL_UNPACK_SWAP_BYTES, GLint(GL_TRUE) );
+  ppca.glPixelStore( GL_UNPACK_LSB_FIRST, GLint(GL_TRUE) );
+  ppca.glPixelStore( GL_UNPACK_IMAGE_HEIGHT, GLint(11) );
+  ppca.glPixelStore( GL_UNPACK_SKIP_IMAGES, GLint(12) );
+  ppca.glPixelStore( GL_UNPACK_ROW_LENGTH, GLint(13) );
+  ppca.glPixelStore( GL_UNPACK_SKIP_ROWS, GLint(14) );
+  ppca.glPixelStore( GL_UNPACK_SKIP_PIXELS, GLint(15) );
+  ppca.glPixelStore( GL_UNPACK_ALIGNMENT, GLint(16) );
+  ppca.glPixelStore( GL_PACK_SWAP_BYTES, GLint(GL_TRUE) );
+  ppca.glPixelStore( GL_PACK_LSB_FIRST, GLint(GL_TRUE) );
+  ppca.glPixelStore( GL_PACK_IMAGE_HEIGHT, GLint(27) );
+  ppca.glPixelStore( GL_PACK_SKIP_IMAGES, GLint(28) );
+  ppca.glPixelStore( GL_PACK_ROW_LENGTH, GLint(29) );
+  ppca.glPixelStore( GL_PACK_SKIP_ROWS, GLint(30) );
+  ppca.glPixelStore( GL_PACK_SKIP_PIXELS, GLint(31) );
+  ppca.glPixelStore( GL_PACK_ALIGNMENT, GLint(32) );
+
+  ppca.glBindBuffer( GL_PIXEL_UNPACK_BUFFER, GLuint(123) );
+  ppca.glBindBuffer( GL_PIXEL_PACK_BUFFER, GLuint(456) );
+
+  EXPECT_EQ( GLint(GL_TRUE), ppca.PixelStore::unpackSwapBytes );
+  EXPECT_EQ( GLint(GL_TRUE), ppca.PixelStore::unpackLsbFirst );
+  EXPECT_EQ( GLint(11),      ppca.PixelStore::unpackImageHeight );
+  EXPECT_EQ( GLint(12),      ppca.PixelStore::unpackSkipImages );
+  EXPECT_EQ( GLint(13),      ppca.PixelStore::unpackRowLength );
+  EXPECT_EQ( GLint(14),      ppca.PixelStore::unpackSkipRows );
+  EXPECT_EQ( GLint(15),      ppca.PixelStore::unpackSkipPixels );
+  EXPECT_EQ( GLint(16),      ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( GLint(GL_TRUE), ppca.PixelStore::packSwapBytes );
+  EXPECT_EQ( GLint(GL_TRUE), ppca.PixelStore::packLsbFirst );
+  EXPECT_EQ( GLint(27),      ppca.PixelStore::packImageHeight );
+  EXPECT_EQ( GLint(28),      ppca.PixelStore::packSkipImages );
+  EXPECT_EQ( GLint(29),      ppca.PixelStore::packRowLength );
+  EXPECT_EQ( GLint(30),      ppca.PixelStore::packSkipRows );
+  EXPECT_EQ( GLint(31),      ppca.PixelStore::packSkipPixels );
+  EXPECT_EQ( GLint(32),      ppca.PixelStore::packAlignment );
+  EXPECT_EQ( GLuint(123),    ppca.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint(456),    ppca.PixelStore::pixelPackBufferBinding );
+
+  // reset just the pixel store state then verify that
+  // the entire ppca is now back to default state
+
+  ppca.PixelStore::Reset();
+  checkPpcaDefaults(ctx, ppca);
+
+  // now test glPixelStoref
+
+  ppca.glPixelStore( GL_UNPACK_SWAP_BYTES, GLfloat(1.11) );
+  ppca.glPixelStore( GL_UNPACK_LSB_FIRST, GLfloat(0) );
+  ppca.glPixelStore( GL_UNPACK_IMAGE_HEIGHT, GLfloat(11.0) );
+  ppca.glPixelStore( GL_UNPACK_SKIP_IMAGES, GLfloat(12.1) );
+  ppca.glPixelStore( GL_UNPACK_ROW_LENGTH, GLfloat(13.2) );
+  ppca.glPixelStore( GL_UNPACK_SKIP_ROWS, GLfloat(14.3) );
+  ppca.glPixelStore( GL_UNPACK_SKIP_PIXELS, GLfloat(15.4) );
+  ppca.glPixelStore( GL_UNPACK_ALIGNMENT, GLfloat(16.5) );
+  ppca.glPixelStore( GL_PACK_SWAP_BYTES, GLfloat(GL_TRUE) );
+  ppca.glPixelStore( GL_PACK_LSB_FIRST, GLfloat(GL_TRUE) );
+  ppca.glPixelStore( GL_PACK_IMAGE_HEIGHT, GLfloat(27.01) );
+  ppca.glPixelStore( GL_PACK_SKIP_IMAGES, GLfloat(28.02) );
+  ppca.glPixelStore( GL_PACK_ROW_LENGTH, GLfloat(29.03) );
+  ppca.glPixelStore( GL_PACK_SKIP_ROWS, GLfloat(30.04) );
+  ppca.glPixelStore( GL_PACK_SKIP_PIXELS, GLfloat(31.05) );
+  ppca.glPixelStore( GL_PACK_ALIGNMENT, GLfloat(32.06) );
+
+  ppca.glBindBuffer( GL_PIXEL_UNPACK_BUFFER, GLuint(123) );
+  ppca.glBindBuffer( GL_PIXEL_PACK_BUFFER, GLuint(456) );
+
+  EXPECT_EQ( GLfloat(GL_TRUE),  ppca.PixelStore::unpackSwapBytes );
+  EXPECT_EQ( GLfloat(GL_FALSE), ppca.PixelStore::unpackLsbFirst );
+  EXPECT_EQ( GLfloat(11),       ppca.PixelStore::unpackImageHeight );
+  EXPECT_EQ( GLfloat(12),       ppca.PixelStore::unpackSkipImages );
+  EXPECT_EQ( GLfloat(13),       ppca.PixelStore::unpackRowLength );
+  EXPECT_EQ( GLfloat(14),       ppca.PixelStore::unpackSkipRows );
+  EXPECT_EQ( GLfloat(15),       ppca.PixelStore::unpackSkipPixels );
+  EXPECT_EQ( GLfloat(16),       ppca.PixelStore::unpackAlignment );
+  EXPECT_EQ( GLfloat(GL_TRUE),  ppca.PixelStore::packSwapBytes );
+  EXPECT_EQ( GLfloat(GL_TRUE),  ppca.PixelStore::packLsbFirst );
+  EXPECT_EQ( GLfloat(27),       ppca.PixelStore::packImageHeight );
+  EXPECT_EQ( GLfloat(28),       ppca.PixelStore::packSkipImages );
+  EXPECT_EQ( GLfloat(29),       ppca.PixelStore::packRowLength );
+  EXPECT_EQ( GLfloat(30),       ppca.PixelStore::packSkipRows );
+  EXPECT_EQ( GLfloat(31),       ppca.PixelStore::packSkipPixels );
+  EXPECT_EQ( GLfloat(32),       ppca.PixelStore::packAlignment );
+  EXPECT_EQ( GLuint(123),       ppca.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint(456),       ppca.PixelStore::pixelPackBufferBinding );
+}
+
+TEST ( RegalPpca, glBindBuffer_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::arrayBufferBinding = 0;
+  ppca.VertexArray::elementArrayBufferBinding = 0;
+  ppca.PixelStore::pixelUnpackBufferBinding = 0;
+  ppca.PixelStore::pixelPackBufferBinding = 0;
+
+  ppca.glBindBuffer( GL_ARRAY_BUFFER, GLuint(12) );
+  EXPECT_EQ( GLuint(12), ppca.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint( 0), ppca.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLuint( 0), ppca.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint( 0), ppca.PixelStore::pixelPackBufferBinding );
+
+  ppca.glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, GLuint(34) );
+  EXPECT_EQ( GLuint(12), ppca.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint(34), ppca.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLuint( 0), ppca.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint( 0), ppca.PixelStore::pixelPackBufferBinding );
+
+  ppca.glBindBuffer( GL_PIXEL_UNPACK_BUFFER, GLuint(21) );
+  EXPECT_EQ( GLuint(12), ppca.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint(34), ppca.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLuint(21), ppca.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint( 0), ppca.PixelStore::pixelPackBufferBinding );
+
+  ppca.glBindBuffer( GL_PIXEL_PACK_BUFFER, GLuint(43) );
+  EXPECT_EQ( GLuint(12), ppca.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint(34), ppca.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLuint(21), ppca.PixelStore::pixelUnpackBufferBinding );
+  EXPECT_EQ( GLuint(43), ppca.PixelStore::pixelPackBufferBinding );
+
+  GLuint validBuffers[] = { GL_ATOMIC_COUNTER_BUFFER,
+                            GL_COPY_READ_BUFFER,
+                            GL_COPY_WRITE_BUFFER,
+                            GL_DRAW_INDIRECT_BUFFER,
+                            GL_DISPATCH_INDIRECT_BUFFER,
+                            GL_SHADER_STORAGE_BUFFER,
+                            GL_TEXTURE_BUFFER,
+                            GL_TRANSFORM_FEEDBACK_BUFFER,
+                            GL_UNIFORM_BUFFER };
+  GLuint nValidBuffers = sizeof(validBuffers)/sizeof(GLuint);
+
+  for (GLuint n=0; n<nValidBuffers; n++)
+  {
+    ppca.glBindBuffer( validBuffers[n], GLuint(56) );
+    EXPECT_EQ( GLuint(12), ppca.VertexArray::arrayBufferBinding );
+    EXPECT_EQ( GLuint(34), ppca.VertexArray::elementArrayBufferBinding );
+    EXPECT_EQ( GLuint(21), ppca.PixelStore::pixelUnpackBufferBinding );
+    EXPECT_EQ( GLuint(43), ppca.PixelStore::pixelPackBufferBinding );
+  }
+
+  GLuint invalidBuffers[] = { GL_ARRAY_BUFFER_BINDING,
+                              GL_ATOMIC_COUNTER_BUFFER_BINDING,
+                              GL_DRAW_INDIRECT_BUFFER_BINDING,
+                              GL_DISPATCH_INDIRECT_BUFFER_BINDING,
+                              GL_ELEMENT_ARRAY_BUFFER_BINDING,
+                              GL_PIXEL_PACK_BUFFER_BINDING,
+                              GL_PIXEL_UNPACK_BUFFER_BINDING,
+                              GL_SHADER_STORAGE_BUFFER_BINDING,
+                              GL_TEXTURE_BUFFER_DATA_STORE_BINDING,
+                              GL_TEXTURE_BUFFER_FORMAT,
+                              GL_TEXTURE_BUFFER_OFFSET,
+                              GL_TEXTURE_BUFFER_SIZE,
+                              GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT,
+                              GL_TRANSFORM_FEEDBACK_BUFFER_BINDING,
+                              GL_UNIFORM_BUFFER_BINDING };
+  GLuint nInvalidBuffers = sizeof(invalidBuffers)/sizeof(GLuint);
+
+  for (GLuint n=0; n<nInvalidBuffers; n++)
+  {
+    ppca.glBindBuffer( invalidBuffers[n], GLuint(78) );
+    EXPECT_EQ( GLuint(12), ppca.VertexArray::arrayBufferBinding );
+    EXPECT_EQ( GLuint(34), ppca.VertexArray::elementArrayBufferBinding );
+    EXPECT_EQ( GLuint(21), ppca.PixelStore::pixelUnpackBufferBinding );
+    EXPECT_EQ( GLuint(43), ppca.PixelStore::pixelPackBufferBinding );
+  }
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindBuffer( GL_ARRAY_BUFFER, GLuint(123) );
+  ppca.glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, GLuint(789) );
+  ppca.glBindBuffer( GL_PIXEL_PACK_BUFFER, GLuint(321) );
+  ppca.glBindBuffer( GL_PIXEL_UNPACK_BUFFER, GLuint(654) );
+
+  EXPECT_EQ( GLuint(123), ppca.VertexArray::arrayBufferBinding );
+  EXPECT_EQ( GLuint(  0), ppca.VertexArray::elementArrayBufferBinding );
+  EXPECT_EQ( GLuint(321), ppca.PixelStore::pixelPackBufferBinding );
+  EXPECT_EQ( GLuint(654), ppca.PixelStore::pixelUnpackBufferBinding );
+}
+
+TEST ( RegalPpca, glClientActiveTexture_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<(REGAL_EMU_MAX_TEXTURE_COORDS * 2); ii++)
+  {
+    GLenum test = GLenum(GL_TEXTURE0 + ii);
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.VertexArray::clientActiveTexture = GLenum(0);
+    ppca.glClientActiveTexture( test );
+
+    if (ii < REGAL_EMU_MAX_TEXTURE_COORDS)
+      EXPECT_EQ( test, ppca.VertexArray::clientActiveTexture );
+    else
+      EXPECT_EQ( GLenum(0), ppca.VertexArray::clientActiveTexture );
+
+    ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  for (GLuint ii=0; ii<(REGAL_EMU_MAX_TEXTURE_COORDS * 2); ii++)
+  {
+    GLenum test = GLenum(GL_TEXTURE0 + ii);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.VertexArray::clientActiveTexture = GLenum(0);
+    ppca.glClientActiveTexture( test );
+
+    if (ii < REGAL_EMU_MAX_TEXTURE_COORDS)
+      EXPECT_EQ( test, ppca.VertexArray::clientActiveTexture );
+    else
+      EXPECT_EQ( GLenum(0), ppca.VertexArray::clientActiveTexture );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glEnableDisableClientState_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glEnableClientState & glDisableClientState with no vertex array bound
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    if (ii < 7)
+    {
+      ppca.glEnableClientState( Regal::ClientState::vaEnum[ii][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientState( Regal::ClientState::vaEnum[ii][0] );
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.glEnableClientState( Regal::ClientState::vaEnum[7][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientState( Regal::ClientState::vaEnum[7][0] );
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+
+  // test glEnableClientStateiEXT & glDisableClientStateiEXT with no vertex array bound
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    if (ii < 7)
+    {
+      ppca.glEnableClientStateiEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateiEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.glEnableClientStateiEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateiEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+
+  // test glEnableClientStateIndexedEXT & glDisableClientStateIndexedEXT with no vertex array bound
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    if (ii < 7)
+    {
+      ppca.glEnableClientStateIndexedEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateIndexedEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.glEnableClientStateIndexedEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateIndexedEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+
+  // test glEnableClientState & glDisableClientState with a vertex array bound
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    if (ii < 7)
+    {
+      ppca.glEnableClientState( Regal::ClientState::vaEnum[ii][0] );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::vertexArrayBinding = 1;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientState( Regal::ClientState::vaEnum[ii][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.glEnableClientState( Regal::ClientState::vaEnum[7][0] );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::vertexArrayBinding = 1;
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientState( Regal::ClientState::vaEnum[7][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+
+  // test glEnableClientStateiEXT & glDisableClientStateiEXT with a vertex array bound
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    if (ii < 7)
+    {
+      ppca.glEnableClientStateiEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::vertexArrayBinding = 1;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateiEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.glEnableClientStateiEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::vertexArrayBinding = 1;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateiEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+
+  // test glEnableClientStateIndexedEXT & glDisableClientStateIndexedEXT with a vertex array bound
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    if (ii < 7)
+    {
+      ppca.glEnableClientStateIndexedEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::vertexArrayBinding = 1;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateIndexedEXT( Regal::ClientState::vaEnum[ii][0], 0 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.glEnableClientStateIndexedEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::vertexArrayBinding = 1;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableClientStateIndexedEXT( Regal::ClientState::vaEnum[7][0], ii - 7 );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::vertexArrayBinding = 0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+}
+
+TEST ( RegalPpca, glBindVertexArray_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.glBindVertexArray( GLuint(13579) );
+  EXPECT_EQ( GLuint(13579), ppca.VertexArray::vertexArrayBinding );
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  checkPpcaDefaults(ctx, ppca);
+}
+
+TEST ( RegalPpca, glEnableDisableVertexAttribArray_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glEnableVertexAttribArray & glDisableVertexAttribArray with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.glEnableVertexAttribArray( ii );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].enabled );
+    ppca.VertexArray::generic[ii].enabled = GL_FALSE;
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].enabled = GL_TRUE;
+    ppca.glDisableVertexAttribArray( ii );
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glEnableVertexAttribArray & glDisableVertexAttribArray with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    ppca.glEnableVertexAttribArray( ii );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].enabled );
+    ppca.VertexArray::vertexArrayBinding = 0;
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.VertexArray::generic[ii].enabled = GL_TRUE;
+    ppca.glDisableVertexAttribArray( ii );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].enabled );
+    ppca.VertexArray::generic[ii].enabled = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glEnableDisableVertexArrayAttribEXT_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glEnableVertexArrayAttribEXT & glDisableVertexArrayAttribEXT with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.glEnableVertexArrayAttribEXT( 0, ii );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].enabled );
+    ppca.VertexArray::generic[ii].enabled = GL_FALSE;
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].enabled = GL_TRUE;
+    ppca.glDisableVertexArrayAttribEXT( 0, ii );
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glEnableVertexAttribArray & glDisableVertexAttribArray with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.glEnableVertexArrayAttribEXT( ii+1, ii );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].enabled );
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].enabled = GL_TRUE;
+    ppca.glDisableVertexArrayAttribEXT( ii+1, ii );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].enabled );
+    ppca.VertexArray::generic[ii].enabled = GL_FALSE;
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glEnableDisableVertexArrayEXT_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glEnableVertexArrayEXT & glDisableVertexArrayEXT with no vertex array object
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    if (ii < 7)
+    {
+      ppca.glEnableVertexArrayEXT( 0, Regal::ClientState::vaEnum[ii][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableVertexArrayEXT( 0, Regal::ClientState::vaEnum[ii][0] );
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.glEnableVertexArrayEXT( 0, Regal::ClientState::vaEnum[7][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      checkPpcaDefaults(ctx, ppca);
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableVertexArrayEXT( 0, Regal::ClientState::vaEnum[7][0] );
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+
+  // test glEnableVertexArrayEXT & glDisableVertexArrayEXT with a vertex array object
+
+  for (GLuint ii=0; ii<ClientState::nNamedArrays; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    if (ii < 7)
+    {
+      ppca.glEnableVertexArrayEXT( ii+1, Regal::ClientState::vaEnum[ii][0] );
+      checkPpcaDefaults(ctx, ppca);
+
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableVertexArrayEXT( ii+1, Regal::ClientState::vaEnum[ii][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      checkPpcaDefaults(ctx, ppca);
+    }
+    else
+    {
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.glEnableVertexArrayEXT( ii+1, Regal::ClientState::vaEnum[7][0] );
+      EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      checkPpcaDefaults(ctx, ppca);
+
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0 + ii - 7;
+      ppca.VertexArray::named[ii].enabled = GL_TRUE;
+      ppca.glDisableVertexArrayEXT( ii+1, Regal::ClientState::vaEnum[7][0] );
+      EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::named[ii].enabled );
+      ppca.VertexArray::named[ii].enabled = GL_FALSE;
+      ppca.VertexArray::clientActiveTexture = GL_TEXTURE0;
+      checkPpcaDefaults(ctx, ppca);
+    }
+  }
+}
+
+TEST ( RegalPpca, glVertexAttribBinding_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glVertexAttribBinding with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.glVertexAttribBinding( ii, ii+1 );
+    EXPECT_EQ( GLuint(ii+1), ppca.VertexArray::generic[ii].bindingIndex );
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexAttribBinding with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    ppca.VertexArray::generic[ii].bindingIndex = ii+1;
+    ppca.glVertexAttribBinding( ii, 0 );
+    EXPECT_EQ( GLuint(ii+1), ppca.VertexArray::generic[ii].bindingIndex );
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glVertexBindingDivisor_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glVertexBindingDivisor with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.glVertexBindingDivisor( ii, 333 );
+    EXPECT_EQ( GLuint(333), ppca.VertexArray::bindings[ii].divisor );
+    ppca.VertexArray::bindings[ii].divisor = 0;
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexBindingDivisor with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    ppca.VertexArray::bindings[ii].divisor = 333;
+    ppca.glVertexBindingDivisor( ii, 555 );
+    EXPECT_EQ( GLuint(333), ppca.VertexArray::bindings[ii].divisor );
+    ppca.VertexArray::bindings[ii].divisor = 0;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexAttribDivisor with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    if (ii<REGAL_EMU_MAX_VERTEX_ATTRIBS)
+    {
+      ppca.glVertexAttribDivisor( ii, 555 );
+      EXPECT_EQ( GLuint(555), ppca.VertexArray::bindings[ii].divisor );
+      EXPECT_EQ( GLuint(ii), ppca.VertexArray::generic[ii].bindingIndex );
+      ppca.VertexArray::bindings[ii].divisor = 0;
+      ppca.VertexArray::generic[ii].bindingIndex = ii;
+    }
+    else
+    {
+      ppca.VertexArray::bindings[ii].divisor = 333;
+      ppca.glVertexAttribDivisor( ii, 555 );
+      EXPECT_EQ( GLuint(333), ppca.VertexArray::bindings[ii].divisor );
+      ppca.VertexArray::bindings[ii].divisor = 0;
+      ppca.VertexArray::vertexArrayBinding = 0;
+    }
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexAttribDivisor with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    if (ii<REGAL_EMU_MAX_VERTEX_ATTRIBS)
+    {
+      ppca.VertexArray::bindings[ii].divisor = 333;
+      ppca.VertexArray::generic[ii].bindingIndex = 333;
+      ppca.glVertexAttribDivisor( ii, 555 );
+      EXPECT_EQ( GLuint(333), ppca.VertexArray::bindings[ii].divisor );
+      EXPECT_EQ( GLuint(333), ppca.VertexArray::generic[ii].bindingIndex );
+      ppca.VertexArray::bindings[ii].divisor = 0;
+      ppca.VertexArray::generic[ii].bindingIndex = ii;
+      ppca.VertexArray::vertexArrayBinding = 0;
+    }
+    else
+    {
+      ppca.VertexArray::bindings[ii].divisor = 333;
+      ppca.glVertexAttribDivisor( ii, 555 );
+      EXPECT_EQ( GLuint(333), ppca.VertexArray::bindings[ii].divisor );
+      ppca.VertexArray::bindings[ii].divisor = 0;
+      ppca.VertexArray::vertexArrayBinding = 0;
+    }
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glBindVertexBuffer_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glBindVertexBuffer with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.glBindVertexBuffer( ii, GLuint(2 * ii + 1), GLintptr(0xbeef), ii+3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr( 0xbeef), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(ii + 3), ppca.VertexArray::bindings[ii].stride );
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glBindVertexBuffer with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+
+    ppca.glBindVertexBuffer( ii, 1, 1, 1 );
+
+    EXPECT_EQ( GLuint(333), ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11), ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::vertexArrayBinding = GLuint(0);
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glBindVertexBuffers_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  GLuint    buffers[REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS];
+  GLintptr  offsets[REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS];
+  GLsizei   strides[REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS];
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    buffers[ii] = GLuint(2 * ii + 1);
+    offsets[ii] = GLintptr(0xbeef);
+    strides[ii] = GLsizei(ii+3);
+  }
+
+  // first test with "real" buffers, offsets, and strides
+
+  // test glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 0, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, buffers, offsets, strides );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr( 0xbeef), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(ii + 3), ppca.VertexArray::bindings[ii].stride );
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 0, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, buffers, offsets, strides );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test partial glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 5, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS-5, &(buffers[5]), &(offsets[5]), &(strides[5]) );
+
+  for (GLuint ii=5; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr( 0xbeef), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(ii + 3), ppca.VertexArray::bindings[ii].stride );
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  checkPpcaDefaults(ctx, ppca);
+
+  // test partial glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=5; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 5, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS-5, &(buffers[5]), &(offsets[5]), &(strides[5]) );
+
+  for (GLuint ii=5; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // a second partial test glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 3, 3, &(buffers[3]), &(offsets[3]), &(strides[3]) );
+
+  for (GLuint ii=3; ii<6; ii++)
+  {
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr( 0xbeef),  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(ii + 3),    ppca.VertexArray::bindings[ii].stride );
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  checkPpcaDefaults(ctx, ppca);
+
+  // a second partial test glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=3; ii<6; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 3, 3, &(buffers[3]), &(offsets[3]), &(strides[3]) );
+
+  for (GLuint ii=3; ii<6; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // a third partial test glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 0, 4, buffers, offsets, strides );
+
+  for (GLuint ii=0; ii<4; ii++)
+  {
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr( 0xbeef),  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(ii + 3),    ppca.VertexArray::bindings[ii].stride );
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  checkPpcaDefaults(ctx, ppca);
+
+  // a third partial test glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<4; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 0, 4, buffers, offsets, strides );
+
+  for (GLuint ii=0; ii<4; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // now test passing NULL for buffers
+
+  // test glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 0, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, NULL, offsets, strides );
+
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 0, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS, NULL, offsets, strides );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test partial glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 5, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS-5, NULL, &(offsets[5]), &(strides[5]) );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    if (ii < 5)
+    {
+      EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+      EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+      EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+    }
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  checkPpcaDefaults(ctx, ppca);
+
+  // test partial glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 5, REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS-5, NULL, &(offsets[5]), &(strides[5]) );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // a second partial test glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 3, 3, NULL, &(offsets[3]), &(strides[3]) );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    if (ii >= 3 && ii < 6)
+    {
+      EXPECT_EQ( GLuint(0),   ppca.VertexArray::bindings[ii].buffer );
+      EXPECT_EQ( GLintptr(0), ppca.VertexArray::bindings[ii].offset );
+      EXPECT_EQ( GLsizei(16), ppca.VertexArray::bindings[ii].stride );
+    }
+    else
+    {
+      EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+      EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+      EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+    }
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  checkPpcaDefaults(ctx, ppca);
+
+  // a second partial test glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 3, 3, NULL, &(offsets[3]), &(strides[3]) );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+
+  // a third partial test glBindVertexBuffers with no vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 0;
+  ppca.glBindVertexBuffers( 0, 4, NULL, offsets, strides );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    if (ii < 4)
+    {
+      EXPECT_EQ( GLuint(0),   ppca.VertexArray::bindings[ii].buffer );
+      EXPECT_EQ( GLintptr(0), ppca.VertexArray::bindings[ii].offset );
+      EXPECT_EQ( GLsizei(16), ppca.VertexArray::bindings[ii].stride );
+    }
+    else
+    {
+      EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+      EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+      EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+    }
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+
+  checkPpcaDefaults(ctx, ppca);
+
+  // a third partial test glBindVertexBuffers with a vertex array bound
+
+  ppca.Reset(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.VertexArray::bindings[ii].buffer = GLuint(333);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0xdead);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(11);
+  }
+
+  ppca.VertexArray::vertexArrayBinding = 1;
+  ppca.glBindVertexBuffers( 0, 4, NULL, offsets, strides );
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    EXPECT_EQ( GLuint(333),      ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( GLintptr(0xdead), ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( GLsizei(11),      ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+  }
+  ppca.VertexArray::vertexArrayBinding = GLuint(0);
+  checkPpcaDefaults(ctx, ppca);
+}
+
+TEST ( RegalPpca, glVertexAttribFormat_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glVertexAttrib(I|L|)Format with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexAttribIFormat( ii, GLuint(2 * ii + 1), GLenum(ii), GLuint(ii + 3) );
+
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(ii), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(ii + 3), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexAttribLFormat( ii, GLuint(2 * ii + 1), GLenum(ii), ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(ii), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(ii + 3), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.glVertexAttribFormat( ii, GLuint(2 * ii + 1), GLenum(ii), GL_TRUE, ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(ii), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(ii + 3), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.glVertexAttribFormat( ii, GLuint(2 * ii + 1), GLenum(ii), GL_FALSE, ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 1), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(ii), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(ii + 3), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexAttrib(I|L|)Format with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].size = 2 * ii + 3;
+    ppca.VertexArray::generic[ii].type = GLenum(2 * ii + 4);
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(2 * ii + 5);
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribIFormat( ii, ii + 1, GLenum(ii + 2), ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 3), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(2 * ii + 4), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(2 * ii + 5), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].size = 2 * ii + 3;
+    ppca.VertexArray::generic[ii].type = GLenum(2 * ii + 4);
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(2 * ii + 5);
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribLFormat( ii, ii + 1, GLenum(ii + 2), ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 3), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(2 * ii + 4), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(2 * ii + 5), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].size = 2 * ii + 3;
+    ppca.VertexArray::generic[ii].type = GLenum(2 * ii + 4);
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(2 * ii + 5);
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribFormat( ii, ii + 1, GLenum(ii + 2), GL_FALSE, ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 3), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(2 * ii + 4), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(2 * ii + 5), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].size = 2 * ii + 3;
+    ppca.VertexArray::generic[ii].type = GLenum(2 * ii + 4);
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(2 * ii + 5);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribFormat( ii, ii + 1, GLenum(ii + 2), GL_TRUE, ii + 3 );
+
+    EXPECT_EQ( GLuint(2 * ii + 3), ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( GLenum(2 * ii + 4), ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint(2 * ii + 5), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glVertexAttribPointer_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glVertexAttrib(I|L|)Pointer with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS && ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    GLuint   testSize   = GLuint(2 * ii + 1);
+    GLenum   testType   = GLenum(ii);
+    GLsizei  testStride = GLsizei(ii + 3);
+    GLintptr testOffset = (GLintptr)(ii + 4);
+    GLuint   testBuffer = ppca.VertexArray::arrayBufferBinding;
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexAttribIPointer( ii, testSize, testType, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexAttribLPointer( ii, testSize, testType, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexAttribPointer( ii, testSize, testType, GL_FALSE, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE),  ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexAttribPointer( ii, testSize, testType, GL_TRUE, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexAttrib(I|L|)Pointer with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS && ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    GLuint   testSize   = GLuint(2 * ii + 1);
+    GLenum   testType   = GLenum(ii);
+    GLsizei  testStride = GLsizei(ii + 3);
+    GLintptr testOffset = (GLintptr)(ii + 4);
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribIPointer( ii, testSize, testType, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( GLuint( 1 ),         ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLuint( 1 ),         ppca.VertexArray::vertexArrayBinding );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribLPointer( ii, testSize, testType, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( GLuint( 1 ),         ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLuint( 1 ),         ppca.VertexArray::vertexArrayBinding );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribPointer( ii, testSize, testType, GL_FALSE, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( GLuint( 1 ),        ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLuint( 1 ),        ppca.VertexArray::vertexArrayBinding );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexAttribPointer( ii, testSize, testType, GL_TRUE, testStride, reinterpret_cast<const GLvoid*>(testOffset) );
+
+    EXPECT_EQ( GLuint( 1 ),         ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLuint( 1 ),         ppca.VertexArray::vertexArrayBinding );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+  }
+}
+
+TEST ( RegalPpca, glVertexArrayVertexAttribOffsetEXT_Shadowing )
+{
+  RegalContext ctx;
+  ctx.info = new ContextInfo();
+
+  Ppca ppca;
+  ppca.Init(ctx);
+  checkPpcaDefaults(ctx, ppca);
+
+  // test glVertexArrayVertexAttrib(I|)OffsetEXT with no vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS && ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    GLuint   testSize   = GLuint(2 * ii + 1);
+    GLenum   testType   = GLenum(ii);
+    GLsizei  testStride = GLsizei(ii + 3);
+    GLintptr testOffset = (GLintptr)(ii + 4);
+    GLuint   testBuffer = ppca.VertexArray::arrayBufferBinding + 1;
+
+    // first test passing in 0 for vertex array object
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexArrayVertexAttribIOffsetEXT( 0, testBuffer, ii, testSize, testType, testStride, testOffset );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 0, testBuffer, ii, testSize, testType, GL_FALSE, testStride, testOffset );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 0, testBuffer, ii, testSize, testType, GL_TRUE, testStride, testOffset );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    // now test passing in 1 for vertex array object
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexArrayVertexAttribIOffsetEXT( 1, testBuffer, ii, testSize, testType, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::generic[ii].relativeOffset );
+
+    ppca.VertexArray::generic[ii].relativeOffset = 0;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 1, testBuffer, ii, testSize, testType, GL_FALSE, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::vertexArrayBinding = 0;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 1, testBuffer, ii, testSize, testType, GL_TRUE, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+  }
+
+  // test glVertexArrayVertexAttrib(I|)OffsetEXT with a vertex array bound
+
+  for (GLuint ii=0; ii<REGAL_EMU_MAX_VERTEX_ATTRIBS && ii<REGAL_EMU_MAX_VERTEX_ATTRIB_BINDINGS; ii++)
+  {
+    ppca.Reset(ctx);
+    checkPpcaDefaults(ctx, ppca);
+
+    GLuint   testSize   = GLuint(2 * ii + 1);
+    GLenum   testType   = GLenum(ii);
+    GLsizei  testStride = GLsizei(ii + 3);
+    GLintptr testOffset = (GLintptr)(ii + 4);
+    GLuint   testBuffer = ppca.VertexArray::arrayBufferBinding + 1;
+
+    // first test passing in 0 for vertex array object
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexArrayVertexAttribIOffsetEXT( 0, testBuffer, ii, testSize, testType, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ),  ppca.VertexArray::vertexArrayBinding );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 0, testBuffer, ii, testSize, testType, GL_FALSE, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::vertexArrayBinding );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 0, testBuffer, ii, testSize, testType, GL_TRUE, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::vertexArrayBinding );
+
+    EXPECT_EQ( testSize,    ppca.VertexArray::generic[ii].size );
+    EXPECT_EQ( testType,    ppca.VertexArray::generic[ii].type );
+    EXPECT_EQ( GLuint( 0 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isLong );
+    EXPECT_EQ( ii,          ppca.VertexArray::generic[ii].bindingIndex );
+
+    EXPECT_EQ( testBuffer,  ppca.VertexArray::bindings[ii].buffer );
+    EXPECT_EQ( testOffset,  ppca.VertexArray::bindings[ii].offset );
+    EXPECT_EQ( testStride,  ppca.VertexArray::bindings[ii].stride );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.VertexArray::generic[ii].size = 4;
+    ppca.VertexArray::generic[ii].type = GL_FLOAT;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+    ppca.VertexArray::generic[ii].bindingIndex = ii;
+
+    ppca.VertexArray::bindings[ii].buffer = GLuint(0);
+    ppca.VertexArray::bindings[ii].offset = GLintptr(0);
+    ppca.VertexArray::bindings[ii].stride = GLsizei(16);
+
+    checkPpcaDefaults(ctx, ppca);
+
+    // now test passing in 1 for vertex array object
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexArrayVertexAttribIOffsetEXT( 1, testBuffer, ii, testSize, testType, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ),  ppca.VertexArray::vertexArrayBinding );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_TRUE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+    ppca.glVertexArrayVertexAttribOffsetEXT( 1, testBuffer, ii, testSize, testType, GL_FALSE, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::vertexArrayBinding );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE), ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_TRUE;
+    ppca.VertexArray::generic[ii].isLong = GL_TRUE;
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(1);
+
+    ppca.VertexArray::vertexArrayBinding = 1;
+
+    ppca.glVertexArrayVertexAttribOffsetEXT( 1, testBuffer, ii, testSize, testType, GL_TRUE, testStride, testOffset );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::vertexArrayBinding );
+
+    EXPECT_EQ( GLuint( 1 ), ppca.VertexArray::generic[ii].relativeOffset );
+    EXPECT_EQ( GLboolean(GL_FALSE), ppca.VertexArray::generic[ii].normalized );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isInteger );
+    EXPECT_EQ( GLboolean(GL_TRUE),  ppca.VertexArray::generic[ii].isLong );
+
+    ppca.VertexArray::vertexArrayBinding = 0;
+
+    ppca.VertexArray::generic[ii].relativeOffset = GLuint(0);
+    ppca.VertexArray::generic[ii].normalized = GL_FALSE;
+    ppca.VertexArray::generic[ii].isInteger = GL_FALSE;
+    ppca.VertexArray::generic[ii].isLong = GL_FALSE;
+
+    checkPpcaDefaults(ctx, ppca);
+  }
 }
 
 }  // namespace
+
+/*
+glColorPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+*/

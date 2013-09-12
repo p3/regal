@@ -41,7 +41,7 @@ REGALTEST.SRCS.NAMES := $(notdir $(REGALTEST.SRCS))
 REGALTEST.OBJS       := $(addprefix tmp/$(SYSTEM)/regaltest/static/,$(REGALTEST.SRCS.NAMES))
 REGALTEST.OBJS       := $(REGALTEST.OBJS:.cpp=.o)
 REGALTEST.DEPS       := $(REGALTEST.DEPS:.o=.d)
-REGALTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googlemock/include -Isrc/regal -Isrc/boost
+REGALTEST.CFLAGS     := -Isrc/googletest/include -Isrc/googlemock/include -Isrc/regal -Isrc/boost -Isrc/lookup3
 REGALTEST.LIBS       := -Llib/$(SYSTEM) $(LDFLAGS.X11) -lm
 
 ifeq ($(filter nacl%,$(SYSTEM)),)

@@ -5,6 +5,7 @@
 
 # Sources
 
+ZLIB.C :=
 ZLIB.C += src/zlib/src/adler32.c
 ZLIB.C += src/zlib/src/crc32.c
 ZLIB.C += src/zlib/src/compress.c

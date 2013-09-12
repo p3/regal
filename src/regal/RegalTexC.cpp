@@ -44,6 +44,7 @@ REGAL_GLOBAL_BEGIN
 
 #include "RegalTexC.h"
 #include "RegalContext.h"
+#include "RegalToken.h"
 #include "RegalPixelConversions.h"
 
 REGAL_GLOBAL_END
@@ -325,28 +326,35 @@ TexC::Reset_()
 {
   unpackPSS.Reset();
 
-  currentTextureUnit = GL_TEXTURE0;
-  for ( size_t i = 0; i < REGAL_EMU_MAX_TEXTURE_UNITS; ++i )
+  currentTextureUnit = 0;
+  const size_t n = array_size( textureUnitArrayState );
+  for ( size_t i = 0; i < n; ++i )
   {
+    RegalAssertArrayIndex( textureUnitArrayState, i );
     textureUnitArrayState[ i ].UnbindAll();
   }
   textureZero = TextureState();
 }
 
 TextureState *
-TexC::GetBoundTexture_( GLenum textureUnit, GLenum target )
+TexC::GetBoundTexture_( GLenum texture, GLenum target )
 {
-  size_t i = textureUnit - GL_TEXTURE0;
-  if ( REGAL_EMU_MAX_TEXTURE_UNITS <= i )
+  return GetBoundTextureUnit_( static_cast<GLuint>(texture-GL_TEXTURE0), target );
+}
+
+TextureState *
+TexC::GetBoundTextureUnit_( GLuint textureUnit, GLenum target )
+{
+  size_t i = static_cast<size_t>(textureUnit);
+  const size_t n = array_size( textureUnitArrayState );
+  if ( i >= n )
   {
-    RegalAssert( i < REGAL_EMU_MAX_TEXTURE_UNITS );
+    RegalAssert( i < n );
     return NULL;
   }
+  RegalAssertArrayIndex( textureUnitArrayState, i );
   TextureState* ts = textureUnitArrayState[ i ].GetBinding( target );
-  if ( ts != NULL ) {
-    return ts;
-  }
-  return &textureZero;
+  return ( ts ? ts : &textureZero );
 }
 
 TextureState *
@@ -369,17 +377,17 @@ TexC::GetTexture_( GLuint texture )
 void
 TexC::GetFormatAndType( GLenum target, GLint level, GLenum* format, GLenum* type )
 {
-  GetBoundTexture_( currentTextureUnit, target )->GetFormatAndType( level, format, type );
+  TextureState* p = GetBoundTextureUnit_( currentTextureUnit, target );
+  if (p)
+    p->GetFormatAndType( level, format, type );
 }
 
 void
 TexC::ShadowTexImage2D( GLenum target, GLint level, GLenum format, GLenum type )
 {
-  if ( REGAL_EMU_MAX_TEXTURE_UNITS <= currentTextureUnit - GL_TEXTURE0 ) {
-    return;
-  }
-
-  GetBoundTexture_( currentTextureUnit, target )->SetFormatAndType( level, format, type );
+  TextureState* p = GetBoundTextureUnit_( currentTextureUnit, target );
+  if (p)
+    p->SetFormatAndType( level, format, type );
 }
 
 void
@@ -408,15 +416,18 @@ void TexC::ShadowDeleteTextures( GLsizei n, const GLuint* textures )
 
 void TexC::ShadowActiveTexture( GLenum texture )
 {
-  currentTextureUnit = texture;
+  if (validTextureEnum(texture))
+    currentTextureUnit = texture - GL_TEXTURE0;
 }
 
 void TexC::ShadowBindTexture( GLenum target, GLuint texture )
 {
-  size_t i = currentTextureUnit - GL_TEXTURE0;
-  if ( REGAL_EMU_MAX_TEXTURE_UNITS <= i ) {
+  size_t i = currentTextureUnit;
+  const size_t n = array_size( textureUnitArrayState );
+  if ( n <= i )
     return;
-  }
+
+  RegalAssertArrayIndex( textureUnitArrayState, i );
   TextureUnitState& textureUnitState = textureUnitArrayState[ i ];
 
   if ( texture == TEXTURE_ZERO ) {
@@ -432,11 +443,9 @@ void TexC::ShadowBindTexture( GLenum target, GLuint texture )
 void
 TexC::ShadowGenerateMipmap( GLenum target )
 {
-  if ( REGAL_EMU_MAX_TEXTURE_UNITS <= currentTextureUnit - GL_TEXTURE0 ) {
-    return;
-  }
-
-  GetBoundTexture_( currentTextureUnit, target )->SimulateComputeMipMaps();
+  TextureState* p = GetBoundTextureUnit_( currentTextureUnit, target );
+  if (p)
+    p->SimulateComputeMipMaps();
 }
 
 void

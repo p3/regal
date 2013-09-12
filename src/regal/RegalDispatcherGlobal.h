@@ -50,13 +50,19 @@ public:
   DispatchTableGlobal logging;
   #endif
 
+  #if REGAL_SYS_GLX && !REGAL_SYS_X11
+  DispatchTableGlobal glx;
+  #endif
+
   #if REGAL_TRACE
   DispatchTableGlobal trace;
   #endif
 
   DispatchTableGlobal driver;      // Underlying GLX/WGL/EGL implementation
 
+  #if REGAL_MISSING
   DispatchTableGlobal missing;     // Must have this last
+  #endif
 
 public:
   DispatcherGlobal();
@@ -65,7 +71,10 @@ public:
   inline void push_back(DispatchTableGlobal &table, bool enable)
   {
     // Disabling the missing table would be bad!
+    #if REGAL_MISSING
     RegalAssert(&table!=&missing || enable==true);
+    #endif
+
     Dispatcher::push_back(table,enable);
   }
 
@@ -91,6 +100,7 @@ extern void InitDispatchTableStaticEGL      (DispatchTableGlobal &tbl);
 #endif
 
 extern void InitDispatchTableGlobalLog       (DispatchTableGlobal &tbl);
+extern void InitDispatchTableGlobalGLX       (DispatchTableGlobal &tbl);
 extern void InitDispatchTableGlobalTrace     (DispatchTableGlobal &tbl);
 extern void InitDispatchTableGlobalLoader    (DispatchTableGlobal &tbl);
 extern void InitDispatchTableGlobalMissing   (DispatchTableGlobal &tbl);

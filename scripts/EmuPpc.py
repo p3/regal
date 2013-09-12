@@ -30,7 +30,7 @@ ppcFormulae = {
         'prefix' : [ 'rCtx->ppc->${m1}VertexAttribArray( rCtx, ${arg0} );' ],
     },
     'ClientActiveTexture' : {
-        'entries' : [ 'glClientActiveTexture' ],
+        'entries' : [ 'glClientActiveTexture(ARB|)' ],
         'prefix' : [ 'rCtx->ppc->ClientActiveTexture( rCtx, ${arg0} );' ],
     },
     'Pointer4' : {

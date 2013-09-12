@@ -384,6 +384,10 @@ Related Efforts
 
 * Mesa3D mail thread: `Mesa as part of OpenGL-on-OpenGL ES 2.0 <http://lists.freedesktop.org/archives/mesa-dev/2012-March/019692.html>`_
 
+* `glshim <https://github.com/lunixbochs/glshim>`_, `Pandora forum thread <http://boards.openpandora.org/index.php/topic/11506-opengl-implementation-tldr-more-games/>`_.
+
+* Runtime OpenGL to OpenGL ES translator: `glesport <http://unrealvoodoo.org/cgi-bin/cgit/glesport.git/log/>`_, `OpenGL ES for Maemo <http://unrealvoodoo.org/hiteck/blog/2007/07/opengl-es-for-maemo/>`_.
+
 License and Credits
 ===================
 

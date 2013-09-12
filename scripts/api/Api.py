@@ -4,6 +4,7 @@ class Api:
 
   def __init__(self):
 
+    self.name       = ''
     self.functions  = []
     self.typedefs   = []
     self.enums      = []

@@ -82,6 +82,7 @@ namespace Config
   extern bool enableStatistics;
   extern bool enableLog;
   extern bool enableDriver;
+  extern bool enableMissing;
 
   // Initial emulation layer enable/disable
 

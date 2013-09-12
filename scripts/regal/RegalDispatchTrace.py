@@ -1,6 +1,7 @@
 #!/usr/bin/python -B
 
 from string import Template, upper, replace
+from copy   import deepcopy
 
 from ApiUtil import outputCode
 from ApiUtil import typeIsVoid
@@ -15,7 +16,10 @@ from RegalDispatchTraceExclude import exclude
 
 ##############################################################################################
 
-# CodeGen for API error checking function definition.
+traceCond = deepcopy(cond)
+traceCond['glx'] = 'REGAL_SYS_GLX && REGAL_SYS_X11'
+
+# CodeGen for apitrace integration
 
 def apiTraceFuncDefineCode(apis, args):
   categoryPrev = None
@@ -27,8 +31,8 @@ def apiTraceFuncDefineCode(apis, args):
   for api in apis:
 
     code += '\n'
-    if api.name in cond:
-      code += '#if %s\n' % cond[api.name]
+    if api.name in traceCond:
+      code += '#if %s\n' % traceCond[api.name]
 
     for function in api.functions:
       if getattr(function,'regalOnly',False)==True:
@@ -61,8 +65,8 @@ def apiTraceFuncDefineCode(apis, args):
 
       code += '  %s %s(%s);\n' % (rType, name, params)
 
-    if api.name in cond:
-      code += '#endif // %s\n' % cond[api.name]
+    if api.name in traceCond:
+      code += '#endif // %s\n' % traceCond[api.name]
     code += '\n'
 
   # Close pending if block.
@@ -74,8 +78,8 @@ def apiTraceFuncDefineCode(apis, args):
   for api in apis:
 
     code += '\n'
-    if api.name in cond:
-      code += '#if %s\n' % cond[api.name]
+    if api.name in traceCond:
+      code += '#if %s\n' % traceCond[api.name]
 
     for function in api.functions:
       if getattr(function,'regalOnly',False)==True:
@@ -125,8 +129,8 @@ def apiTraceFuncDefineCode(apis, args):
         code += '  return ret;\n'
       code += '}\n\n'
 
-    if api.name in cond:
-      code += '#endif // %s\n' % cond[api.name]
+    if api.name in traceCond:
+      code += '#endif // %s\n' % traceCond[api.name]
     code += '\n'
 
   # Close pending if block.
@@ -138,8 +142,8 @@ def apiTraceFuncDefineCode(apis, args):
 def generateTraceSource(apis, args):
 
   funcDefine     = apiTraceFuncDefineCode( apis, args )
-  funcInit       = apiDispatchFuncInitCode( apis, args, 'trace', exclude )
-  globalFuncInit = apiDispatchGlobalFuncInitCode( apis, args, 'trace', exclude )
+  funcInit       = apiDispatchFuncInitCode( apis, args, 'trace', exclude, lambda x : True, traceCond )
+  globalFuncInit = apiDispatchGlobalFuncInitCode( apis, args, 'trace', exclude, lambda x : True, traceCond )
 
   substitute = {}
   substitute['LICENSE']         = args.license

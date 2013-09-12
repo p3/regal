@@ -155,6 +155,7 @@ _glBinormal3sEXT
 _glBinormal3svEXT
 _glBinormalPointerEXT
 _glBitmap
+_glBlendBarrierNV
 _glBlendColor
 _glBlendColorEXT
 _glBlendEquation
@@ -180,6 +181,7 @@ _glBlendFuncSeparatei
 _glBlendFuncSeparateiARB
 _glBlendFunci
 _glBlendFunciARB
+_glBlendParameteriNV
 _glBlitFramebuffer
 _glBlitFramebufferANGLE
 _glBlitFramebufferEXT

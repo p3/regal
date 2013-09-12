@@ -27,6 +27,9 @@ regalSys = '''#if defined(_WIN32)
 #  ifndef REGAL_SYS_OSX
 #   define REGAL_SYS_OSX 1
 #  endif
+#  ifndef REGAL_SYS_GLX
+#   define REGAL_SYS_GLX 1
+#  endif
 # endif
 #elif defined(__native_client__)
 # ifndef REGAL_SYS_PPAPI
@@ -39,6 +42,9 @@ regalSys = '''#if defined(_WIN32)
 # ifndef REGAL_SYS_EGL
 #  define REGAL_SYS_EGL 1
 # endif
+# ifndef REGAL_SYS_GLX
+#  define REGAL_SYS_GLX 0
+# endif
 #elif defined(EMSCRIPTEN)
 # ifndef REGAL_SYS_EMSCRIPTEN
 #  define REGAL_SYS_EMSCRIPTEN 1
@@ -50,13 +56,12 @@ regalSys = '''#if defined(_WIN32)
 #  define REGAL_SYS_ES2 1
 # endif
 # ifndef REGAL_SYS_EMSCRIPTEN_STATIC
-#  define REGAL_SYS_EMSCRIPTEN_STATIC 0
+#  define REGAL_SYS_EMSCRIPTEN_STATIC 1
 # endif
 # if REGAL_SYS_EMSCRIPTEN_STATIC
-#  define REGAL_DRIVER 1
-#  define REGAL_NAMESPACE 1
-#  define REGAL_STATIC_ES2 1
-#  define REGAL_STATIC_EGL 1
+#  ifndef REGAL_NAMESPACE
+#   define REGAL_NAMESPACE 1
+#  endif
 # endif
 #elif !defined(REGAL_SYS_PPAPI) || !REGAL_SYS_PPAPI
 # ifndef REGAL_SYS_X11
@@ -105,6 +110,10 @@ regalSys = '''#if defined(_WIN32)
 
 #ifndef REGAL_SYS_EMSCRIPTEN
 #define REGAL_SYS_EMSCRIPTEN 0
+#endif
+
+#ifndef REGAL_SYS_EMSCRIPTEN_STATIC
+#define REGAL_SYS_EMSCRIPTEN_STATIC 0
 #endif
 
 #ifndef REGAL_SYS_ES1
