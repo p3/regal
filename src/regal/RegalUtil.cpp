@@ -368,11 +368,11 @@ void *GetProcAddress( const char * entry )
 
 // Emscripten-specific GetProcAddress.  Can match EGL and GLES symbols.
 
-extern "C" void *eglGetProcAddressEMSCRIPTEN(const char *name);
+extern "C" void *eglGetProcAddress(const char *name);
 
 void *GetProcAddress(const char *entry)
 {
-    return eglGetProcAddressEMSCRIPTEN(entry);
+    return eglGetProcAddress(entry);
 }
 
 #elif REGAL_SYS_GLX || REGAL_SYS_EGL
