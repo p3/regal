@@ -4,6 +4,10 @@
  */
 
 #include "gzguts.h"
+#ifdef EMSCRIPTEN
+#include <fcntl.h> // for open
+#include <unistd.h> // for close
+#endif //__EMSCRIPTEN__ //
 
 /* Local functions */
 local int gz_init OF((gz_statep));
