@@ -633,6 +633,24 @@ static void _glewInfo_GL_AMD_draw_buffers_blend (void)
 
 #endif /* GL_AMD_draw_buffers_blend */
 
+#ifdef GL_AMD_gcn_shader
+
+static void _glewInfo_GL_AMD_gcn_shader (void)
+{
+  glewPrintExt("GL_AMD_gcn_shader", GLEW_AMD_gcn_shader, glewIsSupported("GL_AMD_gcn_shader"), glewGetExtension("GL_AMD_gcn_shader"));
+}
+
+#endif /* GL_AMD_gcn_shader */
+
+#ifdef GL_AMD_gpu_shader_int64
+
+static void _glewInfo_GL_AMD_gpu_shader_int64 (void)
+{
+  glewPrintExt("GL_AMD_gpu_shader_int64", GLEW_AMD_gpu_shader_int64, glewIsSupported("GL_AMD_gpu_shader_int64"), glewGetExtension("GL_AMD_gpu_shader_int64"));
+}
+
+#endif /* GL_AMD_gpu_shader_int64 */
+
 #ifdef GL_AMD_interleaved_elements
 
 static void _glewInfo_GL_AMD_interleaved_elements (void)
@@ -815,6 +833,15 @@ static void _glewInfo_GL_AMD_transform_feedback3_lines_triangles (void)
 }
 
 #endif /* GL_AMD_transform_feedback3_lines_triangles */
+
+#ifdef GL_AMD_transform_feedback4
+
+static void _glewInfo_GL_AMD_transform_feedback4 (void)
+{
+  glewPrintExt("GL_AMD_transform_feedback4", GLEW_AMD_transform_feedback4, glewIsSupported("GL_AMD_transform_feedback4"), glewGetExtension("GL_AMD_transform_feedback4"));
+}
+
+#endif /* GL_AMD_transform_feedback4 */
 
 #ifdef GL_AMD_vertex_shader_layer
 
@@ -4410,6 +4437,15 @@ static void _glewInfo_GL_EXT_separate_specular_color (void)
 
 #endif /* GL_EXT_separate_specular_color */
 
+#ifdef GL_EXT_shader_image_load_formatted
+
+static void _glewInfo_GL_EXT_shader_image_load_formatted (void)
+{
+  glewPrintExt("GL_EXT_shader_image_load_formatted", GLEW_EXT_shader_image_load_formatted, glewIsSupported("GL_EXT_shader_image_load_formatted"), glewGetExtension("GL_EXT_shader_image_load_formatted"));
+}
+
+#endif /* GL_EXT_shader_image_load_formatted */
+
 #ifdef GL_EXT_shader_image_load_store
 
 static void _glewInfo_GL_EXT_shader_image_load_store (void)
@@ -5980,6 +6016,24 @@ static void _glewInfo_GL_NV_shader_storage_buffer_object (void)
 }
 
 #endif /* GL_NV_shader_storage_buffer_object */
+
+#ifdef GL_NV_shader_thread_group
+
+static void _glewInfo_GL_NV_shader_thread_group (void)
+{
+  glewPrintExt("GL_NV_shader_thread_group", GLEW_NV_shader_thread_group, glewIsSupported("GL_NV_shader_thread_group"), glewGetExtension("GL_NV_shader_thread_group"));
+}
+
+#endif /* GL_NV_shader_thread_group */
+
+#ifdef GL_NV_shader_thread_shuffle
+
+static void _glewInfo_GL_NV_shader_thread_shuffle (void)
+{
+  glewPrintExt("GL_NV_shader_thread_shuffle", GLEW_NV_shader_thread_shuffle, glewIsSupported("GL_NV_shader_thread_shuffle"), glewGetExtension("GL_NV_shader_thread_shuffle"));
+}
+
+#endif /* GL_NV_shader_thread_shuffle */
 
 #ifdef GL_NV_tessellation_program5
 
@@ -8153,6 +8207,15 @@ static void _glewInfo_GLX_EXT_scene_marker (void)
 
 #endif /* GLX_EXT_scene_marker */
 
+#ifdef GLX_EXT_stereo_tree
+
+static void _glewInfo_GLX_EXT_stereo_tree (void)
+{
+  glewPrintExt("GLX_EXT_stereo_tree", GLXEW_EXT_stereo_tree, glxewIsSupported("GLX_EXT_stereo_tree"), glxewGetExtension("GLX_EXT_stereo_tree"));
+}
+
+#endif /* GLX_EXT_stereo_tree */
+
 #ifdef GLX_EXT_swap_control
 
 static void _glewInfo_GLX_EXT_swap_control (void)
@@ -8388,11 +8451,11 @@ static void _glewInfo_GLX_NV_video_capture (void)
 
 #endif /* GLX_NV_video_capture */
 
-#ifdef GLX_NV_video_output
+#ifdef GLX_NV_video_out
 
-static void _glewInfo_GLX_NV_video_output (void)
+static void _glewInfo_GLX_NV_video_out (void)
 {
-  glewPrintExt("GLX_NV_video_output", GLXEW_NV_video_output, glxewIsSupported("GLX_NV_video_output"), glxewGetExtension("GLX_NV_video_output"));
+  glewPrintExt("GLX_NV_video_out", GLXEW_NV_video_out, glxewIsSupported("GLX_NV_video_out"), glxewGetExtension("GLX_NV_video_out"));
 
   glewInfoFunc("glXBindVideoImageNV", glXBindVideoImageNV == NULL);
   glewInfoFunc("glXGetVideoDeviceNV", glXGetVideoDeviceNV == NULL);
@@ -8402,7 +8465,7 @@ static void _glewInfo_GLX_NV_video_output (void)
   glewInfoFunc("glXSendPbufferToVideoNV", glXSendPbufferToVideoNV == NULL);
 }
 
-#endif /* GLX_NV_video_output */
+#endif /* GLX_NV_video_out */
 
 #ifdef GLX_OML_swap_method
 
@@ -8710,6 +8773,12 @@ static void glewInfo (void)
 #ifdef GL_AMD_draw_buffers_blend
   _glewInfo_GL_AMD_draw_buffers_blend();
 #endif /* GL_AMD_draw_buffers_blend */
+#ifdef GL_AMD_gcn_shader
+  _glewInfo_GL_AMD_gcn_shader();
+#endif /* GL_AMD_gcn_shader */
+#ifdef GL_AMD_gpu_shader_int64
+  _glewInfo_GL_AMD_gpu_shader_int64();
+#endif /* GL_AMD_gpu_shader_int64 */
 #ifdef GL_AMD_interleaved_elements
   _glewInfo_GL_AMD_interleaved_elements();
 #endif /* GL_AMD_interleaved_elements */
@@ -8761,6 +8830,9 @@ static void glewInfo (void)
 #ifdef GL_AMD_transform_feedback3_lines_triangles
   _glewInfo_GL_AMD_transform_feedback3_lines_triangles();
 #endif /* GL_AMD_transform_feedback3_lines_triangles */
+#ifdef GL_AMD_transform_feedback4
+  _glewInfo_GL_AMD_transform_feedback4();
+#endif /* GL_AMD_transform_feedback4 */
 #ifdef GL_AMD_vertex_shader_layer
   _glewInfo_GL_AMD_vertex_shader_layer();
 #endif /* GL_AMD_vertex_shader_layer */
@@ -9529,6 +9601,9 @@ static void glewInfo (void)
 #ifdef GL_EXT_separate_specular_color
   _glewInfo_GL_EXT_separate_specular_color();
 #endif /* GL_EXT_separate_specular_color */
+#ifdef GL_EXT_shader_image_load_formatted
+  _glewInfo_GL_EXT_shader_image_load_formatted();
+#endif /* GL_EXT_shader_image_load_formatted */
 #ifdef GL_EXT_shader_image_load_store
   _glewInfo_GL_EXT_shader_image_load_store();
 #endif /* GL_EXT_shader_image_load_store */
@@ -9895,6 +9970,12 @@ static void glewInfo (void)
 #ifdef GL_NV_shader_storage_buffer_object
   _glewInfo_GL_NV_shader_storage_buffer_object();
 #endif /* GL_NV_shader_storage_buffer_object */
+#ifdef GL_NV_shader_thread_group
+  _glewInfo_GL_NV_shader_thread_group();
+#endif /* GL_NV_shader_thread_group */
+#ifdef GL_NV_shader_thread_shuffle
+  _glewInfo_GL_NV_shader_thread_shuffle();
+#endif /* GL_NV_shader_thread_shuffle */
 #ifdef GL_NV_tessellation_program5
   _glewInfo_GL_NV_tessellation_program5();
 #endif /* GL_NV_tessellation_program5 */
@@ -10452,6 +10533,9 @@ static void glxewInfo ()
 #ifdef GLX_EXT_scene_marker
   _glewInfo_GLX_EXT_scene_marker();
 #endif /* GLX_EXT_scene_marker */
+#ifdef GLX_EXT_stereo_tree
+  _glewInfo_GLX_EXT_stereo_tree();
+#endif /* GLX_EXT_stereo_tree */
 #ifdef GLX_EXT_swap_control
   _glewInfo_GLX_EXT_swap_control();
 #endif /* GLX_EXT_swap_control */
@@ -10515,9 +10599,9 @@ static void glxewInfo ()
 #ifdef GLX_NV_video_capture
   _glewInfo_GLX_NV_video_capture();
 #endif /* GLX_NV_video_capture */
-#ifdef GLX_NV_video_output
-  _glewInfo_GLX_NV_video_output();
-#endif /* GLX_NV_video_output */
+#ifdef GLX_NV_video_out
+  _glewInfo_GLX_NV_video_out();
+#endif /* GLX_NV_video_out */
 #ifdef GLX_OML_swap_method
   _glewInfo_GLX_OML_swap_method();
 #endif /* GLX_OML_swap_method */

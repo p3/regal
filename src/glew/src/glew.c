@@ -2767,6 +2767,8 @@ GLboolean __GLEW_AMD_conservative_depth = GL_FALSE;
 GLboolean __GLEW_AMD_debug_output = GL_FALSE;
 GLboolean __GLEW_AMD_depth_clamp_separate = GL_FALSE;
 GLboolean __GLEW_AMD_draw_buffers_blend = GL_FALSE;
+GLboolean __GLEW_AMD_gcn_shader = GL_FALSE;
+GLboolean __GLEW_AMD_gpu_shader_int64 = GL_FALSE;
 GLboolean __GLEW_AMD_interleaved_elements = GL_FALSE;
 GLboolean __GLEW_AMD_multi_draw_indirect = GL_FALSE;
 GLboolean __GLEW_AMD_name_gen_delete = GL_FALSE;
@@ -2784,6 +2786,7 @@ GLboolean __GLEW_AMD_sparse_texture = GL_FALSE;
 GLboolean __GLEW_AMD_stencil_operation_extended = GL_FALSE;
 GLboolean __GLEW_AMD_texture_texture4 = GL_FALSE;
 GLboolean __GLEW_AMD_transform_feedback3_lines_triangles = GL_FALSE;
+GLboolean __GLEW_AMD_transform_feedback4 = GL_FALSE;
 GLboolean __GLEW_AMD_vertex_shader_layer = GL_FALSE;
 GLboolean __GLEW_AMD_vertex_shader_tessellator = GL_FALSE;
 GLboolean __GLEW_AMD_vertex_shader_viewport_index = GL_FALSE;
@@ -3040,6 +3043,7 @@ GLboolean __GLEW_EXT_scene_marker = GL_FALSE;
 GLboolean __GLEW_EXT_secondary_color = GL_FALSE;
 GLboolean __GLEW_EXT_separate_shader_objects = GL_FALSE;
 GLboolean __GLEW_EXT_separate_specular_color = GL_FALSE;
+GLboolean __GLEW_EXT_shader_image_load_formatted = GL_FALSE;
 GLboolean __GLEW_EXT_shader_image_load_store = GL_FALSE;
 GLboolean __GLEW_EXT_shader_integer_mix = GL_FALSE;
 GLboolean __GLEW_EXT_shadow_funcs = GL_FALSE;
@@ -3162,6 +3166,8 @@ GLboolean __GLEW_NV_shader_atomic_counters = GL_FALSE;
 GLboolean __GLEW_NV_shader_atomic_float = GL_FALSE;
 GLboolean __GLEW_NV_shader_buffer_load = GL_FALSE;
 GLboolean __GLEW_NV_shader_storage_buffer_object = GL_FALSE;
+GLboolean __GLEW_NV_shader_thread_group = GL_FALSE;
+GLboolean __GLEW_NV_shader_thread_shuffle = GL_FALSE;
 GLboolean __GLEW_NV_tessellation_program5 = GL_FALSE;
 GLboolean __GLEW_NV_texgen_emboss = GL_FALSE;
 GLboolean __GLEW_NV_texgen_reflection = GL_FALSE;
@@ -3769,6 +3775,14 @@ static GLboolean _glewInit_GL_AMD_draw_buffers_blend (GLEW_CONTEXT_ARG_DEF_INIT)
 
 #endif /* GL_AMD_draw_buffers_blend */
 
+#ifdef GL_AMD_gcn_shader
+
+#endif /* GL_AMD_gcn_shader */
+
+#ifdef GL_AMD_gpu_shader_int64
+
+#endif /* GL_AMD_gpu_shader_int64 */
+
 #ifdef GL_AMD_interleaved_elements
 
 static GLboolean _glewInit_GL_AMD_interleaved_elements (GLEW_CONTEXT_ARG_DEF_INIT)
@@ -3922,6 +3936,10 @@ static GLboolean _glewInit_GL_AMD_stencil_operation_extended (GLEW_CONTEXT_ARG_D
 #ifdef GL_AMD_transform_feedback3_lines_triangles
 
 #endif /* GL_AMD_transform_feedback3_lines_triangles */
+
+#ifdef GL_AMD_transform_feedback4
+
+#endif /* GL_AMD_transform_feedback4 */
 
 #ifdef GL_AMD_vertex_shader_layer
 
@@ -7210,6 +7228,10 @@ static GLboolean _glewInit_GL_EXT_separate_shader_objects (GLEW_CONTEXT_ARG_DEF_
 
 #endif /* GL_EXT_separate_specular_color */
 
+#ifdef GL_EXT_shader_image_load_formatted
+
+#endif /* GL_EXT_shader_image_load_formatted */
+
 #ifdef GL_EXT_shader_image_load_store
 
 static GLboolean _glewInit_GL_EXT_shader_image_load_store (GLEW_CONTEXT_ARG_DEF_INIT)
@@ -8563,6 +8585,14 @@ static GLboolean _glewInit_GL_NV_shader_buffer_load (GLEW_CONTEXT_ARG_DEF_INIT)
 
 #endif /* GL_NV_shader_storage_buffer_object */
 
+#ifdef GL_NV_shader_thread_group
+
+#endif /* GL_NV_shader_thread_group */
+
+#ifdef GL_NV_shader_thread_shuffle
+
+#endif /* GL_NV_shader_thread_shuffle */
+
 #ifdef GL_NV_tessellation_program5
 
 #endif /* GL_NV_tessellation_program5 */
@@ -9742,6 +9772,12 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
   CONST_CAST(GLEW_AMD_draw_buffers_blend) = _glewSearchExtension("GL_AMD_draw_buffers_blend", extStart, extEnd);
   if (glewExperimental || GLEW_AMD_draw_buffers_blend) CONST_CAST(GLEW_AMD_draw_buffers_blend) = !_glewInit_GL_AMD_draw_buffers_blend(GLEW_CONTEXT_ARG_VAR_INIT);
 #endif /* GL_AMD_draw_buffers_blend */
+#ifdef GL_AMD_gcn_shader
+  CONST_CAST(GLEW_AMD_gcn_shader) = _glewSearchExtension("GL_AMD_gcn_shader", extStart, extEnd);
+#endif /* GL_AMD_gcn_shader */
+#ifdef GL_AMD_gpu_shader_int64
+  CONST_CAST(GLEW_AMD_gpu_shader_int64) = _glewSearchExtension("GL_AMD_gpu_shader_int64", extStart, extEnd);
+#endif /* GL_AMD_gpu_shader_int64 */
 #ifdef GL_AMD_interleaved_elements
   CONST_CAST(GLEW_AMD_interleaved_elements) = _glewSearchExtension("GL_AMD_interleaved_elements", extStart, extEnd);
   if (glewExperimental || GLEW_AMD_interleaved_elements) CONST_CAST(GLEW_AMD_interleaved_elements) = !_glewInit_GL_AMD_interleaved_elements(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -9801,6 +9837,9 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_AMD_transform_feedback3_lines_triangles
   CONST_CAST(GLEW_AMD_transform_feedback3_lines_triangles) = _glewSearchExtension("GL_AMD_transform_feedback3_lines_triangles", extStart, extEnd);
 #endif /* GL_AMD_transform_feedback3_lines_triangles */
+#ifdef GL_AMD_transform_feedback4
+  CONST_CAST(GLEW_AMD_transform_feedback4) = _glewSearchExtension("GL_AMD_transform_feedback4", extStart, extEnd);
+#endif /* GL_AMD_transform_feedback4 */
 #ifdef GL_AMD_vertex_shader_layer
   CONST_CAST(GLEW_AMD_vertex_shader_layer) = _glewSearchExtension("GL_AMD_vertex_shader_layer", extStart, extEnd);
 #endif /* GL_AMD_vertex_shader_layer */
@@ -10708,6 +10747,9 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_EXT_separate_specular_color
   CONST_CAST(GLEW_EXT_separate_specular_color) = _glewSearchExtension("GL_EXT_separate_specular_color", extStart, extEnd);
 #endif /* GL_EXT_separate_specular_color */
+#ifdef GL_EXT_shader_image_load_formatted
+  CONST_CAST(GLEW_EXT_shader_image_load_formatted) = _glewSearchExtension("GL_EXT_shader_image_load_formatted", extStart, extEnd);
+#endif /* GL_EXT_shader_image_load_formatted */
 #ifdef GL_EXT_shader_image_load_store
   CONST_CAST(GLEW_EXT_shader_image_load_store) = _glewSearchExtension("GL_EXT_shader_image_load_store", extStart, extEnd);
   if (glewExperimental || GLEW_EXT_shader_image_load_store) CONST_CAST(GLEW_EXT_shader_image_load_store) = !_glewInit_GL_EXT_shader_image_load_store(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -11130,6 +11172,12 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GL_NV_shader_storage_buffer_object
   CONST_CAST(GLEW_NV_shader_storage_buffer_object) = _glewSearchExtension("GL_NV_shader_storage_buffer_object", extStart, extEnd);
 #endif /* GL_NV_shader_storage_buffer_object */
+#ifdef GL_NV_shader_thread_group
+  CONST_CAST(GLEW_NV_shader_thread_group) = _glewSearchExtension("GL_NV_shader_thread_group", extStart, extEnd);
+#endif /* GL_NV_shader_thread_group */
+#ifdef GL_NV_shader_thread_shuffle
+  CONST_CAST(GLEW_NV_shader_thread_shuffle) = _glewSearchExtension("GL_NV_shader_thread_shuffle", extStart, extEnd);
+#endif /* GL_NV_shader_thread_shuffle */
 #ifdef GL_NV_tessellation_program5
   CONST_CAST(GLEW_NV_tessellation_program5) = _glewSearchExtension("GL_NV_gpu_program5", extStart, extEnd);
 #endif /* GL_NV_tessellation_program5 */
@@ -12687,6 +12735,7 @@ GLboolean __GLXEW_EXT_fbconfig_packed_float = GL_FALSE;
 GLboolean __GLXEW_EXT_framebuffer_sRGB = GL_FALSE;
 GLboolean __GLXEW_EXT_import_context = GL_FALSE;
 GLboolean __GLXEW_EXT_scene_marker = GL_FALSE;
+GLboolean __GLXEW_EXT_stereo_tree = GL_FALSE;
 GLboolean __GLXEW_EXT_swap_control = GL_FALSE;
 GLboolean __GLXEW_EXT_swap_control_tear = GL_FALSE;
 GLboolean __GLXEW_EXT_texture_from_pixmap = GL_FALSE;
@@ -12708,7 +12757,7 @@ GLboolean __GLXEW_NV_present_video = GL_FALSE;
 GLboolean __GLXEW_NV_swap_group = GL_FALSE;
 GLboolean __GLXEW_NV_vertex_array_range = GL_FALSE;
 GLboolean __GLXEW_NV_video_capture = GL_FALSE;
-GLboolean __GLXEW_NV_video_output = GL_FALSE;
+GLboolean __GLXEW_NV_video_out = GL_FALSE;
 GLboolean __GLXEW_OML_swap_method = GL_FALSE;
 GLboolean __GLXEW_OML_sync_control = GL_FALSE;
 GLboolean __GLXEW_SGIS_blended_overlay = GL_FALSE;
@@ -12909,6 +12958,10 @@ static GLboolean _glewInit_GLX_EXT_import_context (GLXEW_CONTEXT_ARG_DEF_INIT)
 #ifdef GLX_EXT_scene_marker
 
 #endif /* GLX_EXT_scene_marker */
+
+#ifdef GLX_EXT_stereo_tree
+
+#endif /* GLX_EXT_stereo_tree */
 
 #ifdef GLX_EXT_swap_control
 
@@ -13145,9 +13198,9 @@ static GLboolean _glewInit_GLX_NV_video_capture (GLXEW_CONTEXT_ARG_DEF_INIT)
 
 #endif /* GLX_NV_video_capture */
 
-#ifdef GLX_NV_video_output
+#ifdef GLX_NV_video_out
 
-static GLboolean _glewInit_GLX_NV_video_output (GLXEW_CONTEXT_ARG_DEF_INIT)
+static GLboolean _glewInit_GLX_NV_video_out (GLXEW_CONTEXT_ARG_DEF_INIT)
 {
   GLboolean r = GL_FALSE;
 
@@ -13161,7 +13214,7 @@ static GLboolean _glewInit_GLX_NV_video_output (GLXEW_CONTEXT_ARG_DEF_INIT)
   return r;
 }
 
-#endif /* GLX_NV_video_output */
+#endif /* GLX_NV_video_out */
 
 #ifdef GLX_OML_swap_method
 
@@ -13507,6 +13560,9 @@ GLenum glxewContextInit (GLXEW_CONTEXT_ARG_DEF_LIST)
 #ifdef GLX_EXT_scene_marker
   CONST_CAST(GLXEW_EXT_scene_marker) = _glewSearchExtension("GLX_EXT_scene_marker", extStart, extEnd);
 #endif /* GLX_EXT_scene_marker */
+#ifdef GLX_EXT_stereo_tree
+  CONST_CAST(GLXEW_EXT_stereo_tree) = _glewSearchExtension("GLX_EXT_stereo_tree", extStart, extEnd);
+#endif /* GLX_EXT_stereo_tree */
 #ifdef GLX_EXT_swap_control
   CONST_CAST(GLXEW_EXT_swap_control) = _glewSearchExtension("GLX_EXT_swap_control", extStart, extEnd);
   if (glewExperimental || GLXEW_EXT_swap_control) CONST_CAST(GLXEW_EXT_swap_control) = !_glewInit_GLX_EXT_swap_control(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -13585,10 +13641,10 @@ GLenum glxewContextInit (GLXEW_CONTEXT_ARG_DEF_LIST)
   CONST_CAST(GLXEW_NV_video_capture) = _glewSearchExtension("GLX_NV_video_capture", extStart, extEnd);
   if (glewExperimental || GLXEW_NV_video_capture) CONST_CAST(GLXEW_NV_video_capture) = !_glewInit_GLX_NV_video_capture(GLEW_CONTEXT_ARG_VAR_INIT);
 #endif /* GLX_NV_video_capture */
-#ifdef GLX_NV_video_output
-  CONST_CAST(GLXEW_NV_video_output) = _glewSearchExtension("GLX_NV_video_output", extStart, extEnd);
-  if (glewExperimental || GLXEW_NV_video_output) CONST_CAST(GLXEW_NV_video_output) = !_glewInit_GLX_NV_video_output(GLEW_CONTEXT_ARG_VAR_INIT);
-#endif /* GLX_NV_video_output */
+#ifdef GLX_NV_video_out
+  CONST_CAST(GLXEW_NV_video_out) = _glewSearchExtension("GLX_NV_video_out", extStart, extEnd);
+  if (glewExperimental || GLXEW_NV_video_out) CONST_CAST(GLXEW_NV_video_out) = !_glewInit_GLX_NV_video_out(GLEW_CONTEXT_ARG_VAR_INIT);
+#endif /* GLX_NV_video_out */
 #ifdef GLX_OML_swap_method
   CONST_CAST(GLXEW_OML_swap_method) = _glewSearchExtension("GLX_OML_swap_method", extStart, extEnd);
 #endif /* GLX_OML_swap_method */
@@ -13911,6 +13967,20 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
           continue;
         }
 #endif
+#ifdef GL_AMD_gcn_shader
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"gcn_shader", 10))
+        {
+          ret = GLEW_AMD_gcn_shader;
+          continue;
+        }
+#endif
+#ifdef GL_AMD_gpu_shader_int64
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"gpu_shader_int64", 16))
+        {
+          ret = GLEW_AMD_gpu_shader_int64;
+          continue;
+        }
+#endif
 #ifdef GL_AMD_interleaved_elements
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"interleaved_elements", 20))
         {
@@ -14027,6 +14097,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"transform_feedback3_lines_triangles", 35))
         {
           ret = GLEW_AMD_transform_feedback3_lines_triangles;
+          continue;
+        }
+#endif
+#ifdef GL_AMD_transform_feedback4
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"transform_feedback4", 19))
+        {
+          ret = GLEW_AMD_transform_feedback4;
           continue;
         }
 #endif
@@ -15840,6 +15917,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
           continue;
         }
 #endif
+#ifdef GL_EXT_shader_image_load_formatted
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_image_load_formatted", 27))
+        {
+          ret = GLEW_EXT_shader_image_load_formatted;
+          continue;
+        }
+#endif
 #ifdef GL_EXT_shader_image_load_store
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_image_load_store", 23))
         {
@@ -16724,6 +16808,20 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_storage_buffer_object", 28))
         {
           ret = GLEW_NV_shader_storage_buffer_object;
+          continue;
+        }
+#endif
+#ifdef GL_NV_shader_thread_group
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_thread_group", 19))
+        {
+          ret = GLEW_NV_shader_thread_group;
+          continue;
+        }
+#endif
+#ifdef GL_NV_shader_thread_shuffle
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"shader_thread_shuffle", 21))
+        {
+          ret = GLEW_NV_shader_thread_shuffle;
           continue;
         }
 #endif
@@ -18117,6 +18215,13 @@ GLboolean glxewIsSupported (const char* name)
           continue;
         }
 #endif
+#ifdef GLX_EXT_stereo_tree
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"stereo_tree", 11))
+        {
+          ret = GLXEW_EXT_stereo_tree;
+          continue;
+        }
+#endif
 #ifdef GLX_EXT_swap_control
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"swap_control", 12))
         {
@@ -18273,10 +18378,10 @@ GLboolean glxewIsSupported (const char* name)
           continue;
         }
 #endif
-#ifdef GLX_NV_video_output
-        if (_glewStrSame3(&pos, &len, (const GLubyte*)"video_output", 12))
+#ifdef GLX_NV_video_out
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"video_out", 9))
         {
-          ret = GLXEW_NV_video_output;
+          ret = GLXEW_NV_video_out;
           continue;
         }
 #endif

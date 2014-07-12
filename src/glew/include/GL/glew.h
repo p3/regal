@@ -1612,20 +1612,20 @@ typedef void (GLAPIENTRY * PFNGLWINDOWPOS3SVPROC) (const GLshort *p);
 #ifndef GL_VERSION_1_5
 #define GL_VERSION_1_5 1
 
-#define GL_FOG_COORD_SRC GL_FOG_COORDINATE_SOURCE
-#define GL_FOG_COORD GL_FOG_COORDINATE
-#define GL_FOG_COORD_ARRAY GL_FOG_COORDINATE_ARRAY
-#define GL_SRC0_RGB GL_SOURCE0_RGB
-#define GL_FOG_COORD_ARRAY_POINTER GL_FOG_COORDINATE_ARRAY_POINTER
+#define GL_FOG_COORD_ARRAY_STRIDE GL_FOG_COORDINATE_ARRAY_STRIDE
 #define GL_FOG_COORD_ARRAY_TYPE GL_FOG_COORDINATE_ARRAY_TYPE
+#define GL_FOG_COORD_ARRAY_BUFFER_BINDING GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
+#define GL_FOG_COORD GL_FOG_COORDINATE
+#define GL_SRC1_RGB GL_SOURCE1_RGB
 #define GL_SRC1_ALPHA GL_SOURCE1_ALPHA
 #define GL_CURRENT_FOG_COORD GL_CURRENT_FOG_COORDINATE
-#define GL_FOG_COORD_ARRAY_STRIDE GL_FOG_COORDINATE_ARRAY_STRIDE
-#define GL_SRC0_ALPHA GL_SOURCE0_ALPHA
-#define GL_SRC1_RGB GL_SOURCE1_RGB
-#define GL_FOG_COORD_ARRAY_BUFFER_BINDING GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
 #define GL_SRC2_ALPHA GL_SOURCE2_ALPHA
+#define GL_SRC0_ALPHA GL_SOURCE0_ALPHA
+#define GL_SRC0_RGB GL_SOURCE0_RGB
 #define GL_SRC2_RGB GL_SOURCE2_RGB
+#define GL_FOG_COORD_ARRAY_POINTER GL_FOG_COORDINATE_ARRAY_POINTER
+#define GL_FOG_COORD_ARRAY GL_FOG_COORDINATE_ARRAY
+#define GL_FOG_COORD_SRC GL_FOG_COORDINATE_SOURCE
 #define GL_BUFFER_SIZE 0x8764
 #define GL_BUFFER_USAGE 0x8765
 #define GL_QUERY_COUNTER_BITS 0x8864
@@ -2044,15 +2044,15 @@ typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X3FVPROC) (GLint location, GLsizei
 #ifndef GL_VERSION_3_0
 #define GL_VERSION_3_0 1
 
-#define GL_MAX_CLIP_DISTANCES GL_MAX_CLIP_PLANES
-#define GL_CLIP_DISTANCE5 GL_CLIP_PLANE5
+#define GL_CLIP_DISTANCE2 GL_CLIP_PLANE2
 #define GL_CLIP_DISTANCE1 GL_CLIP_PLANE1
+#define GL_CLIP_DISTANCE4 GL_CLIP_PLANE4
+#define GL_CLIP_DISTANCE0 GL_CLIP_PLANE0
+#define GL_CLIP_DISTANCE5 GL_CLIP_PLANE5
+#define GL_MAX_CLIP_DISTANCES GL_MAX_CLIP_PLANES
+#define GL_MAX_VARYING_COMPONENTS GL_MAX_VARYING_FLOATS
 #define GL_CLIP_DISTANCE3 GL_CLIP_PLANE3
 #define GL_COMPARE_REF_TO_TEXTURE GL_COMPARE_R_TO_TEXTURE_ARB
-#define GL_CLIP_DISTANCE0 GL_CLIP_PLANE0
-#define GL_CLIP_DISTANCE4 GL_CLIP_PLANE4
-#define GL_CLIP_DISTANCE2 GL_CLIP_PLANE2
-#define GL_MAX_VARYING_COMPONENTS GL_MAX_VARYING_FLOATS
 #define GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT 0x0001
 #define GL_MAJOR_VERSION 0x821B
 #define GL_MINOR_VERSION 0x821C
@@ -2585,6 +2585,24 @@ typedef void (GLAPIENTRY * PFNGLBLENDFUNCSEPARATEINDEXEDAMDPROC) (GLuint buf, GL
 
 #endif /* GL_AMD_draw_buffers_blend */
 
+/* --------------------------- GL_AMD_gcn_shader --------------------------- */
+
+#ifndef GL_AMD_gcn_shader
+#define GL_AMD_gcn_shader 1
+
+#define GLEW_AMD_gcn_shader GLEW_GET_VAR(__GLEW_AMD_gcn_shader)
+
+#endif /* GL_AMD_gcn_shader */
+
+/* ------------------------ GL_AMD_gpu_shader_int64 ------------------------ */
+
+#ifndef GL_AMD_gpu_shader_int64
+#define GL_AMD_gpu_shader_int64 1
+
+#define GLEW_AMD_gpu_shader_int64 GLEW_GET_VAR(__GLEW_AMD_gpu_shader_int64)
+
+#endif /* GL_AMD_gpu_shader_int64 */
+
 /* ---------------------- GL_AMD_interleaved_elements ---------------------- */
 
 #ifndef GL_AMD_interleaved_elements
@@ -2853,6 +2871,17 @@ typedef void (GLAPIENTRY * PFNGLSTENCILOPVALUEAMDPROC) (GLenum face, GLuint valu
 #define GLEW_AMD_transform_feedback3_lines_triangles GLEW_GET_VAR(__GLEW_AMD_transform_feedback3_lines_triangles)
 
 #endif /* GL_AMD_transform_feedback3_lines_triangles */
+
+/* ----------------------- GL_AMD_transform_feedback4 ---------------------- */
+
+#ifndef GL_AMD_transform_feedback4
+#define GL_AMD_transform_feedback4 1
+
+#define GL_STREAM_RASTERIZATION_AMD 0x91A0
+
+#define GLEW_AMD_transform_feedback4 GLEW_GET_VAR(__GLEW_AMD_transform_feedback4)
+
+#endif /* GL_AMD_transform_feedback4 */
 
 /* ----------------------- GL_AMD_vertex_shader_layer ---------------------- */
 
@@ -4109,8 +4138,8 @@ typedef void (GLAPIENTRY * PFNGLNAMEDFRAMEBUFFERPARAMETERIEXTPROC) (GLuint frame
 #define GL_TEXTURE_STENCIL_SIZE 0x88F1
 #define GL_UNSIGNED_NORMALIZED 0x8C17
 #define GL_SRGB 0x8C40
-#define GL_DRAW_FRAMEBUFFER_BINDING 0x8CA6
 #define GL_FRAMEBUFFER_BINDING 0x8CA6
+#define GL_DRAW_FRAMEBUFFER_BINDING 0x8CA6
 #define GL_RENDERBUFFER_BINDING 0x8CA7
 #define GL_READ_FRAMEBUFFER 0x8CA8
 #define GL_DRAW_FRAMEBUFFER 0x8CA9
@@ -6807,6 +6836,7 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBLPOINTERPROC) (GLuint index, GLint s
 #define GL_VERTEX_BINDING_STRIDE 0x82D8
 #define GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET 0x82D9
 #define GL_MAX_VERTEX_ATTRIB_BINDINGS 0x82DA
+#define GL_VERTEX_BINDING_BUFFER 0x8F4F
 
 typedef void (GLAPIENTRY * PFNGLBINDVERTEXBUFFERPROC) (GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
 typedef void (GLAPIENTRY * PFNGLVERTEXARRAYBINDVERTEXBUFFEREXTPROC) (GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
@@ -7552,11 +7582,11 @@ typedef void (GLAPIENTRY * PFNGLTEXBUMPPARAMETERIVATIPROC) (GLenum pname, GLint 
 #define GL_4X_BIT_ATI 0x00000002
 #define GL_GREEN_BIT_ATI 0x00000002
 #define GL_COMP_BIT_ATI 0x00000002
+#define GL_NEGATE_BIT_ATI 0x00000004
 #define GL_BLUE_BIT_ATI 0x00000004
 #define GL_8X_BIT_ATI 0x00000004
-#define GL_NEGATE_BIT_ATI 0x00000004
-#define GL_BIAS_BIT_ATI 0x00000008
 #define GL_HALF_BIT_ATI 0x00000008
+#define GL_BIAS_BIT_ATI 0x00000008
 #define GL_QUARTER_BIT_ATI 0x00000010
 #define GL_EIGHTH_BIT_ATI 0x00000020
 #define GL_SATURATE_BIT_ATI 0x00000040
@@ -9747,6 +9777,15 @@ typedef void (GLAPIENTRY * PFNGLUSESHADERPROGRAMEXTPROC) (GLenum type, GLuint pr
 #define GLEW_EXT_separate_specular_color GLEW_GET_VAR(__GLEW_EXT_separate_specular_color)
 
 #endif /* GL_EXT_separate_specular_color */
+
+/* ------------------- GL_EXT_shader_image_load_formatted ------------------ */
+
+#ifndef GL_EXT_shader_image_load_formatted
+#define GL_EXT_shader_image_load_formatted 1
+
+#define GLEW_EXT_shader_image_load_formatted GLEW_GET_VAR(__GLEW_EXT_shader_image_load_formatted)
+
+#endif /* GL_EXT_shader_image_load_formatted */
 
 /* --------------------- GL_EXT_shader_image_load_store -------------------- */
 
@@ -12443,19 +12482,19 @@ typedef void (GLAPIENTRY * PFNGLPROGRAMBUFFERPARAMETERSFVNVPROC) (GLenum target,
 #define GL_NV_path_rendering 1
 
 #define GL_CLOSE_PATH_NV 0x00
-#define GL_BOLD_BIT_NV 0x01
 #define GL_GLYPH_WIDTH_BIT_NV 0x01
-#define GL_GLYPH_HEIGHT_BIT_NV 0x02
-#define GL_ITALIC_BIT_NV 0x02
+#define GL_BOLD_BIT_NV 0x01
 #define GL_MOVE_TO_NV 0x02
+#define GL_ITALIC_BIT_NV 0x02
+#define GL_GLYPH_HEIGHT_BIT_NV 0x02
 #define GL_RELATIVE_MOVE_TO_NV 0x03
 #define GL_LINE_TO_NV 0x04
 #define GL_GLYPH_HORIZONTAL_BEARING_X_BIT_NV 0x04
 #define GL_RELATIVE_LINE_TO_NV 0x05
 #define GL_HORIZONTAL_LINE_TO_NV 0x06
 #define GL_RELATIVE_HORIZONTAL_LINE_TO_NV 0x07
-#define GL_GLYPH_HORIZONTAL_BEARING_Y_BIT_NV 0x08
 #define GL_VERTICAL_LINE_TO_NV 0x08
+#define GL_GLYPH_HORIZONTAL_BEARING_Y_BIT_NV 0x08
 #define GL_RELATIVE_VERTICAL_LINE_TO_NV 0x09
 #define GL_QUADRATIC_CURVE_TO_NV 0x0A
 #define GL_RELATIVE_QUADRATIC_CURVE_TO_NV 0x0B
@@ -12938,6 +12977,28 @@ typedef void (GLAPIENTRY * PFNGLUNIFORMUI64VNVPROC) (GLint location, GLsizei cou
 
 #endif /* GL_NV_shader_storage_buffer_object */
 
+/* ----------------------- GL_NV_shader_thread_group ----------------------- */
+
+#ifndef GL_NV_shader_thread_group
+#define GL_NV_shader_thread_group 1
+
+#define GL_WARP_SIZE_NV 0x9339
+#define GL_WARPS_PER_SM_NV 0x933A
+#define GL_SM_COUNT_NV 0x933B
+
+#define GLEW_NV_shader_thread_group GLEW_GET_VAR(__GLEW_NV_shader_thread_group)
+
+#endif /* GL_NV_shader_thread_group */
+
+/* ---------------------- GL_NV_shader_thread_shuffle ---------------------- */
+
+#ifndef GL_NV_shader_thread_shuffle
+#define GL_NV_shader_thread_shuffle 1
+
+#define GLEW_NV_shader_thread_shuffle GLEW_GET_VAR(__GLEW_NV_shader_thread_shuffle)
+
+#endif /* GL_NV_shader_thread_shuffle */
+
 /* ---------------------- GL_NV_tessellation_program5 ---------------------- */
 
 #ifndef GL_NV_tessellation_program5
@@ -13082,12 +13143,12 @@ typedef void (GLAPIENTRY * PFNGLTEXTUREIMAGE3DMULTISAMPLENVPROC) (GLuint texture
 #define GL_TEXTURE_SHADER_NV 0x86DE
 #define GL_SHADER_OPERATION_NV 0x86DF
 #define GL_CULL_MODES_NV 0x86E0
-#define GL_OFFSET_TEXTURE_2D_MATRIX_NV 0x86E1
 #define GL_OFFSET_TEXTURE_MATRIX_NV 0x86E1
-#define GL_OFFSET_TEXTURE_2D_SCALE_NV 0x86E2
+#define GL_OFFSET_TEXTURE_2D_MATRIX_NV 0x86E1
 #define GL_OFFSET_TEXTURE_SCALE_NV 0x86E2
-#define GL_OFFSET_TEXTURE_BIAS_NV 0x86E3
+#define GL_OFFSET_TEXTURE_2D_SCALE_NV 0x86E2
 #define GL_OFFSET_TEXTURE_2D_BIAS_NV 0x86E3
+#define GL_OFFSET_TEXTURE_BIAS_NV 0x86E3
 #define GL_PREVIOUS_TEXTURE_INPUT_NV 0x86E4
 #define GL_CONST_EYE_NV 0x86E5
 #define GL_PASS_THROUGH_NV 0x86E6
@@ -17722,6 +17783,8 @@ GLEW_VAR_EXPORT GLboolean __GLEW_AMD_conservative_depth;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_debug_output;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_depth_clamp_separate;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_draw_buffers_blend;
+GLEW_VAR_EXPORT GLboolean __GLEW_AMD_gcn_shader;
+GLEW_VAR_EXPORT GLboolean __GLEW_AMD_gpu_shader_int64;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_interleaved_elements;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_multi_draw_indirect;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_name_gen_delete;
@@ -17739,6 +17802,7 @@ GLEW_VAR_EXPORT GLboolean __GLEW_AMD_sparse_texture;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_stencil_operation_extended;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_texture_texture4;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_transform_feedback3_lines_triangles;
+GLEW_VAR_EXPORT GLboolean __GLEW_AMD_transform_feedback4;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_vertex_shader_layer;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_vertex_shader_tessellator;
 GLEW_VAR_EXPORT GLboolean __GLEW_AMD_vertex_shader_viewport_index;
@@ -17995,6 +18059,7 @@ GLEW_VAR_EXPORT GLboolean __GLEW_EXT_scene_marker;
 GLEW_VAR_EXPORT GLboolean __GLEW_EXT_secondary_color;
 GLEW_VAR_EXPORT GLboolean __GLEW_EXT_separate_shader_objects;
 GLEW_VAR_EXPORT GLboolean __GLEW_EXT_separate_specular_color;
+GLEW_VAR_EXPORT GLboolean __GLEW_EXT_shader_image_load_formatted;
 GLEW_VAR_EXPORT GLboolean __GLEW_EXT_shader_image_load_store;
 GLEW_VAR_EXPORT GLboolean __GLEW_EXT_shader_integer_mix;
 GLEW_VAR_EXPORT GLboolean __GLEW_EXT_shadow_funcs;
@@ -18117,6 +18182,8 @@ GLEW_VAR_EXPORT GLboolean __GLEW_NV_shader_atomic_counters;
 GLEW_VAR_EXPORT GLboolean __GLEW_NV_shader_atomic_float;
 GLEW_VAR_EXPORT GLboolean __GLEW_NV_shader_buffer_load;
 GLEW_VAR_EXPORT GLboolean __GLEW_NV_shader_storage_buffer_object;
+GLEW_VAR_EXPORT GLboolean __GLEW_NV_shader_thread_group;
+GLEW_VAR_EXPORT GLboolean __GLEW_NV_shader_thread_shuffle;
 GLEW_VAR_EXPORT GLboolean __GLEW_NV_tessellation_program5;
 GLEW_VAR_EXPORT GLboolean __GLEW_NV_texgen_emboss;
 GLEW_VAR_EXPORT GLboolean __GLEW_NV_texgen_reflection;
