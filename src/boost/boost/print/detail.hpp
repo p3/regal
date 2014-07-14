@@ -342,7 +342,13 @@ inline size_t unsigned_length(const unsigned long val) { return unsigned_length(
 #endif
 
 #if defined(__linux) && defined(__x86_64) && !defined(__native_client__) && !defined(__ANDROID__)
+inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
+#endif
+
+#if 0
+#if defined(__linux) && defined(__x86_64) && !defined(__native_client__) && !defined(__ANDROID__)
 inline size_t unsigned_length(const unsigned long long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
+#endif
 #endif
 
 #if defined(__linux) && defined(__arm__) && !defined(__native_client__) && !defined(__ANDROID__)
