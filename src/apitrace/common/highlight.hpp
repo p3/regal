@@ -24,54 +24,65 @@
  **************************************************************************/
 
 /*
- * Human-readible dumping.
+ * Helpers for coloring output.
  */
 
-#ifndef _TRACE_DUMP_HPP_
-#define _TRACE_DUMP_HPP_
+#ifndef _HIGHLIGHT_HPP_
+#define _HIGHLIGHT_HPP_
 
 
 #include <iostream>
 
-#include "trace_model.hpp"
+
+namespace highlight {
 
 
-namespace trace {
+/*
+ * See also http://bytes.com/topic/c/answers/63822-design-question-little-c-header-colorizing-text-linux-comments-ideas
+ */
 
-
-typedef unsigned DumpFlags;
-
-enum {
-    DUMP_FLAG_NO_COLOR                 = (1 << 0),
-    DUMP_FLAG_NO_ARG_NAMES             = (1 << 1),
-    DUMP_FLAG_NO_CALL_NO               = (1 << 2),
-    DUMP_FLAG_THREAD_IDS               = (1 << 3),
+class Attribute {
+public:
+    virtual void apply(std::ostream &) const = 0;
 };
 
 
-void dump(Value *value, std::ostream &os, DumpFlags flags = 0);
-
-
 inline std::ostream &
-operator << (std::ostream &os, Value & value) {
-    dump(& value, os);
+operator << (std::ostream & os, const Attribute & attr) {
+    attr.apply(os);
     return os;
 }
 
 
-std::ostream &
-operator << (std::ostream &os, Value *value);
+enum Color {
+    RED,
+    GREEN,
+    BLUE,
+    GRAY,
+};
 
 
-void dump(Call &call, std::ostream &os, DumpFlags flags = 0);
+class Highlighter {
+public:
+    virtual const Attribute & normal(void) const = 0;
+    virtual const Attribute & bold(void) const = 0;
+    virtual const Attribute & italic(void) const = 0;
+    virtual const Attribute & strike(void) const = 0;
+    virtual const Attribute & color(Color) const = 0;
+};
 
 
-inline std::ostream & operator <<(std::ostream &os, Call &call) {
-    dump(call, os);
-    return os;
-}
+bool
+isAtty(std::ostream & os);
+
+const Highlighter &
+defaultHighlighter(bool color = true);
+
+const Highlighter &
+defaultHighlighter(std::ostream & os);
 
 
-} /* namespace trace */
+} /* namespace highlight */
 
-#endif /* _TRACE_DUMP_HPP_ */
+
+#endif /* _HIGHLIGHT_HPP_ */

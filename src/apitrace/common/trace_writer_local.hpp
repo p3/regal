@@ -116,6 +116,8 @@ namespace trace {
      */
     extern LocalWriter localWriter;
 
+    void fakeMemcpy(const void *ptr, size_t size);
+
 } /* namespace trace */
 
 #endif /* _TRACE_WRITER_LOCAL_HPP_ */
