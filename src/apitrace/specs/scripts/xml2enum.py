@@ -1,6 +1,7 @@
+#!/usr/bin/env python
 ##########################################################################
 #
-# Copyright 2008-2009 VMware, Inc.
+# Copyright 2014 VMware, Inc
 # All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,42 +25,41 @@
 ##########################################################################/
 
 
-from dlltrace import DllTracer
-from specs.stdapi import API
-from specs.d3d import ddraw, interfaces
+#
+# Script to half-generate *enum.py based on Khronos' *.xml
+#
 
 
-if __name__ == '__main__':
-    print '#define INITGUID'
-    print '#include <windows.h>'
-    print '#include "compat.h"'
-    print '#include <ddraw.h>'
-    print '#include <d3d.h>'
-    print
-    print '''
+import sys
+import xml.etree.ElementTree as ET
 
-#ifndef DDBLT_EXTENDED_FLAGS
-#define DDBLT_EXTENDED_FLAGS 0x40000000l
-#endif
 
-#ifndef DDBLT_EXTENDED_LINEAR_CONTENT
-#define DDBLT_EXTENDED_LINEAR_CONTENT 0x00000004l
-#endif
+for arg in sys.argv[1:]:
+    tree = ET.parse(arg)
+    root = tree.getroot()
 
-#ifndef D3DLIGHT_PARALLELPOINT
-#define D3DLIGHT_PARALLELPOINT (D3DLIGHTTYPE)4
-#endif
 
-#ifndef D3DLIGHT_GLSPOT
-#define D3DLIGHT_GLSPOT (D3DLIGHTTYPE)5
-#endif
+    params = {}
+    for enums in root.findall('enums'):
+        if enums.attrib.get('type') == 'bitmask':
+            continue
 
-'''
-    print '#include "trace_writer_local.hpp"'
-    print '#include "os.hpp"'
-    print
+        for enum in enums.findall('enum'):
+            name = enum.attrib['name']
+            value = enum.attrib['value']
 
-    api = API()
-    api.addModule(ddraw)
-    tracer = DllTracer()
-    tracer.traceApi(api)
+            if value.isdigit():
+                value = int(value)
+            elif value.startswith('0x'):
+                value = int(value, 16)
+            else:
+                continue
+
+            params.setdefault(value, name)
+
+
+    values = params.keys()
+    values.sort()
+    for value in values:
+        name = params[value]
+        print '    "%s",\t\t# 0x%04X' % (name, value)

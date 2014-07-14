@@ -1224,8 +1224,12 @@ d3d11.addInterfaces([
     IDXGIFactory1,
     IDXGIAdapter1,
     IDXGIDevice1,
+    IDXGIDevice2,
     IDXGIResource,
     ID3D11Debug,
     ID3D11InfoQueue,
     ID3D11SwitchToRef,
 ])
+
+# Add D3D11.1
+import d3d11_1

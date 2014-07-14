@@ -26,7 +26,7 @@
 
 #include <limits>
 
-#include "formatter.hpp"
+#include "highlight.hpp"
 #include "trace_dump.hpp"
 
 
@@ -38,40 +38,31 @@ class Dumper : public Visitor
 protected:
     std::ostream &os;
     DumpFlags dumpFlags;
-    formatter::Formatter *formatter;
-    formatter::Attribute *normal;
-    formatter::Attribute *bold;
-    formatter::Attribute *italic;
-    formatter::Attribute *strike;
-    formatter::Attribute *red;
-    formatter::Attribute *pointer;
-    formatter::Attribute *literal;
+    const highlight::Highlighter & highlighter;
+    const highlight::Attribute & normal;
+    const highlight::Attribute & bold;
+    const highlight::Attribute & italic;
+    const highlight::Attribute & strike;
+    const highlight::Attribute & red;
+    const highlight::Attribute & pointer;
+    const highlight::Attribute & literal;
 
 public:
     Dumper(std::ostream &_os, DumpFlags _flags) : 
         os(_os),
-        dumpFlags(_flags)
+        dumpFlags(_flags),
+        highlighter(highlight::defaultHighlighter(!(dumpFlags & DUMP_FLAG_NO_COLOR))),
+        normal(highlighter.normal()),
+        bold(highlighter.bold()),
+        italic(highlighter.italic()),
+        strike(highlighter.strike()),
+        red(highlighter.color(highlight::RED)),
+        pointer(highlighter.color(highlight::GREEN)),
+        literal(highlighter.color(highlight::BLUE))
     {
-        bool color = !(dumpFlags & DUMP_FLAG_NO_COLOR);
-        formatter = formatter::defaultFormatter(color);
-        normal = formatter->normal();
-        bold = formatter->bold();
-        italic = formatter->italic();
-        strike = formatter->strike();
-        red = formatter->color(formatter::RED);
-        pointer = formatter->color(formatter::GREEN);
-        literal = formatter->color(formatter::BLUE);
     }
 
     ~Dumper() {
-        delete normal;
-        delete bold;
-        delete italic;
-        delete strike;
-        delete red;
-        delete pointer;
-        delete literal;
-        delete formatter;
     }
 
     void visit(Null *) {
@@ -244,6 +235,9 @@ public:
         
         if (!(dumpFlags & DUMP_FLAG_NO_CALL_NO)) {
             os << call->no << " ";
+        }
+        if (dumpFlags & DUMP_FLAG_THREAD_IDS) {
+            os << "@" << std::hex << call->thread_id << std::dec << " ";
         }
 
         if (callFlags & CALL_FLAG_NON_REPRODUCIBLE) {

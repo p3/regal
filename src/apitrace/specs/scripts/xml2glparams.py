@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ##########################################################################
 #
 # Copyright 2014 VMware, Inc
@@ -29,26 +30,36 @@
 #
 
 
+import sys
 import xml.etree.ElementTree as ET
-tree = ET.parse('gl.xml')
-root = tree.getroot()
 
 
-params = {}
-for enums in root.findall('enums'):
-    if enums.attrib.get('type') == 'bitmask':
-        continue
-
-    for enum in enums.findall('enum'):
-        name = enum.attrib['name']
-        value = enum.attrib['value']
-        value = int(value, 16)
-
-        params.setdefault(value, name)
+for arg in sys.argv[1:]:
+    tree = ET.parse(arg)
+    root = tree.getroot()
 
 
-values = params.keys()
-values.sort()
-for value in values:
-    name = params[value]
-    print '    ("",\tX,\t1,\t"%s"),\t# 0x%04X' % (name, value)
+    params = {}
+    for enums in root.findall('enums'):
+        if enums.attrib.get('type') == 'bitmask':
+            continue
+
+        for enum in enums.findall('enum'):
+            name = enum.attrib['name']
+            value = enum.attrib['value']
+
+            if value.isdigit():
+                value = int(value)
+            elif value.startswith('0x'):
+                value = int(value, 16)
+            else:
+                continue
+
+            params.setdefault(value, name)
+
+
+    values = params.keys()
+    values.sort()
+    for value in values:
+        name = params[value]
+        print '    ("",\tX,\t1,\t"%s"),\t# 0x%04X' % (name, value)

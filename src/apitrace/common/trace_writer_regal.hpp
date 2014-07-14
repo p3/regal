@@ -118,6 +118,7 @@ namespace trace {
      */
 
     extern const char *regalWriterFileName;
+    void fakeMemcpy(const void *ptr, size_t size);
 
     /**
      * Singleton.

@@ -142,7 +142,7 @@ directory.  You can specify the written trace filename by setting the
 For EGL applications you will need to use `egltrace.so` instead of
 `glxtrace.so`.
 
-The `LD_PRELOAD` mechanism should work with the majority applications.  There
+The `LD_PRELOAD` mechanism should work with the majority of applications.  There
 are some applications (e.g., Unigine Heaven, Android GPU emulator, etc.), that
 have global function pointers with the same name as OpenGL entrypoints, living in a
 shared object that wasn't linked with `-Bsymbolic` flag, so relocations to
@@ -228,7 +228,7 @@ to hook only the APIs of interest.
 Emitting annotations to the trace
 ---------------------------------
 
-From whitin OpenGL applications you can embed annotations in the trace file
+From within OpenGL applications you can embed annotations in the trace file
 through the following extensions:
 
 * [`GL_KHR_debug`](http://www.opengl.org/registry/specs/KHR/debug.txt)
@@ -540,6 +540,3 @@ system configuration:
 3. The target host must have access to <trace-file> at the same path
    in the filesystem as the <trace-file> path on the host system being
    passed to the qapitrace command line.
-
-
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/c1062ad633aa7a458e9d7520021307e4 "githalytics.com")](http://githalytics.com/apitrace/apitrace)

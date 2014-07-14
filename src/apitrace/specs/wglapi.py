@@ -142,8 +142,15 @@ WGLContextAttribs = AttribArray(Const(WGLenum), [
     ('WGL_CONTEXT_MAJOR_VERSION_ARB', Int),
     ('WGL_CONTEXT_MINOR_VERSION_ARB', Int),
     ('WGL_CONTEXT_LAYER_PLANE_ARB', Int),
-    ('WGL_CONTEXT_FLAGS_ARB', Flags(Int, ["WGL_CONTEXT_DEBUG_BIT_ARB", "WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB"])),
-    ('WGL_CONTEXT_PROFILE_MASK_ARB', Flags(Int, ["WGL_CONTEXT_CORE_PROFILE_BIT_ARB", "WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB"]))
+    ('WGL_CONTEXT_FLAGS_ARB', Flags(Int, [
+        "WGL_CONTEXT_DEBUG_BIT_ARB",
+        "WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB",
+        "WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB",
+    ])),
+    ('WGL_CONTEXT_PROFILE_MASK_ARB', Flags(Int, [
+        "WGL_CONTEXT_CORE_PROFILE_BIT_ARB",
+        "WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB",
+    ]))
 ])
 
 WGLPixelFormatAttribsList = [
@@ -428,6 +435,9 @@ wglapi.addFunctions([
     StdFunction(BOOL, "wglDXObjectAccessNV", [(HANDLE, "hObject"), (GLenum, "access")]),
     StdFunction(BOOL, "wglDXLockObjectsNV", [(HANDLE, "hDevice"), (GLint, "count"), Out(Array(HANDLE, "count"), "hObjects")]),
     StdFunction(BOOL, "wglDXUnlockObjectsNV", [(HANDLE, "hDevice"), (GLint, "count"), Out(Array(HANDLE, "count"), "hObjects")]),
+
+    # WGL_NV_delay_before_swap
+    StdFunction(BOOL, "wglDelayBeforeSwapNV", [(HDC, "hDC"), (GLfloat, "seconds")]),
 
     # must be last
     StdFunction(PROC, "wglGetProcAddress", [(LPCSTR, "lpszProc")]),

@@ -35,14 +35,11 @@
 
 #include "compat.h"
 
-#include <d3d10.h>
+#include <d3d10_1.h>
 
 #include "d3derr.hpp"
 
 #include "dxgiint.h"
 
-#define D3D10_CREATE_DEVICE_PREVENT_ALTERING_LAYER_SETTINGS_FROM_REGISTRY 0x0080
-#define D3D10_CREATE_DEVICE_STRICT_VALIDATION                             0x0200
-#define D3D10_CREATE_DEVICE_DEBUGGABLE                                    0x0400
 
 #endif /* _D3D10IMPORTS_HPP_ */
