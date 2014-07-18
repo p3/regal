@@ -257,14 +257,14 @@ private:
 
 // 8-bit unsigned integer
 
-inline size_t unsigned_length(const boost::uint8_t val)
+inline size_t unsigned_length_uint8(const boost::uint8_t &val)
 {
   return val<10 ? 1 : (val<100 ? 2 : 3);
 }
 
 // 16-bit unsigned integer
 
-inline size_t unsigned_length(const boost::uint16_t val)
+inline size_t unsigned_length_uint16(const boost::uint16_t &val)
 {
   if (val<1000)
     return val<10 ? 1 : (val<100 ? 2 : 3);
@@ -274,7 +274,7 @@ inline size_t unsigned_length(const boost::uint16_t val)
 
 // 32-bit unsigned integer
 
-inline size_t unsigned_length(const boost::uint32_t val)
+inline size_t unsigned_length_uint32(const boost::uint32_t &val)
 {
   if (val<10000)
     return val<100 ? (val<10 ? 1 : 2) : (val<1000 ? 3 : 4);
@@ -286,7 +286,7 @@ inline size_t unsigned_length(const boost::uint32_t val)
 
 // 64-bit unsigned integer
 
-inline size_t unsigned_length(const boost::uint64_t val)
+inline size_t unsigned_length_uint64(const boost::uint64_t &val)
 {
   if (val<100000000ll)
   {
@@ -309,65 +309,20 @@ inline size_t unsigned_length(const boost::uint64_t val)
   }
 }
 
-#if defined(__APPLE__) && defined(__i386)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
+// Determine the number of digits of an unsigned integer
 
-#if defined(__APPLE__) && defined(__x86_64)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
-#endif
-
-#if defined(__APPLE__) && defined(__ppc__)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(__APPLE__) && defined(__arm__)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(__native_client__) && (defined(__i386) || defined(__x86_64) || defined(__arm__))
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(__ANDROID__) && defined(__i386__)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(__ANDROID__) && defined(__ARM_ARCH__)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(__linux) && defined(__i386) && !defined(__native_client__) && !defined(__ANDROID__)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(__linux) && defined(__x86_64) && !defined(__native_client__) && !defined(__ANDROID__)
-inline size_t unsigned_length(const unsigned long long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
-#endif
-
-#if defined(__linux) && defined(__arm__) && !defined(__native_client__) && !defined(__ANDROID__)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if (defined(__SUNPRO_C) || defined(__SUNPRO_CC) || defined(__sun)) && defined(__i386)
-inline size_t unsigned_length(const unsigned int val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if (defined(__SUNPRO_C) || defined(__SUNPRO_CC) || defined(__sun)) && defined(__x86_64)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
-#endif
-
-#if defined(WIN32) && !defined(_WIN64)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
-
-#if defined(WIN32) && defined(_WIN64)
-inline size_t unsigned_length(const unsigned long val) { return unsigned_length(static_cast<boost::uint64_t>(val)); }
-#endif
-
-#if defined(EMSCRIPTEN)
-inline size_t unsigned_length(const unsigned long val) {return unsigned_length(static_cast<boost::uint32_t>(val)); }
-#endif
+template<typename U>
+inline size_t unsigned_length(const U &val)
+{
+  switch (sizeof(U))
+  {
+    case 1:  return unsigned_length_uint8 (static_cast<const boost::uint8_t >(val));   
+    case 2:  return unsigned_length_uint16(static_cast<const boost::uint16_t>(val));   
+    case 4:  return unsigned_length_uint32(static_cast<const boost::uint32_t>(val));   
+    case 8:  return unsigned_length_uint64(static_cast<const boost::uint64_t>(val));   
+    default: return 0; /* oops... */
+  }
+}
 
 // Determine the number of digits of a signed integer
 
@@ -377,7 +332,7 @@ inline size_t signed_length(S val)
   const bool negative = val<0;
   if (negative)
     val = -val;
-  return unsigned_length(static_cast<U>(val)) + (negative ? 1 : 0);
+  return unsigned_length<U>(static_cast<U>(val)) + (negative ? 1 : 0);
 }
 
 inline size_t sprintf_length(const char *fmt, ...)

@@ -155,11 +155,11 @@ using ::boost::print::detail::write_iterator;
 
 inline size_t length(bool               val) { return val ? 4 : 5; /* true or false */ }
 
-inline size_t length(unsigned char      val) { return unsigned_length(val); }
-inline size_t length(unsigned short     val) { return unsigned_length(val); }
-inline size_t length(unsigned int       val) { return unsigned_length(val); }
-inline size_t length(unsigned long      val) { return unsigned_length(val); }
-inline size_t length(unsigned long long val) { return unsigned_length(val); }
+inline size_t length(unsigned char      val) { return unsigned_length<unsigned char     >(val); }
+inline size_t length(unsigned short     val) { return unsigned_length<unsigned short    >(val); }
+inline size_t length(unsigned int       val) { return unsigned_length<unsigned int      >(val); }
+inline size_t length(unsigned long      val) { return unsigned_length<unsigned long     >(val); }
+inline size_t length(unsigned long long val) { return unsigned_length<unsigned long long>(val); }
 
 inline size_t length(signed char      val) { return signed_length<unsigned char     >(val); }
 inline size_t length(signed short     val) { return signed_length<unsigned short    >(val); }
