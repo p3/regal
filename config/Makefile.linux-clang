@@ -1,0 +1,9 @@
+# Use clang 3.5 toolchain on Ubuntu 14.04 / Debian
+
+include config/Makefile.linux
+
+CC  = clang
+CXX = clang++
+LD  = clang
+
+WARN += -Wno-constant-logical-operand

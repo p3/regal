@@ -1,0 +1,7 @@
+# Use gcc 4.4 toolchain on Ubuntu 14.04 / Debian
+
+include config/Makefile.linux
+
+CC  = gcc-4.4
+CXX = g++-4.4
+LD  = gcc-4.4
