@@ -1,6 +1,6 @@
 /*
 ** The OpenGL Extension Wrangler Library
-** Copyright (C) 2008-2013, Nigel Stewart <nigels[]users sourceforge net>
+** Copyright (C) 2008-2014, Nigel Stewart <nigels[]users sourceforge net>
 ** Copyright (C) 2002-2008, Milan Ikits <milan ikits[]ieee org>
 ** Copyright (C) 2002-2008, Marcelo E. Magallon <mmagallo[]debian org>
 ** Copyright (C) 2002, Lev Povalahev
@@ -205,10 +205,10 @@ typedef Display* ( * PFNGLXGETCURRENTDISPLAYPROC) (void);
 #define GLX_RGBA_BIT 0x00000001
 #define GLX_WINDOW_BIT 0x00000001
 #define GLX_COLOR_INDEX_BIT 0x00000002
-#define GLX_PIXMAP_BIT 0x00000002
 #define GLX_FRONT_RIGHT_BUFFER_BIT 0x00000002
-#define GLX_PBUFFER_BIT 0x00000004
+#define GLX_PIXMAP_BIT 0x00000002
 #define GLX_BACK_LEFT_BUFFER_BIT 0x00000004
+#define GLX_PBUFFER_BIT 0x00000004
 #define GLX_BACK_RIGHT_BUFFER_BIT 0x00000008
 #define GLX_AUX_BUFFERS_BIT 0x00000010
 #define GLX_DEPTH_BUFFER_BIT 0x00000020
@@ -1170,10 +1170,10 @@ typedef Bool ( * PFNGLXWAITFORSBCOMLPROC) (Display* dpy, GLXDrawable drawable, i
 #ifndef GLX_SGIX_fbconfig
 #define GLX_SGIX_fbconfig 1
 
-#define GLX_WINDOW_BIT_SGIX 0x00000001
 #define GLX_RGBA_BIT_SGIX 0x00000001
-#define GLX_PIXMAP_BIT_SGIX 0x00000002
+#define GLX_WINDOW_BIT_SGIX 0x00000001
 #define GLX_COLOR_INDEX_BIT_SGIX 0x00000002
+#define GLX_PIXMAP_BIT_SGIX 0x00000002
 #define GLX_SCREEN_EXT 0x800C
 #define GLX_DRAWABLE_TYPE_SGIX 0x8010
 #define GLX_RENDER_TYPE_SGIX 0x8011
@@ -1208,8 +1208,8 @@ typedef XVisualInfo* ( * PFNGLXGETVISUALFROMFBCONFIGSGIXPROC) (Display *dpy, GLX
 #ifndef GLX_SGIX_hyperpipe
 #define GLX_SGIX_hyperpipe 1
 
-#define GLX_PIPE_RECT_SGIX 0x00000001
 #define GLX_HYPERPIPE_DISPLAY_PIPE_SGIX 0x00000001
+#define GLX_PIPE_RECT_SGIX 0x00000001
 #define GLX_HYPERPIPE_RENDER_PIPE_SGIX 0x00000002
 #define GLX_PIPE_RECT_LIMITS_SGIX 0x00000002
 #define GLX_HYPERPIPE_STEREO_SGIX 0x00000003
