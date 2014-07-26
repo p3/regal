@@ -6,6 +6,7 @@ MAKEFILE_NACL_INCLUDED := 1
 #
 
 ifneq ($(filter nacl%,$(SYSTEM)),)
+ifeq ($(filter nacl-pnacl,$(SYSTEM)),)
 
 .PHONY: nacl.bin nacl.clean
 
@@ -36,8 +37,9 @@ NACL.SRCS.NAMES := $(notdir $(NACL.SRCS))
 NACL.OBJS       := $(addprefix tmp/$(SYSTEM)/nacl/static/,$(NACL.SRCS.NAMES))
 NACL.OBJS       := $(NACL.OBJS:.c=.o)
 NACL.CFLAGS     := -Iinclude
-NACL.LIBS       += -Llib/$(SYSTEM) -lRegal
-NACL.LIBS       += -lpng -lz -lm -pthread -lppapi -lppapi_gles2 -lstdc++
+NACL.CFLAGS     += -DREGAL_NAMESPACE=1
+NACL.LIBS       += -Llib/$(SYSTEM) -lRegallib -lglslopt -lpnglib -lzlib
+NACL.LIBS       += -lm -pthread -lppapi -lppapi_gles2 -lstdc++
 
 -include $(NACL.DEPS)
 
@@ -45,7 +47,7 @@ tmp/$(SYSTEM)/nacl/static/%.o: examples/nacl/%.c
 	@mkdir -p $(dir $@)
 	$(LOG_CC)$(CC) $(CFLAGS) -std=gnu99 $(NACL.CFLAGS) $(CFLAGS.SO) -o $@ -c $<
 
-bin/$(SYSTEM)/nacl$(BIN_EXTENSION): lib/$(SYSTEM)/$(REGAL.STATIC) $(NACL.OBJS)
+bin/$(SYSTEM)/nacl$(BIN_EXTENSION): lib/$(SYSTEM)/$(REGAL.STATIC) lib/$(SYSTEM)/$(GLSLOPT.STATIC) $(NACL.OBJS)
 	@mkdir -p $(dir $@)
 	$(LOG_LD)$(LD) $(LDFLAGS.EXTRA) -o $@ $(NACL.OBJS) $(NACL.LIBS)
 ifneq ($(STRIP),)
@@ -55,5 +57,6 @@ endif
 examples/nacl/nacl.nmf: bin/$(SYSTEM)/nacl$(BIN_EXTENSION)
 	$(NACL_SDK_ROOT)/tools/create_nmf.py -Llib/$(SYSTEM) $(NMF_FLAGS) -o $@ bin/$(SYSTEM)/nacl*.nexe -s examples/nacl
 
+endif
 endif
 endif

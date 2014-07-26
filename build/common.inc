@@ -51,12 +51,12 @@ OPT   ?= $(CFLAGS.RELEASE)
 endif
 
 ifndef V
-LOG_CXX    ?= @echo " [CXX] $@";
-LOG_CC     ?= @echo " [CC] $@";
-LOG_LD     ?= @echo " [LD] $@";
-LOG_AR     ?= @echo " [AR] $@";
+LOG_CXX    ?= @echo " [CXX]    $@";
+LOG_CC     ?= @echo " [CC]     $@";
+LOG_LD     ?= @echo " [LD]     $@";
+LOG_AR     ?= @echo " [AR]     $@";
 LOG_RANLIB ?= @echo " [RANLIB] $@";
-LOG_STRIP  ?= @echo " [STRIP] $@";
+LOG_STRIP  ?= @echo " [STRIP]  $@";
 endif
 
 INCLUDE ?= -Iinclude

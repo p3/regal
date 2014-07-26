@@ -380,9 +380,7 @@ PPAPI and NaCl
 
 * NACL_SDK_ROOT needs to be set
 
-* NACL_LIBC=newlib is the default, specify NACL_LIBC=glibc as an alternative
-
-* regaltest requires pepper_26 or newer
+* NACL_LIBC=newlib is the default, specify glibc or pnacl as alternatives
 
 Questions and Answers
 =====================

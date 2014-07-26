@@ -2,7 +2,7 @@ NACL_ARCH := pnacl
 
 include config/nacl.inc
 
-NACL_TOOLCHAIN := $(NACL_SDK_ROOT)/toolchain/$(NACL_OS)_x86_pnacl/$(NACL_LIBC)
+NACL_TOOLCHAIN := $(NACL_SDK_ROOT)/toolchain/$(NACL_OS)_pnacl
 
 CC     := $(NACL_TOOLCHAIN)/bin/pnacl-clang
 CXX    := $(NACL_TOOLCHAIN)/bin/pnacl-clang++
@@ -13,7 +13,6 @@ STRIP  ?=
 
 BIN_EXTENSION = .pexe
 EXT.DYNAMIC = so
-LDFLAGS.EXTRA =
 LIBDIR =
 CFLAGS.EXTRA +=
 LDFLAGS.EXTRA +=

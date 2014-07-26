@@ -93,15 +93,14 @@ GLSLOPT.CXX += src/glsl/src/glsl/../mesa/program/symbol_table.c
 GLSLOPT.CXX += src/glsl/src/glsl/../mesa/program/prog_hash_table.c
 
 # Internal Headers
-# seth: is this used for dependencies?
 GLSLOPT.H :=
 
 # Other Headers
-# seth: do all of these need to be specified?
 GLSLOPT.H.OTHER :=
 
 #
 # Includes 
+#
 
 GLSLOPT.INCLUDE :=
 GLSLOPT.INCLUDE += -Isrc/glsl/include

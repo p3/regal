@@ -26,3 +26,6 @@ if [ "$NACL_LIBC" != "glibc" ]; then
     echo "Building ARM"
     make -f Makefile SYSTEM=nacl-arm $*
 fi
+
+echo "Building pnacl"
+make -f Makefile SYSTEM=nacl-pnacl $*

@@ -48,7 +48,11 @@ export CCACHE_COMPILERCHECK=echo $(SYSTEM)$(NACL_LIBC)$(NACL_SDK_ROOT)
 ifeq ($(NACL_ARCH),i686)
 NACL_LIBTYPE=$(NACL_LIBC)_x86_32
 else
+ifeq ($(NACL_ARCH),pnacl)
+NACL_LIBTYPE=$(NACL_ARCH)
+else
 NACL_LIBTYPE=$(NACL_LIBC)_$(NACL_ARCH)
+endif
 endif
 
 ifeq ($(MODE),debug)

@@ -39,6 +39,7 @@ include Makefile.dreamtorus
 include Makefile.dreamtorus_static
 include Makefile.alphatorus
 include Makefile.tiger
+include Makefile.nacl
 
 # Testing
 
