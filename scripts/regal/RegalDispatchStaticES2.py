@@ -40,6 +40,8 @@ def generateStaticES2Source(apis, args):
   for api in apis:
     if api.name=='gl':
 
+      # undefine the glFoo macros
+
       for function in api.functions:
         if not function.needsContext:
           continue
@@ -47,6 +49,20 @@ def generateStaticES2Source(apis, args):
           continue
         name   = function.name
         code += '#undef %s\n' % ( name )
+
+      # For NaCL, define glFoo -> GLES2Foo
+      # This is to match GLES/gl2.h in pepper_35
+
+      code += '\n'
+      code += '#if REGAL_SYS_PPAPI\n'
+      for function in api.functions:
+        if not function.needsContext:
+          continue
+        if getattr(function,'esVersions',None)==None or 2.0 not in function.esVersions:
+          continue
+        name   = function.name
+        code += '#define %s GLES2%s\n' % ( name, name[2:] )
+      code += '#endif\n'
 
       code += '\n'
       code += 'extern "C"\n'
