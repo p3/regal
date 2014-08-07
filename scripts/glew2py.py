@@ -22,18 +22,20 @@ options = None
 
 # paramSplit - split a parameter into (name,type) tuple
 
-paramRE1 = re.compile('((const )?[a-zA-Z][a-zA-Z0-9_]*[ \*]+(const )?)(.+)(\[.*\])?')
+paramRE1 = re.compile('((const )?[a-zA-Z][a-zA-Z0-9_]*( [a-zA-Z][a-zA-Z0-9_]+)?[ \*]+(const )?)(.+)(\[.*\])?')
 paramRE2 = re.compile('((const )?[a-zA-Z][a-zA-Z0-9_]*)')
 
 def splitParam(param):
   if param=='void':
     return None, 'void'
+
   m = paramRE1.match(param)
   if m:
-    if m.group(5):
-      return m.group(4), '%s%s'%(m.group(1),m.group(5))
+    if m.group(6):
+      return m.group(5), '%s%s'%(m.group(1),m.group(6))
     else:
-      return m.group(4), m.group(1)
+      return m.group(5), m.group(1)
+
   m = paramRE2.match(param)
   if m:
     return '', m.group(1)
@@ -89,7 +91,7 @@ def splitFunction(f):
 # Return a tuple Python code representation of an
 # extension specification:
 #
-# ( enums, enumsAdd, functions, functionsAdd)
+# ( enums, enumsAdd, functions )
 #
 
 def extensionToPyCode(ext):
@@ -105,13 +107,15 @@ def extensionToPyCode(ext):
   for i in enums:
     code = []
     value = i[1]
-    if not i[1].startswith('0x'):
+    if i[1].startswith('0x'):
+        value = '0x%04x'%(long(value,16))
+    else:
       try:
         value = '0x%04x'%(long(value))
       except:
         value = '\'%s\''%i[1]
       i = ( i[0], '\'%s\''%i[1] )
-    code.append( '%-45s = Enumerant(\'%s\',%s,\'%s\')'%(i[0],i[0],value,category) )
+    code.append( '%s = Enumerant(\'%s\', %s, \'%s\')'%(i[0],i[0],value.lower(),category) )
     pyEnums.append( tuple(code) )
 
   pyEnumsAdd = []
@@ -134,17 +138,14 @@ def extensionToPyCode(ext):
     code.append( '%s.ret = Return(\'%s\')'%(name,ret) )
     for i in params:
       if i[1]!=None and not (i[0]==None and i[1]=='void'):
-        code.append( '%s.add(Input(\'%s\',\'%s\'))'%(name,i[0],i[1]) )
+        code.append( '%s.add( Input( \'%s\',\'%s\' ))'%(name,i[0],i[1]) )
     code.append( '%s.category = \'%s\''%(name,category) )
+    code.append( '%s.trace = True'%(name) )
+    code.append( '%s.play = True'%(name) )
+    code.append( '%s.add(%s)'%(options.api,name) )
     pyFunctions.append( tuple(code) )
 
-  pyFunctionsAdd = []
-  for i in functions:
-    code = []
-    code.append( '%s.add(%s)'%(options.api,i[1]) )
-    pyFunctionsAdd.append( tuple(code) )
-
-  return tuple(pyEnums), tuple(pyEnumsAdd), tuple(pyFunctions), tuple(pyFunctionsAdd)
+  return tuple(pyEnums), tuple(pyEnumsAdd), tuple(pyFunctions)
 
 #
 #
@@ -178,8 +179,10 @@ if __name__ == "__main__":
   ext = []
   for i in files:
     e = readGLEWextension(i)
-    e = ( e[0], e[1], e[2], sorted(e[3]), sorted(e[4]), sorted(e[5]), sorted(e[6]))
+    e = ( e[0], e[1], e[2], sorted(e[3]), sorted(e[4],key=lambda x: splitFunction(x)[1]), sorted(e[5]), sorted(e[6]))
     ext.append(tuple([e,(extensionToPyCode(e))]))
+
+  ext = sorted(ext)
 
   # output file
 
@@ -194,6 +197,7 @@ from Api import Function, Typedef, Enum
 from Api import Return, Parameter, Input, Output, InputOutput
 from Api import Enumerant
 from Api import Extension
+from Api import StateType, State
 
 %s = Api()
 defines = Enum('defines')
@@ -202,46 +206,37 @@ defines = Enum('defines')
 '''%(options.api,options.api)
 
   for i in ext:
-    print >>file, '# %s'%(i[0][0])
-    print >>file, ''
-    for j in i[1][0]:
-      print >>file, '\n'.join(j)
-    print >>file, ''
+    if len(i[1][0]):
+      print >>file, '# %s'%(i[0][0])
+      print >>file, ''
+      for j in i[1][0]:
+        print >>file, '\n'.join(j)
+      print >>file, ''
+      for j in i[1][1]:
+        print >>file, '\n'.join(j)
+      print >>file, ''
+
   for i in ext:
-    print >>file, '# %s'%(i[0][0])
-    print >>file, ''
-    for j in i[1][1]:
-      print >>file, '\n'.join(j)
-    print >>file, ''
-  for i in ext:
-    print >>file, '# %s'%(i[0][0])
-    print >>file, ''
-    for j in i[1][2]:
-      print >>file, '%s\n'%('\n'.join(j))
-    print >>file, ''
-  for i in ext:
-    print >>file, '# %s'%(i[0][0])
-    print >>file, ''
-    for j in i[1][3]:
-      print >>file, '\n'.join(j)
-    print >>file, ''
+    if len(i[1][2]):
+      print >>file, '# %s'%(i[0][0])
+      print >>file, ''
+      for j in i[1][2]:
+        print >>file, '%s\n'%('\n'.join(j))
+      print >>file, ''
+#      for j in i[1][3]:
+#        print >>file, '\n'.join(j)
+#      print >>file, ''
 
   # Output Extensions
   for i in ext:
-    print >>file, '%-45s = Extension(\'%s\',\'%s\')'%(i[0][0],i[0][0],i[0][1])
-  print >>file, ''
-
-  for i in ext:
-    if len(i[0][4]):
-      print >>file, '%s.functions = [\'%s\']'%(i[0][0],'\',\''.join([j.split(' ')[1] for j in i[0][4]]))
-  print >>file, ''
-
-  for i in ext:
+    print >>file, '%s = Extension(\'%s\')'%(i[0][0],i[0][0])
+    if len(i[0][1]):
+      print >>file, '%s.url = \'%s\''%(i[0][0],i[0][1])
     if len(i[0][3]):
       print >>file, '%s.enumerants = [\'%s\']'%(i[0][0],'\',\''.join([j.split(' ')[0] for j in i[0][3]]))
-  print >>file, ''
-
-  for i in ext:
+    if len(i[0][4]):
+      print >>file, '%s.functions = [\'%s\']'%(i[0][0],'\',\''.join([j.split(' ')[1] for j in i[0][4]]))
     print >>file, '%s.add(%s)'%(options.api,i[0][0])
-  print >>file, ''
+    print >>file, ''
+
 
