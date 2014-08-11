@@ -211,8 +211,8 @@ typedef Display* ( * PFNGLXGETCURRENTDISPLAYPROC) (void);
 #define GLX_PBUFFER_BIT 0x00000004
 #define GLX_BACK_RIGHT_BUFFER_BIT 0x00000008
 #define GLX_AUX_BUFFERS_BIT 0x00000010
-#define GLX_DEPTH_BUFFER_BIT 0x00000020
 #define GLX_CONFIG_CAVEAT 0x20
+#define GLX_DEPTH_BUFFER_BIT 0x00000020
 #define GLX_X_VISUAL_TYPE 0x22
 #define GLX_TRANSPARENT_TYPE 0x23
 #define GLX_TRANSPARENT_INDEX_VALUE 0x24
@@ -386,6 +386,15 @@ typedef Bool ( * PFNGLXMAKEASSOCIATEDCONTEXTCURRENTAMDPROC) (GLXContext ctx);
 #define GLXEW_AMD_gpu_association GLXEW_GET_VAR(__GLXEW_AMD_gpu_association)
 
 #endif /* GLX_AMD_gpu_association */
+
+/* --------------------- GLX_ARB_context_flush_control --------------------- */
+
+#ifndef GLX_ARB_context_flush_control
+#define GLX_ARB_context_flush_control 1
+
+#define GLXEW_ARB_context_flush_control GLXEW_GET_VAR(__GLXEW_ARB_context_flush_control)
+
+#endif /* GLX_ARB_context_flush_control */
 
 /* ------------------------- GLX_ARB_create_context ------------------------ */
 
@@ -920,6 +929,21 @@ typedef int ( * PFNGLXSWAPINTERVALMESAPROC) (unsigned int interval);
 #define GLXEW_MESA_swap_control GLXEW_GET_VAR(__GLXEW_MESA_swap_control)
 
 #endif /* GLX_MESA_swap_control */
+
+/* --------------------------- GLX_NV_copy_buffer -------------------------- */
+
+#ifndef GLX_NV_copy_buffer
+#define GLX_NV_copy_buffer 1
+
+typedef void ( * PFNGLXCOPYBUFFERSUBDATANVPROC) (Display* dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size);
+typedef void ( * PFNGLXNAMEDCOPYBUFFERSUBDATANVPROC) (Display* dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size);
+
+#define glXCopyBufferSubDataNV GLXEW_GET_FUN(__glewXCopyBufferSubDataNV)
+#define glXNamedCopyBufferSubDataNV GLXEW_GET_FUN(__glewXNamedCopyBufferSubDataNV)
+
+#define GLXEW_NV_copy_buffer GLXEW_GET_VAR(__GLXEW_NV_copy_buffer)
+
+#endif /* GLX_NV_copy_buffer */
 
 /* --------------------------- GLX_NV_copy_image --------------------------- */
 
@@ -1544,6 +1568,9 @@ GLXEW_FUN_EXPORT PFNGLXSET3DFXMODEMESAPROC __glewXSet3DfxModeMESA;
 GLXEW_FUN_EXPORT PFNGLXGETSWAPINTERVALMESAPROC __glewXGetSwapIntervalMESA;
 GLXEW_FUN_EXPORT PFNGLXSWAPINTERVALMESAPROC __glewXSwapIntervalMESA;
 
+GLXEW_FUN_EXPORT PFNGLXCOPYBUFFERSUBDATANVPROC __glewXCopyBufferSubDataNV;
+GLXEW_FUN_EXPORT PFNGLXNAMEDCOPYBUFFERSUBDATANVPROC __glewXNamedCopyBufferSubDataNV;
+
 GLXEW_FUN_EXPORT PFNGLXCOPYIMAGESUBDATANVPROC __glewXCopyImageSubDataNV;
 
 GLXEW_FUN_EXPORT PFNGLXDELAYBEFORESWAPNVPROC __glewXDelayBeforeSwapNV;
@@ -1640,6 +1667,7 @@ GLXEW_VAR_EXPORT GLboolean __GLXEW_VERSION_1_3;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_VERSION_1_4;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_3DFX_multisample;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_AMD_gpu_association;
+GLXEW_VAR_EXPORT GLboolean __GLXEW_ARB_context_flush_control;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_ARB_create_context;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_ARB_create_context_profile;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_ARB_create_context_robustness;
@@ -1673,6 +1701,7 @@ GLXEW_VAR_EXPORT GLboolean __GLXEW_MESA_query_renderer;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_MESA_release_buffers;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_MESA_set_3dfx_mode;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_MESA_swap_control;
+GLXEW_VAR_EXPORT GLboolean __GLXEW_NV_copy_buffer;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_NV_copy_image;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_NV_delay_before_swap;
 GLXEW_VAR_EXPORT GLboolean __GLXEW_NV_float_buffer;
