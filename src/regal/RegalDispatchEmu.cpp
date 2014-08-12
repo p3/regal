@@ -34129,6 +34129,8 @@ static void REGAL_CALL emu_glShaderBinary(GLsizei count, const GLuint *shaders, 
 
 }
 
+// GL_ARB_ES3_1_compatibility
+
 // GL_ARB_base_instance
 
 static void REGAL_CALL emu_glDrawElementsInstancedBaseVertexBaseInstance(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount, GLint basevertex, GLuint baseinstance)
@@ -34203,6 +34205,8 @@ static void REGAL_CALL emu_glDrawElementsInstancedBaseVertexBaseInstance(GLenum 
 
 // GL_ARB_clear_texture
 
+// GL_ARB_clip_control
+
 // GL_ARB_color_buffer_float
 
 // GL_ARB_compute_shader
@@ -34254,6 +34258,8 @@ static void REGAL_CALL emu_glCopyBufferSubData(GLenum readtarget, GLenum writeta
 // GL_ARB_copy_image
 
 // GL_ARB_debug_output
+
+// GL_ARB_direct_state_access
 
 // GL_ARB_draw_buffers
 
@@ -36133,6 +36139,8 @@ static void REGAL_CALL emu_glFramebufferTextureLayerARB(GLenum target, GLenum at
 }
 
 // GL_ARB_get_program_binary
+
+// GL_ARB_get_texture_sub_image
 
 // GL_ARB_gpu_shader_fp64
 
@@ -43456,6 +43464,8 @@ static void REGAL_CALL emu_glUseProgramObjectARB(GLhandleARB programObj)
 
 // GL_ARB_shading_language_include
 
+// GL_ARB_sparse_buffer
+
 // GL_ARB_sparse_texture
 
 // GL_ARB_sync
@@ -43566,6 +43576,8 @@ static void REGAL_CALL emu_glGetInteger64v(GLenum pname, GLint64 *params)
 }
 
 // GL_ARB_tessellation_shader
+
+// GL_ARB_texture_barrier
 
 // GL_ARB_texture_buffer_object
 
@@ -70775,7 +70787,11 @@ static void REGAL_CALL emu_glVertexPointerEXT(GLint size, GLenum type, GLsizei s
 
 // GL_INTEL_texture_scissor
 
+// GL_KHR_blend_equation_advanced
+
 // GL_KHR_debug
+
+// GL_KHR_robustness
 
 // GL_KTX_buffer_region
 

@@ -3591,6 +3591,10 @@ namespace Trace
 
   BOOL  wglCopyImageSubDataNV(HGLRC hSrcRC, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, HGLRC hDstRC, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth);
 
+// WGL_NV_delay_before_swap
+
+  BOOL  wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds);
+
 // WGL_NV_gpu_affinity
 
   HDC  wglCreateAffinityDCNV(const HGPUNV *phGpuList);
@@ -31292,6 +31296,18 @@ static BOOL REGAL_CALL trace_wglCopyImageSubDataNV(HGLRC hSrcRC, GLuint srcName,
   return ret;
 }
 
+// WGL_NV_delay_before_swap
+
+static BOOL REGAL_CALL trace_wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+{
+  Internal("trace_wglDelayBeforeSwapNV","()");
+  Thread::ThreadLocal &_instance = Thread::ThreadLocal::instance();
+  Push<DispatchTableGlobal *> _push(_instance.nextDispatchTableGlobal);
+  _instance.nextDispatchTableGlobal = dispatcherGlobal.trace.next();
+  BOOL  ret = Trace::wglDelayBeforeSwapNV(hDC, seconds);
+  return ret;
+}
+
 // WGL_NV_gpu_affinity
 
 static HDC REGAL_CALL trace_wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -37527,6 +37543,10 @@ void InitDispatchTableGlobalTrace(DispatchTableGlobal &tbl)
   // WGL_NV_copy_image
 
   tbl.wglCopyImageSubDataNV = trace_wglCopyImageSubDataNV;
+
+  // WGL_NV_delay_before_swap
+
+  tbl.wglDelayBeforeSwapNV = trace_wglDelayBeforeSwapNV;
 
   // WGL_NV_gpu_affinity
 

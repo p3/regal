@@ -91,6 +91,7 @@ ContextInfo::ContextInfo()
   gl_version_4_2(false),
   gl_version_4_3(false),
   gl_version_4_4(false),
+  gl_version_4_5(false),
   gles_version_major(-1),
   gles_version_minor(-1),
   glsl_version_major(-1),
@@ -162,6 +163,7 @@ ContextInfo::ContextInfo()
   gl_apple_vertex_program_evaluators(false),
   gl_apple_ycbcr_422(false),
   gl_arb_es2_compatibility(false),
+  gl_arb_es3_1_compatibility(false),
   gl_arb_es3_compatibility(false),
   gl_arb_base_instance(false),
   gl_arb_bindless_texture(false),
@@ -170,16 +172,20 @@ ContextInfo::ContextInfo()
   gl_arb_cl_event(false),
   gl_arb_clear_buffer_object(false),
   gl_arb_clear_texture(false),
+  gl_arb_clip_control(false),
   gl_arb_color_buffer_float(false),
   gl_arb_compressed_texture_pixel_storage(false),
   gl_arb_compute_shader(false),
   gl_arb_compute_variable_group_size(false),
+  gl_arb_conditional_render_inverted(false),
   gl_arb_copy_buffer(false),
   gl_arb_copy_image(false),
+  gl_arb_cull_distance(false),
   gl_arb_debug_output(false),
   gl_arb_depth_buffer_float(false),
   gl_arb_depth_clamp(false),
   gl_arb_depth_texture(false),
+  gl_arb_direct_state_access(false),
   gl_arb_draw_buffers(false),
   gl_arb_draw_buffers_blend(false),
   gl_arb_draw_elements_base_vertex(false),
@@ -194,6 +200,7 @@ ContextInfo::ContextInfo()
   gl_arb_framebuffer_srgb(false),
   gl_arb_geometry_shader4(false),
   gl_arb_get_program_binary(false),
+  gl_arb_get_texture_sub_image(false),
   gl_arb_gpu_shader5(false),
   gl_arb_gpu_shader_fp64(false),
   gl_arb_half_float_pixel(false),
@@ -213,6 +220,7 @@ ContextInfo::ContextInfo()
   gl_arb_multitexture(false),
   gl_arb_occlusion_query(false),
   gl_arb_occlusion_query2(false),
+  gl_arb_pipeline_statistics_query(false),
   gl_arb_pixel_buffer_object(false),
   gl_arb_point_parameters(false),
   gl_arb_point_sprite(false),
@@ -233,10 +241,12 @@ ContextInfo::ContextInfo()
   gl_arb_shading_language_include(false),
   gl_arb_shadow(false),
   gl_arb_shadow_ambient(false),
+  gl_arb_sparse_buffer(false),
   gl_arb_sparse_texture(false),
   gl_arb_stencil_texturing(false),
   gl_arb_sync(false),
   gl_arb_tessellation_shader(false),
+  gl_arb_texture_barrier(false),
   gl_arb_texture_border_clamp(false),
   gl_arb_texture_buffer_object(false),
   gl_arb_texture_buffer_range(false),
@@ -263,6 +273,7 @@ ContextInfo::ContextInfo()
   gl_arb_transform_feedback2(false),
   gl_arb_transform_feedback3(false),
   gl_arb_transform_feedback_instanced(false),
+  gl_arb_transform_feedback_overflow_query(false),
   gl_arb_transpose_matrix(false),
   gl_arb_uniform_buffer_object(false),
   gl_arb_vertex_array_object(false),
@@ -427,7 +438,9 @@ ContextInfo::ContextInfo()
   gl_intel_map_texture(false),
   gl_intel_parallel_arrays(false),
   gl_intel_texture_scissor(false),
+  gl_khr_blend_equation_advanced(false),
   gl_khr_debug(false),
+  gl_khr_robustness(false),
   gl_khr_texture_compression_astc_ldr(false),
   gl_ktx_buffer_region(false),
   gl_mesax_texture_stack(false),
@@ -653,6 +666,7 @@ ContextInfo::ContextInfo()
   wgl_arb_pixel_format(false),
   wgl_arb_pixel_format_float(false),
   wgl_arb_render_texture(false),
+  wgl_arb_robustness_application_isolation(false),
   wgl_arb_robustness_share_group_isolation(false),
   wgl_ati_pixel_format_float(false),
   wgl_ati_render_texture_rectangle(false),
@@ -677,6 +691,7 @@ ContextInfo::ContextInfo()
   wgl_i3d_swap_frame_usage(false),
   wgl_nv_dx_interop(false),
   wgl_nv_copy_image(false),
+  wgl_nv_delay_before_swap(false),
   wgl_nv_float_buffer(false),
   wgl_nv_gpu_affinity(false),
   wgl_nv_multisample_coverage(false),
@@ -699,15 +714,18 @@ ContextInfo::ContextInfo()
   glx_arb_framebuffer_srgb(false),
   glx_arb_get_proc_address(false),
   glx_arb_multisample(false),
+  glx_arb_robustness_application_isolation(false),
   glx_arb_robustness_share_group_isolation(false),
   glx_arb_vertex_buffer_object(false),
   glx_ati_pixel_format_float(false),
   glx_ati_render_texture(false),
+  glx_ext_buffer_age(false),
   glx_ext_create_context_es2_profile(false),
   glx_ext_create_context_es_profile(false),
   glx_ext_fbconfig_packed_float(false),
   glx_ext_framebuffer_srgb(false),
   glx_ext_import_context(false),
+  glx_ext_stereo_tree(false),
   glx_ext_swap_control(false),
   glx_ext_swap_control_tear(false),
   glx_ext_texture_from_pixmap(false),
@@ -717,10 +735,13 @@ ContextInfo::ContextInfo()
   glx_mesa_agp_offset(false),
   glx_mesa_copy_sub_buffer(false),
   glx_mesa_pixmap_colormap(false),
+  glx_mesa_query_renderer(false),
   glx_mesa_release_buffers(false),
   glx_mesa_set_3dfx_mode(false),
   glx_mesa_swap_control(false),
+  glx_nv_copy_buffer(false),
   glx_nv_copy_image(false),
+  glx_nv_delay_before_swap(false),
   glx_nv_float_buffer(false),
   glx_nv_multisample_coverage(false),
   glx_nv_present_video(false),
@@ -973,7 +994,8 @@ ContextInfo::init(const RegalContext &context)
 
   if (!es1 && !es2)
   {
-    gl_version_4_4 = gl_version_major > 4 || (gl_version_major == 4 && gl_version_minor >= 4);
+    gl_version_4_5 = gl_version_major > 4 || (gl_version_major == 4 && gl_version_minor >= 5);
+    gl_version_4_4 = gl_version_4_5 || (gl_version_major == 4 && gl_version_minor == 4);
     gl_version_4_3 = gl_version_4_4 || (gl_version_major == 4 && gl_version_minor == 3);
     gl_version_4_2 = gl_version_4_3 || (gl_version_major == 4 && gl_version_minor == 2);
     gl_version_4_1 = gl_version_4_2 || (gl_version_major == 4 && gl_version_minor == 1);
@@ -1062,6 +1084,7 @@ ContextInfo::init(const RegalContext &context)
   gl_apple_vertex_program_evaluators                 = stringSetFind(e,"GL_APPLE_vertex_program_evaluators");
   gl_apple_ycbcr_422                                 = stringSetFind(e,"GL_APPLE_ycbcr_422");
   gl_arb_es2_compatibility                           = stringSetFind(e,"GL_ARB_ES2_compatibility");
+  gl_arb_es3_1_compatibility                         = stringSetFind(e,"GL_ARB_ES3_1_compatibility");
   gl_arb_es3_compatibility                           = stringSetFind(e,"GL_ARB_ES3_compatibility");
   gl_arb_base_instance                               = stringSetFind(e,"GL_ARB_base_instance");
   gl_arb_bindless_texture                            = stringSetFind(e,"GL_ARB_bindless_texture");
@@ -1070,16 +1093,20 @@ ContextInfo::init(const RegalContext &context)
   gl_arb_cl_event                                    = stringSetFind(e,"GL_ARB_cl_event");
   gl_arb_clear_buffer_object                         = stringSetFind(e,"GL_ARB_clear_buffer_object");
   gl_arb_clear_texture                               = stringSetFind(e,"GL_ARB_clear_texture");
+  gl_arb_clip_control                                = stringSetFind(e,"GL_ARB_clip_control");
   gl_arb_color_buffer_float                          = stringSetFind(e,"GL_ARB_color_buffer_float");
   gl_arb_compressed_texture_pixel_storage            = stringSetFind(e,"GL_ARB_compressed_texture_pixel_storage");
   gl_arb_compute_shader                              = stringSetFind(e,"GL_ARB_compute_shader");
   gl_arb_compute_variable_group_size                 = stringSetFind(e,"GL_ARB_compute_variable_group_size");
+  gl_arb_conditional_render_inverted                 = stringSetFind(e,"GL_ARB_conditional_render_inverted");
   gl_arb_copy_buffer                                 = stringSetFind(e,"GL_ARB_copy_buffer");
   gl_arb_copy_image                                  = stringSetFind(e,"GL_ARB_copy_image");
+  gl_arb_cull_distance                               = stringSetFind(e,"GL_ARB_cull_distance");
   gl_arb_debug_output                                = stringSetFind(e,"GL_ARB_debug_output");
   gl_arb_depth_buffer_float                          = stringSetFind(e,"GL_ARB_depth_buffer_float");
   gl_arb_depth_clamp                                 = stringSetFind(e,"GL_ARB_depth_clamp");
   gl_arb_depth_texture                               = stringSetFind(e,"GL_ARB_depth_texture");
+  gl_arb_direct_state_access                         = stringSetFind(e,"GL_ARB_direct_state_access");
   gl_arb_draw_buffers                                = stringSetFind(e,"GL_ARB_draw_buffers");
   gl_arb_draw_buffers_blend                          = stringSetFind(e,"GL_ARB_draw_buffers_blend");
   gl_arb_draw_elements_base_vertex                   = stringSetFind(e,"GL_ARB_draw_elements_base_vertex");
@@ -1094,6 +1121,7 @@ ContextInfo::init(const RegalContext &context)
   gl_arb_framebuffer_srgb                            = stringSetFind(e,"GL_ARB_framebuffer_sRGB");
   gl_arb_geometry_shader4                            = stringSetFind(e,"GL_ARB_geometry_shader4");
   gl_arb_get_program_binary                          = stringSetFind(e,"GL_ARB_get_program_binary");
+  gl_arb_get_texture_sub_image                       = stringSetFind(e,"GL_ARB_get_texture_sub_image");
   gl_arb_gpu_shader5                                 = stringSetFind(e,"GL_ARB_gpu_shader5");
   gl_arb_gpu_shader_fp64                             = stringSetFind(e,"GL_ARB_gpu_shader_fp64");
   gl_arb_half_float_pixel                            = stringSetFind(e,"GL_ARB_half_float_pixel");
@@ -1113,6 +1141,7 @@ ContextInfo::init(const RegalContext &context)
   gl_arb_multitexture                                = stringSetFind(e,"GL_ARB_multitexture");
   gl_arb_occlusion_query                             = stringSetFind(e,"GL_ARB_occlusion_query");
   gl_arb_occlusion_query2                            = stringSetFind(e,"GL_ARB_occlusion_query2");
+  gl_arb_pipeline_statistics_query                   = stringSetFind(e,"GL_ARB_pipeline_statistics_query");
   gl_arb_pixel_buffer_object                         = stringSetFind(e,"GL_ARB_pixel_buffer_object");
   gl_arb_point_parameters                            = stringSetFind(e,"GL_ARB_point_parameters");
   gl_arb_point_sprite                                = stringSetFind(e,"GL_ARB_point_sprite");
@@ -1133,10 +1162,12 @@ ContextInfo::init(const RegalContext &context)
   gl_arb_shading_language_include                    = stringSetFind(e,"GL_ARB_shading_language_include");
   gl_arb_shadow                                      = stringSetFind(e,"GL_ARB_shadow");
   gl_arb_shadow_ambient                              = stringSetFind(e,"GL_ARB_shadow_ambient");
+  gl_arb_sparse_buffer                               = stringSetFind(e,"GL_ARB_sparse_buffer");
   gl_arb_sparse_texture                              = stringSetFind(e,"GL_ARB_sparse_texture");
   gl_arb_stencil_texturing                           = stringSetFind(e,"GL_ARB_stencil_texturing");
   gl_arb_sync                                        = stringSetFind(e,"GL_ARB_sync");
   gl_arb_tessellation_shader                         = stringSetFind(e,"GL_ARB_tessellation_shader");
+  gl_arb_texture_barrier                             = stringSetFind(e,"GL_ARB_texture_barrier");
   gl_arb_texture_border_clamp                        = stringSetFind(e,"GL_ARB_texture_border_clamp");
   gl_arb_texture_buffer_object                       = stringSetFind(e,"GL_ARB_texture_buffer_object");
   gl_arb_texture_buffer_range                        = stringSetFind(e,"GL_ARB_texture_buffer_range");
@@ -1163,6 +1194,7 @@ ContextInfo::init(const RegalContext &context)
   gl_arb_transform_feedback2                         = stringSetFind(e,"GL_ARB_transform_feedback2");
   gl_arb_transform_feedback3                         = stringSetFind(e,"GL_ARB_transform_feedback3");
   gl_arb_transform_feedback_instanced                = stringSetFind(e,"GL_ARB_transform_feedback_instanced");
+  gl_arb_transform_feedback_overflow_query           = stringSetFind(e,"GL_ARB_transform_feedback_overflow_query");
   gl_arb_transpose_matrix                            = stringSetFind(e,"GL_ARB_transpose_matrix");
   gl_arb_uniform_buffer_object                       = stringSetFind(e,"GL_ARB_uniform_buffer_object");
   gl_arb_vertex_array_object                         = stringSetFind(e,"GL_ARB_vertex_array_object");
@@ -1327,7 +1359,9 @@ ContextInfo::init(const RegalContext &context)
   gl_intel_map_texture                               = stringSetFind(e,"GL_INTEL_map_texture");
   gl_intel_parallel_arrays                           = stringSetFind(e,"GL_INTEL_parallel_arrays");
   gl_intel_texture_scissor                           = stringSetFind(e,"GL_INTEL_texture_scissor");
+  gl_khr_blend_equation_advanced                     = stringSetFind(e,"GL_KHR_blend_equation_advanced");
   gl_khr_debug                                       = stringSetFind(e,"GL_KHR_debug");
+  gl_khr_robustness                                  = stringSetFind(e,"GL_KHR_robustness");
   gl_khr_texture_compression_astc_ldr                = stringSetFind(e,"GL_KHR_texture_compression_astc_ldr");
   gl_ktx_buffer_region                               = stringSetFind(e,"GL_KTX_buffer_region");
   gl_mesax_texture_stack                             = stringSetFind(e,"GL_MESAX_texture_stack");
@@ -1554,6 +1588,7 @@ ContextInfo::init(const RegalContext &context)
   wgl_arb_pixel_format                               = stringSetFind(e,"WGL_ARB_pixel_format");
   wgl_arb_pixel_format_float                         = stringSetFind(e,"WGL_ARB_pixel_format_float");
   wgl_arb_render_texture                             = stringSetFind(e,"WGL_ARB_render_texture");
+  wgl_arb_robustness_application_isolation           = stringSetFind(e,"WGL_ARB_robustness_application_isolation");
   wgl_arb_robustness_share_group_isolation           = stringSetFind(e,"WGL_ARB_robustness_share_group_isolation");
   wgl_ati_pixel_format_float                         = stringSetFind(e,"WGL_ATI_pixel_format_float");
   wgl_ati_render_texture_rectangle                   = stringSetFind(e,"WGL_ATI_render_texture_rectangle");
@@ -1578,6 +1613,7 @@ ContextInfo::init(const RegalContext &context)
   wgl_i3d_swap_frame_usage                           = stringSetFind(e,"WGL_I3D_swap_frame_usage");
   wgl_nv_dx_interop                                  = stringSetFind(e,"WGL_NV_DX_interop");
   wgl_nv_copy_image                                  = stringSetFind(e,"WGL_NV_copy_image");
+  wgl_nv_delay_before_swap                           = stringSetFind(e,"WGL_NV_delay_before_swap");
   wgl_nv_float_buffer                                = stringSetFind(e,"WGL_NV_float_buffer");
   wgl_nv_gpu_affinity                                = stringSetFind(e,"WGL_NV_gpu_affinity");
   wgl_nv_multisample_coverage                        = stringSetFind(e,"WGL_NV_multisample_coverage");
@@ -1601,15 +1637,18 @@ ContextInfo::init(const RegalContext &context)
   glx_arb_framebuffer_srgb                           = stringSetFind(e,"GLX_ARB_framebuffer_sRGB");
   glx_arb_get_proc_address                           = stringSetFind(e,"GLX_ARB_get_proc_address");
   glx_arb_multisample                                = stringSetFind(e,"GLX_ARB_multisample");
+  glx_arb_robustness_application_isolation           = stringSetFind(e,"GLX_ARB_robustness_application_isolation");
   glx_arb_robustness_share_group_isolation           = stringSetFind(e,"GLX_ARB_robustness_share_group_isolation");
   glx_arb_vertex_buffer_object                       = stringSetFind(e,"GLX_ARB_vertex_buffer_object");
   glx_ati_pixel_format_float                         = stringSetFind(e,"GLX_ATI_pixel_format_float");
   glx_ati_render_texture                             = stringSetFind(e,"GLX_ATI_render_texture");
+  glx_ext_buffer_age                                 = stringSetFind(e,"GLX_EXT_buffer_age");
   glx_ext_create_context_es2_profile                 = stringSetFind(e,"GLX_EXT_create_context_es2_profile");
   glx_ext_create_context_es_profile                  = stringSetFind(e,"GLX_EXT_create_context_es_profile");
   glx_ext_fbconfig_packed_float                      = stringSetFind(e,"GLX_EXT_fbconfig_packed_float");
   glx_ext_framebuffer_srgb                           = stringSetFind(e,"GLX_EXT_framebuffer_sRGB");
   glx_ext_import_context                             = stringSetFind(e,"GLX_EXT_import_context");
+  glx_ext_stereo_tree                                = stringSetFind(e,"GLX_EXT_stereo_tree");
   glx_ext_swap_control                               = stringSetFind(e,"GLX_EXT_swap_control");
   glx_ext_swap_control_tear                          = stringSetFind(e,"GLX_EXT_swap_control_tear");
   glx_ext_texture_from_pixmap                        = stringSetFind(e,"GLX_EXT_texture_from_pixmap");
@@ -1619,10 +1658,13 @@ ContextInfo::init(const RegalContext &context)
   glx_mesa_agp_offset                                = stringSetFind(e,"GLX_MESA_agp_offset");
   glx_mesa_copy_sub_buffer                           = stringSetFind(e,"GLX_MESA_copy_sub_buffer");
   glx_mesa_pixmap_colormap                           = stringSetFind(e,"GLX_MESA_pixmap_colormap");
+  glx_mesa_query_renderer                            = stringSetFind(e,"GLX_MESA_query_renderer");
   glx_mesa_release_buffers                           = stringSetFind(e,"GLX_MESA_release_buffers");
   glx_mesa_set_3dfx_mode                             = stringSetFind(e,"GLX_MESA_set_3dfx_mode");
   glx_mesa_swap_control                              = stringSetFind(e,"GLX_MESA_swap_control");
+  glx_nv_copy_buffer                                 = stringSetFind(e,"GLX_NV_copy_buffer");
   glx_nv_copy_image                                  = stringSetFind(e,"GLX_NV_copy_image");
+  glx_nv_delay_before_swap                           = stringSetFind(e,"GLX_NV_delay_before_swap");
   glx_nv_float_buffer                                = stringSetFind(e,"GLX_NV_float_buffer");
   glx_nv_multisample_coverage                        = stringSetFind(e,"GLX_NV_multisample_coverage");
   glx_nv_present_video                               = stringSetFind(e,"GLX_NV_present_video");
@@ -1828,6 +1870,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_APPLE_vertex_program_evaluators"))       return gl_apple_vertex_program_evaluators;
   if (!strcmp(ext,"GL_APPLE_ycbcr_422"))                       return gl_apple_ycbcr_422;
   if (!strcmp(ext,"GL_ARB_ES2_compatibility"))                 return gl_arb_es2_compatibility;
+  if (!strcmp(ext,"GL_ARB_ES3_1_compatibility"))               return gl_arb_es3_1_compatibility;
   if (!strcmp(ext,"GL_ARB_ES3_compatibility"))                 return gl_arb_es3_compatibility;
   if (!strcmp(ext,"GL_ARB_base_instance"))                     return gl_arb_base_instance;
   if (!strcmp(ext,"GL_ARB_bindless_texture"))                  return gl_arb_bindless_texture;
@@ -1836,16 +1879,20 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_ARB_cl_event"))                          return gl_arb_cl_event;
   if (!strcmp(ext,"GL_ARB_clear_buffer_object"))               return gl_arb_clear_buffer_object;
   if (!strcmp(ext,"GL_ARB_clear_texture"))                     return gl_arb_clear_texture;
+  if (!strcmp(ext,"GL_ARB_clip_control"))                      return gl_arb_clip_control;
   if (!strcmp(ext,"GL_ARB_color_buffer_float"))                return gl_arb_color_buffer_float;
   if (!strcmp(ext,"GL_ARB_compressed_texture_pixel_storage"))  return gl_arb_compressed_texture_pixel_storage;
   if (!strcmp(ext,"GL_ARB_compute_shader"))                    return gl_arb_compute_shader;
   if (!strcmp(ext,"GL_ARB_compute_variable_group_size"))       return gl_arb_compute_variable_group_size;
+  if (!strcmp(ext,"GL_ARB_conditional_render_inverted"))       return gl_arb_conditional_render_inverted;
   if (!strcmp(ext,"GL_ARB_copy_buffer"))                       return gl_arb_copy_buffer;
   if (!strcmp(ext,"GL_ARB_copy_image"))                        return gl_arb_copy_image;
+  if (!strcmp(ext,"GL_ARB_cull_distance"))                     return gl_arb_cull_distance;
   if (!strcmp(ext,"GL_ARB_debug_output"))                      return gl_arb_debug_output;
   if (!strcmp(ext,"GL_ARB_depth_buffer_float"))                return gl_arb_depth_buffer_float;
   if (!strcmp(ext,"GL_ARB_depth_clamp"))                       return gl_arb_depth_clamp;
   if (!strcmp(ext,"GL_ARB_depth_texture"))                     return gl_arb_depth_texture;
+  if (!strcmp(ext,"GL_ARB_direct_state_access"))               return gl_arb_direct_state_access;
   if (!strcmp(ext,"GL_ARB_draw_buffers"))                      return gl_arb_draw_buffers;
   if (!strcmp(ext,"GL_ARB_draw_buffers_blend"))                return gl_arb_draw_buffers_blend;
   if (!strcmp(ext,"GL_ARB_draw_elements_base_vertex"))         return gl_arb_draw_elements_base_vertex;
@@ -1860,6 +1907,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_ARB_framebuffer_sRGB"))                  return gl_arb_framebuffer_srgb;
   if (!strcmp(ext,"GL_ARB_geometry_shader4"))                  return gl_arb_geometry_shader4;
   if (!strcmp(ext,"GL_ARB_get_program_binary"))                return gl_arb_get_program_binary;
+  if (!strcmp(ext,"GL_ARB_get_texture_sub_image"))             return gl_arb_get_texture_sub_image;
   if (!strcmp(ext,"GL_ARB_gpu_shader5"))                       return gl_arb_gpu_shader5;
   if (!strcmp(ext,"GL_ARB_gpu_shader_fp64"))                   return gl_arb_gpu_shader_fp64;
   if (!strcmp(ext,"GL_ARB_half_float_pixel"))                  return gl_arb_half_float_pixel;
@@ -1879,6 +1927,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_ARB_multitexture"))                      return gl_arb_multitexture;
   if (!strcmp(ext,"GL_ARB_occlusion_query"))                   return gl_arb_occlusion_query;
   if (!strcmp(ext,"GL_ARB_occlusion_query2"))                  return gl_arb_occlusion_query2;
+  if (!strcmp(ext,"GL_ARB_pipeline_statistics_query"))         return gl_arb_pipeline_statistics_query;
   if (!strcmp(ext,"GL_ARB_pixel_buffer_object"))               return gl_arb_pixel_buffer_object;
   if (!strcmp(ext,"GL_ARB_point_parameters"))                  return gl_arb_point_parameters;
   if (!strcmp(ext,"GL_ARB_point_sprite"))                      return gl_arb_point_sprite;
@@ -1899,10 +1948,12 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_ARB_shading_language_include"))          return gl_arb_shading_language_include;
   if (!strcmp(ext,"GL_ARB_shadow"))                            return gl_arb_shadow;
   if (!strcmp(ext,"GL_ARB_shadow_ambient"))                    return gl_arb_shadow_ambient;
+  if (!strcmp(ext,"GL_ARB_sparse_buffer"))                     return gl_arb_sparse_buffer;
   if (!strcmp(ext,"GL_ARB_sparse_texture"))                    return gl_arb_sparse_texture;
   if (!strcmp(ext,"GL_ARB_stencil_texturing"))                 return gl_arb_stencil_texturing;
   if (!strcmp(ext,"GL_ARB_sync"))                              return gl_arb_sync;
   if (!strcmp(ext,"GL_ARB_tessellation_shader"))               return gl_arb_tessellation_shader;
+  if (!strcmp(ext,"GL_ARB_texture_barrier"))                   return gl_arb_texture_barrier;
   if (!strcmp(ext,"GL_ARB_texture_border_clamp"))              return gl_arb_texture_border_clamp;
   if (!strcmp(ext,"GL_ARB_texture_buffer_object"))             return gl_arb_texture_buffer_object;
   if (!strcmp(ext,"GL_ARB_texture_buffer_range"))              return gl_arb_texture_buffer_range;
@@ -1929,6 +1980,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_ARB_transform_feedback2"))               return gl_arb_transform_feedback2;
   if (!strcmp(ext,"GL_ARB_transform_feedback3"))               return gl_arb_transform_feedback3;
   if (!strcmp(ext,"GL_ARB_transform_feedback_instanced"))      return gl_arb_transform_feedback_instanced;
+  if (!strcmp(ext,"GL_ARB_transform_feedback_overflow_query")) return gl_arb_transform_feedback_overflow_query;
   if (!strcmp(ext,"GL_ARB_transpose_matrix"))                  return gl_arb_transpose_matrix;
   if (!strcmp(ext,"GL_ARB_uniform_buffer_object"))             return gl_arb_uniform_buffer_object;
   if (!strcmp(ext,"GL_ARB_vertex_array_object"))               return gl_arb_vertex_array_object;
@@ -2093,7 +2145,9 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GL_INTEL_map_texture"))                     return gl_intel_map_texture;
   if (!strcmp(ext,"GL_INTEL_parallel_arrays"))                 return gl_intel_parallel_arrays;
   if (!strcmp(ext,"GL_INTEL_texture_scissor"))                 return gl_intel_texture_scissor;
+  if (!strcmp(ext,"GL_KHR_blend_equation_advanced"))           return gl_khr_blend_equation_advanced;
   if (!strcmp(ext,"GL_KHR_debug"))                             return gl_khr_debug;
+  if (!strcmp(ext,"GL_KHR_robustness"))                        return gl_khr_robustness;
   if (!strcmp(ext,"GL_KHR_texture_compression_astc_ldr"))      return gl_khr_texture_compression_astc_ldr;
   if (!strcmp(ext,"GL_KTX_buffer_region"))                     return gl_ktx_buffer_region;
   if (!strcmp(ext,"GL_MESAX_texture_stack"))                   return gl_mesax_texture_stack;
@@ -2320,6 +2374,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"WGL_ARB_pixel_format"))                     return wgl_arb_pixel_format;
   if (!strcmp(ext,"WGL_ARB_pixel_format_float"))               return wgl_arb_pixel_format_float;
   if (!strcmp(ext,"WGL_ARB_render_texture"))                   return wgl_arb_render_texture;
+  if (!strcmp(ext,"WGL_ARB_robustness_application_isolation")) return wgl_arb_robustness_application_isolation;
   if (!strcmp(ext,"WGL_ARB_robustness_share_group_isolation")) return wgl_arb_robustness_share_group_isolation;
   if (!strcmp(ext,"WGL_ATI_pixel_format_float"))               return wgl_ati_pixel_format_float;
   if (!strcmp(ext,"WGL_ATI_render_texture_rectangle"))         return wgl_ati_render_texture_rectangle;
@@ -2344,6 +2399,7 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"WGL_I3D_swap_frame_usage"))                 return wgl_i3d_swap_frame_usage;
   if (!strcmp(ext,"WGL_NV_DX_interop"))                        return wgl_nv_dx_interop;
   if (!strcmp(ext,"WGL_NV_copy_image"))                        return wgl_nv_copy_image;
+  if (!strcmp(ext,"WGL_NV_delay_before_swap"))                 return wgl_nv_delay_before_swap;
   if (!strcmp(ext,"WGL_NV_float_buffer"))                      return wgl_nv_float_buffer;
   if (!strcmp(ext,"WGL_NV_gpu_affinity"))                      return wgl_nv_gpu_affinity;
   if (!strcmp(ext,"WGL_NV_multisample_coverage"))              return wgl_nv_multisample_coverage;
@@ -2367,15 +2423,18 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GLX_ARB_framebuffer_sRGB"))                 return glx_arb_framebuffer_srgb;
   if (!strcmp(ext,"GLX_ARB_get_proc_address"))                 return glx_arb_get_proc_address;
   if (!strcmp(ext,"GLX_ARB_multisample"))                      return glx_arb_multisample;
+  if (!strcmp(ext,"GLX_ARB_robustness_application_isolation")) return glx_arb_robustness_application_isolation;
   if (!strcmp(ext,"GLX_ARB_robustness_share_group_isolation")) return glx_arb_robustness_share_group_isolation;
   if (!strcmp(ext,"GLX_ARB_vertex_buffer_object"))             return glx_arb_vertex_buffer_object;
   if (!strcmp(ext,"GLX_ATI_pixel_format_float"))               return glx_ati_pixel_format_float;
   if (!strcmp(ext,"GLX_ATI_render_texture"))                   return glx_ati_render_texture;
+  if (!strcmp(ext,"GLX_EXT_buffer_age"))                       return glx_ext_buffer_age;
   if (!strcmp(ext,"GLX_EXT_create_context_es2_profile"))       return glx_ext_create_context_es2_profile;
   if (!strcmp(ext,"GLX_EXT_create_context_es_profile"))        return glx_ext_create_context_es_profile;
   if (!strcmp(ext,"GLX_EXT_fbconfig_packed_float"))            return glx_ext_fbconfig_packed_float;
   if (!strcmp(ext,"GLX_EXT_framebuffer_sRGB"))                 return glx_ext_framebuffer_srgb;
   if (!strcmp(ext,"GLX_EXT_import_context"))                   return glx_ext_import_context;
+  if (!strcmp(ext,"GLX_EXT_stereo_tree"))                      return glx_ext_stereo_tree;
   if (!strcmp(ext,"GLX_EXT_swap_control"))                     return glx_ext_swap_control;
   if (!strcmp(ext,"GLX_EXT_swap_control_tear"))                return glx_ext_swap_control_tear;
   if (!strcmp(ext,"GLX_EXT_texture_from_pixmap"))              return glx_ext_texture_from_pixmap;
@@ -2385,10 +2444,13 @@ ContextInfo::getExtension(const char *ext) const
   if (!strcmp(ext,"GLX_MESA_agp_offset"))                      return glx_mesa_agp_offset;
   if (!strcmp(ext,"GLX_MESA_copy_sub_buffer"))                 return glx_mesa_copy_sub_buffer;
   if (!strcmp(ext,"GLX_MESA_pixmap_colormap"))                 return glx_mesa_pixmap_colormap;
+  if (!strcmp(ext,"GLX_MESA_query_renderer"))                  return glx_mesa_query_renderer;
   if (!strcmp(ext,"GLX_MESA_release_buffers"))                 return glx_mesa_release_buffers;
   if (!strcmp(ext,"GLX_MESA_set_3dfx_mode"))                   return glx_mesa_set_3dfx_mode;
   if (!strcmp(ext,"GLX_MESA_swap_control"))                    return glx_mesa_swap_control;
+  if (!strcmp(ext,"GLX_NV_copy_buffer"))                       return glx_nv_copy_buffer;
   if (!strcmp(ext,"GLX_NV_copy_image"))                        return glx_nv_copy_image;
+  if (!strcmp(ext,"GLX_NV_delay_before_swap"))                 return glx_nv_delay_before_swap;
   if (!strcmp(ext,"GLX_NV_float_buffer"))                      return glx_nv_float_buffer;
   if (!strcmp(ext,"GLX_NV_multisample_coverage"))              return glx_nv_multisample_coverage;
   if (!strcmp(ext,"GLX_NV_present_video"))                     return glx_nv_present_video;

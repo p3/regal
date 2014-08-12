@@ -5681,6 +5681,14 @@ namespace Missing
     Warning( "glShaderBinary", " not available." );
   }
 
+// GL_ARB_ES3_1_compatibility
+
+  static void REGAL_CALL glMemoryBarrierByRegion(GLbitfield barriers)
+{
+    UNUSED_PARAMETER(barriers);
+    Warning( "glMemoryBarrierByRegion", " not available." );
+  }
+
 // GL_ARB_base_instance
 
   static void REGAL_CALL glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei primcount, GLuint baseinstance)
@@ -5961,6 +5969,15 @@ namespace Missing
     Warning( "glClearTexSubImage", " not available." );
   }
 
+// GL_ARB_clip_control
+
+  static void REGAL_CALL glClipControl(GLenum origin, GLenum depth)
+{
+    UNUSED_PARAMETER(origin);
+    UNUSED_PARAMETER(depth);
+    Warning( "glClipControl", " not available." );
+  }
+
 // GL_ARB_color_buffer_float
 
   static void REGAL_CALL glClampColorARB(GLenum target, GLenum clamp)
@@ -6076,6 +6093,864 @@ namespace Missing
     UNUSED_PARAMETER(messageLog);
     Warning( "glGetDebugMessageLogARB", " not available." );
     return 0;
+  }
+
+// GL_ARB_direct_state_access
+
+  static void REGAL_CALL glBindTextureUnit(GLuint unit, GLuint texture)
+{
+    UNUSED_PARAMETER(unit);
+    UNUSED_PARAMETER(texture);
+    Warning( "glBindTextureUnit", " not available." );
+  }
+
+  static void REGAL_CALL glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+    UNUSED_PARAMETER(readFramebuffer);
+    UNUSED_PARAMETER(drawFramebuffer);
+    UNUSED_PARAMETER(srcX0);
+    UNUSED_PARAMETER(srcY0);
+    UNUSED_PARAMETER(srcX1);
+    UNUSED_PARAMETER(srcY1);
+    UNUSED_PARAMETER(dstX0);
+    UNUSED_PARAMETER(dstY0);
+    UNUSED_PARAMETER(dstX1);
+    UNUSED_PARAMETER(dstY1);
+    UNUSED_PARAMETER(mask);
+    UNUSED_PARAMETER(filter);
+    Warning( "glBlitNamedFramebuffer", " not available." );
+  }
+
+  static GLenum REGAL_CALL glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(target);
+    Warning( "glCheckNamedFramebufferStatus", " not available." );
+    return 0;
+  }
+
+  static void REGAL_CALL glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const GLvoid *data)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(data);
+    Warning( "glClearNamedBufferData", " not available." );
+  }
+
+  static void REGAL_CALL glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const GLvoid *data)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(data);
+    Warning( "glClearNamedBufferSubData", " not available." );
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLfloat depth, GLint stencil)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(depth);
+    UNUSED_PARAMETER(stencil);
+    Warning( "glClearNamedFramebufferfi", " not available." );
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferfv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(drawbuffer);
+    UNUSED_PARAMETER(value);
+    Warning( "glClearNamedFramebufferfv", " not available." );
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(drawbuffer);
+    UNUSED_PARAMETER(value);
+    Warning( "glClearNamedFramebufferiv", " not available." );
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferuiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(drawbuffer);
+    UNUSED_PARAMETER(value);
+    Warning( "glClearNamedFramebufferuiv", " not available." );
+  }
+
+  static void REGAL_CALL glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(imageSize);
+    UNUSED_PARAMETER(data);
+    Warning( "glCompressedTextureSubImage1D", " not available." );
+  }
+
+  static void REGAL_CALL glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(imageSize);
+    UNUSED_PARAMETER(data);
+    Warning( "glCompressedTextureSubImage2D", " not available." );
+  }
+
+  static void REGAL_CALL glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(zoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(depth);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(imageSize);
+    UNUSED_PARAMETER(data);
+    Warning( "glCompressedTextureSubImage3D", " not available." );
+  }
+
+  static void REGAL_CALL glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    UNUSED_PARAMETER(readBuffer);
+    UNUSED_PARAMETER(writeBuffer);
+    UNUSED_PARAMETER(readOffset);
+    UNUSED_PARAMETER(writeOffset);
+    UNUSED_PARAMETER(size);
+    Warning( "glCopyNamedBufferSubData", " not available." );
+  }
+
+  static void REGAL_CALL glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(x);
+    UNUSED_PARAMETER(y);
+    UNUSED_PARAMETER(width);
+    Warning( "glCopyTextureSubImage1D", " not available." );
+  }
+
+  static void REGAL_CALL glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(x);
+    UNUSED_PARAMETER(y);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    Warning( "glCopyTextureSubImage2D", " not available." );
+  }
+
+  static void REGAL_CALL glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(zoffset);
+    UNUSED_PARAMETER(x);
+    UNUSED_PARAMETER(y);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    Warning( "glCopyTextureSubImage3D", " not available." );
+  }
+
+  static void REGAL_CALL glCreateBuffers(GLsizei n, GLuint *buffers)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(buffers);
+    Warning( "glCreateBuffers", " not available." );
+  }
+
+  static void REGAL_CALL glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(framebuffers);
+    Warning( "glCreateFramebuffers", " not available." );
+  }
+
+  static void REGAL_CALL glCreateProgramPipelines(GLsizei n, GLuint *pipelines)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(pipelines);
+    Warning( "glCreateProgramPipelines", " not available." );
+  }
+
+  static void REGAL_CALL glCreateQueries(GLenum target, GLsizei n, GLuint *ids)
+{
+    UNUSED_PARAMETER(target);
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(ids);
+    Warning( "glCreateQueries", " not available." );
+  }
+
+  static void REGAL_CALL glCreateRenderbuffers(GLsizei n, GLuint *renderbuffers)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(renderbuffers);
+    Warning( "glCreateRenderbuffers", " not available." );
+  }
+
+  static void REGAL_CALL glCreateSamplers(GLsizei n, GLuint *samplers)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(samplers);
+    Warning( "glCreateSamplers", " not available." );
+  }
+
+  static void REGAL_CALL glCreateTextures(GLenum target, GLsizei n, GLuint *textures)
+{
+    UNUSED_PARAMETER(target);
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(textures);
+    Warning( "glCreateTextures", " not available." );
+  }
+
+  static void REGAL_CALL glCreateTransformFeedbacks(GLsizei n, GLuint *ids)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(ids);
+    Warning( "glCreateTransformFeedbacks", " not available." );
+  }
+
+  static void REGAL_CALL glCreateVertexArrays(GLsizei n, GLuint *arrays)
+{
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(arrays);
+    Warning( "glCreateVertexArrays", " not available." );
+  }
+
+  static void REGAL_CALL glDisableVertexArrayAttrib(GLuint vaobj, GLuint index)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(index);
+    Warning( "glDisableVertexArrayAttrib", " not available." );
+  }
+
+  static void REGAL_CALL glEnableVertexArrayAttrib(GLuint vaobj, GLuint index)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(index);
+    Warning( "glEnableVertexArrayAttrib", " not available." );
+  }
+
+  static void REGAL_CALL glFlushMappedNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(length);
+    Warning( "glFlushMappedNamedBufferRange", " not available." );
+  }
+
+  static void REGAL_CALL glGenerateTextureMipmap(GLuint texture)
+{
+    UNUSED_PARAMETER(texture);
+    Warning( "glGenerateTextureMipmap", " not available." );
+  }
+
+  static void REGAL_CALL glGetCompressedTextureImage(GLuint texture, GLint level, GLsizei bufSize, GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glGetCompressedTextureImage", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedBufferParameteri64v(GLuint buffer, GLenum pname, GLint64 *params)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetNamedBufferParameteri64v", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedBufferParameteriv(GLuint buffer, GLenum pname, GLint *params)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetNamedBufferParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedBufferPointerv(GLuint buffer, GLenum pname, GLvoid **params)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetNamedBufferPointerv", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, GLvoid *data)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(data);
+    Warning( "glGetNamedBufferSubData", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedFramebufferAttachmentParameteriv(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(attachment);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetNamedFramebufferAttachmentParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedFramebufferParameteriv(GLuint framebuffer, GLenum pname, GLint *param)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetNamedFramebufferParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glGetNamedRenderbufferParameteriv(GLuint renderbuffer, GLenum pname, GLint *params)
+{
+    UNUSED_PARAMETER(renderbuffer);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetNamedRenderbufferParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureImage(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glGetTextureImage", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureLevelParameterfv(GLuint texture, GLint level, GLenum pname, GLfloat *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetTextureLevelParameterfv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureLevelParameteriv(GLuint texture, GLint level, GLenum pname, GLint *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetTextureLevelParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureParameterIiv(GLuint texture, GLenum pname, GLint *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetTextureParameterIiv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureParameterIuiv(GLuint texture, GLenum pname, GLuint *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetTextureParameterIuiv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureParameterfv(GLuint texture, GLenum pname, GLfloat *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetTextureParameterfv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureParameteriv(GLuint texture, GLenum pname, GLint *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetTextureParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glGetTransformFeedbacki64_v(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)
+{
+    UNUSED_PARAMETER(xfb);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(index);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetTransformFeedbacki64_v", " not available." );
+  }
+
+  static void REGAL_CALL glGetTransformFeedbacki_v(GLuint xfb, GLenum pname, GLuint index, GLint *param)
+{
+    UNUSED_PARAMETER(xfb);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(index);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetTransformFeedbacki_v", " not available." );
+  }
+
+  static void REGAL_CALL glGetTransformFeedbackiv(GLuint xfb, GLenum pname, GLint *param)
+{
+    UNUSED_PARAMETER(xfb);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetTransformFeedbackiv", " not available." );
+  }
+
+  static void REGAL_CALL glGetVertexArrayIndexed64iv(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(index);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetVertexArrayIndexed64iv", " not available." );
+  }
+
+  static void REGAL_CALL glGetVertexArrayIndexediv(GLuint vaobj, GLuint index, GLenum pname, GLint *param)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(index);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetVertexArrayIndexediv", " not available." );
+  }
+
+  static void REGAL_CALL glGetVertexArrayiv(GLuint vaobj, GLenum pname, GLint *param)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glGetVertexArrayiv", " not available." );
+  }
+
+  static void REGAL_CALL glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(numAttachments);
+    UNUSED_PARAMETER(attachments);
+    Warning( "glInvalidateNamedFramebufferData", " not available." );
+  }
+
+  static void REGAL_CALL glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(numAttachments);
+    UNUSED_PARAMETER(attachments);
+    UNUSED_PARAMETER(x);
+    UNUSED_PARAMETER(y);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    Warning( "glInvalidateNamedFramebufferSubData", " not available." );
+  }
+
+  static GLvoid *REGAL_CALL glMapNamedBuffer(GLuint buffer, GLenum access)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(access);
+    Warning( "glMapNamedBuffer", " not available." );
+    return NULL;
+  }
+
+  static GLvoid *REGAL_CALL glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(length);
+    UNUSED_PARAMETER(access);
+    Warning( "glMapNamedBufferRange", " not available." );
+    return NULL;
+  }
+
+  static void REGAL_CALL glNamedBufferData(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(data);
+    UNUSED_PARAMETER(usage);
+    Warning( "glNamedBufferData", " not available." );
+  }
+
+  static void REGAL_CALL glNamedBufferStorage(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLbitfield flags)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(data);
+    UNUSED_PARAMETER(flags);
+    Warning( "glNamedBufferStorage", " not available." );
+  }
+
+  static void REGAL_CALL glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+{
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(data);
+    Warning( "glNamedBufferSubData", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferDrawBuffer(GLuint framebuffer, GLenum mode)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(mode);
+    Warning( "glNamedFramebufferDrawBuffer", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferDrawBuffers(GLuint framebuffer, GLsizei n, const GLenum *bufs)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(n);
+    UNUSED_PARAMETER(bufs);
+    Warning( "glNamedFramebufferDrawBuffers", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glNamedFramebufferParameteri", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferReadBuffer(GLuint framebuffer, GLenum mode)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(mode);
+    Warning( "glNamedFramebufferReadBuffer", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(attachment);
+    UNUSED_PARAMETER(renderbuffertarget);
+    UNUSED_PARAMETER(renderbuffer);
+    Warning( "glNamedFramebufferRenderbuffer", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferTexture(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(attachment);
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    Warning( "glNamedFramebufferTexture", " not available." );
+  }
+
+  static void REGAL_CALL glNamedFramebufferTextureLayer(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+{
+    UNUSED_PARAMETER(framebuffer);
+    UNUSED_PARAMETER(attachment);
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(layer);
+    Warning( "glNamedFramebufferTextureLayer", " not available." );
+  }
+
+  static void REGAL_CALL glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    UNUSED_PARAMETER(renderbuffer);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    Warning( "glNamedRenderbufferStorage", " not available." );
+  }
+
+  static void REGAL_CALL glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    UNUSED_PARAMETER(renderbuffer);
+    UNUSED_PARAMETER(samples);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    Warning( "glNamedRenderbufferStorageMultisample", " not available." );
+  }
+
+  static void REGAL_CALL glTextureBuffer(GLuint texture, GLenum internalformat, GLuint buffer)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(buffer);
+    Warning( "glTextureBuffer", " not available." );
+  }
+
+  static void REGAL_CALL glTextureBufferRange(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(size);
+    Warning( "glTextureBufferRange", " not available." );
+  }
+
+  static void REGAL_CALL glTextureParameterIiv(GLuint texture, GLenum pname, const GLint *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glTextureParameterIiv", " not available." );
+  }
+
+  static void REGAL_CALL glTextureParameterIuiv(GLuint texture, GLenum pname, const GLuint *params)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(params);
+    Warning( "glTextureParameterIuiv", " not available." );
+  }
+
+  static void REGAL_CALL glTextureParameterf(GLuint texture, GLenum pname, GLfloat param)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glTextureParameterf", " not available." );
+  }
+
+  static void REGAL_CALL glTextureParameterfv(GLuint texture, GLenum pname, const GLfloat *param)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glTextureParameterfv", " not available." );
+  }
+
+  static void REGAL_CALL glTextureParameteri(GLuint texture, GLenum pname, GLint param)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glTextureParameteri", " not available." );
+  }
+
+  static void REGAL_CALL glTextureParameteriv(GLuint texture, GLenum pname, const GLint *param)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(pname);
+    UNUSED_PARAMETER(param);
+    Warning( "glTextureParameteriv", " not available." );
+  }
+
+  static void REGAL_CALL glTextureStorage1D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(levels);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    Warning( "glTextureStorage1D", " not available." );
+  }
+
+  static void REGAL_CALL glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(levels);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    Warning( "glTextureStorage2D", " not available." );
+  }
+
+  static void REGAL_CALL glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(samples);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(fixedsamplelocations);
+    Warning( "glTextureStorage2DMultisample", " not available." );
+  }
+
+  static void REGAL_CALL glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(levels);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(depth);
+    Warning( "glTextureStorage3D", " not available." );
+  }
+
+  static void REGAL_CALL glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(samples);
+    UNUSED_PARAMETER(internalformat);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(depth);
+    UNUSED_PARAMETER(fixedsamplelocations);
+    Warning( "glTextureStorage3DMultisample", " not available." );
+  }
+
+  static void REGAL_CALL glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glTextureSubImage1D", " not available." );
+  }
+
+  static void REGAL_CALL glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glTextureSubImage2D", " not available." );
+  }
+
+  static void REGAL_CALL glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(zoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(depth);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glTextureSubImage3D", " not available." );
+  }
+
+  static void REGAL_CALL glTransformFeedbackBufferBase(GLuint xfb, GLuint index, GLuint buffer)
+{
+    UNUSED_PARAMETER(xfb);
+    UNUSED_PARAMETER(index);
+    UNUSED_PARAMETER(buffer);
+    Warning( "glTransformFeedbackBufferBase", " not available." );
+  }
+
+  static void REGAL_CALL glTransformFeedbackBufferRange(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+    UNUSED_PARAMETER(xfb);
+    UNUSED_PARAMETER(index);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(size);
+    Warning( "glTransformFeedbackBufferRange", " not available." );
+  }
+
+  static GLboolean REGAL_CALL glUnmapNamedBuffer(GLuint buffer)
+{
+    UNUSED_PARAMETER(buffer);
+    Warning( "glUnmapNamedBuffer", " not available." );
+    return GL_FALSE;
+  }
+
+  static void REGAL_CALL glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint bindingindex)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(attribindex);
+    UNUSED_PARAMETER(bindingindex);
+    Warning( "glVertexArrayAttribBinding", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(attribindex);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(normalized);
+    UNUSED_PARAMETER(relativeoffset);
+    Warning( "glVertexArrayAttribFormat", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayAttribIFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(attribindex);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(relativeoffset);
+    Warning( "glVertexArrayAttribIFormat", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayAttribLFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(attribindex);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(relativeoffset);
+    Warning( "glVertexArrayAttribLFormat", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayBindingDivisor(GLuint vaobj, GLuint bindingindex, GLuint divisor)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(bindingindex);
+    UNUSED_PARAMETER(divisor);
+    Warning( "glVertexArrayBindingDivisor", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayElementBuffer(GLuint vaobj, GLuint buffer)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(buffer);
+    Warning( "glVertexArrayElementBuffer", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(bindingindex);
+    UNUSED_PARAMETER(buffer);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(stride);
+    Warning( "glVertexArrayVertexBuffer", " not available." );
+  }
+
+  static void REGAL_CALL glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+{
+    UNUSED_PARAMETER(vaobj);
+    UNUSED_PARAMETER(first);
+    UNUSED_PARAMETER(count);
+    UNUSED_PARAMETER(buffers);
+    UNUSED_PARAMETER(offsets);
+    UNUSED_PARAMETER(strides);
+    Warning( "glVertexArrayVertexBuffers", " not available." );
   }
 
 // GL_ARB_draw_buffers
@@ -6478,6 +7353,40 @@ namespace Missing
     UNUSED_PARAMETER(pname);
     UNUSED_PARAMETER(value);
     Warning( "glProgramParameteri", " not available." );
+  }
+
+// GL_ARB_get_texture_sub_image
+
+  static void REGAL_CALL glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(zoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(depth);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glGetCompressedTextureSubImage", " not available." );
+  }
+
+  static void REGAL_CALL glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+{
+    UNUSED_PARAMETER(texture);
+    UNUSED_PARAMETER(level);
+    UNUSED_PARAMETER(xoffset);
+    UNUSED_PARAMETER(yoffset);
+    UNUSED_PARAMETER(zoffset);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(depth);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(pixels);
+    Warning( "glGetTextureSubImage", " not available." );
   }
 
 // GL_ARB_gpu_shader_fp64
@@ -8960,6 +9869,17 @@ namespace Missing
     Warning( "glNamedStringARB", " not available." );
   }
 
+// GL_ARB_sparse_buffer
+
+  static void REGAL_CALL glBufferPageCommitmentARB(GLenum target, GLintptr offset, GLsizeiptr size, GLboolean commit)
+{
+    UNUSED_PARAMETER(target);
+    UNUSED_PARAMETER(offset);
+    UNUSED_PARAMETER(size);
+    UNUSED_PARAMETER(commit);
+    Warning( "glBufferPageCommitmentARB", " not available." );
+  }
+
 // GL_ARB_sparse_texture
 
   static void REGAL_CALL glTexPageCommitmentARB(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit)
@@ -9062,6 +9982,13 @@ namespace Missing
     UNUSED_PARAMETER(pname);
     UNUSED_PARAMETER(value);
     Warning( "glPatchParameteri", " not available." );
+  }
+
+// GL_ARB_texture_barrier
+
+  static void REGAL_CALL glTextureBarrier(void)
+{
+    Warning( "glTextureBarrier", " not available." );
   }
 
 // GL_ARB_texture_buffer_object
@@ -17018,6 +17945,13 @@ namespace Missing
     Warning( "glTexScissorINTEL", " not available." );
   }
 
+// GL_KHR_blend_equation_advanced
+
+  static void REGAL_CALL glBlendBarrierKHR(void)
+{
+    Warning( "glBlendBarrierKHR", " not available." );
+  }
+
 // GL_KHR_debug
 
   static void REGAL_CALL glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
@@ -17111,6 +18045,48 @@ namespace Missing
     UNUSED_PARAMETER(length);
     UNUSED_PARAMETER(message);
     Warning( "glPushDebugGroup", " not available." );
+  }
+
+// GL_KHR_robustness
+
+  static void REGAL_CALL glGetnUniformfv(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+    UNUSED_PARAMETER(program);
+    UNUSED_PARAMETER(location);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetnUniformfv", " not available." );
+  }
+
+  static void REGAL_CALL glGetnUniformiv(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+    UNUSED_PARAMETER(program);
+    UNUSED_PARAMETER(location);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetnUniformiv", " not available." );
+  }
+
+  static void REGAL_CALL glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *params)
+{
+    UNUSED_PARAMETER(program);
+    UNUSED_PARAMETER(location);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(params);
+    Warning( "glGetnUniformuiv", " not available." );
+  }
+
+  static void REGAL_CALL glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+    UNUSED_PARAMETER(x);
+    UNUSED_PARAMETER(y);
+    UNUSED_PARAMETER(width);
+    UNUSED_PARAMETER(height);
+    UNUSED_PARAMETER(format);
+    UNUSED_PARAMETER(type);
+    UNUSED_PARAMETER(bufSize);
+    UNUSED_PARAMETER(data);
+    Warning( "glReadnPixels", " not available." );
   }
 
 // GL_KTX_buffer_region
@@ -23783,6 +24759,16 @@ namespace Missing
     return 0;
   }
 
+// WGL_NV_delay_before_swap
+
+  static BOOL REGAL_CALL wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+{
+    UNUSED_PARAMETER(hDC);
+    UNUSED_PARAMETER(seconds);
+    Warning( "wglDelayBeforeSwapNV", " not available." );
+    return 0;
+  }
+
 // WGL_NV_gpu_affinity
 
   static HDC REGAL_CALL wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -24828,6 +25814,44 @@ namespace Missing
     return 0;
   }
 
+// GLX_MESA_query_renderer
+
+  static Bool REGAL_CALL glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+{
+    UNUSED_PARAMETER(attribute);
+    UNUSED_PARAMETER(value);
+    Warning( "glXQueryCurrentRendererIntegerMESA", " not available." );
+    return (Bool) 0;
+  }
+
+  static const char *REGAL_CALL glXQueryCurrentRendererStringMESA(int attribute)
+{
+    UNUSED_PARAMETER(attribute);
+    Warning( "glXQueryCurrentRendererStringMESA", " not available." );
+    return NULL;
+  }
+
+  static Bool REGAL_CALL glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+{
+    UNUSED_PARAMETER(dpy);
+    UNUSED_PARAMETER(screen);
+    UNUSED_PARAMETER(renderer);
+    UNUSED_PARAMETER(attribute);
+    UNUSED_PARAMETER(value);
+    Warning( "glXQueryRendererIntegerMESA", " not available." );
+    return (Bool) 0;
+  }
+
+  static const char *REGAL_CALL glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+{
+    UNUSED_PARAMETER(dpy);
+    UNUSED_PARAMETER(screen);
+    UNUSED_PARAMETER(renderer);
+    UNUSED_PARAMETER(attribute);
+    Warning( "glXQueryRendererStringMESA", " not available." );
+    return NULL;
+  }
+
 // GLX_MESA_release_buffers
 
   static Bool REGAL_CALL glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -24862,6 +25886,34 @@ namespace Missing
     return 0;
   }
 
+// GLX_NV_copy_buffer
+
+  static void REGAL_CALL glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    UNUSED_PARAMETER(dpy);
+    UNUSED_PARAMETER(readCtx);
+    UNUSED_PARAMETER(writeCtx);
+    UNUSED_PARAMETER(readTarget);
+    UNUSED_PARAMETER(writeTarget);
+    UNUSED_PARAMETER(readOffset);
+    UNUSED_PARAMETER(writeOffset);
+    UNUSED_PARAMETER(size);
+    Warning( "glXCopyBufferSubDataNV", " not available." );
+  }
+
+  static void REGAL_CALL glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    UNUSED_PARAMETER(dpy);
+    UNUSED_PARAMETER(readCtx);
+    UNUSED_PARAMETER(writeCtx);
+    UNUSED_PARAMETER(readBuffer);
+    UNUSED_PARAMETER(writeBuffer);
+    UNUSED_PARAMETER(readOffset);
+    UNUSED_PARAMETER(writeOffset);
+    UNUSED_PARAMETER(size);
+    Warning( "glXNamedCopyBufferSubDataNV", " not available." );
+  }
+
 // GLX_NV_copy_image
 
   static void REGAL_CALL glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -24885,6 +25937,17 @@ namespace Missing
     UNUSED_PARAMETER(height);
     UNUSED_PARAMETER(depth);
     Warning( "glXCopyImageSubDataNV", " not available." );
+  }
+
+// GLX_NV_delay_before_swap
+
+  static Bool REGAL_CALL glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+{
+    UNUSED_PARAMETER(dpy);
+    UNUSED_PARAMETER(drawable);
+    UNUSED_PARAMETER(seconds);
+    Warning( "glXDelayBeforeSwapNV", " not available." );
+    return (Bool) 0;
   }
 
 // GLX_NV_present_video
@@ -27283,6 +28346,10 @@ namespace Missing
     tbl.glReleaseShaderCompiler = glReleaseShaderCompiler;
     tbl.glShaderBinary = glShaderBinary;
 
+  // GL_ARB_ES3_1_compatibility
+
+    tbl.glMemoryBarrierByRegion = glMemoryBarrierByRegion;
+
   // GL_ARB_base_instance
 
     tbl.glDrawArraysInstancedBaseInstance = glDrawArraysInstancedBaseInstance;
@@ -27334,6 +28401,10 @@ namespace Missing
     tbl.glClearTexImage = glClearTexImage;
     tbl.glClearTexSubImage = glClearTexSubImage;
 
+  // GL_ARB_clip_control
+
+    tbl.glClipControl = glClipControl;
+
   // GL_ARB_color_buffer_float
 
     tbl.glClampColorARB = glClampColorARB;
@@ -27361,6 +28432,102 @@ namespace Missing
     tbl.glDebugMessageControlARB = glDebugMessageControlARB;
     tbl.glDebugMessageInsertARB = glDebugMessageInsertARB;
     tbl.glGetDebugMessageLogARB = glGetDebugMessageLogARB;
+
+  // GL_ARB_direct_state_access
+
+    tbl.glBindTextureUnit = glBindTextureUnit;
+    tbl.glBlitNamedFramebuffer = glBlitNamedFramebuffer;
+    tbl.glCheckNamedFramebufferStatus = glCheckNamedFramebufferStatus;
+    tbl.glClearNamedBufferData = glClearNamedBufferData;
+    tbl.glClearNamedBufferSubData = glClearNamedBufferSubData;
+    tbl.glClearNamedFramebufferfi = glClearNamedFramebufferfi;
+    tbl.glClearNamedFramebufferfv = glClearNamedFramebufferfv;
+    tbl.glClearNamedFramebufferiv = glClearNamedFramebufferiv;
+    tbl.glClearNamedFramebufferuiv = glClearNamedFramebufferuiv;
+    tbl.glCompressedTextureSubImage1D = glCompressedTextureSubImage1D;
+    tbl.glCompressedTextureSubImage2D = glCompressedTextureSubImage2D;
+    tbl.glCompressedTextureSubImage3D = glCompressedTextureSubImage3D;
+    tbl.glCopyNamedBufferSubData = glCopyNamedBufferSubData;
+    tbl.glCopyTextureSubImage1D = glCopyTextureSubImage1D;
+    tbl.glCopyTextureSubImage2D = glCopyTextureSubImage2D;
+    tbl.glCopyTextureSubImage3D = glCopyTextureSubImage3D;
+    tbl.glCreateBuffers = glCreateBuffers;
+    tbl.glCreateFramebuffers = glCreateFramebuffers;
+    tbl.glCreateProgramPipelines = glCreateProgramPipelines;
+    tbl.glCreateQueries = glCreateQueries;
+    tbl.glCreateRenderbuffers = glCreateRenderbuffers;
+    tbl.glCreateSamplers = glCreateSamplers;
+    tbl.glCreateTextures = glCreateTextures;
+    tbl.glCreateTransformFeedbacks = glCreateTransformFeedbacks;
+    tbl.glCreateVertexArrays = glCreateVertexArrays;
+    tbl.glDisableVertexArrayAttrib = glDisableVertexArrayAttrib;
+    tbl.glEnableVertexArrayAttrib = glEnableVertexArrayAttrib;
+    tbl.glFlushMappedNamedBufferRange = glFlushMappedNamedBufferRange;
+    tbl.glGenerateTextureMipmap = glGenerateTextureMipmap;
+    tbl.glGetCompressedTextureImage = glGetCompressedTextureImage;
+    tbl.glGetNamedBufferParameteri64v = glGetNamedBufferParameteri64v;
+    tbl.glGetNamedBufferParameteriv = glGetNamedBufferParameteriv;
+    tbl.glGetNamedBufferPointerv = glGetNamedBufferPointerv;
+    tbl.glGetNamedBufferSubData = glGetNamedBufferSubData;
+    tbl.glGetNamedFramebufferAttachmentParameteriv = glGetNamedFramebufferAttachmentParameteriv;
+    tbl.glGetNamedFramebufferParameteriv = glGetNamedFramebufferParameteriv;
+    tbl.glGetNamedRenderbufferParameteriv = glGetNamedRenderbufferParameteriv;
+    tbl.glGetTextureImage = glGetTextureImage;
+    tbl.glGetTextureLevelParameterfv = glGetTextureLevelParameterfv;
+    tbl.glGetTextureLevelParameteriv = glGetTextureLevelParameteriv;
+    tbl.glGetTextureParameterIiv = glGetTextureParameterIiv;
+    tbl.glGetTextureParameterIuiv = glGetTextureParameterIuiv;
+    tbl.glGetTextureParameterfv = glGetTextureParameterfv;
+    tbl.glGetTextureParameteriv = glGetTextureParameteriv;
+    tbl.glGetTransformFeedbacki64_v = glGetTransformFeedbacki64_v;
+    tbl.glGetTransformFeedbacki_v = glGetTransformFeedbacki_v;
+    tbl.glGetTransformFeedbackiv = glGetTransformFeedbackiv;
+    tbl.glGetVertexArrayIndexed64iv = glGetVertexArrayIndexed64iv;
+    tbl.glGetVertexArrayIndexediv = glGetVertexArrayIndexediv;
+    tbl.glGetVertexArrayiv = glGetVertexArrayiv;
+    tbl.glInvalidateNamedFramebufferData = glInvalidateNamedFramebufferData;
+    tbl.glInvalidateNamedFramebufferSubData = glInvalidateNamedFramebufferSubData;
+    tbl.glMapNamedBuffer = glMapNamedBuffer;
+    tbl.glMapNamedBufferRange = glMapNamedBufferRange;
+    tbl.glNamedBufferData = glNamedBufferData;
+    tbl.glNamedBufferStorage = glNamedBufferStorage;
+    tbl.glNamedBufferSubData = glNamedBufferSubData;
+    tbl.glNamedFramebufferDrawBuffer = glNamedFramebufferDrawBuffer;
+    tbl.glNamedFramebufferDrawBuffers = glNamedFramebufferDrawBuffers;
+    tbl.glNamedFramebufferParameteri = glNamedFramebufferParameteri;
+    tbl.glNamedFramebufferReadBuffer = glNamedFramebufferReadBuffer;
+    tbl.glNamedFramebufferRenderbuffer = glNamedFramebufferRenderbuffer;
+    tbl.glNamedFramebufferTexture = glNamedFramebufferTexture;
+    tbl.glNamedFramebufferTextureLayer = glNamedFramebufferTextureLayer;
+    tbl.glNamedRenderbufferStorage = glNamedRenderbufferStorage;
+    tbl.glNamedRenderbufferStorageMultisample = glNamedRenderbufferStorageMultisample;
+    tbl.glTextureBuffer = glTextureBuffer;
+    tbl.glTextureBufferRange = glTextureBufferRange;
+    tbl.glTextureParameterIiv = glTextureParameterIiv;
+    tbl.glTextureParameterIuiv = glTextureParameterIuiv;
+    tbl.glTextureParameterf = glTextureParameterf;
+    tbl.glTextureParameterfv = glTextureParameterfv;
+    tbl.glTextureParameteri = glTextureParameteri;
+    tbl.glTextureParameteriv = glTextureParameteriv;
+    tbl.glTextureStorage1D = glTextureStorage1D;
+    tbl.glTextureStorage2D = glTextureStorage2D;
+    tbl.glTextureStorage2DMultisample = glTextureStorage2DMultisample;
+    tbl.glTextureStorage3D = glTextureStorage3D;
+    tbl.glTextureStorage3DMultisample = glTextureStorage3DMultisample;
+    tbl.glTextureSubImage1D = glTextureSubImage1D;
+    tbl.glTextureSubImage2D = glTextureSubImage2D;
+    tbl.glTextureSubImage3D = glTextureSubImage3D;
+    tbl.glTransformFeedbackBufferBase = glTransformFeedbackBufferBase;
+    tbl.glTransformFeedbackBufferRange = glTransformFeedbackBufferRange;
+    tbl.glUnmapNamedBuffer = glUnmapNamedBuffer;
+    tbl.glVertexArrayAttribBinding = glVertexArrayAttribBinding;
+    tbl.glVertexArrayAttribFormat = glVertexArrayAttribFormat;
+    tbl.glVertexArrayAttribIFormat = glVertexArrayAttribIFormat;
+    tbl.glVertexArrayAttribLFormat = glVertexArrayAttribLFormat;
+    tbl.glVertexArrayBindingDivisor = glVertexArrayBindingDivisor;
+    tbl.glVertexArrayElementBuffer = glVertexArrayElementBuffer;
+    tbl.glVertexArrayVertexBuffer = glVertexArrayVertexBuffer;
+    tbl.glVertexArrayVertexBuffers = glVertexArrayVertexBuffers;
 
   // GL_ARB_draw_buffers
 
@@ -27432,6 +28599,11 @@ namespace Missing
     tbl.glGetProgramBinary = glGetProgramBinary;
     tbl.glProgramBinary = glProgramBinary;
     tbl.glProgramParameteri = glProgramParameteri;
+
+  // GL_ARB_get_texture_sub_image
+
+    tbl.glGetCompressedTextureSubImage = glGetCompressedTextureSubImage;
+    tbl.glGetTextureSubImage = glGetTextureSubImage;
 
   // GL_ARB_gpu_shader_fp64
 
@@ -27797,6 +28969,10 @@ namespace Missing
     tbl.glIsNamedStringARB = glIsNamedStringARB;
     tbl.glNamedStringARB = glNamedStringARB;
 
+  // GL_ARB_sparse_buffer
+
+    tbl.glBufferPageCommitmentARB = glBufferPageCommitmentARB;
+
   // GL_ARB_sparse_texture
 
     tbl.glTexPageCommitmentARB = glTexPageCommitmentARB;
@@ -27816,6 +28992,10 @@ namespace Missing
 
     tbl.glPatchParameterfv = glPatchParameterfv;
     tbl.glPatchParameteri = glPatchParameteri;
+
+  // GL_ARB_texture_barrier
+
+    tbl.glTextureBarrier = glTextureBarrier;
 
   // GL_ARB_texture_buffer_object
 
@@ -29044,6 +30224,10 @@ namespace Missing
     tbl.glTexScissorFuncINTEL = glTexScissorFuncINTEL;
     tbl.glTexScissorINTEL = glTexScissorINTEL;
 
+  // GL_KHR_blend_equation_advanced
+
+    tbl.glBlendBarrierKHR = glBlendBarrierKHR;
+
   // GL_KHR_debug
 
     tbl.glDebugMessageCallback = glDebugMessageCallback;
@@ -29056,6 +30240,13 @@ namespace Missing
     tbl.glObjectPtrLabel = glObjectPtrLabel;
     tbl.glPopDebugGroup = glPopDebugGroup;
     tbl.glPushDebugGroup = glPushDebugGroup;
+
+  // GL_KHR_robustness
+
+    tbl.glGetnUniformfv = glGetnUniformfv;
+    tbl.glGetnUniformiv = glGetnUniformiv;
+    tbl.glGetnUniformuiv = glGetnUniformuiv;
+    tbl.glReadnPixels = glReadnPixels;
 
   // GL_KTX_buffer_region
 
@@ -30196,6 +31387,10 @@ void Init(DispatchTableGlobal &tbl)
 
     tbl.wglCopyImageSubDataNV = wglCopyImageSubDataNV;
 
+  // WGL_NV_delay_before_swap
+
+    tbl.wglDelayBeforeSwapNV = wglDelayBeforeSwapNV;
+
   // WGL_NV_gpu_affinity
 
     tbl.wglCreateAffinityDCNV = wglCreateAffinityDCNV;
@@ -30384,6 +31579,13 @@ void Init(DispatchTableGlobal &tbl)
 
     tbl.glXCreateGLXPixmapMESA = glXCreateGLXPixmapMESA;
 
+  // GLX_MESA_query_renderer
+
+    tbl.glXQueryCurrentRendererIntegerMESA = glXQueryCurrentRendererIntegerMESA;
+    tbl.glXQueryCurrentRendererStringMESA = glXQueryCurrentRendererStringMESA;
+    tbl.glXQueryRendererIntegerMESA = glXQueryRendererIntegerMESA;
+    tbl.glXQueryRendererStringMESA = glXQueryRendererStringMESA;
+
   // GLX_MESA_release_buffers
 
     tbl.glXReleaseBuffersMESA = glXReleaseBuffersMESA;
@@ -30397,9 +31599,18 @@ void Init(DispatchTableGlobal &tbl)
     tbl.glXGetSwapIntervalMESA = glXGetSwapIntervalMESA;
     tbl.glXSwapIntervalMESA = glXSwapIntervalMESA;
 
+  // GLX_NV_copy_buffer
+
+    tbl.glXCopyBufferSubDataNV = glXCopyBufferSubDataNV;
+    tbl.glXNamedCopyBufferSubDataNV = glXNamedCopyBufferSubDataNV;
+
   // GLX_NV_copy_image
 
     tbl.glXCopyImageSubDataNV = glXCopyImageSubDataNV;
+
+  // GLX_NV_delay_before_swap
+
+    tbl.glXDelayBeforeSwapNV = glXDelayBeforeSwapNV;
 
   // GLX_NV_present_video
 

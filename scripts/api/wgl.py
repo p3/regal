@@ -2384,3 +2384,303 @@ wglUseFontOutlinesW.trace = True
 wglUseFontOutlinesW.play = True
 wgl.add(wglUseFontOutlinesW)
 
+########### OpenGL 4.5
+
+# WGL_ARB_robustness_application_isolation
+
+WGL_CONTEXT_RESET_ISOLATION_BIT_ARB = Enumerant('WGL_CONTEXT_RESET_ISOLATION_BIT_ARB', 0x0008, 'WGL_ARB_robustness_application_isolation')
+
+defines.add(WGL_CONTEXT_RESET_ISOLATION_BIT_ARB)
+
+# WGL_NV_delay_before_swap
+
+wglDelayBeforeSwapNV = Function('wglDelayBeforeSwapNV')
+wglDelayBeforeSwapNV.ret = Return('BOOL')
+wglDelayBeforeSwapNV.add( Input( 'hDC','HDC' ))
+wglDelayBeforeSwapNV.add( Input( 'seconds','GLfloat' ))
+wglDelayBeforeSwapNV.category = 'WGL_NV_delay_before_swap'
+wglDelayBeforeSwapNV.trace = True
+wglDelayBeforeSwapNV.play = True
+wgl.add(wglDelayBeforeSwapNV)
+
+WGL_3DFX_multisample = Extension('WGL_3DFX_multisample')
+WGL_3DFX_multisample.url = 'http://www.opengl.org/registry/specs/3DFX/3dfx_multisample.txt'
+WGL_3DFX_multisample.enumerants = ['WGL_SAMPLES_3DFX','WGL_SAMPLE_BUFFERS_3DFX']
+wgl.add(WGL_3DFX_multisample)
+
+WGL_3DL_stereo_control = Extension('WGL_3DL_stereo_control')
+WGL_3DL_stereo_control.url = 'http://www.opengl.org/registry/specs/3DL/stereo_control.txt'
+WGL_3DL_stereo_control.enumerants = ['WGL_STEREO_EMITTER_DISABLE_3DL','WGL_STEREO_EMITTER_ENABLE_3DL','WGL_STEREO_POLARITY_INVERT_3DL','WGL_STEREO_POLARITY_NORMAL_3DL']
+WGL_3DL_stereo_control.functions = ['wglSetStereoEmitterState3DL']
+wgl.add(WGL_3DL_stereo_control)
+
+WGL_AMD_gpu_association = Extension('WGL_AMD_gpu_association')
+WGL_AMD_gpu_association.url = 'http://www.opengl.org/registry/specs/AMD/wgl_gpu_association.txt'
+WGL_AMD_gpu_association.enumerants = ['WGL_GPU_CLOCK_AMD','WGL_GPU_FASTEST_TARGET_GPUS_AMD','WGL_GPU_NUM_PIPES_AMD','WGL_GPU_NUM_RB_AMD','WGL_GPU_NUM_SIMD_AMD','WGL_GPU_NUM_SPI_AMD','WGL_GPU_OPENGL_VERSION_STRING_AMD','WGL_GPU_RAM_AMD','WGL_GPU_RENDERER_STRING_AMD','WGL_GPU_VENDOR_AMD']
+WGL_AMD_gpu_association.functions = ['wglBlitContextFramebufferAMD','wglCreateAssociatedContextAMD','wglCreateAssociatedContextAttribsAMD','wglDeleteAssociatedContextAMD','wglGetContextGPUIDAMD','wglGetCurrentAssociatedContextAMD','wglGetGPUIDsAMD','wglGetGPUInfoAMD','wglMakeAssociatedContextCurrentAMD']
+wgl.add(WGL_AMD_gpu_association)
+
+WGL_ARB_buffer_region = Extension('WGL_ARB_buffer_region')
+WGL_ARB_buffer_region.url = 'http://www.opengl.org/registry/specs/ARB/wgl_buffer_region.txt'
+WGL_ARB_buffer_region.enumerants = ['WGL_BACK_COLOR_BUFFER_BIT_ARB','WGL_DEPTH_BUFFER_BIT_ARB','WGL_FRONT_COLOR_BUFFER_BIT_ARB','WGL_STENCIL_BUFFER_BIT_ARB']
+WGL_ARB_buffer_region.functions = ['wglCreateBufferRegionARB','wglDeleteBufferRegionARB','wglRestoreBufferRegionARB','wglSaveBufferRegionARB']
+wgl.add(WGL_ARB_buffer_region)
+
+WGL_ARB_create_context = Extension('WGL_ARB_create_context')
+WGL_ARB_create_context.url = 'http://www.opengl.org/registry/specs/ARB/wgl_create_context.txt'
+WGL_ARB_create_context.enumerants = ['ERROR_INVALID_PROFILE_ARB','ERROR_INVALID_VERSION_ARB','WGL_CONTEXT_DEBUG_BIT_ARB','WGL_CONTEXT_FLAGS_ARB','WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB','WGL_CONTEXT_LAYER_PLANE_ARB','WGL_CONTEXT_MAJOR_VERSION_ARB','WGL_CONTEXT_MINOR_VERSION_ARB']
+WGL_ARB_create_context.functions = ['wglCreateContextAttribsARB']
+wgl.add(WGL_ARB_create_context)
+
+WGL_ARB_create_context_profile = Extension('WGL_ARB_create_context_profile')
+WGL_ARB_create_context_profile.url = 'http://www.opengl.org/registry/specs/ARB/wgl_create_context.txt'
+WGL_ARB_create_context_profile.enumerants = ['WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB','WGL_CONTEXT_CORE_PROFILE_BIT_ARB','WGL_CONTEXT_PROFILE_MASK_ARB']
+wgl.add(WGL_ARB_create_context_profile)
+
+WGL_ARB_create_context_robustness = Extension('WGL_ARB_create_context_robustness')
+WGL_ARB_create_context_robustness.url = 'http://www.opengl.org/registry/specs/ARB/wgl_create_context_robustness.txt'
+WGL_ARB_create_context_robustness.enumerants = ['WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB','WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB','WGL_LOSE_CONTEXT_ON_RESET_ARB','WGL_NO_RESET_NOTIFICATION_ARB']
+wgl.add(WGL_ARB_create_context_robustness)
+
+WGL_ARB_extensions_string = Extension('WGL_ARB_extensions_string')
+WGL_ARB_extensions_string.url = 'http://www.opengl.org/registry/specs/ARB/wgl_extensions_string.txt'
+WGL_ARB_extensions_string.functions = ['char*']
+wgl.add(WGL_ARB_extensions_string)
+
+WGL_ARB_framebuffer_sRGB = Extension('WGL_ARB_framebuffer_sRGB')
+WGL_ARB_framebuffer_sRGB.url = 'http://www.opengl.org/registry/specs/ARB/framebuffer_sRGB.txt'
+WGL_ARB_framebuffer_sRGB.enumerants = ['WGL_FRAMEBUFFER_SRGB_CAPABLE_ARB']
+wgl.add(WGL_ARB_framebuffer_sRGB)
+
+WGL_ARB_make_current_read = Extension('WGL_ARB_make_current_read')
+WGL_ARB_make_current_read.url = 'http://www.opengl.org/registry/specs/ARB/wgl_make_current_read.txt'
+WGL_ARB_make_current_read.enumerants = ['ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB','ERROR_INVALID_PIXEL_TYPE_ARB']
+WGL_ARB_make_current_read.functions = ['wglGetCurrentReadDCARB','wglMakeContextCurrentARB']
+wgl.add(WGL_ARB_make_current_read)
+
+WGL_ARB_multisample = Extension('WGL_ARB_multisample')
+WGL_ARB_multisample.url = 'http://www.opengl.org/registry/specs/ARB/multisample.txt'
+WGL_ARB_multisample.enumerants = ['WGL_SAMPLES_ARB','WGL_SAMPLE_BUFFERS_ARB']
+wgl.add(WGL_ARB_multisample)
+
+WGL_ARB_pbuffer = Extension('WGL_ARB_pbuffer')
+WGL_ARB_pbuffer.url = 'http://www.opengl.org/registry/specs/ARB/wgl_pbuffer.txt'
+WGL_ARB_pbuffer.enumerants = ['WGL_DRAW_TO_PBUFFER_ARB','WGL_MAX_PBUFFER_HEIGHT_ARB','WGL_MAX_PBUFFER_PIXELS_ARB','WGL_MAX_PBUFFER_WIDTH_ARB','WGL_PBUFFER_HEIGHT_ARB','WGL_PBUFFER_LARGEST_ARB','WGL_PBUFFER_LOST_ARB','WGL_PBUFFER_WIDTH_ARB']
+WGL_ARB_pbuffer.functions = ['wglCreatePbufferARB','wglDestroyPbufferARB','wglGetPbufferDCARB','wglQueryPbufferARB','wglReleasePbufferDCARB']
+wgl.add(WGL_ARB_pbuffer)
+
+WGL_ARB_pixel_format = Extension('WGL_ARB_pixel_format')
+WGL_ARB_pixel_format.url = 'http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt'
+WGL_ARB_pixel_format.enumerants = ['WGL_ACCELERATION_ARB','WGL_ACCUM_ALPHA_BITS_ARB','WGL_ACCUM_BITS_ARB','WGL_ACCUM_BLUE_BITS_ARB','WGL_ACCUM_GREEN_BITS_ARB','WGL_ACCUM_RED_BITS_ARB','WGL_ALPHA_BITS_ARB','WGL_ALPHA_SHIFT_ARB','WGL_AUX_BUFFERS_ARB','WGL_BLUE_BITS_ARB','WGL_BLUE_SHIFT_ARB','WGL_COLOR_BITS_ARB','WGL_DEPTH_BITS_ARB','WGL_DOUBLE_BUFFER_ARB','WGL_DRAW_TO_BITMAP_ARB','WGL_DRAW_TO_WINDOW_ARB','WGL_FULL_ACCELERATION_ARB','WGL_GENERIC_ACCELERATION_ARB','WGL_GREEN_BITS_ARB','WGL_GREEN_SHIFT_ARB','WGL_NEED_PALETTE_ARB','WGL_NEED_SYSTEM_PALETTE_ARB','WGL_NO_ACCELERATION_ARB','WGL_NUMBER_OVERLAYS_ARB','WGL_NUMBER_PIXEL_FORMATS_ARB','WGL_NUMBER_UNDERLAYS_ARB','WGL_PIXEL_TYPE_ARB','WGL_RED_BITS_ARB','WGL_RED_SHIFT_ARB','WGL_SHARE_ACCUM_ARB','WGL_SHARE_DEPTH_ARB','WGL_SHARE_STENCIL_ARB','WGL_STENCIL_BITS_ARB','WGL_STEREO_ARB','WGL_SUPPORT_GDI_ARB','WGL_SUPPORT_OPENGL_ARB','WGL_SWAP_COPY_ARB','WGL_SWAP_EXCHANGE_ARB','WGL_SWAP_LAYER_BUFFERS_ARB','WGL_SWAP_METHOD_ARB','WGL_SWAP_UNDEFINED_ARB','WGL_TRANSPARENT_ALPHA_VALUE_ARB','WGL_TRANSPARENT_ARB','WGL_TRANSPARENT_BLUE_VALUE_ARB','WGL_TRANSPARENT_GREEN_VALUE_ARB','WGL_TRANSPARENT_INDEX_VALUE_ARB','WGL_TRANSPARENT_RED_VALUE_ARB','WGL_TYPE_COLORINDEX_ARB','WGL_TYPE_RGBA_ARB']
+WGL_ARB_pixel_format.functions = ['wglChoosePixelFormatARB','wglGetPixelFormatAttribfvARB','wglGetPixelFormatAttribivARB']
+wgl.add(WGL_ARB_pixel_format)
+
+WGL_ARB_pixel_format_float = Extension('WGL_ARB_pixel_format_float')
+WGL_ARB_pixel_format_float.url = 'http://www.opengl.org/registry/specs/ARB/color_buffer_float.txt'
+WGL_ARB_pixel_format_float.enumerants = ['WGL_TYPE_RGBA_FLOAT_ARB']
+wgl.add(WGL_ARB_pixel_format_float)
+
+WGL_ARB_render_texture = Extension('WGL_ARB_render_texture')
+WGL_ARB_render_texture.url = 'http://www.opengl.org/registry/specs/ARB/wgl_render_texture.txt'
+WGL_ARB_render_texture.enumerants = ['WGL_AUX0_ARB','WGL_AUX1_ARB','WGL_AUX2_ARB','WGL_AUX3_ARB','WGL_AUX4_ARB','WGL_AUX5_ARB','WGL_AUX6_ARB','WGL_AUX7_ARB','WGL_AUX8_ARB','WGL_AUX9_ARB','WGL_BACK_LEFT_ARB','WGL_BACK_RIGHT_ARB','WGL_BIND_TO_TEXTURE_RGBA_ARB','WGL_BIND_TO_TEXTURE_RGB_ARB','WGL_CUBE_MAP_FACE_ARB','WGL_FRONT_LEFT_ARB','WGL_FRONT_RIGHT_ARB','WGL_MIPMAP_LEVEL_ARB','WGL_MIPMAP_TEXTURE_ARB','WGL_NO_TEXTURE_ARB','WGL_TEXTURE_1D_ARB','WGL_TEXTURE_2D_ARB','WGL_TEXTURE_CUBE_MAP_ARB','WGL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB','WGL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB','WGL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB','WGL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB','WGL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB','WGL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB','WGL_TEXTURE_FORMAT_ARB','WGL_TEXTURE_RGBA_ARB','WGL_TEXTURE_RGB_ARB','WGL_TEXTURE_TARGET_ARB']
+WGL_ARB_render_texture.functions = ['wglBindTexImageARB','wglReleaseTexImageARB','wglSetPbufferAttribARB']
+wgl.add(WGL_ARB_render_texture)
+
+WGL_ARB_robustness_application_isolation = Extension('WGL_ARB_robustness_application_isolation')
+WGL_ARB_robustness_application_isolation.url = 'http://www.opengl.org/registry/specs/ARB/wgl_robustness_isolation.txt'
+WGL_ARB_robustness_application_isolation.enumerants = ['WGL_CONTEXT_RESET_ISOLATION_BIT_ARB']
+wgl.add(WGL_ARB_robustness_application_isolation)
+
+WGL_ARB_robustness_share_group_isolation = Extension('WGL_ARB_robustness_share_group_isolation')
+WGL_ARB_robustness_share_group_isolation.url = 'http://www.opengl.org/registry/specs/ARB/wgl_robustness_isolation.txt'
+WGL_ARB_robustness_share_group_isolation.enumerants = ['WGL_CONTEXT_RESET_ISOLATION_BIT_ARB']
+wgl.add(WGL_ARB_robustness_share_group_isolation)
+
+WGL_ATI_pixel_format_float = Extension('WGL_ATI_pixel_format_float')
+WGL_ATI_pixel_format_float.url = 'http://www.opengl.org/registry/specs/ATI/pixel_format_float.txt'
+WGL_ATI_pixel_format_float.enumerants = ['GL_COLOR_CLEAR_UNCLAMPED_VALUE_ATI','GL_RGBA_FLOAT_MODE_ATI','WGL_TYPE_RGBA_FLOAT_ATI']
+wgl.add(WGL_ATI_pixel_format_float)
+
+WGL_ATI_render_texture_rectangle = Extension('WGL_ATI_render_texture_rectangle')
+WGL_ATI_render_texture_rectangle.enumerants = ['WGL_TEXTURE_RECTANGLE_ATI']
+wgl.add(WGL_ATI_render_texture_rectangle)
+
+WGL_EXT_create_context_es2_profile = Extension('WGL_EXT_create_context_es2_profile')
+WGL_EXT_create_context_es2_profile.url = 'http://www.opengl.org/registry/specs/EXT/wgl_create_context_es2_profile.txt'
+WGL_EXT_create_context_es2_profile.enumerants = ['WGL_CONTEXT_ES2_PROFILE_BIT_EXT']
+wgl.add(WGL_EXT_create_context_es2_profile)
+
+WGL_EXT_create_context_es_profile = Extension('WGL_EXT_create_context_es_profile')
+WGL_EXT_create_context_es_profile.url = 'http://www.opengl.org/registry/specs/EXT/wgl_create_context_es_profile.txt'
+WGL_EXT_create_context_es_profile.enumerants = ['WGL_CONTEXT_ES_PROFILE_BIT_EXT']
+wgl.add(WGL_EXT_create_context_es_profile)
+
+WGL_EXT_depth_float = Extension('WGL_EXT_depth_float')
+WGL_EXT_depth_float.url = 'http://www.opengl.org/registry/specs/EXT/wgl_depth_float.txt'
+WGL_EXT_depth_float.enumerants = ['WGL_DEPTH_FLOAT_EXT']
+wgl.add(WGL_EXT_depth_float)
+
+WGL_EXT_display_color_table = Extension('WGL_EXT_display_color_table')
+WGL_EXT_display_color_table.url = 'http://www.opengl.org/registry/specs/EXT/wgl_display_color_table.txt'
+WGL_EXT_display_color_table.functions = ['wglBindDisplayColorTableEXT','wglCreateDisplayColorTableEXT','wglDestroyDisplayColorTableEXT','wglLoadDisplayColorTableEXT']
+wgl.add(WGL_EXT_display_color_table)
+
+WGL_EXT_extensions_string = Extension('WGL_EXT_extensions_string')
+WGL_EXT_extensions_string.url = 'http://www.opengl.org/registry/specs/EXT/wgl_extensions_string.txt'
+WGL_EXT_extensions_string.functions = ['char*']
+wgl.add(WGL_EXT_extensions_string)
+
+WGL_EXT_framebuffer_sRGB = Extension('WGL_EXT_framebuffer_sRGB')
+WGL_EXT_framebuffer_sRGB.url = 'http://developer.download.nvidia.com/opengl/specs/GL_EXT_framebuffer_sRGB.txt'
+WGL_EXT_framebuffer_sRGB.enumerants = ['WGL_FRAMEBUFFER_SRGB_CAPABLE_EXT']
+wgl.add(WGL_EXT_framebuffer_sRGB)
+
+WGL_EXT_make_current_read = Extension('WGL_EXT_make_current_read')
+WGL_EXT_make_current_read.url = 'http://www.opengl.org/registry/specs/EXT/wgl_make_current_read.txt'
+WGL_EXT_make_current_read.enumerants = ['ERROR_INVALID_PIXEL_TYPE_EXT']
+WGL_EXT_make_current_read.functions = ['wglGetCurrentReadDCEXT','wglMakeContextCurrentEXT']
+wgl.add(WGL_EXT_make_current_read)
+
+WGL_EXT_multisample = Extension('WGL_EXT_multisample')
+WGL_EXT_multisample.url = 'http://www.opengl.org/registry/specs/EXT/wgl_multisample.txt'
+WGL_EXT_multisample.enumerants = ['WGL_SAMPLES_EXT','WGL_SAMPLE_BUFFERS_EXT']
+wgl.add(WGL_EXT_multisample)
+
+WGL_EXT_pbuffer = Extension('WGL_EXT_pbuffer')
+WGL_EXT_pbuffer.url = 'http://www.opengl.org/registry/specs/EXT/wgl_pbuffer.txt'
+WGL_EXT_pbuffer.enumerants = ['WGL_DRAW_TO_PBUFFER_EXT','WGL_MAX_PBUFFER_HEIGHT_EXT','WGL_MAX_PBUFFER_PIXELS_EXT','WGL_MAX_PBUFFER_WIDTH_EXT','WGL_OPTIMAL_PBUFFER_HEIGHT_EXT','WGL_OPTIMAL_PBUFFER_WIDTH_EXT','WGL_PBUFFER_HEIGHT_EXT','WGL_PBUFFER_LARGEST_EXT','WGL_PBUFFER_WIDTH_EXT']
+WGL_EXT_pbuffer.functions = ['wglCreatePbufferEXT','wglDestroyPbufferEXT','wglGetPbufferDCEXT','wglQueryPbufferEXT','wglReleasePbufferDCEXT']
+wgl.add(WGL_EXT_pbuffer)
+
+WGL_EXT_pixel_format = Extension('WGL_EXT_pixel_format')
+WGL_EXT_pixel_format.url = 'http://www.opengl.org/registry/specs/EXT/wgl_pixel_format.txt'
+WGL_EXT_pixel_format.enumerants = ['WGL_ACCELERATION_EXT','WGL_ACCUM_ALPHA_BITS_EXT','WGL_ACCUM_BITS_EXT','WGL_ACCUM_BLUE_BITS_EXT','WGL_ACCUM_GREEN_BITS_EXT','WGL_ACCUM_RED_BITS_EXT','WGL_ALPHA_BITS_EXT','WGL_ALPHA_SHIFT_EXT','WGL_AUX_BUFFERS_EXT','WGL_BLUE_BITS_EXT','WGL_BLUE_SHIFT_EXT','WGL_COLOR_BITS_EXT','WGL_DEPTH_BITS_EXT','WGL_DOUBLE_BUFFER_EXT','WGL_DRAW_TO_BITMAP_EXT','WGL_DRAW_TO_WINDOW_EXT','WGL_FULL_ACCELERATION_EXT','WGL_GENERIC_ACCELERATION_EXT','WGL_GREEN_BITS_EXT','WGL_GREEN_SHIFT_EXT','WGL_NEED_PALETTE_EXT','WGL_NEED_SYSTEM_PALETTE_EXT','WGL_NO_ACCELERATION_EXT','WGL_NUMBER_OVERLAYS_EXT','WGL_NUMBER_PIXEL_FORMATS_EXT','WGL_NUMBER_UNDERLAYS_EXT','WGL_PIXEL_TYPE_EXT','WGL_RED_BITS_EXT','WGL_RED_SHIFT_EXT','WGL_SHARE_ACCUM_EXT','WGL_SHARE_DEPTH_EXT','WGL_SHARE_STENCIL_EXT','WGL_STENCIL_BITS_EXT','WGL_STEREO_EXT','WGL_SUPPORT_GDI_EXT','WGL_SUPPORT_OPENGL_EXT','WGL_SWAP_COPY_EXT','WGL_SWAP_EXCHANGE_EXT','WGL_SWAP_LAYER_BUFFERS_EXT','WGL_SWAP_METHOD_EXT','WGL_SWAP_UNDEFINED_EXT','WGL_TRANSPARENT_EXT','WGL_TRANSPARENT_VALUE_EXT','WGL_TYPE_COLORINDEX_EXT','WGL_TYPE_RGBA_EXT']
+WGL_EXT_pixel_format.functions = ['wglChoosePixelFormatEXT','wglGetPixelFormatAttribfvEXT','wglGetPixelFormatAttribivEXT']
+wgl.add(WGL_EXT_pixel_format)
+
+WGL_EXT_pixel_format_packed_float = Extension('WGL_EXT_pixel_format_packed_float')
+WGL_EXT_pixel_format_packed_float.url = 'http://developer.download.nvidia.com/opengl/specs/GL_EXT_packed_float.txt'
+WGL_EXT_pixel_format_packed_float.enumerants = ['WGL_TYPE_RGBA_UNSIGNED_FLOAT_EXT']
+wgl.add(WGL_EXT_pixel_format_packed_float)
+
+WGL_EXT_swap_control = Extension('WGL_EXT_swap_control')
+WGL_EXT_swap_control.url = 'http://www.opengl.org/registry/specs/EXT/wgl_swap_control.txt'
+WGL_EXT_swap_control.functions = ['wglGetSwapIntervalEXT','wglSwapIntervalEXT']
+wgl.add(WGL_EXT_swap_control)
+
+WGL_EXT_swap_control_tear = Extension('WGL_EXT_swap_control_tear')
+WGL_EXT_swap_control_tear.url = 'http://www.opengl.org/registry/specs/EXT/wgl_swap_control_tear.txt'
+wgl.add(WGL_EXT_swap_control_tear)
+
+WGL_I3D_digital_video_control = Extension('WGL_I3D_digital_video_control')
+WGL_I3D_digital_video_control.url = 'http://www.opengl.org/registry/specs/I3D/wgl_digital_video_control.txt'
+WGL_I3D_digital_video_control.enumerants = ['WGL_DIGITAL_VIDEO_CURSOR_ALPHA_FRAMEBUFFER_I3D','WGL_DIGITAL_VIDEO_CURSOR_ALPHA_VALUE_I3D','WGL_DIGITAL_VIDEO_CURSOR_INCLUDED_I3D','WGL_DIGITAL_VIDEO_GAMMA_CORRECTED_I3D']
+WGL_I3D_digital_video_control.functions = ['wglGetDigitalVideoParametersI3D','wglSetDigitalVideoParametersI3D']
+wgl.add(WGL_I3D_digital_video_control)
+
+WGL_I3D_gamma = Extension('WGL_I3D_gamma')
+WGL_I3D_gamma.url = 'http://www.opengl.org/registry/specs/I3D/wgl_gamma.txt'
+WGL_I3D_gamma.enumerants = ['WGL_GAMMA_EXCLUDE_DESKTOP_I3D','WGL_GAMMA_TABLE_SIZE_I3D']
+WGL_I3D_gamma.functions = ['wglGetGammaTableI3D','wglGetGammaTableParametersI3D','wglSetGammaTableI3D','wglSetGammaTableParametersI3D']
+wgl.add(WGL_I3D_gamma)
+
+WGL_I3D_genlock = Extension('WGL_I3D_genlock')
+WGL_I3D_genlock.url = 'http://www.opengl.org/registry/specs/I3D/wgl_genlock.txt'
+WGL_I3D_genlock.enumerants = ['WGL_GENLOCK_SOURCE_DIGITAL_FIELD_I3D','WGL_GENLOCK_SOURCE_DIGITAL_SYNC_I3D','WGL_GENLOCK_SOURCE_EDGE_BOTH_I3D','WGL_GENLOCK_SOURCE_EDGE_FALLING_I3D','WGL_GENLOCK_SOURCE_EDGE_RISING_I3D','WGL_GENLOCK_SOURCE_EXTERNAL_FIELD_I3D','WGL_GENLOCK_SOURCE_EXTERNAL_SYNC_I3D','WGL_GENLOCK_SOURCE_EXTERNAL_TTL_I3D','WGL_GENLOCK_SOURCE_MULTIVIEW_I3D']
+WGL_I3D_genlock.functions = ['wglDisableGenlockI3D','wglEnableGenlockI3D','wglGenlockSampleRateI3D','wglGenlockSourceDelayI3D','wglGenlockSourceEdgeI3D','wglGenlockSourceI3D','wglGetGenlockSampleRateI3D','wglGetGenlockSourceDelayI3D','wglGetGenlockSourceEdgeI3D','wglGetGenlockSourceI3D','wglIsEnabledGenlockI3D','wglQueryGenlockMaxSourceDelayI3D']
+wgl.add(WGL_I3D_genlock)
+
+WGL_I3D_image_buffer = Extension('WGL_I3D_image_buffer')
+WGL_I3D_image_buffer.url = 'http://www.opengl.org/registry/specs/I3D/wgl_image_buffer.txt'
+WGL_I3D_image_buffer.enumerants = ['WGL_IMAGE_BUFFER_LOCK_I3D','WGL_IMAGE_BUFFER_MIN_ACCESS_I3D']
+WGL_I3D_image_buffer.functions = ['wglAssociateImageBufferEventsI3D','wglCreateImageBufferI3D','wglDestroyImageBufferI3D','wglReleaseImageBufferEventsI3D']
+wgl.add(WGL_I3D_image_buffer)
+
+WGL_I3D_swap_frame_lock = Extension('WGL_I3D_swap_frame_lock')
+WGL_I3D_swap_frame_lock.url = 'http://www.opengl.org/registry/specs/I3D/wgl_swap_frame_lock.txt'
+WGL_I3D_swap_frame_lock.functions = ['wglDisableFrameLockI3D','wglEnableFrameLockI3D','wglIsEnabledFrameLockI3D','wglQueryFrameLockMasterI3D']
+wgl.add(WGL_I3D_swap_frame_lock)
+
+WGL_I3D_swap_frame_usage = Extension('WGL_I3D_swap_frame_usage')
+WGL_I3D_swap_frame_usage.url = 'http://www.opengl.org/registry/specs/I3D/wgl_swap_frame_usage.txt'
+WGL_I3D_swap_frame_usage.functions = ['wglBeginFrameTrackingI3D','wglEndFrameTrackingI3D','wglGetFrameUsageI3D','wglQueryFrameTrackingI3D']
+wgl.add(WGL_I3D_swap_frame_usage)
+
+WGL_NV_DX_interop = Extension('WGL_NV_DX_interop')
+WGL_NV_DX_interop.url = 'http://www.opengl.org/registry/specs/NV/DX_interop.txt'
+WGL_NV_DX_interop.enumerants = ['WGL_ACCESS_READ_ONLY_NV','WGL_ACCESS_READ_WRITE_NV','WGL_ACCESS_WRITE_DISCARD_NV']
+WGL_NV_DX_interop.functions = ['wglDXCloseDeviceNV','wglDXLockObjectsNV','wglDXObjectAccessNV','wglDXOpenDeviceNV','wglDXRegisterObjectNV','wglDXSetResourceShareHandleNV','wglDXUnlockObjectsNV','wglDXUnregisterObjectNV']
+wgl.add(WGL_NV_DX_interop)
+
+WGL_NV_DX_interop2 = Extension('WGL_NV_DX_interop2')
+WGL_NV_DX_interop2.url = 'http://www.opengl.org/registry/specs/NV/DX_interop2.txt'
+wgl.add(WGL_NV_DX_interop2)
+
+WGL_NV_copy_image = Extension('WGL_NV_copy_image')
+WGL_NV_copy_image.url = 'http://www.opengl.org/registry/specs/NV/copy_image.txt'
+WGL_NV_copy_image.functions = ['wglCopyImageSubDataNV']
+wgl.add(WGL_NV_copy_image)
+
+WGL_NV_delay_before_swap = Extension('WGL_NV_delay_before_swap')
+WGL_NV_delay_before_swap.url = 'http://www.opengl.org/registry/specs/NV/wgl_delay_before_swap.txt'
+WGL_NV_delay_before_swap.functions = ['wglDelayBeforeSwapNV']
+wgl.add(WGL_NV_delay_before_swap)
+
+WGL_NV_float_buffer = Extension('WGL_NV_float_buffer')
+WGL_NV_float_buffer.url = 'http://www.opengl.org/registry/specs/NV/float_buffer.txt'
+WGL_NV_float_buffer.enumerants = ['WGL_BIND_TO_TEXTURE_RECTANGLE_FLOAT_RGBA_NV','WGL_BIND_TO_TEXTURE_RECTANGLE_FLOAT_RGB_NV','WGL_BIND_TO_TEXTURE_RECTANGLE_FLOAT_RG_NV','WGL_BIND_TO_TEXTURE_RECTANGLE_FLOAT_R_NV','WGL_FLOAT_COMPONENTS_NV','WGL_TEXTURE_FLOAT_RGBA_NV','WGL_TEXTURE_FLOAT_RGB_NV','WGL_TEXTURE_FLOAT_RG_NV','WGL_TEXTURE_FLOAT_R_NV']
+wgl.add(WGL_NV_float_buffer)
+
+WGL_NV_gpu_affinity = Extension('WGL_NV_gpu_affinity')
+WGL_NV_gpu_affinity.url = 'http://developer.download.nvidia.com/opengl/specs/WGL_nv_gpu_affinity.txt'
+WGL_NV_gpu_affinity.enumerants = ['WGL_ERROR_INCOMPATIBLE_AFFINITY_MASKS_NV','WGL_ERROR_MISSING_AFFINITY_MASK_NV']
+WGL_NV_gpu_affinity.functions = ['wglCreateAffinityDCNV','wglDeleteDCNV','wglEnumGpuDevicesNV','wglEnumGpusFromAffinityDCNV','wglEnumGpusNV']
+wgl.add(WGL_NV_gpu_affinity)
+
+WGL_NV_multisample_coverage = Extension('WGL_NV_multisample_coverage')
+WGL_NV_multisample_coverage.url = 'http://www.opengl.org/registry/specs/NV/multisample_coverage.txt'
+WGL_NV_multisample_coverage.enumerants = ['WGL_COLOR_SAMPLES_NV','WGL_COVERAGE_SAMPLES_NV']
+wgl.add(WGL_NV_multisample_coverage)
+
+WGL_NV_present_video = Extension('WGL_NV_present_video')
+WGL_NV_present_video.url = 'http://www.opengl.org/registry/specs/NV/present_video.txt'
+WGL_NV_present_video.enumerants = ['WGL_NUM_VIDEO_SLOTS_NV']
+WGL_NV_present_video.functions = ['wglBindVideoDeviceNV','wglEnumerateVideoDevicesNV','wglQueryCurrentContextNV']
+wgl.add(WGL_NV_present_video)
+
+WGL_NV_render_depth_texture = Extension('WGL_NV_render_depth_texture')
+WGL_NV_render_depth_texture.url = 'http://www.opengl.org/registry/specs/NV/render_depth_texture.txt'
+WGL_NV_render_depth_texture.enumerants = ['WGL_BIND_TO_TEXTURE_DEPTH_NV','WGL_BIND_TO_TEXTURE_RECTANGLE_DEPTH_NV','WGL_DEPTH_COMPONENT_NV','WGL_DEPTH_TEXTURE_FORMAT_NV','WGL_NO_TEXTURE_ARB','WGL_TEXTURE_DEPTH_COMPONENT_NV']
+wgl.add(WGL_NV_render_depth_texture)
+
+WGL_NV_render_texture_rectangle = Extension('WGL_NV_render_texture_rectangle')
+WGL_NV_render_texture_rectangle.url = 'http://www.opengl.org/registry/specs/NV/render_texture_rectangle.txt'
+WGL_NV_render_texture_rectangle.enumerants = ['WGL_BIND_TO_TEXTURE_RECTANGLE_RGBA_NV','WGL_BIND_TO_TEXTURE_RECTANGLE_RGB_NV','WGL_TEXTURE_RECTANGLE_NV']
+wgl.add(WGL_NV_render_texture_rectangle)
+
+WGL_NV_swap_group = Extension('WGL_NV_swap_group')
+WGL_NV_swap_group.url = 'http://www.opengl.org/registry/specs/NV/wgl_swap_group.txt'
+WGL_NV_swap_group.functions = ['wglBindSwapBarrierNV','wglJoinSwapGroupNV','wglQueryFrameCountNV','wglQueryMaxSwapGroupsNV','wglQuerySwapGroupNV','wglResetFrameCountNV']
+wgl.add(WGL_NV_swap_group)
+
+WGL_NV_vertex_array_range = Extension('WGL_NV_vertex_array_range')
+WGL_NV_vertex_array_range.url = 'http://oss.sgi.com/projects/ogl-sample/registry/NV/vertex_array_range.txt'
+WGL_NV_vertex_array_range.functions = ['*','wglFreeMemoryNV']
+wgl.add(WGL_NV_vertex_array_range)
+
+WGL_NV_video_capture = Extension('WGL_NV_video_capture')
+WGL_NV_video_capture.url = 'http://www.opengl.org/registry/specs/NV/video_capture.txt'
+WGL_NV_video_capture.enumerants = ['WGL_NUM_VIDEO_CAPTURE_SLOTS_NV','WGL_UNIQUE_ID_NV']
+WGL_NV_video_capture.functions = ['wglBindVideoCaptureDeviceNV','wglEnumerateVideoCaptureDevicesNV','wglLockVideoCaptureDeviceNV','wglQueryVideoCaptureDeviceNV','wglReleaseVideoCaptureDeviceNV']
+wgl.add(WGL_NV_video_capture)
+
+WGL_NV_video_output = Extension('WGL_NV_video_output')
+WGL_NV_video_output.url = 'http://www.opengl.org/registry/specs/NV/wgl_video_output.txt'
+WGL_NV_video_output.enumerants = ['WGL_BIND_TO_VIDEO_RGBA_NV','WGL_BIND_TO_VIDEO_RGB_AND_DEPTH_NV','WGL_BIND_TO_VIDEO_RGB_NV','WGL_VIDEO_OUT_ALPHA_NV','WGL_VIDEO_OUT_COLOR_AND_ALPHA_NV','WGL_VIDEO_OUT_COLOR_AND_DEPTH_NV','WGL_VIDEO_OUT_COLOR_NV','WGL_VIDEO_OUT_DEPTH_NV','WGL_VIDEO_OUT_FIELD_1','WGL_VIDEO_OUT_FIELD_2','WGL_VIDEO_OUT_FRAME','WGL_VIDEO_OUT_STACKED_FIELDS_1_2','WGL_VIDEO_OUT_STACKED_FIELDS_2_1']
+WGL_NV_video_output.functions = ['wglBindVideoImageNV','wglGetVideoDeviceNV','wglGetVideoInfoNV','wglReleaseVideoDeviceNV','wglReleaseVideoImageNV','wglSendPbufferToVideoNV']
+wgl.add(WGL_NV_video_output)
+
+WGL_OML_sync_control = Extension('WGL_OML_sync_control')
+WGL_OML_sync_control.url = 'http://www.opengl.org/registry/specs/OML/wgl_sync_control.txt'
+WGL_OML_sync_control.functions = ['wglGetMscRateOML','wglGetSyncValuesOML','wglSwapBuffersMscOML','wglSwapLayerBuffersMscOML','wglWaitForMscOML','wglWaitForSbcOML']
+wgl.add(WGL_OML_sync_control)

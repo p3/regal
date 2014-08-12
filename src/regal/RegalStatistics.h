@@ -80,6 +80,7 @@ struct Statistics
   GLuint gl_version_4_2;
   GLuint gl_version_4_3;
   GLuint gl_version_4_4;
+  GLuint gl_version_4_5;
 
   GLuint glx_version_1_0;
   GLuint glx_version_1_1;
@@ -146,6 +147,7 @@ struct Statistics
   GLuint gl_apple_vertex_program_evaluators;
   GLuint gl_apple_ycbcr_422;
   GLuint gl_arb_es2_compatibility;
+  GLuint gl_arb_es3_1_compatibility;
   GLuint gl_arb_es3_compatibility;
   GLuint gl_arb_base_instance;
   GLuint gl_arb_bindless_texture;
@@ -154,16 +156,20 @@ struct Statistics
   GLuint gl_arb_cl_event;
   GLuint gl_arb_clear_buffer_object;
   GLuint gl_arb_clear_texture;
+  GLuint gl_arb_clip_control;
   GLuint gl_arb_color_buffer_float;
   GLuint gl_arb_compressed_texture_pixel_storage;
   GLuint gl_arb_compute_shader;
   GLuint gl_arb_compute_variable_group_size;
+  GLuint gl_arb_conditional_render_inverted;
   GLuint gl_arb_copy_buffer;
   GLuint gl_arb_copy_image;
+  GLuint gl_arb_cull_distance;
   GLuint gl_arb_debug_output;
   GLuint gl_arb_depth_buffer_float;
   GLuint gl_arb_depth_clamp;
   GLuint gl_arb_depth_texture;
+  GLuint gl_arb_direct_state_access;
   GLuint gl_arb_draw_buffers;
   GLuint gl_arb_draw_buffers_blend;
   GLuint gl_arb_draw_elements_base_vertex;
@@ -178,6 +184,7 @@ struct Statistics
   GLuint gl_arb_framebuffer_srgb;
   GLuint gl_arb_geometry_shader4;
   GLuint gl_arb_get_program_binary;
+  GLuint gl_arb_get_texture_sub_image;
   GLuint gl_arb_gpu_shader5;
   GLuint gl_arb_gpu_shader_fp64;
   GLuint gl_arb_half_float_pixel;
@@ -197,6 +204,7 @@ struct Statistics
   GLuint gl_arb_multitexture;
   GLuint gl_arb_occlusion_query;
   GLuint gl_arb_occlusion_query2;
+  GLuint gl_arb_pipeline_statistics_query;
   GLuint gl_arb_pixel_buffer_object;
   GLuint gl_arb_point_parameters;
   GLuint gl_arb_point_sprite;
@@ -217,10 +225,12 @@ struct Statistics
   GLuint gl_arb_shading_language_include;
   GLuint gl_arb_shadow;
   GLuint gl_arb_shadow_ambient;
+  GLuint gl_arb_sparse_buffer;
   GLuint gl_arb_sparse_texture;
   GLuint gl_arb_stencil_texturing;
   GLuint gl_arb_sync;
   GLuint gl_arb_tessellation_shader;
+  GLuint gl_arb_texture_barrier;
   GLuint gl_arb_texture_border_clamp;
   GLuint gl_arb_texture_buffer_object;
   GLuint gl_arb_texture_buffer_range;
@@ -247,6 +257,7 @@ struct Statistics
   GLuint gl_arb_transform_feedback2;
   GLuint gl_arb_transform_feedback3;
   GLuint gl_arb_transform_feedback_instanced;
+  GLuint gl_arb_transform_feedback_overflow_query;
   GLuint gl_arb_transpose_matrix;
   GLuint gl_arb_uniform_buffer_object;
   GLuint gl_arb_vertex_array_object;
@@ -411,7 +422,9 @@ struct Statistics
   GLuint gl_intel_map_texture;
   GLuint gl_intel_parallel_arrays;
   GLuint gl_intel_texture_scissor;
+  GLuint gl_khr_blend_equation_advanced;
   GLuint gl_khr_debug;
+  GLuint gl_khr_robustness;
   GLuint gl_khr_texture_compression_astc_ldr;
   GLuint gl_ktx_buffer_region;
   GLuint gl_mesax_texture_stack;
@@ -638,6 +651,7 @@ struct Statistics
   GLuint wgl_arb_pixel_format;
   GLuint wgl_arb_pixel_format_float;
   GLuint wgl_arb_render_texture;
+  GLuint wgl_arb_robustness_application_isolation;
   GLuint wgl_arb_robustness_share_group_isolation;
   GLuint wgl_ati_pixel_format_float;
   GLuint wgl_ati_render_texture_rectangle;
@@ -662,6 +676,7 @@ struct Statistics
   GLuint wgl_i3d_swap_frame_usage;
   GLuint wgl_nv_dx_interop;
   GLuint wgl_nv_copy_image;
+  GLuint wgl_nv_delay_before_swap;
   GLuint wgl_nv_float_buffer;
   GLuint wgl_nv_gpu_affinity;
   GLuint wgl_nv_multisample_coverage;
@@ -685,15 +700,18 @@ struct Statistics
   GLuint glx_arb_framebuffer_srgb;
   GLuint glx_arb_get_proc_address;
   GLuint glx_arb_multisample;
+  GLuint glx_arb_robustness_application_isolation;
   GLuint glx_arb_robustness_share_group_isolation;
   GLuint glx_arb_vertex_buffer_object;
   GLuint glx_ati_pixel_format_float;
   GLuint glx_ati_render_texture;
+  GLuint glx_ext_buffer_age;
   GLuint glx_ext_create_context_es2_profile;
   GLuint glx_ext_create_context_es_profile;
   GLuint glx_ext_fbconfig_packed_float;
   GLuint glx_ext_framebuffer_srgb;
   GLuint glx_ext_import_context;
+  GLuint glx_ext_stereo_tree;
   GLuint glx_ext_swap_control;
   GLuint glx_ext_swap_control_tear;
   GLuint glx_ext_texture_from_pixmap;
@@ -703,10 +721,13 @@ struct Statistics
   GLuint glx_mesa_agp_offset;
   GLuint glx_mesa_copy_sub_buffer;
   GLuint glx_mesa_pixmap_colormap;
+  GLuint glx_mesa_query_renderer;
   GLuint glx_mesa_release_buffers;
   GLuint glx_mesa_set_3dfx_mode;
   GLuint glx_mesa_swap_control;
+  GLuint glx_nv_copy_buffer;
   GLuint glx_nv_copy_image;
+  GLuint glx_nv_delay_before_swap;
   GLuint glx_nv_float_buffer;
   GLuint glx_nv_multisample_coverage;
   GLuint glx_nv_present_video;
@@ -1611,6 +1632,10 @@ struct Statistics
   GLuint glReleaseShaderCompiler;
   GLuint glShaderBinary;
 
+  /* GL_ARB_ES3_1_compatibility */
+
+  GLuint glMemoryBarrierByRegion;
+
   /* GL_ARB_base_instance */
 
   GLuint glDrawArraysInstancedBaseInstance;
@@ -1662,6 +1687,10 @@ struct Statistics
   GLuint glClearTexImage;
   GLuint glClearTexSubImage;
 
+  /* GL_ARB_clip_control */
+
+  GLuint glClipControl;
+
   /* GL_ARB_color_buffer_float */
 
   GLuint glClampColorARB;
@@ -1689,6 +1718,102 @@ struct Statistics
   GLuint glDebugMessageControlARB;
   GLuint glDebugMessageInsertARB;
   GLuint glGetDebugMessageLogARB;
+
+  /* GL_ARB_direct_state_access */
+
+  GLuint glBindTextureUnit;
+  GLuint glBlitNamedFramebuffer;
+  GLuint glCheckNamedFramebufferStatus;
+  GLuint glClearNamedBufferData;
+  GLuint glClearNamedBufferSubData;
+  GLuint glClearNamedFramebufferfi;
+  GLuint glClearNamedFramebufferfv;
+  GLuint glClearNamedFramebufferiv;
+  GLuint glClearNamedFramebufferuiv;
+  GLuint glCompressedTextureSubImage1D;
+  GLuint glCompressedTextureSubImage2D;
+  GLuint glCompressedTextureSubImage3D;
+  GLuint glCopyNamedBufferSubData;
+  GLuint glCopyTextureSubImage1D;
+  GLuint glCopyTextureSubImage2D;
+  GLuint glCopyTextureSubImage3D;
+  GLuint glCreateBuffers;
+  GLuint glCreateFramebuffers;
+  GLuint glCreateProgramPipelines;
+  GLuint glCreateQueries;
+  GLuint glCreateRenderbuffers;
+  GLuint glCreateSamplers;
+  GLuint glCreateTextures;
+  GLuint glCreateTransformFeedbacks;
+  GLuint glCreateVertexArrays;
+  GLuint glDisableVertexArrayAttrib;
+  GLuint glEnableVertexArrayAttrib;
+  GLuint glFlushMappedNamedBufferRange;
+  GLuint glGenerateTextureMipmap;
+  GLuint glGetCompressedTextureImage;
+  GLuint glGetNamedBufferParameteri64v;
+  GLuint glGetNamedBufferParameteriv;
+  GLuint glGetNamedBufferPointerv;
+  GLuint glGetNamedBufferSubData;
+  GLuint glGetNamedFramebufferAttachmentParameteriv;
+  GLuint glGetNamedFramebufferParameteriv;
+  GLuint glGetNamedRenderbufferParameteriv;
+  GLuint glGetTextureImage;
+  GLuint glGetTextureLevelParameterfv;
+  GLuint glGetTextureLevelParameteriv;
+  GLuint glGetTextureParameterIiv;
+  GLuint glGetTextureParameterIuiv;
+  GLuint glGetTextureParameterfv;
+  GLuint glGetTextureParameteriv;
+  GLuint glGetTransformFeedbacki64_v;
+  GLuint glGetTransformFeedbacki_v;
+  GLuint glGetTransformFeedbackiv;
+  GLuint glGetVertexArrayIndexed64iv;
+  GLuint glGetVertexArrayIndexediv;
+  GLuint glGetVertexArrayiv;
+  GLuint glInvalidateNamedFramebufferData;
+  GLuint glInvalidateNamedFramebufferSubData;
+  GLuint glMapNamedBuffer;
+  GLuint glMapNamedBufferRange;
+  GLuint glNamedBufferData;
+  GLuint glNamedBufferStorage;
+  GLuint glNamedBufferSubData;
+  GLuint glNamedFramebufferDrawBuffer;
+  GLuint glNamedFramebufferDrawBuffers;
+  GLuint glNamedFramebufferParameteri;
+  GLuint glNamedFramebufferReadBuffer;
+  GLuint glNamedFramebufferRenderbuffer;
+  GLuint glNamedFramebufferTexture;
+  GLuint glNamedFramebufferTextureLayer;
+  GLuint glNamedRenderbufferStorage;
+  GLuint glNamedRenderbufferStorageMultisample;
+  GLuint glTextureBuffer;
+  GLuint glTextureBufferRange;
+  GLuint glTextureParameterIiv;
+  GLuint glTextureParameterIuiv;
+  GLuint glTextureParameterf;
+  GLuint glTextureParameterfv;
+  GLuint glTextureParameteri;
+  GLuint glTextureParameteriv;
+  GLuint glTextureStorage1D;
+  GLuint glTextureStorage2D;
+  GLuint glTextureStorage2DMultisample;
+  GLuint glTextureStorage3D;
+  GLuint glTextureStorage3DMultisample;
+  GLuint glTextureSubImage1D;
+  GLuint glTextureSubImage2D;
+  GLuint glTextureSubImage3D;
+  GLuint glTransformFeedbackBufferBase;
+  GLuint glTransformFeedbackBufferRange;
+  GLuint glUnmapNamedBuffer;
+  GLuint glVertexArrayAttribBinding;
+  GLuint glVertexArrayAttribFormat;
+  GLuint glVertexArrayAttribIFormat;
+  GLuint glVertexArrayAttribLFormat;
+  GLuint glVertexArrayBindingDivisor;
+  GLuint glVertexArrayElementBuffer;
+  GLuint glVertexArrayVertexBuffer;
+  GLuint glVertexArrayVertexBuffers;
 
   /* GL_ARB_draw_buffers */
 
@@ -1760,6 +1885,11 @@ struct Statistics
   GLuint glGetProgramBinary;
   GLuint glProgramBinary;
   GLuint glProgramParameteri;
+
+  /* GL_ARB_get_texture_sub_image */
+
+  GLuint glGetCompressedTextureSubImage;
+  GLuint glGetTextureSubImage;
 
   /* GL_ARB_gpu_shader_fp64 */
 
@@ -2125,6 +2255,10 @@ struct Statistics
   GLuint glIsNamedStringARB;
   GLuint glNamedStringARB;
 
+  /* GL_ARB_sparse_buffer */
+
+  GLuint glBufferPageCommitmentARB;
+
   /* GL_ARB_sparse_texture */
 
   GLuint glTexPageCommitmentARB;
@@ -2144,6 +2278,10 @@ struct Statistics
 
   GLuint glPatchParameterfv;
   GLuint glPatchParameteri;
+
+  /* GL_ARB_texture_barrier */
+
+  GLuint glTextureBarrier;
 
   /* GL_ARB_texture_buffer_object */
 
@@ -3372,6 +3510,10 @@ struct Statistics
   GLuint glTexScissorFuncINTEL;
   GLuint glTexScissorINTEL;
 
+  /* GL_KHR_blend_equation_advanced */
+
+  GLuint glBlendBarrierKHR;
+
   /* GL_KHR_debug */
 
   GLuint glDebugMessageCallback;
@@ -3384,6 +3526,13 @@ struct Statistics
   GLuint glObjectPtrLabel;
   GLuint glPopDebugGroup;
   GLuint glPushDebugGroup;
+
+  /* GL_KHR_robustness */
+
+  GLuint glGetnUniformfv;
+  GLuint glGetnUniformiv;
+  GLuint glGetnUniformuiv;
+  GLuint glReadnPixels;
 
   /* GL_KTX_buffer_region */
 
@@ -4520,6 +4669,10 @@ struct Statistics
 
   GLuint wglCopyImageSubDataNV;
 
+  /* WGL_NV_delay_before_swap */
+
+  GLuint wglDelayBeforeSwapNV;
+
   /* WGL_NV_gpu_affinity */
 
   GLuint wglCreateAffinityDCNV;
@@ -4708,6 +4861,13 @@ struct Statistics
 
   GLuint glXCreateGLXPixmapMESA;
 
+  /* GLX_MESA_query_renderer */
+
+  GLuint glXQueryCurrentRendererIntegerMESA;
+  GLuint glXQueryCurrentRendererStringMESA;
+  GLuint glXQueryRendererIntegerMESA;
+  GLuint glXQueryRendererStringMESA;
+
   /* GLX_MESA_release_buffers */
 
   GLuint glXReleaseBuffersMESA;
@@ -4721,9 +4881,18 @@ struct Statistics
   GLuint glXGetSwapIntervalMESA;
   GLuint glXSwapIntervalMESA;
 
+  /* GLX_NV_copy_buffer */
+
+  GLuint glXCopyBufferSubDataNV;
+  GLuint glXNamedCopyBufferSubDataNV;
+
   /* GLX_NV_copy_image */
 
   GLuint glXCopyImageSubDataNV;
+
+  /* GLX_NV_delay_before_swap */
+
+  GLuint glXDelayBeforeSwapNV;
 
   /* GLX_NV_present_video */
 

@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
   # output
 
-  if len(options.output):
+  if options.output and len(options.output):
     for i in range(len(options.input)):
       f = open( os.path.join(options.output,os.path.basename(options.input[i])), 'w' )
       f.write('\n'.join(output[i]))

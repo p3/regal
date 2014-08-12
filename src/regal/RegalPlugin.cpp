@@ -5890,6 +5890,16 @@ extern "C" {
     _next->call(&_next->glShaderBinary)(count, shaders, binaryformat, binary, length);
   }
 
+  /* GL_ARB_ES3_1_compatibility */
+
+  void REGAL_CALL plugin_glMemoryBarrierByRegion(GLbitfield barriers)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glMemoryBarrierByRegion)(barriers);
+  }
+
   /* GL_ARB_base_instance */
 
   void REGAL_CALL plugin_glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei primcount, GLuint baseinstance)
@@ -6144,6 +6154,16 @@ extern "C" {
     _next->call(&_next->glClearTexSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, data);
   }
 
+  /* GL_ARB_clip_control */
+
+  void REGAL_CALL plugin_glClipControl(GLenum origin, GLenum depth)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClipControl)(origin, depth);
+  }
+
   /* GL_ARB_color_buffer_float */
 
   void REGAL_CALL plugin_glClampColorARB(GLenum target, GLenum clamp)
@@ -6234,6 +6254,752 @@ extern "C" {
     ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
     RegalAssert(_next);
     return _next->call(&_next->glGetDebugMessageLogARB)(count, bufsize, sources, types, ids, severities, lengths, messageLog);
+  }
+
+  /* GL_ARB_direct_state_access */
+
+  void REGAL_CALL plugin_glBindTextureUnit(GLuint unit, GLuint texture)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glBindTextureUnit)(unit, texture);
+  }
+
+  void REGAL_CALL plugin_glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glBlitNamedFramebuffer)(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+  }
+
+  GLenum REGAL_CALL plugin_glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    return _next->call(&_next->glCheckNamedFramebufferStatus)(framebuffer, target);
+  }
+
+  void REGAL_CALL plugin_glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferData)(buffer, internalformat, format, type, data);
+  }
+
+  void REGAL_CALL plugin_glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferSubData)(buffer, internalformat, offset, size, format, type, data);
+  }
+
+  void REGAL_CALL plugin_glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLfloat depth, GLint stencil)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfi)(framebuffer, buffer, depth, stencil);
+  }
+
+  void REGAL_CALL plugin_glClearNamedFramebufferfv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  void REGAL_CALL plugin_glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferiv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  void REGAL_CALL plugin_glClearNamedFramebufferuiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferuiv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  void REGAL_CALL plugin_glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage1D)(texture, level, xoffset, width, format, imageSize, data);
+  }
+
+  void REGAL_CALL plugin_glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+  }
+
+  void REGAL_CALL plugin_glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+  }
+
+  void REGAL_CALL plugin_glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyNamedBufferSubData)(readBuffer, writeBuffer, readOffset, writeOffset, size);
+  }
+
+  void REGAL_CALL plugin_glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage1D)(texture, level, xoffset, x, y, width);
+  }
+
+  void REGAL_CALL plugin_glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage2D)(texture, level, xoffset, yoffset, x, y, width, height);
+  }
+
+  void REGAL_CALL plugin_glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+  }
+
+  void REGAL_CALL plugin_glCreateBuffers(GLsizei n, GLuint *buffers)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateBuffers)(n, buffers);
+  }
+
+  void REGAL_CALL plugin_glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateFramebuffers)(n, framebuffers);
+  }
+
+  void REGAL_CALL plugin_glCreateProgramPipelines(GLsizei n, GLuint *pipelines)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateProgramPipelines)(n, pipelines);
+  }
+
+  void REGAL_CALL plugin_glCreateQueries(GLenum target, GLsizei n, GLuint *ids)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateQueries)(target, n, ids);
+  }
+
+  void REGAL_CALL plugin_glCreateRenderbuffers(GLsizei n, GLuint *renderbuffers)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateRenderbuffers)(n, renderbuffers);
+  }
+
+  void REGAL_CALL plugin_glCreateSamplers(GLsizei n, GLuint *samplers)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateSamplers)(n, samplers);
+  }
+
+  void REGAL_CALL plugin_glCreateTextures(GLenum target, GLsizei n, GLuint *textures)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTextures)(target, n, textures);
+  }
+
+  void REGAL_CALL plugin_glCreateTransformFeedbacks(GLsizei n, GLuint *ids)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTransformFeedbacks)(n, ids);
+  }
+
+  void REGAL_CALL plugin_glCreateVertexArrays(GLsizei n, GLuint *arrays)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateVertexArrays)(n, arrays);
+  }
+
+  void REGAL_CALL plugin_glDisableVertexArrayAttrib(GLuint vaobj, GLuint index)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glDisableVertexArrayAttrib)(vaobj, index);
+  }
+
+  void REGAL_CALL plugin_glEnableVertexArrayAttrib(GLuint vaobj, GLuint index)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glEnableVertexArrayAttrib)(vaobj, index);
+  }
+
+  void REGAL_CALL plugin_glFlushMappedNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glFlushMappedNamedBufferRange)(buffer, offset, length);
+  }
+
+  void REGAL_CALL plugin_glGenerateTextureMipmap(GLuint texture)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGenerateTextureMipmap)(texture);
+  }
+
+  void REGAL_CALL plugin_glGetCompressedTextureImage(GLuint texture, GLint level, GLsizei bufSize, GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureImage)(texture, level, bufSize, pixels);
+  }
+
+  void REGAL_CALL plugin_glGetNamedBufferParameteri64v(GLuint buffer, GLenum pname, GLint64 *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteri64v)(buffer, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetNamedBufferParameteriv(GLuint buffer, GLenum pname, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteriv)(buffer, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetNamedBufferPointerv(GLuint buffer, GLenum pname, GLvoid **params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferPointerv)(buffer, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferSubData)(buffer, offset, size, data);
+  }
+
+  void REGAL_CALL plugin_glGetNamedFramebufferAttachmentParameteriv(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferAttachmentParameteriv)(framebuffer, attachment, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetNamedFramebufferParameteriv(GLuint framebuffer, GLenum pname, GLint *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferParameteriv)(framebuffer, pname, param);
+  }
+
+  void REGAL_CALL plugin_glGetNamedRenderbufferParameteriv(GLuint renderbuffer, GLenum pname, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedRenderbufferParameteriv)(renderbuffer, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTextureImage(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureImage)(texture, level, format, type, bufSize, pixels);
+  }
+
+  void REGAL_CALL plugin_glGetTextureLevelParameterfv(GLuint texture, GLint level, GLenum pname, GLfloat *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameterfv)(texture, level, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTextureLevelParameteriv(GLuint texture, GLint level, GLenum pname, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameteriv)(texture, level, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTextureParameterIiv(GLuint texture, GLenum pname, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIiv)(texture, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTextureParameterIuiv(GLuint texture, GLenum pname, GLuint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIuiv)(texture, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTextureParameterfv(GLuint texture, GLenum pname, GLfloat *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterfv)(texture, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTextureParameteriv(GLuint texture, GLenum pname, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameteriv)(texture, pname, params);
+  }
+
+  void REGAL_CALL plugin_glGetTransformFeedbacki64_v(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki64_v)(xfb, pname, index, param);
+  }
+
+  void REGAL_CALL plugin_glGetTransformFeedbacki_v(GLuint xfb, GLenum pname, GLuint index, GLint *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki_v)(xfb, pname, index, param);
+  }
+
+  void REGAL_CALL plugin_glGetTransformFeedbackiv(GLuint xfb, GLenum pname, GLint *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbackiv)(xfb, pname, param);
+  }
+
+  void REGAL_CALL plugin_glGetVertexArrayIndexed64iv(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexed64iv)(vaobj, index, pname, param);
+  }
+
+  void REGAL_CALL plugin_glGetVertexArrayIndexediv(GLuint vaobj, GLuint index, GLenum pname, GLint *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexediv)(vaobj, index, pname, param);
+  }
+
+  void REGAL_CALL plugin_glGetVertexArrayiv(GLuint vaobj, GLenum pname, GLint *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayiv)(vaobj, pname, param);
+  }
+
+  void REGAL_CALL plugin_glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferData)(framebuffer, numAttachments, attachments);
+  }
+
+  void REGAL_CALL plugin_glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferSubData)(framebuffer, numAttachments, attachments, x, y, width, height);
+  }
+
+  GLvoid *REGAL_CALL plugin_glMapNamedBuffer(GLuint buffer, GLenum access)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    return _next->call(&_next->glMapNamedBuffer)(buffer, access);
+  }
+
+  GLvoid *REGAL_CALL plugin_glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    return _next->call(&_next->glMapNamedBufferRange)(buffer, offset, length, access);
+  }
+
+  void REGAL_CALL plugin_glNamedBufferData(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferData)(buffer, size, data, usage);
+  }
+
+  void REGAL_CALL plugin_glNamedBufferStorage(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLbitfield flags)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferStorage)(buffer, size, data, flags);
+  }
+
+  void REGAL_CALL plugin_glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferSubData)(buffer, offset, size, data);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferDrawBuffer(GLuint framebuffer, GLenum mode)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffer)(framebuffer, mode);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferDrawBuffers(GLuint framebuffer, GLsizei n, const GLenum *bufs)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffers)(framebuffer, n, bufs);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferParameteri)(framebuffer, pname, param);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferReadBuffer(GLuint framebuffer, GLenum mode)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferReadBuffer)(framebuffer, mode);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferRenderbuffer)(framebuffer, attachment, renderbuffertarget, renderbuffer);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferTexture(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTexture)(framebuffer, attachment, texture, level);
+  }
+
+  void REGAL_CALL plugin_glNamedFramebufferTextureLayer(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTextureLayer)(framebuffer, attachment, texture, level, layer);
+  }
+
+  void REGAL_CALL plugin_glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorage)(renderbuffer, internalformat, width, height);
+  }
+
+  void REGAL_CALL plugin_glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorageMultisample)(renderbuffer, samples, internalformat, width, height);
+  }
+
+  void REGAL_CALL plugin_glTextureBuffer(GLuint texture, GLenum internalformat, GLuint buffer)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBuffer)(texture, internalformat, buffer);
+  }
+
+  void REGAL_CALL plugin_glTextureBufferRange(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBufferRange)(texture, internalformat, buffer, offset, size);
+  }
+
+  void REGAL_CALL plugin_glTextureParameterIiv(GLuint texture, GLenum pname, const GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIiv)(texture, pname, params);
+  }
+
+  void REGAL_CALL plugin_glTextureParameterIuiv(GLuint texture, GLenum pname, const GLuint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIuiv)(texture, pname, params);
+  }
+
+  void REGAL_CALL plugin_glTextureParameterf(GLuint texture, GLenum pname, GLfloat param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterf)(texture, pname, param);
+  }
+
+  void REGAL_CALL plugin_glTextureParameterfv(GLuint texture, GLenum pname, const GLfloat *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterfv)(texture, pname, param);
+  }
+
+  void REGAL_CALL plugin_glTextureParameteri(GLuint texture, GLenum pname, GLint param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteri)(texture, pname, param);
+  }
+
+  void REGAL_CALL plugin_glTextureParameteriv(GLuint texture, GLenum pname, const GLint *param)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteriv)(texture, pname, param);
+  }
+
+  void REGAL_CALL plugin_glTextureStorage1D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage1D)(texture, levels, internalformat, width);
+  }
+
+  void REGAL_CALL plugin_glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2D)(texture, levels, internalformat, width, height);
+  }
+
+  void REGAL_CALL plugin_glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2DMultisample)(texture, samples, internalformat, width, height, fixedsamplelocations);
+  }
+
+  void REGAL_CALL plugin_glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3D)(texture, levels, internalformat, width, height, depth);
+  }
+
+  void REGAL_CALL plugin_glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3DMultisample)(texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+  }
+
+  void REGAL_CALL plugin_glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage1D)(texture, level, xoffset, width, format, type, pixels);
+  }
+
+  void REGAL_CALL plugin_glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+  }
+
+  void REGAL_CALL plugin_glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+  }
+
+  void REGAL_CALL plugin_glTransformFeedbackBufferBase(GLuint xfb, GLuint index, GLuint buffer)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferBase)(xfb, index, buffer);
+  }
+
+  void REGAL_CALL plugin_glTransformFeedbackBufferRange(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferRange)(xfb, index, buffer, offset, size);
+  }
+
+  GLboolean REGAL_CALL plugin_glUnmapNamedBuffer(GLuint buffer)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    return _next->call(&_next->glUnmapNamedBuffer)(buffer);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint bindingindex)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribBinding)(vaobj, attribindex, bindingindex);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribFormat)(vaobj, attribindex, size, type, normalized, relativeoffset);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayAttribIFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribIFormat)(vaobj, attribindex, size, type, relativeoffset);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayAttribLFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribLFormat)(vaobj, attribindex, size, type, relativeoffset);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayBindingDivisor(GLuint vaobj, GLuint bindingindex, GLuint divisor)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayBindingDivisor)(vaobj, bindingindex, divisor);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayElementBuffer(GLuint vaobj, GLuint buffer)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayElementBuffer)(vaobj, buffer);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffer)(vaobj, bindingindex, buffer, offset, stride);
+  }
+
+  void REGAL_CALL plugin_glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffers)(vaobj, first, count, buffers, offsets, strides);
   }
 
   /* GL_ARB_draw_buffers */
@@ -6604,6 +7370,24 @@ extern "C" {
     ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
     RegalAssert(_next);
     _next->call(&_next->glProgramParameteri)(program, pname, value);
+  }
+
+  /* GL_ARB_get_texture_sub_image */
+
+  void REGAL_CALL plugin_glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
+  }
+
+  void REGAL_CALL plugin_glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
   }
 
   /* GL_ARB_gpu_shader_fp64 */
@@ -8924,6 +9708,16 @@ extern "C" {
     _next->call(&_next->glNamedStringARB)(type, namelen, name, stringlen, string);
   }
 
+  /* GL_ARB_sparse_buffer */
+
+  void REGAL_CALL plugin_glBufferPageCommitmentARB(GLenum target, GLintptr offset, GLsizeiptr size, GLboolean commit)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glBufferPageCommitmentARB)(target, offset, size, commit);
+  }
+
   /* GL_ARB_sparse_texture */
 
   void REGAL_CALL plugin_glTexPageCommitmentARB(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit)
@@ -9016,6 +9810,16 @@ extern "C" {
     ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
     RegalAssert(_next);
     _next->call(&_next->glPatchParameteri)(pname, value);
+  }
+
+  /* GL_ARB_texture_barrier */
+
+  void REGAL_CALL plugin_glTextureBarrier(void)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBarrier)();
   }
 
   /* GL_ARB_texture_buffer_object */
@@ -16458,6 +17262,16 @@ extern "C" {
     _next->call(&_next->glTexScissorINTEL)(target, tlow, thigh);
   }
 
+  /* GL_KHR_blend_equation_advanced */
+
+  void REGAL_CALL plugin_glBlendBarrierKHR(void)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glBlendBarrierKHR)();
+  }
+
   /* GL_KHR_debug */
 
   void REGAL_CALL plugin_glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
@@ -16538,6 +17352,40 @@ extern "C" {
     ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
     RegalAssert(_next);
     _next->call(&_next->glPushDebugGroup)(source, id, length, message);
+  }
+
+  /* GL_KHR_robustness */
+
+  void REGAL_CALL plugin_glGetnUniformfv(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformfv)(program, location, bufSize, params);
+  }
+
+  void REGAL_CALL plugin_glGetnUniformiv(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformiv)(program, location, bufSize, params);
+  }
+
+  void REGAL_CALL plugin_glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *params)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformuiv)(program, location, bufSize, params);
+  }
+
+  void REGAL_CALL plugin_glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGL *_next = _instance.nextDispatchTable;
+    RegalAssert(_next);
+    _next->call(&_next->glReadnPixels)(x, y, width, height, format, type, bufSize, data);
   }
 
   /* GL_KTX_buffer_region */
@@ -22988,6 +23836,16 @@ extern "C" {
     return _next->call(&_next->wglCopyImageSubDataNV)(hSrcRC, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
   }
 
+  /* WGL_NV_delay_before_swap */
+
+  BOOL REGAL_CALL plugin_wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    return _next->call(&_next->wglDelayBeforeSwapNV)(hDC, seconds);
+  }
+
   /* WGL_NV_gpu_affinity */
 
   HDC REGAL_CALL plugin_wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -23965,6 +24823,40 @@ extern "C" {
     return _next->call(&_next->glXCreateGLXPixmapMESA)(dpy, visual, pixmap, cmap);
   }
 
+  /* GLX_MESA_query_renderer */
+
+  Bool REGAL_CALL plugin_glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    return _next->call(&_next->glXQueryCurrentRendererIntegerMESA)(attribute, value);
+  }
+
+  const char *REGAL_CALL plugin_glXQueryCurrentRendererStringMESA(int attribute)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    return _next->call(&_next->glXQueryCurrentRendererStringMESA)(attribute);
+  }
+
+  Bool REGAL_CALL plugin_glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    return _next->call(&_next->glXQueryRendererIntegerMESA)(dpy, screen, renderer, attribute, value);
+  }
+
+  const char *REGAL_CALL plugin_glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    return _next->call(&_next->glXQueryRendererStringMESA)(dpy, screen, renderer, attribute);
+  }
+
   /* GLX_MESA_release_buffers */
 
   Bool REGAL_CALL plugin_glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -24003,6 +24895,24 @@ extern "C" {
     return _next->call(&_next->glXSwapIntervalMESA)(interval);
   }
 
+  /* GLX_NV_copy_buffer */
+
+  void REGAL_CALL plugin_glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    _next->call(&_next->glXCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
+  }
+
+  void REGAL_CALL plugin_glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    _next->call(&_next->glXNamedCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
+  }
+
   /* GLX_NV_copy_image */
 
   void REGAL_CALL plugin_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -24011,6 +24921,16 @@ extern "C" {
     ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
     RegalAssert(_next);
     _next->call(&_next->glXCopyImageSubDataNV)(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+  }
+
+  /* GLX_NV_delay_before_swap */
+
+  Bool REGAL_CALL plugin_glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+  {
+    ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal &_instance = ::REGAL_NAMESPACE_INTERNAL::Thread::ThreadLocal::instance();
+    ::REGAL_NAMESPACE_INTERNAL::DispatchTableGlobal *_next = _instance.nextDispatchTableGlobal;
+    RegalAssert(_next);
+    return _next->call(&_next->glXDelayBeforeSwapNV)(dpy, drawable, seconds);
   }
 
   /* GLX_NV_present_video */
@@ -25455,7 +26375,7 @@ REGAL_NAMESPACE_BEGIN
 
 namespace Plugin {
 
-  const char * const lookup_gl_Name[2697] = {
+  const char * const lookup_gl_Name[2801] = {
     "glAccum",
     "glActiveProgramEXT",
     "glActiveShaderProgram",
@@ -25537,6 +26457,7 @@ namespace Plugin {
     "glBindTexGenParameterEXT",
     "glBindTexture",
     "glBindTextureEXT",
+    "glBindTextureUnit",
     "glBindTextureUnitParameterEXT",
     "glBindTextures",
     "glBindTransformFeedback",
@@ -25561,6 +26482,7 @@ namespace Plugin {
     "glBinormal3svEXT",
     "glBinormalPointerEXT",
     "glBitmap",
+    "glBlendBarrierKHR",
     "glBlendBarrierNV",
     "glBlendColor",
     "glBlendColorEXT",
@@ -25592,9 +26514,11 @@ namespace Plugin {
     "glBlitFramebufferANGLE",
     "glBlitFramebufferEXT",
     "glBlitFramebufferNV",
+    "glBlitNamedFramebuffer",
     "glBufferAddressRangeNV",
     "glBufferData",
     "glBufferDataARB",
+    "glBufferPageCommitmentARB",
     "glBufferParameteriAPPLE",
     "glBufferRegionEnabled",
     "glBufferStorage",
@@ -25605,6 +26529,7 @@ namespace Plugin {
     "glCheckFramebufferStatus",
     "glCheckFramebufferStatusEXT",
     "glCheckFramebufferStatusOES",
+    "glCheckNamedFramebufferStatus",
     "glCheckNamedFramebufferStatusEXT",
     "glClampColor",
     "glClampColorARB",
@@ -25626,8 +26551,14 @@ namespace Plugin {
     "glClearDepthfOES",
     "glClearDepthx",
     "glClearIndex",
+    "glClearNamedBufferData",
     "glClearNamedBufferDataEXT",
+    "glClearNamedBufferSubData",
     "glClearNamedBufferSubDataEXT",
+    "glClearNamedFramebufferfi",
+    "glClearNamedFramebufferfv",
+    "glClearNamedFramebufferiv",
+    "glClearNamedFramebufferuiv",
     "glClearStencil",
     "glClearTexImage",
     "glClearTexSubImage",
@@ -25637,6 +26568,7 @@ namespace Plugin {
     "glClientAttribDefaultEXT",
     "glClientWaitSync",
     "glClientWaitSyncAPPLE",
+    "glClipControl",
     "glClipPlane",
     "glClipPlanef",
     "glClipPlanefOES",
@@ -25744,8 +26676,11 @@ namespace Plugin {
     "glCompressedTextureImage1DEXT",
     "glCompressedTextureImage2DEXT",
     "glCompressedTextureImage3DEXT",
+    "glCompressedTextureSubImage1D",
     "glCompressedTextureSubImage1DEXT",
+    "glCompressedTextureSubImage2D",
     "glCompressedTextureSubImage2DEXT",
+    "glCompressedTextureSubImage3D",
     "glCompressedTextureSubImage3DEXT",
     "glConvolutionFilter1D",
     "glConvolutionFilter1DEXT",
@@ -25776,6 +26711,7 @@ namespace Plugin {
     "glCopyMultiTexSubImage1DEXT",
     "glCopyMultiTexSubImage2DEXT",
     "glCopyMultiTexSubImage3DEXT",
+    "glCopyNamedBufferSubData",
     "glCopyPathNV",
     "glCopyPixels",
     "glCopyTexImage1D",
@@ -25792,8 +26728,11 @@ namespace Plugin {
     "glCopyTextureImage1DEXT",
     "glCopyTextureImage2DEXT",
     "glCopyTextureLevelsAPPLE",
+    "glCopyTextureSubImage1D",
     "glCopyTextureSubImage1DEXT",
+    "glCopyTextureSubImage2D",
     "glCopyTextureSubImage2DEXT",
+    "glCopyTextureSubImage3D",
     "glCopyTextureSubImage3DEXT",
     "glCoverFillPathInstancedNV",
     "glCoverFillPathNV",
@@ -25801,13 +26740,22 @@ namespace Plugin {
     "glCoverStrokePathNV",
     "glCoverageMaskNV",
     "glCoverageOperationNV",
+    "glCreateBuffers",
+    "glCreateFramebuffers",
     "glCreateProgram",
     "glCreateProgramObjectARB",
+    "glCreateProgramPipelines",
+    "glCreateQueries",
+    "glCreateRenderbuffers",
+    "glCreateSamplers",
     "glCreateShader",
     "glCreateShaderObjectARB",
     "glCreateShaderProgramEXT",
     "glCreateShaderProgramv",
     "glCreateSyncFromCLeventARB",
+    "glCreateTextures",
+    "glCreateTransformFeedbacks",
+    "glCreateVertexArrays",
     "glCullFace",
     "glCullParameterdvEXT",
     "glCullParameterfvEXT",
@@ -25886,6 +26834,7 @@ namespace Plugin {
     "glDisableDriverControlQCOM",
     "glDisableIndexedEXT",
     "glDisableVariantClientStateEXT",
+    "glDisableVertexArrayAttrib",
     "glDisableVertexArrayAttribEXT",
     "glDisableVertexArrayEXT",
     "glDisableVertexAttribAPPLE",
@@ -25951,6 +26900,7 @@ namespace Plugin {
     "glEnableDriverControlQCOM",
     "glEnableIndexedEXT",
     "glEnableVariantClientStateEXT",
+    "glEnableVertexArrayAttrib",
     "glEnableVertexArrayAttribEXT",
     "glEnableVertexArrayEXT",
     "glEnableVertexAttribAPPLE",
@@ -26019,6 +26969,7 @@ namespace Plugin {
     "glFlushMappedBufferRange",
     "glFlushMappedBufferRangeAPPLE",
     "glFlushMappedBufferRangeEXT",
+    "glFlushMappedNamedBufferRange",
     "glFlushMappedNamedBufferRangeEXT",
     "glFlushPixelDataRangeNV",
     "glFlushRasterSGIX",
@@ -26143,6 +27094,7 @@ namespace Plugin {
     "glGenerateMipmapEXT",
     "glGenerateMipmapOES",
     "glGenerateMultiTexMipmapEXT",
+    "glGenerateTextureMipmap",
     "glGenerateTextureMipmapEXT",
     "glGetActiveAtomicCounterBufferiv",
     "glGetActiveAttrib",
@@ -26196,7 +27148,9 @@ namespace Plugin {
     "glGetCompressedMultiTexImageEXT",
     "glGetCompressedTexImage",
     "glGetCompressedTexImageARB",
+    "glGetCompressedTextureImage",
     "glGetCompressedTextureImageEXT",
+    "glGetCompressedTextureSubImage",
     "glGetConvolutionFilter",
     "glGetConvolutionFilterEXT",
     "glGetConvolutionParameterfv",
@@ -26306,11 +27260,17 @@ namespace Plugin {
     "glGetMultiTexParameterivEXT",
     "glGetMultisamplefv",
     "glGetMultisamplefvNV",
+    "glGetNamedBufferParameteri64v",
+    "glGetNamedBufferParameteriv",
     "glGetNamedBufferParameterivEXT",
     "glGetNamedBufferParameterui64vNV",
+    "glGetNamedBufferPointerv",
     "glGetNamedBufferPointervEXT",
+    "glGetNamedBufferSubData",
     "glGetNamedBufferSubDataEXT",
+    "glGetNamedFramebufferAttachmentParameteriv",
     "glGetNamedFramebufferAttachmentParameterivEXT",
+    "glGetNamedFramebufferParameteriv",
     "glGetNamedFramebufferParameterivEXT",
     "glGetNamedProgramLocalParameterIivEXT",
     "glGetNamedProgramLocalParameterIuivEXT",
@@ -26318,6 +27278,7 @@ namespace Plugin {
     "glGetNamedProgramLocalParameterfvEXT",
     "glGetNamedProgramStringEXT",
     "glGetNamedProgramivEXT",
+    "glGetNamedRenderbufferParameteriv",
     "glGetNamedRenderbufferParameterivEXT",
     "glGetNamedStringARB",
     "glGetNamedStringivARB",
@@ -26457,19 +27418,30 @@ namespace Plugin {
     "glGetTexParameterxv",
     "glGetTextureHandleARB",
     "glGetTextureHandleNV",
+    "glGetTextureImage",
     "glGetTextureImageEXT",
+    "glGetTextureLevelParameterfv",
     "glGetTextureLevelParameterfvEXT",
+    "glGetTextureLevelParameteriv",
     "glGetTextureLevelParameterivEXT",
+    "glGetTextureParameterIiv",
     "glGetTextureParameterIivEXT",
+    "glGetTextureParameterIuiv",
     "glGetTextureParameterIuivEXT",
+    "glGetTextureParameterfv",
     "glGetTextureParameterfvEXT",
+    "glGetTextureParameteriv",
     "glGetTextureParameterivEXT",
     "glGetTextureSamplerHandleARB",
     "glGetTextureSamplerHandleNV",
+    "glGetTextureSubImage",
     "glGetTrackMatrixivNV",
     "glGetTransformFeedbackVarying",
     "glGetTransformFeedbackVaryingEXT",
     "glGetTransformFeedbackVaryingNV",
+    "glGetTransformFeedbacki64_v",
+    "glGetTransformFeedbacki_v",
+    "glGetTransformFeedbackiv",
     "glGetTranslatedShaderSourceANGLE",
     "glGetUniformBlockIndex",
     "glGetUniformBufferSizeEXT",
@@ -26494,10 +27466,13 @@ namespace Plugin {
     "glGetVariantIntegervEXT",
     "glGetVariantPointervEXT",
     "glGetVaryingLocationNV",
+    "glGetVertexArrayIndexed64iv",
+    "glGetVertexArrayIndexediv",
     "glGetVertexArrayIntegeri_vEXT",
     "glGetVertexArrayIntegervEXT",
     "glGetVertexArrayPointeri_vEXT",
     "glGetVertexArrayPointervEXT",
+    "glGetVertexArrayiv",
     "glGetVertexAttribArrayObjectfvATI",
     "glGetVertexAttribArrayObjectivATI",
     "glGetVertexAttribIiv",
@@ -26544,10 +27519,13 @@ namespace Plugin {
     "glGetnSeparableFilterARB",
     "glGetnTexImageARB",
     "glGetnUniformdvARB",
+    "glGetnUniformfv",
     "glGetnUniformfvARB",
     "glGetnUniformfvEXT",
+    "glGetnUniformiv",
     "glGetnUniformivARB",
     "glGetnUniformivEXT",
+    "glGetnUniformuiv",
     "glGetnUniformuivARB",
     "glGlobalAlphaFactorbSUN",
     "glGlobalAlphaFactordSUN",
@@ -26593,6 +27571,8 @@ namespace Plugin {
     "glInvalidateBufferData",
     "glInvalidateBufferSubData",
     "glInvalidateFramebuffer",
+    "glInvalidateNamedFramebufferData",
+    "glInvalidateNamedFramebufferSubData",
     "glInvalidateSubFramebuffer",
     "glInvalidateTexImage",
     "glInvalidateTexSubImage",
@@ -26710,7 +27690,9 @@ namespace Plugin {
     "glMapGrid1f",
     "glMapGrid2d",
     "glMapGrid2f",
+    "glMapNamedBuffer",
     "glMapNamedBufferEXT",
+    "glMapNamedBufferRange",
     "glMapNamedBufferRangeEXT",
     "glMapObjectBufferATI",
     "glMapParameterfvNV",
@@ -26752,6 +27734,7 @@ namespace Plugin {
     "glMatrixTranslatedEXT",
     "glMatrixTranslatefEXT",
     "glMemoryBarrier",
+    "glMemoryBarrierByRegion",
     "glMemoryBarrierEXT",
     "glMinSampleShading",
     "glMinSampleShadingARB",
@@ -26885,17 +27868,27 @@ namespace Plugin {
     "glMultiTexSubImage1DEXT",
     "glMultiTexSubImage2DEXT",
     "glMultiTexSubImage3DEXT",
+    "glNamedBufferData",
     "glNamedBufferDataEXT",
+    "glNamedBufferStorage",
     "glNamedBufferStorageEXT",
+    "glNamedBufferSubData",
     "glNamedBufferSubDataEXT",
     "glNamedCopyBufferSubDataEXT",
+    "glNamedFramebufferDrawBuffer",
+    "glNamedFramebufferDrawBuffers",
+    "glNamedFramebufferParameteri",
     "glNamedFramebufferParameteriEXT",
+    "glNamedFramebufferReadBuffer",
+    "glNamedFramebufferRenderbuffer",
     "glNamedFramebufferRenderbufferEXT",
+    "glNamedFramebufferTexture",
     "glNamedFramebufferTexture1DEXT",
     "glNamedFramebufferTexture2DEXT",
     "glNamedFramebufferTexture3DEXT",
     "glNamedFramebufferTextureEXT",
     "glNamedFramebufferTextureFaceEXT",
+    "glNamedFramebufferTextureLayer",
     "glNamedFramebufferTextureLayerEXT",
     "glNamedProgramLocalParameter4dEXT",
     "glNamedProgramLocalParameter4dvEXT",
@@ -26909,7 +27902,9 @@ namespace Plugin {
     "glNamedProgramLocalParametersI4ivEXT",
     "glNamedProgramLocalParametersI4uivEXT",
     "glNamedProgramStringEXT",
+    "glNamedRenderbufferStorage",
     "glNamedRenderbufferStorageEXT",
+    "glNamedRenderbufferStorageMultisample",
     "glNamedRenderbufferStorageMultisampleCoverageEXT",
     "glNamedRenderbufferStorageMultisampleEXT",
     "glNamedStringARB",
@@ -27246,6 +28241,7 @@ namespace Plugin {
     "glReadInstrumentsSGIX",
     "glReadPixels",
     "glReadVideoPixelsSUN",
+    "glReadnPixels",
     "glReadnPixelsARB",
     "glReadnPixelsEXT",
     "glRectd",
@@ -27561,8 +28557,11 @@ namespace Plugin {
     "glTexSubImage3DEXT",
     "glTexSubImage3DOES",
     "glTexSubImage4DSGIS",
+    "glTextureBarrier",
     "glTextureBarrierNV",
+    "glTextureBuffer",
     "glTextureBufferEXT",
+    "glTextureBufferRange",
     "glTextureBufferRangeEXT",
     "glTextureColorMaskSGIS",
     "glTextureFogSGIX",
@@ -27577,26 +28576,42 @@ namespace Plugin {
     "glTextureMaterialEXT",
     "glTextureNormalEXT",
     "glTexturePageCommitmentEXT",
+    "glTextureParameterIiv",
     "glTextureParameterIivEXT",
+    "glTextureParameterIuiv",
     "glTextureParameterIuivEXT",
+    "glTextureParameterf",
     "glTextureParameterfEXT",
+    "glTextureParameterfv",
     "glTextureParameterfvEXT",
+    "glTextureParameteri",
     "glTextureParameteriEXT",
+    "glTextureParameteriv",
     "glTextureParameterivEXT",
     "glTextureRangeAPPLE",
     "glTextureRenderbufferEXT",
+    "glTextureStorage1D",
     "glTextureStorage1DEXT",
+    "glTextureStorage2D",
     "glTextureStorage2DEXT",
+    "glTextureStorage2DMultisample",
     "glTextureStorage2DMultisampleEXT",
+    "glTextureStorage3D",
     "glTextureStorage3DEXT",
+    "glTextureStorage3DMultisample",
     "glTextureStorage3DMultisampleEXT",
     "glTextureStorageSparseAMD",
+    "glTextureSubImage1D",
     "glTextureSubImage1DEXT",
+    "glTextureSubImage2D",
     "glTextureSubImage2DEXT",
+    "glTextureSubImage3D",
     "glTextureSubImage3DEXT",
     "glTextureView",
     "glTrackMatrixNV",
     "glTransformFeedbackAttribsNV",
+    "glTransformFeedbackBufferBase",
+    "glTransformFeedbackBufferRange",
     "glTransformFeedbackVaryings",
     "glTransformFeedbackVaryingsEXT",
     "glTransformFeedbackVaryingsNV",
@@ -27716,6 +28731,7 @@ namespace Plugin {
     "glUnmapBuffer",
     "glUnmapBufferARB",
     "glUnmapBufferOES",
+    "glUnmapNamedBuffer",
     "glUnmapNamedBufferEXT",
     "glUnmapObjectBufferATI",
     "glUnmapTexture2DINTEL",
@@ -27777,9 +28793,15 @@ namespace Plugin {
     "glVertex4iv",
     "glVertex4s",
     "glVertex4sv",
+    "glVertexArrayAttribBinding",
+    "glVertexArrayAttribFormat",
+    "glVertexArrayAttribIFormat",
+    "glVertexArrayAttribLFormat",
     "glVertexArrayBindVertexBufferEXT",
+    "glVertexArrayBindingDivisor",
     "glVertexArrayColorOffsetEXT",
     "glVertexArrayEdgeFlagOffsetEXT",
+    "glVertexArrayElementBuffer",
     "glVertexArrayFogCoordOffsetEXT",
     "glVertexArrayIndexOffsetEXT",
     "glVertexArrayMultiTexCoordOffsetEXT",
@@ -27797,6 +28819,8 @@ namespace Plugin {
     "glVertexArrayVertexAttribLOffsetEXT",
     "glVertexArrayVertexAttribOffsetEXT",
     "glVertexArrayVertexBindingDivisorEXT",
+    "glVertexArrayVertexBuffer",
+    "glVertexArrayVertexBuffers",
     "glVertexArrayVertexOffsetEXT",
     "glVertexAttrib1d",
     "glVertexAttrib1dARB",
@@ -28155,7 +29179,7 @@ namespace Plugin {
     NULL
   };
 
-  const void *lookup_gl_Value[2697] = {
+  const void *lookup_gl_Value[2801] = {
     (void *)(plugin_glAccum),
     (void *)(plugin_glActiveProgramEXT),
     (void *)(plugin_glActiveShaderProgram),
@@ -28237,6 +29261,7 @@ namespace Plugin {
     (void *)(plugin_glBindTexGenParameterEXT),
     (void *)(plugin_glBindTexture),
     (void *)(plugin_glBindTextureEXT),
+    (void *)(plugin_glBindTextureUnit),
     (void *)(plugin_glBindTextureUnitParameterEXT),
     (void *)(plugin_glBindTextures),
     (void *)(plugin_glBindTransformFeedback),
@@ -28261,6 +29286,7 @@ namespace Plugin {
     (void *)(plugin_glBinormal3svEXT),
     (void *)(plugin_glBinormalPointerEXT),
     (void *)(plugin_glBitmap),
+    (void *)(plugin_glBlendBarrierKHR),
     (void *)(plugin_glBlendBarrierNV),
     (void *)(plugin_glBlendColor),
     (void *)(plugin_glBlendColorEXT),
@@ -28292,9 +29318,11 @@ namespace Plugin {
     (void *)(plugin_glBlitFramebufferANGLE),
     (void *)(plugin_glBlitFramebufferEXT),
     (void *)(plugin_glBlitFramebufferNV),
+    (void *)(plugin_glBlitNamedFramebuffer),
     (void *)(plugin_glBufferAddressRangeNV),
     (void *)(plugin_glBufferData),
     (void *)(plugin_glBufferDataARB),
+    (void *)(plugin_glBufferPageCommitmentARB),
     (void *)(plugin_glBufferParameteriAPPLE),
     (void *)(plugin_glBufferRegionEnabled),
     (void *)(plugin_glBufferStorage),
@@ -28305,6 +29333,7 @@ namespace Plugin {
     (void *)(plugin_glCheckFramebufferStatus),
     (void *)(plugin_glCheckFramebufferStatusEXT),
     (void *)(plugin_glCheckFramebufferStatusOES),
+    (void *)(plugin_glCheckNamedFramebufferStatus),
     (void *)(plugin_glCheckNamedFramebufferStatusEXT),
     (void *)(plugin_glClampColor),
     (void *)(plugin_glClampColorARB),
@@ -28326,8 +29355,14 @@ namespace Plugin {
     (void *)(plugin_glClearDepthfOES),
     (void *)(plugin_glClearDepthx),
     (void *)(plugin_glClearIndex),
+    (void *)(plugin_glClearNamedBufferData),
     (void *)(plugin_glClearNamedBufferDataEXT),
+    (void *)(plugin_glClearNamedBufferSubData),
     (void *)(plugin_glClearNamedBufferSubDataEXT),
+    (void *)(plugin_glClearNamedFramebufferfi),
+    (void *)(plugin_glClearNamedFramebufferfv),
+    (void *)(plugin_glClearNamedFramebufferiv),
+    (void *)(plugin_glClearNamedFramebufferuiv),
     (void *)(plugin_glClearStencil),
     (void *)(plugin_glClearTexImage),
     (void *)(plugin_glClearTexSubImage),
@@ -28337,6 +29372,7 @@ namespace Plugin {
     (void *)(plugin_glClientAttribDefaultEXT),
     (void *)(plugin_glClientWaitSync),
     (void *)(plugin_glClientWaitSyncAPPLE),
+    (void *)(plugin_glClipControl),
     (void *)(plugin_glClipPlane),
     (void *)(plugin_glClipPlanef),
     (void *)(plugin_glClipPlanefOES),
@@ -28444,8 +29480,11 @@ namespace Plugin {
     (void *)(plugin_glCompressedTextureImage1DEXT),
     (void *)(plugin_glCompressedTextureImage2DEXT),
     (void *)(plugin_glCompressedTextureImage3DEXT),
+    (void *)(plugin_glCompressedTextureSubImage1D),
     (void *)(plugin_glCompressedTextureSubImage1DEXT),
+    (void *)(plugin_glCompressedTextureSubImage2D),
     (void *)(plugin_glCompressedTextureSubImage2DEXT),
+    (void *)(plugin_glCompressedTextureSubImage3D),
     (void *)(plugin_glCompressedTextureSubImage3DEXT),
     (void *)(plugin_glConvolutionFilter1D),
     (void *)(plugin_glConvolutionFilter1DEXT),
@@ -28476,6 +29515,7 @@ namespace Plugin {
     (void *)(plugin_glCopyMultiTexSubImage1DEXT),
     (void *)(plugin_glCopyMultiTexSubImage2DEXT),
     (void *)(plugin_glCopyMultiTexSubImage3DEXT),
+    (void *)(plugin_glCopyNamedBufferSubData),
     (void *)(plugin_glCopyPathNV),
     (void *)(plugin_glCopyPixels),
     (void *)(plugin_glCopyTexImage1D),
@@ -28492,8 +29532,11 @@ namespace Plugin {
     (void *)(plugin_glCopyTextureImage1DEXT),
     (void *)(plugin_glCopyTextureImage2DEXT),
     (void *)(plugin_glCopyTextureLevelsAPPLE),
+    (void *)(plugin_glCopyTextureSubImage1D),
     (void *)(plugin_glCopyTextureSubImage1DEXT),
+    (void *)(plugin_glCopyTextureSubImage2D),
     (void *)(plugin_glCopyTextureSubImage2DEXT),
+    (void *)(plugin_glCopyTextureSubImage3D),
     (void *)(plugin_glCopyTextureSubImage3DEXT),
     (void *)(plugin_glCoverFillPathInstancedNV),
     (void *)(plugin_glCoverFillPathNV),
@@ -28501,13 +29544,22 @@ namespace Plugin {
     (void *)(plugin_glCoverStrokePathNV),
     (void *)(plugin_glCoverageMaskNV),
     (void *)(plugin_glCoverageOperationNV),
+    (void *)(plugin_glCreateBuffers),
+    (void *)(plugin_glCreateFramebuffers),
     (void *)(plugin_glCreateProgram),
     (void *)(plugin_glCreateProgramObjectARB),
+    (void *)(plugin_glCreateProgramPipelines),
+    (void *)(plugin_glCreateQueries),
+    (void *)(plugin_glCreateRenderbuffers),
+    (void *)(plugin_glCreateSamplers),
     (void *)(plugin_glCreateShader),
     (void *)(plugin_glCreateShaderObjectARB),
     (void *)(plugin_glCreateShaderProgramEXT),
     (void *)(plugin_glCreateShaderProgramv),
     (void *)(plugin_glCreateSyncFromCLeventARB),
+    (void *)(plugin_glCreateTextures),
+    (void *)(plugin_glCreateTransformFeedbacks),
+    (void *)(plugin_glCreateVertexArrays),
     (void *)(plugin_glCullFace),
     (void *)(plugin_glCullParameterdvEXT),
     (void *)(plugin_glCullParameterfvEXT),
@@ -28586,6 +29638,7 @@ namespace Plugin {
     (void *)(plugin_glDisableDriverControlQCOM),
     (void *)(plugin_glDisableIndexedEXT),
     (void *)(plugin_glDisableVariantClientStateEXT),
+    (void *)(plugin_glDisableVertexArrayAttrib),
     (void *)(plugin_glDisableVertexArrayAttribEXT),
     (void *)(plugin_glDisableVertexArrayEXT),
     (void *)(plugin_glDisableVertexAttribAPPLE),
@@ -28651,6 +29704,7 @@ namespace Plugin {
     (void *)(plugin_glEnableDriverControlQCOM),
     (void *)(plugin_glEnableIndexedEXT),
     (void *)(plugin_glEnableVariantClientStateEXT),
+    (void *)(plugin_glEnableVertexArrayAttrib),
     (void *)(plugin_glEnableVertexArrayAttribEXT),
     (void *)(plugin_glEnableVertexArrayEXT),
     (void *)(plugin_glEnableVertexAttribAPPLE),
@@ -28719,6 +29773,7 @@ namespace Plugin {
     (void *)(plugin_glFlushMappedBufferRange),
     (void *)(plugin_glFlushMappedBufferRangeAPPLE),
     (void *)(plugin_glFlushMappedBufferRangeEXT),
+    (void *)(plugin_glFlushMappedNamedBufferRange),
     (void *)(plugin_glFlushMappedNamedBufferRangeEXT),
     (void *)(plugin_glFlushPixelDataRangeNV),
     (void *)(plugin_glFlushRasterSGIX),
@@ -28843,6 +29898,7 @@ namespace Plugin {
     (void *)(plugin_glGenerateMipmapEXT),
     (void *)(plugin_glGenerateMipmapOES),
     (void *)(plugin_glGenerateMultiTexMipmapEXT),
+    (void *)(plugin_glGenerateTextureMipmap),
     (void *)(plugin_glGenerateTextureMipmapEXT),
     (void *)(plugin_glGetActiveAtomicCounterBufferiv),
     (void *)(plugin_glGetActiveAttrib),
@@ -28896,7 +29952,9 @@ namespace Plugin {
     (void *)(plugin_glGetCompressedMultiTexImageEXT),
     (void *)(plugin_glGetCompressedTexImage),
     (void *)(plugin_glGetCompressedTexImageARB),
+    (void *)(plugin_glGetCompressedTextureImage),
     (void *)(plugin_glGetCompressedTextureImageEXT),
+    (void *)(plugin_glGetCompressedTextureSubImage),
     (void *)(plugin_glGetConvolutionFilter),
     (void *)(plugin_glGetConvolutionFilterEXT),
     (void *)(plugin_glGetConvolutionParameterfv),
@@ -29006,11 +30064,17 @@ namespace Plugin {
     (void *)(plugin_glGetMultiTexParameterivEXT),
     (void *)(plugin_glGetMultisamplefv),
     (void *)(plugin_glGetMultisamplefvNV),
+    (void *)(plugin_glGetNamedBufferParameteri64v),
+    (void *)(plugin_glGetNamedBufferParameteriv),
     (void *)(plugin_glGetNamedBufferParameterivEXT),
     (void *)(plugin_glGetNamedBufferParameterui64vNV),
+    (void *)(plugin_glGetNamedBufferPointerv),
     (void *)(plugin_glGetNamedBufferPointervEXT),
+    (void *)(plugin_glGetNamedBufferSubData),
     (void *)(plugin_glGetNamedBufferSubDataEXT),
+    (void *)(plugin_glGetNamedFramebufferAttachmentParameteriv),
     (void *)(plugin_glGetNamedFramebufferAttachmentParameterivEXT),
+    (void *)(plugin_glGetNamedFramebufferParameteriv),
     (void *)(plugin_glGetNamedFramebufferParameterivEXT),
     (void *)(plugin_glGetNamedProgramLocalParameterIivEXT),
     (void *)(plugin_glGetNamedProgramLocalParameterIuivEXT),
@@ -29018,6 +30082,7 @@ namespace Plugin {
     (void *)(plugin_glGetNamedProgramLocalParameterfvEXT),
     (void *)(plugin_glGetNamedProgramStringEXT),
     (void *)(plugin_glGetNamedProgramivEXT),
+    (void *)(plugin_glGetNamedRenderbufferParameteriv),
     (void *)(plugin_glGetNamedRenderbufferParameterivEXT),
     (void *)(plugin_glGetNamedStringARB),
     (void *)(plugin_glGetNamedStringivARB),
@@ -29157,19 +30222,30 @@ namespace Plugin {
     (void *)(plugin_glGetTexParameterxv),
     (void *)(plugin_glGetTextureHandleARB),
     (void *)(plugin_glGetTextureHandleNV),
+    (void *)(plugin_glGetTextureImage),
     (void *)(plugin_glGetTextureImageEXT),
+    (void *)(plugin_glGetTextureLevelParameterfv),
     (void *)(plugin_glGetTextureLevelParameterfvEXT),
+    (void *)(plugin_glGetTextureLevelParameteriv),
     (void *)(plugin_glGetTextureLevelParameterivEXT),
+    (void *)(plugin_glGetTextureParameterIiv),
     (void *)(plugin_glGetTextureParameterIivEXT),
+    (void *)(plugin_glGetTextureParameterIuiv),
     (void *)(plugin_glGetTextureParameterIuivEXT),
+    (void *)(plugin_glGetTextureParameterfv),
     (void *)(plugin_glGetTextureParameterfvEXT),
+    (void *)(plugin_glGetTextureParameteriv),
     (void *)(plugin_glGetTextureParameterivEXT),
     (void *)(plugin_glGetTextureSamplerHandleARB),
     (void *)(plugin_glGetTextureSamplerHandleNV),
+    (void *)(plugin_glGetTextureSubImage),
     (void *)(plugin_glGetTrackMatrixivNV),
     (void *)(plugin_glGetTransformFeedbackVarying),
     (void *)(plugin_glGetTransformFeedbackVaryingEXT),
     (void *)(plugin_glGetTransformFeedbackVaryingNV),
+    (void *)(plugin_glGetTransformFeedbacki64_v),
+    (void *)(plugin_glGetTransformFeedbacki_v),
+    (void *)(plugin_glGetTransformFeedbackiv),
     (void *)(plugin_glGetTranslatedShaderSourceANGLE),
     (void *)(plugin_glGetUniformBlockIndex),
     (void *)(plugin_glGetUniformBufferSizeEXT),
@@ -29194,10 +30270,13 @@ namespace Plugin {
     (void *)(plugin_glGetVariantIntegervEXT),
     (void *)(plugin_glGetVariantPointervEXT),
     (void *)(plugin_glGetVaryingLocationNV),
+    (void *)(plugin_glGetVertexArrayIndexed64iv),
+    (void *)(plugin_glGetVertexArrayIndexediv),
     (void *)(plugin_glGetVertexArrayIntegeri_vEXT),
     (void *)(plugin_glGetVertexArrayIntegervEXT),
     (void *)(plugin_glGetVertexArrayPointeri_vEXT),
     (void *)(plugin_glGetVertexArrayPointervEXT),
+    (void *)(plugin_glGetVertexArrayiv),
     (void *)(plugin_glGetVertexAttribArrayObjectfvATI),
     (void *)(plugin_glGetVertexAttribArrayObjectivATI),
     (void *)(plugin_glGetVertexAttribIiv),
@@ -29244,10 +30323,13 @@ namespace Plugin {
     (void *)(plugin_glGetnSeparableFilterARB),
     (void *)(plugin_glGetnTexImageARB),
     (void *)(plugin_glGetnUniformdvARB),
+    (void *)(plugin_glGetnUniformfv),
     (void *)(plugin_glGetnUniformfvARB),
     (void *)(plugin_glGetnUniformfvEXT),
+    (void *)(plugin_glGetnUniformiv),
     (void *)(plugin_glGetnUniformivARB),
     (void *)(plugin_glGetnUniformivEXT),
+    (void *)(plugin_glGetnUniformuiv),
     (void *)(plugin_glGetnUniformuivARB),
     (void *)(plugin_glGlobalAlphaFactorbSUN),
     (void *)(plugin_glGlobalAlphaFactordSUN),
@@ -29293,6 +30375,8 @@ namespace Plugin {
     (void *)(plugin_glInvalidateBufferData),
     (void *)(plugin_glInvalidateBufferSubData),
     (void *)(plugin_glInvalidateFramebuffer),
+    (void *)(plugin_glInvalidateNamedFramebufferData),
+    (void *)(plugin_glInvalidateNamedFramebufferSubData),
     (void *)(plugin_glInvalidateSubFramebuffer),
     (void *)(plugin_glInvalidateTexImage),
     (void *)(plugin_glInvalidateTexSubImage),
@@ -29410,7 +30494,9 @@ namespace Plugin {
     (void *)(plugin_glMapGrid1f),
     (void *)(plugin_glMapGrid2d),
     (void *)(plugin_glMapGrid2f),
+    (void *)(plugin_glMapNamedBuffer),
     (void *)(plugin_glMapNamedBufferEXT),
+    (void *)(plugin_glMapNamedBufferRange),
     (void *)(plugin_glMapNamedBufferRangeEXT),
     (void *)(plugin_glMapObjectBufferATI),
     (void *)(plugin_glMapParameterfvNV),
@@ -29452,6 +30538,7 @@ namespace Plugin {
     (void *)(plugin_glMatrixTranslatedEXT),
     (void *)(plugin_glMatrixTranslatefEXT),
     (void *)(plugin_glMemoryBarrier),
+    (void *)(plugin_glMemoryBarrierByRegion),
     (void *)(plugin_glMemoryBarrierEXT),
     (void *)(plugin_glMinSampleShading),
     (void *)(plugin_glMinSampleShadingARB),
@@ -29585,17 +30672,27 @@ namespace Plugin {
     (void *)(plugin_glMultiTexSubImage1DEXT),
     (void *)(plugin_glMultiTexSubImage2DEXT),
     (void *)(plugin_glMultiTexSubImage3DEXT),
+    (void *)(plugin_glNamedBufferData),
     (void *)(plugin_glNamedBufferDataEXT),
+    (void *)(plugin_glNamedBufferStorage),
     (void *)(plugin_glNamedBufferStorageEXT),
+    (void *)(plugin_glNamedBufferSubData),
     (void *)(plugin_glNamedBufferSubDataEXT),
     (void *)(plugin_glNamedCopyBufferSubDataEXT),
+    (void *)(plugin_glNamedFramebufferDrawBuffer),
+    (void *)(plugin_glNamedFramebufferDrawBuffers),
+    (void *)(plugin_glNamedFramebufferParameteri),
     (void *)(plugin_glNamedFramebufferParameteriEXT),
+    (void *)(plugin_glNamedFramebufferReadBuffer),
+    (void *)(plugin_glNamedFramebufferRenderbuffer),
     (void *)(plugin_glNamedFramebufferRenderbufferEXT),
+    (void *)(plugin_glNamedFramebufferTexture),
     (void *)(plugin_glNamedFramebufferTexture1DEXT),
     (void *)(plugin_glNamedFramebufferTexture2DEXT),
     (void *)(plugin_glNamedFramebufferTexture3DEXT),
     (void *)(plugin_glNamedFramebufferTextureEXT),
     (void *)(plugin_glNamedFramebufferTextureFaceEXT),
+    (void *)(plugin_glNamedFramebufferTextureLayer),
     (void *)(plugin_glNamedFramebufferTextureLayerEXT),
     (void *)(plugin_glNamedProgramLocalParameter4dEXT),
     (void *)(plugin_glNamedProgramLocalParameter4dvEXT),
@@ -29609,7 +30706,9 @@ namespace Plugin {
     (void *)(plugin_glNamedProgramLocalParametersI4ivEXT),
     (void *)(plugin_glNamedProgramLocalParametersI4uivEXT),
     (void *)(plugin_glNamedProgramStringEXT),
+    (void *)(plugin_glNamedRenderbufferStorage),
     (void *)(plugin_glNamedRenderbufferStorageEXT),
+    (void *)(plugin_glNamedRenderbufferStorageMultisample),
     (void *)(plugin_glNamedRenderbufferStorageMultisampleCoverageEXT),
     (void *)(plugin_glNamedRenderbufferStorageMultisampleEXT),
     (void *)(plugin_glNamedStringARB),
@@ -29946,6 +31045,7 @@ namespace Plugin {
     (void *)(plugin_glReadInstrumentsSGIX),
     (void *)(plugin_glReadPixels),
     (void *)(plugin_glReadVideoPixelsSUN),
+    (void *)(plugin_glReadnPixels),
     (void *)(plugin_glReadnPixelsARB),
     (void *)(plugin_glReadnPixelsEXT),
     (void *)(plugin_glRectd),
@@ -30261,8 +31361,11 @@ namespace Plugin {
     (void *)(plugin_glTexSubImage3DEXT),
     (void *)(plugin_glTexSubImage3DOES),
     (void *)(plugin_glTexSubImage4DSGIS),
+    (void *)(plugin_glTextureBarrier),
     (void *)(plugin_glTextureBarrierNV),
+    (void *)(plugin_glTextureBuffer),
     (void *)(plugin_glTextureBufferEXT),
+    (void *)(plugin_glTextureBufferRange),
     (void *)(plugin_glTextureBufferRangeEXT),
     (void *)(plugin_glTextureColorMaskSGIS),
     (void *)(plugin_glTextureFogSGIX),
@@ -30277,26 +31380,42 @@ namespace Plugin {
     (void *)(plugin_glTextureMaterialEXT),
     (void *)(plugin_glTextureNormalEXT),
     (void *)(plugin_glTexturePageCommitmentEXT),
+    (void *)(plugin_glTextureParameterIiv),
     (void *)(plugin_glTextureParameterIivEXT),
+    (void *)(plugin_glTextureParameterIuiv),
     (void *)(plugin_glTextureParameterIuivEXT),
+    (void *)(plugin_glTextureParameterf),
     (void *)(plugin_glTextureParameterfEXT),
+    (void *)(plugin_glTextureParameterfv),
     (void *)(plugin_glTextureParameterfvEXT),
+    (void *)(plugin_glTextureParameteri),
     (void *)(plugin_glTextureParameteriEXT),
+    (void *)(plugin_glTextureParameteriv),
     (void *)(plugin_glTextureParameterivEXT),
     (void *)(plugin_glTextureRangeAPPLE),
     (void *)(plugin_glTextureRenderbufferEXT),
+    (void *)(plugin_glTextureStorage1D),
     (void *)(plugin_glTextureStorage1DEXT),
+    (void *)(plugin_glTextureStorage2D),
     (void *)(plugin_glTextureStorage2DEXT),
+    (void *)(plugin_glTextureStorage2DMultisample),
     (void *)(plugin_glTextureStorage2DMultisampleEXT),
+    (void *)(plugin_glTextureStorage3D),
     (void *)(plugin_glTextureStorage3DEXT),
+    (void *)(plugin_glTextureStorage3DMultisample),
     (void *)(plugin_glTextureStorage3DMultisampleEXT),
     (void *)(plugin_glTextureStorageSparseAMD),
+    (void *)(plugin_glTextureSubImage1D),
     (void *)(plugin_glTextureSubImage1DEXT),
+    (void *)(plugin_glTextureSubImage2D),
     (void *)(plugin_glTextureSubImage2DEXT),
+    (void *)(plugin_glTextureSubImage3D),
     (void *)(plugin_glTextureSubImage3DEXT),
     (void *)(plugin_glTextureView),
     (void *)(plugin_glTrackMatrixNV),
     (void *)(plugin_glTransformFeedbackAttribsNV),
+    (void *)(plugin_glTransformFeedbackBufferBase),
+    (void *)(plugin_glTransformFeedbackBufferRange),
     (void *)(plugin_glTransformFeedbackVaryings),
     (void *)(plugin_glTransformFeedbackVaryingsEXT),
     (void *)(plugin_glTransformFeedbackVaryingsNV),
@@ -30416,6 +31535,7 @@ namespace Plugin {
     (void *)(plugin_glUnmapBuffer),
     (void *)(plugin_glUnmapBufferARB),
     (void *)(plugin_glUnmapBufferOES),
+    (void *)(plugin_glUnmapNamedBuffer),
     (void *)(plugin_glUnmapNamedBufferEXT),
     (void *)(plugin_glUnmapObjectBufferATI),
     (void *)(plugin_glUnmapTexture2DINTEL),
@@ -30477,9 +31597,15 @@ namespace Plugin {
     (void *)(plugin_glVertex4iv),
     (void *)(plugin_glVertex4s),
     (void *)(plugin_glVertex4sv),
+    (void *)(plugin_glVertexArrayAttribBinding),
+    (void *)(plugin_glVertexArrayAttribFormat),
+    (void *)(plugin_glVertexArrayAttribIFormat),
+    (void *)(plugin_glVertexArrayAttribLFormat),
     (void *)(plugin_glVertexArrayBindVertexBufferEXT),
+    (void *)(plugin_glVertexArrayBindingDivisor),
     (void *)(plugin_glVertexArrayColorOffsetEXT),
     (void *)(plugin_glVertexArrayEdgeFlagOffsetEXT),
+    (void *)(plugin_glVertexArrayElementBuffer),
     (void *)(plugin_glVertexArrayFogCoordOffsetEXT),
     (void *)(plugin_glVertexArrayIndexOffsetEXT),
     (void *)(plugin_glVertexArrayMultiTexCoordOffsetEXT),
@@ -30497,6 +31623,8 @@ namespace Plugin {
     (void *)(plugin_glVertexArrayVertexAttribLOffsetEXT),
     (void *)(plugin_glVertexArrayVertexAttribOffsetEXT),
     (void *)(plugin_glVertexArrayVertexBindingDivisorEXT),
+    (void *)(plugin_glVertexArrayVertexBuffer),
+    (void *)(plugin_glVertexArrayVertexBuffers),
     (void *)(plugin_glVertexArrayVertexOffsetEXT),
     (void *)(plugin_glVertexAttrib1d),
     (void *)(plugin_glVertexAttrib1dARB),
@@ -30856,7 +31984,7 @@ namespace Plugin {
   };
 
   #if REGAL_SYS_WGL
-  const char * const lookup_wgl_Name[144] = {
+  const char * const lookup_wgl_Name[145] = {
     "wglAllocateMemoryNV",
     "wglAssociateImageBufferEventsI3D",
     "wglBeginFrameTrackingI3D",
@@ -30891,6 +32019,7 @@ namespace Plugin {
     "wglDXSetResourceShareHandleNV",
     "wglDXUnlockObjectsNV",
     "wglDXUnregisterObjectNV",
+    "wglDelayBeforeSwapNV",
     "wglDeleteAssociatedContextAMD",
     "wglDeleteBufferRegionARB",
     "wglDeleteContext",
@@ -31003,7 +32132,7 @@ namespace Plugin {
     NULL
   };
 
-  const void *lookup_wgl_Value[144] = {
+  const void *lookup_wgl_Value[145] = {
     (void *)(plugin_wglAllocateMemoryNV),
     (void *)(plugin_wglAssociateImageBufferEventsI3D),
     (void *)(plugin_wglBeginFrameTrackingI3D),
@@ -31038,6 +32167,7 @@ namespace Plugin {
     (void *)(plugin_wglDXSetResourceShareHandleNV),
     (void *)(plugin_wglDXUnlockObjectsNV),
     (void *)(plugin_wglDXUnregisterObjectNV),
+    (void *)(plugin_wglDelayBeforeSwapNV),
     (void *)(plugin_wglDeleteAssociatedContextAMD),
     (void *)(plugin_wglDeleteBufferRegionARB),
     (void *)(plugin_wglDeleteContext),
@@ -31152,7 +32282,7 @@ namespace Plugin {
   #endif /* REGAL_SYS_WGL */
 
   #if REGAL_SYS_GLX
-  const char * const lookup_glx_Name[123] = {
+  const char * const lookup_glx_Name[130] = {
     "glXAllocateMemoryNV",
     "glXBindChannelToWindowSGIX",
     "glXBindSwapBarrierNV",
@@ -31168,6 +32298,7 @@ namespace Plugin {
     "glXChooseFBConfig",
     "glXChooseFBConfigSGIX",
     "glXChooseVisual",
+    "glXCopyBufferSubDataNV",
     "glXCopyContext",
     "glXCopyImageSubDataNV",
     "glXCopySubBufferMESA",
@@ -31185,6 +32316,7 @@ namespace Plugin {
     "glXCreatePixmap",
     "glXCreateWindow",
     "glXCushionSGI",
+    "glXDelayBeforeSwapNV",
     "glXDeleteAssociatedContextAMD",
     "glXDestroyContext",
     "glXDestroyGLXPbufferSGIX",
@@ -31237,10 +32369,13 @@ namespace Plugin {
     "glXMakeContextCurrent",
     "glXMakeCurrent",
     "glXMakeCurrentReadSGI",
+    "glXNamedCopyBufferSubDataNV",
     "glXQueryChannelDeltasSGIX",
     "glXQueryChannelRectSGIX",
     "glXQueryContext",
     "glXQueryContextInfoEXT",
+    "glXQueryCurrentRendererIntegerMESA",
+    "glXQueryCurrentRendererStringMESA",
     "glXQueryDrawable",
     "glXQueryExtension",
     "glXQueryExtensionsString",
@@ -31248,6 +32383,8 @@ namespace Plugin {
     "glXQueryGLXPbufferSGIX",
     "glXQueryMaxSwapBarriersSGIX",
     "glXQueryMaxSwapGroupsNV",
+    "glXQueryRendererIntegerMESA",
+    "glXQueryRendererStringMESA",
     "glXQueryServerString",
     "glXQuerySwapGroupNV",
     "glXQueryVersion",
@@ -31278,7 +32415,7 @@ namespace Plugin {
     NULL
   };
 
-  const void *lookup_glx_Value[123] = {
+  const void *lookup_glx_Value[130] = {
     (void *)(plugin_glXAllocateMemoryNV),
     (void *)(plugin_glXBindChannelToWindowSGIX),
     (void *)(plugin_glXBindSwapBarrierNV),
@@ -31294,6 +32431,7 @@ namespace Plugin {
     (void *)(plugin_glXChooseFBConfig),
     (void *)(plugin_glXChooseFBConfigSGIX),
     (void *)(plugin_glXChooseVisual),
+    (void *)(plugin_glXCopyBufferSubDataNV),
     (void *)(plugin_glXCopyContext),
     (void *)(plugin_glXCopyImageSubDataNV),
     (void *)(plugin_glXCopySubBufferMESA),
@@ -31311,6 +32449,7 @@ namespace Plugin {
     (void *)(plugin_glXCreatePixmap),
     (void *)(plugin_glXCreateWindow),
     (void *)(plugin_glXCushionSGI),
+    (void *)(plugin_glXDelayBeforeSwapNV),
     (void *)(plugin_glXDeleteAssociatedContextAMD),
     (void *)(plugin_glXDestroyContext),
     (void *)(plugin_glXDestroyGLXPbufferSGIX),
@@ -31363,10 +32502,13 @@ namespace Plugin {
     (void *)(plugin_glXMakeContextCurrent),
     (void *)(plugin_glXMakeCurrent),
     (void *)(plugin_glXMakeCurrentReadSGI),
+    (void *)(plugin_glXNamedCopyBufferSubDataNV),
     (void *)(plugin_glXQueryChannelDeltasSGIX),
     (void *)(plugin_glXQueryChannelRectSGIX),
     (void *)(plugin_glXQueryContext),
     (void *)(plugin_glXQueryContextInfoEXT),
+    (void *)(plugin_glXQueryCurrentRendererIntegerMESA),
+    (void *)(plugin_glXQueryCurrentRendererStringMESA),
     (void *)(plugin_glXQueryDrawable),
     (void *)(plugin_glXQueryExtension),
     (void *)(plugin_glXQueryExtensionsString),
@@ -31374,6 +32516,8 @@ namespace Plugin {
     (void *)(plugin_glXQueryGLXPbufferSGIX),
     (void *)(plugin_glXQueryMaxSwapBarriersSGIX),
     (void *)(plugin_glXQueryMaxSwapGroupsNV),
+    (void *)(plugin_glXQueryRendererIntegerMESA),
+    (void *)(plugin_glXQueryRendererStringMESA),
     (void *)(plugin_glXQueryServerString),
     (void *)(plugin_glXQuerySwapGroupNV),
     (void *)(plugin_glXQueryVersion),
@@ -31671,16 +32815,16 @@ extern "C" {
   {
     const char **res;
 
-    res = (const char **) std::bsearch(&name, lookup_gl_Name, 2695, sizeof(const char *), NameCmp);
+    res = (const char **) std::bsearch(&name, lookup_gl_Name, 2799, sizeof(const char *), NameCmp);
     if (res) return const_cast<void *>(lookup_gl_Value[(size_t) (res - lookup_gl_Name)]);
 
 #if REGAL_SYS_WGL
-    res = (const char **) std::bsearch(&name, lookup_wgl_Name, 142, sizeof(const char *), NameCmp);
+    res = (const char **) std::bsearch(&name, lookup_wgl_Name, 143, sizeof(const char *), NameCmp);
     if (res) return const_cast<void *>(lookup_wgl_Value[(size_t) (res - lookup_wgl_Name)]);
 #endif /* REGAL_SYS_WGL */
 
 #if REGAL_SYS_GLX
-    res = (const char **) std::bsearch(&name, lookup_glx_Name, 121, sizeof(const char *), NameCmp);
+    res = (const char **) std::bsearch(&name, lookup_glx_Name, 128, sizeof(const char *), NameCmp);
     if (res) return const_cast<void *>(lookup_glx_Value[(size_t) (res - lookup_glx_Name)]);
 #endif /* REGAL_SYS_GLX */
 

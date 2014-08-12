@@ -81,6 +81,7 @@ EXPORTS
   glBindTexGenParameterEXT
   glBindTexture
   glBindTextureEXT
+  glBindTextureUnit
   glBindTextureUnitParameterEXT
   glBindTextures
   glBindTransformFeedback
@@ -105,6 +106,7 @@ EXPORTS
   glBinormal3svEXT
   glBinormalPointerEXT
   glBitmap
+  glBlendBarrierKHR
   glBlendBarrierNV
   glBlendColor
   glBlendColorEXT
@@ -136,9 +138,11 @@ EXPORTS
   glBlitFramebufferANGLE
   glBlitFramebufferEXT
   glBlitFramebufferNV
+  glBlitNamedFramebuffer
   glBufferAddressRangeNV
   glBufferData
   glBufferDataARB
+  glBufferPageCommitmentARB
   glBufferParameteriAPPLE
   glBufferRegionEnabled
   glBufferStorage
@@ -149,6 +153,7 @@ EXPORTS
   glCheckFramebufferStatus
   glCheckFramebufferStatusEXT
   glCheckFramebufferStatusOES
+  glCheckNamedFramebufferStatus
   glCheckNamedFramebufferStatusEXT
   glClampColor
   glClampColorARB
@@ -170,8 +175,14 @@ EXPORTS
   glClearDepthfOES
   glClearDepthx
   glClearIndex
+  glClearNamedBufferData
   glClearNamedBufferDataEXT
+  glClearNamedBufferSubData
   glClearNamedBufferSubDataEXT
+  glClearNamedFramebufferfi
+  glClearNamedFramebufferfv
+  glClearNamedFramebufferiv
+  glClearNamedFramebufferuiv
   glClearStencil
   glClearTexImage
   glClearTexSubImage
@@ -181,6 +192,7 @@ EXPORTS
   glClientAttribDefaultEXT
   glClientWaitSync
   glClientWaitSyncAPPLE
+  glClipControl
   glClipPlane
   glClipPlanef
   glClipPlanefOES
@@ -288,8 +300,11 @@ EXPORTS
   glCompressedTextureImage1DEXT
   glCompressedTextureImage2DEXT
   glCompressedTextureImage3DEXT
+  glCompressedTextureSubImage1D
   glCompressedTextureSubImage1DEXT
+  glCompressedTextureSubImage2D
   glCompressedTextureSubImage2DEXT
+  glCompressedTextureSubImage3D
   glCompressedTextureSubImage3DEXT
   glConvolutionFilter1D
   glConvolutionFilter1DEXT
@@ -320,6 +335,7 @@ EXPORTS
   glCopyMultiTexSubImage1DEXT
   glCopyMultiTexSubImage2DEXT
   glCopyMultiTexSubImage3DEXT
+  glCopyNamedBufferSubData
   glCopyPathNV
   glCopyPixels
   glCopyTexImage1D
@@ -336,8 +352,11 @@ EXPORTS
   glCopyTextureImage1DEXT
   glCopyTextureImage2DEXT
   glCopyTextureLevelsAPPLE
+  glCopyTextureSubImage1D
   glCopyTextureSubImage1DEXT
+  glCopyTextureSubImage2D
   glCopyTextureSubImage2DEXT
+  glCopyTextureSubImage3D
   glCopyTextureSubImage3DEXT
   glCoverFillPathInstancedNV
   glCoverFillPathNV
@@ -345,13 +364,22 @@ EXPORTS
   glCoverStrokePathNV
   glCoverageMaskNV
   glCoverageOperationNV
+  glCreateBuffers
+  glCreateFramebuffers
   glCreateProgram
   glCreateProgramObjectARB
+  glCreateProgramPipelines
+  glCreateQueries
+  glCreateRenderbuffers
+  glCreateSamplers
   glCreateShader
   glCreateShaderObjectARB
   glCreateShaderProgramEXT
   glCreateShaderProgramv
   glCreateSyncFromCLeventARB
+  glCreateTextures
+  glCreateTransformFeedbacks
+  glCreateVertexArrays
   glCullFace
   glCullParameterdvEXT
   glCullParameterfvEXT
@@ -430,6 +458,7 @@ EXPORTS
   glDisableDriverControlQCOM
   glDisableIndexedEXT
   glDisableVariantClientStateEXT
+  glDisableVertexArrayAttrib
   glDisableVertexArrayAttribEXT
   glDisableVertexArrayEXT
   glDisableVertexAttribAPPLE
@@ -495,6 +524,7 @@ EXPORTS
   glEnableDriverControlQCOM
   glEnableIndexedEXT
   glEnableVariantClientStateEXT
+  glEnableVertexArrayAttrib
   glEnableVertexArrayAttribEXT
   glEnableVertexArrayEXT
   glEnableVertexAttribAPPLE
@@ -564,6 +594,7 @@ EXPORTS
   glFlushMappedBufferRange
   glFlushMappedBufferRangeAPPLE
   glFlushMappedBufferRangeEXT
+  glFlushMappedNamedBufferRange
   glFlushMappedNamedBufferRangeEXT
   glFlushPixelDataRangeNV
   glFlushRasterSGIX
@@ -688,6 +719,7 @@ EXPORTS
   glGenerateMipmapEXT
   glGenerateMipmapOES
   glGenerateMultiTexMipmapEXT
+  glGenerateTextureMipmap
   glGenerateTextureMipmapEXT
   glGetActiveAtomicCounterBufferiv
   glGetActiveAttrib
@@ -741,7 +773,9 @@ EXPORTS
   glGetCompressedMultiTexImageEXT
   glGetCompressedTexImage
   glGetCompressedTexImageARB
+  glGetCompressedTextureImage
   glGetCompressedTextureImageEXT
+  glGetCompressedTextureSubImage
   glGetConvolutionFilter
   glGetConvolutionFilterEXT
   glGetConvolutionParameterfv
@@ -852,11 +886,17 @@ EXPORTS
   glGetMultiTexParameterivEXT
   glGetMultisamplefv
   glGetMultisamplefvNV
+  glGetNamedBufferParameteri64v
+  glGetNamedBufferParameteriv
   glGetNamedBufferParameterivEXT
   glGetNamedBufferParameterui64vNV
+  glGetNamedBufferPointerv
   glGetNamedBufferPointervEXT
+  glGetNamedBufferSubData
   glGetNamedBufferSubDataEXT
+  glGetNamedFramebufferAttachmentParameteriv
   glGetNamedFramebufferAttachmentParameterivEXT
+  glGetNamedFramebufferParameteriv
   glGetNamedFramebufferParameterivEXT
   glGetNamedProgramLocalParameterIivEXT
   glGetNamedProgramLocalParameterIuivEXT
@@ -864,6 +904,7 @@ EXPORTS
   glGetNamedProgramLocalParameterfvEXT
   glGetNamedProgramStringEXT
   glGetNamedProgramivEXT
+  glGetNamedRenderbufferParameteriv
   glGetNamedRenderbufferParameterivEXT
   glGetNamedStringARB
   glGetNamedStringivARB
@@ -1004,19 +1045,30 @@ EXPORTS
   glGetTexParameterxv
   glGetTextureHandleARB
   glGetTextureHandleNV
+  glGetTextureImage
   glGetTextureImageEXT
+  glGetTextureLevelParameterfv
   glGetTextureLevelParameterfvEXT
+  glGetTextureLevelParameteriv
   glGetTextureLevelParameterivEXT
+  glGetTextureParameterIiv
   glGetTextureParameterIivEXT
+  glGetTextureParameterIuiv
   glGetTextureParameterIuivEXT
+  glGetTextureParameterfv
   glGetTextureParameterfvEXT
+  glGetTextureParameteriv
   glGetTextureParameterivEXT
   glGetTextureSamplerHandleARB
   glGetTextureSamplerHandleNV
+  glGetTextureSubImage
   glGetTrackMatrixivNV
   glGetTransformFeedbackVarying
   glGetTransformFeedbackVaryingEXT
   glGetTransformFeedbackVaryingNV
+  glGetTransformFeedbacki64_v
+  glGetTransformFeedbacki_v
+  glGetTransformFeedbackiv
   glGetTranslatedShaderSourceANGLE
   glGetUniformBlockIndex
   glGetUniformBufferSizeEXT
@@ -1041,10 +1093,13 @@ EXPORTS
   glGetVariantIntegervEXT
   glGetVariantPointervEXT
   glGetVaryingLocationNV
+  glGetVertexArrayIndexed64iv
+  glGetVertexArrayIndexediv
   glGetVertexArrayIntegeri_vEXT
   glGetVertexArrayIntegervEXT
   glGetVertexArrayPointeri_vEXT
   glGetVertexArrayPointervEXT
+  glGetVertexArrayiv
   glGetVertexAttribArrayObjectfvATI
   glGetVertexAttribArrayObjectivATI
   glGetVertexAttribIiv
@@ -1091,10 +1146,13 @@ EXPORTS
   glGetnSeparableFilterARB
   glGetnTexImageARB
   glGetnUniformdvARB
+  glGetnUniformfv
   glGetnUniformfvARB
   glGetnUniformfvEXT
+  glGetnUniformiv
   glGetnUniformivARB
   glGetnUniformivEXT
+  glGetnUniformuiv
   glGetnUniformuivARB
   glGlobalAlphaFactorbSUN
   glGlobalAlphaFactordSUN
@@ -1140,6 +1198,8 @@ EXPORTS
   glInvalidateBufferData
   glInvalidateBufferSubData
   glInvalidateFramebuffer
+  glInvalidateNamedFramebufferData
+  glInvalidateNamedFramebufferSubData
   glInvalidateSubFramebuffer
   glInvalidateTexImage
   glInvalidateTexSubImage
@@ -1258,7 +1318,9 @@ EXPORTS
   glMapGrid1f
   glMapGrid2d
   glMapGrid2f
+  glMapNamedBuffer
   glMapNamedBufferEXT
+  glMapNamedBufferRange
   glMapNamedBufferRangeEXT
   glMapObjectBufferATI
   glMapParameterfvNV
@@ -1300,6 +1362,7 @@ EXPORTS
   glMatrixTranslatedEXT
   glMatrixTranslatefEXT
   glMemoryBarrier
+  glMemoryBarrierByRegion
   glMemoryBarrierEXT
   glMinSampleShading
   glMinSampleShadingARB
@@ -1433,17 +1496,27 @@ EXPORTS
   glMultiTexSubImage1DEXT
   glMultiTexSubImage2DEXT
   glMultiTexSubImage3DEXT
+  glNamedBufferData
   glNamedBufferDataEXT
+  glNamedBufferStorage
   glNamedBufferStorageEXT
+  glNamedBufferSubData
   glNamedBufferSubDataEXT
   glNamedCopyBufferSubDataEXT
+  glNamedFramebufferDrawBuffer
+  glNamedFramebufferDrawBuffers
+  glNamedFramebufferParameteri
   glNamedFramebufferParameteriEXT
+  glNamedFramebufferReadBuffer
+  glNamedFramebufferRenderbuffer
   glNamedFramebufferRenderbufferEXT
+  glNamedFramebufferTexture
   glNamedFramebufferTexture1DEXT
   glNamedFramebufferTexture2DEXT
   glNamedFramebufferTexture3DEXT
   glNamedFramebufferTextureEXT
   glNamedFramebufferTextureFaceEXT
+  glNamedFramebufferTextureLayer
   glNamedFramebufferTextureLayerEXT
   glNamedProgramLocalParameter4dEXT
   glNamedProgramLocalParameter4dvEXT
@@ -1457,7 +1530,9 @@ EXPORTS
   glNamedProgramLocalParametersI4ivEXT
   glNamedProgramLocalParametersI4uivEXT
   glNamedProgramStringEXT
+  glNamedRenderbufferStorage
   glNamedRenderbufferStorageEXT
+  glNamedRenderbufferStorageMultisample
   glNamedRenderbufferStorageMultisampleCoverageEXT
   glNamedRenderbufferStorageMultisampleEXT
   glNamedStringARB
@@ -1794,6 +1869,7 @@ EXPORTS
   glReadInstrumentsSGIX
   glReadPixels
   glReadVideoPixelsSUN
+  glReadnPixels
   glReadnPixelsARB
   glReadnPixelsEXT
   glRectd
@@ -2109,8 +2185,11 @@ EXPORTS
   glTexSubImage3DEXT
   glTexSubImage3DOES
   glTexSubImage4DSGIS
+  glTextureBarrier
   glTextureBarrierNV
+  glTextureBuffer
   glTextureBufferEXT
+  glTextureBufferRange
   glTextureBufferRangeEXT
   glTextureColorMaskSGIS
   glTextureFogSGIX
@@ -2125,26 +2204,42 @@ EXPORTS
   glTextureMaterialEXT
   glTextureNormalEXT
   glTexturePageCommitmentEXT
+  glTextureParameterIiv
   glTextureParameterIivEXT
+  glTextureParameterIuiv
   glTextureParameterIuivEXT
+  glTextureParameterf
   glTextureParameterfEXT
+  glTextureParameterfv
   glTextureParameterfvEXT
+  glTextureParameteri
   glTextureParameteriEXT
+  glTextureParameteriv
   glTextureParameterivEXT
   glTextureRangeAPPLE
   glTextureRenderbufferEXT
+  glTextureStorage1D
   glTextureStorage1DEXT
+  glTextureStorage2D
   glTextureStorage2DEXT
+  glTextureStorage2DMultisample
   glTextureStorage2DMultisampleEXT
+  glTextureStorage3D
   glTextureStorage3DEXT
+  glTextureStorage3DMultisample
   glTextureStorage3DMultisampleEXT
   glTextureStorageSparseAMD
+  glTextureSubImage1D
   glTextureSubImage1DEXT
+  glTextureSubImage2D
   glTextureSubImage2DEXT
+  glTextureSubImage3D
   glTextureSubImage3DEXT
   glTextureView
   glTrackMatrixNV
   glTransformFeedbackAttribsNV
+  glTransformFeedbackBufferBase
+  glTransformFeedbackBufferRange
   glTransformFeedbackVaryings
   glTransformFeedbackVaryingsEXT
   glTransformFeedbackVaryingsNV
@@ -2264,6 +2359,7 @@ EXPORTS
   glUnmapBuffer
   glUnmapBufferARB
   glUnmapBufferOES
+  glUnmapNamedBuffer
   glUnmapNamedBufferEXT
   glUnmapObjectBufferATI
   glUnmapTexture2DINTEL
@@ -2325,9 +2421,15 @@ EXPORTS
   glVertex4iv
   glVertex4s
   glVertex4sv
+  glVertexArrayAttribBinding
+  glVertexArrayAttribFormat
+  glVertexArrayAttribIFormat
+  glVertexArrayAttribLFormat
   glVertexArrayBindVertexBufferEXT
+  glVertexArrayBindingDivisor
   glVertexArrayColorOffsetEXT
   glVertexArrayEdgeFlagOffsetEXT
+  glVertexArrayElementBuffer
   glVertexArrayFogCoordOffsetEXT
   glVertexArrayIndexOffsetEXT
   glVertexArrayMultiTexCoordOffsetEXT
@@ -2345,6 +2447,8 @@ EXPORTS
   glVertexArrayVertexAttribLOffsetEXT
   glVertexArrayVertexAttribOffsetEXT
   glVertexArrayVertexBindingDivisorEXT
+  glVertexArrayVertexBuffer
+  glVertexArrayVertexBuffers
   glVertexArrayVertexOffsetEXT
   glVertexAttrib1d
   glVertexAttrib1dARB
@@ -2734,6 +2838,7 @@ EXPORTS
   wglDXSetResourceShareHandleNV
   wglDXUnlockObjectsNV
   wglDXUnregisterObjectNV
+  wglDelayBeforeSwapNV
   wglDeleteAssociatedContextAMD
   wglDeleteBufferRegionARB
   wglDeleteContext

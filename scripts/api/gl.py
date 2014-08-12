@@ -43338,6 +43338,1421 @@ glAddSwapHintRectWIN.trace = True
 glAddSwapHintRectWIN.play = True
 gl.add(glAddSwapHintRectWIN)
 
+#
+# OpenGL 4.5 additions
+#
+
+# GL_ARB_clip_control
+
+GL_CLIP_DEPTH_MODE = Enumerant('GL_CLIP_DEPTH_MODE', 0x935d, 'GL_ARB_clip_control')
+GL_CLIP_ORIGIN = Enumerant('GL_CLIP_ORIGIN', 0x935c, 'GL_ARB_clip_control')
+GL_LOWER_LEFT = Enumerant('GL_LOWER_LEFT', 0x8ca1, 'GL_ARB_clip_control')
+GL_NEGATIVE_ONE_TO_ONE = Enumerant('GL_NEGATIVE_ONE_TO_ONE', 0x935e, 'GL_ARB_clip_control')
+GL_UPPER_LEFT = Enumerant('GL_UPPER_LEFT', 0x8ca2, 'GL_ARB_clip_control')
+GL_ZERO_TO_ONE = Enumerant('GL_ZERO_TO_ONE', 0x935f, 'GL_ARB_clip_control')
+
+defines.add(GL_CLIP_DEPTH_MODE)
+defines.add(GL_CLIP_ORIGIN)
+defines.add(GL_LOWER_LEFT)
+defines.add(GL_NEGATIVE_ONE_TO_ONE)
+defines.add(GL_UPPER_LEFT)
+defines.add(GL_ZERO_TO_ONE)
+
+# GL_ARB_conditional_render_inverted
+
+GL_QUERY_BY_REGION_NO_WAIT_INVERTED = Enumerant('GL_QUERY_BY_REGION_NO_WAIT_INVERTED', 0x8e1a, 'GL_ARB_conditional_render_inverted')
+GL_QUERY_BY_REGION_WAIT_INVERTED = Enumerant('GL_QUERY_BY_REGION_WAIT_INVERTED', 0x8e19, 'GL_ARB_conditional_render_inverted')
+GL_QUERY_NO_WAIT_INVERTED = Enumerant('GL_QUERY_NO_WAIT_INVERTED', 0x8e18, 'GL_ARB_conditional_render_inverted')
+GL_QUERY_WAIT_INVERTED = Enumerant('GL_QUERY_WAIT_INVERTED', 0x8e17, 'GL_ARB_conditional_render_inverted')
+
+defines.add(GL_QUERY_BY_REGION_NO_WAIT_INVERTED)
+defines.add(GL_QUERY_BY_REGION_WAIT_INVERTED)
+defines.add(GL_QUERY_NO_WAIT_INVERTED)
+defines.add(GL_QUERY_WAIT_INVERTED)
+
+# GL_ARB_cull_distance
+
+GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = Enumerant('GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES', 0x82fa, 'GL_ARB_cull_distance')
+GL_MAX_CULL_DISTANCES = Enumerant('GL_MAX_CULL_DISTANCES', 0x82f9, 'GL_ARB_cull_distance')
+
+defines.add(GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES)
+defines.add(GL_MAX_CULL_DISTANCES)
+
+# GL_ARB_direct_state_access
+
+GL_QUERY_TARGET = Enumerant('GL_QUERY_TARGET', 0x82ea, 'GL_ARB_direct_state_access')
+GL_TEXTURE_BINDING = Enumerant('GL_TEXTURE_BINDING', 0x82eb, 'GL_ARB_direct_state_access')
+GL_TEXTURE_TARGET = Enumerant('GL_TEXTURE_TARGET', 0x1006, 'GL_ARB_direct_state_access')
+
+defines.add(GL_QUERY_TARGET)
+defines.add(GL_TEXTURE_BINDING)
+defines.add(GL_TEXTURE_TARGET)
+
+# GL_ARB_pipeline_statistics_query
+
+GL_CLIPPING_INPUT_PRIMITIVES_ARB = Enumerant('GL_CLIPPING_INPUT_PRIMITIVES_ARB', 0x82f6, 'GL_ARB_pipeline_statistics_query')
+GL_CLIPPING_OUTPUT_PRIMITIVES_ARB = Enumerant('GL_CLIPPING_OUTPUT_PRIMITIVES_ARB', 0x82f7, 'GL_ARB_pipeline_statistics_query')
+GL_COMPUTE_SHADER_INVOCATIONS_ARB = Enumerant('GL_COMPUTE_SHADER_INVOCATIONS_ARB', 0x82f5, 'GL_ARB_pipeline_statistics_query')
+GL_FRAGMENT_SHADER_INVOCATIONS_ARB = Enumerant('GL_FRAGMENT_SHADER_INVOCATIONS_ARB', 0x82f4, 'GL_ARB_pipeline_statistics_query')
+GL_GEOMETRY_SHADER_INVOCATIONS = Enumerant('GL_GEOMETRY_SHADER_INVOCATIONS', 0x887f, 'GL_ARB_pipeline_statistics_query')
+GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB = Enumerant('GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB', 0x82f3, 'GL_ARB_pipeline_statistics_query')
+GL_PRIMITIVES_SUBMITTED_ARB = Enumerant('GL_PRIMITIVES_SUBMITTED_ARB', 0x82ef, 'GL_ARB_pipeline_statistics_query')
+GL_TESS_CONTROL_SHADER_PATCHES_ARB = Enumerant('GL_TESS_CONTROL_SHADER_PATCHES_ARB', 0x82f1, 'GL_ARB_pipeline_statistics_query')
+GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB = Enumerant('GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB', 0x82f2, 'GL_ARB_pipeline_statistics_query')
+GL_VERTEX_SHADER_INVOCATIONS_ARB = Enumerant('GL_VERTEX_SHADER_INVOCATIONS_ARB', 0x82f0, 'GL_ARB_pipeline_statistics_query')
+GL_VERTICES_SUBMITTED_ARB = Enumerant('GL_VERTICES_SUBMITTED_ARB', 0x82ee, 'GL_ARB_pipeline_statistics_query')
+
+defines.add(GL_CLIPPING_INPUT_PRIMITIVES_ARB)
+defines.add(GL_CLIPPING_OUTPUT_PRIMITIVES_ARB)
+defines.add(GL_COMPUTE_SHADER_INVOCATIONS_ARB)
+defines.add(GL_FRAGMENT_SHADER_INVOCATIONS_ARB)
+defines.add(GL_GEOMETRY_SHADER_INVOCATIONS)
+defines.add(GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB)
+defines.add(GL_PRIMITIVES_SUBMITTED_ARB)
+defines.add(GL_TESS_CONTROL_SHADER_PATCHES_ARB)
+defines.add(GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB)
+defines.add(GL_VERTEX_SHADER_INVOCATIONS_ARB)
+defines.add(GL_VERTICES_SUBMITTED_ARB)
+
+# GL_ARB_sparse_buffer
+
+GL_SPARSE_BUFFER_PAGE_SIZE_ARB = Enumerant('GL_SPARSE_BUFFER_PAGE_SIZE_ARB', 0x82f8, 'GL_ARB_sparse_buffer')
+GL_SPARSE_STORAGE_BIT_ARB = Enumerant('GL_SPARSE_STORAGE_BIT_ARB', 0x0400, 'GL_ARB_sparse_buffer')
+
+defines.add(GL_SPARSE_BUFFER_PAGE_SIZE_ARB)
+defines.add(GL_SPARSE_STORAGE_BIT_ARB)
+
+# GL_ARB_transform_feedback_overflow_query
+
+GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB = Enumerant('GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB', 0x82ec, 'GL_ARB_transform_feedback_overflow_query')
+GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB = Enumerant('GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB', 0x82ed, 'GL_ARB_transform_feedback_overflow_query')
+
+defines.add(GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB)
+defines.add(GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB)
+
+# GL_KHR_blend_equation_advanced
+
+GL_BLEND_ADVANCED_COHERENT_KHR = Enumerant('GL_BLEND_ADVANCED_COHERENT_KHR', 0x9285, 'GL_KHR_blend_equation_advanced')
+GL_COLORBURN_KHR = Enumerant('GL_COLORBURN_KHR', 0x929a, 'GL_KHR_blend_equation_advanced')
+GL_COLORDODGE_KHR = Enumerant('GL_COLORDODGE_KHR', 0x9299, 'GL_KHR_blend_equation_advanced')
+GL_DARKEN_KHR = Enumerant('GL_DARKEN_KHR', 0x9297, 'GL_KHR_blend_equation_advanced')
+GL_DIFFERENCE_KHR = Enumerant('GL_DIFFERENCE_KHR', 0x929e, 'GL_KHR_blend_equation_advanced')
+GL_EXCLUSION_KHR = Enumerant('GL_EXCLUSION_KHR', 0x92a0, 'GL_KHR_blend_equation_advanced')
+GL_HARDLIGHT_KHR = Enumerant('GL_HARDLIGHT_KHR', 0x929b, 'GL_KHR_blend_equation_advanced')
+GL_HSL_COLOR_KHR = Enumerant('GL_HSL_COLOR_KHR', 0x92af, 'GL_KHR_blend_equation_advanced')
+GL_HSL_HUE_KHR = Enumerant('GL_HSL_HUE_KHR', 0x92ad, 'GL_KHR_blend_equation_advanced')
+GL_HSL_LUMINOSITY_KHR = Enumerant('GL_HSL_LUMINOSITY_KHR', 0x92b0, 'GL_KHR_blend_equation_advanced')
+GL_HSL_SATURATION_KHR = Enumerant('GL_HSL_SATURATION_KHR', 0x92ae, 'GL_KHR_blend_equation_advanced')
+GL_LIGHTEN_KHR = Enumerant('GL_LIGHTEN_KHR', 0x9298, 'GL_KHR_blend_equation_advanced')
+GL_MULTIPLY_KHR = Enumerant('GL_MULTIPLY_KHR', 0x9294, 'GL_KHR_blend_equation_advanced')
+GL_OVERLAY_KHR = Enumerant('GL_OVERLAY_KHR', 0x9296, 'GL_KHR_blend_equation_advanced')
+GL_SCREEN_KHR = Enumerant('GL_SCREEN_KHR', 0x9295, 'GL_KHR_blend_equation_advanced')
+GL_SOFTLIGHT_KHR = Enumerant('GL_SOFTLIGHT_KHR', 0x929c, 'GL_KHR_blend_equation_advanced')
+
+defines.add(GL_BLEND_ADVANCED_COHERENT_KHR)
+defines.add(GL_COLORBURN_KHR)
+defines.add(GL_COLORDODGE_KHR)
+defines.add(GL_DARKEN_KHR)
+defines.add(GL_DIFFERENCE_KHR)
+defines.add(GL_EXCLUSION_KHR)
+defines.add(GL_HARDLIGHT_KHR)
+defines.add(GL_HSL_COLOR_KHR)
+defines.add(GL_HSL_HUE_KHR)
+defines.add(GL_HSL_LUMINOSITY_KHR)
+defines.add(GL_HSL_SATURATION_KHR)
+defines.add(GL_LIGHTEN_KHR)
+defines.add(GL_MULTIPLY_KHR)
+defines.add(GL_OVERLAY_KHR)
+defines.add(GL_SCREEN_KHR)
+defines.add(GL_SOFTLIGHT_KHR)
+
+# GL_KHR_robustness
+
+GL_CONTEXT_LOST = Enumerant('GL_CONTEXT_LOST', 0x0507, 'GL_KHR_robustness')
+GL_CONTEXT_ROBUST_ACCESS = Enumerant('GL_CONTEXT_ROBUST_ACCESS', 0x90f3, 'GL_KHR_robustness')
+GL_GUILTY_CONTEXT_RESET = Enumerant('GL_GUILTY_CONTEXT_RESET', 0x8253, 'GL_KHR_robustness')
+GL_INNOCENT_CONTEXT_RESET = Enumerant('GL_INNOCENT_CONTEXT_RESET', 0x8254, 'GL_KHR_robustness')
+GL_LOSE_CONTEXT_ON_RESET = Enumerant('GL_LOSE_CONTEXT_ON_RESET', 0x8252, 'GL_KHR_robustness')
+GL_NO_RESET_NOTIFICATION = Enumerant('GL_NO_RESET_NOTIFICATION', 0x8261, 'GL_KHR_robustness')
+GL_RESET_NOTIFICATION_STRATEGY = Enumerant('GL_RESET_NOTIFICATION_STRATEGY', 0x8256, 'GL_KHR_robustness')
+GL_UNKNOWN_CONTEXT_RESET = Enumerant('GL_UNKNOWN_CONTEXT_RESET', 0x8255, 'GL_KHR_robustness')
+
+defines.add(GL_CONTEXT_LOST)
+defines.add(GL_CONTEXT_ROBUST_ACCESS)
+defines.add(GL_GUILTY_CONTEXT_RESET)
+defines.add(GL_INNOCENT_CONTEXT_RESET)
+defines.add(GL_LOSE_CONTEXT_ON_RESET)
+defines.add(GL_NO_RESET_NOTIFICATION)
+defines.add(GL_RESET_NOTIFICATION_STRATEGY)
+defines.add(GL_UNKNOWN_CONTEXT_RESET)
+
+# GL_ARB_ES3_1_compatibility
+
+glMemoryBarrierByRegion = Function('glMemoryBarrierByRegion')
+glMemoryBarrierByRegion.ret = Return('void')
+glMemoryBarrierByRegion.add( Input( 'barriers','GLbitfield' ))
+glMemoryBarrierByRegion.category = 'GL_ARB_ES3_1_compatibility'
+glMemoryBarrierByRegion.trace = True
+glMemoryBarrierByRegion.play = True
+gl.add(glMemoryBarrierByRegion)
+
+# GL_ARB_clip_control
+
+glClipControl = Function('glClipControl')
+glClipControl.ret = Return('void')
+glClipControl.add( Input( 'origin','GLenum' ))
+glClipControl.add( Input( 'depth','GLenum' ))
+glClipControl.category = 'GL_ARB_clip_control'
+glClipControl.trace = True
+glClipControl.play = True
+gl.add(glClipControl)
+
+# GL_ARB_direct_state_access
+
+glUnmapNamedBuffer = Function('glUnmapNamedBuffer')
+glUnmapNamedBuffer.ret = Return('GLboolean')
+glUnmapNamedBuffer.add( Input( 'buffer','GLuint' ))
+glUnmapNamedBuffer.category = 'GL_ARB_direct_state_access'
+glUnmapNamedBuffer.trace = True
+glUnmapNamedBuffer.play = True
+gl.add(glUnmapNamedBuffer)
+
+glCheckNamedFramebufferStatus = Function('glCheckNamedFramebufferStatus')
+glCheckNamedFramebufferStatus.ret = Return('GLenum')
+glCheckNamedFramebufferStatus.add( Input( 'framebuffer','GLuint' ))
+glCheckNamedFramebufferStatus.add( Input( 'target','GLenum' ))
+glCheckNamedFramebufferStatus.category = 'GL_ARB_direct_state_access'
+glCheckNamedFramebufferStatus.trace = True
+glCheckNamedFramebufferStatus.play = True
+gl.add(glCheckNamedFramebufferStatus)
+
+glMapNamedBuffer = Function('glMapNamedBuffer')
+glMapNamedBuffer.ret = Return('GLvoid *')
+glMapNamedBuffer.add( Input( 'buffer','GLuint' ))
+glMapNamedBuffer.add( Input( 'access','GLenum' ))
+glMapNamedBuffer.category = 'GL_ARB_direct_state_access'
+glMapNamedBuffer.trace = True
+glMapNamedBuffer.play = True
+gl.add(glMapNamedBuffer)
+
+glMapNamedBufferRange = Function('glMapNamedBufferRange')
+glMapNamedBufferRange.ret = Return('GLvoid *')
+glMapNamedBufferRange.add( Input( 'buffer','GLuint' ))
+glMapNamedBufferRange.add( Input( 'offset','GLintptr' ))
+glMapNamedBufferRange.add( Input( 'length','GLsizeiptr' ))
+glMapNamedBufferRange.add( Input( 'access','GLbitfield' ))
+glMapNamedBufferRange.category = 'GL_ARB_direct_state_access'
+glMapNamedBufferRange.trace = True
+glMapNamedBufferRange.play = True
+gl.add(glMapNamedBufferRange)
+
+glBindTextureUnit = Function('glBindTextureUnit')
+glBindTextureUnit.ret = Return('void')
+glBindTextureUnit.add( Input( 'unit','GLuint' ))
+glBindTextureUnit.add( Input( 'texture','GLuint' ))
+glBindTextureUnit.category = 'GL_ARB_direct_state_access'
+glBindTextureUnit.trace = True
+glBindTextureUnit.play = True
+gl.add(glBindTextureUnit)
+
+glBlitNamedFramebuffer = Function('glBlitNamedFramebuffer')
+glBlitNamedFramebuffer.ret = Return('void')
+glBlitNamedFramebuffer.add( Input( 'readFramebuffer','GLuint' ))
+glBlitNamedFramebuffer.add( Input( 'drawFramebuffer','GLuint' ))
+glBlitNamedFramebuffer.add( Input( 'srcX0','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'srcY0','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'srcX1','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'srcY1','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'dstX0','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'dstY0','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'dstX1','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'dstY1','GLint' ))
+glBlitNamedFramebuffer.add( Input( 'mask','GLbitfield' ))
+glBlitNamedFramebuffer.add( Input( 'filter','GLenum' ))
+glBlitNamedFramebuffer.category = 'GL_ARB_direct_state_access'
+glBlitNamedFramebuffer.trace = True
+glBlitNamedFramebuffer.play = True
+gl.add(glBlitNamedFramebuffer)
+
+glClearNamedBufferData = Function('glClearNamedBufferData')
+glClearNamedBufferData.ret = Return('void')
+glClearNamedBufferData.add( Input( 'buffer','GLuint' ))
+glClearNamedBufferData.add( Input( 'internalformat','GLenum' ))
+glClearNamedBufferData.add( Input( 'format','GLenum' ))
+glClearNamedBufferData.add( Input( 'type','GLenum' ))
+glClearNamedBufferData.add( Input( 'data','const GLvoid *' ))
+glClearNamedBufferData.category = 'GL_ARB_direct_state_access'
+glClearNamedBufferData.trace = True
+glClearNamedBufferData.play = True
+gl.add(glClearNamedBufferData)
+
+glClearNamedBufferSubData = Function('glClearNamedBufferSubData')
+glClearNamedBufferSubData.ret = Return('void')
+glClearNamedBufferSubData.add( Input( 'buffer','GLuint' ))
+glClearNamedBufferSubData.add( Input( 'internalformat','GLenum' ))
+glClearNamedBufferSubData.add( Input( 'offset','GLintptr' ))
+glClearNamedBufferSubData.add( Input( 'size','GLsizeiptr' ))
+glClearNamedBufferSubData.add( Input( 'format','GLenum' ))
+glClearNamedBufferSubData.add( Input( 'type','GLenum' ))
+glClearNamedBufferSubData.add( Input( 'data','const GLvoid *' ))
+glClearNamedBufferSubData.category = 'GL_ARB_direct_state_access'
+glClearNamedBufferSubData.trace = True
+glClearNamedBufferSubData.play = True
+gl.add(glClearNamedBufferSubData)
+
+glClearNamedFramebufferfi = Function('glClearNamedFramebufferfi')
+glClearNamedFramebufferfi.ret = Return('void')
+glClearNamedFramebufferfi.add( Input( 'framebuffer','GLuint' ))
+glClearNamedFramebufferfi.add( Input( 'buffer','GLenum' ))
+glClearNamedFramebufferfi.add( Input( 'depth','GLfloat' ))
+glClearNamedFramebufferfi.add( Input( 'stencil','GLint' ))
+glClearNamedFramebufferfi.category = 'GL_ARB_direct_state_access'
+glClearNamedFramebufferfi.trace = True
+glClearNamedFramebufferfi.play = True
+gl.add(glClearNamedFramebufferfi)
+
+glClearNamedFramebufferfv = Function('glClearNamedFramebufferfv')
+glClearNamedFramebufferfv.ret = Return('void')
+glClearNamedFramebufferfv.add( Input( 'framebuffer','GLuint' ))
+glClearNamedFramebufferfv.add( Input( 'buffer','GLenum' ))
+glClearNamedFramebufferfv.add( Input( 'drawbuffer','GLint' ))
+glClearNamedFramebufferfv.add( Input( 'value','const GLfloat *' ))
+glClearNamedFramebufferfv.category = 'GL_ARB_direct_state_access'
+glClearNamedFramebufferfv.trace = True
+glClearNamedFramebufferfv.play = True
+gl.add(glClearNamedFramebufferfv)
+
+glClearNamedFramebufferiv = Function('glClearNamedFramebufferiv')
+glClearNamedFramebufferiv.ret = Return('void')
+glClearNamedFramebufferiv.add( Input( 'framebuffer','GLuint' ))
+glClearNamedFramebufferiv.add( Input( 'buffer','GLenum' ))
+glClearNamedFramebufferiv.add( Input( 'drawbuffer','GLint' ))
+glClearNamedFramebufferiv.add( Input( 'value','const GLint *' ))
+glClearNamedFramebufferiv.category = 'GL_ARB_direct_state_access'
+glClearNamedFramebufferiv.trace = True
+glClearNamedFramebufferiv.play = True
+gl.add(glClearNamedFramebufferiv)
+
+glClearNamedFramebufferuiv = Function('glClearNamedFramebufferuiv')
+glClearNamedFramebufferuiv.ret = Return('void')
+glClearNamedFramebufferuiv.add( Input( 'framebuffer','GLuint' ))
+glClearNamedFramebufferuiv.add( Input( 'buffer','GLenum' ))
+glClearNamedFramebufferuiv.add( Input( 'drawbuffer','GLint' ))
+glClearNamedFramebufferuiv.add( Input( 'value','const GLuint *' ))
+glClearNamedFramebufferuiv.category = 'GL_ARB_direct_state_access'
+glClearNamedFramebufferuiv.trace = True
+glClearNamedFramebufferuiv.play = True
+gl.add(glClearNamedFramebufferuiv)
+
+glCompressedTextureSubImage1D = Function('glCompressedTextureSubImage1D')
+glCompressedTextureSubImage1D.ret = Return('void')
+glCompressedTextureSubImage1D.add( Input( 'texture','GLuint' ))
+glCompressedTextureSubImage1D.add( Input( 'level','GLint' ))
+glCompressedTextureSubImage1D.add( Input( 'xoffset','GLint' ))
+glCompressedTextureSubImage1D.add( Input( 'width','GLsizei' ))
+glCompressedTextureSubImage1D.add( Input( 'format','GLenum' ))
+glCompressedTextureSubImage1D.add( Input( 'imageSize','GLsizei' ))
+glCompressedTextureSubImage1D.add( Input( 'data','const GLvoid *' ))
+glCompressedTextureSubImage1D.category = 'GL_ARB_direct_state_access'
+glCompressedTextureSubImage1D.trace = True
+glCompressedTextureSubImage1D.play = True
+gl.add(glCompressedTextureSubImage1D)
+
+glCompressedTextureSubImage2D = Function('glCompressedTextureSubImage2D')
+glCompressedTextureSubImage2D.ret = Return('void')
+glCompressedTextureSubImage2D.add( Input( 'texture','GLuint' ))
+glCompressedTextureSubImage2D.add( Input( 'level','GLint' ))
+glCompressedTextureSubImage2D.add( Input( 'xoffset','GLint' ))
+glCompressedTextureSubImage2D.add( Input( 'yoffset','GLint' ))
+glCompressedTextureSubImage2D.add( Input( 'width','GLsizei' ))
+glCompressedTextureSubImage2D.add( Input( 'height','GLsizei' ))
+glCompressedTextureSubImage2D.add( Input( 'format','GLenum' ))
+glCompressedTextureSubImage2D.add( Input( 'imageSize','GLsizei' ))
+glCompressedTextureSubImage2D.add( Input( 'data','const GLvoid *' ))
+glCompressedTextureSubImage2D.category = 'GL_ARB_direct_state_access'
+glCompressedTextureSubImage2D.trace = True
+glCompressedTextureSubImage2D.play = True
+gl.add(glCompressedTextureSubImage2D)
+
+glCompressedTextureSubImage3D = Function('glCompressedTextureSubImage3D')
+glCompressedTextureSubImage3D.ret = Return('void')
+glCompressedTextureSubImage3D.add( Input( 'texture','GLuint' ))
+glCompressedTextureSubImage3D.add( Input( 'level','GLint' ))
+glCompressedTextureSubImage3D.add( Input( 'xoffset','GLint' ))
+glCompressedTextureSubImage3D.add( Input( 'yoffset','GLint' ))
+glCompressedTextureSubImage3D.add( Input( 'zoffset','GLint' ))
+glCompressedTextureSubImage3D.add( Input( 'width','GLsizei' ))
+glCompressedTextureSubImage3D.add( Input( 'height','GLsizei' ))
+glCompressedTextureSubImage3D.add( Input( 'depth','GLsizei' ))
+glCompressedTextureSubImage3D.add( Input( 'format','GLenum' ))
+glCompressedTextureSubImage3D.add( Input( 'imageSize','GLsizei' ))
+glCompressedTextureSubImage3D.add( Input( 'data','const GLvoid *' ))
+glCompressedTextureSubImage3D.category = 'GL_ARB_direct_state_access'
+glCompressedTextureSubImage3D.trace = True
+glCompressedTextureSubImage3D.play = True
+gl.add(glCompressedTextureSubImage3D)
+
+glCopyNamedBufferSubData = Function('glCopyNamedBufferSubData')
+glCopyNamedBufferSubData.ret = Return('void')
+glCopyNamedBufferSubData.add( Input( 'readBuffer','GLuint' ))
+glCopyNamedBufferSubData.add( Input( 'writeBuffer','GLuint' ))
+glCopyNamedBufferSubData.add( Input( 'readOffset','GLintptr' ))
+glCopyNamedBufferSubData.add( Input( 'writeOffset','GLintptr' ))
+glCopyNamedBufferSubData.add( Input( 'size','GLsizeiptr' ))
+glCopyNamedBufferSubData.category = 'GL_ARB_direct_state_access'
+glCopyNamedBufferSubData.trace = True
+glCopyNamedBufferSubData.play = True
+gl.add(glCopyNamedBufferSubData)
+
+glCopyTextureSubImage1D = Function('glCopyTextureSubImage1D')
+glCopyTextureSubImage1D.ret = Return('void')
+glCopyTextureSubImage1D.add( Input( 'texture','GLuint' ))
+glCopyTextureSubImage1D.add( Input( 'level','GLint' ))
+glCopyTextureSubImage1D.add( Input( 'xoffset','GLint' ))
+glCopyTextureSubImage1D.add( Input( 'x','GLint' ))
+glCopyTextureSubImage1D.add( Input( 'y','GLint' ))
+glCopyTextureSubImage1D.add( Input( 'width','GLsizei' ))
+glCopyTextureSubImage1D.category = 'GL_ARB_direct_state_access'
+glCopyTextureSubImage1D.trace = True
+glCopyTextureSubImage1D.play = True
+gl.add(glCopyTextureSubImage1D)
+
+glCopyTextureSubImage2D = Function('glCopyTextureSubImage2D')
+glCopyTextureSubImage2D.ret = Return('void')
+glCopyTextureSubImage2D.add( Input( 'texture','GLuint' ))
+glCopyTextureSubImage2D.add( Input( 'level','GLint' ))
+glCopyTextureSubImage2D.add( Input( 'xoffset','GLint' ))
+glCopyTextureSubImage2D.add( Input( 'yoffset','GLint' ))
+glCopyTextureSubImage2D.add( Input( 'x','GLint' ))
+glCopyTextureSubImage2D.add( Input( 'y','GLint' ))
+glCopyTextureSubImage2D.add( Input( 'width','GLsizei' ))
+glCopyTextureSubImage2D.add( Input( 'height','GLsizei' ))
+glCopyTextureSubImage2D.category = 'GL_ARB_direct_state_access'
+glCopyTextureSubImage2D.trace = True
+glCopyTextureSubImage2D.play = True
+gl.add(glCopyTextureSubImage2D)
+
+glCopyTextureSubImage3D = Function('glCopyTextureSubImage3D')
+glCopyTextureSubImage3D.ret = Return('void')
+glCopyTextureSubImage3D.add( Input( 'texture','GLuint' ))
+glCopyTextureSubImage3D.add( Input( 'level','GLint' ))
+glCopyTextureSubImage3D.add( Input( 'xoffset','GLint' ))
+glCopyTextureSubImage3D.add( Input( 'yoffset','GLint' ))
+glCopyTextureSubImage3D.add( Input( 'zoffset','GLint' ))
+glCopyTextureSubImage3D.add( Input( 'x','GLint' ))
+glCopyTextureSubImage3D.add( Input( 'y','GLint' ))
+glCopyTextureSubImage3D.add( Input( 'width','GLsizei' ))
+glCopyTextureSubImage3D.add( Input( 'height','GLsizei' ))
+glCopyTextureSubImage3D.category = 'GL_ARB_direct_state_access'
+glCopyTextureSubImage3D.trace = True
+glCopyTextureSubImage3D.play = True
+gl.add(glCopyTextureSubImage3D)
+
+glCreateBuffers = Function('glCreateBuffers')
+glCreateBuffers.ret = Return('void')
+glCreateBuffers.add( Input( 'n','GLsizei' ))
+glCreateBuffers.add( Input( 'buffers','GLuint *' ))
+glCreateBuffers.category = 'GL_ARB_direct_state_access'
+glCreateBuffers.trace = True
+glCreateBuffers.play = True
+gl.add(glCreateBuffers)
+
+glCreateFramebuffers = Function('glCreateFramebuffers')
+glCreateFramebuffers.ret = Return('void')
+glCreateFramebuffers.add( Input( 'n','GLsizei' ))
+glCreateFramebuffers.add( Input( 'framebuffers','GLuint *' ))
+glCreateFramebuffers.category = 'GL_ARB_direct_state_access'
+glCreateFramebuffers.trace = True
+glCreateFramebuffers.play = True
+gl.add(glCreateFramebuffers)
+
+glCreateProgramPipelines = Function('glCreateProgramPipelines')
+glCreateProgramPipelines.ret = Return('void')
+glCreateProgramPipelines.add( Input( 'n','GLsizei' ))
+glCreateProgramPipelines.add( Input( 'pipelines','GLuint *' ))
+glCreateProgramPipelines.category = 'GL_ARB_direct_state_access'
+glCreateProgramPipelines.trace = True
+glCreateProgramPipelines.play = True
+gl.add(glCreateProgramPipelines)
+
+glCreateQueries = Function('glCreateQueries')
+glCreateQueries.ret = Return('void')
+glCreateQueries.add( Input( 'target','GLenum' ))
+glCreateQueries.add( Input( 'n','GLsizei' ))
+glCreateQueries.add( Input( 'ids','GLuint *' ))
+glCreateQueries.category = 'GL_ARB_direct_state_access'
+glCreateQueries.trace = True
+glCreateQueries.play = True
+gl.add(glCreateQueries)
+
+glCreateRenderbuffers = Function('glCreateRenderbuffers')
+glCreateRenderbuffers.ret = Return('void')
+glCreateRenderbuffers.add( Input( 'n','GLsizei' ))
+glCreateRenderbuffers.add( Input( 'renderbuffers','GLuint *' ))
+glCreateRenderbuffers.category = 'GL_ARB_direct_state_access'
+glCreateRenderbuffers.trace = True
+glCreateRenderbuffers.play = True
+gl.add(glCreateRenderbuffers)
+
+glCreateSamplers = Function('glCreateSamplers')
+glCreateSamplers.ret = Return('void')
+glCreateSamplers.add( Input( 'n','GLsizei' ))
+glCreateSamplers.add( Input( 'samplers','GLuint *' ))
+glCreateSamplers.category = 'GL_ARB_direct_state_access'
+glCreateSamplers.trace = True
+glCreateSamplers.play = True
+gl.add(glCreateSamplers)
+
+glCreateTextures = Function('glCreateTextures')
+glCreateTextures.ret = Return('void')
+glCreateTextures.add( Input( 'target','GLenum' ))
+glCreateTextures.add( Input( 'n','GLsizei' ))
+glCreateTextures.add( Input( 'textures','GLuint *' ))
+glCreateTextures.category = 'GL_ARB_direct_state_access'
+glCreateTextures.trace = True
+glCreateTextures.play = True
+gl.add(glCreateTextures)
+
+glCreateTransformFeedbacks = Function('glCreateTransformFeedbacks')
+glCreateTransformFeedbacks.ret = Return('void')
+glCreateTransformFeedbacks.add( Input( 'n','GLsizei' ))
+glCreateTransformFeedbacks.add( Input( 'ids','GLuint *' ))
+glCreateTransformFeedbacks.category = 'GL_ARB_direct_state_access'
+glCreateTransformFeedbacks.trace = True
+glCreateTransformFeedbacks.play = True
+gl.add(glCreateTransformFeedbacks)
+
+glCreateVertexArrays = Function('glCreateVertexArrays')
+glCreateVertexArrays.ret = Return('void')
+glCreateVertexArrays.add( Input( 'n','GLsizei' ))
+glCreateVertexArrays.add( Input( 'arrays','GLuint *' ))
+glCreateVertexArrays.category = 'GL_ARB_direct_state_access'
+glCreateVertexArrays.trace = True
+glCreateVertexArrays.play = True
+gl.add(glCreateVertexArrays)
+
+glDisableVertexArrayAttrib = Function('glDisableVertexArrayAttrib')
+glDisableVertexArrayAttrib.ret = Return('void')
+glDisableVertexArrayAttrib.add( Input( 'vaobj','GLuint' ))
+glDisableVertexArrayAttrib.add( Input( 'index','GLuint' ))
+glDisableVertexArrayAttrib.category = 'GL_ARB_direct_state_access'
+glDisableVertexArrayAttrib.trace = True
+glDisableVertexArrayAttrib.play = True
+gl.add(glDisableVertexArrayAttrib)
+
+glEnableVertexArrayAttrib = Function('glEnableVertexArrayAttrib')
+glEnableVertexArrayAttrib.ret = Return('void')
+glEnableVertexArrayAttrib.add( Input( 'vaobj','GLuint' ))
+glEnableVertexArrayAttrib.add( Input( 'index','GLuint' ))
+glEnableVertexArrayAttrib.category = 'GL_ARB_direct_state_access'
+glEnableVertexArrayAttrib.trace = True
+glEnableVertexArrayAttrib.play = True
+gl.add(glEnableVertexArrayAttrib)
+
+glFlushMappedNamedBufferRange = Function('glFlushMappedNamedBufferRange')
+glFlushMappedNamedBufferRange.ret = Return('void')
+glFlushMappedNamedBufferRange.add( Input( 'buffer','GLuint' ))
+glFlushMappedNamedBufferRange.add( Input( 'offset','GLintptr' ))
+glFlushMappedNamedBufferRange.add( Input( 'length','GLsizeiptr' ))
+glFlushMappedNamedBufferRange.category = 'GL_ARB_direct_state_access'
+glFlushMappedNamedBufferRange.trace = True
+glFlushMappedNamedBufferRange.play = True
+gl.add(glFlushMappedNamedBufferRange)
+
+glGenerateTextureMipmap = Function('glGenerateTextureMipmap')
+glGenerateTextureMipmap.ret = Return('void')
+glGenerateTextureMipmap.add( Input( 'texture','GLuint' ))
+glGenerateTextureMipmap.category = 'GL_ARB_direct_state_access'
+glGenerateTextureMipmap.trace = True
+glGenerateTextureMipmap.play = True
+gl.add(glGenerateTextureMipmap)
+
+glGetCompressedTextureImage = Function('glGetCompressedTextureImage')
+glGetCompressedTextureImage.ret = Return('void')
+glGetCompressedTextureImage.add( Input( 'texture','GLuint' ))
+glGetCompressedTextureImage.add( Input( 'level','GLint' ))
+glGetCompressedTextureImage.add( Input( 'bufSize','GLsizei' ))
+glGetCompressedTextureImage.add( Input( 'pixels','GLvoid *' ))
+glGetCompressedTextureImage.category = 'GL_ARB_direct_state_access'
+glGetCompressedTextureImage.trace = True
+glGetCompressedTextureImage.play = True
+gl.add(glGetCompressedTextureImage)
+
+glGetNamedBufferParameteri64v = Function('glGetNamedBufferParameteri64v')
+glGetNamedBufferParameteri64v.ret = Return('void')
+glGetNamedBufferParameteri64v.add( Input( 'buffer','GLuint' ))
+glGetNamedBufferParameteri64v.add( Input( 'pname','GLenum' ))
+glGetNamedBufferParameteri64v.add( Input( 'params','GLint64 *' ))
+glGetNamedBufferParameteri64v.category = 'GL_ARB_direct_state_access'
+glGetNamedBufferParameteri64v.trace = True
+glGetNamedBufferParameteri64v.play = True
+gl.add(glGetNamedBufferParameteri64v)
+
+glGetNamedBufferParameteriv = Function('glGetNamedBufferParameteriv')
+glGetNamedBufferParameteriv.ret = Return('void')
+glGetNamedBufferParameteriv.add( Input( 'buffer','GLuint' ))
+glGetNamedBufferParameteriv.add( Input( 'pname','GLenum' ))
+glGetNamedBufferParameteriv.add( Input( 'params','GLint *' ))
+glGetNamedBufferParameteriv.category = 'GL_ARB_direct_state_access'
+glGetNamedBufferParameteriv.trace = True
+glGetNamedBufferParameteriv.play = True
+gl.add(glGetNamedBufferParameteriv)
+
+glGetNamedBufferPointerv = Function('glGetNamedBufferPointerv')
+glGetNamedBufferPointerv.ret = Return('void')
+glGetNamedBufferPointerv.add( Input( 'buffer','GLuint' ))
+glGetNamedBufferPointerv.add( Input( 'pname','GLenum' ))
+glGetNamedBufferPointerv.add( Input( 'params','GLvoid **' ))
+glGetNamedBufferPointerv.category = 'GL_ARB_direct_state_access'
+glGetNamedBufferPointerv.trace = True
+glGetNamedBufferPointerv.play = True
+gl.add(glGetNamedBufferPointerv)
+
+glGetNamedBufferSubData = Function('glGetNamedBufferSubData')
+glGetNamedBufferSubData.ret = Return('void')
+glGetNamedBufferSubData.add( Input( 'buffer','GLuint' ))
+glGetNamedBufferSubData.add( Input( 'offset','GLintptr' ))
+glGetNamedBufferSubData.add( Input( 'size','GLsizeiptr' ))
+glGetNamedBufferSubData.add( Input( 'data','GLvoid *' ))
+glGetNamedBufferSubData.category = 'GL_ARB_direct_state_access'
+glGetNamedBufferSubData.trace = True
+glGetNamedBufferSubData.play = True
+gl.add(glGetNamedBufferSubData)
+
+glGetNamedFramebufferAttachmentParameteriv = Function('glGetNamedFramebufferAttachmentParameteriv')
+glGetNamedFramebufferAttachmentParameteriv.ret = Return('void')
+glGetNamedFramebufferAttachmentParameteriv.add( Input( 'framebuffer','GLuint' ))
+glGetNamedFramebufferAttachmentParameteriv.add( Input( 'attachment','GLenum' ))
+glGetNamedFramebufferAttachmentParameteriv.add( Input( 'pname','GLenum' ))
+glGetNamedFramebufferAttachmentParameteriv.add( Input( 'params','GLint *' ))
+glGetNamedFramebufferAttachmentParameteriv.category = 'GL_ARB_direct_state_access'
+glGetNamedFramebufferAttachmentParameteriv.trace = True
+glGetNamedFramebufferAttachmentParameteriv.play = True
+gl.add(glGetNamedFramebufferAttachmentParameteriv)
+
+glGetNamedFramebufferParameteriv = Function('glGetNamedFramebufferParameteriv')
+glGetNamedFramebufferParameteriv.ret = Return('void')
+glGetNamedFramebufferParameteriv.add( Input( 'framebuffer','GLuint' ))
+glGetNamedFramebufferParameteriv.add( Input( 'pname','GLenum' ))
+glGetNamedFramebufferParameteriv.add( Input( 'param','GLint *' ))
+glGetNamedFramebufferParameteriv.category = 'GL_ARB_direct_state_access'
+glGetNamedFramebufferParameteriv.trace = True
+glGetNamedFramebufferParameteriv.play = True
+gl.add(glGetNamedFramebufferParameteriv)
+
+glGetNamedRenderbufferParameteriv = Function('glGetNamedRenderbufferParameteriv')
+glGetNamedRenderbufferParameteriv.ret = Return('void')
+glGetNamedRenderbufferParameteriv.add( Input( 'renderbuffer','GLuint' ))
+glGetNamedRenderbufferParameteriv.add( Input( 'pname','GLenum' ))
+glGetNamedRenderbufferParameteriv.add( Input( 'params','GLint *' ))
+glGetNamedRenderbufferParameteriv.category = 'GL_ARB_direct_state_access'
+glGetNamedRenderbufferParameteriv.trace = True
+glGetNamedRenderbufferParameteriv.play = True
+gl.add(glGetNamedRenderbufferParameteriv)
+
+glGetTextureImage = Function('glGetTextureImage')
+glGetTextureImage.ret = Return('void')
+glGetTextureImage.add( Input( 'texture','GLuint' ))
+glGetTextureImage.add( Input( 'level','GLint' ))
+glGetTextureImage.add( Input( 'format','GLenum' ))
+glGetTextureImage.add( Input( 'type','GLenum' ))
+glGetTextureImage.add( Input( 'bufSize','GLsizei' ))
+glGetTextureImage.add( Input( 'pixels','GLvoid *' ))
+glGetTextureImage.category = 'GL_ARB_direct_state_access'
+glGetTextureImage.trace = True
+glGetTextureImage.play = True
+gl.add(glGetTextureImage)
+
+glGetTextureLevelParameterfv = Function('glGetTextureLevelParameterfv')
+glGetTextureLevelParameterfv.ret = Return('void')
+glGetTextureLevelParameterfv.add( Input( 'texture','GLuint' ))
+glGetTextureLevelParameterfv.add( Input( 'level','GLint' ))
+glGetTextureLevelParameterfv.add( Input( 'pname','GLenum' ))
+glGetTextureLevelParameterfv.add( Input( 'params','GLfloat *' ))
+glGetTextureLevelParameterfv.category = 'GL_ARB_direct_state_access'
+glGetTextureLevelParameterfv.trace = True
+glGetTextureLevelParameterfv.play = True
+gl.add(glGetTextureLevelParameterfv)
+
+glGetTextureLevelParameteriv = Function('glGetTextureLevelParameteriv')
+glGetTextureLevelParameteriv.ret = Return('void')
+glGetTextureLevelParameteriv.add( Input( 'texture','GLuint' ))
+glGetTextureLevelParameteriv.add( Input( 'level','GLint' ))
+glGetTextureLevelParameteriv.add( Input( 'pname','GLenum' ))
+glGetTextureLevelParameteriv.add( Input( 'params','GLint *' ))
+glGetTextureLevelParameteriv.category = 'GL_ARB_direct_state_access'
+glGetTextureLevelParameteriv.trace = True
+glGetTextureLevelParameteriv.play = True
+gl.add(glGetTextureLevelParameteriv)
+
+glGetTextureParameterIiv = Function('glGetTextureParameterIiv')
+glGetTextureParameterIiv.ret = Return('void')
+glGetTextureParameterIiv.add( Input( 'texture','GLuint' ))
+glGetTextureParameterIiv.add( Input( 'pname','GLenum' ))
+glGetTextureParameterIiv.add( Input( 'params','GLint *' ))
+glGetTextureParameterIiv.category = 'GL_ARB_direct_state_access'
+glGetTextureParameterIiv.trace = True
+glGetTextureParameterIiv.play = True
+gl.add(glGetTextureParameterIiv)
+
+glGetTextureParameterIuiv = Function('glGetTextureParameterIuiv')
+glGetTextureParameterIuiv.ret = Return('void')
+glGetTextureParameterIuiv.add( Input( 'texture','GLuint' ))
+glGetTextureParameterIuiv.add( Input( 'pname','GLenum' ))
+glGetTextureParameterIuiv.add( Input( 'params','GLuint *' ))
+glGetTextureParameterIuiv.category = 'GL_ARB_direct_state_access'
+glGetTextureParameterIuiv.trace = True
+glGetTextureParameterIuiv.play = True
+gl.add(glGetTextureParameterIuiv)
+
+glGetTextureParameterfv = Function('glGetTextureParameterfv')
+glGetTextureParameterfv.ret = Return('void')
+glGetTextureParameterfv.add( Input( 'texture','GLuint' ))
+glGetTextureParameterfv.add( Input( 'pname','GLenum' ))
+glGetTextureParameterfv.add( Input( 'params','GLfloat *' ))
+glGetTextureParameterfv.category = 'GL_ARB_direct_state_access'
+glGetTextureParameterfv.trace = True
+glGetTextureParameterfv.play = True
+gl.add(glGetTextureParameterfv)
+
+glGetTextureParameteriv = Function('glGetTextureParameteriv')
+glGetTextureParameteriv.ret = Return('void')
+glGetTextureParameteriv.add( Input( 'texture','GLuint' ))
+glGetTextureParameteriv.add( Input( 'pname','GLenum' ))
+glGetTextureParameteriv.add( Input( 'params','GLint *' ))
+glGetTextureParameteriv.category = 'GL_ARB_direct_state_access'
+glGetTextureParameteriv.trace = True
+glGetTextureParameteriv.play = True
+gl.add(glGetTextureParameteriv)
+
+glGetTransformFeedbacki64_v = Function('glGetTransformFeedbacki64_v')
+glGetTransformFeedbacki64_v.ret = Return('void')
+glGetTransformFeedbacki64_v.add( Input( 'xfb','GLuint' ))
+glGetTransformFeedbacki64_v.add( Input( 'pname','GLenum' ))
+glGetTransformFeedbacki64_v.add( Input( 'index','GLuint' ))
+glGetTransformFeedbacki64_v.add( Input( 'param','GLint64 *' ))
+glGetTransformFeedbacki64_v.category = 'GL_ARB_direct_state_access'
+glGetTransformFeedbacki64_v.trace = True
+glGetTransformFeedbacki64_v.play = True
+gl.add(glGetTransformFeedbacki64_v)
+
+glGetTransformFeedbacki_v = Function('glGetTransformFeedbacki_v')
+glGetTransformFeedbacki_v.ret = Return('void')
+glGetTransformFeedbacki_v.add( Input( 'xfb','GLuint' ))
+glGetTransformFeedbacki_v.add( Input( 'pname','GLenum' ))
+glGetTransformFeedbacki_v.add( Input( 'index','GLuint' ))
+glGetTransformFeedbacki_v.add( Input( 'param','GLint *' ))
+glGetTransformFeedbacki_v.category = 'GL_ARB_direct_state_access'
+glGetTransformFeedbacki_v.trace = True
+glGetTransformFeedbacki_v.play = True
+gl.add(glGetTransformFeedbacki_v)
+
+glGetTransformFeedbackiv = Function('glGetTransformFeedbackiv')
+glGetTransformFeedbackiv.ret = Return('void')
+glGetTransformFeedbackiv.add( Input( 'xfb','GLuint' ))
+glGetTransformFeedbackiv.add( Input( 'pname','GLenum' ))
+glGetTransformFeedbackiv.add( Input( 'param','GLint *' ))
+glGetTransformFeedbackiv.category = 'GL_ARB_direct_state_access'
+glGetTransformFeedbackiv.trace = True
+glGetTransformFeedbackiv.play = True
+gl.add(glGetTransformFeedbackiv)
+
+glGetVertexArrayIndexed64iv = Function('glGetVertexArrayIndexed64iv')
+glGetVertexArrayIndexed64iv.ret = Return('void')
+glGetVertexArrayIndexed64iv.add( Input( 'vaobj','GLuint' ))
+glGetVertexArrayIndexed64iv.add( Input( 'index','GLuint' ))
+glGetVertexArrayIndexed64iv.add( Input( 'pname','GLenum' ))
+glGetVertexArrayIndexed64iv.add( Input( 'param','GLint64 *' ))
+glGetVertexArrayIndexed64iv.category = 'GL_ARB_direct_state_access'
+glGetVertexArrayIndexed64iv.trace = True
+glGetVertexArrayIndexed64iv.play = True
+gl.add(glGetVertexArrayIndexed64iv)
+
+glGetVertexArrayIndexediv = Function('glGetVertexArrayIndexediv')
+glGetVertexArrayIndexediv.ret = Return('void')
+glGetVertexArrayIndexediv.add( Input( 'vaobj','GLuint' ))
+glGetVertexArrayIndexediv.add( Input( 'index','GLuint' ))
+glGetVertexArrayIndexediv.add( Input( 'pname','GLenum' ))
+glGetVertexArrayIndexediv.add( Input( 'param','GLint *' ))
+glGetVertexArrayIndexediv.category = 'GL_ARB_direct_state_access'
+glGetVertexArrayIndexediv.trace = True
+glGetVertexArrayIndexediv.play = True
+gl.add(glGetVertexArrayIndexediv)
+
+glGetVertexArrayiv = Function('glGetVertexArrayiv')
+glGetVertexArrayiv.ret = Return('void')
+glGetVertexArrayiv.add( Input( 'vaobj','GLuint' ))
+glGetVertexArrayiv.add( Input( 'pname','GLenum' ))
+glGetVertexArrayiv.add( Input( 'param','GLint *' ))
+glGetVertexArrayiv.category = 'GL_ARB_direct_state_access'
+glGetVertexArrayiv.trace = True
+glGetVertexArrayiv.play = True
+gl.add(glGetVertexArrayiv)
+
+glInvalidateNamedFramebufferData = Function('glInvalidateNamedFramebufferData')
+glInvalidateNamedFramebufferData.ret = Return('void')
+glInvalidateNamedFramebufferData.add( Input( 'framebuffer','GLuint' ))
+glInvalidateNamedFramebufferData.add( Input( 'numAttachments','GLsizei' ))
+glInvalidateNamedFramebufferData.add( Input( 'attachments','const GLenum *' ))
+glInvalidateNamedFramebufferData.category = 'GL_ARB_direct_state_access'
+glInvalidateNamedFramebufferData.trace = True
+glInvalidateNamedFramebufferData.play = True
+gl.add(glInvalidateNamedFramebufferData)
+
+glInvalidateNamedFramebufferSubData = Function('glInvalidateNamedFramebufferSubData')
+glInvalidateNamedFramebufferSubData.ret = Return('void')
+glInvalidateNamedFramebufferSubData.add( Input( 'framebuffer','GLuint' ))
+glInvalidateNamedFramebufferSubData.add( Input( 'numAttachments','GLsizei' ))
+glInvalidateNamedFramebufferSubData.add( Input( 'attachments','const GLenum *' ))
+glInvalidateNamedFramebufferSubData.add( Input( 'x','GLint' ))
+glInvalidateNamedFramebufferSubData.add( Input( 'y','GLint' ))
+glInvalidateNamedFramebufferSubData.add( Input( 'width','GLsizei' ))
+glInvalidateNamedFramebufferSubData.add( Input( 'height','GLsizei' ))
+glInvalidateNamedFramebufferSubData.category = 'GL_ARB_direct_state_access'
+glInvalidateNamedFramebufferSubData.trace = True
+glInvalidateNamedFramebufferSubData.play = True
+gl.add(glInvalidateNamedFramebufferSubData)
+
+glNamedBufferData = Function('glNamedBufferData')
+glNamedBufferData.ret = Return('void')
+glNamedBufferData.add( Input( 'buffer','GLuint' ))
+glNamedBufferData.add( Input( 'size','GLsizeiptr' ))
+glNamedBufferData.add( Input( 'data','const GLvoid *' ))
+glNamedBufferData.add( Input( 'usage','GLenum' ))
+glNamedBufferData.category = 'GL_ARB_direct_state_access'
+glNamedBufferData.trace = True
+glNamedBufferData.play = True
+gl.add(glNamedBufferData)
+
+glNamedBufferStorage = Function('glNamedBufferStorage')
+glNamedBufferStorage.ret = Return('void')
+glNamedBufferStorage.add( Input( 'buffer','GLuint' ))
+glNamedBufferStorage.add( Input( 'size','GLsizeiptr' ))
+glNamedBufferStorage.add( Input( 'data','const GLvoid *' ))
+glNamedBufferStorage.add( Input( 'flags','GLbitfield' ))
+glNamedBufferStorage.category = 'GL_ARB_direct_state_access'
+glNamedBufferStorage.trace = True
+glNamedBufferStorage.play = True
+gl.add(glNamedBufferStorage)
+
+glNamedBufferSubData = Function('glNamedBufferSubData')
+glNamedBufferSubData.ret = Return('void')
+glNamedBufferSubData.add( Input( 'buffer','GLuint' ))
+glNamedBufferSubData.add( Input( 'offset','GLintptr' ))
+glNamedBufferSubData.add( Input( 'size','GLsizeiptr' ))
+glNamedBufferSubData.add( Input( 'data','const GLvoid *' ))
+glNamedBufferSubData.category = 'GL_ARB_direct_state_access'
+glNamedBufferSubData.trace = True
+glNamedBufferSubData.play = True
+gl.add(glNamedBufferSubData)
+
+glNamedFramebufferDrawBuffer = Function('glNamedFramebufferDrawBuffer')
+glNamedFramebufferDrawBuffer.ret = Return('void')
+glNamedFramebufferDrawBuffer.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferDrawBuffer.add( Input( 'mode','GLenum' ))
+glNamedFramebufferDrawBuffer.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferDrawBuffer.trace = True
+glNamedFramebufferDrawBuffer.play = True
+gl.add(glNamedFramebufferDrawBuffer)
+
+glNamedFramebufferDrawBuffers = Function('glNamedFramebufferDrawBuffers')
+glNamedFramebufferDrawBuffers.ret = Return('void')
+glNamedFramebufferDrawBuffers.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferDrawBuffers.add( Input( 'n','GLsizei' ))
+glNamedFramebufferDrawBuffers.add( Input( 'bufs','const GLenum *' ))
+glNamedFramebufferDrawBuffers.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferDrawBuffers.trace = True
+glNamedFramebufferDrawBuffers.play = True
+gl.add(glNamedFramebufferDrawBuffers)
+
+glNamedFramebufferParameteri = Function('glNamedFramebufferParameteri')
+glNamedFramebufferParameteri.ret = Return('void')
+glNamedFramebufferParameteri.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferParameteri.add( Input( 'pname','GLenum' ))
+glNamedFramebufferParameteri.add( Input( 'param','GLint' ))
+glNamedFramebufferParameteri.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferParameteri.trace = True
+glNamedFramebufferParameteri.play = True
+gl.add(glNamedFramebufferParameteri)
+
+glNamedFramebufferReadBuffer = Function('glNamedFramebufferReadBuffer')
+glNamedFramebufferReadBuffer.ret = Return('void')
+glNamedFramebufferReadBuffer.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferReadBuffer.add( Input( 'mode','GLenum' ))
+glNamedFramebufferReadBuffer.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferReadBuffer.trace = True
+glNamedFramebufferReadBuffer.play = True
+gl.add(glNamedFramebufferReadBuffer)
+
+glNamedFramebufferRenderbuffer = Function('glNamedFramebufferRenderbuffer')
+glNamedFramebufferRenderbuffer.ret = Return('void')
+glNamedFramebufferRenderbuffer.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferRenderbuffer.add( Input( 'attachment','GLenum' ))
+glNamedFramebufferRenderbuffer.add( Input( 'renderbuffertarget','GLenum' ))
+glNamedFramebufferRenderbuffer.add( Input( 'renderbuffer','GLuint' ))
+glNamedFramebufferRenderbuffer.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferRenderbuffer.trace = True
+glNamedFramebufferRenderbuffer.play = True
+gl.add(glNamedFramebufferRenderbuffer)
+
+glNamedFramebufferTexture = Function('glNamedFramebufferTexture')
+glNamedFramebufferTexture.ret = Return('void')
+glNamedFramebufferTexture.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferTexture.add( Input( 'attachment','GLenum' ))
+glNamedFramebufferTexture.add( Input( 'texture','GLuint' ))
+glNamedFramebufferTexture.add( Input( 'level','GLint' ))
+glNamedFramebufferTexture.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferTexture.trace = True
+glNamedFramebufferTexture.play = True
+gl.add(glNamedFramebufferTexture)
+
+glNamedFramebufferTextureLayer = Function('glNamedFramebufferTextureLayer')
+glNamedFramebufferTextureLayer.ret = Return('void')
+glNamedFramebufferTextureLayer.add( Input( 'framebuffer','GLuint' ))
+glNamedFramebufferTextureLayer.add( Input( 'attachment','GLenum' ))
+glNamedFramebufferTextureLayer.add( Input( 'texture','GLuint' ))
+glNamedFramebufferTextureLayer.add( Input( 'level','GLint' ))
+glNamedFramebufferTextureLayer.add( Input( 'layer','GLint' ))
+glNamedFramebufferTextureLayer.category = 'GL_ARB_direct_state_access'
+glNamedFramebufferTextureLayer.trace = True
+glNamedFramebufferTextureLayer.play = True
+gl.add(glNamedFramebufferTextureLayer)
+
+glNamedRenderbufferStorage = Function('glNamedRenderbufferStorage')
+glNamedRenderbufferStorage.ret = Return('void')
+glNamedRenderbufferStorage.add( Input( 'renderbuffer','GLuint' ))
+glNamedRenderbufferStorage.add( Input( 'internalformat','GLenum' ))
+glNamedRenderbufferStorage.add( Input( 'width','GLsizei' ))
+glNamedRenderbufferStorage.add( Input( 'height','GLsizei' ))
+glNamedRenderbufferStorage.category = 'GL_ARB_direct_state_access'
+glNamedRenderbufferStorage.trace = True
+glNamedRenderbufferStorage.play = True
+gl.add(glNamedRenderbufferStorage)
+
+glNamedRenderbufferStorageMultisample = Function('glNamedRenderbufferStorageMultisample')
+glNamedRenderbufferStorageMultisample.ret = Return('void')
+glNamedRenderbufferStorageMultisample.add( Input( 'renderbuffer','GLuint' ))
+glNamedRenderbufferStorageMultisample.add( Input( 'samples','GLsizei' ))
+glNamedRenderbufferStorageMultisample.add( Input( 'internalformat','GLenum' ))
+glNamedRenderbufferStorageMultisample.add( Input( 'width','GLsizei' ))
+glNamedRenderbufferStorageMultisample.add( Input( 'height','GLsizei' ))
+glNamedRenderbufferStorageMultisample.category = 'GL_ARB_direct_state_access'
+glNamedRenderbufferStorageMultisample.trace = True
+glNamedRenderbufferStorageMultisample.play = True
+gl.add(glNamedRenderbufferStorageMultisample)
+
+glTextureBuffer = Function('glTextureBuffer')
+glTextureBuffer.ret = Return('void')
+glTextureBuffer.add( Input( 'texture','GLuint' ))
+glTextureBuffer.add( Input( 'internalformat','GLenum' ))
+glTextureBuffer.add( Input( 'buffer','GLuint' ))
+glTextureBuffer.category = 'GL_ARB_direct_state_access'
+glTextureBuffer.trace = True
+glTextureBuffer.play = True
+gl.add(glTextureBuffer)
+
+glTextureBufferRange = Function('glTextureBufferRange')
+glTextureBufferRange.ret = Return('void')
+glTextureBufferRange.add( Input( 'texture','GLuint' ))
+glTextureBufferRange.add( Input( 'internalformat','GLenum' ))
+glTextureBufferRange.add( Input( 'buffer','GLuint' ))
+glTextureBufferRange.add( Input( 'offset','GLintptr' ))
+glTextureBufferRange.add( Input( 'size','GLsizeiptr' ))
+glTextureBufferRange.category = 'GL_ARB_direct_state_access'
+glTextureBufferRange.trace = True
+glTextureBufferRange.play = True
+gl.add(glTextureBufferRange)
+
+glTextureParameterIiv = Function('glTextureParameterIiv')
+glTextureParameterIiv.ret = Return('void')
+glTextureParameterIiv.add( Input( 'texture','GLuint' ))
+glTextureParameterIiv.add( Input( 'pname','GLenum' ))
+glTextureParameterIiv.add( Input( 'params','const GLint *' ))
+glTextureParameterIiv.category = 'GL_ARB_direct_state_access'
+glTextureParameterIiv.trace = True
+glTextureParameterIiv.play = True
+gl.add(glTextureParameterIiv)
+
+glTextureParameterIuiv = Function('glTextureParameterIuiv')
+glTextureParameterIuiv.ret = Return('void')
+glTextureParameterIuiv.add( Input( 'texture','GLuint' ))
+glTextureParameterIuiv.add( Input( 'pname','GLenum' ))
+glTextureParameterIuiv.add( Input( 'params','const GLuint *' ))
+glTextureParameterIuiv.category = 'GL_ARB_direct_state_access'
+glTextureParameterIuiv.trace = True
+glTextureParameterIuiv.play = True
+gl.add(glTextureParameterIuiv)
+
+glTextureParameterf = Function('glTextureParameterf')
+glTextureParameterf.ret = Return('void')
+glTextureParameterf.add( Input( 'texture','GLuint' ))
+glTextureParameterf.add( Input( 'pname','GLenum' ))
+glTextureParameterf.add( Input( 'param','GLfloat' ))
+glTextureParameterf.category = 'GL_ARB_direct_state_access'
+glTextureParameterf.trace = True
+glTextureParameterf.play = True
+gl.add(glTextureParameterf)
+
+glTextureParameterfv = Function('glTextureParameterfv')
+glTextureParameterfv.ret = Return('void')
+glTextureParameterfv.add( Input( 'texture','GLuint' ))
+glTextureParameterfv.add( Input( 'pname','GLenum' ))
+glTextureParameterfv.add( Input( 'param','const GLfloat *' ))
+glTextureParameterfv.category = 'GL_ARB_direct_state_access'
+glTextureParameterfv.trace = True
+glTextureParameterfv.play = True
+gl.add(glTextureParameterfv)
+
+glTextureParameteri = Function('glTextureParameteri')
+glTextureParameteri.ret = Return('void')
+glTextureParameteri.add( Input( 'texture','GLuint' ))
+glTextureParameteri.add( Input( 'pname','GLenum' ))
+glTextureParameteri.add( Input( 'param','GLint' ))
+glTextureParameteri.category = 'GL_ARB_direct_state_access'
+glTextureParameteri.trace = True
+glTextureParameteri.play = True
+gl.add(glTextureParameteri)
+
+glTextureParameteriv = Function('glTextureParameteriv')
+glTextureParameteriv.ret = Return('void')
+glTextureParameteriv.add( Input( 'texture','GLuint' ))
+glTextureParameteriv.add( Input( 'pname','GLenum' ))
+glTextureParameteriv.add( Input( 'param','const GLint *' ))
+glTextureParameteriv.category = 'GL_ARB_direct_state_access'
+glTextureParameteriv.trace = True
+glTextureParameteriv.play = True
+gl.add(glTextureParameteriv)
+
+glTextureStorage1D = Function('glTextureStorage1D')
+glTextureStorage1D.ret = Return('void')
+glTextureStorage1D.add( Input( 'texture','GLuint' ))
+glTextureStorage1D.add( Input( 'levels','GLsizei' ))
+glTextureStorage1D.add( Input( 'internalformat','GLenum' ))
+glTextureStorage1D.add( Input( 'width','GLsizei' ))
+glTextureStorage1D.category = 'GL_ARB_direct_state_access'
+glTextureStorage1D.trace = True
+glTextureStorage1D.play = True
+gl.add(glTextureStorage1D)
+
+glTextureStorage2D = Function('glTextureStorage2D')
+glTextureStorage2D.ret = Return('void')
+glTextureStorage2D.add( Input( 'texture','GLuint' ))
+glTextureStorage2D.add( Input( 'levels','GLsizei' ))
+glTextureStorage2D.add( Input( 'internalformat','GLenum' ))
+glTextureStorage2D.add( Input( 'width','GLsizei' ))
+glTextureStorage2D.add( Input( 'height','GLsizei' ))
+glTextureStorage2D.category = 'GL_ARB_direct_state_access'
+glTextureStorage2D.trace = True
+glTextureStorage2D.play = True
+gl.add(glTextureStorage2D)
+
+glTextureStorage2DMultisample = Function('glTextureStorage2DMultisample')
+glTextureStorage2DMultisample.ret = Return('void')
+glTextureStorage2DMultisample.add( Input( 'texture','GLuint' ))
+glTextureStorage2DMultisample.add( Input( 'samples','GLsizei' ))
+glTextureStorage2DMultisample.add( Input( 'internalformat','GLenum' ))
+glTextureStorage2DMultisample.add( Input( 'width','GLsizei' ))
+glTextureStorage2DMultisample.add( Input( 'height','GLsizei' ))
+glTextureStorage2DMultisample.add( Input( 'fixedsamplelocations','GLboolean' ))
+glTextureStorage2DMultisample.category = 'GL_ARB_direct_state_access'
+glTextureStorage2DMultisample.trace = True
+glTextureStorage2DMultisample.play = True
+gl.add(glTextureStorage2DMultisample)
+
+glTextureStorage3D = Function('glTextureStorage3D')
+glTextureStorage3D.ret = Return('void')
+glTextureStorage3D.add( Input( 'texture','GLuint' ))
+glTextureStorage3D.add( Input( 'levels','GLsizei' ))
+glTextureStorage3D.add( Input( 'internalformat','GLenum' ))
+glTextureStorage3D.add( Input( 'width','GLsizei' ))
+glTextureStorage3D.add( Input( 'height','GLsizei' ))
+glTextureStorage3D.add( Input( 'depth','GLsizei' ))
+glTextureStorage3D.category = 'GL_ARB_direct_state_access'
+glTextureStorage3D.trace = True
+glTextureStorage3D.play = True
+gl.add(glTextureStorage3D)
+
+glTextureStorage3DMultisample = Function('glTextureStorage3DMultisample')
+glTextureStorage3DMultisample.ret = Return('void')
+glTextureStorage3DMultisample.add( Input( 'texture','GLuint' ))
+glTextureStorage3DMultisample.add( Input( 'samples','GLsizei' ))
+glTextureStorage3DMultisample.add( Input( 'internalformat','GLenum' ))
+glTextureStorage3DMultisample.add( Input( 'width','GLsizei' ))
+glTextureStorage3DMultisample.add( Input( 'height','GLsizei' ))
+glTextureStorage3DMultisample.add( Input( 'depth','GLsizei' ))
+glTextureStorage3DMultisample.add( Input( 'fixedsamplelocations','GLboolean' ))
+glTextureStorage3DMultisample.category = 'GL_ARB_direct_state_access'
+glTextureStorage3DMultisample.trace = True
+glTextureStorage3DMultisample.play = True
+gl.add(glTextureStorage3DMultisample)
+
+glTextureSubImage1D = Function('glTextureSubImage1D')
+glTextureSubImage1D.ret = Return('void')
+glTextureSubImage1D.add( Input( 'texture','GLuint' ))
+glTextureSubImage1D.add( Input( 'level','GLint' ))
+glTextureSubImage1D.add( Input( 'xoffset','GLint' ))
+glTextureSubImage1D.add( Input( 'width','GLsizei' ))
+glTextureSubImage1D.add( Input( 'format','GLenum' ))
+glTextureSubImage1D.add( Input( 'type','GLenum' ))
+glTextureSubImage1D.add( Input( 'pixels','const GLvoid *' ))
+glTextureSubImage1D.category = 'GL_ARB_direct_state_access'
+glTextureSubImage1D.trace = True
+glTextureSubImage1D.play = True
+gl.add(glTextureSubImage1D)
+
+glTextureSubImage2D = Function('glTextureSubImage2D')
+glTextureSubImage2D.ret = Return('void')
+glTextureSubImage2D.add( Input( 'texture','GLuint' ))
+glTextureSubImage2D.add( Input( 'level','GLint' ))
+glTextureSubImage2D.add( Input( 'xoffset','GLint' ))
+glTextureSubImage2D.add( Input( 'yoffset','GLint' ))
+glTextureSubImage2D.add( Input( 'width','GLsizei' ))
+glTextureSubImage2D.add( Input( 'height','GLsizei' ))
+glTextureSubImage2D.add( Input( 'format','GLenum' ))
+glTextureSubImage2D.add( Input( 'type','GLenum' ))
+glTextureSubImage2D.add( Input( 'pixels','const GLvoid *' ))
+glTextureSubImage2D.category = 'GL_ARB_direct_state_access'
+glTextureSubImage2D.trace = True
+glTextureSubImage2D.play = True
+gl.add(glTextureSubImage2D)
+
+glTextureSubImage3D = Function('glTextureSubImage3D')
+glTextureSubImage3D.ret = Return('void')
+glTextureSubImage3D.add( Input( 'texture','GLuint' ))
+glTextureSubImage3D.add( Input( 'level','GLint' ))
+glTextureSubImage3D.add( Input( 'xoffset','GLint' ))
+glTextureSubImage3D.add( Input( 'yoffset','GLint' ))
+glTextureSubImage3D.add( Input( 'zoffset','GLint' ))
+glTextureSubImage3D.add( Input( 'width','GLsizei' ))
+glTextureSubImage3D.add( Input( 'height','GLsizei' ))
+glTextureSubImage3D.add( Input( 'depth','GLsizei' ))
+glTextureSubImage3D.add( Input( 'format','GLenum' ))
+glTextureSubImage3D.add( Input( 'type','GLenum' ))
+glTextureSubImage3D.add( Input( 'pixels','const GLvoid *' ))
+glTextureSubImage3D.category = 'GL_ARB_direct_state_access'
+glTextureSubImage3D.trace = True
+glTextureSubImage3D.play = True
+gl.add(glTextureSubImage3D)
+
+glTransformFeedbackBufferBase = Function('glTransformFeedbackBufferBase')
+glTransformFeedbackBufferBase.ret = Return('void')
+glTransformFeedbackBufferBase.add( Input( 'xfb','GLuint' ))
+glTransformFeedbackBufferBase.add( Input( 'index','GLuint' ))
+glTransformFeedbackBufferBase.add( Input( 'buffer','GLuint' ))
+glTransformFeedbackBufferBase.category = 'GL_ARB_direct_state_access'
+glTransformFeedbackBufferBase.trace = True
+glTransformFeedbackBufferBase.play = True
+gl.add(glTransformFeedbackBufferBase)
+
+glTransformFeedbackBufferRange = Function('glTransformFeedbackBufferRange')
+glTransformFeedbackBufferRange.ret = Return('void')
+glTransformFeedbackBufferRange.add( Input( 'xfb','GLuint' ))
+glTransformFeedbackBufferRange.add( Input( 'index','GLuint' ))
+glTransformFeedbackBufferRange.add( Input( 'buffer','GLuint' ))
+glTransformFeedbackBufferRange.add( Input( 'offset','GLintptr' ))
+glTransformFeedbackBufferRange.add( Input( 'size','GLsizeiptr' ))
+glTransformFeedbackBufferRange.category = 'GL_ARB_direct_state_access'
+glTransformFeedbackBufferRange.trace = True
+glTransformFeedbackBufferRange.play = True
+gl.add(glTransformFeedbackBufferRange)
+
+glVertexArrayAttribBinding = Function('glVertexArrayAttribBinding')
+glVertexArrayAttribBinding.ret = Return('void')
+glVertexArrayAttribBinding.add( Input( 'vaobj','GLuint' ))
+glVertexArrayAttribBinding.add( Input( 'attribindex','GLuint' ))
+glVertexArrayAttribBinding.add( Input( 'bindingindex','GLuint' ))
+glVertexArrayAttribBinding.category = 'GL_ARB_direct_state_access'
+glVertexArrayAttribBinding.trace = True
+glVertexArrayAttribBinding.play = True
+gl.add(glVertexArrayAttribBinding)
+
+glVertexArrayAttribFormat = Function('glVertexArrayAttribFormat')
+glVertexArrayAttribFormat.ret = Return('void')
+glVertexArrayAttribFormat.add( Input( 'vaobj','GLuint' ))
+glVertexArrayAttribFormat.add( Input( 'attribindex','GLuint' ))
+glVertexArrayAttribFormat.add( Input( 'size','GLint' ))
+glVertexArrayAttribFormat.add( Input( 'type','GLenum' ))
+glVertexArrayAttribFormat.add( Input( 'normalized','GLboolean' ))
+glVertexArrayAttribFormat.add( Input( 'relativeoffset','GLuint' ))
+glVertexArrayAttribFormat.category = 'GL_ARB_direct_state_access'
+glVertexArrayAttribFormat.trace = True
+glVertexArrayAttribFormat.play = True
+gl.add(glVertexArrayAttribFormat)
+
+glVertexArrayAttribIFormat = Function('glVertexArrayAttribIFormat')
+glVertexArrayAttribIFormat.ret = Return('void')
+glVertexArrayAttribIFormat.add( Input( 'vaobj','GLuint' ))
+glVertexArrayAttribIFormat.add( Input( 'attribindex','GLuint' ))
+glVertexArrayAttribIFormat.add( Input( 'size','GLint' ))
+glVertexArrayAttribIFormat.add( Input( 'type','GLenum' ))
+glVertexArrayAttribIFormat.add( Input( 'relativeoffset','GLuint' ))
+glVertexArrayAttribIFormat.category = 'GL_ARB_direct_state_access'
+glVertexArrayAttribIFormat.trace = True
+glVertexArrayAttribIFormat.play = True
+gl.add(glVertexArrayAttribIFormat)
+
+glVertexArrayAttribLFormat = Function('glVertexArrayAttribLFormat')
+glVertexArrayAttribLFormat.ret = Return('void')
+glVertexArrayAttribLFormat.add( Input( 'vaobj','GLuint' ))
+glVertexArrayAttribLFormat.add( Input( 'attribindex','GLuint' ))
+glVertexArrayAttribLFormat.add( Input( 'size','GLint' ))
+glVertexArrayAttribLFormat.add( Input( 'type','GLenum' ))
+glVertexArrayAttribLFormat.add( Input( 'relativeoffset','GLuint' ))
+glVertexArrayAttribLFormat.category = 'GL_ARB_direct_state_access'
+glVertexArrayAttribLFormat.trace = True
+glVertexArrayAttribLFormat.play = True
+gl.add(glVertexArrayAttribLFormat)
+
+glVertexArrayBindingDivisor = Function('glVertexArrayBindingDivisor')
+glVertexArrayBindingDivisor.ret = Return('void')
+glVertexArrayBindingDivisor.add( Input( 'vaobj','GLuint' ))
+glVertexArrayBindingDivisor.add( Input( 'bindingindex','GLuint' ))
+glVertexArrayBindingDivisor.add( Input( 'divisor','GLuint' ))
+glVertexArrayBindingDivisor.category = 'GL_ARB_direct_state_access'
+glVertexArrayBindingDivisor.trace = True
+glVertexArrayBindingDivisor.play = True
+gl.add(glVertexArrayBindingDivisor)
+
+glVertexArrayElementBuffer = Function('glVertexArrayElementBuffer')
+glVertexArrayElementBuffer.ret = Return('void')
+glVertexArrayElementBuffer.add( Input( 'vaobj','GLuint' ))
+glVertexArrayElementBuffer.add( Input( 'buffer','GLuint' ))
+glVertexArrayElementBuffer.category = 'GL_ARB_direct_state_access'
+glVertexArrayElementBuffer.trace = True
+glVertexArrayElementBuffer.play = True
+gl.add(glVertexArrayElementBuffer)
+
+glVertexArrayVertexBuffer = Function('glVertexArrayVertexBuffer')
+glVertexArrayVertexBuffer.ret = Return('void')
+glVertexArrayVertexBuffer.add( Input( 'vaobj','GLuint' ))
+glVertexArrayVertexBuffer.add( Input( 'bindingindex','GLuint' ))
+glVertexArrayVertexBuffer.add( Input( 'buffer','GLuint' ))
+glVertexArrayVertexBuffer.add( Input( 'offset','GLintptr' ))
+glVertexArrayVertexBuffer.add( Input( 'stride','GLsizei' ))
+glVertexArrayVertexBuffer.category = 'GL_ARB_direct_state_access'
+glVertexArrayVertexBuffer.trace = True
+glVertexArrayVertexBuffer.play = True
+gl.add(glVertexArrayVertexBuffer)
+
+glVertexArrayVertexBuffers = Function('glVertexArrayVertexBuffers')
+glVertexArrayVertexBuffers.ret = Return('void')
+glVertexArrayVertexBuffers.add( Input( 'vaobj','GLuint' ))
+glVertexArrayVertexBuffers.add( Input( 'first','GLuint' ))
+glVertexArrayVertexBuffers.add( Input( 'count','GLsizei' ))
+glVertexArrayVertexBuffers.add( Input( 'buffers','const GLuint *' ))
+glVertexArrayVertexBuffers.add( Input( 'offsets','const GLintptr *' ))
+glVertexArrayVertexBuffers.add( Input( 'strides','const GLsizei *' ))
+glVertexArrayVertexBuffers.category = 'GL_ARB_direct_state_access'
+glVertexArrayVertexBuffers.trace = True
+glVertexArrayVertexBuffers.play = True
+gl.add(glVertexArrayVertexBuffers)
+
+# GL_ARB_get_texture_sub_image
+
+glGetCompressedTextureSubImage = Function('glGetCompressedTextureSubImage')
+glGetCompressedTextureSubImage.ret = Return('void')
+glGetCompressedTextureSubImage.add( Input( 'texture','GLuint' ))
+glGetCompressedTextureSubImage.add( Input( 'level','GLint' ))
+glGetCompressedTextureSubImage.add( Input( 'xoffset','GLint' ))
+glGetCompressedTextureSubImage.add( Input( 'yoffset','GLint' ))
+glGetCompressedTextureSubImage.add( Input( 'zoffset','GLint' ))
+glGetCompressedTextureSubImage.add( Input( 'width','GLsizei' ))
+glGetCompressedTextureSubImage.add( Input( 'height','GLsizei' ))
+glGetCompressedTextureSubImage.add( Input( 'depth','GLsizei' ))
+glGetCompressedTextureSubImage.add( Input( 'bufSize','GLsizei' ))
+glGetCompressedTextureSubImage.add( Input( 'pixels','GLvoid *' ))
+glGetCompressedTextureSubImage.category = 'GL_ARB_get_texture_sub_image'
+glGetCompressedTextureSubImage.trace = True
+glGetCompressedTextureSubImage.play = True
+gl.add(glGetCompressedTextureSubImage)
+
+glGetTextureSubImage = Function('glGetTextureSubImage')
+glGetTextureSubImage.ret = Return('void')
+glGetTextureSubImage.add( Input( 'texture','GLuint' ))
+glGetTextureSubImage.add( Input( 'level','GLint' ))
+glGetTextureSubImage.add( Input( 'xoffset','GLint' ))
+glGetTextureSubImage.add( Input( 'yoffset','GLint' ))
+glGetTextureSubImage.add( Input( 'zoffset','GLint' ))
+glGetTextureSubImage.add( Input( 'width','GLsizei' ))
+glGetTextureSubImage.add( Input( 'height','GLsizei' ))
+glGetTextureSubImage.add( Input( 'depth','GLsizei' ))
+glGetTextureSubImage.add( Input( 'format','GLenum' ))
+glGetTextureSubImage.add( Input( 'type','GLenum' ))
+glGetTextureSubImage.add( Input( 'bufSize','GLsizei' ))
+glGetTextureSubImage.add( Input( 'pixels','GLvoid *' ))
+glGetTextureSubImage.category = 'GL_ARB_get_texture_sub_image'
+glGetTextureSubImage.trace = True
+glGetTextureSubImage.play = True
+gl.add(glGetTextureSubImage)
+
+# GL_ARB_sparse_buffer
+
+glBufferPageCommitmentARB = Function('glBufferPageCommitmentARB')
+glBufferPageCommitmentARB.ret = Return('void')
+glBufferPageCommitmentARB.add( Input( 'target','GLenum' ))
+glBufferPageCommitmentARB.add( Input( 'offset','GLintptr' ))
+glBufferPageCommitmentARB.add( Input( 'size','GLsizeiptr' ))
+glBufferPageCommitmentARB.add( Input( 'commit','GLboolean' ))
+glBufferPageCommitmentARB.category = 'GL_ARB_sparse_buffer'
+glBufferPageCommitmentARB.trace = True
+glBufferPageCommitmentARB.play = True
+gl.add(glBufferPageCommitmentARB)
+
+# GL_ARB_texture_barrier
+
+glTextureBarrier = Function('glTextureBarrier')
+glTextureBarrier.ret = Return('void')
+glTextureBarrier.category = 'GL_ARB_texture_barrier'
+glTextureBarrier.trace = True
+glTextureBarrier.play = True
+gl.add(glTextureBarrier)
+
+# GL_KHR_blend_equation_advanced
+
+glBlendBarrierKHR = Function('glBlendBarrierKHR')
+glBlendBarrierKHR.ret = Return('void')
+glBlendBarrierKHR.category = 'GL_KHR_blend_equation_advanced'
+glBlendBarrierKHR.trace = True
+glBlendBarrierKHR.play = True
+gl.add(glBlendBarrierKHR)
+
+# GL_KHR_robustness
+
+glGetnUniformfv = Function('glGetnUniformfv')
+glGetnUniformfv.ret = Return('void')
+glGetnUniformfv.add( Input( 'program','GLuint' ))
+glGetnUniformfv.add( Input( 'location','GLint' ))
+glGetnUniformfv.add( Input( 'bufSize','GLsizei' ))
+glGetnUniformfv.add( Input( 'params','GLfloat *' ))
+glGetnUniformfv.category = 'GL_KHR_robustness'
+glGetnUniformfv.trace = True
+glGetnUniformfv.play = True
+gl.add(glGetnUniformfv)
+
+glGetnUniformiv = Function('glGetnUniformiv')
+glGetnUniformiv.ret = Return('void')
+glGetnUniformiv.add( Input( 'program','GLuint' ))
+glGetnUniformiv.add( Input( 'location','GLint' ))
+glGetnUniformiv.add( Input( 'bufSize','GLsizei' ))
+glGetnUniformiv.add( Input( 'params','GLint *' ))
+glGetnUniformiv.category = 'GL_KHR_robustness'
+glGetnUniformiv.trace = True
+glGetnUniformiv.play = True
+gl.add(glGetnUniformiv)
+
+glGetnUniformuiv = Function('glGetnUniformuiv')
+glGetnUniformuiv.ret = Return('void')
+glGetnUniformuiv.add( Input( 'program','GLuint' ))
+glGetnUniformuiv.add( Input( 'location','GLint' ))
+glGetnUniformuiv.add( Input( 'bufSize','GLsizei' ))
+glGetnUniformuiv.add( Input( 'params','GLuint *' ))
+glGetnUniformuiv.category = 'GL_KHR_robustness'
+glGetnUniformuiv.trace = True
+glGetnUniformuiv.play = True
+gl.add(glGetnUniformuiv)
+
+glReadnPixels = Function('glReadnPixels')
+glReadnPixels.ret = Return('void')
+glReadnPixels.add( Input( 'x','GLint' ))
+glReadnPixels.add( Input( 'y','GLint' ))
+glReadnPixels.add( Input( 'width','GLsizei' ))
+glReadnPixels.add( Input( 'height','GLsizei' ))
+glReadnPixels.add( Input( 'format','GLenum' ))
+glReadnPixels.add( Input( 'type','GLenum' ))
+glReadnPixels.add( Input( 'bufSize','GLsizei' ))
+glReadnPixels.add( Input( 'data','GLvoid *' ))
+glReadnPixels.category = 'GL_KHR_robustness'
+glReadnPixels.trace = True
+glReadnPixels.play = True
+gl.add(glReadnPixels)
+
+GL_ARB_ES3_1_compatibility = Extension('GL_ARB_ES3_1_compatibility')
+GL_ARB_ES3_1_compatibility.url = 'http://www.opengl.org/registry/specs/ARB/ES3_1_compatibility.txt'
+GL_ARB_ES3_1_compatibility.functions = ['glMemoryBarrierByRegion']
+gl.add(GL_ARB_ES3_1_compatibility)
+
+GL_ARB_clip_control = Extension('GL_ARB_clip_control')
+GL_ARB_clip_control.url = 'http://www.opengl.org/registry/specs/ARB/clip_control.txt'
+GL_ARB_clip_control.enumerants = ['GL_CLIP_DEPTH_MODE','GL_CLIP_ORIGIN','GL_LOWER_LEFT','GL_NEGATIVE_ONE_TO_ONE','GL_UPPER_LEFT','GL_ZERO_TO_ONE']
+GL_ARB_clip_control.functions = ['glClipControl']
+gl.add(GL_ARB_clip_control)
+
+GL_ARB_conditional_render_inverted = Extension('GL_ARB_conditional_render_inverted')
+GL_ARB_conditional_render_inverted.url = 'http://www.opengl.org/registry/specs/ARB/conditional_render_inverted.txt'
+GL_ARB_conditional_render_inverted.enumerants = ['GL_QUERY_BY_REGION_NO_WAIT_INVERTED','GL_QUERY_BY_REGION_WAIT_INVERTED','GL_QUERY_NO_WAIT_INVERTED','GL_QUERY_WAIT_INVERTED']
+gl.add(GL_ARB_conditional_render_inverted)
+
+GL_ARB_context_flush_control = Extension('GL_ARB_context_flush_control')
+GL_ARB_context_flush_control.url = 'http://www.opengl.org/registry/specs/ARB/wgl_context_flush_control.txt'
+gl.add(GL_ARB_context_flush_control)
+
+GL_ARB_cull_distance = Extension('GL_ARB_cull_distance')
+GL_ARB_cull_distance.url = 'http://www.opengl.org/registry/specs/ARB/cull_distance.txt'
+GL_ARB_cull_distance.enumerants = ['GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES','GL_MAX_CULL_DISTANCES']
+gl.add(GL_ARB_cull_distance)
+
+GL_ARB_derivative_control = Extension('GL_ARB_derivative_control')
+GL_ARB_derivative_control.url = 'http://www.opengl.org/registry/specs/ARB/derivative_control.txt'
+gl.add(GL_ARB_derivative_control)
+
+GL_ARB_direct_state_access = Extension('GL_ARB_direct_state_access')
+GL_ARB_direct_state_access.url = 'http://www.opengl.org/registry/specs/ARB/direct_state_access.txt'
+GL_ARB_direct_state_access.enumerants = ['GL_QUERY_TARGET','GL_TEXTURE_BINDING','GL_TEXTURE_TARGET']
+GL_ARB_direct_state_access.functions = ['glUnmapNamedBuffer','glCheckNamedFramebufferStatus','*','*','glBindTextureUnit','glBlitNamedFramebuffer','glClearNamedBufferData','glClearNamedBufferSubData','glClearNamedFramebufferfi','glClearNamedFramebufferfv','glClearNamedFramebufferiv','glClearNamedFramebufferuiv','glCompressedTextureSubImage1D','glCompressedTextureSubImage2D','glCompressedTextureSubImage3D','glCopyNamedBufferSubData','glCopyTextureSubImage1D','glCopyTextureSubImage2D','glCopyTextureSubImage3D','glCreateBuffers','glCreateFramebuffers','glCreateProgramPipelines','glCreateQueries','glCreateRenderbuffers','glCreateSamplers','glCreateTextures','glCreateTransformFeedbacks','glCreateVertexArrays','glDisableVertexArrayAttrib','glEnableVertexArrayAttrib','glFlushMappedNamedBufferRange','glGenerateTextureMipmap','glGetCompressedTextureImage','glGetNamedBufferParameteri64v','glGetNamedBufferParameteriv','glGetNamedBufferPointerv','glGetNamedBufferSubData','glGetNamedFramebufferAttachmentParameteriv','glGetNamedFramebufferParameteriv','glGetNamedRenderbufferParameteriv','glGetTextureImage','glGetTextureLevelParameterfv','glGetTextureLevelParameteriv','glGetTextureParameterIiv','glGetTextureParameterIuiv','glGetTextureParameterfv','glGetTextureParameteriv','glGetTransformFeedbacki64_v','glGetTransformFeedbacki_v','glGetTransformFeedbackiv','glGetVertexArrayIndexed64iv','glGetVertexArrayIndexediv','glGetVertexArrayiv','glInvalidateNamedFramebufferData','glInvalidateNamedFramebufferSubData','glNamedBufferData','glNamedBufferStorage','glNamedBufferSubData','glNamedFramebufferDrawBuffer','glNamedFramebufferDrawBuffers','glNamedFramebufferParameteri','glNamedFramebufferReadBuffer','glNamedFramebufferRenderbuffer','glNamedFramebufferTexture','glNamedFramebufferTextureLayer','glNamedRenderbufferStorage','glNamedRenderbufferStorageMultisample','glTextureBuffer','glTextureBufferRange','glTextureParameterIiv','glTextureParameterIuiv','glTextureParameterf','glTextureParameterfv','glTextureParameteri','glTextureParameteriv','glTextureStorage1D','glTextureStorage2D','glTextureStorage2DMultisample','glTextureStorage3D','glTextureStorage3DMultisample','glTextureSubImage1D','glTextureSubImage2D','glTextureSubImage3D','glTransformFeedbackBufferBase','glTransformFeedbackBufferRange','glVertexArrayAttribBinding','glVertexArrayAttribFormat','glVertexArrayAttribIFormat','glVertexArrayAttribLFormat','glVertexArrayBindingDivisor','glVertexArrayElementBuffer','glVertexArrayVertexBuffer','glVertexArrayVertexBuffers']
+gl.add(GL_ARB_direct_state_access)
+
+GL_ARB_get_texture_sub_image = Extension('GL_ARB_get_texture_sub_image')
+GL_ARB_get_texture_sub_image.url = 'http://www.opengl.org/registry/specs/ARB/get_texture_sub_image.txt'
+GL_ARB_get_texture_sub_image.functions = ['glGetCompressedTextureSubImage','glGetTextureSubImage']
+gl.add(GL_ARB_get_texture_sub_image)
+
+GL_ARB_pipeline_statistics_query = Extension('GL_ARB_pipeline_statistics_query')
+GL_ARB_pipeline_statistics_query.url = 'http://www.opengl.org/registry/specs/ARB/pipeline_statistics_query.txt'
+GL_ARB_pipeline_statistics_query.enumerants = ['GL_CLIPPING_INPUT_PRIMITIVES_ARB','GL_CLIPPING_OUTPUT_PRIMITIVES_ARB','GL_COMPUTE_SHADER_INVOCATIONS_ARB','GL_FRAGMENT_SHADER_INVOCATIONS_ARB','GL_GEOMETRY_SHADER_INVOCATIONS','GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB','GL_PRIMITIVES_SUBMITTED_ARB','GL_TESS_CONTROL_SHADER_PATCHES_ARB','GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB','GL_VERTEX_SHADER_INVOCATIONS_ARB','GL_VERTICES_SUBMITTED_ARB']
+gl.add(GL_ARB_pipeline_statistics_query)
+
+GL_ARB_shader_texture_image_samples = Extension('GL_ARB_shader_texture_image_samples')
+GL_ARB_shader_texture_image_samples.url = 'http://www.opengl.org/registry/specs/ARB/shader_texture_image_samples.txt'
+gl.add(GL_ARB_shader_texture_image_samples)
+
+GL_ARB_sparse_buffer = Extension('GL_ARB_sparse_buffer')
+GL_ARB_sparse_buffer.url = 'http://www.opengl.org/registry/specs/ARB/sparse_buffer.txt'
+GL_ARB_sparse_buffer.enumerants = ['GL_SPARSE_BUFFER_PAGE_SIZE_ARB','GL_SPARSE_STORAGE_BIT_ARB']
+GL_ARB_sparse_buffer.functions = ['glBufferPageCommitmentARB']
+gl.add(GL_ARB_sparse_buffer)
+
+GL_ARB_texture_barrier = Extension('GL_ARB_texture_barrier')
+GL_ARB_texture_barrier.url = 'http://www.opengl.org/registry/specs/ARB/texture_barrier.txt'
+GL_ARB_texture_barrier.functions = ['glTextureBarrier']
+gl.add(GL_ARB_texture_barrier)
+
+GL_ARB_transform_feedback_overflow_query = Extension('GL_ARB_transform_feedback_overflow_query')
+GL_ARB_transform_feedback_overflow_query.url = 'http://www.opengl.org/registry/specs/ARB/transform_feedback_overflow_query.txt'
+GL_ARB_transform_feedback_overflow_query.enumerants = ['GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB','GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB']
+gl.add(GL_ARB_transform_feedback_overflow_query)
+
+GL_KHR_blend_equation_advanced = Extension('GL_KHR_blend_equation_advanced')
+GL_KHR_blend_equation_advanced.url = 'http://www.opengl.org/registry/specs/KHR/blend_equation_advanced.txt'
+GL_KHR_blend_equation_advanced.enumerants = ['GL_BLEND_ADVANCED_COHERENT_KHR','GL_COLORBURN_KHR','GL_COLORDODGE_KHR','GL_DARKEN_KHR','GL_DIFFERENCE_KHR','GL_EXCLUSION_KHR','GL_HARDLIGHT_KHR','GL_HSL_COLOR_KHR','GL_HSL_HUE_KHR','GL_HSL_LUMINOSITY_KHR','GL_HSL_SATURATION_KHR','GL_LIGHTEN_KHR','GL_MULTIPLY_KHR','GL_OVERLAY_KHR','GL_SCREEN_KHR','GL_SOFTLIGHT_KHR']
+GL_KHR_blend_equation_advanced.functions = ['glBlendBarrierKHR']
+gl.add(GL_KHR_blend_equation_advanced)
+
+GL_KHR_blend_equation_advanced_coherent = Extension('GL_KHR_blend_equation_advanced_coherent')
+GL_KHR_blend_equation_advanced_coherent.url = 'http://www.opengl.org/registry/specs/KHR/blend_equation_advanced.txt'
+gl.add(GL_KHR_blend_equation_advanced_coherent)
+
+GL_KHR_robust_buffer_access_behavior = Extension('GL_KHR_robust_buffer_access_behavior')
+GL_KHR_robust_buffer_access_behavior.url = 'http://www.opengl.org/registry/specs/KHR/robust_buffer_access_behavior.txt'
+gl.add(GL_KHR_robust_buffer_access_behavior)
+
+GL_KHR_robustness = Extension('GL_KHR_robustness')
+GL_KHR_robustness.url = 'http://www.opengl.org/registry/specs/KHR/robustness.txt'
+GL_KHR_robustness.enumerants = ['GL_CONTEXT_LOST','GL_CONTEXT_ROBUST_ACCESS','GL_GUILTY_CONTEXT_RESET','GL_INNOCENT_CONTEXT_RESET','GL_LOSE_CONTEXT_ON_RESET','GL_NO_RESET_NOTIFICATION','GL_RESET_NOTIFICATION_STRATEGY','GL_UNKNOWN_CONTEXT_RESET']
+GL_KHR_robustness.functions = ['glGetnUniformfv','glGetnUniformiv','glGetnUniformuiv','glReadnPixels']
+gl.add(GL_KHR_robustness)
+
+################
+
 GL_3DFX_multisample = Extension('GL_3DFX_multisample')
 GL_3DFX_multisample.url = 'http://www.opengl.org/registry/specs/3DFX/3dfx_multisample.txt'
 GL_3DFX_multisample.enumerants = ['GL_MULTISAMPLE_3DFX','GL_MULTISAMPLE_BIT_3DFX','GL_SAMPLES_3DFX','GL_SAMPLE_BUFFERS_3DFX']
