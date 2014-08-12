@@ -29,6 +29,8 @@ covers all the functions we support.
 """ 
 
 
+import sys
+
 from dispatch import Dispatcher
 import specs.stdapi as stdapi
 from specs.glapi import glapi
@@ -491,23 +493,42 @@ public_symbols.update([
 
 class GlDispatcher(Dispatcher):
 
-    def header(self):
-        print '''
-#if defined(_WIN32)
-extern HMODULE _libGlHandle;
-#else
-extern void * _libGlHandle;
-#endif
-
-void * _getPublicProcAddress(const char *procName);
-void * _getPrivateProcAddress(const char *procName);
-'''
-        
     def isFunctionPublic(self, module, function):
         return function.name in public_symbols or function.name.startswith('CGL')
 
+    def getProcAddressName(self, module, function):
+        if self.isFunctionPublic(module, function):
+            return '_getPublicProcAddress'
+        else:
+            return '_getPrivateProcAddress'
+
     def failFunction(self, function):
-        # We fake this when they are not available
+        # We fake these when they are not available
+        if function.name in (
+            # GL_KHR_debug
+            'glDebugMessageControl',
+            'glDebugMessageInsert',
+            'glDebugMessageCallback',
+            'glPushDebugGroup',
+            'glPopDebugGroup',
+            'glObjectLabel',
+            'glObjectPtrLabel',
+            # GL_ARB_debug_output
+            'glDebugMessageControlARB',
+            'glDebugMessageInsertARB',
+            'glDebugMessageCallbackARB',
+            # GL_AMD_debug_output
+            'glDebugMessageEnableAMD',
+            'glDebugMessageInsertAMD',
+            'glDebugMessageCallbackAMD',
+            # GL_EXT_debug_label
+            'glLabelObjectEXT',
+            # GL_EXT_debug_marker
+            'glInsertEventMarkerEXT',
+            'glPushGroupMarkerEXT',
+            'glPopGroupMarkerEXT',
+        ):
+            return
         if function.name in ('glGetObjectLabel', 'glGetObjectPtrLabel', 'glGetObjectLabelEXT'):
             print r'    if (length != 0) *length = 0;'
             print r'    if (label != 0 && bufSize > 0) *label = 0;'
@@ -519,6 +540,7 @@ void * _getPrivateProcAddress(const char *procName);
             print r'    if (severities != 0) *severities = 0;'
             print r'    if (lengths != 0) *lengths = 0;'
             print r'    if (messageLog != 0 && bufsize > 0) *messageLog = 0;'
+            print r'    return 0;'
             return
         if function.name in ('glGetDebugMessageLogAMD'):
             print r'    if (categories != 0) *categories = 0;'
@@ -526,43 +548,80 @@ void * _getPrivateProcAddress(const char *procName);
             print r'    if (severities != 0) *severities = 0;'
             print r'    if (lengths != 0) *lengths = 0;'
             print r'    if (message != 0 && bufsize > 0) *message = 0;'
+            print r'    return 0;'
             return
 
         Dispatcher.failFunction(self, function)
 
 
 if __name__ == '__main__':
+    decl, impl = sys.argv[1:]
+
+    sys.stdout = open(decl, 'wt')
     print
     print '#ifndef _GLPROC_HPP_'
     print '#define _GLPROC_HPP_'
-    print 
+    print
     print '#include "glimports.hpp"'
+    print
+    print '#if defined(_WIN32)'
+    print 'extern HMODULE _libGlHandle;'
+    print '#else'
+    print 'extern void * _libGlHandle;'
+    print '#endif'
+    print
+    print 'void * _getPublicProcAddress(const char *procName);'
+    print 'void * _getPrivateProcAddress(const char *procName);'
+    print
+    dispatcher = GlDispatcher()
+    print
+    dispatcher.dispatchModuleDecl(eglapi)
+    print
+    print '#if defined(_WIN32)'
+    print
+    dispatcher.dispatchModuleDecl(wglapi)
+    print
+    print '#elif defined(__APPLE__)'
+    print
+    dispatcher.dispatchModuleDecl(cglapi)
+    print
+    print '#elif defined(HAVE_X11)'
+    print
+    dispatcher.dispatchModuleDecl(glxapi)
+    print
+    print '#endif'
+    print
+    dispatcher.dispatchModuleDecl(glapi)
+    print
+    dispatcher.dispatchModuleDecl(glesapi)
+    print
+    print '#endif /* !_GLPROC_HPP_ */'
+    print
+
+    sys.stdout = open(impl, 'wt')
+    print
+    print '#include "glproc.hpp"'
     print '#include "os.hpp"'
     print
     dispatcher = GlDispatcher()
     print
-    dispatcher.header()
-    print
-    dispatcher.dispatchModule(eglapi)
+    dispatcher.dispatchModuleImpl(eglapi)
     print
     print '#if defined(_WIN32)'
     print
-    dispatcher.dispatchModule(wglapi)
+    dispatcher.dispatchModuleImpl(wglapi)
     print
     print '#elif defined(__APPLE__)'
     print
-    dispatcher.dispatchModule(cglapi)
+    dispatcher.dispatchModuleImpl(cglapi)
     print
     print '#elif defined(HAVE_X11)'
     print
-    dispatcher.dispatchModule(glxapi)
+    dispatcher.dispatchModuleImpl(glxapi)
     print
     print '#endif'
     print
-    dispatcher.dispatchModule(glapi)
+    dispatcher.dispatchModuleImpl(glapi)
     print
-    dispatcher.dispatchModule(glesapi)
-    print
-
-    print '#endif /* !_GLPROC_HPP_ */'
+    dispatcher.dispatchModuleImpl(glesapi)
     print

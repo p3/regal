@@ -119,13 +119,12 @@ class GlTracer(Tracer):
         # Which glVertexAttrib* variant to use
         print 'enum vertex_attrib {'
         print '    VERTEX_ATTRIB,'
-        print '    VERTEX_ATTRIB_ARB,'
         print '    VERTEX_ATTRIB_NV,'
         print '};'
         print
         print 'static vertex_attrib _get_vertex_attrib(void) {'
         print '    gltrace::Context *ctx = gltrace::getContext();'
-        print '    if (ctx->user_arrays_arb || ctx->user_arrays_nv) {'
+        print '    if (ctx->user_arrays_nv) {'
         print '        GLboolean _vertex_program = GL_FALSE;'
         print '        _glGetBooleanv(GL_VERTEX_PROGRAM_ARB, &_vertex_program);'
         print '        if (_vertex_program) {'
@@ -135,7 +134,6 @@ class GlTracer(Tracer):
         print '                    return VERTEX_ATTRIB_NV;'
         print '                }'
         print '            }'
-        print '            return VERTEX_ATTRIB_ARB;'
         print '        }'
         print '    }'
         print '    return VERTEX_ATTRIB;'
@@ -152,12 +150,14 @@ class GlTracer(Tracer):
         print '        return false;'
         print '    }'
         print
+        print '    enum gltrace::Profile profile = ctx->profile;'
+        print
 
         for camelcase_name, uppercase_name in self.arrays:
             # in which profile is the array available?
-            profile_check = 'ctx->profile == gltrace::PROFILE_COMPAT'
+            profile_check = 'profile == gltrace::PROFILE_COMPAT'
             if camelcase_name in self.arrays_es1:
-                profile_check = '(' + profile_check + ' || ctx->profile == gltrace::PROFILE_ES1)';
+                profile_check = '(' + profile_check + ' || profile == gltrace::PROFILE_ES1)';
 
             function_name = 'gl%sPointer' % camelcase_name
             enable_name = 'GL_%s_ARRAY' % uppercase_name
@@ -165,19 +165,17 @@ class GlTracer(Tracer):
             print '    // %s' % function_name
             print '  if (%s) {' % profile_check
             self.array_prolog(api, uppercase_name)
-            print '    if (_glIsEnabled(%s)) {' % enable_name
-            print '        GLint _binding = _glGetInteger(%s);' % binding_name
-            print '        if (!_binding) {'
+            print '    if (_glIsEnabled(%s) &&' % enable_name
+            print '        _glGetInteger(%s) == 0) {' % binding_name
             self.array_cleanup(api, uppercase_name)
-            print '            return true;'
-            print '        }'
+            print '        return true;'
             print '    }'
             self.array_epilog(api, uppercase_name)
             print '  }'
             print
 
         print '    // ES1 does not support generic vertex attributes'
-        print '    if (ctx->profile == gltrace::PROFILE_ES1)'
+        print '    if (profile == gltrace::PROFILE_ES1)'
         print '        return false;'
         print
         print '    vertex_attrib _vertex_attrib = _get_vertex_attrib();'
@@ -186,30 +184,9 @@ class GlTracer(Tracer):
         print '    if (_vertex_attrib == VERTEX_ATTRIB) {'
         print '        GLint _max_vertex_attribs = _glGetInteger(GL_MAX_VERTEX_ATTRIBS);'
         print '        for (GLint index = 0; index < _max_vertex_attribs; ++index) {'
-        print '            GLint _enabled = 0;'
-        print '            _glGetVertexAttribiv(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &_enabled);'
-        print '            if (_enabled) {'
-        print '                GLint _binding = 0;'
-        print '                _glGetVertexAttribiv(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, &_binding);'
-        print '                if (!_binding) {'
-        print '                    return true;'
-        print '                }'
-        print '            }'
-        print '        }'
-        print '    }'
-        print
-        print '    // glVertexAttribPointerARB'
-        print '    if (_vertex_attrib == VERTEX_ATTRIB_ARB) {'
-        print '        GLint _max_vertex_attribs = _glGetInteger(GL_MAX_VERTEX_ATTRIBS_ARB);'
-        print '        for (GLint index = 0; index < _max_vertex_attribs; ++index) {'
-        print '            GLint _enabled = 0;'
-        print '            _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED_ARB, &_enabled);'
-        print '            if (_enabled) {'
-        print '                GLint _binding = 0;'
-        print '                _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING_ARB, &_binding);'
-        print '                if (!_binding) {'
-        print '                    return true;'
-        print '                }'
+        print '            if (_glGetVertexAttribi(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED) &&'
+        print '                _glGetVertexAttribi(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING) == 0) {'
+        print '                return true;'
         print '            }'
         print '        }'
         print '    }'
@@ -217,8 +194,7 @@ class GlTracer(Tracer):
         print '    // glVertexAttribPointerNV'
         print '    if (_vertex_attrib == VERTEX_ATTRIB_NV) {'
         print '        for (GLint index = 0; index < 16; ++index) {'
-        print '            GLboolean _enabled = _glIsEnabled(GL_VERTEX_ATTRIB_ARRAY0_NV);'
-        print '            if (_enabled) {'
+        print '            if (_glIsEnabled(GL_VERTEX_ATTRIB_ARRAY0_NV + index)) {'
         print '                return true;'
         print '            }'
         print '        }'
@@ -493,8 +469,6 @@ class GlTracer(Tracer):
             print '    if (!_array_buffer) {'
             print '        gltrace::Context *ctx = gltrace::getContext();'
             print '        ctx->user_arrays = true;'
-            if function.name == "glVertexAttribPointerARB":
-                print '        ctx->user_arrays_arb = true;'
             if function.name == "glVertexAttribPointerNV":
                 print '        ctx->user_arrays_nv = true;'
             self.invokeFunction(function)
@@ -747,10 +721,6 @@ class GlTracer(Tracer):
         'glStringMarkerGREMEDY',
         # GL_GREMEDY_frame_terminator
         'glFrameTerminatorGREMEDY',
-        # GL_EXT_debug_marker
-        'glInsertEventMarkerEXT',
-        'glPushGroupMarkerEXT',
-        'glPopGroupMarkerEXT',
     ]
 
     # These entrypoints may be implemented by drivers, but are also very useful
@@ -777,6 +747,13 @@ class GlTracer(Tracer):
         'glDebugMessageInsertAMD',
         'glDebugMessageCallbackAMD',
         'glGetDebugMessageLogAMD',
+        # GL_EXT_debug_label
+        'glLabelObjectEXT',
+        'glGetObjectLabelEXT',
+        # GL_EXT_debug_marker
+        'glInsertEventMarkerEXT',
+        'glPushGroupMarkerEXT',
+        'glPopGroupMarkerEXT',
     ]
 
     def invokeFunction(self, function):
@@ -796,8 +773,7 @@ class GlTracer(Tracer):
             Tracer.doInvokeFunction(self, function, prefix = 'gltrace::_', suffix = '_override')
             return
 
-        # We implement GL_EXT_debug_marker, GL_GREMEDY_*, etc., and not the
-        # driver
+        # We implement GL_GREMEDY_*, etc., and not the driver
         if function.name in self.marker_functions:
             return
 
@@ -1064,7 +1040,7 @@ class GlTracer(Tracer):
         print
         print '    vertex_attrib _vertex_attrib = _get_vertex_attrib();'
         print
-        for suffix in ['', 'ARB', 'NV']:
+        for suffix in ['', 'NV']:
             if suffix:
                 SUFFIX = '_' + suffix
             else:

@@ -41,13 +41,12 @@ static std::map<void *, void *> g_WrappedObjects;
 
 enum vertex_attrib {
     VERTEX_ATTRIB,
-    VERTEX_ATTRIB_ARB,
     VERTEX_ATTRIB_NV,
 };
 
 static vertex_attrib _get_vertex_attrib(void) {
     gltrace::Context *ctx = gltrace::getContext();
-    if (ctx->user_arrays_arb || ctx->user_arrays_nv) {
+    if (ctx->user_arrays_nv) {
         GLboolean _vertex_program = GL_FALSE;
         _glGetBooleanv(GL_VERTEX_PROGRAM_ARB, &_vertex_program);
         if (_vertex_program) {
@@ -57,7 +56,6 @@ static vertex_attrib _get_vertex_attrib(void) {
                     return VERTEX_ATTRIB_NV;
                 }
             }
-            return VERTEX_ATTRIB_ARB;
         }
     }
     return VERTEX_ATTRIB;
@@ -85,38 +83,34 @@ static inline bool _need_user_arrays(void)
         return false;
     }
 
+    enum gltrace::Profile profile = ctx->profile;
+
     // glSecondaryColorPointer
-  if (ctx->profile == gltrace::PROFILE_COMPAT) {
-    if (_glIsEnabled(GL_SECONDARY_COLOR_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_SECONDARY_COLOR_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if (profile == gltrace::PROFILE_COMPAT) {
+    if (_glIsEnabled(GL_SECONDARY_COLOR_ARRAY) &&
+        _glGetInteger(GL_SECONDARY_COLOR_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // glFogCoordPointer
-  if (ctx->profile == gltrace::PROFILE_COMPAT) {
-    if (_glIsEnabled(GL_FOG_COORD_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_FOG_COORD_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if (profile == gltrace::PROFILE_COMPAT) {
+    if (_glIsEnabled(GL_FOG_COORD_ARRAY) &&
+        _glGetInteger(GL_FOG_COORD_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // glEdgeFlagPointer
-  if (ctx->profile == gltrace::PROFILE_COMPAT) {
-    if (_glIsEnabled(GL_EDGE_FLAG_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_EDGE_FLAG_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if (profile == gltrace::PROFILE_COMPAT) {
+    if (_glIsEnabled(GL_EDGE_FLAG_ARRAY) &&
+        _glGetInteger(GL_EDGE_FLAG_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // glTexCoordPointer
-  if ((ctx->profile == gltrace::PROFILE_COMPAT || ctx->profile == gltrace::PROFILE_ES1)) {
+  if ((profile == gltrace::PROFILE_COMPAT || profile == gltrace::PROFILE_ES1)) {
     GLint client_active_texture = _glGetInteger(GL_CLIENT_ACTIVE_TEXTURE);
     GLint max_texture_coords = 0;
     if (ctx->profile == gltrace::PROFILE_COMPAT)
@@ -126,59 +120,49 @@ static inline bool _need_user_arrays(void)
     for (GLint unit = 0; unit < max_texture_coords; ++unit) {
         GLint texture = GL_TEXTURE0 + unit;
         _glClientActiveTexture(texture);
-    if (_glIsEnabled(GL_TEXTURE_COORD_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
+    if (_glIsEnabled(GL_TEXTURE_COORD_ARRAY) &&
+        _glGetInteger(GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING) == 0) {
     _glClientActiveTexture(client_active_texture);
-            return true;
-        }
+        return true;
     }
     }
     _glClientActiveTexture(client_active_texture);
   }
 
     // glIndexPointer
-  if (ctx->profile == gltrace::PROFILE_COMPAT) {
-    if (_glIsEnabled(GL_INDEX_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_INDEX_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if (profile == gltrace::PROFILE_COMPAT) {
+    if (_glIsEnabled(GL_INDEX_ARRAY) &&
+        _glGetInteger(GL_INDEX_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // glColorPointer
-  if ((ctx->profile == gltrace::PROFILE_COMPAT || ctx->profile == gltrace::PROFILE_ES1)) {
-    if (_glIsEnabled(GL_COLOR_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_COLOR_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if ((profile == gltrace::PROFILE_COMPAT || profile == gltrace::PROFILE_ES1)) {
+    if (_glIsEnabled(GL_COLOR_ARRAY) &&
+        _glGetInteger(GL_COLOR_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // glNormalPointer
-  if ((ctx->profile == gltrace::PROFILE_COMPAT || ctx->profile == gltrace::PROFILE_ES1)) {
-    if (_glIsEnabled(GL_NORMAL_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_NORMAL_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if ((profile == gltrace::PROFILE_COMPAT || profile == gltrace::PROFILE_ES1)) {
+    if (_glIsEnabled(GL_NORMAL_ARRAY) &&
+        _glGetInteger(GL_NORMAL_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // glVertexPointer
-  if ((ctx->profile == gltrace::PROFILE_COMPAT || ctx->profile == gltrace::PROFILE_ES1)) {
-    if (_glIsEnabled(GL_VERTEX_ARRAY)) {
-        GLint _binding = _glGetInteger(GL_VERTEX_ARRAY_BUFFER_BINDING);
-        if (!_binding) {
-            return true;
-        }
+  if ((profile == gltrace::PROFILE_COMPAT || profile == gltrace::PROFILE_ES1)) {
+    if (_glIsEnabled(GL_VERTEX_ARRAY) &&
+        _glGetInteger(GL_VERTEX_ARRAY_BUFFER_BINDING) == 0) {
+        return true;
     }
   }
 
     // ES1 does not support generic vertex attributes
-    if (ctx->profile == gltrace::PROFILE_ES1)
+    if (profile == gltrace::PROFILE_ES1)
         return false;
 
     vertex_attrib _vertex_attrib = _get_vertex_attrib();
@@ -187,30 +171,9 @@ static inline bool _need_user_arrays(void)
     if (_vertex_attrib == VERTEX_ATTRIB) {
         GLint _max_vertex_attribs = _glGetInteger(GL_MAX_VERTEX_ATTRIBS);
         for (GLint index = 0; index < _max_vertex_attribs; ++index) {
-            GLint _enabled = 0;
-            _glGetVertexAttribiv(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &_enabled);
-            if (_enabled) {
-                GLint _binding = 0;
-                _glGetVertexAttribiv(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, &_binding);
-                if (!_binding) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    // glVertexAttribPointerARB
-    if (_vertex_attrib == VERTEX_ATTRIB_ARB) {
-        GLint _max_vertex_attribs = _glGetInteger(GL_MAX_VERTEX_ATTRIBS_ARB);
-        for (GLint index = 0; index < _max_vertex_attribs; ++index) {
-            GLint _enabled = 0;
-            _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED_ARB, &_enabled);
-            if (_enabled) {
-                GLint _binding = 0;
-                _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING_ARB, &_binding);
-                if (!_binding) {
-                    return true;
-                }
+            if (_glGetVertexAttribi(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED) &&
+                _glGetVertexAttribi(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING) == 0) {
+                return true;
             }
         }
     }
@@ -218,8 +181,7 @@ static inline bool _need_user_arrays(void)
     // glVertexAttribPointerNV
     if (_vertex_attrib == VERTEX_ATTRIB_NV) {
         for (GLint index = 0; index < 16; ++index) {
-            GLboolean _enabled = _glIsEnabled(GL_VERTEX_ATTRIB_ARRAY0_NV);
-            if (_enabled) {
+            if (_glIsEnabled(GL_VERTEX_ATTRIB_ARRAY0_NV + index)) {
                 return true;
             }
         }
@@ -470,6 +432,9 @@ is_symbolic_pname(GLenum pname) {
     case GL_TEXTURE_UNSIGNED_REMAP_MODE_NV:
     case GL_BUFFER_ACCESS:
     case GL_ACTIVE_STENCIL_FACE_EXT:
+    case GL_CLAMP_VERTEX_COLOR:
+    case GL_CLAMP_FRAGMENT_COLOR:
+    case GL_CLAMP_READ_COLOR:
     case GL_ELEMENT_ARRAY_TYPE_APPLE:
     case GL_UNIFORM_TYPE:
     case GL_TEXTURE_SRGB_DECODE_EXT:
@@ -6535,10 +6500,11 @@ static const trace::BitmaskSig _bitmaskint15_sig = {
 static const trace::BitmaskFlag _bitmaskint16_flags[] = {
     {"GLX_CONTEXT_CORE_PROFILE_BIT_ARB", GLX_CONTEXT_CORE_PROFILE_BIT_ARB},
     {"GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB", GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB},
+    {"GLX_CONTEXT_ES_PROFILE_BIT_EXT", GLX_CONTEXT_ES_PROFILE_BIT_EXT},
 };
 
 static const trace::BitmaskSig _bitmaskint16_sig = {
-    15, 2, _bitmaskint16_flags
+    15, 3, _bitmaskint16_flags
 };
 
 #endif // REGAL_SYS_GLX
@@ -6907,10 +6873,11 @@ static const trace::BitmaskSig _bitmaskint46_sig = {
 static const trace::BitmaskFlag _bitmaskint47_flags[] = {
     {"WGL_CONTEXT_CORE_PROFILE_BIT_ARB", WGL_CONTEXT_CORE_PROFILE_BIT_ARB},
     {"WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB", WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB},
+    {"WGL_CONTEXT_ES_PROFILE_BIT_EXT", WGL_CONTEXT_ES_PROFILE_BIT_EXT},
 };
 
 static const trace::BitmaskSig _bitmaskint47_sig = {
-    25, 2, _bitmaskint47_flags
+    25, 3, _bitmaskint47_flags
 };
 
 static const char * _structRECT_members[4] = {
@@ -46234,7 +46201,6 @@ void glVertexAttribPointerARB( GLuint index, GLint size, GLenum type, GLboolean 
     if (!_array_buffer) {
         gltrace::Context *ctx = gltrace::getContext();
         ctx->user_arrays = true;
-        ctx->user_arrays_arb = true;
     _glVertexAttribPointerARB(index, size, type, normalized, stride, pointer);
         static bool _checked = false;
         if (!_checked && size == GL_BGRA) {
@@ -95640,54 +95606,6 @@ static void _trace_user_arrays(GLuint count)
                     _glGetVertexAttribPointerv(index, GL_VERTEX_ATTRIB_ARRAY_POINTER, &pointer);
                     size_t _size = _glVertexAttribPointer_size(size, type, normalized, stride, count);
                     unsigned _call = trace::localWriter.beginEnter(&_glVertexAttribPointer_sig, true);
-                    trace::localWriter.beginArg(0);
-    trace::localWriter.writeUInt(index);
-                    trace::localWriter.endArg();
-                    trace::localWriter.beginArg(1);
-    trace::localWriter.writeEnum(&_enumGLint2_sig, size);
-                    trace::localWriter.endArg();
-                    trace::localWriter.beginArg(2);
-    trace::localWriter.writeEnum(&_enumGLenum_sig, type);
-                    trace::localWriter.endArg();
-                    trace::localWriter.beginArg(3);
-    trace::localWriter.writeEnum(&_enumGLboolean_sig, normalized);
-                    trace::localWriter.endArg();
-                    trace::localWriter.beginArg(4);
-    trace::localWriter.writeSInt(stride);
-                    trace::localWriter.endArg();
-                    trace::localWriter.beginArg(5);
-                    trace::localWriter.writeBlob((const void *)pointer, _size);
-                    trace::localWriter.endArg();
-                    trace::localWriter.endEnter();
-                    trace::localWriter.beginLeave(_call);
-                    trace::localWriter.endLeave();
-                }
-            }
-        }
-    }
-
-    // void APIENTRY glVertexAttribPointerARB(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer)
-    if (_vertex_attrib == VERTEX_ATTRIB_ARB) {
-        GLint _max_vertex_attribs = _glGetInteger(GL_MAX_VERTEX_ATTRIBS);
-        for (GLint index = 0; index < _max_vertex_attribs; ++index) {
-            GLint _enabled = 0;
-            _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_ENABLED_ARB, &_enabled);
-            if (_enabled) {
-                GLint _binding = 0;
-                _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING_ARB, &_binding);
-                if (!_binding) {
-                    GLint size = 0;
-                    _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_SIZE_ARB, &size);
-                    GLint type = 0;
-                    _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_TYPE_ARB, &type);
-                    GLint normalized = 0;
-                    _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB, &normalized);
-                    GLint stride = 0;
-                    _glGetVertexAttribivARB(index, GL_VERTEX_ATTRIB_ARRAY_STRIDE_ARB, &stride);
-                    GLvoid * pointer = 0;
-                    _glGetVertexAttribPointervARB(index, GL_VERTEX_ATTRIB_ARRAY_POINTER_ARB, &pointer);
-                    size_t _size = _glVertexAttribPointerARB_size(size, type, normalized, stride, count);
-                    unsigned _call = trace::localWriter.beginEnter(&_glVertexAttribPointerARB_sig, true);
                     trace::localWriter.beginArg(0);
     trace::localWriter.writeUInt(index);
                     trace::localWriter.endArg();
