@@ -316,7 +316,7 @@ def traverseContextInfo(apis, args):
     if api.name == 'gles':
       api.versions =  [ [2, 0] ]
     if api.name == 'gl':
-      api.versions =  [ [4,4], [4,3], [4,2], [4, 1], [4, 0] ]
+      api.versions =  [ [4,5], [4,4], [4,3], [4,2], [4, 1], [4, 0] ]
       api.versions += [ [3, 3], [3, 2], [3, 1], [3, 0] ]
       api.versions += [ [2, 1], [2, 0] ]
       api.versions += [ [1, 5], [1, 4], [1, 3], [1, 2], [1, 1], [1, 0] ]

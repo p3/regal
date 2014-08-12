@@ -101,6 +101,7 @@ Statistics::log() const
   log("GL_VERSION_4_2",gl_version_4_2);
   log("GL_VERSION_4_3",gl_version_4_3);
   log("GL_VERSION_4_4",gl_version_4_4);
+  log("GL_VERSION_4_5",gl_version_4_5);
   log("GLX_VERSION_1_0",glx_version_1_0);
   log("GLX_VERSION_1_1",glx_version_1_1);
   log("GLX_VERSION_1_2",glx_version_1_2);
@@ -164,6 +165,7 @@ Statistics::log() const
   log("GL_APPLE_VERTEX_PROGRAM_EVALUATORS",gl_apple_vertex_program_evaluators);
   log("GL_APPLE_YCBCR_422",gl_apple_ycbcr_422);
   log("GL_ARB_ES2_COMPATIBILITY",gl_arb_es2_compatibility);
+  log("GL_ARB_ES3_1_COMPATIBILITY",gl_arb_es3_1_compatibility);
   log("GL_ARB_ES3_COMPATIBILITY",gl_arb_es3_compatibility);
   log("GL_ARB_BASE_INSTANCE",gl_arb_base_instance);
   log("GL_ARB_BINDLESS_TEXTURE",gl_arb_bindless_texture);
@@ -172,16 +174,20 @@ Statistics::log() const
   log("GL_ARB_CL_EVENT",gl_arb_cl_event);
   log("GL_ARB_CLEAR_BUFFER_OBJECT",gl_arb_clear_buffer_object);
   log("GL_ARB_CLEAR_TEXTURE",gl_arb_clear_texture);
+  log("GL_ARB_CLIP_CONTROL",gl_arb_clip_control);
   log("GL_ARB_COLOR_BUFFER_FLOAT",gl_arb_color_buffer_float);
   log("GL_ARB_COMPRESSED_TEXTURE_PIXEL_STORAGE",gl_arb_compressed_texture_pixel_storage);
   log("GL_ARB_COMPUTE_SHADER",gl_arb_compute_shader);
   log("GL_ARB_COMPUTE_VARIABLE_GROUP_SIZE",gl_arb_compute_variable_group_size);
+  log("GL_ARB_CONDITIONAL_RENDER_INVERTED",gl_arb_conditional_render_inverted);
   log("GL_ARB_COPY_BUFFER",gl_arb_copy_buffer);
   log("GL_ARB_COPY_IMAGE",gl_arb_copy_image);
+  log("GL_ARB_CULL_DISTANCE",gl_arb_cull_distance);
   log("GL_ARB_DEBUG_OUTPUT",gl_arb_debug_output);
   log("GL_ARB_DEPTH_BUFFER_FLOAT",gl_arb_depth_buffer_float);
   log("GL_ARB_DEPTH_CLAMP",gl_arb_depth_clamp);
   log("GL_ARB_DEPTH_TEXTURE",gl_arb_depth_texture);
+  log("GL_ARB_DIRECT_STATE_ACCESS",gl_arb_direct_state_access);
   log("GL_ARB_DRAW_BUFFERS",gl_arb_draw_buffers);
   log("GL_ARB_DRAW_BUFFERS_BLEND",gl_arb_draw_buffers_blend);
   log("GL_ARB_DRAW_ELEMENTS_BASE_VERTEX",gl_arb_draw_elements_base_vertex);
@@ -196,6 +202,7 @@ Statistics::log() const
   log("GL_ARB_FRAMEBUFFER_SRGB",gl_arb_framebuffer_srgb);
   log("GL_ARB_GEOMETRY_SHADER4",gl_arb_geometry_shader4);
   log("GL_ARB_GET_PROGRAM_BINARY",gl_arb_get_program_binary);
+  log("GL_ARB_GET_TEXTURE_SUB_IMAGE",gl_arb_get_texture_sub_image);
   log("GL_ARB_GPU_SHADER5",gl_arb_gpu_shader5);
   log("GL_ARB_GPU_SHADER_FP64",gl_arb_gpu_shader_fp64);
   log("GL_ARB_HALF_FLOAT_PIXEL",gl_arb_half_float_pixel);
@@ -215,6 +222,7 @@ Statistics::log() const
   log("GL_ARB_MULTITEXTURE",gl_arb_multitexture);
   log("GL_ARB_OCCLUSION_QUERY",gl_arb_occlusion_query);
   log("GL_ARB_OCCLUSION_QUERY2",gl_arb_occlusion_query2);
+  log("GL_ARB_PIPELINE_STATISTICS_QUERY",gl_arb_pipeline_statistics_query);
   log("GL_ARB_PIXEL_BUFFER_OBJECT",gl_arb_pixel_buffer_object);
   log("GL_ARB_POINT_PARAMETERS",gl_arb_point_parameters);
   log("GL_ARB_POINT_SPRITE",gl_arb_point_sprite);
@@ -235,10 +243,12 @@ Statistics::log() const
   log("GL_ARB_SHADING_LANGUAGE_INCLUDE",gl_arb_shading_language_include);
   log("GL_ARB_SHADOW",gl_arb_shadow);
   log("GL_ARB_SHADOW_AMBIENT",gl_arb_shadow_ambient);
+  log("GL_ARB_SPARSE_BUFFER",gl_arb_sparse_buffer);
   log("GL_ARB_SPARSE_TEXTURE",gl_arb_sparse_texture);
   log("GL_ARB_STENCIL_TEXTURING",gl_arb_stencil_texturing);
   log("GL_ARB_SYNC",gl_arb_sync);
   log("GL_ARB_TESSELLATION_SHADER",gl_arb_tessellation_shader);
+  log("GL_ARB_TEXTURE_BARRIER",gl_arb_texture_barrier);
   log("GL_ARB_TEXTURE_BORDER_CLAMP",gl_arb_texture_border_clamp);
   log("GL_ARB_TEXTURE_BUFFER_OBJECT",gl_arb_texture_buffer_object);
   log("GL_ARB_TEXTURE_BUFFER_RANGE",gl_arb_texture_buffer_range);
@@ -265,6 +275,7 @@ Statistics::log() const
   log("GL_ARB_TRANSFORM_FEEDBACK2",gl_arb_transform_feedback2);
   log("GL_ARB_TRANSFORM_FEEDBACK3",gl_arb_transform_feedback3);
   log("GL_ARB_TRANSFORM_FEEDBACK_INSTANCED",gl_arb_transform_feedback_instanced);
+  log("GL_ARB_TRANSFORM_FEEDBACK_OVERFLOW_QUERY",gl_arb_transform_feedback_overflow_query);
   log("GL_ARB_TRANSPOSE_MATRIX",gl_arb_transpose_matrix);
   log("GL_ARB_UNIFORM_BUFFER_OBJECT",gl_arb_uniform_buffer_object);
   log("GL_ARB_VERTEX_ARRAY_OBJECT",gl_arb_vertex_array_object);
@@ -429,7 +440,9 @@ Statistics::log() const
   log("GL_INTEL_MAP_TEXTURE",gl_intel_map_texture);
   log("GL_INTEL_PARALLEL_ARRAYS",gl_intel_parallel_arrays);
   log("GL_INTEL_TEXTURE_SCISSOR",gl_intel_texture_scissor);
+  log("GL_KHR_BLEND_EQUATION_ADVANCED",gl_khr_blend_equation_advanced);
   log("GL_KHR_DEBUG",gl_khr_debug);
+  log("GL_KHR_ROBUSTNESS",gl_khr_robustness);
   log("GL_KHR_TEXTURE_COMPRESSION_ASTC_LDR",gl_khr_texture_compression_astc_ldr);
   log("GL_KTX_BUFFER_REGION",gl_ktx_buffer_region);
   log("GL_MESAX_TEXTURE_STACK",gl_mesax_texture_stack);
@@ -655,6 +668,7 @@ Statistics::log() const
   log("WGL_ARB_PIXEL_FORMAT",wgl_arb_pixel_format);
   log("WGL_ARB_PIXEL_FORMAT_FLOAT",wgl_arb_pixel_format_float);
   log("WGL_ARB_RENDER_TEXTURE",wgl_arb_render_texture);
+  log("WGL_ARB_ROBUSTNESS_APPLICATION_ISOLATION",wgl_arb_robustness_application_isolation);
   log("WGL_ARB_ROBUSTNESS_SHARE_GROUP_ISOLATION",wgl_arb_robustness_share_group_isolation);
   log("WGL_ATI_PIXEL_FORMAT_FLOAT",wgl_ati_pixel_format_float);
   log("WGL_ATI_RENDER_TEXTURE_RECTANGLE",wgl_ati_render_texture_rectangle);
@@ -679,6 +693,7 @@ Statistics::log() const
   log("WGL_I3D_SWAP_FRAME_USAGE",wgl_i3d_swap_frame_usage);
   log("WGL_NV_DX_INTEROP",wgl_nv_dx_interop);
   log("WGL_NV_COPY_IMAGE",wgl_nv_copy_image);
+  log("WGL_NV_DELAY_BEFORE_SWAP",wgl_nv_delay_before_swap);
   log("WGL_NV_FLOAT_BUFFER",wgl_nv_float_buffer);
   log("WGL_NV_GPU_AFFINITY",wgl_nv_gpu_affinity);
   log("WGL_NV_MULTISAMPLE_COVERAGE",wgl_nv_multisample_coverage);
@@ -701,15 +716,18 @@ Statistics::log() const
   log("GLX_ARB_FRAMEBUFFER_SRGB",glx_arb_framebuffer_srgb);
   log("GLX_ARB_GET_PROC_ADDRESS",glx_arb_get_proc_address);
   log("GLX_ARB_MULTISAMPLE",glx_arb_multisample);
+  log("GLX_ARB_ROBUSTNESS_APPLICATION_ISOLATION",glx_arb_robustness_application_isolation);
   log("GLX_ARB_ROBUSTNESS_SHARE_GROUP_ISOLATION",glx_arb_robustness_share_group_isolation);
   log("GLX_ARB_VERTEX_BUFFER_OBJECT",glx_arb_vertex_buffer_object);
   log("GLX_ATI_PIXEL_FORMAT_FLOAT",glx_ati_pixel_format_float);
   log("GLX_ATI_RENDER_TEXTURE",glx_ati_render_texture);
+  log("GLX_EXT_BUFFER_AGE",glx_ext_buffer_age);
   log("GLX_EXT_CREATE_CONTEXT_ES2_PROFILE",glx_ext_create_context_es2_profile);
   log("GLX_EXT_CREATE_CONTEXT_ES_PROFILE",glx_ext_create_context_es_profile);
   log("GLX_EXT_FBCONFIG_PACKED_FLOAT",glx_ext_fbconfig_packed_float);
   log("GLX_EXT_FRAMEBUFFER_SRGB",glx_ext_framebuffer_srgb);
   log("GLX_EXT_IMPORT_CONTEXT",glx_ext_import_context);
+  log("GLX_EXT_STEREO_TREE",glx_ext_stereo_tree);
   log("GLX_EXT_SWAP_CONTROL",glx_ext_swap_control);
   log("GLX_EXT_SWAP_CONTROL_TEAR",glx_ext_swap_control_tear);
   log("GLX_EXT_TEXTURE_FROM_PIXMAP",glx_ext_texture_from_pixmap);
@@ -719,10 +737,13 @@ Statistics::log() const
   log("GLX_MESA_AGP_OFFSET",glx_mesa_agp_offset);
   log("GLX_MESA_COPY_SUB_BUFFER",glx_mesa_copy_sub_buffer);
   log("GLX_MESA_PIXMAP_COLORMAP",glx_mesa_pixmap_colormap);
+  log("GLX_MESA_QUERY_RENDERER",glx_mesa_query_renderer);
   log("GLX_MESA_RELEASE_BUFFERS",glx_mesa_release_buffers);
   log("GLX_MESA_SET_3DFX_MODE",glx_mesa_set_3dfx_mode);
   log("GLX_MESA_SWAP_CONTROL",glx_mesa_swap_control);
+  log("GLX_NV_COPY_BUFFER",glx_nv_copy_buffer);
   log("GLX_NV_COPY_IMAGE",glx_nv_copy_image);
+  log("GLX_NV_DELAY_BEFORE_SWAP",glx_nv_delay_before_swap);
   log("GLX_NV_FLOAT_BUFFER",glx_nv_float_buffer);
   log("GLX_NV_MULTISAMPLE_COVERAGE",glx_nv_multisample_coverage);
   log("GLX_NV_PRESENT_VIDEO",glx_nv_present_video);
@@ -1626,6 +1647,10 @@ Statistics::log() const
   log("glReleaseShaderCompiler",glReleaseShaderCompiler);
   log("glShaderBinary",glShaderBinary);
 
+/* GL_ARB_ES3_1_compatibility */
+
+  log("glMemoryBarrierByRegion",glMemoryBarrierByRegion);
+
 /* GL_ARB_base_instance */
 
   log("glDrawArraysInstancedBaseInstance",glDrawArraysInstancedBaseInstance);
@@ -1677,6 +1702,10 @@ Statistics::log() const
   log("glClearTexImage",glClearTexImage);
   log("glClearTexSubImage",glClearTexSubImage);
 
+/* GL_ARB_clip_control */
+
+  log("glClipControl",glClipControl);
+
 /* GL_ARB_color_buffer_float */
 
   log("glClampColorARB",glClampColorARB);
@@ -1704,6 +1733,102 @@ Statistics::log() const
   log("glDebugMessageControlARB",glDebugMessageControlARB);
   log("glDebugMessageInsertARB",glDebugMessageInsertARB);
   log("glGetDebugMessageLogARB",glGetDebugMessageLogARB);
+
+/* GL_ARB_direct_state_access */
+
+  log("glBindTextureUnit",glBindTextureUnit);
+  log("glBlitNamedFramebuffer",glBlitNamedFramebuffer);
+  log("glCheckNamedFramebufferStatus",glCheckNamedFramebufferStatus);
+  log("glClearNamedBufferData",glClearNamedBufferData);
+  log("glClearNamedBufferSubData",glClearNamedBufferSubData);
+  log("glClearNamedFramebufferfi",glClearNamedFramebufferfi);
+  log("glClearNamedFramebufferfv",glClearNamedFramebufferfv);
+  log("glClearNamedFramebufferiv",glClearNamedFramebufferiv);
+  log("glClearNamedFramebufferuiv",glClearNamedFramebufferuiv);
+  log("glCompressedTextureSubImage1D",glCompressedTextureSubImage1D);
+  log("glCompressedTextureSubImage2D",glCompressedTextureSubImage2D);
+  log("glCompressedTextureSubImage3D",glCompressedTextureSubImage3D);
+  log("glCopyNamedBufferSubData",glCopyNamedBufferSubData);
+  log("glCopyTextureSubImage1D",glCopyTextureSubImage1D);
+  log("glCopyTextureSubImage2D",glCopyTextureSubImage2D);
+  log("glCopyTextureSubImage3D",glCopyTextureSubImage3D);
+  log("glCreateBuffers",glCreateBuffers);
+  log("glCreateFramebuffers",glCreateFramebuffers);
+  log("glCreateProgramPipelines",glCreateProgramPipelines);
+  log("glCreateQueries",glCreateQueries);
+  log("glCreateRenderbuffers",glCreateRenderbuffers);
+  log("glCreateSamplers",glCreateSamplers);
+  log("glCreateTextures",glCreateTextures);
+  log("glCreateTransformFeedbacks",glCreateTransformFeedbacks);
+  log("glCreateVertexArrays",glCreateVertexArrays);
+  log("glDisableVertexArrayAttrib",glDisableVertexArrayAttrib);
+  log("glEnableVertexArrayAttrib",glEnableVertexArrayAttrib);
+  log("glFlushMappedNamedBufferRange",glFlushMappedNamedBufferRange);
+  log("glGenerateTextureMipmap",glGenerateTextureMipmap);
+  log("glGetCompressedTextureImage",glGetCompressedTextureImage);
+  log("glGetNamedBufferParameteri64v",glGetNamedBufferParameteri64v);
+  log("glGetNamedBufferParameteriv",glGetNamedBufferParameteriv);
+  log("glGetNamedBufferPointerv",glGetNamedBufferPointerv);
+  log("glGetNamedBufferSubData",glGetNamedBufferSubData);
+  log("glGetNamedFramebufferAttachmentParameteriv",glGetNamedFramebufferAttachmentParameteriv);
+  log("glGetNamedFramebufferParameteriv",glGetNamedFramebufferParameteriv);
+  log("glGetNamedRenderbufferParameteriv",glGetNamedRenderbufferParameteriv);
+  log("glGetTextureImage",glGetTextureImage);
+  log("glGetTextureLevelParameterfv",glGetTextureLevelParameterfv);
+  log("glGetTextureLevelParameteriv",glGetTextureLevelParameteriv);
+  log("glGetTextureParameterIiv",glGetTextureParameterIiv);
+  log("glGetTextureParameterIuiv",glGetTextureParameterIuiv);
+  log("glGetTextureParameterfv",glGetTextureParameterfv);
+  log("glGetTextureParameteriv",glGetTextureParameteriv);
+  log("glGetTransformFeedbacki64_v",glGetTransformFeedbacki64_v);
+  log("glGetTransformFeedbacki_v",glGetTransformFeedbacki_v);
+  log("glGetTransformFeedbackiv",glGetTransformFeedbackiv);
+  log("glGetVertexArrayIndexed64iv",glGetVertexArrayIndexed64iv);
+  log("glGetVertexArrayIndexediv",glGetVertexArrayIndexediv);
+  log("glGetVertexArrayiv",glGetVertexArrayiv);
+  log("glInvalidateNamedFramebufferData",glInvalidateNamedFramebufferData);
+  log("glInvalidateNamedFramebufferSubData",glInvalidateNamedFramebufferSubData);
+  log("glMapNamedBuffer",glMapNamedBuffer);
+  log("glMapNamedBufferRange",glMapNamedBufferRange);
+  log("glNamedBufferData",glNamedBufferData);
+  log("glNamedBufferStorage",glNamedBufferStorage);
+  log("glNamedBufferSubData",glNamedBufferSubData);
+  log("glNamedFramebufferDrawBuffer",glNamedFramebufferDrawBuffer);
+  log("glNamedFramebufferDrawBuffers",glNamedFramebufferDrawBuffers);
+  log("glNamedFramebufferParameteri",glNamedFramebufferParameteri);
+  log("glNamedFramebufferReadBuffer",glNamedFramebufferReadBuffer);
+  log("glNamedFramebufferRenderbuffer",glNamedFramebufferRenderbuffer);
+  log("glNamedFramebufferTexture",glNamedFramebufferTexture);
+  log("glNamedFramebufferTextureLayer",glNamedFramebufferTextureLayer);
+  log("glNamedRenderbufferStorage",glNamedRenderbufferStorage);
+  log("glNamedRenderbufferStorageMultisample",glNamedRenderbufferStorageMultisample);
+  log("glTextureBuffer",glTextureBuffer);
+  log("glTextureBufferRange",glTextureBufferRange);
+  log("glTextureParameterIiv",glTextureParameterIiv);
+  log("glTextureParameterIuiv",glTextureParameterIuiv);
+  log("glTextureParameterf",glTextureParameterf);
+  log("glTextureParameterfv",glTextureParameterfv);
+  log("glTextureParameteri",glTextureParameteri);
+  log("glTextureParameteriv",glTextureParameteriv);
+  log("glTextureStorage1D",glTextureStorage1D);
+  log("glTextureStorage2D",glTextureStorage2D);
+  log("glTextureStorage2DMultisample",glTextureStorage2DMultisample);
+  log("glTextureStorage3D",glTextureStorage3D);
+  log("glTextureStorage3DMultisample",glTextureStorage3DMultisample);
+  log("glTextureSubImage1D",glTextureSubImage1D);
+  log("glTextureSubImage2D",glTextureSubImage2D);
+  log("glTextureSubImage3D",glTextureSubImage3D);
+  log("glTransformFeedbackBufferBase",glTransformFeedbackBufferBase);
+  log("glTransformFeedbackBufferRange",glTransformFeedbackBufferRange);
+  log("glUnmapNamedBuffer",glUnmapNamedBuffer);
+  log("glVertexArrayAttribBinding",glVertexArrayAttribBinding);
+  log("glVertexArrayAttribFormat",glVertexArrayAttribFormat);
+  log("glVertexArrayAttribIFormat",glVertexArrayAttribIFormat);
+  log("glVertexArrayAttribLFormat",glVertexArrayAttribLFormat);
+  log("glVertexArrayBindingDivisor",glVertexArrayBindingDivisor);
+  log("glVertexArrayElementBuffer",glVertexArrayElementBuffer);
+  log("glVertexArrayVertexBuffer",glVertexArrayVertexBuffer);
+  log("glVertexArrayVertexBuffers",glVertexArrayVertexBuffers);
 
 /* GL_ARB_draw_buffers */
 
@@ -1775,6 +1900,11 @@ Statistics::log() const
   log("glGetProgramBinary",glGetProgramBinary);
   log("glProgramBinary",glProgramBinary);
   log("glProgramParameteri",glProgramParameteri);
+
+/* GL_ARB_get_texture_sub_image */
+
+  log("glGetCompressedTextureSubImage",glGetCompressedTextureSubImage);
+  log("glGetTextureSubImage",glGetTextureSubImage);
 
 /* GL_ARB_gpu_shader_fp64 */
 
@@ -2140,6 +2270,10 @@ Statistics::log() const
   log("glIsNamedStringARB",glIsNamedStringARB);
   log("glNamedStringARB",glNamedStringARB);
 
+/* GL_ARB_sparse_buffer */
+
+  log("glBufferPageCommitmentARB",glBufferPageCommitmentARB);
+
 /* GL_ARB_sparse_texture */
 
   log("glTexPageCommitmentARB",glTexPageCommitmentARB);
@@ -2159,6 +2293,10 @@ Statistics::log() const
 
   log("glPatchParameterfv",glPatchParameterfv);
   log("glPatchParameteri",glPatchParameteri);
+
+/* GL_ARB_texture_barrier */
+
+  log("glTextureBarrier",glTextureBarrier);
 
 /* GL_ARB_texture_buffer_object */
 
@@ -3387,6 +3525,10 @@ Statistics::log() const
   log("glTexScissorFuncINTEL",glTexScissorFuncINTEL);
   log("glTexScissorINTEL",glTexScissorINTEL);
 
+/* GL_KHR_blend_equation_advanced */
+
+  log("glBlendBarrierKHR",glBlendBarrierKHR);
+
 /* GL_KHR_debug */
 
   log("glDebugMessageCallback",glDebugMessageCallback);
@@ -3399,6 +3541,13 @@ Statistics::log() const
   log("glObjectPtrLabel",glObjectPtrLabel);
   log("glPopDebugGroup",glPopDebugGroup);
   log("glPushDebugGroup",glPushDebugGroup);
+
+/* GL_KHR_robustness */
+
+  log("glGetnUniformfv",glGetnUniformfv);
+  log("glGetnUniformiv",glGetnUniformiv);
+  log("glGetnUniformuiv",glGetnUniformuiv);
+  log("glReadnPixels",glReadnPixels);
 
 /* GL_KTX_buffer_region */
 
@@ -4535,6 +4684,10 @@ Statistics::log() const
 
   log("wglCopyImageSubDataNV",wglCopyImageSubDataNV);
 
+/* WGL_NV_delay_before_swap */
+
+  log("wglDelayBeforeSwapNV",wglDelayBeforeSwapNV);
+
 /* WGL_NV_gpu_affinity */
 
   log("wglCreateAffinityDCNV",wglCreateAffinityDCNV);
@@ -4723,6 +4876,13 @@ Statistics::log() const
 
   log("glXCreateGLXPixmapMESA",glXCreateGLXPixmapMESA);
 
+/* GLX_MESA_query_renderer */
+
+  log("glXQueryCurrentRendererIntegerMESA",glXQueryCurrentRendererIntegerMESA);
+  log("glXQueryCurrentRendererStringMESA",glXQueryCurrentRendererStringMESA);
+  log("glXQueryRendererIntegerMESA",glXQueryRendererIntegerMESA);
+  log("glXQueryRendererStringMESA",glXQueryRendererStringMESA);
+
 /* GLX_MESA_release_buffers */
 
   log("glXReleaseBuffersMESA",glXReleaseBuffersMESA);
@@ -4736,9 +4896,18 @@ Statistics::log() const
   log("glXGetSwapIntervalMESA",glXGetSwapIntervalMESA);
   log("glXSwapIntervalMESA",glXSwapIntervalMESA);
 
+/* GLX_NV_copy_buffer */
+
+  log("glXCopyBufferSubDataNV",glXCopyBufferSubDataNV);
+  log("glXNamedCopyBufferSubDataNV",glXNamedCopyBufferSubDataNV);
+
 /* GLX_NV_copy_image */
 
   log("glXCopyImageSubDataNV",glXCopyImageSubDataNV);
+
+/* GLX_NV_delay_before_swap */
+
+  log("glXDelayBeforeSwapNV",glXDelayBeforeSwapNV);
 
 /* GLX_NV_present_video */
 

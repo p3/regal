@@ -10570,6 +10570,22 @@ extern "C" {
     _next->call(&_next->glShaderBinary)(count, shaders, binaryformat, binary, length);
   }
 
+  /* GL_ARB_ES3_1_compatibility */
+
+  REGAL_DECL void REGAL_CALL glMemoryBarrierByRegion(GLbitfield barriers)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glMemoryBarrierByRegion","(", barriers, ")");;
+    #endif
+    App("glMemoryBarrierByRegion","(", barriers, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glMemoryBarrierByRegion)(barriers);
+  }
+
   /* GL_ARB_base_instance */
 
   REGAL_DECL void REGAL_CALL glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei primcount, GLuint baseinstance)
@@ -11004,6 +11020,22 @@ extern "C" {
     _next->call(&_next->glClearTexSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, data);
   }
 
+  /* GL_ARB_clip_control */
+
+  REGAL_DECL void REGAL_CALL glClipControl(GLenum origin, GLenum depth)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClipControl","(", toString(origin), ", ", toString(depth), ")");;
+    #endif
+    App("glClipControl","(", toString(origin), ", ", toString(depth), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClipControl)(origin, depth);
+  }
+
   /* GL_ARB_color_buffer_float */
 
   REGAL_DECL void REGAL_CALL glClampColorARB(GLenum target, GLenum clamp)
@@ -11163,6 +11195,1310 @@ extern "C" {
     DispatchTableGL *_next = &_context->dispatcher.front();
     RegalAssert(_next);
     return _next->call(&_next->glGetDebugMessageLogARB)(count, bufsize, sources, types, ids, severities, lengths, messageLog);
+  }
+
+  /* GL_ARB_direct_state_access */
+
+  REGAL_DECL void REGAL_CALL glBindTextureUnit(GLuint unit, GLuint texture)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glBindTextureUnit","(", unit, ", ", texture, ")");;
+    #endif
+    App("glBindTextureUnit","(", unit, ", ", texture, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glBindTextureUnit)(unit, texture);
+  }
+
+  REGAL_DECL void REGAL_CALL glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glBlitNamedFramebuffer","(", readFramebuffer, ", ", drawFramebuffer, ", ", srcX0, ", ", srcY0, ", ", srcX1, ", ", srcY1, ", ", dstX0, ", ", dstY0, ", ", dstX1, ", ", dstY1, ", ", mask, ", ", toString(filter), ")");;
+    #endif
+    App("glBlitNamedFramebuffer","(", readFramebuffer, ", ", drawFramebuffer, ", ", srcX0, ", ", srcY0, ", ", srcX1, ", ", srcY1, ", ", dstX0, ", ", dstY0, ", ", dstX1, ", ", dstY1, ", ", mask, ", ", toString(filter), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glBlitNamedFramebuffer)(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+  }
+
+  REGAL_DECL GLenum REGAL_CALL glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCheckNamedFramebufferStatus","(", framebuffer, ", ", toString(target), ")");;
+    #endif
+    App("glCheckNamedFramebufferStatus","(", framebuffer, ", ", toString(target), ")");
+    if (!_context) return 0;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    return _next->call(&_next->glCheckNamedFramebufferStatus)(framebuffer, target);
+  }
+
+  REGAL_DECL void REGAL_CALL glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClearNamedBufferData","(", buffer, ", ", toString(internalformat), ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glClearNamedBufferData","(", buffer, ", ", toString(internalformat), ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferData)(buffer, internalformat, format, type, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClearNamedBufferSubData","(", buffer, ", ", toString(internalformat), ", ", offset, ", ", size, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glClearNamedBufferSubData","(", buffer, ", ", toString(internalformat), ", ", offset, ", ", size, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferSubData)(buffer, internalformat, offset, size, format, type, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLfloat depth, GLint stencil)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClearNamedFramebufferfi","(", framebuffer, ", ", toString(buffer), ", ", depth, ", ", stencil, ")");;
+    #endif
+    App("glClearNamedFramebufferfi","(", framebuffer, ", ", toString(buffer), ", ", depth, ", ", stencil, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfi)(framebuffer, buffer, depth, stencil);
+  }
+
+  REGAL_DECL void REGAL_CALL glClearNamedFramebufferfv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClearNamedFramebufferfv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");;
+    #endif
+    App("glClearNamedFramebufferfv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  REGAL_DECL void REGAL_CALL glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClearNamedFramebufferiv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");;
+    #endif
+    App("glClearNamedFramebufferiv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferiv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  REGAL_DECL void REGAL_CALL glClearNamedFramebufferuiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glClearNamedFramebufferuiv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");;
+    #endif
+    App("glClearNamedFramebufferuiv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferuiv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  REGAL_DECL void REGAL_CALL glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCompressedTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", width, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glCompressedTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", width, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage1D)(texture, level, xoffset, width, format, imageSize, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCompressedTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", width, ", ", height, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glCompressedTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", width, ", ", height, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCompressedTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glCompressedTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCopyNamedBufferSubData","(", readBuffer, ", ", writeBuffer, ", ", readOffset, ", ", writeOffset, ", ", size, ")");;
+    #endif
+    App("glCopyNamedBufferSubData","(", readBuffer, ", ", writeBuffer, ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyNamedBufferSubData)(readBuffer, writeBuffer, readOffset, writeOffset, size);
+  }
+
+  REGAL_DECL void REGAL_CALL glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCopyTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", x, ", ", y, ", ", width, ")");;
+    #endif
+    App("glCopyTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", x, ", ", y, ", ", width, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage1D)(texture, level, xoffset, x, y, width);
+  }
+
+  REGAL_DECL void REGAL_CALL glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCopyTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", x, ", ", y, ", ", width, ", ", height, ")");;
+    #endif
+    App("glCopyTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", x, ", ", y, ", ", width, ", ", height, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage2D)(texture, level, xoffset, yoffset, x, y, width, height);
+  }
+
+  REGAL_DECL void REGAL_CALL glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCopyTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", x, ", ", y, ", ", width, ", ", height, ")");;
+    #endif
+    App("glCopyTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", x, ", ", y, ", ", width, ", ", height, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateBuffers(GLsizei n, GLuint *buffers)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateBuffers","(", n, ", ", boost::print::optional(buffers,Logging::pointers), ")");;
+    #endif
+    App("glCreateBuffers","(", n, ", ", boost::print::optional(buffers,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateBuffers)(n, buffers);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateFramebuffers","(", n, ", ", boost::print::optional(framebuffers,Logging::pointers), ")");;
+    #endif
+    App("glCreateFramebuffers","(", n, ", ", boost::print::optional(framebuffers,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateFramebuffers)(n, framebuffers);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateProgramPipelines(GLsizei n, GLuint *pipelines)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateProgramPipelines","(", n, ", ", boost::print::optional(pipelines,Logging::pointers), ")");;
+    #endif
+    App("glCreateProgramPipelines","(", n, ", ", boost::print::optional(pipelines,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateProgramPipelines)(n, pipelines);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateQueries(GLenum target, GLsizei n, GLuint *ids)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateQueries","(", toString(target), ", ", n, ", ", boost::print::optional(ids,Logging::pointers), ")");;
+    #endif
+    App("glCreateQueries","(", toString(target), ", ", n, ", ", boost::print::optional(ids,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateQueries)(target, n, ids);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateRenderbuffers(GLsizei n, GLuint *renderbuffers)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateRenderbuffers","(", n, ", ", boost::print::optional(renderbuffers,Logging::pointers), ")");;
+    #endif
+    App("glCreateRenderbuffers","(", n, ", ", boost::print::optional(renderbuffers,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateRenderbuffers)(n, renderbuffers);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateSamplers(GLsizei n, GLuint *samplers)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateSamplers","(", n, ", ", boost::print::optional(samplers,Logging::pointers), ")");;
+    #endif
+    App("glCreateSamplers","(", n, ", ", boost::print::optional(samplers,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateSamplers)(n, samplers);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateTextures(GLenum target, GLsizei n, GLuint *textures)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateTextures","(", toString(target), ", ", n, ", ", boost::print::optional(textures,Logging::pointers), ")");;
+    #endif
+    App("glCreateTextures","(", toString(target), ", ", n, ", ", boost::print::optional(textures,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTextures)(target, n, textures);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateTransformFeedbacks(GLsizei n, GLuint *ids)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateTransformFeedbacks","(", n, ", ", boost::print::optional(ids,Logging::pointers), ")");;
+    #endif
+    App("glCreateTransformFeedbacks","(", n, ", ", boost::print::optional(ids,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTransformFeedbacks)(n, ids);
+  }
+
+  REGAL_DECL void REGAL_CALL glCreateVertexArrays(GLsizei n, GLuint *arrays)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glCreateVertexArrays","(", n, ", ", boost::print::optional(arrays,Logging::pointers), ")");;
+    #endif
+    App("glCreateVertexArrays","(", n, ", ", boost::print::optional(arrays,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateVertexArrays)(n, arrays);
+  }
+
+  REGAL_DECL void REGAL_CALL glDisableVertexArrayAttrib(GLuint vaobj, GLuint index)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glDisableVertexArrayAttrib","(", vaobj, ", ", index, ")");;
+    #endif
+    App("glDisableVertexArrayAttrib","(", vaobj, ", ", index, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glDisableVertexArrayAttrib)(vaobj, index);
+  }
+
+  REGAL_DECL void REGAL_CALL glEnableVertexArrayAttrib(GLuint vaobj, GLuint index)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glEnableVertexArrayAttrib","(", vaobj, ", ", index, ")");;
+    #endif
+    App("glEnableVertexArrayAttrib","(", vaobj, ", ", index, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glEnableVertexArrayAttrib)(vaobj, index);
+  }
+
+  REGAL_DECL void REGAL_CALL glFlushMappedNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glFlushMappedNamedBufferRange","(", buffer, ", ", offset, ", ", length, ")");;
+    #endif
+    App("glFlushMappedNamedBufferRange","(", buffer, ", ", offset, ", ", length, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glFlushMappedNamedBufferRange)(buffer, offset, length);
+  }
+
+  REGAL_DECL void REGAL_CALL glGenerateTextureMipmap(GLuint texture)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGenerateTextureMipmap","(", texture, ")");;
+    #endif
+    App("glGenerateTextureMipmap","(", texture, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGenerateTextureMipmap)(texture);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetCompressedTextureImage(GLuint texture, GLint level, GLsizei bufSize, GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetCompressedTextureImage","(", texture, ", ", level, ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glGetCompressedTextureImage","(", texture, ", ", level, ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureImage)(texture, level, bufSize, pixels);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedBufferParameteri64v(GLuint buffer, GLenum pname, GLint64 *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedBufferParameteri64v","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedBufferParameteri64v","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteri64v)(buffer, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedBufferParameteriv(GLuint buffer, GLenum pname, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedBufferParameteriv","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedBufferParameteriv","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteriv)(buffer, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedBufferPointerv(GLuint buffer, GLenum pname, GLvoid **params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedBufferPointerv","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedBufferPointerv","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferPointerv)(buffer, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedBufferSubData","(", buffer, ", ", offset, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedBufferSubData","(", buffer, ", ", offset, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferSubData)(buffer, offset, size, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedFramebufferAttachmentParameteriv(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedFramebufferAttachmentParameteriv","(", framebuffer, ", ", toString(attachment), ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedFramebufferAttachmentParameteriv","(", framebuffer, ", ", toString(attachment), ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferAttachmentParameteriv)(framebuffer, attachment, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedFramebufferParameteriv(GLuint framebuffer, GLenum pname, GLint *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedFramebufferParameteriv","(", framebuffer, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedFramebufferParameteriv","(", framebuffer, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferParameteriv)(framebuffer, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetNamedRenderbufferParameteriv(GLuint renderbuffer, GLenum pname, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetNamedRenderbufferParameteriv","(", renderbuffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetNamedRenderbufferParameteriv","(", renderbuffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedRenderbufferParameteriv)(renderbuffer, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureImage(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureImage","(", texture, ", ", level, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureImage","(", texture, ", ", level, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureImage)(texture, level, format, type, bufSize, pixels);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureLevelParameterfv(GLuint texture, GLint level, GLenum pname, GLfloat *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureLevelParameterfv","(", texture, ", ", level, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureLevelParameterfv","(", texture, ", ", level, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameterfv)(texture, level, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureLevelParameteriv(GLuint texture, GLint level, GLenum pname, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureLevelParameteriv","(", texture, ", ", level, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureLevelParameteriv","(", texture, ", ", level, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameteriv)(texture, level, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureParameterIiv(GLuint texture, GLenum pname, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureParameterIiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureParameterIiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIiv)(texture, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureParameterIuiv(GLuint texture, GLenum pname, GLuint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureParameterIuiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureParameterIuiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIuiv)(texture, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureParameterfv(GLuint texture, GLenum pname, GLfloat *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureParameterfv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureParameterfv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterfv)(texture, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureParameteriv(GLuint texture, GLenum pname, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureParameteriv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureParameteriv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameteriv)(texture, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTransformFeedbacki64_v(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTransformFeedbacki64_v","(", xfb, ", ", toString(pname), ", ", index, ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetTransformFeedbacki64_v","(", xfb, ", ", toString(pname), ", ", index, ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki64_v)(xfb, pname, index, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTransformFeedbacki_v(GLuint xfb, GLenum pname, GLuint index, GLint *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTransformFeedbacki_v","(", xfb, ", ", toString(pname), ", ", index, ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetTransformFeedbacki_v","(", xfb, ", ", toString(pname), ", ", index, ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki_v)(xfb, pname, index, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTransformFeedbackiv(GLuint xfb, GLenum pname, GLint *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTransformFeedbackiv","(", xfb, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetTransformFeedbackiv","(", xfb, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbackiv)(xfb, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetVertexArrayIndexed64iv(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetVertexArrayIndexed64iv","(", vaobj, ", ", index, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetVertexArrayIndexed64iv","(", vaobj, ", ", index, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexed64iv)(vaobj, index, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetVertexArrayIndexediv(GLuint vaobj, GLuint index, GLenum pname, GLint *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetVertexArrayIndexediv","(", vaobj, ", ", index, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetVertexArrayIndexediv","(", vaobj, ", ", index, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexediv)(vaobj, index, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetVertexArrayiv(GLuint vaobj, GLenum pname, GLint *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetVertexArrayiv","(", vaobj, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glGetVertexArrayiv","(", vaobj, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayiv)(vaobj, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glInvalidateNamedFramebufferData","(", framebuffer, ", ", numAttachments, ", ", attachments, ")");;
+    #endif
+    App("glInvalidateNamedFramebufferData","(", framebuffer, ", ", numAttachments, ", ", attachments, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferData)(framebuffer, numAttachments, attachments);
+  }
+
+  REGAL_DECL void REGAL_CALL glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glInvalidateNamedFramebufferSubData","(", framebuffer, ", ", numAttachments, ", ", attachments, ", ", x, ", ", y, ", ", width, ", ", height, ")");;
+    #endif
+    App("glInvalidateNamedFramebufferSubData","(", framebuffer, ", ", numAttachments, ", ", attachments, ", ", x, ", ", y, ", ", width, ", ", height, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferSubData)(framebuffer, numAttachments, attachments, x, y, width, height);
+  }
+
+  REGAL_DECL GLvoid *REGAL_CALL glMapNamedBuffer(GLuint buffer, GLenum access)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glMapNamedBuffer","(", buffer, ", ", toString(access), ")");;
+    #endif
+    App("glMapNamedBuffer","(", buffer, ", ", toString(access), ")");
+    if (!_context) return NULL;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    return _next->call(&_next->glMapNamedBuffer)(buffer, access);
+  }
+
+  REGAL_DECL GLvoid *REGAL_CALL glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glMapNamedBufferRange","(", buffer, ", ", offset, ", ", length, ", ", access, ")");;
+    #endif
+    App("glMapNamedBufferRange","(", buffer, ", ", offset, ", ", length, ", ", access, ")");
+    if (!_context) return NULL;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    return _next->call(&_next->glMapNamedBufferRange)(buffer, offset, length, access);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedBufferData(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedBufferData","(", buffer, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ", ", toString(usage), ")");;
+    #endif
+    App("glNamedBufferData","(", buffer, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ", ", toString(usage), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferData)(buffer, size, data, usage);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedBufferStorage(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLbitfield flags)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedBufferStorage","(", buffer, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ", ", flags, ")");;
+    #endif
+    App("glNamedBufferStorage","(", buffer, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ", ", flags, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferStorage)(buffer, size, data, flags);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedBufferSubData","(", buffer, ", ", offset, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glNamedBufferSubData","(", buffer, ", ", offset, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferSubData)(buffer, offset, size, data);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferDrawBuffer(GLuint framebuffer, GLenum mode)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferDrawBuffer","(", framebuffer, ", ", toString(mode), ")");;
+    #endif
+    App("glNamedFramebufferDrawBuffer","(", framebuffer, ", ", toString(mode), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffer)(framebuffer, mode);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferDrawBuffers(GLuint framebuffer, GLsizei n, const GLenum *bufs)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferDrawBuffers","(", framebuffer, ", ", n, ", ", bufs, ")");;
+    #endif
+    App("glNamedFramebufferDrawBuffers","(", framebuffer, ", ", n, ", ", bufs, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffers)(framebuffer, n, bufs);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferParameteri","(", framebuffer, ", ", toString(pname), ", ", param, ")");;
+    #endif
+    App("glNamedFramebufferParameteri","(", framebuffer, ", ", toString(pname), ", ", param, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferParameteri)(framebuffer, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferReadBuffer(GLuint framebuffer, GLenum mode)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferReadBuffer","(", framebuffer, ", ", toString(mode), ")");;
+    #endif
+    App("glNamedFramebufferReadBuffer","(", framebuffer, ", ", toString(mode), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferReadBuffer)(framebuffer, mode);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferRenderbuffer","(", framebuffer, ", ", toString(attachment), ", ", toString(renderbuffertarget), ", ", renderbuffer, ")");;
+    #endif
+    App("glNamedFramebufferRenderbuffer","(", framebuffer, ", ", toString(attachment), ", ", toString(renderbuffertarget), ", ", renderbuffer, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferRenderbuffer)(framebuffer, attachment, renderbuffertarget, renderbuffer);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferTexture(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferTexture","(", framebuffer, ", ", toString(attachment), ", ", texture, ", ", level, ")");;
+    #endif
+    App("glNamedFramebufferTexture","(", framebuffer, ", ", toString(attachment), ", ", texture, ", ", level, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTexture)(framebuffer, attachment, texture, level);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedFramebufferTextureLayer(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedFramebufferTextureLayer","(", framebuffer, ", ", toString(attachment), ", ", texture, ", ", level, ", ", layer, ")");;
+    #endif
+    App("glNamedFramebufferTextureLayer","(", framebuffer, ", ", toString(attachment), ", ", texture, ", ", level, ", ", layer, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTextureLayer)(framebuffer, attachment, texture, level, layer);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedRenderbufferStorage","(", renderbuffer, ", ", toString(internalformat), ", ", width, ", ", height, ")");;
+    #endif
+    App("glNamedRenderbufferStorage","(", renderbuffer, ", ", toString(internalformat), ", ", width, ", ", height, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorage)(renderbuffer, internalformat, width, height);
+  }
+
+  REGAL_DECL void REGAL_CALL glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glNamedRenderbufferStorageMultisample","(", renderbuffer, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ")");;
+    #endif
+    App("glNamedRenderbufferStorageMultisample","(", renderbuffer, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorageMultisample)(renderbuffer, samples, internalformat, width, height);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureBuffer(GLuint texture, GLenum internalformat, GLuint buffer)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureBuffer","(", texture, ", ", toString(internalformat), ", ", buffer, ")");;
+    #endif
+    App("glTextureBuffer","(", texture, ", ", toString(internalformat), ", ", buffer, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBuffer)(texture, internalformat, buffer);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureBufferRange(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureBufferRange","(", texture, ", ", toString(internalformat), ", ", buffer, ", ", offset, ", ", size, ")");;
+    #endif
+    App("glTextureBufferRange","(", texture, ", ", toString(internalformat), ", ", buffer, ", ", offset, ", ", size, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBufferRange)(texture, internalformat, buffer, offset, size);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureParameterIiv(GLuint texture, GLenum pname, const GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureParameterIiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glTextureParameterIiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIiv)(texture, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureParameterIuiv(GLuint texture, GLenum pname, const GLuint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureParameterIuiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glTextureParameterIuiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIuiv)(texture, pname, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureParameterf(GLuint texture, GLenum pname, GLfloat param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureParameterf","(", texture, ", ", toString(pname), ", ", param, ")");;
+    #endif
+    App("glTextureParameterf","(", texture, ", ", toString(pname), ", ", param, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterf)(texture, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureParameterfv(GLuint texture, GLenum pname, const GLfloat *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureParameterfv","(", texture, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glTextureParameterfv","(", texture, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterfv)(texture, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureParameteri(GLuint texture, GLenum pname, GLint param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureParameteri","(", texture, ", ", toString(pname), ", ", param, ")");;
+    #endif
+    App("glTextureParameteri","(", texture, ", ", toString(pname), ", ", param, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteri)(texture, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureParameteriv(GLuint texture, GLenum pname, const GLint *param)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureParameteriv","(", texture, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");;
+    #endif
+    App("glTextureParameteriv","(", texture, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteriv)(texture, pname, param);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureStorage1D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureStorage1D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ")");;
+    #endif
+    App("glTextureStorage1D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage1D)(texture, levels, internalformat, width);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureStorage2D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ", ", height, ")");;
+    #endif
+    App("glTextureStorage2D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ", ", height, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2D)(texture, levels, internalformat, width, height);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureStorage2DMultisample","(", texture, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ", ", toString(fixedsamplelocations), ")");;
+    #endif
+    App("glTextureStorage2DMultisample","(", texture, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ", ", toString(fixedsamplelocations), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2DMultisample)(texture, samples, internalformat, width, height, fixedsamplelocations);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureStorage3D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ", ", height, ", ", depth, ")");;
+    #endif
+    App("glTextureStorage3D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ", ", height, ", ", depth, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3D)(texture, levels, internalformat, width, height, depth);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureStorage3DMultisample","(", texture, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ", ", depth, ", ", toString(fixedsamplelocations), ")");;
+    #endif
+    App("glTextureStorage3DMultisample","(", texture, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ", ", depth, ", ", toString(fixedsamplelocations), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3DMultisample)(texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", width, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", width, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage1D)(texture, level, xoffset, width, format, type, pixels);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", width, ", ", height, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", width, ", ", height, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+  }
+
+  REGAL_DECL void REGAL_CALL glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+  }
+
+  REGAL_DECL void REGAL_CALL glTransformFeedbackBufferBase(GLuint xfb, GLuint index, GLuint buffer)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTransformFeedbackBufferBase","(", xfb, ", ", index, ", ", buffer, ")");;
+    #endif
+    App("glTransformFeedbackBufferBase","(", xfb, ", ", index, ", ", buffer, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferBase)(xfb, index, buffer);
+  }
+
+  REGAL_DECL void REGAL_CALL glTransformFeedbackBufferRange(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTransformFeedbackBufferRange","(", xfb, ", ", index, ", ", buffer, ", ", offset, ", ", size, ")");;
+    #endif
+    App("glTransformFeedbackBufferRange","(", xfb, ", ", index, ", ", buffer, ", ", offset, ", ", size, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferRange)(xfb, index, buffer, offset, size);
+  }
+
+  REGAL_DECL GLboolean REGAL_CALL glUnmapNamedBuffer(GLuint buffer)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glUnmapNamedBuffer","(", buffer, ")");;
+    #endif
+    App("glUnmapNamedBuffer","(", buffer, ")");
+    if (!_context) return GL_FALSE;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    return _next->call(&_next->glUnmapNamedBuffer)(buffer);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint bindingindex)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayAttribBinding","(", vaobj, ", ", attribindex, ", ", bindingindex, ")");;
+    #endif
+    App("glVertexArrayAttribBinding","(", vaobj, ", ", attribindex, ", ", bindingindex, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribBinding)(vaobj, attribindex, bindingindex);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayAttribFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", toString(normalized), ", ", relativeoffset, ")");;
+    #endif
+    App("glVertexArrayAttribFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", toString(normalized), ", ", relativeoffset, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribFormat)(vaobj, attribindex, size, type, normalized, relativeoffset);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayAttribIFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayAttribIFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", relativeoffset, ")");;
+    #endif
+    App("glVertexArrayAttribIFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", relativeoffset, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribIFormat)(vaobj, attribindex, size, type, relativeoffset);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayAttribLFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayAttribLFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", relativeoffset, ")");;
+    #endif
+    App("glVertexArrayAttribLFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", relativeoffset, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribLFormat)(vaobj, attribindex, size, type, relativeoffset);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayBindingDivisor(GLuint vaobj, GLuint bindingindex, GLuint divisor)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayBindingDivisor","(", vaobj, ", ", bindingindex, ", ", divisor, ")");;
+    #endif
+    App("glVertexArrayBindingDivisor","(", vaobj, ", ", bindingindex, ", ", divisor, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayBindingDivisor)(vaobj, bindingindex, divisor);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayElementBuffer(GLuint vaobj, GLuint buffer)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayElementBuffer","(", vaobj, ", ", buffer, ")");;
+    #endif
+    App("glVertexArrayElementBuffer","(", vaobj, ", ", buffer, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayElementBuffer)(vaobj, buffer);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayVertexBuffer","(", vaobj, ", ", bindingindex, ", ", buffer, ", ", offset, ", ", stride, ")");;
+    #endif
+    App("glVertexArrayVertexBuffer","(", vaobj, ", ", bindingindex, ", ", buffer, ", ", offset, ", ", stride, ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffer)(vaobj, bindingindex, buffer, offset, stride);
+  }
+
+  REGAL_DECL void REGAL_CALL glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glVertexArrayVertexBuffers","(", vaobj, ", ", first, ", ", count, ", ", boost::print::optional(buffers,Logging::pointers), ", ", offsets, ", ", boost::print::optional(strides,Logging::pointers), ")");;
+    #endif
+    App("glVertexArrayVertexBuffers","(", vaobj, ", ", first, ", ", count, ", ", boost::print::optional(buffers,Logging::pointers), ", ", offsets, ", ", boost::print::optional(strides,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffers)(vaobj, first, count, buffers, offsets, strides);
   }
 
   /* GL_ARB_draw_buffers */
@@ -11797,6 +13133,36 @@ extern "C" {
     DispatchTableGL *_next = &_context->dispatcher.front();
     RegalAssert(_next);
     _next->call(&_next->glProgramParameteri)(program, pname, value);
+  }
+
+  /* GL_ARB_get_texture_sub_image */
+
+  REGAL_DECL void REGAL_CALL glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetCompressedTextureSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glGetCompressedTextureSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetTextureSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");;
+    #endif
+    App("glGetTextureSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
   }
 
   /* GL_ARB_gpu_shader_fp64 */
@@ -15815,6 +17181,22 @@ extern "C" {
     _next->call(&_next->glNamedStringARB)(type, namelen, name, stringlen, string);
   }
 
+  /* GL_ARB_sparse_buffer */
+
+  REGAL_DECL void REGAL_CALL glBufferPageCommitmentARB(GLenum target, GLintptr offset, GLsizeiptr size, GLboolean commit)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glBufferPageCommitmentARB","(", toString(target), ", ", offset, ", ", size, ", ", toString(commit), ")");;
+    #endif
+    App("glBufferPageCommitmentARB","(", toString(target), ", ", offset, ", ", size, ", ", toString(commit), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glBufferPageCommitmentARB)(target, offset, size, commit);
+  }
+
   /* GL_ARB_sparse_texture */
 
   REGAL_DECL void REGAL_CALL glTexPageCommitmentARB(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit)
@@ -15983,6 +17365,22 @@ extern "C" {
     DispatchTableGL *_next = &_context->dispatcher.front();
     RegalAssert(_next);
     _next->call(&_next->glPatchParameteri)(pname, value);
+  }
+
+  /* GL_ARB_texture_barrier */
+
+  REGAL_DECL void REGAL_CALL glTextureBarrier(void)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glTextureBarrier","()");;
+    #endif
+    App("glTextureBarrier","()");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBarrier)();
   }
 
   /* GL_ARB_texture_buffer_object */
@@ -28889,6 +30287,22 @@ extern "C" {
     _next->call(&_next->glTexScissorINTEL)(target, tlow, thigh);
   }
 
+  /* GL_KHR_blend_equation_advanced */
+
+  REGAL_DECL void REGAL_CALL glBlendBarrierKHR(void)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glBlendBarrierKHR","()");;
+    #endif
+    App("glBlendBarrierKHR","()");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glBlendBarrierKHR)();
+  }
+
   /* GL_KHR_debug */
 
   REGAL_DECL void REGAL_CALL glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
@@ -29053,6 +30467,64 @@ extern "C" {
     }
     if (_context->marker)
       _context->marker->PushGroupMarker(*_context, _message);
+  }
+
+  /* GL_KHR_robustness */
+
+  REGAL_DECL void REGAL_CALL glGetnUniformfv(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetnUniformfv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetnUniformfv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformfv)(program, location, bufSize, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetnUniformiv(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetnUniformiv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetnUniformiv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformiv)(program, location, bufSize, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *params)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glGetnUniformuiv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");;
+    #endif
+    App("glGetnUniformuiv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformuiv)(program, location, bufSize, params);
+  }
+
+  REGAL_DECL void REGAL_CALL glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+  {
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(Init::isInitialized());
+    #if REGAL_HTTP
+    _context->http.callString = print_string("glReadnPixels","(", x, ", ", y, ", ", width, ", ", height, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(data,Logging::pointers), ")");;
+    #endif
+    App("glReadnPixels","(", x, ", ", y, ", ", width, ", ", height, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+    if (!_context) return;
+    DispatchTableGL *_next = &_context->dispatcher.front();
+    RegalAssert(_next);
+    _next->call(&_next->glReadnPixels)(x, y, width, height, format, type, bufSize, data);
   }
 
   /* GL_KTX_buffer_region */
@@ -41313,6 +42785,30 @@ extern "C" {
     return ret;
   }
 
+  /* WGL_NV_delay_before_swap */
+
+  REGAL_DECL BOOL REGAL_CALL wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", boost::print::optional(hDC,Logging::pointers), ", ", seconds, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "wglDelayBeforeSwapNV", params );
+      }
+      App( "wglDelayBeforeSwapNV", params );
+    }
+    #else
+    App("wglDelayBeforeSwapNV","(", boost::print::optional(hDC,Logging::pointers), ", ", seconds, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    BOOL ret = 0;
+    ret = _next->call(&_next->wglDelayBeforeSwapNV)(hDC, seconds);
+    return ret;
+  }
+
   /* WGL_NV_gpu_affinity */
 
   REGAL_DECL HDC REGAL_CALL wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -43972,6 +45468,96 @@ extern "C" {
     return ret;
   }
 
+  /* GLX_MESA_query_renderer */
+
+  REGAL_DECL Bool REGAL_CALL glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", attribute, ", ", value, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXQueryCurrentRendererIntegerMESA", params );
+      }
+      App( "glXQueryCurrentRendererIntegerMESA", params );
+    }
+    #else
+    App("glXQueryCurrentRendererIntegerMESA","(", attribute, ", ", value, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    Bool ret = (Bool) 0;
+    ret = _next->call(&_next->glXQueryCurrentRendererIntegerMESA)(attribute, value);
+    return ret;
+  }
+
+  REGAL_DECL const char *REGAL_CALL glXQueryCurrentRendererStringMESA(int attribute)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", attribute, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXQueryCurrentRendererStringMESA", params );
+      }
+      App( "glXQueryCurrentRendererStringMESA", params );
+    }
+    #else
+    App("glXQueryCurrentRendererStringMESA","(", attribute, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    const char * ret = NULL;
+    ret = _next->call(&_next->glXQueryCurrentRendererStringMESA)(attribute);
+    return ret;
+  }
+
+  REGAL_DECL Bool REGAL_CALL glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", boost::print::optional(dpy,Logging::pointers), ", ", screen, ", ", renderer, ", ", attribute, ", ", value, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXQueryRendererIntegerMESA", params );
+      }
+      App( "glXQueryRendererIntegerMESA", params );
+    }
+    #else
+    App("glXQueryRendererIntegerMESA","(", boost::print::optional(dpy,Logging::pointers), ", ", screen, ", ", renderer, ", ", attribute, ", ", value, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    Bool ret = (Bool) 0;
+    ret = _next->call(&_next->glXQueryRendererIntegerMESA)(dpy, screen, renderer, attribute, value);
+    return ret;
+  }
+
+  REGAL_DECL const char *REGAL_CALL glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", boost::print::optional(dpy,Logging::pointers), ", ", screen, ", ", renderer, ", ", attribute, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXQueryRendererStringMESA", params );
+      }
+      App( "glXQueryRendererStringMESA", params );
+    }
+    #else
+    App("glXQueryRendererStringMESA","(", boost::print::optional(dpy,Logging::pointers), ", ", screen, ", ", renderer, ", ", attribute, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    const char * ret = NULL;
+    ret = _next->call(&_next->glXQueryRendererStringMESA)(dpy, screen, renderer, attribute);
+    return ret;
+  }
+
   /* GLX_MESA_release_buffers */
 
   REGAL_DECL Bool REGAL_CALL glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -44066,6 +45652,48 @@ extern "C" {
     return ret;
   }
 
+  /* GLX_NV_copy_buffer */
+
+  REGAL_DECL void REGAL_CALL glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(readCtx,Logging::pointers), ", ", boost::print::optional(writeCtx,Logging::pointers), ", ", toString(readTarget), ", ", toString(writeTarget), ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXCopyBufferSubDataNV", params );
+      }
+      App( "glXCopyBufferSubDataNV", params );
+    }
+    #else
+    App("glXCopyBufferSubDataNV","(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(readCtx,Logging::pointers), ", ", boost::print::optional(writeCtx,Logging::pointers), ", ", toString(readTarget), ", ", toString(writeTarget), ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    _next->call(&_next->glXCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
+  }
+
+  REGAL_DECL void REGAL_CALL glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(readCtx,Logging::pointers), ", ", boost::print::optional(writeCtx,Logging::pointers), ", ", readBuffer, ", ", writeBuffer, ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXNamedCopyBufferSubDataNV", params );
+      }
+      App( "glXNamedCopyBufferSubDataNV", params );
+    }
+    #else
+    App("glXNamedCopyBufferSubDataNV","(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(readCtx,Logging::pointers), ", ", boost::print::optional(writeCtx,Logging::pointers), ", ", readBuffer, ", ", writeBuffer, ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    _next->call(&_next->glXNamedCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
+  }
+
   /* GLX_NV_copy_image */
 
   REGAL_DECL void REGAL_CALL glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -44086,6 +45714,30 @@ extern "C" {
     DispatchTableGlobal *_next = &dispatcherGlobal.front();
     RegalAssert(_next);
     _next->call(&_next->glXCopyImageSubDataNV)(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+  }
+
+  /* GLX_NV_delay_before_swap */
+
+  REGAL_DECL Bool REGAL_CALL glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+  {
+    #if REGAL_HTTP
+    {
+      RegalContext *_context = REGAL_GET_CONTEXT();
+      std::string params = print_string("(", boost::print::optional(dpy,Logging::pointers), ", ", drawable, ", ", seconds, ")");
+      if( _context ) {
+        _context->http.callString = print_string( "glXDelayBeforeSwapNV", params );
+      }
+      App( "glXDelayBeforeSwapNV", params );
+    }
+    #else
+    App("glXDelayBeforeSwapNV","(", boost::print::optional(dpy,Logging::pointers), ", ", drawable, ", ", seconds, ")");
+    #endif
+    RegalAssert(Init::isInitialized());
+    DispatchTableGlobal *_next = &dispatcherGlobal.front();
+    RegalAssert(_next);
+    Bool ret = (Bool) 0;
+    ret = _next->call(&_next->glXDelayBeforeSwapNV)(dpy, drawable, seconds);
+    return ret;
   }
 
   /* GLX_NV_present_video */

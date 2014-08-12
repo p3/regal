@@ -14039,6 +14039,27 @@ static void REGAL_CALL http_glShaderBinary(GLsizei count, const GLuint *shaders,
 #endif
 }
 
+// GL_ARB_ES3_1_compatibility
+
+static void REGAL_CALL http_glMemoryBarrierByRegion(GLbitfield barriers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glMemoryBarrierByRegion)(barriers);
+#endif
+}
+
 // GL_ARB_base_instance
 
 static void REGAL_CALL http_glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei primcount, GLuint baseinstance)
@@ -14670,6 +14691,27 @@ static void REGAL_CALL http_glClearTexSubImage(GLuint texture, GLint level, GLin
 #endif
 }
 
+// GL_ARB_clip_control
+
+static void REGAL_CALL http_glClipControl(GLenum origin, GLenum depth)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClipControl)(origin, depth);
+#endif
+}
+
 // GL_ARB_color_buffer_float
 
 static void REGAL_CALL http_glClampColorARB(GLenum target, GLenum clamp)
@@ -14872,6 +14914,1783 @@ static GLuint REGAL_CALL http_glGetDebugMessageLogARB(GLuint count, GLsizei bufs
     ret = _next->call(&_next->glGetDebugMessageLogARB)(count, bufsize, sources, types, ids, severities, lengths, messageLog);
 #endif
     return ret;
+}
+
+// GL_ARB_direct_state_access
+
+static void REGAL_CALL http_glBindTextureUnit(GLuint unit, GLuint texture)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glBindTextureUnit)(unit, texture);
+#endif
+}
+
+static void REGAL_CALL http_glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glBlitNamedFramebuffer)(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+#endif
+}
+
+static GLenum REGAL_CALL http_glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+{
+    GLenum  ret = 0;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    ret = _next->call(&_next->glCheckNamedFramebufferStatus)(framebuffer, target);
+#endif
+    return ret;
+}
+
+static void REGAL_CALL http_glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferData)(buffer, internalformat, format, type, data);
+#endif
+}
+
+static void REGAL_CALL http_glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferSubData)(buffer, internalformat, offset, size, format, type, data);
+#endif
+}
+
+static void REGAL_CALL http_glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLfloat depth, GLint stencil)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfi)(framebuffer, buffer, depth, stencil);
+#endif
+}
+
+static void REGAL_CALL http_glClearNamedFramebufferfv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfv)(framebuffer, buffer, drawbuffer, value);
+#endif
+}
+
+static void REGAL_CALL http_glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferiv)(framebuffer, buffer, drawbuffer, value);
+#endif
+}
+
+static void REGAL_CALL http_glClearNamedFramebufferuiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferuiv)(framebuffer, buffer, drawbuffer, value);
+#endif
+}
+
+static void REGAL_CALL http_glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage1D)(texture, level, xoffset, width, format, imageSize, data);
+#endif
+}
+
+static void REGAL_CALL http_glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+#endif
+}
+
+static void REGAL_CALL http_glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+#endif
+}
+
+static void REGAL_CALL http_glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyNamedBufferSubData)(readBuffer, writeBuffer, readOffset, writeOffset, size);
+#endif
+}
+
+static void REGAL_CALL http_glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage1D)(texture, level, xoffset, x, y, width);
+#endif
+}
+
+static void REGAL_CALL http_glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage2D)(texture, level, xoffset, yoffset, x, y, width, height);
+#endif
+}
+
+static void REGAL_CALL http_glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+#endif
+}
+
+static void REGAL_CALL http_glCreateBuffers(GLsizei n, GLuint *buffers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateBuffers)(n, buffers);
+#endif
+}
+
+static void REGAL_CALL http_glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateFramebuffers)(n, framebuffers);
+#endif
+}
+
+static void REGAL_CALL http_glCreateProgramPipelines(GLsizei n, GLuint *pipelines)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateProgramPipelines)(n, pipelines);
+#endif
+}
+
+static void REGAL_CALL http_glCreateQueries(GLenum target, GLsizei n, GLuint *ids)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateQueries)(target, n, ids);
+#endif
+}
+
+static void REGAL_CALL http_glCreateRenderbuffers(GLsizei n, GLuint *renderbuffers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateRenderbuffers)(n, renderbuffers);
+#endif
+}
+
+static void REGAL_CALL http_glCreateSamplers(GLsizei n, GLuint *samplers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateSamplers)(n, samplers);
+#endif
+}
+
+static void REGAL_CALL http_glCreateTextures(GLenum target, GLsizei n, GLuint *textures)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTextures)(target, n, textures);
+#endif
+}
+
+static void REGAL_CALL http_glCreateTransformFeedbacks(GLsizei n, GLuint *ids)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTransformFeedbacks)(n, ids);
+#endif
+}
+
+static void REGAL_CALL http_glCreateVertexArrays(GLsizei n, GLuint *arrays)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glCreateVertexArrays)(n, arrays);
+#endif
+}
+
+static void REGAL_CALL http_glDisableVertexArrayAttrib(GLuint vaobj, GLuint index)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glDisableVertexArrayAttrib)(vaobj, index);
+#endif
+}
+
+static void REGAL_CALL http_glEnableVertexArrayAttrib(GLuint vaobj, GLuint index)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glEnableVertexArrayAttrib)(vaobj, index);
+#endif
+}
+
+static void REGAL_CALL http_glFlushMappedNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glFlushMappedNamedBufferRange)(buffer, offset, length);
+#endif
+}
+
+static void REGAL_CALL http_glGenerateTextureMipmap(GLuint texture)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGenerateTextureMipmap)(texture);
+#endif
+}
+
+static void REGAL_CALL http_glGetCompressedTextureImage(GLuint texture, GLint level, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureImage)(texture, level, bufSize, pixels);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedBufferParameteri64v(GLuint buffer, GLenum pname, GLint64 *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteri64v)(buffer, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedBufferParameteriv(GLuint buffer, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteriv)(buffer, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedBufferPointerv(GLuint buffer, GLenum pname, GLvoid **params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferPointerv)(buffer, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferSubData)(buffer, offset, size, data);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedFramebufferAttachmentParameteriv(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferAttachmentParameteriv)(framebuffer, attachment, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedFramebufferParameteriv(GLuint framebuffer, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferParameteriv)(framebuffer, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glGetNamedRenderbufferParameteriv(GLuint renderbuffer, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedRenderbufferParameteriv)(renderbuffer, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureImage(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureImage)(texture, level, format, type, bufSize, pixels);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureLevelParameterfv(GLuint texture, GLint level, GLenum pname, GLfloat *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameterfv)(texture, level, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureLevelParameteriv(GLuint texture, GLint level, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameteriv)(texture, level, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureParameterIiv(GLuint texture, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIiv)(texture, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureParameterIuiv(GLuint texture, GLenum pname, GLuint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIuiv)(texture, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureParameterfv(GLuint texture, GLenum pname, GLfloat *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterfv)(texture, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureParameteriv(GLuint texture, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameteriv)(texture, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetTransformFeedbacki64_v(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki64_v)(xfb, pname, index, param);
+#endif
+}
+
+static void REGAL_CALL http_glGetTransformFeedbacki_v(GLuint xfb, GLenum pname, GLuint index, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki_v)(xfb, pname, index, param);
+#endif
+}
+
+static void REGAL_CALL http_glGetTransformFeedbackiv(GLuint xfb, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbackiv)(xfb, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glGetVertexArrayIndexed64iv(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexed64iv)(vaobj, index, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glGetVertexArrayIndexediv(GLuint vaobj, GLuint index, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexediv)(vaobj, index, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glGetVertexArrayiv(GLuint vaobj, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayiv)(vaobj, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferData)(framebuffer, numAttachments, attachments);
+#endif
+}
+
+static void REGAL_CALL http_glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferSubData)(framebuffer, numAttachments, attachments, x, y, width, height);
+#endif
+}
+
+static GLvoid *REGAL_CALL http_glMapNamedBuffer(GLuint buffer, GLenum access)
+{
+    GLvoid * ret = NULL;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    ret = _next->call(&_next->glMapNamedBuffer)(buffer, access);
+#endif
+    return ret;
+}
+
+static GLvoid *REGAL_CALL http_glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+    GLvoid * ret = NULL;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    ret = _next->call(&_next->glMapNamedBufferRange)(buffer, offset, length, access);
+#endif
+    return ret;
+}
+
+static void REGAL_CALL http_glNamedBufferData(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferData)(buffer, size, data, usage);
+#endif
+}
+
+static void REGAL_CALL http_glNamedBufferStorage(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLbitfield flags)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferStorage)(buffer, size, data, flags);
+#endif
+}
+
+static void REGAL_CALL http_glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferSubData)(buffer, offset, size, data);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferDrawBuffer(GLuint framebuffer, GLenum mode)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffer)(framebuffer, mode);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferDrawBuffers(GLuint framebuffer, GLsizei n, const GLenum *bufs)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffers)(framebuffer, n, bufs);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferParameteri)(framebuffer, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferReadBuffer(GLuint framebuffer, GLenum mode)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferReadBuffer)(framebuffer, mode);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferRenderbuffer)(framebuffer, attachment, renderbuffertarget, renderbuffer);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferTexture(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTexture)(framebuffer, attachment, texture, level);
+#endif
+}
+
+static void REGAL_CALL http_glNamedFramebufferTextureLayer(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTextureLayer)(framebuffer, attachment, texture, level, layer);
+#endif
+}
+
+static void REGAL_CALL http_glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorage)(renderbuffer, internalformat, width, height);
+#endif
+}
+
+static void REGAL_CALL http_glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorageMultisample)(renderbuffer, samples, internalformat, width, height);
+#endif
+}
+
+static void REGAL_CALL http_glTextureBuffer(GLuint texture, GLenum internalformat, GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBuffer)(texture, internalformat, buffer);
+#endif
+}
+
+static void REGAL_CALL http_glTextureBufferRange(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBufferRange)(texture, internalformat, buffer, offset, size);
+#endif
+}
+
+static void REGAL_CALL http_glTextureParameterIiv(GLuint texture, GLenum pname, const GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIiv)(texture, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glTextureParameterIuiv(GLuint texture, GLenum pname, const GLuint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIuiv)(texture, pname, params);
+#endif
+}
+
+static void REGAL_CALL http_glTextureParameterf(GLuint texture, GLenum pname, GLfloat param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterf)(texture, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glTextureParameterfv(GLuint texture, GLenum pname, const GLfloat *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterfv)(texture, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glTextureParameteri(GLuint texture, GLenum pname, GLint param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteri)(texture, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glTextureParameteriv(GLuint texture, GLenum pname, const GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteriv)(texture, pname, param);
+#endif
+}
+
+static void REGAL_CALL http_glTextureStorage1D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage1D)(texture, levels, internalformat, width);
+#endif
+}
+
+static void REGAL_CALL http_glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2D)(texture, levels, internalformat, width, height);
+#endif
+}
+
+static void REGAL_CALL http_glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2DMultisample)(texture, samples, internalformat, width, height, fixedsamplelocations);
+#endif
+}
+
+static void REGAL_CALL http_glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3D)(texture, levels, internalformat, width, height, depth);
+#endif
+}
+
+static void REGAL_CALL http_glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3DMultisample)(texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+#endif
+}
+
+static void REGAL_CALL http_glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage1D)(texture, level, xoffset, width, format, type, pixels);
+#endif
+}
+
+static void REGAL_CALL http_glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+#endif
+}
+
+static void REGAL_CALL http_glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+#endif
+}
+
+static void REGAL_CALL http_glTransformFeedbackBufferBase(GLuint xfb, GLuint index, GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferBase)(xfb, index, buffer);
+#endif
+}
+
+static void REGAL_CALL http_glTransformFeedbackBufferRange(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferRange)(xfb, index, buffer, offset, size);
+#endif
+}
+
+static GLboolean REGAL_CALL http_glUnmapNamedBuffer(GLuint buffer)
+{
+    GLboolean  ret = GL_FALSE;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    ret = _next->call(&_next->glUnmapNamedBuffer)(buffer);
+#endif
+    return ret;
+}
+
+static void REGAL_CALL http_glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint bindingindex)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribBinding)(vaobj, attribindex, bindingindex);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribFormat)(vaobj, attribindex, size, type, normalized, relativeoffset);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayAttribIFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribIFormat)(vaobj, attribindex, size, type, relativeoffset);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayAttribLFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribLFormat)(vaobj, attribindex, size, type, relativeoffset);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayBindingDivisor(GLuint vaobj, GLuint bindingindex, GLuint divisor)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayBindingDivisor)(vaobj, bindingindex, divisor);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayElementBuffer(GLuint vaobj, GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayElementBuffer)(vaobj, buffer);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffer)(vaobj, bindingindex, buffer, offset, stride);
+#endif
+}
+
+static void REGAL_CALL http_glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffers)(vaobj, first, count, buffers, offsets, strides);
+#endif
 }
 
 // GL_ARB_draw_buffers
@@ -15820,6 +17639,46 @@ static void REGAL_CALL http_glProgramParameteri(GLuint program, GLenum pname, GL
     DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
     RegalAssert(_next);
     _next->call(&_next->glProgramParameteri)(program, pname, value);
+#endif
+}
+
+// GL_ARB_get_texture_sub_image
+
+static void REGAL_CALL http_glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
+#endif
+}
+
+static void REGAL_CALL http_glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
 #endif
 }
 
@@ -21354,6 +23213,27 @@ static void REGAL_CALL http_glNamedStringARB(GLenum type, GLint namelen, const G
 #endif
 }
 
+// GL_ARB_sparse_buffer
+
+static void REGAL_CALL http_glBufferPageCommitmentARB(GLenum target, GLintptr offset, GLsizeiptr size, GLboolean commit)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glBufferPageCommitmentARB)(target, offset, size, commit);
+#endif
+}
+
 // GL_ARB_sparse_texture
 
 static void REGAL_CALL http_glTexPageCommitmentARB(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit)
@@ -21572,6 +23452,27 @@ static void REGAL_CALL http_glPatchParameteri(GLenum pname, GLint value)
     DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
     RegalAssert(_next);
     _next->call(&_next->glPatchParameteri)(pname, value);
+#endif
+}
+
+// GL_ARB_texture_barrier
+
+static void REGAL_CALL http_glTextureBarrier(void)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBarrier)();
 #endif
 }
 
@@ -39128,6 +41029,27 @@ static void REGAL_CALL http_glTexScissorINTEL(GLenum target, GLclampf tlow, GLcl
 #endif
 }
 
+// GL_KHR_blend_equation_advanced
+
+static void REGAL_CALL http_glBlendBarrierKHR(void)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glBlendBarrierKHR)();
+#endif
+}
+
 // GL_KHR_debug
 
 static void REGAL_CALL http_glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
@@ -39344,6 +41266,84 @@ static void REGAL_CALL http_glPushDebugGroup(GLenum source, GLuint id, GLsizei l
       _context->http.count.lastGroup = _context->http.count.call;
       #endif
     }
+}
+
+// GL_KHR_robustness
+
+static void REGAL_CALL http_glGetnUniformfv(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformfv)(program, location, bufSize, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetnUniformiv(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformiv)(program, location, bufSize, params);
+#endif
+}
+
+static void REGAL_CALL http_glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformuiv)(program, location, bufSize, params);
+#endif
+}
+
+static void REGAL_CALL http_glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert( _context );
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;
+    RegalAssert(_next);
+    _next->call(&_next->glReadnPixels)(x, y, width, height, format, type, bufSize, data);
+#endif
 }
 
 // GL_KTX_buffer_region
@@ -54506,6 +56506,28 @@ static BOOL REGAL_CALL http_wglCopyImageSubDataNV(HGLRC hSrcRC, GLuint srcName, 
     return ret;
 }
 
+// WGL_NV_delay_before_swap
+
+static BOOL REGAL_CALL http_wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+{
+    BOOL  ret = 0;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    ret = _next->call(&_next->wglDelayBeforeSwapNV)(hDC, seconds);
+#endif
+    return ret;
+}
+
 // WGL_NV_gpu_affinity
 
 static HDC REGAL_CALL http_wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -56844,6 +58866,88 @@ static GLXPixmap REGAL_CALL http_glXCreateGLXPixmapMESA(Display *dpy, XVisualInf
     return ret;
 }
 
+// GLX_MESA_query_renderer
+
+static Bool REGAL_CALL http_glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+{
+    Bool  ret = (Bool) 0;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    ret = _next->call(&_next->glXQueryCurrentRendererIntegerMESA)(attribute, value);
+#endif
+    return ret;
+}
+
+static const char *REGAL_CALL http_glXQueryCurrentRendererStringMESA(int attribute)
+{
+    const char * ret = NULL;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    ret = _next->call(&_next->glXQueryCurrentRendererStringMESA)(attribute);
+#endif
+    return ret;
+}
+
+static Bool REGAL_CALL http_glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+{
+    Bool  ret = (Bool) 0;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    ret = _next->call(&_next->glXQueryRendererIntegerMESA)(dpy, screen, renderer, attribute, value);
+#endif
+    return ret;
+}
+
+static const char *REGAL_CALL http_glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+{
+    const char * ret = NULL;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    ret = _next->call(&_next->glXQueryRendererStringMESA)(dpy, screen, renderer, attribute);
+#endif
+    return ret;
+}
+
 // GLX_MESA_release_buffers
 
 static Bool REGAL_CALL http_glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -56930,6 +59034,44 @@ static int REGAL_CALL http_glXSwapIntervalMESA(unsigned int interval)
     return ret;
 }
 
+// GLX_NV_copy_buffer
+
+static void REGAL_CALL http_glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    _next->call(&_next->glXCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
+#endif
+}
+
+static void REGAL_CALL http_glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    _next->call(&_next->glXNamedCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
+#endif
+}
+
 // GLX_NV_copy_image
 
 static void REGAL_CALL http_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -56948,6 +59090,28 @@ static void REGAL_CALL http_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCt
     RegalAssert(_next);
     _next->call(&_next->glXCopyImageSubDataNV)(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
 #endif
+}
+
+// GLX_NV_delay_before_swap
+
+static Bool REGAL_CALL http_glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+{
+    Bool  ret = (Bool) 0;
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    if( _context ) {
+#if REGAL_HTTP
+      if( _context->http.runState == RS_Next ) {
+        _context->http.runState = RS_Pause;
+      }
+      _context->http.YieldToHttpServer( _context );
+#endif
+    }
+#if REGAL_HTTP
+    DispatchTableGlobal *_next = dispatcherGlobal.http.next();
+    RegalAssert(_next);
+    ret = _next->call(&_next->glXDelayBeforeSwapNV)(dpy, drawable, seconds);
+#endif
+    return ret;
 }
 
 // GLX_NV_present_video
@@ -61258,6 +63422,10 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glReleaseShaderCompiler = http_glReleaseShaderCompiler;
   tbl.glShaderBinary = http_glShaderBinary;
 
+  // GL_ARB_ES3_1_compatibility
+
+  tbl.glMemoryBarrierByRegion = http_glMemoryBarrierByRegion;
+
   // GL_ARB_base_instance
 
   tbl.glDrawArraysInstancedBaseInstance = http_glDrawArraysInstancedBaseInstance;
@@ -61309,6 +63477,10 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glClearTexImage = http_glClearTexImage;
   tbl.glClearTexSubImage = http_glClearTexSubImage;
 
+  // GL_ARB_clip_control
+
+  tbl.glClipControl = http_glClipControl;
+
   // GL_ARB_color_buffer_float
 
   tbl.glClampColorARB = http_glClampColorARB;
@@ -61336,6 +63508,102 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glDebugMessageControlARB = http_glDebugMessageControlARB;
   tbl.glDebugMessageInsertARB = http_glDebugMessageInsertARB;
   tbl.glGetDebugMessageLogARB = http_glGetDebugMessageLogARB;
+
+  // GL_ARB_direct_state_access
+
+  tbl.glBindTextureUnit = http_glBindTextureUnit;
+  tbl.glBlitNamedFramebuffer = http_glBlitNamedFramebuffer;
+  tbl.glCheckNamedFramebufferStatus = http_glCheckNamedFramebufferStatus;
+  tbl.glClearNamedBufferData = http_glClearNamedBufferData;
+  tbl.glClearNamedBufferSubData = http_glClearNamedBufferSubData;
+  tbl.glClearNamedFramebufferfi = http_glClearNamedFramebufferfi;
+  tbl.glClearNamedFramebufferfv = http_glClearNamedFramebufferfv;
+  tbl.glClearNamedFramebufferiv = http_glClearNamedFramebufferiv;
+  tbl.glClearNamedFramebufferuiv = http_glClearNamedFramebufferuiv;
+  tbl.glCompressedTextureSubImage1D = http_glCompressedTextureSubImage1D;
+  tbl.glCompressedTextureSubImage2D = http_glCompressedTextureSubImage2D;
+  tbl.glCompressedTextureSubImage3D = http_glCompressedTextureSubImage3D;
+  tbl.glCopyNamedBufferSubData = http_glCopyNamedBufferSubData;
+  tbl.glCopyTextureSubImage1D = http_glCopyTextureSubImage1D;
+  tbl.glCopyTextureSubImage2D = http_glCopyTextureSubImage2D;
+  tbl.glCopyTextureSubImage3D = http_glCopyTextureSubImage3D;
+  tbl.glCreateBuffers = http_glCreateBuffers;
+  tbl.glCreateFramebuffers = http_glCreateFramebuffers;
+  tbl.glCreateProgramPipelines = http_glCreateProgramPipelines;
+  tbl.glCreateQueries = http_glCreateQueries;
+  tbl.glCreateRenderbuffers = http_glCreateRenderbuffers;
+  tbl.glCreateSamplers = http_glCreateSamplers;
+  tbl.glCreateTextures = http_glCreateTextures;
+  tbl.glCreateTransformFeedbacks = http_glCreateTransformFeedbacks;
+  tbl.glCreateVertexArrays = http_glCreateVertexArrays;
+  tbl.glDisableVertexArrayAttrib = http_glDisableVertexArrayAttrib;
+  tbl.glEnableVertexArrayAttrib = http_glEnableVertexArrayAttrib;
+  tbl.glFlushMappedNamedBufferRange = http_glFlushMappedNamedBufferRange;
+  tbl.glGenerateTextureMipmap = http_glGenerateTextureMipmap;
+  tbl.glGetCompressedTextureImage = http_glGetCompressedTextureImage;
+  tbl.glGetNamedBufferParameteri64v = http_glGetNamedBufferParameteri64v;
+  tbl.glGetNamedBufferParameteriv = http_glGetNamedBufferParameteriv;
+  tbl.glGetNamedBufferPointerv = http_glGetNamedBufferPointerv;
+  tbl.glGetNamedBufferSubData = http_glGetNamedBufferSubData;
+  tbl.glGetNamedFramebufferAttachmentParameteriv = http_glGetNamedFramebufferAttachmentParameteriv;
+  tbl.glGetNamedFramebufferParameteriv = http_glGetNamedFramebufferParameteriv;
+  tbl.glGetNamedRenderbufferParameteriv = http_glGetNamedRenderbufferParameteriv;
+  tbl.glGetTextureImage = http_glGetTextureImage;
+  tbl.glGetTextureLevelParameterfv = http_glGetTextureLevelParameterfv;
+  tbl.glGetTextureLevelParameteriv = http_glGetTextureLevelParameteriv;
+  tbl.glGetTextureParameterIiv = http_glGetTextureParameterIiv;
+  tbl.glGetTextureParameterIuiv = http_glGetTextureParameterIuiv;
+  tbl.glGetTextureParameterfv = http_glGetTextureParameterfv;
+  tbl.glGetTextureParameteriv = http_glGetTextureParameteriv;
+  tbl.glGetTransformFeedbacki64_v = http_glGetTransformFeedbacki64_v;
+  tbl.glGetTransformFeedbacki_v = http_glGetTransformFeedbacki_v;
+  tbl.glGetTransformFeedbackiv = http_glGetTransformFeedbackiv;
+  tbl.glGetVertexArrayIndexed64iv = http_glGetVertexArrayIndexed64iv;
+  tbl.glGetVertexArrayIndexediv = http_glGetVertexArrayIndexediv;
+  tbl.glGetVertexArrayiv = http_glGetVertexArrayiv;
+  tbl.glInvalidateNamedFramebufferData = http_glInvalidateNamedFramebufferData;
+  tbl.glInvalidateNamedFramebufferSubData = http_glInvalidateNamedFramebufferSubData;
+  tbl.glMapNamedBuffer = http_glMapNamedBuffer;
+  tbl.glMapNamedBufferRange = http_glMapNamedBufferRange;
+  tbl.glNamedBufferData = http_glNamedBufferData;
+  tbl.glNamedBufferStorage = http_glNamedBufferStorage;
+  tbl.glNamedBufferSubData = http_glNamedBufferSubData;
+  tbl.glNamedFramebufferDrawBuffer = http_glNamedFramebufferDrawBuffer;
+  tbl.glNamedFramebufferDrawBuffers = http_glNamedFramebufferDrawBuffers;
+  tbl.glNamedFramebufferParameteri = http_glNamedFramebufferParameteri;
+  tbl.glNamedFramebufferReadBuffer = http_glNamedFramebufferReadBuffer;
+  tbl.glNamedFramebufferRenderbuffer = http_glNamedFramebufferRenderbuffer;
+  tbl.glNamedFramebufferTexture = http_glNamedFramebufferTexture;
+  tbl.glNamedFramebufferTextureLayer = http_glNamedFramebufferTextureLayer;
+  tbl.glNamedRenderbufferStorage = http_glNamedRenderbufferStorage;
+  tbl.glNamedRenderbufferStorageMultisample = http_glNamedRenderbufferStorageMultisample;
+  tbl.glTextureBuffer = http_glTextureBuffer;
+  tbl.glTextureBufferRange = http_glTextureBufferRange;
+  tbl.glTextureParameterIiv = http_glTextureParameterIiv;
+  tbl.glTextureParameterIuiv = http_glTextureParameterIuiv;
+  tbl.glTextureParameterf = http_glTextureParameterf;
+  tbl.glTextureParameterfv = http_glTextureParameterfv;
+  tbl.glTextureParameteri = http_glTextureParameteri;
+  tbl.glTextureParameteriv = http_glTextureParameteriv;
+  tbl.glTextureStorage1D = http_glTextureStorage1D;
+  tbl.glTextureStorage2D = http_glTextureStorage2D;
+  tbl.glTextureStorage2DMultisample = http_glTextureStorage2DMultisample;
+  tbl.glTextureStorage3D = http_glTextureStorage3D;
+  tbl.glTextureStorage3DMultisample = http_glTextureStorage3DMultisample;
+  tbl.glTextureSubImage1D = http_glTextureSubImage1D;
+  tbl.glTextureSubImage2D = http_glTextureSubImage2D;
+  tbl.glTextureSubImage3D = http_glTextureSubImage3D;
+  tbl.glTransformFeedbackBufferBase = http_glTransformFeedbackBufferBase;
+  tbl.glTransformFeedbackBufferRange = http_glTransformFeedbackBufferRange;
+  tbl.glUnmapNamedBuffer = http_glUnmapNamedBuffer;
+  tbl.glVertexArrayAttribBinding = http_glVertexArrayAttribBinding;
+  tbl.glVertexArrayAttribFormat = http_glVertexArrayAttribFormat;
+  tbl.glVertexArrayAttribIFormat = http_glVertexArrayAttribIFormat;
+  tbl.glVertexArrayAttribLFormat = http_glVertexArrayAttribLFormat;
+  tbl.glVertexArrayBindingDivisor = http_glVertexArrayBindingDivisor;
+  tbl.glVertexArrayElementBuffer = http_glVertexArrayElementBuffer;
+  tbl.glVertexArrayVertexBuffer = http_glVertexArrayVertexBuffer;
+  tbl.glVertexArrayVertexBuffers = http_glVertexArrayVertexBuffers;
 
   // GL_ARB_draw_buffers
 
@@ -61407,6 +63675,11 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glGetProgramBinary = http_glGetProgramBinary;
   tbl.glProgramBinary = http_glProgramBinary;
   tbl.glProgramParameteri = http_glProgramParameteri;
+
+  // GL_ARB_get_texture_sub_image
+
+  tbl.glGetCompressedTextureSubImage = http_glGetCompressedTextureSubImage;
+  tbl.glGetTextureSubImage = http_glGetTextureSubImage;
 
   // GL_ARB_gpu_shader_fp64
 
@@ -61772,6 +64045,10 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glIsNamedStringARB = http_glIsNamedStringARB;
   tbl.glNamedStringARB = http_glNamedStringARB;
 
+  // GL_ARB_sparse_buffer
+
+  tbl.glBufferPageCommitmentARB = http_glBufferPageCommitmentARB;
+
   // GL_ARB_sparse_texture
 
   tbl.glTexPageCommitmentARB = http_glTexPageCommitmentARB;
@@ -61791,6 +64068,10 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
 
   tbl.glPatchParameterfv = http_glPatchParameterfv;
   tbl.glPatchParameteri = http_glPatchParameteri;
+
+  // GL_ARB_texture_barrier
+
+  tbl.glTextureBarrier = http_glTextureBarrier;
 
   // GL_ARB_texture_buffer_object
 
@@ -63019,6 +65300,10 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glTexScissorFuncINTEL = http_glTexScissorFuncINTEL;
   tbl.glTexScissorINTEL = http_glTexScissorINTEL;
 
+  // GL_KHR_blend_equation_advanced
+
+  tbl.glBlendBarrierKHR = http_glBlendBarrierKHR;
+
   // GL_KHR_debug
 
   tbl.glDebugMessageCallback = http_glDebugMessageCallback;
@@ -63031,6 +65316,13 @@ void InitDispatchTableHttp(DispatchTableGL &tbl)
   tbl.glObjectPtrLabel = http_glObjectPtrLabel;
   tbl.glPopDebugGroup = http_glPopDebugGroup;
   tbl.glPushDebugGroup = http_glPushDebugGroup;
+
+  // GL_KHR_robustness
+
+  tbl.glGetnUniformfv = http_glGetnUniformfv;
+  tbl.glGetnUniformiv = http_glGetnUniformiv;
+  tbl.glGetnUniformuiv = http_glGetnUniformuiv;
+  tbl.glReadnPixels = http_glReadnPixels;
 
   // GL_KTX_buffer_region
 
@@ -64171,6 +66463,10 @@ void InitDispatchTableGlobalHttp(DispatchTableGlobal &tbl)
 
   tbl.wglCopyImageSubDataNV = http_wglCopyImageSubDataNV;
 
+  // WGL_NV_delay_before_swap
+
+  tbl.wglDelayBeforeSwapNV = http_wglDelayBeforeSwapNV;
+
   // WGL_NV_gpu_affinity
 
   tbl.wglCreateAffinityDCNV = http_wglCreateAffinityDCNV;
@@ -64359,6 +66655,13 @@ void InitDispatchTableGlobalHttp(DispatchTableGlobal &tbl)
 
   tbl.glXCreateGLXPixmapMESA = http_glXCreateGLXPixmapMESA;
 
+  // GLX_MESA_query_renderer
+
+  tbl.glXQueryCurrentRendererIntegerMESA = http_glXQueryCurrentRendererIntegerMESA;
+  tbl.glXQueryCurrentRendererStringMESA = http_glXQueryCurrentRendererStringMESA;
+  tbl.glXQueryRendererIntegerMESA = http_glXQueryRendererIntegerMESA;
+  tbl.glXQueryRendererStringMESA = http_glXQueryRendererStringMESA;
+
   // GLX_MESA_release_buffers
 
   tbl.glXReleaseBuffersMESA = http_glXReleaseBuffersMESA;
@@ -64372,9 +66675,18 @@ void InitDispatchTableGlobalHttp(DispatchTableGlobal &tbl)
   tbl.glXGetSwapIntervalMESA = http_glXGetSwapIntervalMESA;
   tbl.glXSwapIntervalMESA = http_glXSwapIntervalMESA;
 
+  // GLX_NV_copy_buffer
+
+  tbl.glXCopyBufferSubDataNV = http_glXCopyBufferSubDataNV;
+  tbl.glXNamedCopyBufferSubDataNV = http_glXNamedCopyBufferSubDataNV;
+
   // GLX_NV_copy_image
 
   tbl.glXCopyImageSubDataNV = http_glXCopyImageSubDataNV;
+
+  // GLX_NV_delay_before_swap
+
+  tbl.glXDelayBeforeSwapNV = http_glXDelayBeforeSwapNV;
 
   // GLX_NV_present_video
 

@@ -82,4 +82,37 @@ exclude = [
   'GL_SGIX_fog_texture',
 
   'GL_SUN_read_video_pixels',
+
+  # OpenGL 4.5 additions, August 2014
+
+  'GL_ARB_ES3_1_compatibility',
+  'GL_ARB_clip_control',
+  'GL_ARB_conditional_render_inverted',
+  'GL_ARB_context_flush_control',
+  'GL_ARB_cull_distance',
+  'GL_ARB_derivative_control',
+  'GL_ARB_direct_state_access',
+  'GL_ARB_get_texture_sub_image',
+  'GL_ARB_pipeline_statistics_query',
+  'GL_ARB_shader_texture_image_samples',
+  'GL_ARB_sparse_buffer',
+  'GL_ARB_texture_barrier',
+  'GL_ARB_transform_feedback_overflow_query',
+  'GL_EXT_shader_image_load_formatted',
+  'GL_EXT_shader_integer_mix',
+  'GL_INTEL_fragment_shader_ordering',
+  'GL_INTEL_performance_query',
+  'GL_KHR_blend_equation_advanced',
+  'GL_KHR_blend_equation_advanced_coherent',
+  'GL_KHR_robust_buffer_access_behavior',
+  'GL_KHR_robustness',
+  'GL_KHR_texture_compression_astc_hdr',
+  'GL_NV_bindless_multi_draw_indirect_count',
+  'GL_NV_shader_atomic_int64',
+  'GL_NV_shader_thread_group',
+  'GL_NV_shader_thread_shuffle',
+
+  'GLX_MESA_query_renderer',
+  'GLX_NV_copy_buffer',
+  'GLX_NV_delay_before_swap'
 ]

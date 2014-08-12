@@ -586,6 +586,40 @@ static GLXPixmap REGAL_CALL GLX_glXCreateGLXPixmapMESA(Display *dpy, XVisualInfo
     return ret;
 }
 
+// GLX_MESA_query_renderer
+
+static Bool REGAL_CALL GLX_glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    Bool  ret = _next->call(&_next->glXQueryCurrentRendererIntegerMESA)(attribute, value);
+    return ret;
+}
+
+static const char *REGAL_CALL GLX_glXQueryCurrentRendererStringMESA(int attribute)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    const char * ret = _next->call(&_next->glXQueryCurrentRendererStringMESA)(attribute);
+    return ret;
+}
+
+static Bool REGAL_CALL GLX_glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    Bool  ret = _next->call(&_next->glXQueryRendererIntegerMESA)(dpy, screen, renderer, attribute, value);
+    return ret;
+}
+
+static const char *REGAL_CALL GLX_glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    const char * ret = _next->call(&_next->glXQueryRendererStringMESA)(dpy, screen, renderer, attribute);
+    return ret;
+}
+
 // GLX_MESA_release_buffers
 
 static Bool REGAL_CALL GLX_glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -624,6 +658,22 @@ static int REGAL_CALL GLX_glXSwapIntervalMESA(unsigned int interval)
     return ret;
 }
 
+// GLX_NV_copy_buffer
+
+static void REGAL_CALL GLX_glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    _next->call(&_next->glXCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
+}
+
+static void REGAL_CALL GLX_glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    _next->call(&_next->glXNamedCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
+}
+
 // GLX_NV_copy_image
 
 static void REGAL_CALL GLX_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -631,6 +681,16 @@ static void REGAL_CALL GLX_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx
     DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
     RegalAssert(_next);
     _next->call(&_next->glXCopyImageSubDataNV)(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+}
+
+// GLX_NV_delay_before_swap
+
+static Bool REGAL_CALL GLX_glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.glx.next();
+    RegalAssert(_next);
+    Bool  ret = _next->call(&_next->glXDelayBeforeSwapNV)(dpy, drawable, seconds);
+    return ret;
 }
 
 // GLX_NV_present_video
@@ -1206,6 +1266,13 @@ void InitDispatchTableGlobalGLX(DispatchTableGlobal &tbl)
 
   tbl.glXCreateGLXPixmapMESA = GLX_glXCreateGLXPixmapMESA;
 
+  // GLX_MESA_query_renderer
+
+  tbl.glXQueryCurrentRendererIntegerMESA = GLX_glXQueryCurrentRendererIntegerMESA;
+  tbl.glXQueryCurrentRendererStringMESA = GLX_glXQueryCurrentRendererStringMESA;
+  tbl.glXQueryRendererIntegerMESA = GLX_glXQueryRendererIntegerMESA;
+  tbl.glXQueryRendererStringMESA = GLX_glXQueryRendererStringMESA;
+
   // GLX_MESA_release_buffers
 
   tbl.glXReleaseBuffersMESA = GLX_glXReleaseBuffersMESA;
@@ -1219,9 +1286,18 @@ void InitDispatchTableGlobalGLX(DispatchTableGlobal &tbl)
   tbl.glXGetSwapIntervalMESA = GLX_glXGetSwapIntervalMESA;
   tbl.glXSwapIntervalMESA = GLX_glXSwapIntervalMESA;
 
+  // GLX_NV_copy_buffer
+
+  tbl.glXCopyBufferSubDataNV = GLX_glXCopyBufferSubDataNV;
+  tbl.glXNamedCopyBufferSubDataNV = GLX_glXNamedCopyBufferSubDataNV;
+
   // GLX_NV_copy_image
 
   tbl.glXCopyImageSubDataNV = GLX_glXCopyImageSubDataNV;
+
+  // GLX_NV_delay_before_swap
+
+  tbl.glXDelayBeforeSwapNV = GLX_glXDelayBeforeSwapNV;
 
   // GLX_NV_present_video
 

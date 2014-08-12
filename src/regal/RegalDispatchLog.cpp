@@ -7387,6 +7387,18 @@ static void REGAL_CALL log_glShaderBinary(GLsizei count, const GLuint *shaders, 
     Driver("glShaderBinary","(", count, ", ", boost::print::array(shaders,count), ", ", toString(binaryformat), ", ", boost::print::optional(binary,Logging::pointers), ", ", length, ")");
 }
 
+// GL_ARB_ES3_1_compatibility
+
+static void REGAL_CALL log_glMemoryBarrierByRegion(GLbitfield barriers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glMemoryBarrierByRegion)(barriers);
+    Driver("glMemoryBarrierByRegion","(", barriers, ")");
+}
+
 // GL_ARB_base_instance
 
 static void REGAL_CALL log_glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei primcount, GLuint baseinstance)
@@ -7708,6 +7720,18 @@ static void REGAL_CALL log_glClearTexSubImage(GLuint texture, GLint level, GLint
     Driver("glClearTexSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");
 }
 
+// GL_ARB_clip_control
+
+static void REGAL_CALL log_glClipControl(GLenum origin, GLenum depth)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClipControl)(origin, depth);
+    Driver("glClipControl","(", toString(origin), ", ", toString(depth), ")");
+}
+
 // GL_ARB_color_buffer_float
 
 static void REGAL_CALL log_glClampColorARB(GLenum target, GLenum clamp)
@@ -7819,6 +7843,942 @@ static GLuint REGAL_CALL log_glGetDebugMessageLogARB(GLuint count, GLsizei bufsi
     GLuint  ret = _next->call(&_next->glGetDebugMessageLogARB)(count, bufsize, sources, types, ids, severities, lengths, messageLog);
     Driver("glGetDebugMessageLogARB","(", count, ", ", bufsize, ", ", boost::print::array(sources,ret), ", ", boost::print::array(types,ret), ", ", boost::print::array(ids,ret), ", ", boost::print::array(severities,ret), ", ", boost::print::array(lengths,ret), ", ", boost::print::quote(messageLog,'"'), ")", " returned ", ret);
     return ret;
+}
+
+// GL_ARB_direct_state_access
+
+static void REGAL_CALL log_glBindTextureUnit(GLuint unit, GLuint texture)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glBindTextureUnit)(unit, texture);
+    Driver("glBindTextureUnit","(", unit, ", ", texture, ")");
+}
+
+static void REGAL_CALL log_glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glBlitNamedFramebuffer)(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+    Driver("glBlitNamedFramebuffer","(", readFramebuffer, ", ", drawFramebuffer, ", ", srcX0, ", ", srcY0, ", ", srcX1, ", ", srcY1, ", ", dstX0, ", ", dstY0, ", ", dstX1, ", ", dstY1, ", ", mask, ", ", toString(filter), ")");
+}
+
+static GLenum REGAL_CALL log_glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    GLenum  ret = _next->call(&_next->glCheckNamedFramebufferStatus)(framebuffer, target);
+    Driver("glCheckNamedFramebufferStatus","(", framebuffer, ", ", toString(target), ")", " returned ", toString(ret));
+    return ret;
+}
+
+static void REGAL_CALL log_glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferData)(buffer, internalformat, format, type, data);
+    Driver("glClearNamedBufferData","(", buffer, ", ", toString(internalformat), ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedBufferSubData)(buffer, internalformat, offset, size, format, type, data);
+    Driver("glClearNamedBufferSubData","(", buffer, ", ", toString(internalformat), ", ", offset, ", ", size, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLfloat depth, GLint stencil)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfi)(framebuffer, buffer, depth, stencil);
+    Driver("glClearNamedFramebufferfi","(", framebuffer, ", ", toString(buffer), ", ", depth, ", ", stencil, ")");
+}
+
+static void REGAL_CALL log_glClearNamedFramebufferfv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferfv)(framebuffer, buffer, drawbuffer, value);
+    Driver("glClearNamedFramebufferfv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferiv)(framebuffer, buffer, drawbuffer, value);
+    Driver("glClearNamedFramebufferiv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glClearNamedFramebufferuiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glClearNamedFramebufferuiv)(framebuffer, buffer, drawbuffer, value);
+    Driver("glClearNamedFramebufferuiv","(", framebuffer, ", ", toString(buffer), ", ", drawbuffer, ", ", boost::print::optional(value,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage1D)(texture, level, xoffset, width, format, imageSize, data);
+    Driver("glCompressedTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", width, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+    Driver("glCompressedTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", width, ", ", height, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCompressedTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+    Driver("glCompressedTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", imageSize, ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyNamedBufferSubData)(readBuffer, writeBuffer, readOffset, writeOffset, size);
+    Driver("glCopyNamedBufferSubData","(", readBuffer, ", ", writeBuffer, ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+}
+
+static void REGAL_CALL log_glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage1D)(texture, level, xoffset, x, y, width);
+    Driver("glCopyTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", x, ", ", y, ", ", width, ")");
+}
+
+static void REGAL_CALL log_glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage2D)(texture, level, xoffset, yoffset, x, y, width, height);
+    Driver("glCopyTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", x, ", ", y, ", ", width, ", ", height, ")");
+}
+
+static void REGAL_CALL log_glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCopyTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+    Driver("glCopyTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", x, ", ", y, ", ", width, ", ", height, ")");
+}
+
+static void REGAL_CALL log_glCreateBuffers(GLsizei n, GLuint *buffers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateBuffers)(n, buffers);
+    Driver("glCreateBuffers","(", n, ", ", boost::print::optional(buffers,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateFramebuffers)(n, framebuffers);
+    Driver("glCreateFramebuffers","(", n, ", ", boost::print::optional(framebuffers,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateProgramPipelines(GLsizei n, GLuint *pipelines)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateProgramPipelines)(n, pipelines);
+    Driver("glCreateProgramPipelines","(", n, ", ", boost::print::optional(pipelines,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateQueries(GLenum target, GLsizei n, GLuint *ids)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateQueries)(target, n, ids);
+    Driver("glCreateQueries","(", toString(target), ", ", n, ", ", boost::print::optional(ids,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateRenderbuffers(GLsizei n, GLuint *renderbuffers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateRenderbuffers)(n, renderbuffers);
+    Driver("glCreateRenderbuffers","(", n, ", ", boost::print::optional(renderbuffers,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateSamplers(GLsizei n, GLuint *samplers)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateSamplers)(n, samplers);
+    Driver("glCreateSamplers","(", n, ", ", boost::print::optional(samplers,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateTextures(GLenum target, GLsizei n, GLuint *textures)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTextures)(target, n, textures);
+    Driver("glCreateTextures","(", toString(target), ", ", n, ", ", boost::print::optional(textures,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateTransformFeedbacks(GLsizei n, GLuint *ids)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateTransformFeedbacks)(n, ids);
+    Driver("glCreateTransformFeedbacks","(", n, ", ", boost::print::optional(ids,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glCreateVertexArrays(GLsizei n, GLuint *arrays)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glCreateVertexArrays)(n, arrays);
+    Driver("glCreateVertexArrays","(", n, ", ", boost::print::optional(arrays,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glDisableVertexArrayAttrib(GLuint vaobj, GLuint index)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glDisableVertexArrayAttrib)(vaobj, index);
+    Driver("glDisableVertexArrayAttrib","(", vaobj, ", ", index, ")");
+}
+
+static void REGAL_CALL log_glEnableVertexArrayAttrib(GLuint vaobj, GLuint index)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glEnableVertexArrayAttrib)(vaobj, index);
+    Driver("glEnableVertexArrayAttrib","(", vaobj, ", ", index, ")");
+}
+
+static void REGAL_CALL log_glFlushMappedNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glFlushMappedNamedBufferRange)(buffer, offset, length);
+    Driver("glFlushMappedNamedBufferRange","(", buffer, ", ", offset, ", ", length, ")");
+}
+
+static void REGAL_CALL log_glGenerateTextureMipmap(GLuint texture)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGenerateTextureMipmap)(texture);
+    Driver("glGenerateTextureMipmap","(", texture, ")");
+}
+
+static void REGAL_CALL log_glGetCompressedTextureImage(GLuint texture, GLint level, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureImage)(texture, level, bufSize, pixels);
+    Driver("glGetCompressedTextureImage","(", texture, ", ", level, ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedBufferParameteri64v(GLuint buffer, GLenum pname, GLint64 *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteri64v)(buffer, pname, params);
+    Driver("glGetNamedBufferParameteri64v","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedBufferParameteriv(GLuint buffer, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferParameteriv)(buffer, pname, params);
+    Driver("glGetNamedBufferParameteriv","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedBufferPointerv(GLuint buffer, GLenum pname, GLvoid **params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferPointerv)(buffer, pname, params);
+    Driver("glGetNamedBufferPointerv","(", buffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedBufferSubData)(buffer, offset, size, data);
+    Driver("glGetNamedBufferSubData","(", buffer, ", ", offset, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedFramebufferAttachmentParameteriv(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferAttachmentParameteriv)(framebuffer, attachment, pname, params);
+    Driver("glGetNamedFramebufferAttachmentParameteriv","(", framebuffer, ", ", toString(attachment), ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedFramebufferParameteriv(GLuint framebuffer, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedFramebufferParameteriv)(framebuffer, pname, param);
+    Driver("glGetNamedFramebufferParameteriv","(", framebuffer, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetNamedRenderbufferParameteriv(GLuint renderbuffer, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetNamedRenderbufferParameteriv)(renderbuffer, pname, params);
+    Driver("glGetNamedRenderbufferParameteriv","(", renderbuffer, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureImage(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureImage)(texture, level, format, type, bufSize, pixels);
+    Driver("glGetTextureImage","(", texture, ", ", level, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureLevelParameterfv(GLuint texture, GLint level, GLenum pname, GLfloat *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameterfv)(texture, level, pname, params);
+    Driver("glGetTextureLevelParameterfv","(", texture, ", ", level, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureLevelParameteriv(GLuint texture, GLint level, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureLevelParameteriv)(texture, level, pname, params);
+    Driver("glGetTextureLevelParameteriv","(", texture, ", ", level, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureParameterIiv(GLuint texture, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIiv)(texture, pname, params);
+    Driver("glGetTextureParameterIiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureParameterIuiv(GLuint texture, GLenum pname, GLuint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterIuiv)(texture, pname, params);
+    Driver("glGetTextureParameterIuiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureParameterfv(GLuint texture, GLenum pname, GLfloat *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameterfv)(texture, pname, params);
+    Driver("glGetTextureParameterfv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureParameteriv(GLuint texture, GLenum pname, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureParameteriv)(texture, pname, params);
+    Driver("glGetTextureParameteriv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTransformFeedbacki64_v(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki64_v)(xfb, pname, index, param);
+    Driver("glGetTransformFeedbacki64_v","(", xfb, ", ", toString(pname), ", ", index, ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTransformFeedbacki_v(GLuint xfb, GLenum pname, GLuint index, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbacki_v)(xfb, pname, index, param);
+    Driver("glGetTransformFeedbacki_v","(", xfb, ", ", toString(pname), ", ", index, ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTransformFeedbackiv(GLuint xfb, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTransformFeedbackiv)(xfb, pname, param);
+    Driver("glGetTransformFeedbackiv","(", xfb, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetVertexArrayIndexed64iv(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexed64iv)(vaobj, index, pname, param);
+    Driver("glGetVertexArrayIndexed64iv","(", vaobj, ", ", index, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetVertexArrayIndexediv(GLuint vaobj, GLuint index, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayIndexediv)(vaobj, index, pname, param);
+    Driver("glGetVertexArrayIndexediv","(", vaobj, ", ", index, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetVertexArrayiv(GLuint vaobj, GLenum pname, GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetVertexArrayiv)(vaobj, pname, param);
+    Driver("glGetVertexArrayiv","(", vaobj, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferData)(framebuffer, numAttachments, attachments);
+    Driver("glInvalidateNamedFramebufferData","(", framebuffer, ", ", numAttachments, ", ", attachments, ")");
+}
+
+static void REGAL_CALL log_glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glInvalidateNamedFramebufferSubData)(framebuffer, numAttachments, attachments, x, y, width, height);
+    Driver("glInvalidateNamedFramebufferSubData","(", framebuffer, ", ", numAttachments, ", ", attachments, ", ", x, ", ", y, ", ", width, ", ", height, ")");
+}
+
+static GLvoid *REGAL_CALL log_glMapNamedBuffer(GLuint buffer, GLenum access)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    GLvoid * ret = _next->call(&_next->glMapNamedBuffer)(buffer, access);
+    Driver("glMapNamedBuffer","(", buffer, ", ", toString(access), ")", " returned ", boost::print::optional(ret,Logging::pointers));
+    return ret;
+}
+
+static GLvoid *REGAL_CALL log_glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    GLvoid * ret = _next->call(&_next->glMapNamedBufferRange)(buffer, offset, length, access);
+    Driver("glMapNamedBufferRange","(", buffer, ", ", offset, ", ", length, ", ", access, ")", " returned ", boost::print::optional(ret,Logging::pointers));
+    return ret;
+}
+
+static void REGAL_CALL log_glNamedBufferData(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferData)(buffer, size, data, usage);
+    Driver("glNamedBufferData","(", buffer, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ", ", toString(usage), ")");
+}
+
+static void REGAL_CALL log_glNamedBufferStorage(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLbitfield flags)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferStorage)(buffer, size, data, flags);
+    Driver("glNamedBufferStorage","(", buffer, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ", ", flags, ")");
+}
+
+static void REGAL_CALL log_glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedBufferSubData)(buffer, offset, size, data);
+    Driver("glNamedBufferSubData","(", buffer, ", ", offset, ", ", size, ", ", boost::print::optional(data,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferDrawBuffer(GLuint framebuffer, GLenum mode)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffer)(framebuffer, mode);
+    Driver("glNamedFramebufferDrawBuffer","(", framebuffer, ", ", toString(mode), ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferDrawBuffers(GLuint framebuffer, GLsizei n, const GLenum *bufs)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferDrawBuffers)(framebuffer, n, bufs);
+    Driver("glNamedFramebufferDrawBuffers","(", framebuffer, ", ", n, ", ", bufs, ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferParameteri)(framebuffer, pname, param);
+    Driver("glNamedFramebufferParameteri","(", framebuffer, ", ", toString(pname), ", ", param, ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferReadBuffer(GLuint framebuffer, GLenum mode)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferReadBuffer)(framebuffer, mode);
+    Driver("glNamedFramebufferReadBuffer","(", framebuffer, ", ", toString(mode), ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferRenderbuffer)(framebuffer, attachment, renderbuffertarget, renderbuffer);
+    Driver("glNamedFramebufferRenderbuffer","(", framebuffer, ", ", toString(attachment), ", ", toString(renderbuffertarget), ", ", renderbuffer, ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferTexture(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTexture)(framebuffer, attachment, texture, level);
+    Driver("glNamedFramebufferTexture","(", framebuffer, ", ", toString(attachment), ", ", texture, ", ", level, ")");
+}
+
+static void REGAL_CALL log_glNamedFramebufferTextureLayer(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedFramebufferTextureLayer)(framebuffer, attachment, texture, level, layer);
+    Driver("glNamedFramebufferTextureLayer","(", framebuffer, ", ", toString(attachment), ", ", texture, ", ", level, ", ", layer, ")");
+}
+
+static void REGAL_CALL log_glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorage)(renderbuffer, internalformat, width, height);
+    Driver("glNamedRenderbufferStorage","(", renderbuffer, ", ", toString(internalformat), ", ", width, ", ", height, ")");
+}
+
+static void REGAL_CALL log_glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glNamedRenderbufferStorageMultisample)(renderbuffer, samples, internalformat, width, height);
+    Driver("glNamedRenderbufferStorageMultisample","(", renderbuffer, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ")");
+}
+
+static void REGAL_CALL log_glTextureBuffer(GLuint texture, GLenum internalformat, GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBuffer)(texture, internalformat, buffer);
+    Driver("glTextureBuffer","(", texture, ", ", toString(internalformat), ", ", buffer, ")");
+}
+
+static void REGAL_CALL log_glTextureBufferRange(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBufferRange)(texture, internalformat, buffer, offset, size);
+    Driver("glTextureBufferRange","(", texture, ", ", toString(internalformat), ", ", buffer, ", ", offset, ", ", size, ")");
+}
+
+static void REGAL_CALL log_glTextureParameterIiv(GLuint texture, GLenum pname, const GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIiv)(texture, pname, params);
+    Driver("glTextureParameterIiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTextureParameterIuiv(GLuint texture, GLenum pname, const GLuint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterIuiv)(texture, pname, params);
+    Driver("glTextureParameterIuiv","(", texture, ", ", toString(pname), ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTextureParameterf(GLuint texture, GLenum pname, GLfloat param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterf)(texture, pname, param);
+    Driver("glTextureParameterf","(", texture, ", ", toString(pname), ", ", param, ")");
+}
+
+static void REGAL_CALL log_glTextureParameterfv(GLuint texture, GLenum pname, const GLfloat *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameterfv)(texture, pname, param);
+    Driver("glTextureParameterfv","(", texture, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTextureParameteri(GLuint texture, GLenum pname, GLint param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteri)(texture, pname, param);
+    Driver("glTextureParameteri","(", texture, ", ", toString(pname), ", ", param, ")");
+}
+
+static void REGAL_CALL log_glTextureParameteriv(GLuint texture, GLenum pname, const GLint *param)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureParameteriv)(texture, pname, param);
+    Driver("glTextureParameteriv","(", texture, ", ", toString(pname), ", ", boost::print::optional(param,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTextureStorage1D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage1D)(texture, levels, internalformat, width);
+    Driver("glTextureStorage1D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ")");
+}
+
+static void REGAL_CALL log_glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2D)(texture, levels, internalformat, width, height);
+    Driver("glTextureStorage2D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ", ", height, ")");
+}
+
+static void REGAL_CALL log_glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage2DMultisample)(texture, samples, internalformat, width, height, fixedsamplelocations);
+    Driver("glTextureStorage2DMultisample","(", texture, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ", ", toString(fixedsamplelocations), ")");
+}
+
+static void REGAL_CALL log_glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3D)(texture, levels, internalformat, width, height, depth);
+    Driver("glTextureStorage3D","(", texture, ", ", levels, ", ", toString(internalformat), ", ", width, ", ", height, ", ", depth, ")");
+}
+
+static void REGAL_CALL log_glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureStorage3DMultisample)(texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+    Driver("glTextureStorage3DMultisample","(", texture, ", ", samples, ", ", toString(internalformat), ", ", width, ", ", height, ", ", depth, ", ", toString(fixedsamplelocations), ")");
+}
+
+static void REGAL_CALL log_glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage1D)(texture, level, xoffset, width, format, type, pixels);
+    Driver("glTextureSubImage1D","(", texture, ", ", level, ", ", xoffset, ", ", width, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+    Driver("glTextureSubImage2D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", width, ", ", height, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+    Driver("glTextureSubImage3D","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", boost::print::optional(pixels,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glTransformFeedbackBufferBase(GLuint xfb, GLuint index, GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferBase)(xfb, index, buffer);
+    Driver("glTransformFeedbackBufferBase","(", xfb, ", ", index, ", ", buffer, ")");
+}
+
+static void REGAL_CALL log_glTransformFeedbackBufferRange(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTransformFeedbackBufferRange)(xfb, index, buffer, offset, size);
+    Driver("glTransformFeedbackBufferRange","(", xfb, ", ", index, ", ", buffer, ", ", offset, ", ", size, ")");
+}
+
+static GLboolean REGAL_CALL log_glUnmapNamedBuffer(GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    GLboolean  ret = _next->call(&_next->glUnmapNamedBuffer)(buffer);
+    Driver("glUnmapNamedBuffer","(", buffer, ")", " returned ", toString(ret));
+    return ret;
+}
+
+static void REGAL_CALL log_glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint bindingindex)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribBinding)(vaobj, attribindex, bindingindex);
+    Driver("glVertexArrayAttribBinding","(", vaobj, ", ", attribindex, ", ", bindingindex, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribFormat)(vaobj, attribindex, size, type, normalized, relativeoffset);
+    Driver("glVertexArrayAttribFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", toString(normalized), ", ", relativeoffset, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayAttribIFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribIFormat)(vaobj, attribindex, size, type, relativeoffset);
+    Driver("glVertexArrayAttribIFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", relativeoffset, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayAttribLFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayAttribLFormat)(vaobj, attribindex, size, type, relativeoffset);
+    Driver("glVertexArrayAttribLFormat","(", vaobj, ", ", attribindex, ", ", size, ", ", toString(type), ", ", relativeoffset, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayBindingDivisor(GLuint vaobj, GLuint bindingindex, GLuint divisor)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayBindingDivisor)(vaobj, bindingindex, divisor);
+    Driver("glVertexArrayBindingDivisor","(", vaobj, ", ", bindingindex, ", ", divisor, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayElementBuffer(GLuint vaobj, GLuint buffer)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayElementBuffer)(vaobj, buffer);
+    Driver("glVertexArrayElementBuffer","(", vaobj, ", ", buffer, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffer)(vaobj, bindingindex, buffer, offset, stride);
+    Driver("glVertexArrayVertexBuffer","(", vaobj, ", ", bindingindex, ", ", buffer, ", ", offset, ", ", stride, ")");
+}
+
+static void REGAL_CALL log_glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glVertexArrayVertexBuffers)(vaobj, first, count, buffers, offsets, strides);
+    Driver("glVertexArrayVertexBuffers","(", vaobj, ", ", first, ", ", count, ", ", boost::print::optional(buffers,Logging::pointers), ", ", offsets, ", ", boost::print::optional(strides,Logging::pointers), ")");
 }
 
 // GL_ARB_draw_buffers
@@ -8280,6 +9240,28 @@ static void REGAL_CALL log_glProgramParameteri(GLuint program, GLenum pname, GLi
     RegalAssert(_next);
     _next->call(&_next->glProgramParameteri)(program, pname, value);
     Driver("glProgramParameteri","(", program, ", ", toString(pname), ", ", value, ")");
+}
+
+// GL_ARB_get_texture_sub_image
+
+static void REGAL_CALL log_glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetCompressedTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
+    Driver("glGetCompressedTextureSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
+    Driver("glGetTextureSubImage","(", texture, ", ", level, ", ", xoffset, ", ", yoffset, ", ", zoffset, ", ", width, ", ", height, ", ", depth, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(pixels,Logging::pointers), ")");
 }
 
 // GL_ARB_gpu_shader_fp64
@@ -11182,6 +12164,18 @@ static void REGAL_CALL log_glNamedStringARB(GLenum type, GLint namelen, const GL
     Driver("glNamedStringARB","(", toString(type), ", ", namelen, ", ", boost::print::quote(name,'"'), ", ", stringlen, ", ", boost::print::quote(string,'"'), ")");
 }
 
+// GL_ARB_sparse_buffer
+
+static void REGAL_CALL log_glBufferPageCommitmentARB(GLenum target, GLintptr offset, GLsizeiptr size, GLboolean commit)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glBufferPageCommitmentARB)(target, offset, size, commit);
+    Driver("glBufferPageCommitmentARB","(", toString(target), ", ", offset, ", ", size, ", ", toString(commit), ")");
+}
+
 // GL_ARB_sparse_texture
 
 static void REGAL_CALL log_glTexPageCommitmentARB(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit)
@@ -11299,6 +12293,18 @@ static void REGAL_CALL log_glPatchParameteri(GLenum pname, GLint value)
     RegalAssert(_next);
     _next->call(&_next->glPatchParameteri)(pname, value);
     Driver("glPatchParameteri","(", toString(pname), ", ", value, ")");
+}
+
+// GL_ARB_texture_barrier
+
+static void REGAL_CALL log_glTextureBarrier(void)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glTextureBarrier)();
+    Driver("glTextureBarrier","()");
 }
 
 // GL_ARB_texture_buffer_object
@@ -20585,6 +21591,18 @@ static void REGAL_CALL log_glTexScissorINTEL(GLenum target, GLclampf tlow, GLcla
     Driver("glTexScissorINTEL","(", toString(target), ", ", tlow, ", ", thigh, ")");
 }
 
+// GL_KHR_blend_equation_advanced
+
+static void REGAL_CALL log_glBlendBarrierKHR(void)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glBlendBarrierKHR)();
+    Driver("glBlendBarrierKHR","()");
+}
+
 // GL_KHR_debug
 
 static void REGAL_CALL log_glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
@@ -20686,6 +21704,48 @@ static void REGAL_CALL log_glPushDebugGroup(GLenum source, GLuint id, GLsizei le
     RegalAssert(_next);
     _next->call(&_next->glPushDebugGroup)(source, id, length, message);
     Driver("glPushDebugGroup","(", toString(source), ", ", id, ", ", length, ", ", boost::print::quote(message,'"'), ")");
+}
+
+// GL_KHR_robustness
+
+static void REGAL_CALL log_glGetnUniformfv(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformfv)(program, location, bufSize, params);
+    Driver("glGetnUniformfv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetnUniformiv(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformiv)(program, location, bufSize, params);
+    Driver("glGetnUniformiv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *params)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glGetnUniformuiv)(program, location, bufSize, params);
+    Driver("glGetnUniformuiv","(", program, ", ", location, ", ", bufSize, ", ", boost::print::optional(params,Logging::pointers), ")");
+}
+
+static void REGAL_CALL log_glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+{
+    RegalContext *_context = REGAL_GET_CONTEXT();
+    RegalAssert(_context);
+    DispatchTableGL *_next = _context->dispatcher.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glReadnPixels)(x, y, width, height, format, type, bufSize, data);
+    Driver("glReadnPixels","(", x, ", ", y, ", ", width, ", ", height, ", ", toString(format), ", ", toString(type), ", ", bufSize, ", ", boost::print::optional(data,Logging::pointers), ")");
 }
 
 // GL_KTX_buffer_region
@@ -28634,6 +29694,17 @@ static BOOL REGAL_CALL log_wglCopyImageSubDataNV(HGLRC hSrcRC, GLuint srcName, G
     return ret;
 }
 
+// WGL_NV_delay_before_swap
+
+static BOOL REGAL_CALL log_wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    BOOL  ret = _next->call(&_next->wglDelayBeforeSwapNV)(hDC, seconds);
+    Driver("wglDelayBeforeSwapNV","(", boost::print::optional(hDC,Logging::pointers), ", ", seconds, ")", " returned ", ret);
+    return ret;
+}
+
 // WGL_NV_gpu_affinity
 
 static HDC REGAL_CALL log_wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -29705,6 +30776,44 @@ static GLXPixmap REGAL_CALL log_glXCreateGLXPixmapMESA(Display *dpy, XVisualInfo
     return ret;
 }
 
+// GLX_MESA_query_renderer
+
+static Bool REGAL_CALL log_glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    Bool  ret = _next->call(&_next->glXQueryCurrentRendererIntegerMESA)(attribute, value);
+    Driver("glXQueryCurrentRendererIntegerMESA","(", attribute, ", ", value, ")", " returned ", ret);
+    return ret;
+}
+
+static const char *REGAL_CALL log_glXQueryCurrentRendererStringMESA(int attribute)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    const char * ret = _next->call(&_next->glXQueryCurrentRendererStringMESA)(attribute);
+    Driver("glXQueryCurrentRendererStringMESA","(", attribute, ")", " returned ", boost::print::quote(ret,'"'));
+    return ret;
+}
+
+static Bool REGAL_CALL log_glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    Bool  ret = _next->call(&_next->glXQueryRendererIntegerMESA)(dpy, screen, renderer, attribute, value);
+    Driver("glXQueryRendererIntegerMESA","(", boost::print::optional(dpy,Logging::pointers), ", ", screen, ", ", renderer, ", ", attribute, ", ", value, ")", " returned ", ret);
+    return ret;
+}
+
+static const char *REGAL_CALL log_glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    const char * ret = _next->call(&_next->glXQueryRendererStringMESA)(dpy, screen, renderer, attribute);
+    Driver("glXQueryRendererStringMESA","(", boost::print::optional(dpy,Logging::pointers), ", ", screen, ", ", renderer, ", ", attribute, ")", " returned ", boost::print::quote(ret,'"'));
+    return ret;
+}
+
 // GLX_MESA_release_buffers
 
 static Bool REGAL_CALL log_glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -29747,6 +30856,24 @@ static int REGAL_CALL log_glXSwapIntervalMESA(unsigned int interval)
     return ret;
 }
 
+// GLX_NV_copy_buffer
+
+static void REGAL_CALL log_glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glXCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
+    Driver("glXCopyBufferSubDataNV","(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(readCtx,Logging::pointers), ", ", boost::print::optional(writeCtx,Logging::pointers), ", ", toString(readTarget), ", ", toString(writeTarget), ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+}
+
+static void REGAL_CALL log_glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    _next->call(&_next->glXNamedCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
+    Driver("glXNamedCopyBufferSubDataNV","(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(readCtx,Logging::pointers), ", ", boost::print::optional(writeCtx,Logging::pointers), ", ", readBuffer, ", ", writeBuffer, ", ", readOffset, ", ", writeOffset, ", ", size, ")");
+}
+
 // GLX_NV_copy_image
 
 static void REGAL_CALL log_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -29755,6 +30882,17 @@ static void REGAL_CALL log_glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx
     RegalAssert(_next);
     _next->call(&_next->glXCopyImageSubDataNV)(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
     Driver("glXCopyImageSubDataNV","(", boost::print::optional(dpy,Logging::pointers), ", ", boost::print::optional(srcCtx,Logging::pointers), ", ", srcName, ", ", toString(srcTarget), ", ", srcLevel, ", ", srcX, ", ", srcY, ", ", srcZ, ", ", boost::print::optional(dstCtx,Logging::pointers), ", ", dstName, ", ", toString(dstTarget), ", ", dstLevel, ", ", dstX, ", ", dstY, ", ", dstZ, ")");
+}
+
+// GLX_NV_delay_before_swap
+
+static Bool REGAL_CALL log_glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+{
+    DispatchTableGlobal *_next = dispatcherGlobal.logging.next();
+    RegalAssert(_next);
+    Bool  ret = _next->call(&_next->glXDelayBeforeSwapNV)(dpy, drawable, seconds);
+    Driver("glXDelayBeforeSwapNV","(", boost::print::optional(dpy,Logging::pointers), ", ", drawable, ", ", seconds, ")", " returned ", ret);
+    return ret;
 }
 
 // GLX_NV_present_video
@@ -32194,6 +33332,10 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glReleaseShaderCompiler = log_glReleaseShaderCompiler;
   tbl.glShaderBinary = log_glShaderBinary;
 
+  // GL_ARB_ES3_1_compatibility
+
+  tbl.glMemoryBarrierByRegion = log_glMemoryBarrierByRegion;
+
   // GL_ARB_base_instance
 
   tbl.glDrawArraysInstancedBaseInstance = log_glDrawArraysInstancedBaseInstance;
@@ -32245,6 +33387,10 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glClearTexImage = log_glClearTexImage;
   tbl.glClearTexSubImage = log_glClearTexSubImage;
 
+  // GL_ARB_clip_control
+
+  tbl.glClipControl = log_glClipControl;
+
   // GL_ARB_color_buffer_float
 
   tbl.glClampColorARB = log_glClampColorARB;
@@ -32272,6 +33418,102 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glDebugMessageControlARB = log_glDebugMessageControlARB;
   tbl.glDebugMessageInsertARB = log_glDebugMessageInsertARB;
   tbl.glGetDebugMessageLogARB = log_glGetDebugMessageLogARB;
+
+  // GL_ARB_direct_state_access
+
+  tbl.glBindTextureUnit = log_glBindTextureUnit;
+  tbl.glBlitNamedFramebuffer = log_glBlitNamedFramebuffer;
+  tbl.glCheckNamedFramebufferStatus = log_glCheckNamedFramebufferStatus;
+  tbl.glClearNamedBufferData = log_glClearNamedBufferData;
+  tbl.glClearNamedBufferSubData = log_glClearNamedBufferSubData;
+  tbl.glClearNamedFramebufferfi = log_glClearNamedFramebufferfi;
+  tbl.glClearNamedFramebufferfv = log_glClearNamedFramebufferfv;
+  tbl.glClearNamedFramebufferiv = log_glClearNamedFramebufferiv;
+  tbl.glClearNamedFramebufferuiv = log_glClearNamedFramebufferuiv;
+  tbl.glCompressedTextureSubImage1D = log_glCompressedTextureSubImage1D;
+  tbl.glCompressedTextureSubImage2D = log_glCompressedTextureSubImage2D;
+  tbl.glCompressedTextureSubImage3D = log_glCompressedTextureSubImage3D;
+  tbl.glCopyNamedBufferSubData = log_glCopyNamedBufferSubData;
+  tbl.glCopyTextureSubImage1D = log_glCopyTextureSubImage1D;
+  tbl.glCopyTextureSubImage2D = log_glCopyTextureSubImage2D;
+  tbl.glCopyTextureSubImage3D = log_glCopyTextureSubImage3D;
+  tbl.glCreateBuffers = log_glCreateBuffers;
+  tbl.glCreateFramebuffers = log_glCreateFramebuffers;
+  tbl.glCreateProgramPipelines = log_glCreateProgramPipelines;
+  tbl.glCreateQueries = log_glCreateQueries;
+  tbl.glCreateRenderbuffers = log_glCreateRenderbuffers;
+  tbl.glCreateSamplers = log_glCreateSamplers;
+  tbl.glCreateTextures = log_glCreateTextures;
+  tbl.glCreateTransformFeedbacks = log_glCreateTransformFeedbacks;
+  tbl.glCreateVertexArrays = log_glCreateVertexArrays;
+  tbl.glDisableVertexArrayAttrib = log_glDisableVertexArrayAttrib;
+  tbl.glEnableVertexArrayAttrib = log_glEnableVertexArrayAttrib;
+  tbl.glFlushMappedNamedBufferRange = log_glFlushMappedNamedBufferRange;
+  tbl.glGenerateTextureMipmap = log_glGenerateTextureMipmap;
+  tbl.glGetCompressedTextureImage = log_glGetCompressedTextureImage;
+  tbl.glGetNamedBufferParameteri64v = log_glGetNamedBufferParameteri64v;
+  tbl.glGetNamedBufferParameteriv = log_glGetNamedBufferParameteriv;
+  tbl.glGetNamedBufferPointerv = log_glGetNamedBufferPointerv;
+  tbl.glGetNamedBufferSubData = log_glGetNamedBufferSubData;
+  tbl.glGetNamedFramebufferAttachmentParameteriv = log_glGetNamedFramebufferAttachmentParameteriv;
+  tbl.glGetNamedFramebufferParameteriv = log_glGetNamedFramebufferParameteriv;
+  tbl.glGetNamedRenderbufferParameteriv = log_glGetNamedRenderbufferParameteriv;
+  tbl.glGetTextureImage = log_glGetTextureImage;
+  tbl.glGetTextureLevelParameterfv = log_glGetTextureLevelParameterfv;
+  tbl.glGetTextureLevelParameteriv = log_glGetTextureLevelParameteriv;
+  tbl.glGetTextureParameterIiv = log_glGetTextureParameterIiv;
+  tbl.glGetTextureParameterIuiv = log_glGetTextureParameterIuiv;
+  tbl.glGetTextureParameterfv = log_glGetTextureParameterfv;
+  tbl.glGetTextureParameteriv = log_glGetTextureParameteriv;
+  tbl.glGetTransformFeedbacki64_v = log_glGetTransformFeedbacki64_v;
+  tbl.glGetTransformFeedbacki_v = log_glGetTransformFeedbacki_v;
+  tbl.glGetTransformFeedbackiv = log_glGetTransformFeedbackiv;
+  tbl.glGetVertexArrayIndexed64iv = log_glGetVertexArrayIndexed64iv;
+  tbl.glGetVertexArrayIndexediv = log_glGetVertexArrayIndexediv;
+  tbl.glGetVertexArrayiv = log_glGetVertexArrayiv;
+  tbl.glInvalidateNamedFramebufferData = log_glInvalidateNamedFramebufferData;
+  tbl.glInvalidateNamedFramebufferSubData = log_glInvalidateNamedFramebufferSubData;
+  tbl.glMapNamedBuffer = log_glMapNamedBuffer;
+  tbl.glMapNamedBufferRange = log_glMapNamedBufferRange;
+  tbl.glNamedBufferData = log_glNamedBufferData;
+  tbl.glNamedBufferStorage = log_glNamedBufferStorage;
+  tbl.glNamedBufferSubData = log_glNamedBufferSubData;
+  tbl.glNamedFramebufferDrawBuffer = log_glNamedFramebufferDrawBuffer;
+  tbl.glNamedFramebufferDrawBuffers = log_glNamedFramebufferDrawBuffers;
+  tbl.glNamedFramebufferParameteri = log_glNamedFramebufferParameteri;
+  tbl.glNamedFramebufferReadBuffer = log_glNamedFramebufferReadBuffer;
+  tbl.glNamedFramebufferRenderbuffer = log_glNamedFramebufferRenderbuffer;
+  tbl.glNamedFramebufferTexture = log_glNamedFramebufferTexture;
+  tbl.glNamedFramebufferTextureLayer = log_glNamedFramebufferTextureLayer;
+  tbl.glNamedRenderbufferStorage = log_glNamedRenderbufferStorage;
+  tbl.glNamedRenderbufferStorageMultisample = log_glNamedRenderbufferStorageMultisample;
+  tbl.glTextureBuffer = log_glTextureBuffer;
+  tbl.glTextureBufferRange = log_glTextureBufferRange;
+  tbl.glTextureParameterIiv = log_glTextureParameterIiv;
+  tbl.glTextureParameterIuiv = log_glTextureParameterIuiv;
+  tbl.glTextureParameterf = log_glTextureParameterf;
+  tbl.glTextureParameterfv = log_glTextureParameterfv;
+  tbl.glTextureParameteri = log_glTextureParameteri;
+  tbl.glTextureParameteriv = log_glTextureParameteriv;
+  tbl.glTextureStorage1D = log_glTextureStorage1D;
+  tbl.glTextureStorage2D = log_glTextureStorage2D;
+  tbl.glTextureStorage2DMultisample = log_glTextureStorage2DMultisample;
+  tbl.glTextureStorage3D = log_glTextureStorage3D;
+  tbl.glTextureStorage3DMultisample = log_glTextureStorage3DMultisample;
+  tbl.glTextureSubImage1D = log_glTextureSubImage1D;
+  tbl.glTextureSubImage2D = log_glTextureSubImage2D;
+  tbl.glTextureSubImage3D = log_glTextureSubImage3D;
+  tbl.glTransformFeedbackBufferBase = log_glTransformFeedbackBufferBase;
+  tbl.glTransformFeedbackBufferRange = log_glTransformFeedbackBufferRange;
+  tbl.glUnmapNamedBuffer = log_glUnmapNamedBuffer;
+  tbl.glVertexArrayAttribBinding = log_glVertexArrayAttribBinding;
+  tbl.glVertexArrayAttribFormat = log_glVertexArrayAttribFormat;
+  tbl.glVertexArrayAttribIFormat = log_glVertexArrayAttribIFormat;
+  tbl.glVertexArrayAttribLFormat = log_glVertexArrayAttribLFormat;
+  tbl.glVertexArrayBindingDivisor = log_glVertexArrayBindingDivisor;
+  tbl.glVertexArrayElementBuffer = log_glVertexArrayElementBuffer;
+  tbl.glVertexArrayVertexBuffer = log_glVertexArrayVertexBuffer;
+  tbl.glVertexArrayVertexBuffers = log_glVertexArrayVertexBuffers;
 
   // GL_ARB_draw_buffers
 
@@ -32343,6 +33585,11 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glGetProgramBinary = log_glGetProgramBinary;
   tbl.glProgramBinary = log_glProgramBinary;
   tbl.glProgramParameteri = log_glProgramParameteri;
+
+  // GL_ARB_get_texture_sub_image
+
+  tbl.glGetCompressedTextureSubImage = log_glGetCompressedTextureSubImage;
+  tbl.glGetTextureSubImage = log_glGetTextureSubImage;
 
   // GL_ARB_gpu_shader_fp64
 
@@ -32708,6 +33955,10 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glIsNamedStringARB = log_glIsNamedStringARB;
   tbl.glNamedStringARB = log_glNamedStringARB;
 
+  // GL_ARB_sparse_buffer
+
+  tbl.glBufferPageCommitmentARB = log_glBufferPageCommitmentARB;
+
   // GL_ARB_sparse_texture
 
   tbl.glTexPageCommitmentARB = log_glTexPageCommitmentARB;
@@ -32727,6 +33978,10 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
 
   tbl.glPatchParameterfv = log_glPatchParameterfv;
   tbl.glPatchParameteri = log_glPatchParameteri;
+
+  // GL_ARB_texture_barrier
+
+  tbl.glTextureBarrier = log_glTextureBarrier;
 
   // GL_ARB_texture_buffer_object
 
@@ -33955,6 +35210,10 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glTexScissorFuncINTEL = log_glTexScissorFuncINTEL;
   tbl.glTexScissorINTEL = log_glTexScissorINTEL;
 
+  // GL_KHR_blend_equation_advanced
+
+  tbl.glBlendBarrierKHR = log_glBlendBarrierKHR;
+
   // GL_KHR_debug
 
   tbl.glDebugMessageCallback = log_glDebugMessageCallback;
@@ -33967,6 +35226,13 @@ void InitDispatchTableLog(DispatchTableGL &tbl)
   tbl.glObjectPtrLabel = log_glObjectPtrLabel;
   tbl.glPopDebugGroup = log_glPopDebugGroup;
   tbl.glPushDebugGroup = log_glPushDebugGroup;
+
+  // GL_KHR_robustness
+
+  tbl.glGetnUniformfv = log_glGetnUniformfv;
+  tbl.glGetnUniformiv = log_glGetnUniformiv;
+  tbl.glGetnUniformuiv = log_glGetnUniformuiv;
+  tbl.glReadnPixels = log_glReadnPixels;
 
   // GL_KTX_buffer_region
 
@@ -35107,6 +36373,10 @@ void InitDispatchTableGlobalLog(DispatchTableGlobal &tbl)
 
   tbl.wglCopyImageSubDataNV = log_wglCopyImageSubDataNV;
 
+  // WGL_NV_delay_before_swap
+
+  tbl.wglDelayBeforeSwapNV = log_wglDelayBeforeSwapNV;
+
   // WGL_NV_gpu_affinity
 
   tbl.wglCreateAffinityDCNV = log_wglCreateAffinityDCNV;
@@ -35295,6 +36565,13 @@ void InitDispatchTableGlobalLog(DispatchTableGlobal &tbl)
 
   tbl.glXCreateGLXPixmapMESA = log_glXCreateGLXPixmapMESA;
 
+  // GLX_MESA_query_renderer
+
+  tbl.glXQueryCurrentRendererIntegerMESA = log_glXQueryCurrentRendererIntegerMESA;
+  tbl.glXQueryCurrentRendererStringMESA = log_glXQueryCurrentRendererStringMESA;
+  tbl.glXQueryRendererIntegerMESA = log_glXQueryRendererIntegerMESA;
+  tbl.glXQueryRendererStringMESA = log_glXQueryRendererStringMESA;
+
   // GLX_MESA_release_buffers
 
   tbl.glXReleaseBuffersMESA = log_glXReleaseBuffersMESA;
@@ -35308,9 +36585,18 @@ void InitDispatchTableGlobalLog(DispatchTableGlobal &tbl)
   tbl.glXGetSwapIntervalMESA = log_glXGetSwapIntervalMESA;
   tbl.glXSwapIntervalMESA = log_glXSwapIntervalMESA;
 
+  // GLX_NV_copy_buffer
+
+  tbl.glXCopyBufferSubDataNV = log_glXCopyBufferSubDataNV;
+  tbl.glXNamedCopyBufferSubDataNV = log_glXNamedCopyBufferSubDataNV;
+
   // GLX_NV_copy_image
 
   tbl.glXCopyImageSubDataNV = log_glXCopyImageSubDataNV;
+
+  // GLX_NV_delay_before_swap
+
+  tbl.glXDelayBeforeSwapNV = log_glXDelayBeforeSwapNV;
 
   // GLX_NV_present_video
 

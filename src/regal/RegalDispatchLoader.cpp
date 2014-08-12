@@ -5201,6 +5201,15 @@ namespace Loader
     _driver.call(&_driver.glShaderBinary)(count, shaders, binaryformat, binary, length);
   }
 
+// GL_ARB_ES3_1_compatibility
+
+  static void REGAL_CALL glMemoryBarrierByRegion(GLbitfield barriers)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glMemoryBarrierByRegion),reinterpret_cast<void (*)()>(glMemoryBarrierByRegion),"glMemoryBarrierByRegion");
+    _driver.call(&_driver.glMemoryBarrierByRegion)(barriers);
+  }
+
 // GL_ARB_base_instance
 
   static void REGAL_CALL glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei primcount, GLuint baseinstance)
@@ -5425,6 +5434,15 @@ namespace Loader
     _driver.call(&_driver.glClearTexSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, data);
   }
 
+// GL_ARB_clip_control
+
+  static void REGAL_CALL glClipControl(GLenum origin, GLenum depth)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClipControl),reinterpret_cast<void (*)()>(glClipControl),"glClipControl");
+    _driver.call(&_driver.glClipControl)(origin, depth);
+  }
+
 // GL_ARB_color_buffer_float
 
   static void REGAL_CALL glClampColorARB(GLenum target, GLenum clamp)
@@ -5505,6 +5523,659 @@ namespace Loader
     DispatchTableGL &_driver = _getDispatchGL();
     _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetDebugMessageLogARB),reinterpret_cast<void (*)()>(glGetDebugMessageLogARB),"glGetDebugMessageLogARB");
     return _driver.call(&_driver.glGetDebugMessageLogARB)(count, bufsize, sources, types, ids, severities, lengths, messageLog);
+  }
+
+// GL_ARB_direct_state_access
+
+  static void REGAL_CALL glBindTextureUnit(GLuint unit, GLuint texture)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glBindTextureUnit),reinterpret_cast<void (*)()>(glBindTextureUnit),"glBindTextureUnit");
+    _driver.call(&_driver.glBindTextureUnit)(unit, texture);
+  }
+
+  static void REGAL_CALL glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glBlitNamedFramebuffer),reinterpret_cast<void (*)()>(glBlitNamedFramebuffer),"glBlitNamedFramebuffer");
+    _driver.call(&_driver.glBlitNamedFramebuffer)(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+  }
+
+  static GLenum REGAL_CALL glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCheckNamedFramebufferStatus),reinterpret_cast<void (*)()>(glCheckNamedFramebufferStatus),"glCheckNamedFramebufferStatus");
+    return _driver.call(&_driver.glCheckNamedFramebufferStatus)(framebuffer, target);
+  }
+
+  static void REGAL_CALL glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClearNamedBufferData),reinterpret_cast<void (*)()>(glClearNamedBufferData),"glClearNamedBufferData");
+    _driver.call(&_driver.glClearNamedBufferData)(buffer, internalformat, format, type, data);
+  }
+
+  static void REGAL_CALL glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClearNamedBufferSubData),reinterpret_cast<void (*)()>(glClearNamedBufferSubData),"glClearNamedBufferSubData");
+    _driver.call(&_driver.glClearNamedBufferSubData)(buffer, internalformat, offset, size, format, type, data);
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLfloat depth, GLint stencil)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClearNamedFramebufferfi),reinterpret_cast<void (*)()>(glClearNamedFramebufferfi),"glClearNamedFramebufferfi");
+    _driver.call(&_driver.glClearNamedFramebufferfi)(framebuffer, buffer, depth, stencil);
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferfv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClearNamedFramebufferfv),reinterpret_cast<void (*)()>(glClearNamedFramebufferfv),"glClearNamedFramebufferfv");
+    _driver.call(&_driver.glClearNamedFramebufferfv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClearNamedFramebufferiv),reinterpret_cast<void (*)()>(glClearNamedFramebufferiv),"glClearNamedFramebufferiv");
+    _driver.call(&_driver.glClearNamedFramebufferiv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  static void REGAL_CALL glClearNamedFramebufferuiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glClearNamedFramebufferuiv),reinterpret_cast<void (*)()>(glClearNamedFramebufferuiv),"glClearNamedFramebufferuiv");
+    _driver.call(&_driver.glClearNamedFramebufferuiv)(framebuffer, buffer, drawbuffer, value);
+  }
+
+  static void REGAL_CALL glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCompressedTextureSubImage1D),reinterpret_cast<void (*)()>(glCompressedTextureSubImage1D),"glCompressedTextureSubImage1D");
+    _driver.call(&_driver.glCompressedTextureSubImage1D)(texture, level, xoffset, width, format, imageSize, data);
+  }
+
+  static void REGAL_CALL glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCompressedTextureSubImage2D),reinterpret_cast<void (*)()>(glCompressedTextureSubImage2D),"glCompressedTextureSubImage2D");
+    _driver.call(&_driver.glCompressedTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+  }
+
+  static void REGAL_CALL glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCompressedTextureSubImage3D),reinterpret_cast<void (*)()>(glCompressedTextureSubImage3D),"glCompressedTextureSubImage3D");
+    _driver.call(&_driver.glCompressedTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+  }
+
+  static void REGAL_CALL glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCopyNamedBufferSubData),reinterpret_cast<void (*)()>(glCopyNamedBufferSubData),"glCopyNamedBufferSubData");
+    _driver.call(&_driver.glCopyNamedBufferSubData)(readBuffer, writeBuffer, readOffset, writeOffset, size);
+  }
+
+  static void REGAL_CALL glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCopyTextureSubImage1D),reinterpret_cast<void (*)()>(glCopyTextureSubImage1D),"glCopyTextureSubImage1D");
+    _driver.call(&_driver.glCopyTextureSubImage1D)(texture, level, xoffset, x, y, width);
+  }
+
+  static void REGAL_CALL glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCopyTextureSubImage2D),reinterpret_cast<void (*)()>(glCopyTextureSubImage2D),"glCopyTextureSubImage2D");
+    _driver.call(&_driver.glCopyTextureSubImage2D)(texture, level, xoffset, yoffset, x, y, width, height);
+  }
+
+  static void REGAL_CALL glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCopyTextureSubImage3D),reinterpret_cast<void (*)()>(glCopyTextureSubImage3D),"glCopyTextureSubImage3D");
+    _driver.call(&_driver.glCopyTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, x, y, width, height);
+  }
+
+  static void REGAL_CALL glCreateBuffers(GLsizei n, GLuint *buffers)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateBuffers),reinterpret_cast<void (*)()>(glCreateBuffers),"glCreateBuffers");
+    _driver.call(&_driver.glCreateBuffers)(n, buffers);
+  }
+
+  static void REGAL_CALL glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateFramebuffers),reinterpret_cast<void (*)()>(glCreateFramebuffers),"glCreateFramebuffers");
+    _driver.call(&_driver.glCreateFramebuffers)(n, framebuffers);
+  }
+
+  static void REGAL_CALL glCreateProgramPipelines(GLsizei n, GLuint *pipelines)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateProgramPipelines),reinterpret_cast<void (*)()>(glCreateProgramPipelines),"glCreateProgramPipelines");
+    _driver.call(&_driver.glCreateProgramPipelines)(n, pipelines);
+  }
+
+  static void REGAL_CALL glCreateQueries(GLenum target, GLsizei n, GLuint *ids)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateQueries),reinterpret_cast<void (*)()>(glCreateQueries),"glCreateQueries");
+    _driver.call(&_driver.glCreateQueries)(target, n, ids);
+  }
+
+  static void REGAL_CALL glCreateRenderbuffers(GLsizei n, GLuint *renderbuffers)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateRenderbuffers),reinterpret_cast<void (*)()>(glCreateRenderbuffers),"glCreateRenderbuffers");
+    _driver.call(&_driver.glCreateRenderbuffers)(n, renderbuffers);
+  }
+
+  static void REGAL_CALL glCreateSamplers(GLsizei n, GLuint *samplers)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateSamplers),reinterpret_cast<void (*)()>(glCreateSamplers),"glCreateSamplers");
+    _driver.call(&_driver.glCreateSamplers)(n, samplers);
+  }
+
+  static void REGAL_CALL glCreateTextures(GLenum target, GLsizei n, GLuint *textures)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateTextures),reinterpret_cast<void (*)()>(glCreateTextures),"glCreateTextures");
+    _driver.call(&_driver.glCreateTextures)(target, n, textures);
+  }
+
+  static void REGAL_CALL glCreateTransformFeedbacks(GLsizei n, GLuint *ids)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateTransformFeedbacks),reinterpret_cast<void (*)()>(glCreateTransformFeedbacks),"glCreateTransformFeedbacks");
+    _driver.call(&_driver.glCreateTransformFeedbacks)(n, ids);
+  }
+
+  static void REGAL_CALL glCreateVertexArrays(GLsizei n, GLuint *arrays)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glCreateVertexArrays),reinterpret_cast<void (*)()>(glCreateVertexArrays),"glCreateVertexArrays");
+    _driver.call(&_driver.glCreateVertexArrays)(n, arrays);
+  }
+
+  static void REGAL_CALL glDisableVertexArrayAttrib(GLuint vaobj, GLuint index)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glDisableVertexArrayAttrib),reinterpret_cast<void (*)()>(glDisableVertexArrayAttrib),"glDisableVertexArrayAttrib");
+    _driver.call(&_driver.glDisableVertexArrayAttrib)(vaobj, index);
+  }
+
+  static void REGAL_CALL glEnableVertexArrayAttrib(GLuint vaobj, GLuint index)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glEnableVertexArrayAttrib),reinterpret_cast<void (*)()>(glEnableVertexArrayAttrib),"glEnableVertexArrayAttrib");
+    _driver.call(&_driver.glEnableVertexArrayAttrib)(vaobj, index);
+  }
+
+  static void REGAL_CALL glFlushMappedNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glFlushMappedNamedBufferRange),reinterpret_cast<void (*)()>(glFlushMappedNamedBufferRange),"glFlushMappedNamedBufferRange");
+    _driver.call(&_driver.glFlushMappedNamedBufferRange)(buffer, offset, length);
+  }
+
+  static void REGAL_CALL glGenerateTextureMipmap(GLuint texture)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGenerateTextureMipmap),reinterpret_cast<void (*)()>(glGenerateTextureMipmap),"glGenerateTextureMipmap");
+    _driver.call(&_driver.glGenerateTextureMipmap)(texture);
+  }
+
+  static void REGAL_CALL glGetCompressedTextureImage(GLuint texture, GLint level, GLsizei bufSize, GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetCompressedTextureImage),reinterpret_cast<void (*)()>(glGetCompressedTextureImage),"glGetCompressedTextureImage");
+    _driver.call(&_driver.glGetCompressedTextureImage)(texture, level, bufSize, pixels);
+  }
+
+  static void REGAL_CALL glGetNamedBufferParameteri64v(GLuint buffer, GLenum pname, GLint64 *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedBufferParameteri64v),reinterpret_cast<void (*)()>(glGetNamedBufferParameteri64v),"glGetNamedBufferParameteri64v");
+    _driver.call(&_driver.glGetNamedBufferParameteri64v)(buffer, pname, params);
+  }
+
+  static void REGAL_CALL glGetNamedBufferParameteriv(GLuint buffer, GLenum pname, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedBufferParameteriv),reinterpret_cast<void (*)()>(glGetNamedBufferParameteriv),"glGetNamedBufferParameteriv");
+    _driver.call(&_driver.glGetNamedBufferParameteriv)(buffer, pname, params);
+  }
+
+  static void REGAL_CALL glGetNamedBufferPointerv(GLuint buffer, GLenum pname, GLvoid **params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedBufferPointerv),reinterpret_cast<void (*)()>(glGetNamedBufferPointerv),"glGetNamedBufferPointerv");
+    _driver.call(&_driver.glGetNamedBufferPointerv)(buffer, pname, params);
+  }
+
+  static void REGAL_CALL glGetNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedBufferSubData),reinterpret_cast<void (*)()>(glGetNamedBufferSubData),"glGetNamedBufferSubData");
+    _driver.call(&_driver.glGetNamedBufferSubData)(buffer, offset, size, data);
+  }
+
+  static void REGAL_CALL glGetNamedFramebufferAttachmentParameteriv(GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedFramebufferAttachmentParameteriv),reinterpret_cast<void (*)()>(glGetNamedFramebufferAttachmentParameteriv),"glGetNamedFramebufferAttachmentParameteriv");
+    _driver.call(&_driver.glGetNamedFramebufferAttachmentParameteriv)(framebuffer, attachment, pname, params);
+  }
+
+  static void REGAL_CALL glGetNamedFramebufferParameteriv(GLuint framebuffer, GLenum pname, GLint *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedFramebufferParameteriv),reinterpret_cast<void (*)()>(glGetNamedFramebufferParameteriv),"glGetNamedFramebufferParameteriv");
+    _driver.call(&_driver.glGetNamedFramebufferParameteriv)(framebuffer, pname, param);
+  }
+
+  static void REGAL_CALL glGetNamedRenderbufferParameteriv(GLuint renderbuffer, GLenum pname, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetNamedRenderbufferParameteriv),reinterpret_cast<void (*)()>(glGetNamedRenderbufferParameteriv),"glGetNamedRenderbufferParameteriv");
+    _driver.call(&_driver.glGetNamedRenderbufferParameteriv)(renderbuffer, pname, params);
+  }
+
+  static void REGAL_CALL glGetTextureImage(GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureImage),reinterpret_cast<void (*)()>(glGetTextureImage),"glGetTextureImage");
+    _driver.call(&_driver.glGetTextureImage)(texture, level, format, type, bufSize, pixels);
+  }
+
+  static void REGAL_CALL glGetTextureLevelParameterfv(GLuint texture, GLint level, GLenum pname, GLfloat *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureLevelParameterfv),reinterpret_cast<void (*)()>(glGetTextureLevelParameterfv),"glGetTextureLevelParameterfv");
+    _driver.call(&_driver.glGetTextureLevelParameterfv)(texture, level, pname, params);
+  }
+
+  static void REGAL_CALL glGetTextureLevelParameteriv(GLuint texture, GLint level, GLenum pname, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureLevelParameteriv),reinterpret_cast<void (*)()>(glGetTextureLevelParameteriv),"glGetTextureLevelParameteriv");
+    _driver.call(&_driver.glGetTextureLevelParameteriv)(texture, level, pname, params);
+  }
+
+  static void REGAL_CALL glGetTextureParameterIiv(GLuint texture, GLenum pname, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureParameterIiv),reinterpret_cast<void (*)()>(glGetTextureParameterIiv),"glGetTextureParameterIiv");
+    _driver.call(&_driver.glGetTextureParameterIiv)(texture, pname, params);
+  }
+
+  static void REGAL_CALL glGetTextureParameterIuiv(GLuint texture, GLenum pname, GLuint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureParameterIuiv),reinterpret_cast<void (*)()>(glGetTextureParameterIuiv),"glGetTextureParameterIuiv");
+    _driver.call(&_driver.glGetTextureParameterIuiv)(texture, pname, params);
+  }
+
+  static void REGAL_CALL glGetTextureParameterfv(GLuint texture, GLenum pname, GLfloat *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureParameterfv),reinterpret_cast<void (*)()>(glGetTextureParameterfv),"glGetTextureParameterfv");
+    _driver.call(&_driver.glGetTextureParameterfv)(texture, pname, params);
+  }
+
+  static void REGAL_CALL glGetTextureParameteriv(GLuint texture, GLenum pname, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureParameteriv),reinterpret_cast<void (*)()>(glGetTextureParameteriv),"glGetTextureParameteriv");
+    _driver.call(&_driver.glGetTextureParameteriv)(texture, pname, params);
+  }
+
+  static void REGAL_CALL glGetTransformFeedbacki64_v(GLuint xfb, GLenum pname, GLuint index, GLint64 *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTransformFeedbacki64_v),reinterpret_cast<void (*)()>(glGetTransformFeedbacki64_v),"glGetTransformFeedbacki64_v");
+    _driver.call(&_driver.glGetTransformFeedbacki64_v)(xfb, pname, index, param);
+  }
+
+  static void REGAL_CALL glGetTransformFeedbacki_v(GLuint xfb, GLenum pname, GLuint index, GLint *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTransformFeedbacki_v),reinterpret_cast<void (*)()>(glGetTransformFeedbacki_v),"glGetTransformFeedbacki_v");
+    _driver.call(&_driver.glGetTransformFeedbacki_v)(xfb, pname, index, param);
+  }
+
+  static void REGAL_CALL glGetTransformFeedbackiv(GLuint xfb, GLenum pname, GLint *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTransformFeedbackiv),reinterpret_cast<void (*)()>(glGetTransformFeedbackiv),"glGetTransformFeedbackiv");
+    _driver.call(&_driver.glGetTransformFeedbackiv)(xfb, pname, param);
+  }
+
+  static void REGAL_CALL glGetVertexArrayIndexed64iv(GLuint vaobj, GLuint index, GLenum pname, GLint64 *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetVertexArrayIndexed64iv),reinterpret_cast<void (*)()>(glGetVertexArrayIndexed64iv),"glGetVertexArrayIndexed64iv");
+    _driver.call(&_driver.glGetVertexArrayIndexed64iv)(vaobj, index, pname, param);
+  }
+
+  static void REGAL_CALL glGetVertexArrayIndexediv(GLuint vaobj, GLuint index, GLenum pname, GLint *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetVertexArrayIndexediv),reinterpret_cast<void (*)()>(glGetVertexArrayIndexediv),"glGetVertexArrayIndexediv");
+    _driver.call(&_driver.glGetVertexArrayIndexediv)(vaobj, index, pname, param);
+  }
+
+  static void REGAL_CALL glGetVertexArrayiv(GLuint vaobj, GLenum pname, GLint *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetVertexArrayiv),reinterpret_cast<void (*)()>(glGetVertexArrayiv),"glGetVertexArrayiv");
+    _driver.call(&_driver.glGetVertexArrayiv)(vaobj, pname, param);
+  }
+
+  static void REGAL_CALL glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glInvalidateNamedFramebufferData),reinterpret_cast<void (*)()>(glInvalidateNamedFramebufferData),"glInvalidateNamedFramebufferData");
+    _driver.call(&_driver.glInvalidateNamedFramebufferData)(framebuffer, numAttachments, attachments);
+  }
+
+  static void REGAL_CALL glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glInvalidateNamedFramebufferSubData),reinterpret_cast<void (*)()>(glInvalidateNamedFramebufferSubData),"glInvalidateNamedFramebufferSubData");
+    _driver.call(&_driver.glInvalidateNamedFramebufferSubData)(framebuffer, numAttachments, attachments, x, y, width, height);
+  }
+
+  static GLvoid *REGAL_CALL glMapNamedBuffer(GLuint buffer, GLenum access)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glMapNamedBuffer),reinterpret_cast<void (*)()>(glMapNamedBuffer),"glMapNamedBuffer");
+    return _driver.call(&_driver.glMapNamedBuffer)(buffer, access);
+  }
+
+  static GLvoid *REGAL_CALL glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glMapNamedBufferRange),reinterpret_cast<void (*)()>(glMapNamedBufferRange),"glMapNamedBufferRange");
+    return _driver.call(&_driver.glMapNamedBufferRange)(buffer, offset, length, access);
+  }
+
+  static void REGAL_CALL glNamedBufferData(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedBufferData),reinterpret_cast<void (*)()>(glNamedBufferData),"glNamedBufferData");
+    _driver.call(&_driver.glNamedBufferData)(buffer, size, data, usage);
+  }
+
+  static void REGAL_CALL glNamedBufferStorage(GLuint buffer, GLsizeiptr size, const GLvoid *data, GLbitfield flags)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedBufferStorage),reinterpret_cast<void (*)()>(glNamedBufferStorage),"glNamedBufferStorage");
+    _driver.call(&_driver.glNamedBufferStorage)(buffer, size, data, flags);
+  }
+
+  static void REGAL_CALL glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedBufferSubData),reinterpret_cast<void (*)()>(glNamedBufferSubData),"glNamedBufferSubData");
+    _driver.call(&_driver.glNamedBufferSubData)(buffer, offset, size, data);
+  }
+
+  static void REGAL_CALL glNamedFramebufferDrawBuffer(GLuint framebuffer, GLenum mode)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferDrawBuffer),reinterpret_cast<void (*)()>(glNamedFramebufferDrawBuffer),"glNamedFramebufferDrawBuffer");
+    _driver.call(&_driver.glNamedFramebufferDrawBuffer)(framebuffer, mode);
+  }
+
+  static void REGAL_CALL glNamedFramebufferDrawBuffers(GLuint framebuffer, GLsizei n, const GLenum *bufs)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferDrawBuffers),reinterpret_cast<void (*)()>(glNamedFramebufferDrawBuffers),"glNamedFramebufferDrawBuffers");
+    _driver.call(&_driver.glNamedFramebufferDrawBuffers)(framebuffer, n, bufs);
+  }
+
+  static void REGAL_CALL glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferParameteri),reinterpret_cast<void (*)()>(glNamedFramebufferParameteri),"glNamedFramebufferParameteri");
+    _driver.call(&_driver.glNamedFramebufferParameteri)(framebuffer, pname, param);
+  }
+
+  static void REGAL_CALL glNamedFramebufferReadBuffer(GLuint framebuffer, GLenum mode)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferReadBuffer),reinterpret_cast<void (*)()>(glNamedFramebufferReadBuffer),"glNamedFramebufferReadBuffer");
+    _driver.call(&_driver.glNamedFramebufferReadBuffer)(framebuffer, mode);
+  }
+
+  static void REGAL_CALL glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferRenderbuffer),reinterpret_cast<void (*)()>(glNamedFramebufferRenderbuffer),"glNamedFramebufferRenderbuffer");
+    _driver.call(&_driver.glNamedFramebufferRenderbuffer)(framebuffer, attachment, renderbuffertarget, renderbuffer);
+  }
+
+  static void REGAL_CALL glNamedFramebufferTexture(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferTexture),reinterpret_cast<void (*)()>(glNamedFramebufferTexture),"glNamedFramebufferTexture");
+    _driver.call(&_driver.glNamedFramebufferTexture)(framebuffer, attachment, texture, level);
+  }
+
+  static void REGAL_CALL glNamedFramebufferTextureLayer(GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedFramebufferTextureLayer),reinterpret_cast<void (*)()>(glNamedFramebufferTextureLayer),"glNamedFramebufferTextureLayer");
+    _driver.call(&_driver.glNamedFramebufferTextureLayer)(framebuffer, attachment, texture, level, layer);
+  }
+
+  static void REGAL_CALL glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedRenderbufferStorage),reinterpret_cast<void (*)()>(glNamedRenderbufferStorage),"glNamedRenderbufferStorage");
+    _driver.call(&_driver.glNamedRenderbufferStorage)(renderbuffer, internalformat, width, height);
+  }
+
+  static void REGAL_CALL glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glNamedRenderbufferStorageMultisample),reinterpret_cast<void (*)()>(glNamedRenderbufferStorageMultisample),"glNamedRenderbufferStorageMultisample");
+    _driver.call(&_driver.glNamedRenderbufferStorageMultisample)(renderbuffer, samples, internalformat, width, height);
+  }
+
+  static void REGAL_CALL glTextureBuffer(GLuint texture, GLenum internalformat, GLuint buffer)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureBuffer),reinterpret_cast<void (*)()>(glTextureBuffer),"glTextureBuffer");
+    _driver.call(&_driver.glTextureBuffer)(texture, internalformat, buffer);
+  }
+
+  static void REGAL_CALL glTextureBufferRange(GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureBufferRange),reinterpret_cast<void (*)()>(glTextureBufferRange),"glTextureBufferRange");
+    _driver.call(&_driver.glTextureBufferRange)(texture, internalformat, buffer, offset, size);
+  }
+
+  static void REGAL_CALL glTextureParameterIiv(GLuint texture, GLenum pname, const GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureParameterIiv),reinterpret_cast<void (*)()>(glTextureParameterIiv),"glTextureParameterIiv");
+    _driver.call(&_driver.glTextureParameterIiv)(texture, pname, params);
+  }
+
+  static void REGAL_CALL glTextureParameterIuiv(GLuint texture, GLenum pname, const GLuint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureParameterIuiv),reinterpret_cast<void (*)()>(glTextureParameterIuiv),"glTextureParameterIuiv");
+    _driver.call(&_driver.glTextureParameterIuiv)(texture, pname, params);
+  }
+
+  static void REGAL_CALL glTextureParameterf(GLuint texture, GLenum pname, GLfloat param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureParameterf),reinterpret_cast<void (*)()>(glTextureParameterf),"glTextureParameterf");
+    _driver.call(&_driver.glTextureParameterf)(texture, pname, param);
+  }
+
+  static void REGAL_CALL glTextureParameterfv(GLuint texture, GLenum pname, const GLfloat *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureParameterfv),reinterpret_cast<void (*)()>(glTextureParameterfv),"glTextureParameterfv");
+    _driver.call(&_driver.glTextureParameterfv)(texture, pname, param);
+  }
+
+  static void REGAL_CALL glTextureParameteri(GLuint texture, GLenum pname, GLint param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureParameteri),reinterpret_cast<void (*)()>(glTextureParameteri),"glTextureParameteri");
+    _driver.call(&_driver.glTextureParameteri)(texture, pname, param);
+  }
+
+  static void REGAL_CALL glTextureParameteriv(GLuint texture, GLenum pname, const GLint *param)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureParameteriv),reinterpret_cast<void (*)()>(glTextureParameteriv),"glTextureParameteriv");
+    _driver.call(&_driver.glTextureParameteriv)(texture, pname, param);
+  }
+
+  static void REGAL_CALL glTextureStorage1D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureStorage1D),reinterpret_cast<void (*)()>(glTextureStorage1D),"glTextureStorage1D");
+    _driver.call(&_driver.glTextureStorage1D)(texture, levels, internalformat, width);
+  }
+
+  static void REGAL_CALL glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureStorage2D),reinterpret_cast<void (*)()>(glTextureStorage2D),"glTextureStorage2D");
+    _driver.call(&_driver.glTextureStorage2D)(texture, levels, internalformat, width, height);
+  }
+
+  static void REGAL_CALL glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureStorage2DMultisample),reinterpret_cast<void (*)()>(glTextureStorage2DMultisample),"glTextureStorage2DMultisample");
+    _driver.call(&_driver.glTextureStorage2DMultisample)(texture, samples, internalformat, width, height, fixedsamplelocations);
+  }
+
+  static void REGAL_CALL glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureStorage3D),reinterpret_cast<void (*)()>(glTextureStorage3D),"glTextureStorage3D");
+    _driver.call(&_driver.glTextureStorage3D)(texture, levels, internalformat, width, height, depth);
+  }
+
+  static void REGAL_CALL glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureStorage3DMultisample),reinterpret_cast<void (*)()>(glTextureStorage3DMultisample),"glTextureStorage3DMultisample");
+    _driver.call(&_driver.glTextureStorage3DMultisample)(texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+  }
+
+  static void REGAL_CALL glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureSubImage1D),reinterpret_cast<void (*)()>(glTextureSubImage1D),"glTextureSubImage1D");
+    _driver.call(&_driver.glTextureSubImage1D)(texture, level, xoffset, width, format, type, pixels);
+  }
+
+  static void REGAL_CALL glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureSubImage2D),reinterpret_cast<void (*)()>(glTextureSubImage2D),"glTextureSubImage2D");
+    _driver.call(&_driver.glTextureSubImage2D)(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+  }
+
+  static void REGAL_CALL glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureSubImage3D),reinterpret_cast<void (*)()>(glTextureSubImage3D),"glTextureSubImage3D");
+    _driver.call(&_driver.glTextureSubImage3D)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+  }
+
+  static void REGAL_CALL glTransformFeedbackBufferBase(GLuint xfb, GLuint index, GLuint buffer)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTransformFeedbackBufferBase),reinterpret_cast<void (*)()>(glTransformFeedbackBufferBase),"glTransformFeedbackBufferBase");
+    _driver.call(&_driver.glTransformFeedbackBufferBase)(xfb, index, buffer);
+  }
+
+  static void REGAL_CALL glTransformFeedbackBufferRange(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTransformFeedbackBufferRange),reinterpret_cast<void (*)()>(glTransformFeedbackBufferRange),"glTransformFeedbackBufferRange");
+    _driver.call(&_driver.glTransformFeedbackBufferRange)(xfb, index, buffer, offset, size);
+  }
+
+  static GLboolean REGAL_CALL glUnmapNamedBuffer(GLuint buffer)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glUnmapNamedBuffer),reinterpret_cast<void (*)()>(glUnmapNamedBuffer),"glUnmapNamedBuffer");
+    return _driver.call(&_driver.glUnmapNamedBuffer)(buffer);
+  }
+
+  static void REGAL_CALL glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint bindingindex)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayAttribBinding),reinterpret_cast<void (*)()>(glVertexArrayAttribBinding),"glVertexArrayAttribBinding");
+    _driver.call(&_driver.glVertexArrayAttribBinding)(vaobj, attribindex, bindingindex);
+  }
+
+  static void REGAL_CALL glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayAttribFormat),reinterpret_cast<void (*)()>(glVertexArrayAttribFormat),"glVertexArrayAttribFormat");
+    _driver.call(&_driver.glVertexArrayAttribFormat)(vaobj, attribindex, size, type, normalized, relativeoffset);
+  }
+
+  static void REGAL_CALL glVertexArrayAttribIFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayAttribIFormat),reinterpret_cast<void (*)()>(glVertexArrayAttribIFormat),"glVertexArrayAttribIFormat");
+    _driver.call(&_driver.glVertexArrayAttribIFormat)(vaobj, attribindex, size, type, relativeoffset);
+  }
+
+  static void REGAL_CALL glVertexArrayAttribLFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayAttribLFormat),reinterpret_cast<void (*)()>(glVertexArrayAttribLFormat),"glVertexArrayAttribLFormat");
+    _driver.call(&_driver.glVertexArrayAttribLFormat)(vaobj, attribindex, size, type, relativeoffset);
+  }
+
+  static void REGAL_CALL glVertexArrayBindingDivisor(GLuint vaobj, GLuint bindingindex, GLuint divisor)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayBindingDivisor),reinterpret_cast<void (*)()>(glVertexArrayBindingDivisor),"glVertexArrayBindingDivisor");
+    _driver.call(&_driver.glVertexArrayBindingDivisor)(vaobj, bindingindex, divisor);
+  }
+
+  static void REGAL_CALL glVertexArrayElementBuffer(GLuint vaobj, GLuint buffer)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayElementBuffer),reinterpret_cast<void (*)()>(glVertexArrayElementBuffer),"glVertexArrayElementBuffer");
+    _driver.call(&_driver.glVertexArrayElementBuffer)(vaobj, buffer);
+  }
+
+  static void REGAL_CALL glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayVertexBuffer),reinterpret_cast<void (*)()>(glVertexArrayVertexBuffer),"glVertexArrayVertexBuffer");
+    _driver.call(&_driver.glVertexArrayVertexBuffer)(vaobj, bindingindex, buffer, offset, stride);
+  }
+
+  static void REGAL_CALL glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glVertexArrayVertexBuffers),reinterpret_cast<void (*)()>(glVertexArrayVertexBuffers),"glVertexArrayVertexBuffers");
+    _driver.call(&_driver.glVertexArrayVertexBuffers)(vaobj, first, count, buffers, offsets, strides);
   }
 
 // GL_ARB_draw_buffers
@@ -5831,6 +6502,22 @@ namespace Loader
     DispatchTableGL &_driver = _getDispatchGL();
     _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glProgramParameteri),reinterpret_cast<void (*)()>(glProgramParameteri),"glProgramParameteri");
     _driver.call(&_driver.glProgramParameteri)(program, pname, value);
+  }
+
+// GL_ARB_get_texture_sub_image
+
+  static void REGAL_CALL glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetCompressedTextureSubImage),reinterpret_cast<void (*)()>(glGetCompressedTextureSubImage),"glGetCompressedTextureSubImage");
+    _driver.call(&_driver.glGetCompressedTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
+  }
+
+  static void REGAL_CALL glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, GLvoid *pixels)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetTextureSubImage),reinterpret_cast<void (*)()>(glGetTextureSubImage),"glGetTextureSubImage");
+    _driver.call(&_driver.glGetTextureSubImage)(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
   }
 
 // GL_ARB_gpu_shader_fp64
@@ -7868,6 +8555,15 @@ namespace Loader
     _driver.call(&_driver.glNamedStringARB)(type, namelen, name, stringlen, string);
   }
 
+// GL_ARB_sparse_buffer
+
+  static void REGAL_CALL glBufferPageCommitmentARB(GLenum target, GLintptr offset, GLsizeiptr size, GLboolean commit)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glBufferPageCommitmentARB),reinterpret_cast<void (*)()>(glBufferPageCommitmentARB),"glBufferPageCommitmentARB");
+    _driver.call(&_driver.glBufferPageCommitmentARB)(target, offset, size, commit);
+  }
+
 // GL_ARB_sparse_texture
 
   static void REGAL_CALL glTexPageCommitmentARB(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLboolean commit)
@@ -7949,6 +8645,15 @@ namespace Loader
     DispatchTableGL &_driver = _getDispatchGL();
     _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glPatchParameteri),reinterpret_cast<void (*)()>(glPatchParameteri),"glPatchParameteri");
     _driver.call(&_driver.glPatchParameteri)(pname, value);
+  }
+
+// GL_ARB_texture_barrier
+
+  static void REGAL_CALL glTextureBarrier(void)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glTextureBarrier),reinterpret_cast<void (*)()>(glTextureBarrier),"glTextureBarrier");
+    _driver.call(&_driver.glTextureBarrier)();
   }
 
 // GL_ARB_texture_buffer_object
@@ -14488,6 +15193,15 @@ namespace Loader
     _driver.call(&_driver.glTexScissorINTEL)(target, tlow, thigh);
   }
 
+// GL_KHR_blend_equation_advanced
+
+  static void REGAL_CALL glBlendBarrierKHR(void)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glBlendBarrierKHR),reinterpret_cast<void (*)()>(glBlendBarrierKHR),"glBlendBarrierKHR");
+    _driver.call(&_driver.glBlendBarrierKHR)();
+  }
+
 // GL_KHR_debug
 
   static void REGAL_CALL glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
@@ -14558,6 +15272,36 @@ namespace Loader
     DispatchTableGL &_driver = _getDispatchGL();
     _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glPushDebugGroup),reinterpret_cast<void (*)()>(glPushDebugGroup),"glPushDebugGroup");
     _driver.call(&_driver.glPushDebugGroup)(source, id, length, message);
+  }
+
+// GL_KHR_robustness
+
+  static void REGAL_CALL glGetnUniformfv(GLuint program, GLint location, GLsizei bufSize, GLfloat *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetnUniformfv),reinterpret_cast<void (*)()>(glGetnUniformfv),"glGetnUniformfv");
+    _driver.call(&_driver.glGetnUniformfv)(program, location, bufSize, params);
+  }
+
+  static void REGAL_CALL glGetnUniformiv(GLuint program, GLint location, GLsizei bufSize, GLint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetnUniformiv),reinterpret_cast<void (*)()>(glGetnUniformiv),"glGetnUniformiv");
+    _driver.call(&_driver.glGetnUniformiv)(program, location, bufSize, params);
+  }
+
+  static void REGAL_CALL glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *params)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glGetnUniformuiv),reinterpret_cast<void (*)()>(glGetnUniformuiv),"glGetnUniformuiv");
+    _driver.call(&_driver.glGetnUniformuiv)(program, location, bufSize, params);
+  }
+
+  static void REGAL_CALL glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, GLvoid *data)
+  {
+    DispatchTableGL &_driver = _getDispatchGL();
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glReadnPixels),reinterpret_cast<void (*)()>(glReadnPixels),"glReadnPixels");
+    _driver.call(&_driver.glReadnPixels)(x, y, width, height, format, type, bufSize, data);
   }
 
 // GL_KTX_buffer_region
@@ -20232,6 +20976,15 @@ namespace Loader
     return _driver.call(&_driver.wglCopyImageSubDataNV)(hSrcRC, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
   }
 
+// WGL_NV_delay_before_swap
+
+  static BOOL REGAL_CALL wglDelayBeforeSwapNV(HDC hDC, GLfloat seconds)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.wglDelayBeforeSwapNV),reinterpret_cast<void (*)()>(wglDelayBeforeSwapNV),"wglDelayBeforeSwapNV");
+    return _driver.call(&_driver.wglDelayBeforeSwapNV)(hDC, seconds);
+  }
+
 // WGL_NV_gpu_affinity
 
   static HDC REGAL_CALL wglCreateAffinityDCNV(const HGPUNV *phGpuList)
@@ -21094,6 +21847,36 @@ namespace Loader
     return _driver.call(&_driver.glXCreateGLXPixmapMESA)(dpy, visual, pixmap, cmap);
   }
 
+// GLX_MESA_query_renderer
+
+  static Bool REGAL_CALL glXQueryCurrentRendererIntegerMESA(int attribute, unsigned int *value)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXQueryCurrentRendererIntegerMESA),reinterpret_cast<void (*)()>(glXQueryCurrentRendererIntegerMESA),"glXQueryCurrentRendererIntegerMESA");
+    return _driver.call(&_driver.glXQueryCurrentRendererIntegerMESA)(attribute, value);
+  }
+
+  static const char *REGAL_CALL glXQueryCurrentRendererStringMESA(int attribute)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXQueryCurrentRendererStringMESA),reinterpret_cast<void (*)()>(glXQueryCurrentRendererStringMESA),"glXQueryCurrentRendererStringMESA");
+    return _driver.call(&_driver.glXQueryCurrentRendererStringMESA)(attribute);
+  }
+
+  static Bool REGAL_CALL glXQueryRendererIntegerMESA(Display *dpy, int screen, int renderer, int attribute, unsigned int *value)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXQueryRendererIntegerMESA),reinterpret_cast<void (*)()>(glXQueryRendererIntegerMESA),"glXQueryRendererIntegerMESA");
+    return _driver.call(&_driver.glXQueryRendererIntegerMESA)(dpy, screen, renderer, attribute, value);
+  }
+
+  static const char *REGAL_CALL glXQueryRendererStringMESA(Display *dpy, int screen, int renderer, int attribute)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXQueryRendererStringMESA),reinterpret_cast<void (*)()>(glXQueryRendererStringMESA),"glXQueryRendererStringMESA");
+    return _driver.call(&_driver.glXQueryRendererStringMESA)(dpy, screen, renderer, attribute);
+  }
+
 // GLX_MESA_release_buffers
 
   static Bool REGAL_CALL glXReleaseBuffersMESA(Display *dpy, GLXDrawable d)
@@ -21128,6 +21911,22 @@ namespace Loader
     return _driver.call(&_driver.glXSwapIntervalMESA)(interval);
   }
 
+// GLX_NV_copy_buffer
+
+  static void REGAL_CALL glXCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXCopyBufferSubDataNV),reinterpret_cast<void (*)()>(glXCopyBufferSubDataNV),"glXCopyBufferSubDataNV");
+    _driver.call(&_driver.glXCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
+  }
+
+  static void REGAL_CALL glXNamedCopyBufferSubDataNV(Display *dpy, GLXContext readCtx, GLXContext writeCtx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXNamedCopyBufferSubDataNV),reinterpret_cast<void (*)()>(glXNamedCopyBufferSubDataNV),"glXNamedCopyBufferSubDataNV");
+    _driver.call(&_driver.glXNamedCopyBufferSubDataNV)(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
+  }
+
 // GLX_NV_copy_image
 
   static void REGAL_CALL glXCopyImageSubDataNV(Display *dpy, GLXContext srcCtx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLXContext dstCtx, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth)
@@ -21135,6 +21934,15 @@ namespace Loader
     DispatchTableGlobal &_driver = dispatcherGlobal.driver;
     _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXCopyImageSubDataNV),reinterpret_cast<void (*)()>(glXCopyImageSubDataNV),"glXCopyImageSubDataNV");
     _driver.call(&_driver.glXCopyImageSubDataNV)(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+  }
+
+// GLX_NV_delay_before_swap
+
+  static Bool REGAL_CALL glXDelayBeforeSwapNV(Display *dpy, GLXDrawable drawable, GLfloat seconds)
+  {
+    DispatchTableGlobal &_driver = dispatcherGlobal.driver;
+    _getProcAddress(reinterpret_cast<void (**)()>(&_driver.glXDelayBeforeSwapNV),reinterpret_cast<void (*)()>(glXDelayBeforeSwapNV),"glXDelayBeforeSwapNV");
+    return _driver.call(&_driver.glXDelayBeforeSwapNV)(dpy, drawable, seconds);
   }
 
 // GLX_NV_present_video
@@ -23252,6 +24060,10 @@ namespace Loader
     tbl.glReleaseShaderCompiler = glReleaseShaderCompiler;
     tbl.glShaderBinary = glShaderBinary;
 
+  // GL_ARB_ES3_1_compatibility
+
+    tbl.glMemoryBarrierByRegion = glMemoryBarrierByRegion;
+
   // GL_ARB_base_instance
 
     tbl.glDrawArraysInstancedBaseInstance = glDrawArraysInstancedBaseInstance;
@@ -23303,6 +24115,10 @@ namespace Loader
     tbl.glClearTexImage = glClearTexImage;
     tbl.glClearTexSubImage = glClearTexSubImage;
 
+  // GL_ARB_clip_control
+
+    tbl.glClipControl = glClipControl;
+
   // GL_ARB_color_buffer_float
 
     tbl.glClampColorARB = glClampColorARB;
@@ -23330,6 +24146,102 @@ namespace Loader
     tbl.glDebugMessageControlARB = glDebugMessageControlARB;
     tbl.glDebugMessageInsertARB = glDebugMessageInsertARB;
     tbl.glGetDebugMessageLogARB = glGetDebugMessageLogARB;
+
+  // GL_ARB_direct_state_access
+
+    tbl.glBindTextureUnit = glBindTextureUnit;
+    tbl.glBlitNamedFramebuffer = glBlitNamedFramebuffer;
+    tbl.glCheckNamedFramebufferStatus = glCheckNamedFramebufferStatus;
+    tbl.glClearNamedBufferData = glClearNamedBufferData;
+    tbl.glClearNamedBufferSubData = glClearNamedBufferSubData;
+    tbl.glClearNamedFramebufferfi = glClearNamedFramebufferfi;
+    tbl.glClearNamedFramebufferfv = glClearNamedFramebufferfv;
+    tbl.glClearNamedFramebufferiv = glClearNamedFramebufferiv;
+    tbl.glClearNamedFramebufferuiv = glClearNamedFramebufferuiv;
+    tbl.glCompressedTextureSubImage1D = glCompressedTextureSubImage1D;
+    tbl.glCompressedTextureSubImage2D = glCompressedTextureSubImage2D;
+    tbl.glCompressedTextureSubImage3D = glCompressedTextureSubImage3D;
+    tbl.glCopyNamedBufferSubData = glCopyNamedBufferSubData;
+    tbl.glCopyTextureSubImage1D = glCopyTextureSubImage1D;
+    tbl.glCopyTextureSubImage2D = glCopyTextureSubImage2D;
+    tbl.glCopyTextureSubImage3D = glCopyTextureSubImage3D;
+    tbl.glCreateBuffers = glCreateBuffers;
+    tbl.glCreateFramebuffers = glCreateFramebuffers;
+    tbl.glCreateProgramPipelines = glCreateProgramPipelines;
+    tbl.glCreateQueries = glCreateQueries;
+    tbl.glCreateRenderbuffers = glCreateRenderbuffers;
+    tbl.glCreateSamplers = glCreateSamplers;
+    tbl.glCreateTextures = glCreateTextures;
+    tbl.glCreateTransformFeedbacks = glCreateTransformFeedbacks;
+    tbl.glCreateVertexArrays = glCreateVertexArrays;
+    tbl.glDisableVertexArrayAttrib = glDisableVertexArrayAttrib;
+    tbl.glEnableVertexArrayAttrib = glEnableVertexArrayAttrib;
+    tbl.glFlushMappedNamedBufferRange = glFlushMappedNamedBufferRange;
+    tbl.glGenerateTextureMipmap = glGenerateTextureMipmap;
+    tbl.glGetCompressedTextureImage = glGetCompressedTextureImage;
+    tbl.glGetNamedBufferParameteri64v = glGetNamedBufferParameteri64v;
+    tbl.glGetNamedBufferParameteriv = glGetNamedBufferParameteriv;
+    tbl.glGetNamedBufferPointerv = glGetNamedBufferPointerv;
+    tbl.glGetNamedBufferSubData = glGetNamedBufferSubData;
+    tbl.glGetNamedFramebufferAttachmentParameteriv = glGetNamedFramebufferAttachmentParameteriv;
+    tbl.glGetNamedFramebufferParameteriv = glGetNamedFramebufferParameteriv;
+    tbl.glGetNamedRenderbufferParameteriv = glGetNamedRenderbufferParameteriv;
+    tbl.glGetTextureImage = glGetTextureImage;
+    tbl.glGetTextureLevelParameterfv = glGetTextureLevelParameterfv;
+    tbl.glGetTextureLevelParameteriv = glGetTextureLevelParameteriv;
+    tbl.glGetTextureParameterIiv = glGetTextureParameterIiv;
+    tbl.glGetTextureParameterIuiv = glGetTextureParameterIuiv;
+    tbl.glGetTextureParameterfv = glGetTextureParameterfv;
+    tbl.glGetTextureParameteriv = glGetTextureParameteriv;
+    tbl.glGetTransformFeedbacki64_v = glGetTransformFeedbacki64_v;
+    tbl.glGetTransformFeedbacki_v = glGetTransformFeedbacki_v;
+    tbl.glGetTransformFeedbackiv = glGetTransformFeedbackiv;
+    tbl.glGetVertexArrayIndexed64iv = glGetVertexArrayIndexed64iv;
+    tbl.glGetVertexArrayIndexediv = glGetVertexArrayIndexediv;
+    tbl.glGetVertexArrayiv = glGetVertexArrayiv;
+    tbl.glInvalidateNamedFramebufferData = glInvalidateNamedFramebufferData;
+    tbl.glInvalidateNamedFramebufferSubData = glInvalidateNamedFramebufferSubData;
+    tbl.glMapNamedBuffer = glMapNamedBuffer;
+    tbl.glMapNamedBufferRange = glMapNamedBufferRange;
+    tbl.glNamedBufferData = glNamedBufferData;
+    tbl.glNamedBufferStorage = glNamedBufferStorage;
+    tbl.glNamedBufferSubData = glNamedBufferSubData;
+    tbl.glNamedFramebufferDrawBuffer = glNamedFramebufferDrawBuffer;
+    tbl.glNamedFramebufferDrawBuffers = glNamedFramebufferDrawBuffers;
+    tbl.glNamedFramebufferParameteri = glNamedFramebufferParameteri;
+    tbl.glNamedFramebufferReadBuffer = glNamedFramebufferReadBuffer;
+    tbl.glNamedFramebufferRenderbuffer = glNamedFramebufferRenderbuffer;
+    tbl.glNamedFramebufferTexture = glNamedFramebufferTexture;
+    tbl.glNamedFramebufferTextureLayer = glNamedFramebufferTextureLayer;
+    tbl.glNamedRenderbufferStorage = glNamedRenderbufferStorage;
+    tbl.glNamedRenderbufferStorageMultisample = glNamedRenderbufferStorageMultisample;
+    tbl.glTextureBuffer = glTextureBuffer;
+    tbl.glTextureBufferRange = glTextureBufferRange;
+    tbl.glTextureParameterIiv = glTextureParameterIiv;
+    tbl.glTextureParameterIuiv = glTextureParameterIuiv;
+    tbl.glTextureParameterf = glTextureParameterf;
+    tbl.glTextureParameterfv = glTextureParameterfv;
+    tbl.glTextureParameteri = glTextureParameteri;
+    tbl.glTextureParameteriv = glTextureParameteriv;
+    tbl.glTextureStorage1D = glTextureStorage1D;
+    tbl.glTextureStorage2D = glTextureStorage2D;
+    tbl.glTextureStorage2DMultisample = glTextureStorage2DMultisample;
+    tbl.glTextureStorage3D = glTextureStorage3D;
+    tbl.glTextureStorage3DMultisample = glTextureStorage3DMultisample;
+    tbl.glTextureSubImage1D = glTextureSubImage1D;
+    tbl.glTextureSubImage2D = glTextureSubImage2D;
+    tbl.glTextureSubImage3D = glTextureSubImage3D;
+    tbl.glTransformFeedbackBufferBase = glTransformFeedbackBufferBase;
+    tbl.glTransformFeedbackBufferRange = glTransformFeedbackBufferRange;
+    tbl.glUnmapNamedBuffer = glUnmapNamedBuffer;
+    tbl.glVertexArrayAttribBinding = glVertexArrayAttribBinding;
+    tbl.glVertexArrayAttribFormat = glVertexArrayAttribFormat;
+    tbl.glVertexArrayAttribIFormat = glVertexArrayAttribIFormat;
+    tbl.glVertexArrayAttribLFormat = glVertexArrayAttribLFormat;
+    tbl.glVertexArrayBindingDivisor = glVertexArrayBindingDivisor;
+    tbl.glVertexArrayElementBuffer = glVertexArrayElementBuffer;
+    tbl.glVertexArrayVertexBuffer = glVertexArrayVertexBuffer;
+    tbl.glVertexArrayVertexBuffers = glVertexArrayVertexBuffers;
 
   // GL_ARB_draw_buffers
 
@@ -23401,6 +24313,11 @@ namespace Loader
     tbl.glGetProgramBinary = glGetProgramBinary;
     tbl.glProgramBinary = glProgramBinary;
     tbl.glProgramParameteri = glProgramParameteri;
+
+  // GL_ARB_get_texture_sub_image
+
+    tbl.glGetCompressedTextureSubImage = glGetCompressedTextureSubImage;
+    tbl.glGetTextureSubImage = glGetTextureSubImage;
 
   // GL_ARB_gpu_shader_fp64
 
@@ -23766,6 +24683,10 @@ namespace Loader
     tbl.glIsNamedStringARB = glIsNamedStringARB;
     tbl.glNamedStringARB = glNamedStringARB;
 
+  // GL_ARB_sparse_buffer
+
+    tbl.glBufferPageCommitmentARB = glBufferPageCommitmentARB;
+
   // GL_ARB_sparse_texture
 
     tbl.glTexPageCommitmentARB = glTexPageCommitmentARB;
@@ -23785,6 +24706,10 @@ namespace Loader
 
     tbl.glPatchParameterfv = glPatchParameterfv;
     tbl.glPatchParameteri = glPatchParameteri;
+
+  // GL_ARB_texture_barrier
+
+    tbl.glTextureBarrier = glTextureBarrier;
 
   // GL_ARB_texture_buffer_object
 
@@ -25013,6 +25938,10 @@ namespace Loader
     tbl.glTexScissorFuncINTEL = glTexScissorFuncINTEL;
     tbl.glTexScissorINTEL = glTexScissorINTEL;
 
+  // GL_KHR_blend_equation_advanced
+
+    tbl.glBlendBarrierKHR = glBlendBarrierKHR;
+
   // GL_KHR_debug
 
     tbl.glDebugMessageCallback = glDebugMessageCallback;
@@ -25025,6 +25954,13 @@ namespace Loader
     tbl.glObjectPtrLabel = glObjectPtrLabel;
     tbl.glPopDebugGroup = glPopDebugGroup;
     tbl.glPushDebugGroup = glPushDebugGroup;
+
+  // GL_KHR_robustness
+
+    tbl.glGetnUniformfv = glGetnUniformfv;
+    tbl.glGetnUniformiv = glGetnUniformiv;
+    tbl.glGetnUniformuiv = glGetnUniformuiv;
+    tbl.glReadnPixels = glReadnPixels;
 
   // GL_KTX_buffer_region
 
@@ -26165,6 +27101,10 @@ void Init(DispatchTableGlobal &tbl)
 
     tbl.wglCopyImageSubDataNV = wglCopyImageSubDataNV;
 
+  // WGL_NV_delay_before_swap
+
+    tbl.wglDelayBeforeSwapNV = wglDelayBeforeSwapNV;
+
   // WGL_NV_gpu_affinity
 
     tbl.wglCreateAffinityDCNV = wglCreateAffinityDCNV;
@@ -26353,6 +27293,13 @@ void Init(DispatchTableGlobal &tbl)
 
     tbl.glXCreateGLXPixmapMESA = glXCreateGLXPixmapMESA;
 
+  // GLX_MESA_query_renderer
+
+    tbl.glXQueryCurrentRendererIntegerMESA = glXQueryCurrentRendererIntegerMESA;
+    tbl.glXQueryCurrentRendererStringMESA = glXQueryCurrentRendererStringMESA;
+    tbl.glXQueryRendererIntegerMESA = glXQueryRendererIntegerMESA;
+    tbl.glXQueryRendererStringMESA = glXQueryRendererStringMESA;
+
   // GLX_MESA_release_buffers
 
     tbl.glXReleaseBuffersMESA = glXReleaseBuffersMESA;
@@ -26366,9 +27313,18 @@ void Init(DispatchTableGlobal &tbl)
     tbl.glXGetSwapIntervalMESA = glXGetSwapIntervalMESA;
     tbl.glXSwapIntervalMESA = glXSwapIntervalMESA;
 
+  // GLX_NV_copy_buffer
+
+    tbl.glXCopyBufferSubDataNV = glXCopyBufferSubDataNV;
+    tbl.glXNamedCopyBufferSubDataNV = glXNamedCopyBufferSubDataNV;
+
   // GLX_NV_copy_image
 
     tbl.glXCopyImageSubDataNV = glXCopyImageSubDataNV;
+
+  // GLX_NV_delay_before_swap
+
+    tbl.glXDelayBeforeSwapNV = glXDelayBeforeSwapNV;
 
   // GLX_NV_present_video
 
