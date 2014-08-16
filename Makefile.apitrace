@@ -40,6 +40,8 @@ APITRACE.DEPS       := $(APITRACE.OBJS:.o=.d)
 
 -include $(APITRACE.DEPS)
 
+APITRACE.CFLAGS     += -fvisibility=hidden
+
 ifneq ($(filter linux%,$(SYSTEM)),)
 APITRACE.CFLAGS  += -DHAVE_X11=1
 endif

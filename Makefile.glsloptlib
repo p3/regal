@@ -27,6 +27,8 @@ GLSLOPT.OBJS       := $(GLSLOPT.OBJS:.c=.o) $(GLSLOPT.OBJS:.cpp=.o)
 GLSLOPT.OBJS       := $(filter %.o,$(GLSLOPT.OBJS))
 GLSLOPT.DEPS       := $(GLSLOPT.OBJS:.o=.d)
 GLSLOPT.CFLAGS     := $(GLSLOPT.INCLUDE)
+GLSLOPT.CFLAGS     += -fvisibility=hidden
+
 # quiet build for this thirdparty code for now
 GLSLOPT.CFLAGS     += -Wno-sign-compare
 

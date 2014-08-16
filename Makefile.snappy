@@ -28,6 +28,8 @@ SNAPPY.DEPS       := $(SNAPPY.DEPS:.o=.d)
 
 -include $(SNAPPY.DEPS)
 
+SNAPPY.CFLAGS     += -fvisibility=hidden
+
 ifeq ($(filter-out linux% darwin% nacl%,$(SYSTEM)),)
 SNAPPY.CFLAGS     += -DHAVE_UNISTD_H
 endif

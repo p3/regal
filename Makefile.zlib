@@ -24,6 +24,8 @@ ZLIB.DEPS       := $(ZLIB.OBJS:.o=.d)
 
 -include $(ZLIB.DEPS)
 
+ZLIB.CFLAGS     += -fvisibility=hidden
+
 ifeq ($(filter-out linux% darwin% nacl%,$(SYSTEM)),)
 ZLIB.CFLAGS     += -DHAVE_UNISTD_H
 endif

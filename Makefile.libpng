@@ -29,6 +29,8 @@ LIBPNG.DEPS       := $(LIBPNG.DEPS:.o=.d)
 
 -include $(LIBPNG.DEPS)
 
+LIBPNG.CFLAGS     += -fvisibility=hidden
+
 ifeq ($(filter-out linux% darwin% nacl%,$(SYSTEM)),)
 LIBPNG.CFLAGS     += -DHAVE_UNISTD_H
 endif

@@ -29,6 +29,7 @@ PCRE.OBJS       := $(filter %.o,$(PCRE.OBJS))
 PCRE.DEPS       := $(PCRE.OBJS:.o=.d)
 PCRE.CFLAGS     := $(PCRE.INCLUDE)
 PCRE.CFLAGS     += -DHAVE_CONFIG_H
+PCRE.CFLAGS     += -fvisibility=hidden
 
 ifeq ($(MODE),release)
 PCRE.CFLAGS  += -DNDEBUG
