@@ -3,6 +3,7 @@ CC = cc
 CXX = c++
 LD = cc
 RANLIB :=
+ABIDUMP = abi-dumper -bin-only -lver HEAD
 EXT.DYNAMIC = so
 PICFLAG = -fPIC
 M_ARCH ?= $(shell uname -m)

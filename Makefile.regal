@@ -304,6 +304,9 @@ endif
 ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
+ifneq ($(ABIDUMP),)
+	$(LOG_ABIDUMP)$(ABIDUMP) $@ -o $@.dump
+endif
 endif
 
 tmp/$(SYSTEM)/regal/static/%.o: src/regal/%.cpp $(REGAL.HEADERS)

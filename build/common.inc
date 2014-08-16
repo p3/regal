@@ -53,15 +53,16 @@ OPT   ?= $(CFLAGS.RELEASE)
 endif
 
 ifndef V
-LOG_CXX    ?= @echo " [CXX]    $@";
-LOG_CC     ?= @echo " [CC]     $@";
-LOG_LD     ?= @echo " [LD]     $@";
-LOG_AR     ?= @echo " [AR]     $@";
-LOG_RANLIB ?= @echo " [RANLIB] $@";
-LOG_STRIP  ?= @echo " [STRIP]  $@";
-LOG_LN     ?= @echo " [LN]     $@";
-LOG_CP     ?= @echo " [CP]     $@";
-LOG_MKDIR  ?= @echo " [MKDIR]  $@";
+LOG_CXX     ?= @echo " [CXX]     $@";
+LOG_CC      ?= @echo " [CC]      $@";
+LOG_LD      ?= @echo " [LD]      $@";
+LOG_AR      ?= @echo " [AR]      $@";
+LOG_RANLIB  ?= @echo " [RANLIB]  $@";
+LOG_STRIP   ?= @echo " [STRIP]   $@";
+LOG_LN      ?= @echo " [LN]      $@";
+LOG_CP      ?= @echo " [CP]      $@";
+LOG_MKDIR   ?= @echo " [MKDIR]   $@";
+LOG_ABIDUMP ?= @echo " [ABIDUMP] $@";
 endif
 
 INCLUDE ?= -Iinclude
