@@ -1,9 +1,9 @@
 /*
   Copyright (c) 2011-2012 NVIDIA Corporation
+  Copyright (c) 2012-2014 Nigel Stewart
   Copyright (c) 2011-2012 Cass Everitt
   Copyright (c) 2012 Scott Nations
   Copyright (c) 2012 Mathias Schott
-  Copyright (c) 2012 Nigel Stewart
   Copyright (c) 2012 Google Inc
   All rights reserved.
 
@@ -127,6 +127,69 @@ TEST( StringList, Insert )
     x.insert(16,3,"="); EXPECT_EQ(string("x x y y y x z z z 0 1 a b c d e = = = 7 + + + f - - - 9"),     x.join(" "));
     x.insert(14,2,"<"); EXPECT_EQ(string("x x y y y x z z z 0 1 a b c < < d e = = = 7 + + + f - - - 9"), x.join(" "));
     x.insert(14,0,">"); EXPECT_EQ(string("x x y y y x z z z 0 1 a b c < < d e = = = 7 + + + f - - - 9"), x.join(" "));
+  }
+}
+
+TEST( StringList, Split )
+{
+  {
+    string_list x;
+    x.split("a b c d e f");
+    EXPECT_EQ(x.size(),6);
+    EXPECT_EQ(x[0],"a");
+    EXPECT_EQ(x[1],"b");
+    EXPECT_EQ(x[2],"c");
+    EXPECT_EQ(x[3],"d");
+    EXPECT_EQ(x[4],"e");
+    EXPECT_EQ(x[5],"f");
+  }
+
+  {
+    string_list x;
+    x.split(" a b c d e f ");
+    EXPECT_EQ(x.size(),6);
+    EXPECT_EQ(x[0],"a");
+    EXPECT_EQ(x[1],"b");
+    EXPECT_EQ(x[2],"c");
+    EXPECT_EQ(x[3],"d");
+    EXPECT_EQ(x[4],"e");
+    EXPECT_EQ(x[5],"f");
+  }
+
+  {
+    string_list x;
+    x.split(" a  b   c     d  e  f ");
+    EXPECT_EQ(x.size(),6);
+    EXPECT_EQ(x[0],"a");
+    EXPECT_EQ(x[1],"b");
+    EXPECT_EQ(x[2],"c");
+    EXPECT_EQ(x[3],"d");
+    EXPECT_EQ(x[4],"e");
+    EXPECT_EQ(x[5],"f");
+  }
+
+  {
+    string_list x;
+    x.split("a b c d e f",8,' ');
+    EXPECT_EQ(x.size(),4);
+    EXPECT_EQ(x[0],"a");
+    EXPECT_EQ(x[1],"b");
+    EXPECT_EQ(x[2],"c");
+    EXPECT_EQ(x[3],"d");
+  }
+
+  {
+    string_list x;
+    x.split("a,b,c,d",',');
+    EXPECT_EQ(x.size(),4);
+    EXPECT_EQ(x[0],"a");
+    EXPECT_EQ(x[1],"b");
+    EXPECT_EQ(x[2],"c");
+    EXPECT_EQ(x[3],"d");
+
+    EXPECT_EQ(x.join(" "),"a b c d");
+    EXPECT_EQ(x.join("x"),"axbxcxd");
+    EXPECT_EQ(x.join("."),"a.b.c.d");
   }
 }
 
