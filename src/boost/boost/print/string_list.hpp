@@ -512,7 +512,7 @@ string_list<T>::split(const typename string_list<T>::char_type *input, const siz
     while (j<n && input[j]!=delim)
       ++j;
 
-    PushBack(*this).assign(i,j-i);
+    PushBack(*this).assign(input+i,j-i);
 
     // Last token if there were no trailing delims
     if (j==n)
