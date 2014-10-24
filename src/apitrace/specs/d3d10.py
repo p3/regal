@@ -676,6 +676,39 @@ D3D10_QUERY_DATA_SO_STATISTICS = Struct("D3D10_QUERY_DATA_SO_STATISTICS", [
     (UINT64, "PrimitivesStorageNeeded"),
 ])
 
+D3D10_QUERY_DATA = Polymorphic("_getQueryType(_this)", [
+    ("D3D10_QUERY_EVENT", Pointer(BOOL)),
+    ("D3D10_QUERY_OCCLUSION", Pointer(UINT64)),
+    ("D3D10_QUERY_TIMESTAMP", Pointer(UINT64)),
+    ("D3D10_QUERY_TIMESTAMP_DISJOINT", Pointer(D3D10_QUERY_DATA_TIMESTAMP_DISJOINT)),
+    ("D3D10_QUERY_PIPELINE_STATISTICS", Pointer(D3D10_QUERY_DATA_PIPELINE_STATISTICS)),
+    ("D3D10_QUERY_OCCLUSION_PREDICATE", Pointer(BOOL)),
+    ("D3D10_QUERY_SO_STATISTICS", Pointer(D3D10_QUERY_DATA_SO_STATISTICS)),
+    ("D3D10_QUERY_SO_OVERFLOW_PREDICATE", Pointer(BOOL)),
+], Blob(Void, "DataSize"), contextLess=False)
+
+# TODO: Handle ID3D10Counter::GetData too.
+D3D10_COUNTER_DATA = Polymorphic("_getCounterType(_this)", [
+    ("D3D10_COUNTER_GPU_IDLE", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_VERTEX_PROCESSING", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_GEOMETRY_PROCESSING", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_PIXEL_PROCESSING", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_OTHER_GPU_PROCESSING", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_HOST_ADAPTER_BANDWIDTH_UTILIZATION", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_LOCAL_VIDMEM_BANDWIDTH_UTILIZATION", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_VERTEX_THROUGHPUT_UTILIZATION", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_TRIANGLE_SETUP_THROUGHPUT_UTILIZATION", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_FILLRATE_THROUGHPUT_UTILIZATION", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_VS_MEMORY_LIMITED", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_VS_COMPUTATION_LIMITED", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_GS_MEMORY_LIMITED", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_GS_COMPUTATION_LIMITED", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_PS_MEMORY_LIMITED", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_PS_COMPUTATION_LIMITED", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_POST_TRANSFORM_CACHE_HIT_RATE", Pointer(FLOAT32)),
+    ("D3D10_COUNTER_TEXTURE_CACHE_HIT_RATE", Pointer(FLOAT32)),
+], Blob(Void, "DataSize"), contextLess=False)
+
 D3D10_CREATE_DEVICE_FLAG = Flags(UINT, [
     "D3D10_CREATE_DEVICE_SINGLETHREADED",
     "D3D10_CREATE_DEVICE_DEBUG",
@@ -721,7 +754,7 @@ ID3D10Multithread = Interface("ID3D10Multithread", IUnknown)
 
 ID3D10DeviceChild.methods += [
     StdMethod(Void, "GetDevice", [Out(Pointer(ObjPointer(ID3D10Device)), "ppDevice")]),
-    StdMethod(HRESULT, "GetPrivateData", [(REFGUID, "guid"), Out(Pointer(UINT), "pDataSize"), Out(OpaquePointer(Void), "pData")], sideeffects=False),
+    StdMethod(HRESULT, "GetPrivateData", [(REFGUID, "guid"), InOut(Pointer(UINT), "pDataSize"), Out(OpaquePointer(Void), "pData")], sideeffects=False),
     StdMethod(HRESULT, "SetPrivateData", [(REFGUID, "guid"), (UINT, "DataSize"), (OpaqueBlob(Const(Void), "DataSize"), "pData")], sideeffects=False),
     StdMethod(HRESULT, "SetPrivateDataInterface", [(REFGUID, "guid"), (OpaquePointer(Const(IUnknown)), "pData")], sideeffects=False),
 ]
@@ -791,7 +824,7 @@ ID3D10SamplerState.methods += [
 ID3D10Asynchronous.methods += [
     StdMethod(Void, "Begin", []),
     StdMethod(Void, "End", []),
-    StdMethod(HRESULT, "GetData", [Out(Blob(Void, "DataSize"), "pData"), (UINT, "DataSize"), (D3D10_ASYNC_GETDATA_FLAG, "GetDataFlags")], sideeffects=False),
+    StdMethod(HRESULT, "GetData", [Out(D3D10_QUERY_DATA, "pData"), (UINT, "DataSize"), (D3D10_ASYNC_GETDATA_FLAG, "GetDataFlags")], sideeffects=False),
     StdMethod(UINT, "GetDataSize", [], sideeffects=False),
 ]
 
@@ -862,12 +895,12 @@ ID3D10Device.methods += [
     StdMethod(Void, "OMGetDepthStencilState", [Out(Pointer(ObjPointer(ID3D10DepthStencilState)), "ppDepthStencilState"), Out(Pointer(UINT), "pStencilRef")]),
     StdMethod(Void, "SOGetTargets", [(UINT, "NumBuffers"), Out(Array(ObjPointer(ID3D10Buffer), "NumBuffers"), "ppSOTargets"), Out(Array(UINT, "NumBuffers"), "pOffsets")]),
     StdMethod(Void, "RSGetState", [Out(Pointer(ObjPointer(ID3D10RasterizerState)), "ppRasterizerState")]),
-    StdMethod(Void, "RSGetViewports", [Out(Pointer(UINT), "NumViewports"), Out(Array(D3D10_VIEWPORT, "*NumViewports"), "pViewports")], sideeffects=False),
-    StdMethod(Void, "RSGetScissorRects", [Out(Pointer(UINT), "NumRects"), Out(Array(D3D10_RECT, "*NumRects"), "pRects")], sideeffects=False),
+    StdMethod(Void, "RSGetViewports", [InOut(Pointer(UINT), "pNumViewports"), Out(Array(D3D10_VIEWPORT, "*pNumViewports"), "pViewports")], sideeffects=False),
+    StdMethod(Void, "RSGetScissorRects", [InOut(Pointer(UINT), "pNumRects"), Out(Array(D3D10_RECT, "*pNumRects"), "pRects")], sideeffects=False),
     StdMethod(HRESULT, "GetDeviceRemovedReason", [], sideeffects=False),
     StdMethod(HRESULT, "SetExceptionMode", [(D3D10_RAISE_FLAG, "RaiseFlags")]),
     StdMethod(D3D10_RAISE_FLAG, "GetExceptionMode", [], sideeffects=False),
-    StdMethod(HRESULT, "GetPrivateData", [(REFGUID, "guid"), Out(Pointer(UINT), "pDataSize"), Out(OpaquePointer(Void), "pData")], sideeffects=False),
+    StdMethod(HRESULT, "GetPrivateData", [(REFGUID, "guid"), InOut(Pointer(UINT), "pDataSize"), Out(OpaquePointer(Void), "pData")], sideeffects=False),
     StdMethod(HRESULT, "SetPrivateData", [(REFGUID, "guid"), (UINT, "DataSize"), (OpaqueBlob(Const(Void), "DataSize"), "pData")], sideeffects=False),
     StdMethod(HRESULT, "SetPrivateDataInterface", [(REFGUID, "guid"), (OpaquePointer(Const(IUnknown)), "pData")], sideeffects=False),
     StdMethod(Void, "ClearState", []),

@@ -453,145 +453,11 @@ _glDrawElementsBaseVertex_count(GLsizei count, GLenum type, const GLvoid *indice
 #define _glDrawElementsInstancedBaseVertexBaseInstance_count(count, type, indices, primcount, basevertex, baseinstance) _glDrawElementsBaseVertex_count(count, type, indices, basevertex)
 
 #define _glDrawArraysInstancedARB_count _glDrawArraysInstanced_count
-#define _glDrawElementsInstancedARB_count _glDrawElementsInstanced_count
 #define _glDrawArraysInstancedEXT_count _glDrawArraysInstanced_count
+#define _glDrawArraysInstancedANGLE_count _glDrawArraysInstanced_count
+#define _glDrawElementsInstancedARB_count _glDrawElementsInstanced_count
 #define _glDrawElementsInstancedEXT_count _glDrawElementsInstanced_count
-
-typedef struct {
-    GLuint count;
-    GLuint primCount;
-    GLuint first;
-    GLuint baseInstance;
-} DrawArraysIndirectCommand;
-
-static inline GLuint
-_glMultiDrawArraysIndirect_count(const GLvoid *indirect, GLsizei drawcount, GLsizei stride) {
-    const DrawArraysIndirectCommand *cmd;
-    GLvoid *temp = 0;
-
-    if (drawcount <= 0) {
-        return 0;
-    }
-
-    if (stride == 0) {
-        stride = sizeof *cmd;
-    }
-
-    GLint draw_indirect_buffer = _glGetInteger(GL_DRAW_INDIRECT_BUFFER_BINDING);
-    if (draw_indirect_buffer) {
-        // Read commands from indirect buffer object
-        GLintptr offset = (GLintptr)indirect;
-        GLsizeiptr size = sizeof *cmd + (drawcount - 1) * stride;
-        GLvoid *temp = malloc(size);
-        if (!temp) {
-            return 0;
-        }
-        memset(temp, 0, size);
-        _glGetBufferSubData(GL_DRAW_INDIRECT_BUFFER, offset, size, temp);
-        indirect = temp;
-    } else {
-        if (!indirect) {
-            return 0;
-        }
-    }
-
-    GLuint count = 0;
-    for (GLsizei i = 0; i < drawcount; ++i) {
-        cmd = (const DrawArraysIndirectCommand *)((const GLbyte *)indirect + i * stride);
-
-        GLuint count_i = _glDrawArraysInstancedBaseInstance_count(
-            cmd->first,
-            cmd->count,
-            cmd->primCount,
-            cmd->baseInstance
-        );
-
-        count = std::max(count, count_i);
-    }
-
-    if (draw_indirect_buffer) {
-        free(temp);
-    }
-
-    return count;
-}
-
-static inline GLuint
-_glDrawArraysIndirect_count(const GLvoid *indirect) {
-    return _glMultiDrawArraysIndirect_count(indirect, 1, 0);
-}
-
-typedef struct {
-    GLuint count;
-    GLuint primCount;
-    GLuint firstIndex;
-    GLuint baseVertex;
-    GLuint baseInstance;
-} DrawElementsIndirectCommand;
-
-static inline GLuint
-_glMultiDrawElementsIndirect_count(GLenum type, const GLvoid *indirect, GLsizei drawcount, GLsizei stride) {
-    const DrawElementsIndirectCommand *cmd;
-    GLvoid *temp = 0;
-
-    if (drawcount <= 0) {
-        return 0;
-    }
-
-    if (stride == 0) {
-        stride = sizeof *cmd;
-    }
-
-    GLint draw_indirect_buffer = _glGetInteger(GL_DRAW_INDIRECT_BUFFER_BINDING);
-    if (draw_indirect_buffer) {
-        // Read commands from indirect buffer object
-        GLintptr offset = (GLintptr)indirect;
-        GLsizeiptr size = sizeof *cmd + (drawcount - 1) * stride;
-        GLvoid *temp = malloc(size);
-        if (!temp) {
-            return 0;
-        }
-        memset(temp, 0, size);
-        _glGetBufferSubData(GL_DRAW_INDIRECT_BUFFER, offset, size, temp);
-        indirect = temp;
-    } else {
-        if (!indirect) {
-            return 0;
-        }
-    }
-
-    cmd = (const DrawElementsIndirectCommand *)indirect;
-
-    GLuint count = 0;
-    for (GLsizei i = 0; i < drawcount; ++i) {
-        cmd = (const DrawElementsIndirectCommand *)((const GLbyte *)indirect + i * stride);
-
-        GLuint count_i = _glDrawElementsInstancedBaseVertexBaseInstance_count(
-            cmd->count,
-            type,
-            (GLvoid *)(uintptr_t)(cmd->firstIndex * _gl_type_size(type)),
-            cmd->primCount,
-            cmd->baseVertex,
-            cmd->baseInstance
-        );
-
-        count = std::max(count, count_i);
-    }
-
-    if (draw_indirect_buffer) {
-        free(temp);
-    }
-
-    return count;
-}
-
-static inline GLuint
-_glDrawElementsIndirect_count(GLenum type, const GLvoid *indirect) {
-    return _glMultiDrawElementsIndirect_count(type, indirect, 1, 0);
-}
-
-#define _glMultiDrawArraysIndirectAMD_count _glMultiDrawArraysIndirect_count
-#define _glMultiDrawElementsIndirectAMD_count _glMultiDrawElementsIndirect_count
+#define _glDrawElementsInstancedANGLE_count _glDrawElementsInstanced_count
 
 static inline GLuint
 _glMultiDrawArrays_count(const GLint *first, const GLsizei *count, GLsizei drawcount) {
@@ -939,31 +805,6 @@ _gl_image_size(GLenum format, GLenum type, GLsizei width, GLsizei height, GLsize
 #define _glTexImage3D_size(format, type, width, height, depth) _gl_image_size(format, type, width, height, depth, can_unpack_subimage())
 #define _glTexImage2D_size(format, type, width, height)        _gl_image_size(format, type, width, height, 1, can_unpack_subimage())
 #define _glTexImage1D_size(format, type, width)                _gl_image_size(format, type, width, 1, 1, can_unpack_subimage())
-
-#define _glTexSubImage3D_size(format, type, width, height, depth) _glTexImage3D_size(format, type, width, height, depth)
-#define _glTexSubImage2D_size(format, type, width, height)        _glTexImage2D_size(format, type, width, height)
-#define _glTexSubImage1D_size(format, type, width)                _glTexImage1D_size(format, type, width)
-
-#define _glTexImage3DEXT_size _glTexImage3D_size
-#define _glTexImage2DEXT_size _glTexImage2D_size
-#define _glTexImage1DEXT_size _glTexImage1D_size
-#define _glTexSubImage3DEXT_size _glTexSubImage3D_size
-#define _glTexSubImage2DEXT_size _glTexSubImage2D_size
-#define _glTexSubImage1DEXT_size _glTexSubImage1D_size
-
-#define _glTextureImage3DEXT_size _glTexImage3D_size
-#define _glTextureImage2DEXT_size _glTexImage2D_size
-#define _glTextureImage1DEXT_size _glTexImage1D_size
-#define _glTextureSubImage3DEXT_size _glTexSubImage3D_size
-#define _glTextureSubImage2DEXT_size _glTexSubImage2D_size
-#define _glTextureSubImage1DEXT_size _glTexSubImage1D_size
-
-#define _glMultiTexImage3DEXT_size _glTexImage3D_size
-#define _glMultiTexImage2DEXT_size _glTexImage2D_size
-#define _glMultiTexImage1DEXT_size _glTexImage1D_size
-#define _glMultiTexSubImage3DEXT_size _glTexSubImage3D_size
-#define _glMultiTexSubImage2DEXT_size _glTexSubImage2D_size
-#define _glMultiTexSubImage1DEXT_size _glTexSubImage1D_size
 
 #define _glDrawPixels_size(format, type, width, height) _glTexImage2D_size(format, type, width, height)
 #define _glConvolutionFilter1D_size(format, type, width) _glTexImage1D_size(format, type, width)
