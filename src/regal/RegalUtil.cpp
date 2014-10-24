@@ -192,6 +192,7 @@ const char *libraryLocation(const Library &library)
         "/usr/lib64/libGL.so.1",                      // RedHat
         "/lib64/libGL.so.1",                          // Fedora 18
         "/usr/lib/nvidia-current/libGL.so.1",         // Ubuntu NVIDIA
+        "/usr/lib/nvidia-331-updates/libGL.so.1",     // Ubuntu 14.04 NVIDIA
         "/usr/lib/libGL.so.1",                        // Ubuntu
         "/usr/lib/x86_64-linux-gnu/mesa/libGL.so.1",  // Ubuntu via VMWare on Windows
         NULL
