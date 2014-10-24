@@ -42,6 +42,7 @@
 #include <algorithm>
 
 #include "dxgisize.hpp"
+#include "com_ptr.hpp"
 
 
 inline UINT
@@ -192,7 +193,7 @@ _calcSubresourceSize(ID3D10Resource *pDstResource, UINT DstSubresource, const D3
     UINT Width;
     UINT Height = 1;
     UINT Depth = 1;
-    UINT MipLevel = 0;
+    UINT MipLevels = 1;
 
     switch (Type) {
     case D3D10_RESOURCE_DIMENSION_BUFFER:
@@ -209,7 +210,7 @@ _calcSubresourceSize(ID3D10Resource *pDstResource, UINT DstSubresource, const D3
             static_cast<ID3D10Texture1D *>(pDstResource)->GetDesc(&Desc);
             Format = Desc.Format;
             Width = Desc.Width;
-            MipLevel = DstSubresource % Desc.MipLevels;
+            MipLevels = Desc.MipLevels;
         }
         break;
     case D3D10_RESOURCE_DIMENSION_TEXTURE2D:
@@ -219,7 +220,7 @@ _calcSubresourceSize(ID3D10Resource *pDstResource, UINT DstSubresource, const D3
             Format = Desc.Format;
             Width = Desc.Width;
             Height = Desc.Height;
-            MipLevel = DstSubresource % Desc.MipLevels;
+            MipLevels = Desc.MipLevels;
         }
         break;
     case D3D10_RESOURCE_DIMENSION_TEXTURE3D:
@@ -230,6 +231,7 @@ _calcSubresourceSize(ID3D10Resource *pDstResource, UINT DstSubresource, const D3
             Width = Desc.Width;
             Height = Desc.Height;
             Depth = Desc.Depth;
+            MipLevels = Desc.MipLevels;
         }
         break;
     case D3D10_RESOURCE_DIMENSION_UNKNOWN:
@@ -242,9 +244,39 @@ _calcSubresourceSize(ID3D10Resource *pDstResource, UINT DstSubresource, const D3
         Width  = pDstBox->right  - pDstBox->left;
         Height = pDstBox->bottom - pDstBox->top;
         Depth  = pDstBox->back   - pDstBox->front;
+    } else {
+        assert(Width  > 0);
+        assert(Height > 0);
+        assert(Depth  > 0);
+        UINT MipLevel = DstSubresource % MipLevels;
+        Width  = std::max(Width  >> MipLevel, UINT(1));
+        Height = std::max(Height >> MipLevel, UINT(1));
+        Depth  = std::max(Depth  >> MipLevel, UINT(1));
     }
 
-    return _calcMipDataSize(MipLevel, Format, Width, Height, SrcRowPitch, Depth, SrcDepthPitch);
+    return _calcDataSize(Format, Width, Height, SrcRowPitch, Depth, SrcDepthPitch);
+}
+
+
+static inline D3D10_QUERY
+_getQueryType(ID3D10Query *pQuery)
+{
+    D3D10_QUERY_DESC Desc;
+    pQuery->GetDesc(&Desc);
+    return Desc.Query;
+}
+
+
+static inline D3D10_QUERY
+_getQueryType(ID3D10Asynchronous *pAsync)
+{
+    com_ptr<ID3D10Query> pQuery;
+    HRESULT hr;
+    hr = pAsync->QueryInterface(IID_ID3D10Query, (void **)&pQuery);
+    if (FAILED(hr)) {
+        return (D3D10_QUERY)-1;
+    }
+    return _getQueryType(pQuery);
 }
 
 

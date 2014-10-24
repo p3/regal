@@ -106,6 +106,8 @@ GLXEnum = FakeEnum(Int, [
     "GLX_CONTEXT_MINOR_VERSION_ARB",		# 0x2092
     "GLX_CONTEXT_FLAGS_ARB",		# 0x2094
     "GLX_CONTEXT_ALLOW_BUFFER_BYTE_ORDER_MISMATCH_ARB",		# 0x2095
+    "GLX_CONTEXT_RELEASE_BEHAVIOR_ARB",		# 0x2097
+    "GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB",		# 0x2098
     "GLX_FLOAT_COMPONENTS_NV",		# 0x20B0
     "GLX_RGBA_UNSIGNED_FLOAT_TYPE_EXT",		# 0x20B1
     "GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB",		# 0x20B2
@@ -275,7 +277,10 @@ GLXbuffer = Flags(Int, [
 
 UnusedAttribs = AttribArray(Const(GLXEnum), [])
 
-GLXCommonSizeAttribs = [
+GLXCommonAttribs = [
+    ('GLX_BUFFER_SIZE', UInt),
+    ('GLX_LEVEL', Int),
+    ('GLX_AUX_BUFFERS', UInt),
     ('GLX_RED_SIZE', UInt),
     ('GLX_GREEN_SIZE', UInt),
     ('GLX_BLUE_SIZE', UInt),
@@ -285,48 +290,40 @@ GLXCommonSizeAttribs = [
     ('GLX_ACCUM_RED_SIZE', UInt),
     ('GLX_ACCUM_GREEN_SIZE', UInt),
     ('GLX_ACCUM_BLUE_SIZE', UInt),
-    ('GLX_ACCUM_ALPHA_SIZE', UInt)
-]
-
-GLXVisualAttribs = AttribArray(GLXEnum, GLXCommonSizeAttribs + [
-    ('GLX_USE_GL', None),
-    ('GLX_BUFFER_SIZE', UInt),
-    ('GLX_LEVEL', Int),
-    ('GLX_RGBA', None),
-    ('GLX_DOUBLEBUFFER', None),
-    ('GLX_STEREO', None),
-    ('GLX_AUX_BUFFERS', UInt),
-    ('GLX_SAMPLE_BUFFERS', UInt),
-    ('GLX_SAMPLES', UInt)],
-)
-
-GLXFBConfigCommonAttribs = GLXCommonSizeAttribs + [
-    ('GLX_BUFFER_SIZE', UInt),
-    ('GLX_LEVEL', Int),
-    ('GLX_DOUBLEBUFFER', Bool),
-    ('GLX_STEREO', Bool),
-    ('GLX_AUX_BUFFERS', UInt),
-    ('GLX_SAMPLE_BUFFERS', UInt),
-    ('GLX_SAMPLES', UInt),
-    ('GLX_RENDER_TYPE', Flags(Int, ["GLX_RGBA_BIT", "GLX_COLOR_INDEX_BIT"])),
-    ('GLX_DRAWABLE_TYPE', Flags(Int, ["GLX_WINDOW_BIT", "GLX_PIXMAP_BIT", "GLX_PBUFFER_BIT"])),
-    ('GLX_X_RENDERABLE', Bool),
-    ('GLX_X_VISUAL_TYPE', FakeEnum(Int, ["GLX_TRUE_COLOR", "GLX_DIRECT_COLOR", "GLX_PSEUDO_COLOR", "GLX_STATIC_COLOR"])),
+    ('GLX_ACCUM_ALPHA_SIZE', UInt),
     ('GLX_CONFIG_CAVEAT', FakeEnum(Int, ["GLX_NONE", "GLX_SLOW_CONFIG", "GLX_NON_CONFORMANT_CONFIG"])),
+    ('GLX_X_VISUAL_TYPE', FakeEnum(Int, ["GLX_TRUE_COLOR", "GLX_DIRECT_COLOR", "GLX_PSEUDO_COLOR", "GLX_STATIC_COLOR"])),
     ('GLX_TRANSPARENT_TYPE', FakeEnum(Int, ["GLX_NONE", "GLX_TRANSPARENT_RGB", "GLX_TRANSPARENT_INDEX"])),
     ('GLX_TRANSPARENT_INDEX_VALUE', Int),
     ('GLX_TRANSPARENT_RED_VALUE', Int),
     ('GLX_TRANSPARENT_GREEN_VALUE', Int),
     ('GLX_TRANSPARENT_BLUE_VALUE', Int),
-    ('GLX_TRANSPARENT_ALPHA_VALUE', Int)
+    ('GLX_TRANSPARENT_ALPHA_VALUE', Int),
+    ('GLX_SAMPLE_BUFFERS', UInt),
+    ('GLX_SAMPLES', UInt),
+]
+
+GLXVisualAttribs = AttribArray(GLXEnum, GLXCommonAttribs + [
+    ('GLX_USE_GL', None),
+    ('GLX_RGBA', None),
+    ('GLX_DOUBLEBUFFER', None),
+    ('GLX_STEREO', None),
+])
+
+GLXFBConfigCommonAttribs = GLXCommonAttribs + [
+    ('GLX_DOUBLEBUFFER', Bool),
+    ('GLX_STEREO', Bool),
+    ('GLX_RENDER_TYPE', Flags(Int, ["GLX_RGBA_BIT", "GLX_COLOR_INDEX_BIT"])),
+    ('GLX_DRAWABLE_TYPE', Flags(Int, ["GLX_WINDOW_BIT", "GLX_PIXMAP_BIT", "GLX_PBUFFER_BIT"])),
+    ('GLX_X_RENDERABLE', Bool),
 ]
 
 GLXFBConfigGLXAttribs = GLXFBConfigCommonAttribs + [
-    ('GLX_FBCONFIG_ID', Int), # an XID, can we do better than int?
+    ('GLX_FBCONFIG_ID', GLXFBConfigID),
     ('GLX_MAX_PBUFFER_WIDTH', Int),
     ('GLX_MAX_PBUFFER_HEIGHT', Int),
     ('GLX_MAX_PBUFFER_PIXELS', Int),
-    ('GLX_VISUAL_ID', Int)  # another XID
+    ('GLX_VISUAL_ID', VisualID),
 ]
 
 GLXFBConfigAttribs = AttribArray(Const(GLXEnum), GLXFBConfigGLXAttribs)
@@ -347,6 +344,10 @@ GLXContextARBAttribs = AttribArray(Const(GLXEnum), [
         "GLX_CONTEXT_ES_PROFILE_BIT_EXT",
     ])),
     ('GLX_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB', GLXEnum),
+    ('GLX_CONTEXT_RELEASE_BEHAVIOR_ARB', FakeEnum(Int, [
+        'GLX_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB',
+        'GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB',
+    ])),
 ])
 
 GLXPbufferAttribs = AttribArray(Const(GLXEnum), [
