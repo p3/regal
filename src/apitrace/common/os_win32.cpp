@@ -256,6 +256,21 @@ static void (*gCallback)(void) = NULL;
 static LONG CALLBACK
 unhandledExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
 {
+    /*
+     * Before Vista KiUserExceptionDispatcher does not clear the direction
+     * flag.
+     *
+     * See also:
+     * - http://code.google.com/p/nativeclient/issues/detail?id=1495
+     */
+#ifdef _MSC_VER
+#ifndef _WIN64
+    __asm cld;
+#endif
+#else
+    asm("cld");
+#endif
+
     PEXCEPTION_RECORD pExceptionRecord = pExceptionInfo->ExceptionRecord;
 
     /*
@@ -266,14 +281,20 @@ unhandledExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
     }
 
     /*
-     * Ignore C++ exceptions
+     * Ignore C++ exceptions, as some applications generate a lot of these with
+     * no harm.  But don't ignore them on debug builds, as bugs in apitrace can
+     * easily lead the applicationa and/or runtime to raise them, and catching
+     * them helps debugging.
      *
-     * http://support.microsoft.com/kb/185294
-     * http://blogs.msdn.com/b/oldnewthing/archive/2010/07/30/10044061.aspx
+     * See also:
+     * - http://blogs.msdn.com/b/oldnewthing/archive/2010/07/30/10044061.aspx
+     * - http://support.microsoft.com/kb/185294
      */
+#ifdef NDEBUG
     if (pExceptionRecord->ExceptionCode == 0xe06d7363) {
         return EXCEPTION_CONTINUE_SEARCH;
     }
+#endif
 
     /*
      * Ignore thread naming exception.
@@ -292,17 +313,6 @@ unhandledExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
     if (pExceptionRecord->ExceptionCode == 0xe0434352) {
         return EXCEPTION_CONTINUE_SEARCH;
     }
-
-    // Clear direction flag
-#ifdef _MSC_VER
-#ifndef _WIN64
-    __asm {
-        cld
-    };
-#endif
-#else
-    asm("cld");
-#endif
 
     log("apitrace: warning: caught exception 0x%08lx\n", pExceptionRecord->ExceptionCode);
 
