@@ -1,9 +1,9 @@
 
 /* pngconf.h - machine configurable file for libpng
  *
- * libpng version 1.6.9 - February 6, 2014
+ * libpng version 1.6.14 - October 23, 2014
  *
- * Copyright (c) 1998-2013 Glenn Randers-Pehrson
+ * Copyright (c) 1998-2014 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -361,7 +361,7 @@
    * version 1.2.41.  Disabling these removes the warnings but may also produce
    * less efficient code.
    */
-#  if defined(__clang__)
+#  if defined(__clang__) && defined(__has_attribute)
      /* Clang defines both __clang__ and __GNUC__. Check __clang__ first. */
 #    if !defined(PNG_USE_RESULT) && __has_attribute(__warn_unused_result__)
 #      define PNG_USE_RESULT __attribute__((__warn_unused_result__))
@@ -376,9 +376,11 @@
 #      define PNG_DEPRECATED __attribute__((__deprecated__))
 #    endif
 #    if !defined(PNG_PRIVATE)
-#      if __has_extension(attribute_unavailable_with_message)
-#        define PNG_PRIVATE __attribute__((__unavailable__(\
-           "This function is not exported by libpng.")))
+#      ifdef __has_extension
+#        if __has_extension(attribute_unavailable_with_message)
+#          define PNG_PRIVATE __attribute__((__unavailable__(\
+             "This function is not exported by libpng.")))
+#        endif
 #      endif
 #    endif
 #    ifndef PNG_RESTRICT

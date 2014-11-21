@@ -6,7 +6,7 @@
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
- * Last changed in libpng 1.6.9 [February 6, 2014]
+ * Last changed in libpng 1.6.10 [March 6, 1014]]
  *
  * This code is released under the libpng license.
  * For conditions of distribution and use, see the disclaimer
@@ -119,8 +119,12 @@
     * PNG_ARM_NEON_OPT is set in CPPFLAGS (to >0) then arm/arm_init.c will fail
     * to compile with an appropriate #error if ALIGNED_MEMORY has been turned
     * off.
+    *
+    * Note that gcc-4.9 defines __ARM_NEON instead of __ARM_NEON__, so we
+    * check both variants.
     */
-#  if defined(__ARM_NEON__) && defined(PNG_ALIGNED_MEMORY_SUPPORTED)
+#  if (defined(__ARM_NEON__) || defined(__ARM_NEON)) && \
+   defined(PNG_ALIGNED_MEMORY_SUPPORTED)
 #     define PNG_ARM_NEON_OPT 2
 #  else
 #     define PNG_ARM_NEON_OPT 0
@@ -148,7 +152,7 @@
     * libpng implementation list for incorporation in the next minor release.
     */
 #  ifndef PNG_ARM_NEON_IMPLEMENTATION
-#     ifdef __ARM_NEON__
+#     if defined(__ARM_NEON__) || defined(__ARM_NEON)
 #        if defined(__clang__)
             /* At present it is unknown by the libpng developers which versions
              * of clang support the intrinsics, however some or perhaps all
@@ -252,6 +256,11 @@
 #ifndef PNG_INTERNAL_FUNCTION
 #  define PNG_INTERNAL_FUNCTION(type, name, args, attributes)\
       extern PNG_FUNCTION(type, name, args, PNG_EMPTY attributes)
+#endif
+
+#ifndef PNG_INTERNAL_CALLBACK
+#  define PNG_INTERNAL_CALLBACK(type, name, args, attributes)\
+      extern PNG_FUNCTION(type, (PNGCBAPI name), args, PNG_EMPTY attributes)
 #endif
 
 /* If floating or fixed point APIs are disabled they may still be compiled
@@ -373,8 +382,6 @@
 #ifdef PNG_WARNINGS_SUPPORTED
 #  define PNG_WARNING_PARAMETERS(p) png_warning_parameters p;
 #else
-#  define png_warning(s1,s2) ((void)(s1))
-#  define png_chunk_warning(s1,s2) ((void)(s1))
 #  define png_warning_parameter(p,number,string) ((void)0)
 #  define png_warning_parameter_unsigned(p,number,format,value) ((void)0)
 #  define png_warning_parameter_signed(p,number,format,value) ((void)0)
@@ -382,8 +389,6 @@
 #  define PNG_WARNING_PARAMETERS(p)
 #endif
 #ifndef PNG_ERROR_TEXT_SUPPORTED
-#  define png_error(s1,s2) png_err(s1)
-#  define png_chunk_error(s1,s2) png_err(s1)
 #  define png_fixed_error(s1,s2) png_err(s1)
 #endif
 
@@ -821,7 +826,7 @@
     * zlib version number and because this affects handling of certain broken
     * PNG files the -I directives must match.
     *
-    * The most likely explanation is that you passed a -I in CFLAGS, this will
+    * The most likely explanation is that you passed a -I in CFLAGS. This will
     * not work; all the preprocessor directories and in particular all the -I
     * directives must be in CPPFLAGS.
     */
@@ -1085,7 +1090,7 @@ PNG_INTERNAL_FUNCTION(void,png_write_tEXt,(png_structrp png_ptr,
 
 #ifdef PNG_WRITE_zTXt_SUPPORTED
 PNG_INTERNAL_FUNCTION(void,png_write_zTXt,(png_structrp png_ptr, png_const_charp
-    key, png_const_charp text, png_size_t text_len, int compression),PNG_EMPTY);
+    key, png_const_charp text, int compression),PNG_EMPTY);
 #endif
 
 #ifdef PNG_WRITE_iTXt_SUPPORTED
@@ -1883,11 +1888,11 @@ typedef struct png_control
  * errors that might occur.  Returns true on success, false on failure (either
  * of the function or as a result of a png_error.)
  */
-PNG_INTERNAL_FUNCTION(void,png_safe_error,(png_structp png_ptr,
+PNG_INTERNAL_CALLBACK(void,png_safe_error,(png_structp png_ptr,
    png_const_charp error_message),PNG_NORETURN);
 
 #ifdef PNG_WARNINGS_SUPPORTED
-PNG_INTERNAL_FUNCTION(void,png_safe_warning,(png_structp png_ptr,
+PNG_INTERNAL_CALLBACK(void,png_safe_warning,(png_structp png_ptr,
    png_const_charp warning_message),PNG_EMPTY);
 #else
 #  define png_safe_warning 0/*dummy argument*/

@@ -1,8 +1,8 @@
 
 /* png.h - header file for PNG reference library
  *
- * libpng version 1.6.9 - February 6, 2014
- * Copyright (c) 1998-2013 Glenn Randers-Pehrson
+ * libpng version 1.6.14 - October 23, 2014
+ * Copyright (c) 1998-2014 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -11,7 +11,7 @@
  * Authors and maintainers:
  *   libpng versions 0.71, May 1995, through 0.88, January 1996: Guy Schalnat
  *   libpng versions 0.89c, June 1996, through 0.96, May 1997: Andreas Dilger
- *   libpng versions 0.97, January 1998, through 1.6.9 - February 6, 2014: Glenn
+ *   libpng versions 0.97, January 1998, through 1.6.14 - October 23, 2014: Glenn
  *   See also "Contributing Authors", below.
  *
  * Note about libpng version numbers:
@@ -192,6 +192,20 @@
  *    1.6.9beta01-04          16    10609  16.so.16.9[.0]
  *    1.6.9rc01-02            16    10609  16.so.16.9[.0]
  *    1.6.9                   16    10609  16.so.16.9[.0]
+ *    1.6.10beta01-03         16    10610  16.so.16.10[.0]
+ *    1.6.10rc01-03           16    10610  16.so.16.10[.0]
+ *    1.6.10                  16    10610  16.so.16.10[.0]
+ *    1.6.11beta01-06         16    10611  16.so.16.11[.0]
+ *    1.6.11rc01-02           16    10611  16.so.16.11[.0]
+ *    1.6.11                  16    10611  16.so.16.11[.0]
+ *    1.6.12rc01-03           16    10612  16.so.16.12[.0]
+ *    1.6.12                  16    10612  16.so.16.12[.0]
+ *    1.6.13beta01-04         16    10613  16.so.16.13[.0]
+ *    1.6.13rc01-02           16    10613  16.so.16.13[.0]
+ *    1.6.13                  16    10613  16.so.16.13[.0]
+ *    1.6.14beta01-07         16    10614  16.so.16.14[.0]
+ *    1.6.14rc01-02           16    10614  16.so.16.14[.0]
+ *    1.6.14                  16    10614  16.so.16.14[.0]
  *
  *   Henceforth the source version will match the shared-library major
  *   and minor numbers; the shared-library major version number will be
@@ -223,8 +237,8 @@
  *
  * This code is released under the libpng license.
  *
- * libpng versions 1.2.6, August 15, 2004, through 1.6.9, February 6, 2014, are
- * Copyright (c) 2004, 2006-2013 Glenn Randers-Pehrson, and are
+ * libpng versions 1.2.6, August 15, 2004, through 1.6.14, October 23, 2014, are
+ * Copyright (c) 2004, 2006-2014 Glenn Randers-Pehrson, and are
  * distributed according to the same disclaimer and license as libpng-1.2.5
  * with the following individual added to the list of Contributing Authors:
  *
@@ -335,13 +349,13 @@
  * Y2K compliance in libpng:
  * =========================
  *
- *    February 6, 2014
+ *    October 23, 2014
  *
  *    Since the PNG Development group is an ad-hoc body, we can't make
  *    an official declaration.
  *
  *    This is your unofficial assurance that libpng from version 0.71 and
- *    upward through 1.6.9 are Y2K compliant.  It is my belief that
+ *    upward through 1.6.14 are Y2K compliant.  It is my belief that
  *    earlier versions were also Y2K compliant.
  *
  *    Libpng only has two year fields.  One is a 2-byte unsigned integer
@@ -394,16 +408,18 @@
 /* This is not the place to learn how to use libpng. The file libpng-manual.txt
  * describes how to use libpng, and the file example.c summarizes it
  * with some code on which to build.  This file is useful for looking
- * at the actual function definitions and structure components.
+ * at the actual function definitions and structure components.  If that
+ * file has been stripped from your copy of libpng, you can find it at
+ * <http://www.libpng.org/pub/png/libpng-manual.txt>
  *
  * If you just need to read a PNG file and don't want to read the documentation
  * skip to the end of this file and read the section entitled 'simplified API'.
  */
 
 /* Version information for png.h - this should match the version in png.c */
-#define PNG_LIBPNG_VER_STRING "1.6.9"
+#define PNG_LIBPNG_VER_STRING "1.6.14"
 #define PNG_HEADER_VERSION_STRING \
-     " libpng version 1.6.9 - February 6, 2014\n"
+     " libpng version 1.6.14 - October 23, 2014\n"
 
 #define PNG_LIBPNG_VER_SONUM   16
 #define PNG_LIBPNG_VER_DLLNUM  16
@@ -411,7 +427,7 @@
 /* These should match the first 3 components of PNG_LIBPNG_VER_STRING: */
 #define PNG_LIBPNG_VER_MAJOR   1
 #define PNG_LIBPNG_VER_MINOR   6
-#define PNG_LIBPNG_VER_RELEASE 9
+#define PNG_LIBPNG_VER_RELEASE 14
 
 /* This should match the numeric part of the final component of
  * PNG_LIBPNG_VER_STRING, omitting any leading zero:
@@ -442,7 +458,7 @@
  * version 1.0.0 was mis-numbered 100 instead of 10000).  From
  * version 1.0.1 it's    xxyyzz, where x=major, y=minor, z=release
  */
-#define PNG_LIBPNG_VER 10609 /* 1.6.9 */
+#define PNG_LIBPNG_VER 10614 /* 1.6.14 */
 
 /* Library configuration: these options cannot be changed after
  * the library has been built.
@@ -547,7 +563,7 @@ extern "C" {
 /* This triggers a compiler error in png.c, if png.c and png.h
  * do not agree upon the version number.
  */
-typedef char* png_libpng_version_1_6_9;
+typedef char* png_libpng_version_1_6_14;
 
 /* Basic control structions.  Read libpng-manual.txt or libpng.3 for more info.
  *
@@ -1209,9 +1225,9 @@ PNG_EXPORT(35, void, png_build_grayscale_palette, (int bit_depth,
 #endif
 
 #ifdef PNG_READ_ALPHA_MODE_SUPPORTED
-/* How the alpha channel is interpreted - this affects how the color channels of
- * a PNG file are returned when an alpha channel, or tRNS chunk in a palette
- * file, is present.
+/* How the alpha channel is interpreted - this affects how the color channels
+ * of a PNG file are returned to the calling application when an alpha channel,
+ * or a tRNS chunk in a palette file, is present.
  *
  * This has no effect on the way pixels are written into a PNG output
  * datastream. The color samples in a PNG datastream are never premultiplied
@@ -1219,33 +1235,19 @@ PNG_EXPORT(35, void, png_build_grayscale_palette, (int bit_depth,
  *
  * The default is to return data according to the PNG specification: the alpha
  * channel is a linear measure of the contribution of the pixel to the
- * corresponding composited pixel.  The gamma encoded color channels must be
- * scaled according to the contribution and to do this it is necessary to undo
+ * corresponding composited pixel, and the color channels are unassociated
+ * (not premultiplied).  The gamma encoded color channels must be scaled
+ * according to the contribution and to do this it is necessary to undo
  * the encoding, scale the color values, perform the composition and reencode
  * the values.  This is the 'PNG' mode.
  *
  * The alternative is to 'associate' the alpha with the color information by
- * storing color channel values that have been scaled by the alpha.  The
- * advantage is that the color channels can be resampled (the image can be
- * scaled) in this form.  The disadvantage is that normal practice is to store
- * linear, not (gamma) encoded, values and this requires 16-bit channels for
- * still images rather than the 8-bit channels that are just about sufficient if
- * gamma encoding is used.  In addition all non-transparent pixel values,
- * including completely opaque ones, must be gamma encoded to produce the final
- * image.  This is the 'STANDARD', 'ASSOCIATED' or 'PREMULTIPLIED' mode (the
- * latter being the two common names for associated alpha color channels.)
+ * storing color channel values that have been scaled by the alpha.
+ * image.  These are the 'STANDARD', 'ASSOCIATED' or 'PREMULTIPLIED' modes
+ * (the latter being the two common names for associated alpha color channels).
  *
- * Since it is not necessary to perform arithmetic on opaque color values so
- * long as they are not to be resampled and are in the final color space it is
- * possible to optimize the handling of alpha by storing the opaque pixels in
- * the PNG format (adjusted for the output color space) while storing partially
- * opaque pixels in the standard, linear, format.  The accuracy required for
- * standard alpha composition is relatively low, because the pixels are
- * isolated, therefore typically the accuracy loss in storing 8-bit linear
- * values is acceptable.  (This is not true if the alpha channel is used to
- * simulate transparency over large areas - use 16 bits or the PNG mode in
- * this case!)  This is the 'OPTIMIZED' mode.  For this mode a pixel is
- * treated as opaque only if the alpha value is equal to the maximum value.
+ * For the 'OPTIMIZED' mode, a pixel is treated as opaque only if the alpha
+ * value is equal to the maximum value.
  *
  * The final choice is to gamma encode the alpha channel as well.  This is
  * broken because, in practice, no implementation that uses this choice
@@ -1272,68 +1274,7 @@ PNG_FIXED_EXPORT(228, void, png_set_alpha_mode_fixed, (png_structrp png_ptr,
 
 #if defined(PNG_GAMMA_SUPPORTED) || defined(PNG_READ_ALPHA_MODE_SUPPORTED)
 /* The output_gamma value is a screen gamma in libpng terminology: it expresses
- * how to decode the output values, not how they are encoded.  The values used
- * correspond to the normal numbers used to describe the overall gamma of a
- * computer display system; for example 2.2 for an sRGB conformant system.  The
- * values are scaled by 100000 in the _fixed version of the API (so 220000 for
- * sRGB.)
- *
- * The inverse of the value is always used to provide a default for the PNG file
- * encoding if it has no gAMA chunk and if png_set_gamma() has not been called
- * to override the PNG gamma information.
- *
- * When the ALPHA_OPTIMIZED mode is selected the output gamma is used to encode
- * opaque pixels however pixels with lower alpha values are not encoded,
- * regardless of the output gamma setting.
- *
- * When the standard Porter Duff handling is requested with mode 1 the output
- * encoding is set to be linear and the output_gamma value is only relevant
- * as a default for input data that has no gamma information.  The linear output
- * encoding will be overridden if png_set_gamma() is called - the results may be
- * highly unexpected!
- *
- * The following numbers are derived from the sRGB standard and the research
- * behind it.  sRGB is defined to be approximated by a PNG gAMA chunk value of
- * 0.45455 (1/2.2) for PNG.  The value implicitly includes any viewing
- * correction required to take account of any differences in the color
- * environment of the original scene and the intended display environment; the
- * value expresses how to *decode* the image for display, not how the original
- * data was *encoded*.
- *
- * sRGB provides a peg for the PNG standard by defining a viewing environment.
- * sRGB itself, and earlier TV standards, actually use a more complex transform
- * (a linear portion then a gamma 2.4 power law) than PNG can express.  (PNG is
- * limited to simple power laws.)  By saying that an image for direct display on
- * an sRGB conformant system should be stored with a gAMA chunk value of 45455
- * (11.3.3.2 and 11.3.3.5 of the ISO PNG specification) the PNG specification
- * makes it possible to derive values for other display systems and
- * environments.
- *
- * The Mac value is deduced from the sRGB based on an assumption that the actual
- * extra viewing correction used in early Mac display systems was implemented as
- * a power 1.45 lookup table.
- *
- * Any system where a programmable lookup table is used or where the behavior of
- * the final display device characteristics can be changed requires system
- * specific code to obtain the current characteristic.  However this can be
- * difficult and most PNG gamma correction only requires an approximate value.
- *
- * By default, if png_set_alpha_mode() is not called, libpng assumes that all
- * values are unencoded, linear, values and that the output device also has a
- * linear characteristic.  This is only very rarely correct - it is invariably
- * better to call png_set_alpha_mode() with PNG_DEFAULT_sRGB than rely on the
- * default if you don't know what the right answer is!
- *
- * The special value PNG_GAMMA_MAC_18 indicates an older Mac system (pre Mac OS
- * 10.6) which used a correction table to implement a somewhat lower gamma on an
- * otherwise sRGB system.
- *
- * Both these values are reserved (not simple gamma values) in order to allow
- * more precise correction internally in the future.
- *
- * NOTE: the following values can be passed to either the fixed or floating
- * point APIs, but the floating point API will also accept floating point
- * values.
+ * how to decode the output values, not how they are encoded.
  */
 #define PNG_DEFAULT_sRGB -1       /* sRGB gamma and color space */
 #define PNG_GAMMA_MAC_18 -2       /* Old Mac '1.8' gamma and color space */
@@ -1921,7 +1862,6 @@ PNG_EXPORT(219, png_size_t, png_process_data_pause, (png_structrp, int save));
  */
 PNG_EXPORT(220, png_uint_32, png_process_data_skip, (png_structrp));
 
-#ifdef PNG_READ_INTERLACING_SUPPORTED
 /* Function that combines rows.  'new_row' is a flag that should come from
  * the callback and be non-NULL if anything needs to be done; the library
  * stores its own version of the new data internally and ignores the passed
@@ -1929,7 +1869,6 @@ PNG_EXPORT(220, png_uint_32, png_process_data_skip, (png_structrp));
  */
 PNG_EXPORT(93, void, png_progressive_combine_row, (png_const_structrp png_ptr,
     png_bytep old_row, png_const_bytep new_row));
-#endif /* PNG_READ_INTERLACING_SUPPORTED */
 #endif /* PNG_PROGRESSIVE_READ_SUPPORTED */
 
 PNG_EXPORTA(94, png_voidp, png_malloc, (png_const_structrp png_ptr,
@@ -1956,8 +1895,8 @@ PNG_EXPORT(98, void, png_free_data, (png_const_structrp png_ptr,
  * It is unlikely that this function works correctly as of 1.6.0 and using it
  * may result either in memory leaks or double free of allocated data.
  */
-PNG_EXPORTA(99, void, png_data_freer, (png_const_structrp png_ptr,
-    png_inforp info_ptr, int freer, png_uint_32 mask), PNG_DEPRECATED);
+PNG_EXPORT(99, void, png_data_freer, (png_const_structrp png_ptr,
+    png_inforp info_ptr, int freer, png_uint_32 mask));
 
 /* Assignments for png_data_freer */
 #define PNG_DESTROY_WILL_FREE_DATA 1
@@ -1999,6 +1938,8 @@ PNG_EXPORTA(103, void, png_chunk_error, (png_const_structrp png_ptr,
 #else
 /* Fatal error in PNG image of libpng - can't continue */
 PNG_EXPORTA(104, void, png_err, (png_const_structrp png_ptr), PNG_NORETURN);
+#  define png_error(s1,s2) png_err(s1)
+#  define png_chunk_error(s1,s2) png_err(s1)
 #endif
 
 #ifdef PNG_WARNINGS_SUPPORTED
@@ -2009,6 +1950,9 @@ PNG_EXPORT(105, void, png_warning, (png_const_structrp png_ptr,
 /* Non-fatal error in libpng, chunk name is prepended to message. */
 PNG_EXPORT(106, void, png_chunk_warning, (png_const_structrp png_ptr,
     png_const_charp warning_message));
+#else
+#  define png_warning(s1,s2) ((void)(s1))
+#  define png_chunk_warning(s1,s2) ((void)(s1))
 #endif
 
 #ifdef PNG_BENIGN_ERRORS_SUPPORTED
@@ -2519,10 +2463,14 @@ PNG_EXPORT(177, void, png_set_invalid, (png_const_structrp png_ptr,
 
 #ifdef PNG_INFO_IMAGE_SUPPORTED
 /* The "params" pointer is currently not used and is for future expansion. */
+#ifdef PNG_SEQUENTIAL_READ_SUPPORTED
 PNG_EXPORT(178, void, png_read_png, (png_structrp png_ptr, png_inforp info_ptr,
     int transforms, png_voidp params));
+#endif
+#ifdef PNG_WRITE_SUPPORTED
 PNG_EXPORT(179, void, png_write_png, (png_structrp png_ptr, png_inforp info_ptr,
     int transforms, png_voidp params));
+#endif
 #endif
 
 PNG_EXPORT(180, png_const_charp, png_get_copyright,
@@ -2800,6 +2748,8 @@ PNG_EXPORT(207, void, png_save_uint_16, (png_bytep buf, unsigned int i));
 #  endif
 #endif
 
+#if defined(PNG_SIMPLIFIED_READ_SUPPORTED) || \
+    defined(PNG_SIMPLIFIED_WRITE_SUPPORTED)
 /*******************************************************************************
  *  SIMPLIFIED API
  *******************************************************************************
@@ -2871,7 +2821,7 @@ typedef struct
 #  define PNG_IMAGE_WARNING 1
 #  define PNG_IMAGE_ERROR 2
    /*
-    * The result is a two bit code such that a value more than 1 indicates
+    * The result is a two-bit code such that a value more than 1 indicates
     * a failure in the API just called:
     *
     *    0 - no warning or error
@@ -3252,6 +3202,7 @@ PNG_EXPORT(240, int, png_image_write_to_stdio, (png_imagep image, FILE *file,
 /*******************************************************************************
  *  END OF SIMPLIFIED API
  ******************************************************************************/
+#endif /* PNG_SIMPLIFIED_{READ|WRITE}_SUPPORTED */
 
 #ifdef PNG_CHECK_FOR_INVALID_INDEX_SUPPORTED
 PNG_EXPORT(242, void, png_set_check_for_invalid_index,
@@ -3288,7 +3239,8 @@ PNG_EXPORT(243, int, png_get_palette_max, (png_const_structp png_ptr,
 #  define PNG_ARM_NEON   0 /* HARDWARE: ARM Neon SIMD instructions supported */
 #endif
 #define PNG_MAXIMUM_INFLATE_WINDOW 2 /* SOFTWARE: force maximum window */
-#define PNG_OPTION_NEXT  4 /* Next option - numbers must be even */
+#define PNG_SKIP_sRGB_CHECK_PROFILE 4 /* SOFTWARE: Check ICC profile for sRGB */
+#define PNG_OPTION_NEXT  6 /* Next option - numbers must be even */
 
 /* Return values: NOTE: there are four values and 'off' is *not* zero */
 #define PNG_OPTION_UNSET   0 /* Unset - defaults to off */
@@ -3298,19 +3250,18 @@ PNG_EXPORT(243, int, png_get_palette_max, (png_const_structp png_ptr,
 
 PNG_EXPORT(244, int, png_set_option, (png_structrp png_ptr, int option,
    int onoff));
-#endif
+#endif /* PNG_SET_OPTION_SUPPORTED */
 
 /*******************************************************************************
- *  END OF HARDWARE OPTIONS
+ *  END OF HARDWARE AND SOFTWARE OPTIONS
  ******************************************************************************/
 
-/* Maintainer: Put new public prototypes here ^, in libpng.3, and project
- * defs, scripts/pnglibconf.h, and scripts/pnglibconf.h.prebuilt
+/* Maintainer: Put new public prototypes here ^, in libpng.3, in project
+ * defs, and in scripts/symbols.def.
  */
 
 /* The last ordinal number (this is the *last* one already used; the next
- * one to use is one more than this.)  Maintainer, remember to add an entry to
- * scripts/symbols.def as well.
+ * one to use is one more than this.)
  */
 #ifdef PNG_EXPORT_LAST_ORDINAL
   PNG_EXPORT_LAST_ORDINAL(244);
