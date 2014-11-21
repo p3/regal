@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>freetypelib</ProjectName>
+    <ProjectGuid>{8AC0EA07-3E0B-F490-FA69-D3709DFDC1AE}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\Win32\freetypelib\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\x64\freetypelib\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\Win32\freetypelib\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\x64\freetypelib\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">freetypelib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">freetypelib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">freetypelib</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">freetypelib</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../../../../src/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FT2_BUILD_LIBRARY;HAVE_CONFIG_H=1;Z_PREFIX=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Release\Win32\freetypelib\</AssemblerListingLocation>
+      <ObjectFileName>Release\Win32\freetypelib\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\Win32\freetypelib.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Release\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile></ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\Win32\freetypelib.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>Release\Win32\freetypelib.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>../../../../src/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FT2_BUILD_LIBRARY;HAVE_CONFIG_H=1;Z_PREFIX=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Release\x64\freetypelib\</AssemblerListingLocation>
+      <ObjectFileName>Release\x64\freetypelib\</ObjectFileName>
+      <ProgramDataBaseFileName>Release\x64\freetypelib.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile></ModuleDefinitionFile>
+      <ProgramDatabaseFile>Release\x64\freetypelib.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <ImportLibrary>Release\x64\freetypelib.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../src/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FT2_BUILD_LIBRARY;HAVE_CONFIG_H=1;Z_PREFIX=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Debug\Win32\freetypelib\</AssemblerListingLocation>
+      <ObjectFileName>Debug\Win32\freetypelib\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\Win32\freetypelib.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Debug\Win32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile></ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>Debug\Win32\freetypelib.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImportLibrary>Debug\Win32\freetypelib.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../../src/freetype/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FT2_BUILD_LIBRARY;HAVE_CONFIG_H=1;Z_PREFIX=1;_CRT_SECURE_NO_WARNINGS=1;WIN32;_WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <AssemblerListingLocation>Debug\x64\freetypelib\</AssemblerListingLocation>
+      <ObjectFileName>Debug\x64\freetypelib\</ObjectFileName>
+      <ProgramDataBaseFileName>Debug\x64\freetypelib.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>Debug\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile></ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>Debug\x64\freetypelib.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <ImportLibrary>Debug\x64\freetypelib.lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\freetype\src\autofit\autofit.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\basepic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftadvanc.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftapi.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftbbox.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftbdf.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftbitmap.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftcalc.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftcid.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftdbgmem.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftdebug.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftfstype.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftgasp.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftgloadr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftglyph.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftgxval.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftinit.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftlcdfil.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftmac.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftmm.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftotval.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftoutln.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftpatent.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftpfr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftpic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftrfork.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftsnames.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftstream.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftstroke.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftsynth.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftsystem.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\fttrigon.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\fttype1.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftutil.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftwinfnt.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\base\ftxf86.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\bdf\bdf.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\bdf\bdfdrivr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\bdf\bdflib.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cache\ftcache.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2arrst.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2blues.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2error.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2font.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2ft.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2hints.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2intrp.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2read.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cf2stack.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffcmap.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffdrivr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffgload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffparse.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cff\cffpic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cid\cidgload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cid\cidload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cid\cidobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cid\cidparse.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cid\cidriver.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\cid\type1cid.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvalid.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvbsln.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvcommn.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvfeat.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvfgen.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvjust.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvkern.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvlcar.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmod.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmort.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmort0.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmort1.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmort2.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmort4.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmort5.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmorx.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmorx0.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmorx1.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmorx2.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmorx4.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvmorx5.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvopbd.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvprop.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gxvalid\gxvtrak.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\gzip\ftgzip.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\lzw\ftlzw.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\lzw\ftzopen.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvalid.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvbase.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvcommn.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvgdef.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvgpos.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvgsub.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvjstf.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvmath.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\otvalid\otvmod.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pcf\pcf.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pcf\pcfdrivr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pcf\pcfread.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pcf\pcfutil.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfrcmap.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfrdrivr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfrgload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfrload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfrobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pfr\pfrsbit.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\afmparse.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\psaux.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\psauxmod.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\psconv.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\psobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\t1cmap.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psaux\t1decode.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pshinter\pshalgo.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pshinter\pshglob.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pshinter\pshinter.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pshinter\pshpic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\pshinter\pshrec.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psnames\psmodule.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psnames\psnames.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\psnames\pspic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\raster\ftraster.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\raster\ftrend1.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\raster\raster.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\raster\rastpic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\sfdriver.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\sfnt.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\sfntpic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\sfobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttbdf.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttcmap.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttkern.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttmtx.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttpost.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\sfnt\ttsbit.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\smooth\smooth.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\truetype.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttdriver.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttgload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttgxvar.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttinterp.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttobjs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttpic.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\truetype\ttpload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\t1afm.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\t1driver.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\t1gload.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\t1load.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\t1objs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\t1parse.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type1\type1.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type42\t42drivr.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type42\t42objs.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type42\t42parse.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\type42\type42.c" />
+    <ClCompile Include="..\..\..\..\src\freetype\src\winfonts\winfnt.c" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
