@@ -9,11 +9,15 @@ Regal
 
 | https://github.com/p3/regal
 | `Downloads <https://bitbucket.org/nigels_com/regal/downloads>`_, `Issues <https://github.com/p3/regal/issues>`_, `Commits <https://github.com/p3/regal/commits/master>`_.
-| Status: |status|
+| Status: Linux |status-linux|, Windows |status-windows|
 
-.. |status| image:: https://travis-ci.org/nigels-com/regal.png?branch=master
+.. |status-linux| image:: https://travis-ci.org/nigels-com/regal.png?branch=master
    :target: https://travis-ci.org/nigels-com/regal
-   :alt: Build Status
+   :alt: Linux Build Status
+
+.. |status-windows| image:: https://img.shields.io/appveyor/ci/regal/regal.svg
+   :target: https://ci.appveyor.com/project/regal/regal/
+   :alt: Windows Build Status
 
 Recent News
 ===========
