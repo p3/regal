@@ -12,6 +12,8 @@ build:
 
 after_build:
 - cmd: >-
+    cd build/win32/vs2010/Regal
+    dir
     set ARCHIVE=Regal_Windows_x86_Debug_%APPVEYOR_BUILD_VERSION%.7z
-    7z a %ARCHIVE% build/win32/vs2010/Regal/Debug/Win32
+    7z a %ARCHIVE% Debug/Win32
     appveyor PushArtifact %ARCHIVE%
