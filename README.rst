@@ -38,7 +38,7 @@ it is in deployment for internal projects, and has received significant
 external contributions.
 
 Features such as emulation might not be complete or bug-free enough for
-every situation, milage may vary, contributions welcome.
+every situation, mileage may vary, contributions welcome.
 
 .. contents::
 
