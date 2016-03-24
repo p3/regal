@@ -1,6 +1,10 @@
 version: '{build}-{branch}'
 clone_depth: 100
 
+configuration:
+- Debug
+- Release
+
 init:
 - ps: >-
     $version = Get-Date -Format "yyyymmddHHmm"
@@ -14,6 +18,6 @@ after_build:
 - cmd: >-
     cd build/win32/vs2010/Regal
     dir
-    set ARCHIVE=Regal_Windows_x86_Debug_%APPVEYOR_BUILD_VERSION%.7z
-    7z a %ARCHIVE% Debug/Win32
+    set ARCHIVE=Regal_Windows_x86_%CONFIGURATION%_%APPVEYOR_BUILD_VERSION%.7z
+    7z a %ARCHIVE% %CONFIGURATION%/Win32
     appveyor PushArtifact %ARCHIVE%
