@@ -28,6 +28,7 @@ APITRACE.CXX += src/apitrace/common/trace_profiler.cpp
 APITRACE.CXX += src/apitrace/common/trace_writer_regal.cpp
 APITRACE.CXX += src/apitrace/common/trace_writer_model.cpp
 APITRACE.CXX += src/apitrace/common/trace_writer.cpp
+APITRACE.CXX += src/apitrace/dispatch/glproc.cpp
 APITRACE.CXX += src/apitrace/dispatch/glproc_regal.cpp
 #APITRACE.CXX += src/apitrace/dispatch/glproc_egl.cpp
 #APITRACE.CXX += src/apitrace/dispatch/glproc_gl.cpp

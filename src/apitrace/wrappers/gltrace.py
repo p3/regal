@@ -27,6 +27,9 @@
 """GL tracing generator."""
 
 
+import re
+import sys
+
 from trace import Tracer
 from dispatch import function_pointer_type, function_pointer_value
 import specs.stdapi as stdapi
@@ -411,39 +414,8 @@ class GlTracer(Tracer):
         #"glMatrixIndexPointerARB",
     ))
 
-    draw_function_names = set((
-        'glDrawArrays',
-        'glDrawElements',
-        'glDrawRangeElements',
-        'glMultiDrawArrays',
-        'glMultiDrawElements',
-        'glDrawArraysInstanced',
-        "glDrawArraysInstancedBaseInstance",
-        'glDrawElementsInstanced',
-        'glDrawArraysInstancedARB',
-        'glDrawElementsInstancedARB',
-        'glDrawElementsBaseVertex',
-        'glDrawRangeElementsBaseVertex',
-        'glDrawElementsInstancedBaseVertex',
-        "glDrawElementsInstancedBaseInstance",
-        "glDrawElementsInstancedBaseVertexBaseInstance",
-        'glMultiDrawElementsBaseVertex',
-        'glDrawArraysIndirect',
-        'glDrawElementsIndirect',
-        'glMultiDrawArraysIndirect',
-        'glMultiDrawArraysIndirectAMD',
-        'glMultiDrawElementsIndirect',
-        'glMultiDrawElementsIndirectAMD',
-        'glDrawArraysEXT',
-        'glDrawRangeElementsEXT',
-        'glDrawRangeElementsEXT_size',
-        'glMultiDrawArraysEXT',
-        'glMultiDrawElementsEXT',
-        'glMultiModeDrawArraysIBM',
-        'glMultiModeDrawElementsIBM',
-        'glDrawArraysInstancedEXT',
-        'glDrawElementsInstancedEXT',
-    ))
+    # XXX: We currently ignore the gl*Draw*ElementArray* functions
+    draw_function_regex = re.compile(r'^gl([A-Z][a-z]+)*Draw(Range)?(Arrays|Elements)([A-Z][a-zA-Z]*)?$' )
 
     interleaved_formats = [
          'GL_V2F',
@@ -537,18 +509,21 @@ class GlTracer(Tracer):
             print '    }'
 
         # ... to the draw calls
-        if function.name in self.draw_function_names:
+        if self.draw_function_regex.match(function.name):
             print '    if (_need_user_arrays()) {'
-            arg_names = ', '.join([arg.name for arg in function.args[1:]])
-            print '        GLuint _count = _%s_count(%s);' % (function.name, arg_names)
-            # Some apps, in particular Quake3, can tell the driver to lock more
-            # vertices than those actually required for the draw call.
-            print '        if (_checkLockArraysEXT) {'
-            print '            GLuint _locked_count = _glGetInteger(GL_ARRAY_ELEMENT_LOCK_FIRST_EXT)'
-            print '                                 + _glGetInteger(GL_ARRAY_ELEMENT_LOCK_COUNT_EXT);'
-            print '            _count = std::max(_count, _locked_count);'
-            print '        }'
-            print '        _trace_user_arrays(_count);'
+            if 'Indirect' in function.name:
+                print r'        os::log("apitrace: warning: %s: indirect user arrays not supported\n");' % (function.name,)
+            else:
+                arg_names = ', '.join([arg.name for arg in function.args[1:]])
+                print '        GLuint _count = _%s_count(%s);' % (function.name, arg_names)
+                # Some apps, in particular Quake3, can tell the driver to lock more
+                # vertices than those actually required for the draw call.
+                print '        if (_checkLockArraysEXT) {'
+                print '            GLuint _locked_count = _glGetInteger(GL_ARRAY_ELEMENT_LOCK_FIRST_EXT)'
+                print '                                 + _glGetInteger(GL_ARRAY_ELEMENT_LOCK_COUNT_EXT);'
+                print '            _count = std::max(_count, _locked_count);'
+                print '        }'
+                print '        _trace_user_arrays(_count);'
             print '    }'
         if function.name == 'glLockArraysEXT':
             print '        _checkLockArraysEXT = true;'
@@ -626,6 +601,18 @@ class GlTracer(Tracer):
             self.shadowBufferMethod('bufferSubData(0, size, map)')
             print '        }'
             print '    }'
+        if function.name == 'glUnmapNamedBuffer':
+            print '    GLint access_flags = 0;'
+            print '    _glGetNamedBufferParameteriv(buffer, GL_BUFFER_ACCESS_FLAGS, &access_flags);'
+            print '    if ((access_flags & GL_MAP_WRITE_BIT) && !(access_flags & GL_MAP_FLUSH_EXPLICIT_BIT)) {'
+            print '        GLvoid *map = NULL;'
+            print '        _glGetNamedBufferPointerv(buffer, GL_BUFFER_MAP_POINTER, &map);'
+            print '        GLint length = 0;'
+            print '        _glGetNamedBufferParameteriv(buffer, GL_BUFFER_MAP_LENGTH, &length);'
+            print '        if (map && length > 0) {'
+            self.emit_memcpy('map', 'length')
+            print '        }'
+            print '    }'
         if function.name == 'glUnmapNamedBufferEXT':
             print '    GLint access_flags = 0;'
             print '    _glGetNamedBufferParameterivEXT(buffer, GL_BUFFER_ACCESS_FLAGS, &access_flags);'
@@ -650,6 +637,12 @@ class GlTracer(Tracer):
             print '    if (map && size > 0) {'
             self.emit_memcpy('(const char *)map + offset', 'size')
             print '    }'
+        if function.name == 'glFlushMappedNamedBufferRange':
+            print '    GLvoid *map = NULL;'
+            print '    _glGetNamedBufferPointerv(buffer, GL_BUFFER_MAP_POINTER, &map);'
+            print '    if (map && length > 0) {'
+            self.emit_memcpy('(const char *)map + offset', 'length')
+            print '    }'
         if function.name == 'glFlushMappedNamedBufferRangeEXT':
             print '    GLvoid *map = NULL;'
             print '    _glGetNamedBufferPointervEXT(buffer, GL_BUFFER_MAP_POINTER, &map);'
@@ -659,7 +652,7 @@ class GlTracer(Tracer):
 
         # FIXME: We don't support coherent/pinned memory mappings
         # See https://github.com/apitrace/apitrace/issues/232
-        if function.name in ('glBufferStorage', 'glNamedBufferStorageEXT'):
+        if function.name in ('glBufferStorage', 'glNamedBufferStorage', 'glNamedBufferStorageEXT'):
             print r'    if (flags & GL_MAP_COHERENT_BIT) {'
             print r'        os::log("apitrace: warning: coherent mappings not fully supported\n");'
             print r'    }'
@@ -880,11 +873,17 @@ class GlTracer(Tracer):
         'glCompressedTexSubImage2DARB',
         'glCompressedTexSubImage3D',
         'glCompressedTexSubImage3DARB',
+        'glCompressedTextureImage1D',
         'glCompressedTextureImage1DEXT',
+        'glCompressedTextureImage2D',
         'glCompressedTextureImage2DEXT',
+        'glCompressedTextureImage3D',
         'glCompressedTextureImage3DEXT',
+        'glCompressedTextureSubImage1D',
         'glCompressedTextureSubImage1DEXT',
+        'glCompressedTextureSubImage2D',
         'glCompressedTextureSubImage2DEXT',
+        'glCompressedTextureSubImage3D',
         'glCompressedTextureSubImage3DEXT',
         'glConvolutionFilter1D',
         'glConvolutionFilter2D',
