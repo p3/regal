@@ -1,8 +1,8 @@
 
 /* pngset.c - storage of image information into info struct
  *
- * Last changed in libpng 1.6.8 [December 19, 2013]
- * Copyright (c) 1998-2013 Glenn Randers-Pehrson
+ * Last changed in libpng 1.6.11 [June 5, 2014]
+ * Copyright (c) 1998-2014 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -637,7 +637,7 @@ png_set_iCCP(png_const_structrp png_ptr, png_inforp info_ptr,
       png_colorspace_sync_info(png_ptr, info_ptr);
 
       /* Don't do any of the copying if the profile was bad, or inconsistent. */
-      if (!result)
+      if (result == 0)
          return;
 
       /* But do write the gAMA and cHRM chunks from the profile. */
@@ -686,7 +686,7 @@ png_set_text(png_const_structrp png_ptr, png_inforp info_ptr,
    int ret;
    ret = png_set_text_2(png_ptr, info_ptr, text_ptr, num_text);
 
-   if (ret)
+   if (ret != 0)
       png_error(png_ptr, "Insufficient memory to store text");
 }
 
@@ -726,7 +726,7 @@ png_set_text_2(png_const_structrp png_ptr, png_inforp info_ptr,
          else
             max_text = INT_MAX;
 
-         /* Now allocate a new array and copy the old members in, this does all
+         /* Now allocate a new array and copy the old members in; this does all
           * the overflow checks.
           */
          new_text = png_voidcast(png_textp,png_realloc_array(png_ptr,
@@ -855,7 +855,7 @@ png_set_text_2(png_const_structrp png_ptr, png_inforp info_ptr,
          textp->text = textp->key + key_len + 1;
       }
 
-      if (text_length)
+      if (text_length != 0)
          memcpy(textp->text, text_ptr[i].text, text_length);
 
       *(textp->text + text_length) = '\0';
@@ -1020,8 +1020,8 @@ png_set_sPLT(png_const_structrp png_ptr,
 
       np->depth = entries->depth;
 
-      /* In the even of out-of-memory just return - there's no point keeping on
-       * trying to add sPLT chunks.
+      /* In the event of out-of-memory just return - there's no point keeping
+       * on trying to add sPLT chunks.
        */
       length = strlen(entries->name) + 1;
       np->name = png_voidcast(png_charp, png_malloc_base(png_ptr, length));
@@ -1032,8 +1032,8 @@ png_set_sPLT(png_const_structrp png_ptr,
       memcpy(np->name, entries->name, length);
 
       /* IMPORTANT: we have memory now that won't get freed if something else
-       * goes wrong, this code must free it.  png_malloc_array produces no
-       * warnings, use a png_chunk_report (below) if there is an error.
+       * goes wrong; this code must free it.  png_malloc_array produces no
+       * warnings; use a png_chunk_report (below) if there is an error.
        */
       np->entries = png_voidcast(png_sPLT_entryp, png_malloc_array(png_ptr,
           entries->nentries, sizeof (png_sPLT_entry)));
@@ -1072,7 +1072,7 @@ check_location(png_const_structrp png_ptr, int location)
    location &= (PNG_HAVE_IHDR|PNG_HAVE_PLTE|PNG_AFTER_IDAT);
 
    /* New in 1.6.0; copy the location and check it.  This is an API
-    * change, previously the app had to use the
+    * change; previously the app had to use the
     * png_set_unknown_chunk_location API below for each chunk.
     */
    if (location == 0 && !(png_ptr->mode & PNG_IS_READ_STRUCT))
@@ -1353,7 +1353,7 @@ png_set_keep_unknown_chunks(png_structrp png_ptr, int keep,
     * required because add_one_chunk above doesn't extend the list if the 'keep'
     * parameter is the default.
     */
-   if (keep)
+   if (keep != 0)
    {
       new_list = png_voidcast(png_bytep, png_malloc(png_ptr,
           5 * (num_chunks + old_num_chunks)));
@@ -1449,7 +1449,7 @@ png_set_rows(png_const_structrp png_ptr, png_inforp info_ptr,
 
    info_ptr->row_pointers = row_pointers;
 
-   if (row_pointers)
+   if (row_pointers != NULL)
       info_ptr->valid |= PNG_INFO_IDAT;
 }
 #endif
@@ -1536,7 +1536,7 @@ png_set_user_limits (png_structrp png_ptr, png_uint_32 user_width_max,
 void PNGAPI
 png_set_chunk_cache_max (png_structrp png_ptr, png_uint_32 user_chunk_cache_max)
 {
-    if (png_ptr)
+    if (png_ptr != NULL)
        png_ptr->user_chunk_cache_max = user_chunk_cache_max;
 }
 
@@ -1545,7 +1545,7 @@ void PNGAPI
 png_set_chunk_malloc_max (png_structrp png_ptr,
     png_alloc_size_t user_chunk_malloc_max)
 {
-   if (png_ptr)
+   if (png_ptr != NULL)
       png_ptr->user_chunk_malloc_max = user_chunk_malloc_max;
 }
 #endif /* ?PNG_SET_USER_LIMITS_SUPPORTED */
@@ -1563,7 +1563,7 @@ png_set_benign_errors(png_structrp png_ptr, int allowed)
     * is the default behavior if png_set_benign_errors() is not called).
     */
 
-   if (allowed)
+   if (allowed != 0)
       png_ptr->flags |= PNG_FLAG_BENIGN_ERRORS_WARN |
          PNG_FLAG_APP_WARNINGS_WARN | PNG_FLAG_APP_ERRORS_WARN;
 
@@ -1578,7 +1578,7 @@ png_set_benign_errors(png_structrp png_ptr, int allowed)
     * It is possible for an indexed (color-type==3) PNG file to contain
     * pixels with invalid (out-of-range) indexes if the PLTE chunk has
     * fewer entries than the image's bit-depth would allow. We recover
-    * from this gracefully by filling any incomplete palette with zeroes
+    * from this gracefully by filling any incomplete palette with zeros
     * (opaque black).  By default, when this occurs libpng will issue
     * a benign error.  This API can be used to override that behavior.
     */
